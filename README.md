@@ -1,1 +1,1 @@
-# tribeapp
+# 6tribe
