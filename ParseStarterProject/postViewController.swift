@@ -101,6 +101,9 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
             post.saveInBackgroundWithBlock{(success, error) -> Void in
             
             if success == false {
+                self.activityIndicator.stopAnimating()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                
                 
                 //closure, we need self.
                 self.displayAlert("Could Not Post Image", error: "Please try again")
@@ -134,6 +137,7 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
                         
                         self.imageToPost.image = nil
                         //sets image back to original one
+                        //can do UIImage(named: "file_name")
                         
                         self.shareText.text = ""
                         
