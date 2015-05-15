@@ -1,1 +1,1 @@
-# 6tribe
+# 6tribe App
