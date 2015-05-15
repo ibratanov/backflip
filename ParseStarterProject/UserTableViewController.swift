@@ -20,14 +20,15 @@ class UserTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println(PFUser.currentUser())
         
         updateUsers()
         
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh") //text that appears
         refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged) //run this method when value is changed
+        
         self.tableView.addSubview(refresher)
+      
         
         }
     
@@ -60,16 +61,14 @@ class UserTableViewController: UITableViewController {
                         
                         if error == nil {
                             
-                            
-                            
-                            
                             for object in objects! {
                                 
                                 isFollowing = true
                             }
                             
-                            
                             self.following.append(isFollowing)
+                            
+                            println("hello")
                             
                             self.tableView.reloadData()
                             
@@ -79,6 +78,7 @@ class UserTableViewController: UITableViewController {
                         
                         //stop animation when finished
                         self.refresher.endRefreshing()
+                        println("test")
                     }
                 }
                 
@@ -87,16 +87,14 @@ class UserTableViewController: UITableViewController {
             
         })
 
-        
+        println("test2")
     }
     
     func refresh() {
         
-        
         println("refreshed")
         
         updateUsers()
-        
         
     }
 
