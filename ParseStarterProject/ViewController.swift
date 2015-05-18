@@ -89,7 +89,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate,UITextFie
                     
                     user.signUpInBackgroundWithBlock {
                         (succeeded, error) -> Void in
-                        if error == error {
+                        if error == nil {
                             
                             println("Signed up")
                             
