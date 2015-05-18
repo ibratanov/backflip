@@ -53,14 +53,6 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
             
         } else {
    
-            activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-            activityIndicator.center = self.view.center
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-            view.addSubview(activityIndicator)
-            activityIndicator.startAnimating()
-            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-            
             
             PFUser.logInWithUsernameInBackground(username.text, password:passwordUnique) {
                 (user: PFUser?, error: NSError?) -> Void in
@@ -80,7 +72,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
                     
                     user.signUpInBackgroundWithBlock {
                         (succeeded, error) -> Void in
-                        if error == nil {
+                        if error == error {
                             
                             println("Signed up")
                             
@@ -120,6 +112,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     override func viewDidAppear(animated: Bool) {
         
         if PFUser.currentUser() != nil {
+            
             self.performSegueWithIdentifier("jumpToUserTable", sender: self)
             
                    println(PFUser.currentUser())

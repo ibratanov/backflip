@@ -29,7 +29,7 @@ class UserTableViewController: UITableViewController {
         
         self.tableView.addSubview(refresher)
       
-        
+
         }
     
     func updateUsers(){
@@ -140,7 +140,7 @@ class UserTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath.row)
         
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
@@ -183,6 +183,7 @@ class UserTableViewController: UITableViewController {
             following.saveInBackground() //save our selections
         }
     }
+
     
     
     
