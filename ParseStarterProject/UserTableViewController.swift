@@ -20,15 +20,16 @@ class UserTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println(PFUser.currentUser())
         
         updateUsers()
         
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh") //text that appears
         refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged) //run this method when value is changed
-        self.tableView.addSubview(refresher)
         
+        self.tableView.addSubview(refresher)
+      
+
         }
     
     func updateUsers(){
@@ -60,14 +61,10 @@ class UserTableViewController: UITableViewController {
                         
                         if error == nil {
                             
-                            
-                            
-                            
                             for object in objects! {
                                 
                                 isFollowing = true
                             }
-                            
                             
                             self.following.append(isFollowing)
                             
@@ -79,6 +76,7 @@ class UserTableViewController: UITableViewController {
                         
                         //stop animation when finished
                         self.refresher.endRefreshing()
+
                     }
                 }
                 
@@ -87,16 +85,14 @@ class UserTableViewController: UITableViewController {
             
         })
 
-        
+        println("test2")
     }
     
     func refresh() {
         
-        
         println("refreshed")
         
         updateUsers()
-        
         
     }
 
@@ -142,7 +138,7 @@ class UserTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath.row)
         
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
@@ -185,6 +181,7 @@ class UserTableViewController: UITableViewController {
             following.saveInBackground() //save our selections
         }
     }
+
     
     
     

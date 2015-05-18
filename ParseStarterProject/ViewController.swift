@@ -7,174 +7,114 @@
 import UIKit
 import Parse
 
-class ViewController: UIViewController, UINavigationControllerDelegate {
+class ViewController: UIViewController, UINavigationControllerDelegate,UITextFieldDelegate {
     
-    var signupActive = true
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    
+  
+
     func displayAlert(title:String,error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+        //set to false, to prevent login screen flashes on failed login attempt
+        self.dismissViewControllerAnimated(false, completion: nil)
+            
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
+    
+//phone number validation function
+    func validate(value: String) -> Bool {
+        
+        let phoneRegex = "^\\d{3}-\\d{3}-\\d{4}$"
+        
+        var compare = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
+        
+        var resultBool =  compare.evaluateWithObject(value)
+        
+        return resultBool
+        
+    }
 
+    
+    //unique UUID password associated with device
+    let passwordUnique = UIDevice.currentDevice().identifierForVendor.UUIDString
+    
     @IBOutlet var username: UITextField!
-    
-    @IBOutlet var password: UITextField!
-    
-    
-    @IBOutlet var alreadyRegistered: UILabel!
-    
-    @IBOutlet var signUpButton: UIButton!
     
     @IBOutlet var signUpLabel: UILabel!
     
-    
-    @IBOutlet var signUpToggleButton: UIButton!
-    
-    @IBAction func toggleSignUp(sender: AnyObject) {
-        
-        if signupActive == true {
-            
-            signupActive = false
-            
-            signUpLabel.text = "Use the form below to login"
-            
-            signUpButton.setTitle("Log In", forState: UIControlState.Normal)
-            
-            alreadyRegistered.text = "Not Registered?"
-            
-            signUpToggleButton.setTitle("Sign Up", forState: UIControlState.Normal)
-            
-            
-            
-        } else {
-            
-            signupActive = true
-            
-            signUpLabel.text = "Use the form below to sign up"
-            
-            signUpButton.setTitle("Sign Up", forState: UIControlState.Normal)
-            
-            alreadyRegistered.text = "Already Registered?"
-            
-            signUpToggleButton.setTitle("Log In", forState: UIControlState.Normal)
-            
-        }
-        
-        
-    }
-    
-    @IBAction func signUp(sender: AnyObject) {
+    @IBAction func logIn(sender: AnyObject) {
         
         var error = ""
         
-        if username.text == "" || password.text == "" {
+        if (username.text == "") {
             
-            error = "Please enter a username and password"
+            error = "Please enter a phone number."
             
         }
+        
+        if (self.validate(username.text) == false)  {
             
-        if error != "" {
+            error = "Please enter a valid phone number."
+        }
+        
+        
+        if (error != "") {
             
-            displayAlert("Error in form", error: error)
+            displayAlert("Sign in error:", error: error)
             
         } else {
    
-           
             
-            activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-            activityIndicator.center = self.view.center
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-            view.addSubview(activityIndicator)
-            activityIndicator.startAnimating()
-            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-            
-            
-            if signupActive == true {
-                
-                var user = PFUser()
-                user.username = username.text
-                user.password = password.text
-
+            PFUser.logInWithUsernameInBackground(username.text, password:passwordUnique) {
+                (user: PFUser?, error: NSError?) -> Void in
+                if user != nil {
+                    
+                    
+                    println("Logged in")
+                    
+                    self.performSegueWithIdentifier("jumpToUserTable", sender: self)
+                    
+                    
+                } else {
+                    
+                    var user = PFUser()
+                    user.username = self.username.text
+                    user.password = self.passwordUnique
+                    user["UUID"] = self.passwordUnique
+                    
                     user.signUpInBackgroundWithBlock {
-                        (succeeded:Bool, signupError:NSError?) -> Void in
-                        
-                        self.activityIndicator.stopAnimating()
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                        
-                        if signupError == nil {
-                         //Hooray you are signed up
-                            println("signed up")
+                        (succeeded, error) -> Void in
+                        if error == nil {
+                            
+                            println("Signed up")
                             
                             self.performSegueWithIdentifier("jumpToUserTable", sender: self)
                             
                         } else {
                             
-                            if let errorString = signupError!.userInfo?["error"] as? NSString {
-                                
-                                error = errorString as! String
-                                
-                            // Show the errorString somewhere and let the user try again.
-                        } else {
-                                
-                            error = "Please try again"
+                            println(error)
+                            
                         }
-                            
-                            self.displayAlert("Could not sign up", error: error)
-                   
-                        }
-                      }
-            } else {
-                
-                PFUser.logInWithUsernameInBackground(username.text, password:password.text) {
-                    (user: PFUser?, signupError:NSError?) -> Void in
-                    
-                    self.activityIndicator.stopAnimating()
-                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                    
-                    if signupError == nil {
-                        
-                        self.performSegueWithIdentifier("jumpToUserTable", sender: self)
-                        
-                        println("logged in")
-                        
-                        
-                    } else {
-                       
-                        if let errorString = signupError!.userInfo?["error"] as? NSString {
-                            
-                            error = errorString as! String
-                            
-                            // Show the errorString somewhere and let the user try again.
-                        } else {
-                            
-                            error = "Please try again later"
-                        }
-                        
-                        self.displayAlert("Could not log in", error: error)
-    
-                        
                     }
+                    
                 }
             }
         }
     }
-    
+            
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Return closes keyboard
+       self.username.delegate = self
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
-        
-       println(PFUser.currentUser())
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -182,14 +122,33 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
     override func viewDidAppear(animated: Bool) {
-        
+        //check if the user is already logged in
         if PFUser.currentUser() != nil {
+            
             self.performSegueWithIdentifier("jumpToUserTable", sender: self)
             
+                   println(PFUser.currentUser()!)
             
         }
     }
+    
+//two functions to allow off keyboard touch to close keyboard
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
+        self.view.endEditing(true)
+   
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+        
+    }
+
     
 //hide navigation bar when this view is about to be displayed
     override func viewWillAppear(animated: Bool) {
@@ -197,6 +156,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         self.navigationController?.navigationBarHidden = true
         
     }
+    
 //keeps nav bar
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
