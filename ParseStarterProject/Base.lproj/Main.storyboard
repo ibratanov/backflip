@@ -137,7 +137,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r2L-uJ-p38" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2940" y="662"/>
+            <point key="canvasLocation" x="2860" y="749"/>
         </scene>
         <!--Post Image-->
         <scene sceneID="44b-W6-xYA">
@@ -178,6 +178,7 @@
                                     <barButtonItem title="Logout" id="hSY-fj-hjl">
                                         <connections>
                                             <action selector="logout:" destination="2Zf-XQ-OVz" id="9Ik-0d-KU1"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" identifier="logout" id="j85-ZN-Egd"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -194,12 +195,11 @@
                     <connections>
                         <outlet property="imageToPost" destination="iXR-hI-1o6" id="peE-RI-EW5"/>
                         <outlet property="shareText" destination="Ifz-9k-zCQ" id="Em8-ha-omU"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="logout" id="1fK-rV-sr6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AaJ-bA-GUP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2838" y="-42"/>
+            <point key="canvasLocation" x="2860" y="48"/>
         </scene>
         <!--NavController-->
         <scene sceneID="kuC-kA-2m0">

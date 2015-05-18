@@ -23,7 +23,8 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            //Commented out below line to remove flip to login screen upon failed image post
+            //self.dismissViewControllerAnimated(false, completion: nil)
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
@@ -34,16 +35,15 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
     @IBOutlet var imageToPost: UIImageView!
     
     
-    @IBAction func logout(sender: AnyObject) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        //disables current user
-        PFUser.logOut()
-        
-        self.performSegueWithIdentifier("logout", sender: self)
-        
-        println(PFUser.currentUser())
-        
+        if segue.identifier == "logout" {
+            
+            PFUser.logOut()
+
+        }
     }
+
   
     
     @IBAction func chooseImage(sender: AnyObject) {

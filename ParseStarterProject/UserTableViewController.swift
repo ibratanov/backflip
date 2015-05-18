@@ -68,8 +68,6 @@ class UserTableViewController: UITableViewController {
                             
                             self.following.append(isFollowing)
                             
-                            println("hello")
-                            
                             self.tableView.reloadData()
                             
                         } else {
@@ -78,7 +76,7 @@ class UserTableViewController: UITableViewController {
                         
                         //stop animation when finished
                         self.refresher.endRefreshing()
-                        println("test")
+
                     }
                 }
                 
