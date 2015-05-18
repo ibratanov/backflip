@@ -13,6 +13,8 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
 
     var photoSelected:Bool = false
     
+    
+    
     //define activity indicator
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
