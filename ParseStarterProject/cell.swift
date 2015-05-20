@@ -14,12 +14,29 @@ class cell: UITableViewCell, UIGestureRecognizerDelegate {
     @IBOutlet var username: UILabel!
     
     @IBOutlet var title: UILabel!
-    
-    var test = "hello"
-    
+
     @IBOutlet var postedImage: UIImageView!
     
+
+   /* @IBAction func fullView(sender: AnyObject) {
     
+        func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+            
+            println ("test")
+            if segue.identifier == "toFullScreen" {
+                
+                println("test")
+                if let destViewController = segue.destinationViewController as? fullScreenViewController{
+                println("test2")
+                destViewController.cellImage = postedImage.image
+                println("test3")
+                destViewController.eventTitle.text = testString
+                }
+                
+            }
+        }
+    
+    }*/
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -38,14 +55,13 @@ class cell: UITableViewCell, UIGestureRecognizerDelegate {
         }
     }*/
     
-    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    /*func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
     
     println("test")
     
         if segue.identifier == "toFullScreen" {
             
-            
-            var destViewController: fullScreenViewController = segue.destinationViewController as! fullScreenViewController
+            var destViewController = segue.destinationViewController as! fullScreenViewController
 
                 destViewController.cellImage = postedImage.image
                 destViewController.eventTitle.text = test
@@ -53,7 +69,7 @@ class cell: UITableViewCell, UIGestureRecognizerDelegate {
             
             
         }
-    }
+    }*/
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

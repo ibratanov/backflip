@@ -8,59 +8,86 @@
 
 import UIKit
 import Social
+import Parse
+
 
 class fullScreenViewController: UIViewController {
     
     @IBOutlet var eventTitle: UILabel!
     
-    var cellImage : UIImage!
+    @IBOutlet var eventInfo: UILabel!
     
     @IBOutlet var fullScreenImage: UIImageView!
     
+    var cellImage : UIImage!
+    var tempTitle : String = ""
+    var tempDate : NSDate!
+    
+    
+    
+    
+    @IBAction func likeButton(sender: AnyObject) {
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
     func displayAlert(title:String,error: String) {
     
-    var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        
-    //Facebook share feature
-    alert.addAction(UIAlertAction(title: "Facebook", style: .Default, handler: { action in
-        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
-            var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-            facebookSheet.setInitialText("Share on Facebook")
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
             
-            //facebookSheet.addImage(image)
+        //Facebook share feature
+        alert.addAction(UIAlertAction(title: "Facebook", style: .Default, handler: { action in
             
-            self.presentViewController(facebookSheet, animated: true, completion: nil)
-        } else {
-            var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        }
-        }))
-    //Twitter share feature
-    alert.addAction(UIAlertAction(title: "Twitter", style: .Default, handler: { action in
-        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
-            var twitterSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-            twitterSheet.setInitialText("Share on Twitter")
+            if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
+                var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                facebookSheet.setInitialText("Share on Facebook")
+                
+                facebookSheet.addImage(self.fullScreenImage.image)
+                
+                self.presentViewController(facebookSheet, animated: true, completion: nil)
+           
+            } else {
+                var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            }))
             
-            //twitterSheet.addImage(image)
+        //Twitter share feature
+        alert.addAction(UIAlertAction(title: "Twitter", style: .Default, handler: { action in
             
-            self.presentViewController(twitterSheet, animated: true, completion: nil)
-        } else {
-            var alert = UIAlertController(title: "Accounts", message: "Please login to a Twitter account to share.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        }
-        }))
+            if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
+                
+                var twitterSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+                twitterSheet.setInitialText("Share on Twitter")
+                
+                twitterSheet.addImage(self.fullScreenImage.image)
+                
+                self.presentViewController(twitterSheet, animated: true, completion: nil)
+            
+            } else {
+                
+                var alert = UIAlertController(title: "Accounts", message: "Please login to a Twitter account to share.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+            }
+            }))
 
-    alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { action in
-    
-    //set to false, to prevent login screen flashes on failed login attempt
-    self.dismissViewControllerAnimated(false, completion: nil)
-    
-    }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
 
-    self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)
+    
     }
+    
+    
     
     
     @IBAction func share(sender: AnyObject) {
@@ -70,16 +97,73 @@ class fullScreenViewController: UIViewController {
     }
     
     
+    
+    @IBAction func downloadImage(sender: AnyObject) {
+        
+        
+        if fullScreenImage.image != nil {
+            
+            UIImageWriteToSavedPhotosAlbum(fullScreenImage.image, nil,
+                nil, nil)
+            
+            saveImageAlert("Success!", error: "Image saved to camera roll")
+            
+            
+        } else {
+            
+            saveImageAlert("Oops!", error: "Image could not save!")
+        }
+    }
+    
+    
+    
+    func saveImageAlert (title:String, error: String){
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+
+
+    
     override func viewDidLoad() {
+       
         super.viewDidLoad()
         
-        if((fullScreenImage.image) != nil) {
+        //check for image from previous VC, if true, set the image
+        if((cellImage) != nil) {
             
-        self.fullScreenImage.image = cellImage
+            self.fullScreenImage.image = cellImage
+            
+        } else {
+        
+        println("empty")
+        
+        }
+        
+        //check for title/event name from previous VC, display the title
+        if tempTitle != "" {
+            
+            eventTitle.text = tempTitle
+            
+        }
+        
+        //check for date from previous VC, format and display the date
+        if tempDate != nil {
+            
+            //formatting to display date how we want it
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = NSDateFormatterStyle.LongStyle
+            formatter.timeStyle = .MediumStyle
+            let dateStamp = formatter.stringFromDate(tempDate)
+
+            eventInfo.text = "Photo taken on \(dateStamp)"
             
         }
 
-        // Do any additional setup after loading the view.
     }
 
     
@@ -88,16 +172,5 @@ class fullScreenViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
