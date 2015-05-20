@@ -116,6 +116,9 @@
                                 <state key="normal" title="CHECK IN">
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="checkInClicked:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="oYp-r6-LTM"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlL-up-cCN">
                                 <rect key="frame" x="0.0" y="488" width="320" height="80"/>
@@ -138,6 +141,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="eventField" destination="adM-Oa-W25" id="7Iq-dL-aBT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nw0-yu-PiL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

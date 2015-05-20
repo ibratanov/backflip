@@ -21,7 +21,12 @@ class EventViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBOutlet var eventField: UITextField!
 
+    @IBAction func checkInClicked(sender: AnyObject) {
+        //var event = new PFObject
+        
+    }
     /*
     // MARK: - Navigation
 
