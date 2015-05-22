@@ -12,15 +12,14 @@ import Parse
 class feedViewController: UITableViewController {
 
 //we need to create a new class for each image
+//various arrays for storing data
     
     var titles = [String]()
     var usernames = [String]()
     var images = [UIImage]()
     var imageFiles = [PFFile]()
-    
-    
-    
-    
+    var dates = [NSDate]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,8 +44,6 @@ class feedViewController: UITableViewController {
                         
                         if error == nil {
                             
-                            println("Successfully retrieved \(objects!.count) scores")
-                            
                             for object in objects! {
                                 
                                 
@@ -54,6 +51,7 @@ class feedViewController: UITableViewController {
                                 
                                 self.imageFiles.append(object["imageFile"] as! PFFile)
                                 self.usernames.append(object["username"] as! String)
+                                self.dates.append(object["timeStamp"] as! NSDate)
                                 
                                 self.tableView.reloadData()
                                 
@@ -82,23 +80,18 @@ class feedViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     
-        
-        
-        
         return 1
         
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       
-        
-        
-        
         return titles.count
     }
 
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
         return 240
     }
     
@@ -115,6 +108,7 @@ class feedViewController: UITableViewController {
             if error == nil{
                 
                 let image = UIImage(data: imageData!)
+                self.images.append((image)!)
                 
                 myCell.postedImage.image = image
             }
@@ -125,6 +119,26 @@ class feedViewController: UITableViewController {
         return myCell
     }
     
+   override  func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "toFullScreen" {
+            
+            var moveVC: fullScreenViewController = segue.destinationViewController as! fullScreenViewController
+            
+            //get the selected row number
+            var selectedRowIndex = self.tableView.indexPathForSelectedRow()
+
+            dump(usernames)
+            dump(imageFiles)
+            dump(images)
+            dump(titles)
+            dump(dates)
+            moveVC.cellImage = images[selectedRowIndex!.row]
+            moveVC.tempTitle = titles[selectedRowIndex!.row]
+            moveVC.tempDate = dates[selectedRowIndex!.row]
+       
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
