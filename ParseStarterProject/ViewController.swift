@@ -77,7 +77,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate,UITextFie
                     
                     println("Logged in")
                     
-                    self.performSegueWithIdentifier("jumpToUserTable", sender: self)
+                    //self.performSegueWithIdentifier("jumpToUserTable", sender: self)
+                    self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                    
                     
                     
                 } else {
@@ -93,7 +95,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate,UITextFie
                             
                             println("Signed up")
                             
-                            self.performSegueWithIdentifier("jumpToUserTable", sender: self)
+                            //self.performSegueWithIdentifier("jumpToUserTable", sender: self)
+                            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+
                             
                         } else {
                             
@@ -127,9 +131,11 @@ class ViewController: UIViewController, UINavigationControllerDelegate,UITextFie
         //check if the user is already logged in
         if PFUser.currentUser() != nil {
             
-            self.performSegueWithIdentifier("jumpToUserTable", sender: self)
-            
-                   println(PFUser.currentUser()!)
+            //segue done here instead of viewDidLoad() because segues will not yet have been created at viewDidLoad()
+            //self.performSegueWithIdentifier("jumpToUserTable", sender: self)
+            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+
+            println(PFUser.currentUser()!)
             
         }
     }
