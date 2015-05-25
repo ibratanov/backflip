@@ -13,27 +13,132 @@ import Parse
 
 class fullScreenViewController: UIViewController {
     
+    @IBOutlet var likeCount: UILabel!
+    
     @IBOutlet var eventTitle: UILabel!
     
     @IBOutlet var eventInfo: UILabel!
     
     @IBOutlet var fullScreenImage: UIImageView!
     
+    @IBOutlet var likeButtonLabel: UIButton!
+    
     var cellImage : UIImage!
     var tempTitle : String = ""
     var tempDate : NSDate!
+    var objectIdTemp : String = ""
+    var likeActive = false
     
     
+    //toggles the like button from "like" to "unlike" when clicked
+    @IBAction func likeToggle(sender: AnyObject) {
+        
+        if likeActive == false {
+        
+            likeActive = true
+
+            likeButtonLabel.setTitle("Unlike", forState: UIControlState.Normal)
+        
+        } else {
+        
+            likeActive = false
+            
+            likeButtonLabel.setTitle("Like", forState: UIControlState.Normal)
+        
+        }
+    }
+
     
     
     @IBAction func likeButton(sender: AnyObject) {
         
+        if likeActive == false {
         
-        
+            
+            //add username to photos list of users who liked
+            var query3 = PFQuery(className: "Post")
+            
+            query3.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
+                
+                if error == nil {
+                    
+                    objects?.addUniqueObject(PFUser.currentUser()!.username!, forKey:"photoLikeList")
+                   
+                    objects!.saveInBackground()
+                    dump(objects)
+                    
+
+                } else {
+                    
+                    println("Error: \(error!) \(error!.userInfo!)")
+                }
+            }
+            
+            //add photo ID to users list of photos liked
+            var query4 = PFUser.query()
+            
+            query4?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
+                
+                if error == nil {
+                    
+                    objects?.addUniqueObject(self.objectIdTemp, forKey:"photoLikeList")
+
+                    objects!.saveInBackground()
+                    dump(objects)
+                    
+                } else {
+                    
+                    println("Error: \(error!) \(error!.userInfo!)")
+                }
+            }
+            
+        } else {
+            
+            //remove user ID from list of users who liked photo
+            var query3 = PFQuery(className: "Post")
+            
+            query3.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
+                
+                if error == nil {
+                    
+                    objects?.removeObject(PFUser.currentUser()!.username!, forKey:"photoLikeList")
+ 
+                    objects!.saveInBackground()
+                    dump(objects)
+                    
+                    
+                    
+                } else {
+                    
+                    println("Error: \(error!) \(error!.userInfo!)")
+                }
+            }
+            
+            //remove photo ID to user photo liked list
+            var query4 = PFUser.query()
+            
+            query4?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
+                
+                if error == nil {
+                    
+                    objects?.removeObject(self.objectIdTemp, forKey:"photoLikeList")
+                    
+
+                    objects!.saveInBackground()
+                    dump(objects)
+                    
+                    
+                    
+                } else {
+                    
+                    println("Error: \(error!) \(error!.userInfo!)")
+                    
+                }
+            }
+        }
     }
-    
-    
-    
+
+        
     
     
     
@@ -103,8 +208,7 @@ class fullScreenViewController: UIViewController {
         
         if fullScreenImage.image != nil {
             
-            UIImageWriteToSavedPhotosAlbum(fullScreenImage.image, nil,
-                nil, nil)
+            UIImageWriteToSavedPhotosAlbum(fullScreenImage.image, nil, nil, nil)
             
             saveImageAlert("Success!", error: "Image saved to camera roll")
             
@@ -163,6 +267,11 @@ class fullScreenViewController: UIViewController {
             eventInfo.text = "Photo taken on \(dateStamp)"
             
         }
+        
+        
+        
+        
+        
 
     }
 

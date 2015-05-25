@@ -19,6 +19,10 @@ class feedViewController: UITableViewController {
     var images = [UIImage]()
     var imageFiles = [PFFile]()
     var dates = [NSDate]()
+    var objectIDs = [String]()
+    
+    //let information = (title: String(), user: String(), image: PFFile(), date: NSDate(), id: String())
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,14 +49,13 @@ class feedViewController: UITableViewController {
                         if error == nil {
                             
                             for object in objects! {
-                                
-                                
+                                    
                                 self.titles.append(object["Title"] as! String)
                                 
                                 self.imageFiles.append(object["imageFile"] as! PFFile)
                                 self.usernames.append(object["username"] as! String)
                                 self.dates.append(object["timeStamp"] as! NSDate)
-                                
+                                self.objectIDs.append(object.objectId!! as String)
                                 self.tableView.reloadData()
                                 
                             }
@@ -133,9 +136,11 @@ class feedViewController: UITableViewController {
             dump(images)
             dump(titles)
             dump(dates)
+            dump(objectIDs)
             moveVC.cellImage = images[selectedRowIndex!.row]
             moveVC.tempTitle = titles[selectedRowIndex!.row]
             moveVC.tempDate = dates[selectedRowIndex!.row]
+            moveVC.objectIdTemp = objectIDs[selectedRowIndex!.row]
        
         }
     }
