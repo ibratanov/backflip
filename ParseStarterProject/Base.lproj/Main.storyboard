@@ -55,7 +55,7 @@
             </objects>
             <point key="canvasLocation" x="1567" y="304"/>
         </scene>
-        <!--Users-->
+        <!--Events-->
         <scene sceneID="zH2-Tk-H6K">
             <objects>
                 <tableViewController id="KbJ-H0-F5d" customClass="UserTableViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -76,7 +76,7 @@
                             <outlet property="delegate" destination="KbJ-H0-F5d" id="aIb-i0-qbt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Users" id="LHV-eB-VzO">
+                    <navigationItem key="navigationItem" title="Events" id="LHV-eB-VzO">
                         <barButtonItem key="leftBarButtonItem" title="View Feed" id="h6T-nf-wHX">
                             <connections>
                                 <segue destination="32w-le-tIS" kind="show" id="sW8-ZL-bI0"/>
@@ -285,6 +285,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Ju0-Hh-YW7"/>
+        <segue reference="VCX-vA-6qG"/>
     </inferredMetricsTieBreakers>
 </document>
