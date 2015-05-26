@@ -13,6 +13,8 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
 
     var photoSelected:Bool = false
     
+    
+    
     //define activity indicator
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -97,6 +99,8 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
             var post = PFObject(className: "Post")
             post["Title"] = shareText.text //save the text, and object, then add image to it
             post["username"] = PFUser.currentUser()!.username
+            post["timeStamp"] = NSDate()
+            post["likes"] = 0
             
             post.saveInBackgroundWithBlock{(success, error) -> Void in
             
