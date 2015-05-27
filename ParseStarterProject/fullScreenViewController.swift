@@ -10,8 +10,7 @@ import UIKit
 import Social
 import Parse
 
-
-class fullScreenViewController: UIViewController {
+class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet var likeCount: UILabel!
     
@@ -23,6 +22,7 @@ class fullScreenViewController: UIViewController {
     
     @IBOutlet var likeButtonLabel: UIButton!
     
+    
     var cellImage : UIImage!
     var tempTitle : String = ""
     var tempDate : NSDate!
@@ -30,7 +30,7 @@ class fullScreenViewController: UIViewController {
     var likeActive = false
     
     
-    //toggles the like button from "like" to "unlike" when clicked
+    // toggles the like button from "like" to "unlike" when clicked
     @IBAction func likeToggle(sender: AnyObject) {
         
         if likeActive == false {
@@ -49,42 +49,43 @@ class fullScreenViewController: UIViewController {
     }
 
     
-    
+    // both users and images have associated arrays with list of images liked for users, list of users who liked image, for images
     @IBAction func likeButton(sender: AnyObject) {
         
         if likeActive == false {
-        
+         
+            // add username to photos list of users who liked
+            var query1 = PFQuery(className: "Post")
             
-            //add username to photos list of users who liked
-            var query3 = PFQuery(className: "Post")
-            
-            query3.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
+            query1.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
                 
                 if error == nil {
                     
-                    objects?.addUniqueObject(PFUser.currentUser()!.username!, forKey:"photoLikeList")
-                   
-                    objects!.saveInBackground()
-                    dump(objects)
+                    objects?.addUniqueObject(PFUser.currentUser()!.username!, forKey:"userLikeList")
                     
-
+                    let array = objects?.objectForKey("userLikeList") as! [String]
+                    
+                    self.likeCount.text = String(array.count)
+                    
+                    objects!.saveInBackground()
+                    
                 } else {
                     
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
             
-            //add photo ID to users list of photos liked
-            var query4 = PFUser.query()
+            // add photo ID to users list of photos liked
+            var query2 = PFUser.query()
             
-            query4?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
+            query2?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
                 
                 if error == nil {
                     
                     objects?.addUniqueObject(self.objectIdTemp, forKey:"photoLikeList")
 
                     objects!.saveInBackground()
-                    dump(objects)
+
                     
                 } else {
                     
@@ -94,27 +95,28 @@ class fullScreenViewController: UIViewController {
             
         } else {
             
-            //remove user ID from list of users who liked photo
+            // remove user ID from list of users who liked photo
             var query3 = PFQuery(className: "Post")
             
             query3.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
                 
                 if error == nil {
                     
-                    objects?.removeObject(PFUser.currentUser()!.username!, forKey:"photoLikeList")
+                    objects?.removeObject(PFUser.currentUser()!.username!, forKey:"userLikeList")
+                    
+                    let array = objects?.objectForKey("userLikeList") as! [String]
+                    
+                    self.likeCount.text = String(array.count)
  
                     objects!.saveInBackground()
-                    dump(objects)
-                    
-                    
-                    
+
                 } else {
                     
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
             
-            //remove photo ID to user photo liked list
+            // remove photo ID to user photo liked list
             var query4 = PFUser.query()
             
             query4?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
@@ -125,10 +127,7 @@ class fullScreenViewController: UIViewController {
                     
 
                     objects!.saveInBackground()
-                    dump(objects)
-                    
-                    
-                    
+
                 } else {
                     
                     println("Error: \(error!) \(error!.userInfo!)")
@@ -138,16 +137,13 @@ class fullScreenViewController: UIViewController {
         }
     }
 
-        
-    
-    
-    
+ 
     
     func displayAlert(title:String,error: String) {
     
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
             
-        //Facebook share feature
+        // Facebook share feature
         alert.addAction(UIAlertAction(title: "Facebook", style: .Default, handler: { action in
             
             if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
@@ -165,7 +161,7 @@ class fullScreenViewController: UIViewController {
             }
             }))
             
-        //Twitter share feature
+        // Twitter share feature
         alert.addAction(UIAlertAction(title: "Twitter", style: .Default, handler: { action in
             
             if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
@@ -191,8 +187,6 @@ class fullScreenViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     
     }
-    
-    
     
     
     @IBAction func share(sender: AnyObject) {
@@ -221,7 +215,7 @@ class fullScreenViewController: UIViewController {
     
     
     
-    func saveImageAlert (title:String, error: String){
+    func saveImageAlert (title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -237,7 +231,7 @@ class fullScreenViewController: UIViewController {
        
         super.viewDidLoad()
         
-        //check for image from previous VC, if true, set the image
+        // check for image from previous VC, if true, set the image
         if((cellImage) != nil) {
             
             self.fullScreenImage.image = cellImage
@@ -248,20 +242,23 @@ class fullScreenViewController: UIViewController {
         
         }
         
-        //check for title/event name from previous VC, display the title
+        // check for title/event name from previous VC, display the title
         if tempTitle != "" {
             
             eventTitle.text = tempTitle
             
         }
         
-        //check for date from previous VC, format and display the date
+        // check for date from previous VC, format and display the date
         if tempDate != nil {
             
             //formatting to display date how we want it
             let formatter = NSDateFormatter()
+            
             formatter.dateStyle = NSDateFormatterStyle.LongStyle
+            
             formatter.timeStyle = .MediumStyle
+            
             let dateStamp = formatter.stringFromDate(tempDate)
 
             eventInfo.text = "Photo taken on \(dateStamp)"
@@ -269,13 +266,55 @@ class fullScreenViewController: UIViewController {
         }
         
         
+        // block to check if user has already liked photo, and set button label accordingly
         
+        var query5 = PFUser.query()
         
+        query5?.whereKey("photoLikeList", equalTo: objectIdTemp)
+        
+        query5?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
+            
+            if error == nil {
+                
+                let array = objects?.objectForKey("photoLikeList") as! [String]
+                
+                if contains(array, self.objectIdTemp) == true {
+                    
+                    self.likeActive = true
+                    self.likeButtonLabel.setTitle("Unlike", forState: UIControlState.Normal)
+                    
+                } else {
+                
+                    self.likeButtonLabel.setTitle("Like", forState: UIControlState.Normal)
+                    
+                }
+            }
+        }
+        
+        // block to display current like count based on array size when view is loaded
+        
+        var query6 = PFQuery(className: "Post")
+        
+        query6.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
+            
+            if error == nil {
+                
+                let array = objects?.objectForKey("userLikeList") as! [String]
+                self.likeCount.text = String(array.count)
+                
+            } else {
+                
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+        
+        self.navigationController?.navigationBarHidden = true
+
         
 
     }
-
     
+   
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -27,6 +27,8 @@ class feedViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBarHidden = false
+        
         
         var getFollowedUsersQuery = PFQuery(className: "followers")
         
