@@ -27,7 +27,7 @@ class feedViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBarHidden = false
+        //self.navigationController?.navigationBarHidden = false
         
         
         var getFollowedUsersQuery = PFQuery(className: "followers")
@@ -133,12 +133,6 @@ class feedViewController: UITableViewController {
             //get the selected row number
             var selectedRowIndex = self.tableView.indexPathForSelectedRow()
 
-            dump(usernames)
-            dump(imageFiles)
-            dump(images)
-            dump(titles)
-            dump(dates)
-            dump(objectIDs)
             moveVC.cellImage = images[selectedRowIndex!.row]
             moveVC.tempTitle = titles[selectedRowIndex!.row]
             moveVC.tempDate = dates[selectedRowIndex!.row]

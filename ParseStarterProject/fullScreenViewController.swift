@@ -28,22 +28,53 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     var tempDate : NSDate!
     var objectIdTemp : String = ""
     var likeActive = false
+    var liked = UIImage(named: "liked.png") as UIImage!
+    var unliked = UIImage(named: "unliked.png") as UIImage!
+    
+    
+    // function to handle double tap on image
+    func handleTap (sender: UITapGestureRecognizer) {
+        
+        if sender.state == .Ended {
+            
+            likeButton(self)
+            likeToggle(self)
+            
+        }
+    }
+    
+    
+    
     
     
     // toggles the like button from "like" to "unlike" when clicked
     @IBAction func likeToggle(sender: AnyObject) {
         
+        // adjust font size based on like count
+        if (likeCount.text)!.toInt() > 9 {
+            
+            likeCount.font.fontWithSize(10)
+            
+        } else if (likeCount.text)!.toInt() > 99 {
+            
+            likeCount.font.fontWithSize(8)
+        }
+
+        
+        // adjust heart image
         if likeActive == false {
         
             likeActive = true
 
-            likeButtonLabel.setTitle("Unlike", forState: UIControlState.Normal)
+            likeButtonLabel.setImage(liked, forState: .Normal)
+
         
         } else {
         
             likeActive = false
             
-            likeButtonLabel.setTitle("Like", forState: UIControlState.Normal)
+            likeButtonLabel.setImage(unliked, forState:.Normal)
+            
         
         }
     }
@@ -92,6 +123,8 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
+            
+            
             
         } else {
             
@@ -189,12 +222,14 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     
+
+    
+    
     @IBAction func share(sender: AnyObject) {
         
-        displayAlert("Share:", error: "Select an option")
-        
+         displayAlert("Share:", error: "Select an option")
     }
-    
+  
     
     
     @IBAction func downloadImage(sender: AnyObject) {
@@ -281,11 +316,11 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                 if contains(array, self.objectIdTemp) == true {
                     
                     self.likeActive = true
-                    self.likeButtonLabel.setTitle("Unlike", forState: UIControlState.Normal)
+                    self.likeButtonLabel.setImage(self.liked, forState: .Normal)
                     
                 } else {
-                
-                    self.likeButtonLabel.setTitle("Like", forState: UIControlState.Normal)
+                    self.likeActive = false
+                    self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
                     
                 }
             }
@@ -308,10 +343,19 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         
-        self.navigationController?.navigationBarHidden = true
-
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        //self.navigationController?.navigationBarHidden = true
         
-
+        
+        // gesture implementation
+        var gesture = UITapGestureRecognizer(target: self, action: "handleTap:")
+        gesture.numberOfTapsRequired = 2
+        
+        fullScreenImage.userInteractionEnabled = true
+        fullScreenImage.addGestureRecognizer(gesture)
+        
+        self.view.bringSubviewToFront(likeCount)
     }
     
    
