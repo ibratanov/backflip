@@ -28,9 +28,8 @@ class UserTableViewController: UITableViewController {
         refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged) //run this method when value is changed
         
         self.tableView.addSubview(refresher)
-      
 
-        }
+    }
     
     func updateUsers(){
         var query = PFQuery(className: "Events")
@@ -86,8 +85,6 @@ class UserTableViewController: UITableViewController {
 //                }
                 
             }
-            
-            
         })
     }
     
@@ -145,44 +142,46 @@ class UserTableViewController: UITableViewController {
         println(indexPath.row)
         
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        
+    
+        self.performSegueWithIdentifier("toAlbumFeed", sender: self)
+
+    
         //.self explanation: http://stackoverflow.com/questions/26108843/in-swift-what-is-the-difference-between-the-two-different-usages-of-self
-        if cell.accessoryType == UITableViewCellAccessoryType.Checkmark.self {
-            
-            cell.accessoryType = UITableViewCellAccessoryType.None
-            
-            var query = PFQuery(className:"followers")
-            query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
-            query.whereKey("following", equalTo: cell.textLabel!.text!)
-            
-            query.findObjectsInBackgroundWithBlock {
-                (objects: [AnyObject]?, error: NSError?) -> Void in
-                
-                if error == nil {
-                   
-                        for object in objects! {
-                            
-                            object.deleteInBackground()
-                            
-                        
-                    }
-                } else {
-                    
-                    println(error)
-                }
-            }
-            
-        } else {
-            
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-            
-            var following = PFObject(className: "followers")
-            
-            following["following"] = cell.textLabel?.text
-            following["follower"] = PFUser.currentUser()!.username
-            
-            following.saveInBackground() //save our selections
-        }
+    
+//        if cell.accessoryType == UITableViewCellAccessoryType.Checkmark.self {
+//            
+//            cell.accessoryType = UITableViewCellAccessoryType.None
+//            
+//            var query = PFQuery(className:"followers")
+//            query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
+//            query.whereKey("following", equalTo: cell.textLabel!.text!)
+//            
+//            query.findObjectsInBackgroundWithBlock {
+//                (objects: [AnyObject]?, error: NSError?) -> Void in
+//                
+//                if error == nil {
+//                    for object in objects! {
+//                            
+//                        object.deleteInBackground()
+//                        
+//                    }
+//                } else {
+//                    println(error)
+//                }
+//            }
+//            
+//        } else {
+//    
+//            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+//            
+//            var following = PFObject(className: "followers")
+//            
+//            following["following"] = cell.textLabel?.text
+//            following["follower"] = PFUser.currentUser()!.username
+//            
+//            following.saveInBackground() //save our selections
+//        }
+    
     }
 
     

@@ -22,9 +22,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Log in with your phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TA5-eW-t1N">
+                                <rect key="frame" x="36" y="133" width="248" height="33"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="23"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFm-Q6-Ld1">
-                                <rect key="frame" x="0.0" y="408" width="320" height="80"/>
-                                <color key="backgroundColor" red="1" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="488" width="320" height="80"/>
+                                <color key="backgroundColor" red="0.97254901960784312" green="0.29411764705882354" blue="0.32156862745098042" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Log In">
@@ -34,12 +40,6 @@
                                     <action selector="logIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4g8-SH-PNf"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Log in with your phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TA5-eW-t1N">
-                                <rect key="frame" x="36" y="133" width="248" height="33"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="23"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -76,23 +76,15 @@
                             <outlet property="delegate" destination="KbJ-H0-F5d" id="aIb-i0-qbt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Events" id="LHV-eB-VzO">
-                        <barButtonItem key="leftBarButtonItem" title="View Feed" id="h6T-nf-wHX">
-                            <connections>
-                                <segue destination="32w-le-tIS" kind="show" id="sW8-ZL-bI0"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Post" id="4pg-jq-BmX">
-                            <connections>
-                                <segue destination="2Zf-XQ-OVz" kind="show" identifier="showImage" id="ZLL-Mr-WR9"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Events" id="LHV-eB-VzO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="32w-le-tIS" kind="show" identifier="toAlbumFeed" id="hSs-Fu-TWR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ubu-Yz-5Xj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2405" y="304"/>
+            <point key="canvasLocation" x="2471" y="515"/>
         </scene>
         <!--New Event View Controller-->
         <scene sceneID="lvA-2M-Sre">
@@ -206,10 +198,13 @@
                         </connections>
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="2Zf-XQ-OVz" kind="show" identifier="toUploadScreen" id="XQp-Yb-WqK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r2L-uJ-p38" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2818" y="723"/>
+            <point key="canvasLocation" x="2864" y="705"/>
         </scene>
         <!--Post Image-->
         <scene sceneID="44b-W6-xYA">
@@ -271,7 +266,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AaJ-bA-GUP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2860" y="48"/>
+            <point key="canvasLocation" x="3294" y="111"/>
         </scene>
         <!--fullScreenViewController-->
         <scene sceneID="Rgz-H5-2NK">
@@ -346,7 +341,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ysJ-Me-BVH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3262" y="749"/>
+            <point key="canvasLocation" x="3294" y="762"/>
         </scene>
         <!--NavController-->
         <scene sceneID="kuC-kA-2m0">
@@ -363,10 +358,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6l-V7-87z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2021" y="304"/>
+            <point key="canvasLocation" x="2016" y="418"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="VCX-vA-6qG"/>
+        <segue reference="Ju0-Hh-YW7"/>
     </inferredMetricsTieBreakers>
 </document>
