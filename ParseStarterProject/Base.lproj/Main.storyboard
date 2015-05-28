@@ -147,7 +147,7 @@
             </objects>
             <point key="canvasLocation" x="1567" y="1005"/>
         </scene>
-        <!--Feed View Controller-->
+        <!--[Event Name]-->
         <scene sceneID="fge-kj-K8y">
             <objects>
                 <tableViewController id="32w-le-tIS" customClass="feedViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -197,14 +197,18 @@
                             <outlet property="delegate" destination="32w-le-tIS" id="0dW-eG-ZKS"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="[Event Name]" id="XOp-AV-Kej">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="hrC-p1-1Q2">
+                            <connections>
+                                <segue destination="2Zf-XQ-OVz" kind="show" id="KEM-gI-ZVu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <segue destination="2Zf-XQ-OVz" kind="show" identifier="toUploadScreen" id="XQp-Yb-WqK"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r2L-uJ-p38" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2864" y="705"/>
+            <point key="canvasLocation" x="2885" y="762"/>
         </scene>
         <!--Post Image-->
         <scene sceneID="44b-W6-xYA">
@@ -266,7 +270,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AaJ-bA-GUP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3294" y="111"/>
+            <point key="canvasLocation" x="3294" y="381"/>
         </scene>
         <!--fullScreenViewController-->
         <scene sceneID="Rgz-H5-2NK">
@@ -341,7 +345,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ysJ-Me-BVH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3294" y="762"/>
+            <point key="canvasLocation" x="3294" y="1072"/>
         </scene>
         <!--NavController-->
         <scene sceneID="kuC-kA-2m0">
