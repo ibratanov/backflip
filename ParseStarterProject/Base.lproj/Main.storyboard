@@ -17,26 +17,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Eg. 111-222-3333" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4P-6o-IGd">
-                                <rect key="frame" x="16" y="269" width="288" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. 111-222-3333" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4P-6o-IGd">
+                                <rect key="frame" x="16" y="167" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Log in with your phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TA5-eW-t1N">
+                                <rect key="frame" x="36" y="133" width="248" height="33"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="23"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFm-Q6-Ld1">
-                                <rect key="frame" x="139" y="307" width="43" height="30"/>
+                                <rect key="frame" x="0.0" y="488" width="320" height="80"/>
+                                <color key="backgroundColor" red="0.97254901960784312" green="0.29411764705882354" blue="0.32156862745098042" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Log In">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="logIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4g8-SH-PNf"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter phone number to log in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TA5-eW-t1N">
-                                <rect key="frame" x="48" y="240" width="224" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -45,13 +48,14 @@
                         <outlet property="signUpLabel" destination="TA5-eW-t1N" id="ggR-kD-dub"/>
                         <outlet property="username" destination="Q4P-6o-IGd" id="luU-H6-IrX"/>
                         <segue destination="9AY-mp-rfS" kind="show" identifier="jumpToUserTable" id="VCX-vA-6qG"/>
+                        <segue destination="eGV-gf-aJ6" kind="show" identifier="jumpToEventCreation" id="62M-ib-0xv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1567" y="304"/>
         </scene>
-        <!--Users-->
+        <!--Events-->
         <scene sceneID="zH2-Tk-H6K">
             <objects>
                 <tableViewController id="KbJ-H0-F5d" customClass="UserTableViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -72,25 +76,78 @@
                             <outlet property="delegate" destination="KbJ-H0-F5d" id="aIb-i0-qbt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Users" id="LHV-eB-VzO">
-                        <barButtonItem key="leftBarButtonItem" title="View Feed" id="h6T-nf-wHX">
-                            <connections>
-                                <segue destination="32w-le-tIS" kind="show" id="sW8-ZL-bI0"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Post" id="4pg-jq-BmX">
-                            <connections>
-                                <segue destination="2Zf-XQ-OVz" kind="show" identifier="showImage" id="ZLL-Mr-WR9"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Events" id="LHV-eB-VzO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="32w-le-tIS" kind="show" identifier="toAlbumFeed" id="hSs-Fu-TWR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ubu-Yz-5Xj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2405" y="304"/>
+            <point key="canvasLocation" x="2471" y="515"/>
         </scene>
-        <!--Feed View Controller-->
+        <!--New Event View Controller-->
+        <scene sceneID="lvA-2M-Sre">
+            <objects>
+                <viewController title="New Event View Controller" id="eGV-gf-aJ6" customClass="EventViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="muW-ae-W1y"/>
+                        <viewControllerLayoutGuide type="bottom" id="eKU-5w-31Y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KZH-TS-jb6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Where are you?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tzm-B1-aQM">
+                                <rect key="frame" x="42" y="78" width="237" height="47"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="33"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z95-Tc-ZXl">
+                                <rect key="frame" x="0.0" y="408" width="320" height="80"/>
+                                <color key="backgroundColor" red="1" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="CHECK IN">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkInClicked:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="oYp-r6-LTM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlL-up-cCN">
+                                <rect key="frame" x="0.0" y="488" width="320" height="80"/>
+                                <color key="backgroundColor" red="0.31372549019607843" green="0.80000000000000004" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="PAST EVENTS">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pastEventsButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="0Tq-1k-b0z"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. J. Cole @ OVO" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adM-Oa-W25">
+                                <rect key="frame" x="16" y="198" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="checkInButton" destination="Z95-Tc-ZXl" id="3dd-tl-qzj"/>
+                        <outlet property="eventField" destination="adM-Oa-W25" id="7Iq-dL-aBT"/>
+                        <segue destination="9AY-mp-rfS" kind="show" identifier="whereAreYouToEvents" id="Ju0-Hh-YW7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nw0-yu-PiL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1567" y="1005"/>
+        </scene>
+        <!--[Event Name]-->
         <scene sceneID="fge-kj-K8y">
             <objects>
                 <tableViewController id="32w-le-tIS" customClass="feedViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -140,12 +197,18 @@
                             <outlet property="delegate" destination="32w-le-tIS" id="0dW-eG-ZKS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="k2I-09-4Op"/>
+                    <navigationItem key="navigationItem" title="[Event Name]" id="XOp-AV-Kej">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="hrC-p1-1Q2">
+                            <connections>
+                                <segue destination="2Zf-XQ-OVz" kind="show" id="KEM-gI-ZVu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r2L-uJ-p38" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2818" y="723"/>
+            <point key="canvasLocation" x="2885" y="762"/>
         </scene>
         <!--Post Image-->
         <scene sceneID="44b-W6-xYA">
@@ -207,12 +270,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AaJ-bA-GUP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2860" y="48"/>
+            <point key="canvasLocation" x="3294" y="381"/>
         </scene>
         <!--Full Screen View Controller-->
         <scene sceneID="Rgz-H5-2NK">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ysJ-Me-BVH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="OvI-dv-VgA" customClass="fullScreenViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pwg-gk-2Bt"/>
@@ -291,8 +353,9 @@
                         <outlet property="likeCount" destination="uv5-ir-czh" id="ClW-j3-qnO"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ysJ-Me-BVH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3370" y="671"/>
+            <point key="canvasLocation" x="3294" y="1072"/>
         </scene>
         <!--NavController-->
         <scene sceneID="kuC-kA-2m0">
@@ -309,11 +372,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6l-V7-87z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2021" y="304"/>
+            <point key="canvasLocation" x="2016" y="418"/>
         </scene>
     </scenes>
     <resources>
         <image name="downloadButton.png" width="50" height="50"/>
         <image name="shareButton.png" width="50" height="50"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ju0-Hh-YW7"/>
+    </inferredMetricsTieBreakers>
 </document>

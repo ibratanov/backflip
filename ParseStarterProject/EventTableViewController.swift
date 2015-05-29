@@ -13,7 +13,7 @@ class UserTableViewController: UITableViewController {
     
     
     var users = [""]
-    var following = [Bool]()
+//    var following = [Bool]()
     
     var refresher: UIRefreshControl! //allows us to control the pull to refresh function
     
@@ -28,64 +28,64 @@ class UserTableViewController: UITableViewController {
         refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged) //run this method when value is changed
         
         self.tableView.addSubview(refresher)
-      
 
-        }
+    }
     
     func updateUsers(){
-        var query = PFUser.query()
+        var query = PFQuery(className: "Events")
         
-        query!.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+        query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
             
             self.users.removeAll(keepCapacity: true)
             
-            
             for object in objects! {
-                
-                var user: PFUser = object as! PFUser
-                
-                var isFollowing: Bool
-                
-                if user.username != PFUser.currentUser()?.username {
-                    
-                    self.users.append(user.username!)
-                    
-                    isFollowing = false
-                    
-                    var query = PFQuery(className:"followers")
-                    query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
-                    query.whereKey("following", equalTo: user.username!)
-                    
-                    query.findObjectsInBackgroundWithBlock {
-                        (objects, error) -> Void in
-                        
-                        if error == nil {
-                            
-                            for object in objects! {
-                                
-                                isFollowing = true
-                            }
-                            
-                            self.following.append(isFollowing)
-                            
-                            self.tableView.reloadData()
-                            
-                        } else {
-                            println(error)
-                        }
-                        
-                        //stop animation when finished
-                        self.refresher.endRefreshing()
 
-                    }
-                }
+                self.users.append((object["eventName"] as! String))
+                println(self.users)
+                
+                self.tableView.reloadData()
+
+                
+//                var user: PFUser = object as! PFUser
+//
+////                var isFollowing: Bool
+//                
+//                if user.username != PFUser.currentUser()?.username {
+//                    
+////                    self.users.append(user.username!)
+//                    
+//                    isFollowing = false
+//                    
+//                    var query = PFQuery(className:"followers")
+//                    query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
+//                    query.whereKey("following", equalTo: user.username!)
+//                    
+//                    query.findObjectsInBackgroundWithBlock {
+//                        (objects, error) -> Void in
+//                        
+//                        if error == nil {
+//                            
+//                            for object in objects! {
+//                                
+//                                isFollowing = true
+//                            }
+//                            
+//                            self.following.append(isFollowing)
+//                            
+//                            self.tableView.reloadData()
+//                            
+//                        } else {
+//                            println(error)
+//                        }
+//                        
+//                        //stop animation when finished
+//                        self.refresher.endRefreshing()
+//
+//                    }
+//                }
                 
             }
-            
-            
         })
-
-        println("test2")
     }
     
     func refresh() {
@@ -117,21 +117,21 @@ class UserTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println(following)
+        //println(following)
         return users.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         
-        if following.count > indexPath.row{
-        
-            if following[indexPath.row] == true {
-                
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-            }
-    
-        }
+//        if following.count > indexPath.row{
+//        
+//            if following[indexPath.row] == true {
+//                
+//                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+//            }
+//    
+//        }
         
         cell.textLabel?.text = users[indexPath.row]
 
@@ -142,44 +142,46 @@ class UserTableViewController: UITableViewController {
         println(indexPath.row)
         
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        
+    
+        self.performSegueWithIdentifier("toAlbumFeed", sender: self)
+
+    
         //.self explanation: http://stackoverflow.com/questions/26108843/in-swift-what-is-the-difference-between-the-two-different-usages-of-self
-        if cell.accessoryType == UITableViewCellAccessoryType.Checkmark.self {
-            
-            cell.accessoryType = UITableViewCellAccessoryType.None
-            
-            var query = PFQuery(className:"followers")
-            query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
-            query.whereKey("following", equalTo: cell.textLabel!.text!)
-            
-            query.findObjectsInBackgroundWithBlock {
-                (objects: [AnyObject]?, error: NSError?) -> Void in
-                
-                if error == nil {
-                   
-                        for object in objects! {
-                            
-                            object.deleteInBackground()
-                            
-                        
-                    }
-                } else {
-                    
-                    println(error)
-                }
-            }
-            
-        } else {
-            
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-            
-            var following = PFObject(className: "followers")
-            
-            following["following"] = cell.textLabel?.text
-            following["follower"] = PFUser.currentUser()!.username
-            
-            following.saveInBackground() //save our selections
-        }
+    
+//        if cell.accessoryType == UITableViewCellAccessoryType.Checkmark.self {
+//            
+//            cell.accessoryType = UITableViewCellAccessoryType.None
+//            
+//            var query = PFQuery(className:"followers")
+//            query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
+//            query.whereKey("following", equalTo: cell.textLabel!.text!)
+//            
+//            query.findObjectsInBackgroundWithBlock {
+//                (objects: [AnyObject]?, error: NSError?) -> Void in
+//                
+//                if error == nil {
+//                    for object in objects! {
+//                            
+//                        object.deleteInBackground()
+//                        
+//                    }
+//                } else {
+//                    println(error)
+//                }
+//            }
+//            
+//        } else {
+//    
+//            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+//            
+//            var following = PFObject(className: "followers")
+//            
+//            following["following"] = cell.textLabel?.text
+//            following["follower"] = PFUser.currentUser()!.username
+//            
+//            following.saveInBackground() //save our selections
+//        }
+    
     }
 
     
