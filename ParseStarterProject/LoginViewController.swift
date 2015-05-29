@@ -88,6 +88,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate,UITextFie
                     user.username = self.username.text
                     user.password = self.passwordUnique
                     user["UUID"] = self.passwordUnique
+                    user["photoLikeList"] = []
                     
                     user.signUpInBackgroundWithBlock {
                         (succeeded, error) -> Void in

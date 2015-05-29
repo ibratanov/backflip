@@ -19,25 +19,31 @@ class feedViewController: UITableViewController {
     var images = [UIImage]()
     var imageFiles = [PFFile]()
     var dates = [NSDate]()
+    var objectIDs = [String]()
+    
+    //let information = (title: String(), user: String(), image: PFFile(), date: NSDate(), id: String())
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         var getUploadedImages = PFQuery(className: "Post")
         //getUploadedImages.whereKey("username", equalTo: followedUser)
         getUploadedImages.findObjectsInBackgroundWithBlock {
+
             (objects, error) -> Void in
 
             if error == nil {
 
                 for object in objects! {
 
-
                     self.titles.append(object["Title"] as! String)
 
                     self.imageFiles.append(object["imageFile"] as! PFFile)
                     self.usernames.append(object["username"] as! String)
                     self.dates.append(object["timeStamp"] as! NSDate)
+                    self.objectIDs.append(object.objectId!! as String)
 
                     self.tableView.reloadData()
 
@@ -152,14 +158,10 @@ class feedViewController: UITableViewController {
             //get the selected row number
             var selectedRowIndex = self.tableView.indexPathForSelectedRow()
 
-            dump(usernames)
-            dump(imageFiles)
-            dump(images)
-            dump(titles)
-            dump(dates)
             moveVC.cellImage = images[selectedRowIndex!.row]
             moveVC.tempTitle = titles[selectedRowIndex!.row]
             moveVC.tempDate = dates[selectedRowIndex!.row]
+            moveVC.objectIdTemp = objectIDs[selectedRowIndex!.row]
        
         }
     }
