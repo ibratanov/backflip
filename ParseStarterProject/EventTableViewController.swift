@@ -143,7 +143,7 @@ class UserTableViewController: UITableViewController {
         
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
     
-        self.performSegueWithIdentifier("toAlbumFeed", sender: self)
+        self.performSegueWithIdentifier("toAlbum", sender: self)
 
     
         //.self explanation: http://stackoverflow.com/questions/26108843/in-swift-what-is-the-difference-between-the-two-different-usages-of-self

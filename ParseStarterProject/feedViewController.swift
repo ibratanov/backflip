@@ -39,7 +39,6 @@ class feedViewController: UITableViewController {
                 for object in objects! {
 
                     self.titles.append(object["Title"] as! String)
-
                     self.imageFiles.append(object["imageFile"] as! PFFile)
                     self.usernames.append(object["username"] as! String)
                     self.dates.append(object["timeStamp"] as! NSDate)
