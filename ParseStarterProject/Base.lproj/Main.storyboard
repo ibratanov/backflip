@@ -278,7 +278,7 @@
             <objects>
                 <collectionViewController id="NFP-Mr-19d" customClass="albumViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="1Ew-bf-uLw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zd3-eR-Pxs">
                             <size key="itemSize" width="80" height="80"/>
@@ -312,13 +312,12 @@
                         </connections>
                     </collectionView>
                     <toolbarItems>
-                        <barButtonItem title="Item" id="hPD-Dr-O30">
+                        <barButtonItem title="Item" id="vfu-XT-kgh">
                             <connections>
-                                <action selector="sortButton:" destination="NFP-Mr-19d" id="2tj-Ny-KVE"/>
+                                <action selector="sortButton:" destination="NFP-Mr-19d" id="vCv-IK-Ntk"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NXK-9Z-o8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -433,7 +432,7 @@
         <image name="shareButton.png" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ju0-Hh-YW7"/>
+        <segue reference="VCX-vA-6qG"/>
         <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>

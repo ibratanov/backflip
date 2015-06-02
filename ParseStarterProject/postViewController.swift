@@ -100,7 +100,7 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
             post["username"] = PFUser.currentUser()!.username
             post["timeStamp"] = NSDate()
             post["userLikeList"] = []
-            //post["likes"] = 0
+            post["likeCount"] = 0
             
             post.saveInBackgroundWithBlock{(success, error) -> Void in
             
