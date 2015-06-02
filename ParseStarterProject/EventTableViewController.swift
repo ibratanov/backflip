@@ -11,7 +11,6 @@ import Parse
 
 class UserTableViewController: UITableViewController {
     
-    
     var users = [""]
 //    var following = [Bool]()
     
