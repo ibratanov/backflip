@@ -86,6 +86,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate,UITextFie
                     
                     var user = PFUser()
                     user.username = self.username.text
+                    user["phone"] = self.username.text
                     user.password = self.passwordUnique
                     user["UUID"] = self.passwordUnique
                     
