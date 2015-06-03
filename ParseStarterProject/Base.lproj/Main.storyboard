@@ -79,7 +79,6 @@
                     <navigationItem key="navigationItem" title="Events" id="LHV-eB-VzO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <segue destination="32w-le-tIS" kind="show" identifier="toFeed" id="hSs-Fu-TWR"/>
                         <segue destination="NFP-Mr-19d" kind="show" identifier="toAlbum" id="G7I-dQ-N2g"/>
                     </connections>
                 </tableViewController>
@@ -151,7 +150,7 @@
         <!--[Event Name]-->
         <scene sceneID="fge-kj-K8y">
             <objects>
-                <tableViewController id="32w-le-tIS" customClass="feedViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="feedView" id="32w-le-tIS" customClass="feedViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vvF-5Z-jWI">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -276,7 +275,7 @@
         <!--Album View Controller-->
         <scene sceneID="9c8-W4-FK8">
             <objects>
-                <collectionViewController id="NFP-Mr-19d" customClass="albumViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="albumView" id="NFP-Mr-19d" customClass="albumViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="1Ew-bf-uLw">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -432,7 +431,7 @@
         <image name="shareButton.png" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="FSk-Fu-Rj2"/>
         <segue reference="VCX-vA-6qG"/>
-        <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>
