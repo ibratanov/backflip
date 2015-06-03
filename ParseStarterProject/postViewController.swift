@@ -98,7 +98,6 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
             var post = PFObject(className: "Post")
             post["Title"] = shareText.text //save the text, and object, then add image to it
             post["username"] = PFUser.currentUser()!.username
-            post["timeStamp"] = NSDate()
             post["userLikeList"] = []
             post["likeCount"] = 0
             

@@ -13,28 +13,28 @@ let reuseIdentifier = "albumCell"
 
 class albumViewController: UICollectionViewController {
     
-    //variable for segue
+    // Variable for storing PFFile as image, pass through segue
     var images = [UIImage]()
     
-    //tuple for sorting
+    // Tuple for sorting
     var imageFilesTemp : [(image: PFFile , likes: Int , id: String, title: String, date: NSDate)] = []
+    
+    // Arrays for like sort
     var imageFilesLikes = [PFFile]()
-    var objectIDTime = [String]()
+    var objectIdLikes = [String]()
+    var datesLikes = [NSDate]()
+    var titlesLikes = [String]()
+    var created = [NSDate]()
+    
+    // Arrays for time sort
+    var imageFilesTime = [PFFile]()
+    var objectIdTime = [String]()
     var datesTime = [NSDate]()
     var titlesTime = [String]()
     
-    //arrays for time sort
-    var imageFilesTime = [PFFile]()
-    var objectIDs = [String]()
-    var dates = [NSDate]()
-    var titles = [String]()
-    
-    
+    // Checker for sort button. Automatically starts with chronological order
     var sorted = false
-    var sorted1 = true
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,7 +48,6 @@ class albumViewController: UICollectionViewController {
         
         // Button to switch sorting options
         let viewChangeButton = UIButton(frame: CGRectMake(0, 0, 50, 50))
-        //viewChangeButton.center = self.view.center
         viewChangeButton.center.y = self.view.bounds.height - 50
         viewChangeButton.backgroundColor = UIColor.whiteColor()
         viewChangeButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -68,7 +67,7 @@ class albumViewController: UICollectionViewController {
         self.view.bringSubviewToFront(feedChangeButton)
         
 
-        
+        // Load information from parse db
         var getUploadedImages = PFQuery(className: "Post")
         
         getUploadedImages.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
@@ -78,31 +77,38 @@ class albumViewController: UICollectionViewController {
                 for object in objects! {
                     
                     // Creates tuple for easier sorting
-                    let tup = (image: object["imageFile"] as! PFFile, likes: object["likeCount"] as! Int, id: object.objectId!! as String, title: object["Title"] as! String ,  date: object["timeStamp"] as! NSDate)
+                    let tup = (image: object["imageFile"] as! PFFile, likes: object["likeCount"] as! Int, id: object.objectId!! as String, title: object["Title"] as! String , date: object.createdAt!! as NSDate)
                     
                     self.imageFilesTemp.append(tup)
-    
-                    // Fills arrays for images sorted by time
-                    self.imageFilesTime.append(object["imageFile"] as! PFFile)
-                    self.objectIDs.append(object.objectId! as String!)
-                    self.titles.append(object["Title"] as! String)
-                    self.dates.append(object["timeStamp"] as! NSDate)
-                    
                 
                     self.collectionView?.reloadData()
                     
                 }
                 
-                // Sort tuple of images,likes, and fill new array with photos in order of likes
+                // Sort tuple of images by likes, and fill new array with photos in order of likes
                 self.imageFilesTemp.sort{ $0.likes > $1.likes}
                 
                 for (image,likes, id, title, date) in self.imageFilesTemp {
                     
                     self.imageFilesLikes.append(image)
-                    self.objectIDTime.append(id)
+                    self.objectIdLikes.append(id)
+                    self.titlesLikes.append(title)
+                    self.datesLikes.append(date)
+    
+                }
+                
+                // Sort tuple of images,
+                self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
+                
+                for (image, likes, id, title, date) in self.imageFilesTemp {
+                    
+                    self.imageFilesTime.append(image)
+                    self.objectIdTime.append(id)
                     self.titlesTime.append(title)
                     self.datesTime.append(date)
-    
+                    
+                    
+                    
                 }
                 
             } else {
@@ -130,16 +136,14 @@ class albumViewController: UICollectionViewController {
         self.collectionView?.reloadData()
             
         }
-        
+
+    }
+    
     func viewChange() {
         
         let storyboard = UIStoryboard(name: "albumView", bundle: nil)
         let newVC = storyboard.instantiateViewControllerWithIdentifier("feedView") as? feedViewController
         self.presentViewController(newVC!, animated: true, completion: nil)
-        
-  
-        
-        }
         
     }
     
@@ -176,8 +180,6 @@ class albumViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! albumViewCell
-    
-        // Configure the cell
 
         if sorted == false {
             
@@ -234,16 +236,16 @@ class albumViewController: UICollectionViewController {
             if self.sorted == false {
                 
                 moveVC.cellImage = images[selectedCellIndex!.row]
-                moveVC.objectIdTemp = objectIDs[selectedCellIndex!.row]
-                moveVC.tempDate = dates[selectedCellIndex!.row]
-                moveVC.tempTitle = titles[selectedCellIndex!.row]
+                moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
+                moveVC.tempDate = datesTime[selectedCellIndex!.row]
+                moveVC.tempTitle = titlesTime[selectedCellIndex!.row]
                 
             } else {
             // Sorted by like count
                 moveVC.cellImage = images[selectedCellIndex!.row]
-                moveVC.objectIdTemp = objectIDTime[selectedCellIndex!.row]
-                moveVC.tempDate = datesTime[selectedCellIndex!.row]
-                moveVC.tempTitle = titlesTime[selectedCellIndex!.row]
+                moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
+                moveVC.tempDate = datesLikes[selectedCellIndex!.row]
+                moveVC.tempTitle = titlesLikes[selectedCellIndex!.row]
             }
         
         }  
