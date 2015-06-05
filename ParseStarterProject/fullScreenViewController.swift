@@ -96,6 +96,8 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                     
                     let array = objects?.objectForKey("userLikeList") as! [String]
                     
+                    objects?.incrementKey("likeCount", byAmount: 1)
+                    
                     self.likeCount.text = String(array.count)
                     
                     objects!.saveInBackground()
@@ -138,6 +140,8 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                     objects?.removeObject(PFUser.currentUser()!.username!, forKey:"userLikeList")
                     
                     let array = objects?.objectForKey("userLikeList") as! [String]
+                    
+                    objects?.incrementKey("likeCount", byAmount: -1)
                     
                     self.likeCount.text = String(array.count)
  
@@ -273,7 +277,7 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             
         } else {
         
-        println("empty")
+            println("no photo")
         
         }
         
@@ -282,6 +286,9 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             
             eventTitle.text = tempTitle
             
+        } else {
+            
+            println("no title")
         }
         
         // check for date from previous VC, format and display the date
@@ -298,11 +305,14 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
 
             eventInfo.text = "Photo taken on \(dateStamp)"
             
+        } else {
+            
+            println("no date")
+            
         }
         
         
         // block to check if user has already liked photo, and set button label accordingly
-        
         var query5 = PFUser.query()
         
         query5?.whereKey("photoLikeList", equalTo: objectIdTemp)
@@ -326,6 +336,7 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         
+        
         // block to display current like count based on array size when view is loaded
         
         var query6 = PFQuery(className: "Post")
@@ -342,6 +353,7 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
+        
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
