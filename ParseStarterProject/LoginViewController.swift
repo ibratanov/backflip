@@ -70,7 +70,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
 
                 // If user proceeds with phone authentication, login with phonenumber to parse database
                 PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
-                    
+
                     if user != nil {
                         
                         println("Log in successful")

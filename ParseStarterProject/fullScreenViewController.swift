@@ -86,16 +86,19 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
         if likeActive == false {
          
             // add username to photos list of users who liked
-            var query1 = PFQuery(className: "Post")
+            var query1 = PFQuery(className: "Photo")
             
             query1.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
                 
                 if error == nil {
                     
-                    objects?.addUniqueObject(PFUser.currentUser()!.username!, forKey:"userLikeList")
+                    objects?.addUniqueObject(PFUser.currentUser()!.username!, forKey:"usersLiked")
                     
-                    let array = objects?.objectForKey("userLikeList") as! [String]
+                    let array = objects?.objectForKey("usersLiked") as! [String]
                     
+                    objects?.incrementKey("upvoteCount", byAmount: 1)
+                    
+                    //TODO: is this more efficient or is it more efficient to get the upvoteCount value? Same below in "unlike"
                     self.likeCount.text = String(array.count)
                     
                     objects!.saveInBackground()
@@ -113,7 +116,7 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                 
                 if error == nil {
                     
-                    objects?.addUniqueObject(self.objectIdTemp, forKey:"photoLikeList")
+                    objects?.addUniqueObject(self.objectIdTemp, forKey:"photosLiked")
 
                     objects!.saveInBackground()
 
@@ -129,15 +132,17 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
         } else {
             
             // remove user ID from list of users who liked photo
-            var query3 = PFQuery(className: "Post")
+            var query3 = PFQuery(className: "Photo")
             
             query3.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
                 
                 if error == nil {
                     
-                    objects?.removeObject(PFUser.currentUser()!.username!, forKey:"userLikeList")
+                    objects?.removeObject(PFUser.currentUser()!.username!, forKey:"usersLiked")
                     
-                    let array = objects?.objectForKey("userLikeList") as! [String]
+                    let array = objects?.objectForKey("usersLiked") as! [String]
+                    
+                    objects?.incrementKey("upvoteCount", byAmount: -1)
                     
                     self.likeCount.text = String(array.count)
  
@@ -156,7 +161,7 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                 
                 if error == nil {
                     
-                    objects?.removeObject(self.objectIdTemp, forKey:"photoLikeList")
+                    objects?.removeObject(self.objectIdTemp, forKey:"photosLiked")
                     
 
                     objects!.saveInBackground()
@@ -273,7 +278,7 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             
         } else {
         
-        println("empty")
+            println("no photo")
         
         }
         
@@ -282,6 +287,9 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             
             eventTitle.text = tempTitle
             
+        } else {
+            
+            println("no title")
         }
         
         // check for date from previous VC, format and display the date
@@ -298,20 +306,23 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
 
             eventInfo.text = "Photo taken on \(dateStamp)"
             
+        } else {
+            
+            println("no date")
+            
         }
         
         
         // block to check if user has already liked photo, and set button label accordingly
-        
         var query5 = PFUser.query()
         
-        query5?.whereKey("photoLikeList", equalTo: objectIdTemp)
+        query5?.whereKey("photosLiked", equalTo: objectIdTemp)
         
         query5?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
             
             if error == nil {
                 
-                let array = objects?.objectForKey("photoLikeList") as! [String]
+                let array = objects?.objectForKey("photosLiked") as! [String]
                 
                 if contains(array, self.objectIdTemp) == true {
                     
@@ -326,15 +337,16 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         
+        
         // block to display current like count based on array size when view is loaded
         
-        var query6 = PFQuery(className: "Post")
+        var query6 = PFQuery(className: "Photo")
         
         query6.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
             
             if error == nil {
                 
-                let array = objects?.objectForKey("userLikeList") as! [String]
+                let array = objects?.objectForKey("usersLiked") as! [String]
                 self.likeCount.text = String(array.count)
                 
             } else {
@@ -342,6 +354,7 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
+        
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black

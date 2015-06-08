@@ -16,8 +16,8 @@ class EventViewController: UIViewController {
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
             
-            //set to false, to prevent login screen flashes on failed login attempt
-            self.dismissViewControllerAnimated(false, completion: nil)
+            // Commented out below, causes flashing view when display is dismissed
+            //self.dismissViewControllerAnimated(false, completion: nil)
             
         }))
         
@@ -46,9 +46,7 @@ class EventViewController: UIViewController {
             
             error = "Please enter an event name."
             
-        }
-        
-        if (count(eventField.text) < 2)  {
+        } else if (count(eventField.text) < 2)  {
             
             error = "Please enter a valid event name."
         }
@@ -59,7 +57,7 @@ class EventViewController: UIViewController {
             
         } else {
         
-            var event = PFObject(className:"Events")
+            var event = PFObject(className:"Event")
             event["eventName"] = eventField.text
             //event["startTime"] =
             event.saveInBackgroundWithBlock {
@@ -75,6 +73,7 @@ class EventViewController: UIViewController {
             
         }
     }
+    
     @IBAction func pastEventsButton(sender: AnyObject) {
         self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
         
