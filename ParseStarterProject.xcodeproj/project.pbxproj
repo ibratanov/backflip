@@ -14,13 +14,16 @@
 		50BBCFDF1B1605C00055DE32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFDD1B1605C00055DE32 /* Main.storyboard */; };
 		50BBCFE11B16458E0055DE32 /* liked.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFE01B16458E0055DE32 /* liked.png */; };
 		50BBCFE31B1645A50055DE32 /* unliked.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFE21B1645A50055DE32 /* unliked.png */; };
+		50BED87D1B21E05100CBB715 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED8791B21E05100CBB715 /* Fabric.framework */; };
+		50BED87E1B21E05100CBB715 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED87A1B21E05100CBB715 /* DigitsKit.framework */; };
+		50BED87F1B21E05100CBB715 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 50BED87B1B21E05100CBB715 /* DigitsKitResources.bundle */; };
+		50BED8801B21E05100CBB715 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED87C1B21E05100CBB715 /* TwitterCore.framework */; };
 		50CE7E741B027C9000F4B6B1 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E731B027C9000F4B6B1 /* EventTableViewController.swift */; };
 		50CE7E761B03999D00F4B6B1 /* postViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E751B03999D00F4B6B1 /* postViewController.swift */; };
 		50CE7E7A1B03DB2F00F4B6B1 /* feedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E791B03DB2F00F4B6B1 /* feedViewController.swift */; };
 		50CE7E7C1B03DBC100F4B6B1 /* cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E7B1B03DBC100F4B6B1 /* cell.swift */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA814D1A49DA1800E65899 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* LoginViewController.swift */; };
-		81BA81501A49DA1800E65899 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81BA814E1A49DA1800E65899 /* Main.storyboard */; };
 		81BA81521A49DA1800E65899 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
 		81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816B1A49DB6800E65899 /* Bolts.framework */; };
 		81BA81711A49DB6800E65899 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816C1A49DB6800E65899 /* Parse.framework */; };
@@ -43,6 +46,10 @@
 		50BBCFDE1B1605C00055DE32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ParseStarterProject/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		50BBCFE01B16458E0055DE32 /* liked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liked.png; sourceTree = "<group>"; };
 		50BBCFE21B1645A50055DE32 /* unliked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unliked.png; sourceTree = "<group>"; };
+		50BED8791B21E05100CBB715 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		50BED87A1B21E05100CBB715 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
+		50BED87B1B21E05100CBB715 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
+		50BED87C1B21E05100CBB715 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
 		50CE7E731B027C9000F4B6B1 /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		50CE7E751B03999D00F4B6B1 /* postViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = postViewController.swift; sourceTree = "<group>"; };
 		50CE7E791B03DB2F00F4B6B1 /* feedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = feedViewController.swift; sourceTree = "<group>"; };
@@ -51,7 +58,6 @@
 		81BA81491A49DA1800E65899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81BA814C1A49DA1800E65899 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		81BA814F1A49DA1800E65899 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		81BA81511A49DA1800E65899 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		81BA816B1A49DB6800E65899 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		81BA816C1A49DB6800E65899 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -75,6 +81,7 @@
 				81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */,
 				81BA817D1A49E0EA00E65899 /* MobileCoreServices.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
+				50BED87E1B21E05100CBB715 /* DigitsKit.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */,
 				81BA81711A49DB6800E65899 /* Parse.framework in Frameworks */,
@@ -82,6 +89,8 @@
 				81BA81731A49DB6800E65899 /* ParseFacebookUtils.framework in Frameworks */,
 				81BA81811A49E10C00E65899 /* ParseUI.framework in Frameworks */,
 				81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */,
+				50BED87D1B21E05100CBB715 /* Fabric.framework in Frameworks */,
+				50BED8801B21E05100CBB715 /* TwitterCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +149,10 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50BED8791B21E05100CBB715 /* Fabric.framework */,
+				50BED87A1B21E05100CBB715 /* DigitsKit.framework */,
+				50BED87B1B21E05100CBB715 /* DigitsKitResources.bundle */,
+				50BED87C1B21E05100CBB715 /* TwitterCore.framework */,
 				81BA816B1A49DB6800E65899 /* Bolts.framework */,
 				81BA816C1A49DB6800E65899 /* Parse.framework */,
 				81BA816D1A49DB6800E65899 /* ParseCrashReporting.framework */,
@@ -173,6 +186,7 @@
 				81BA81421A49DA1800E65899 /* Frameworks */,
 				81BA81431A49DA1800E65899 /* Resources */,
 				81CC85E11A49F6D40076DE19 /* Upload Symbol Files */,
+				50BED8481B21DC7900CBB715 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -220,6 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50BED87F1B21E05100CBB715 /* DigitsKitResources.bundle in Resources */,
 				50BBCFD71B150F250055DE32 /* downloadButton.png in Resources */,
 				50BBCFDF1B1605C00055DE32 /* Main.storyboard in Resources */,
 				50BBCFE31B1645A50055DE32 /* unliked.png in Resources */,
@@ -233,6 +248,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		50BED8481B21DC7900CBB715 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run ef7a1ebf7fc603f162c02e071c9bec17cfc2117e d0aff69e43930b8d6d34dd135139bf53ce643941c235e4e1a299e8384d76406e";
+		};
 		81CC85E11A49F6D40076DE19 /* Upload Symbol Files */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

@@ -8,6 +8,9 @@ import UIKit
 
 import Bolts
 import Parse
+import Fabric
+import DigitsKit
+
 
 // If you want to use any of the UI components, uncomment this line
 // import ParseUI
@@ -77,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let types = UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound
             application.registerForRemoteNotificationTypes(types)
         }
-
+        Fabric.with([Digits()])
         return true
     }
 

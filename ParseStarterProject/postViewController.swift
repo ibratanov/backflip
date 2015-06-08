@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import DigitsKit
 
 class postViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate {
 
@@ -41,7 +42,7 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
         if segue.identifier == "logout" {
             
             PFUser.logOut()
-
+            Digits.sharedInstance().logOut()
         }
     }
 
