@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>82C8945A-71D5-48AE-9991-5229223450FB</string>
 	<key>IDESourceControlProjectName</key>
-	<string>ParseStarterProject</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>A378226EC2FD4B06544EB459EF19E06596F9C811</key>
 		<string>https://github.com/ibratanov/6tribe.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ParseStarterProject.xcodeproj</string>
+	<string>ParseStarterProject.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>A378226EC2FD4B06544EB459EF19E06596F9C811</key>

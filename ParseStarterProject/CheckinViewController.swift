@@ -16,8 +16,8 @@ class EventViewController: UIViewController {
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
             
-            //set to false, to prevent where are you screen flashes on failed login attempt
-            self.dismissViewControllerAnimated(false, completion: nil)
+            // Commented out below, causes flashing view when display is dismissed
+            //self.dismissViewControllerAnimated(false, completion: nil)
             
         }))
         
