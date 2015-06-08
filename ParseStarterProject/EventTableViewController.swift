@@ -8,9 +8,11 @@
 
 import UIKit
 import Parse
+import DigitsKit
 
 class EventTableViewController: UITableViewController {
     
+
     
     var events = [""]
 //    var following = [Bool]()

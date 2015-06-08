@@ -41,6 +41,7 @@ class feedViewController: UITableViewController {
                     self.imageFiles.append(object["image"] as! PFFile)
                     self.usernames.append(object["uploaderName"] as! String)
                     self.dates.append(object.createdAt as NSDate!)
+
                     self.objectIDs.append(object.objectId!! as String)
 
                     self.tableView.reloadData()
