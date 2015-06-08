@@ -68,7 +68,7 @@ class albumViewController: UICollectionViewController {
         
 
         // Load information from parse db
-        var getUploadedImages = PFQuery(className: "Post")
+        var getUploadedImages = PFQuery(className: "Photo")
         
         getUploadedImages.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             
@@ -77,7 +77,16 @@ class albumViewController: UICollectionViewController {
                 for object in objects! {
                     
                     // Creates tuple for easier sorting
-                    let tup = (image: object["imageFile"] as! PFFile, likes: object["likeCount"] as! Int, id: object.objectId!! as String, title: object["Title"] as! String , date: object.createdAt!! as NSDate)
+                    object["image"] as! PFFile
+                    object["upvoteCount"] as! Int
+                    object.objectId!! as String
+//                    if let ID = object.objectId as!! String {
+//                        
+//                    }
+                    object["caption"] as! String
+                    object.createdAt!! as NSDate
+                    
+                    let tup = (image: object["image"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String, title: object["caption"] as! String , date: object.createdAt!! as NSDate)
                     
                     self.imageFilesTemp.append(tup)
                 

@@ -58,7 +58,7 @@
         <!--Events-->
         <scene sceneID="zH2-Tk-H6K">
             <objects>
-                <tableViewController id="KbJ-H0-F5d" customClass="UserTableViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="KbJ-H0-F5d" customClass="EventTableViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="h83-n3-vbb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

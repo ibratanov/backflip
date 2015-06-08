@@ -41,6 +41,12 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
         if segue.identifier == "logout" {
             
             PFUser.logOut()
+            
+            //self.navigationController?.viewControllers.removeAll(keepCapacity: true)
+            
+            self.navigationController?.popToRootViewControllerAnimated(false)
+            
+            //self.navigationController.viewControllers
 
         }
     }
@@ -49,8 +55,7 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
     
     @IBAction func chooseImage(sender: AnyObject) {
         
-        
-    //necessary code for accessing image from our camera roll
+        //necessary code for accessing image from our camera roll
         var image = UIImagePickerController()
         image.delegate = self
         image.sourceType = UIImagePickerControllerSourceType.PhotoLibrary //cant use camera on simulator, switch for camera to open camera
@@ -93,15 +98,14 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
             activityIndicator.startAnimating()
             UIApplication.sharedApplication().beginIgnoringInteractionEvents()
 
+            var photo = PFObject(className: "Photo")
+            photo["caption"] = shareText.text //save the text, and object, then add image to it
+            photo["uploaderName"] = PFUser.currentUser()!.username
+            //photo["timeStamp"] = NSDate()
+            photo["upvotes"] = 0
+            photo["usersLiked"] = []
             
-            
-            var post = PFObject(className: "Post")
-            post["Title"] = shareText.text //save the text, and object, then add image to it
-            post["username"] = PFUser.currentUser()!.username
-            post["userLikeList"] = []
-            post["likeCount"] = 0
-            
-            post.saveInBackgroundWithBlock{(success, error) -> Void in
+            photo.saveInBackgroundWithBlock{(success, error) -> Void in
             
             if success == false {
                 self.activityIndicator.stopAnimating()
@@ -121,9 +125,9 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
                 //create file for parse to upload to service
                 let imageFile = PFFile(name: "image.png", data: imageData)
                 
-                post["imageFile"] = imageFile
+                photo["image"] = imageFile
                 
-                post.saveInBackgroundWithBlock{(success, error) -> Void in
+                photo.saveInBackgroundWithBlock{(success, error) -> Void in
                     
                     self.activityIndicator.stopAnimating()
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -144,10 +148,7 @@ class postViewController: UIViewController,UINavigationControllerDelegate,UIImag
                         
                         self.shareText.text = ""
                         
-                        
-                        
-                        println("post successfully")
-                        
+                        println("post successful")
                         
                     }
                 }

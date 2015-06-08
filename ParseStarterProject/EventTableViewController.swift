@@ -9,10 +9,10 @@
 import UIKit
 import Parse
 
-class UserTableViewController: UITableViewController {
+class EventTableViewController: UITableViewController {
     
     
-    var users = [""]
+    var events = [""]
 //    var following = [Bool]()
     
     var refresher: UIRefreshControl! //allows us to control the pull to refresh function
@@ -21,7 +21,7 @@ class UserTableViewController: UITableViewController {
         super.viewDidLoad()
         
         
-        updateUsers()
+        updateEvents()
         
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh") //text that appears
@@ -31,17 +31,17 @@ class UserTableViewController: UITableViewController {
 
     }
     
-    func updateUsers(){
-        var query = PFQuery(className: "Events")
+    func updateEvents(){
+        var query = PFQuery(className: "Event")
         
         query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
             
-            self.users.removeAll(keepCapacity: true)
+            self.events.removeAll(keepCapacity: true)
             
             for object in objects! {
 
-                self.users.append((object["eventName"] as! String))
-                println(self.users)
+                self.events.append((object["eventName"] as! String))
+                println(self.events)
                 
                 self.tableView.reloadData()
 
@@ -92,7 +92,7 @@ class UserTableViewController: UITableViewController {
         
         println("refreshed")
         
-        updateUsers()
+        updateEvents()
         
     }
 
@@ -112,13 +112,13 @@ class UserTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-     
+    
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //println(following)
-        return users.count
+        return events.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -133,7 +133,7 @@ class UserTableViewController: UITableViewController {
 //    
 //        }
         
-        cell.textLabel?.text = users[indexPath.row]
+        cell.textLabel?.text = events[indexPath.row]
 
         return cell
     }

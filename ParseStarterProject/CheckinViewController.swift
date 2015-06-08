@@ -46,9 +46,7 @@ class EventViewController: UIViewController {
             
             error = "Please enter an event name."
             
-        }
-        
-        if (count(eventField.text) < 2)  {
+        } else if (count(eventField.text) < 2)  {
             
             error = "Please enter a valid event name."
         }
@@ -59,7 +57,7 @@ class EventViewController: UIViewController {
             
         } else {
         
-            var event = PFObject(className:"Events")
+            var event = PFObject(className:"Event")
             event["eventName"] = eventField.text
             //event["startTime"] =
             event.saveInBackgroundWithBlock {
@@ -75,6 +73,7 @@ class EventViewController: UIViewController {
             
         }
     }
+    
     @IBAction func pastEventsButton(sender: AnyObject) {
         self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
         

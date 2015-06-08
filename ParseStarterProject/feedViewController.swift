@@ -14,7 +14,7 @@ class feedViewController: UITableViewController {
 //we need to create a new class for each image
 //various arrays for storing data
     
-    var titles = [String]()
+    var captions = [String]()
     var usernames = [String]()
     var images = [UIImage]()
     var imageFiles = [PFFile]()
@@ -27,8 +27,7 @@ class feedViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        var getUploadedImages = PFQuery(className: "Post")
+        var getUploadedImages = PFQuery(className: "Photo")
         //getUploadedImages.whereKey("username", equalTo: followedUser)
         getUploadedImages.findObjectsInBackgroundWithBlock {
 
@@ -38,10 +37,10 @@ class feedViewController: UITableViewController {
 
                 for object in objects! {
 
-                    self.titles.append(object["Title"] as! String)
-                    self.imageFiles.append(object["imageFile"] as! PFFile)
-                    self.usernames.append(object["username"] as! String)
-                    self.dates.append(object["timeStamp"] as! NSDate)
+                    self.captions.append(object["caption"] as! String)
+                    self.imageFiles.append(object["image"] as! PFFile)
+                    self.usernames.append(object["uploaderName"] as! String)
+                    self.dates.append(object.createdAt as NSDate!)
                     self.objectIDs.append(object.objectId!! as String)
 
                     self.tableView.reloadData()
@@ -76,7 +75,7 @@ class feedViewController: UITableViewController {
 //                            for object in objects! {
 //                                
 //                                
-//                                self.titles.append(object["Title"] as! String)
+//                                self.captions.append(object["Title"] as! String)
 //                                
 //                                self.imageFiles.append(object["imageFile"] as! PFFile)
 //                                self.usernames.append(object["username"] as! String)
@@ -115,7 +114,7 @@ class feedViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       
-        return titles.count
+        return captions.count
     }
 
     
@@ -127,7 +126,7 @@ class feedViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var myCell:cell = self.tableView.dequeueReusableCellWithIdentifier("myCell") as! cell
       
-        myCell.title.text = titles[indexPath.row]
+        myCell.title.text = captions[indexPath.row]
         myCell.username.text = usernames[indexPath.row]
         
         //gets image file of what we are interested in
@@ -158,7 +157,7 @@ class feedViewController: UITableViewController {
             var selectedRowIndex = self.tableView.indexPathForSelectedRow()
 
             moveVC.cellImage = images[selectedRowIndex!.row]
-            moveVC.tempTitle = titles[selectedRowIndex!.row]
+            moveVC.tempTitle = captions[selectedRowIndex!.row]
             moveVC.tempDate = dates[selectedRowIndex!.row]
             moveVC.objectIdTemp = objectIDs[selectedRowIndex!.row]
        
