@@ -185,9 +185,8 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             
             if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
                 var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-                facebookSheet.setInitialText("Share on Facebook")
                 
-                facebookSheet.addImage(self.fullScreenImage.image)
+                facebookSheet.addImage(self.fullScreenImage.image!)
                 
                 self.presentViewController(facebookSheet, animated: true, completion: nil)
            
@@ -204,7 +203,6 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
                 
                 var twitterSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-                twitterSheet.setInitialText("Share on Twitter")
                 
                 twitterSheet.addImage(self.fullScreenImage.image)
                 

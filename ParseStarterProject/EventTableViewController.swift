@@ -87,6 +87,7 @@ class EventTableViewController: UITableViewController {
 //                }
                 
             }
+            self.refresher.endRefreshing()
         })
     }
     
