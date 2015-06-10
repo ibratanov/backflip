@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class feedViewController: UITableViewController {
+class FeedViewController: UITableViewController {
 
 //we need to create a new class for each image
 //various arrays for storing data
@@ -51,52 +51,6 @@ class feedViewController: UITableViewController {
             } else {
                 println(error)
             }
-
-        
-//        var getFollowedUsersQuery = PFQuery(className: "followers")
-//        
-//        getFollowedUsersQuery.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
-//        getFollowedUsersQuery.findObjectsInBackgroundWithBlock{
-//            (objects, error) -> Void in
-//            
-//            if error == nil {
-//                
-//                var followedUser = ""
-//                
-//                for object in objects! {
-//                    followedUser = object["following"] as! String
-//                    
-//                    var query = PFQuery(className: "Post")
-//                    query.whereKey("username", equalTo: followedUser)
-//                    query.findObjectsInBackgroundWithBlock {
-//                        (objects, error) -> Void in
-//                        
-//                        if error == nil {
-//                            
-//                            for object in objects! {
-//                                
-//                                
-//                                self.captions.append(object["Title"] as! String)
-//                                
-//                                self.imageFiles.append(object["imageFile"] as! PFFile)
-//                                self.usernames.append(object["username"] as! String)
-//                                self.dates.append(object["timeStamp"] as! NSDate)
-//                                
-//                                self.tableView.reloadData()
-//                                
-//                            }
-//                            
-//                            
-//                            
-//                        } else {
-//                            println(error)
-//                        }
-//                    }
-//                    
-//                }
-//                
-//            }
-//            
         }
     }
 
@@ -125,7 +79,7 @@ class feedViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var myCell:cell = self.tableView.dequeueReusableCellWithIdentifier("myCell") as! cell
+        var myCell:FeedViewCell = self.tableView.dequeueReusableCellWithIdentifier("myCell") as! FeedViewCell
       
         myCell.title.text = captions[indexPath.row]
         myCell.username.text = usernames[indexPath.row]
@@ -152,7 +106,7 @@ class feedViewController: UITableViewController {
         
         if segue.identifier == "toFullScreen" {
             
-            var moveVC: fullScreenViewController = segue.destinationViewController as! fullScreenViewController
+            var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
             
             //get the selected row number
             var selectedRowIndex = self.tableView.indexPathForSelectedRow()

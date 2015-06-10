@@ -10,7 +10,7 @@ import UIKit
 import Social
 import Parse
 
-class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
+class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet var likeCount: UILabel!
     
@@ -308,11 +308,8 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                         
                         println(error)
                     }
-                    
-                    
 
                 }
-                
                 
             }
             
@@ -376,8 +373,6 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
         
         self.view.bringSubviewToFront(likeCount)
     }
-    
-   
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

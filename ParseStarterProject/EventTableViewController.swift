@@ -46,45 +46,6 @@ class EventTableViewController: UITableViewController {
                 println(self.events)
                 
                 self.tableView.reloadData()
-
-                
-//                var user: PFUser = object as! PFUser
-//
-////                var isFollowing: Bool
-//                
-//                if user.username != PFUser.currentUser()?.username {
-//                    
-////                    self.users.append(user.username!)
-//                    
-//                    isFollowing = false
-//                    
-//                    var query = PFQuery(className:"followers")
-//                    query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
-//                    query.whereKey("following", equalTo: user.username!)
-//                    
-//                    query.findObjectsInBackgroundWithBlock {
-//                        (objects, error) -> Void in
-//                        
-//                        if error == nil {
-//                            
-//                            for object in objects! {
-//                                
-//                                isFollowing = true
-//                            }
-//                            
-//                            self.following.append(isFollowing)
-//                            
-//                            self.tableView.reloadData()
-//                            
-//                        } else {
-//                            println(error)
-//                        }
-//                        
-//                        //stop animation when finished
-//                        self.refresher.endRefreshing()
-//
-//                    }
-//                }
                 
             }
             self.refresher.endRefreshing()
@@ -126,16 +87,6 @@ class EventTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        
-//        if following.count > indexPath.row{
-//        
-//            if following[indexPath.row] == true {
-//                
-//                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-//            }
-//    
-//        }
-        
         cell.textLabel?.text = events[indexPath.row]
 
         return cell
@@ -147,48 +98,8 @@ class EventTableViewController: UITableViewController {
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
     
         self.performSegueWithIdentifier("toAlbum", sender: self)
-
-    
-        //.self explanation: http://stackoverflow.com/questions/26108843/in-swift-what-is-the-difference-between-the-two-different-usages-of-self
-    
-//        if cell.accessoryType == UITableViewCellAccessoryType.Checkmark.self {
-//            
-//            cell.accessoryType = UITableViewCellAccessoryType.None
-//            
-//            var query = PFQuery(className:"followers")
-//            query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
-//            query.whereKey("following", equalTo: cell.textLabel!.text!)
-//            
-//            query.findObjectsInBackgroundWithBlock {
-//                (objects: [AnyObject]?, error: NSError?) -> Void in
-//                
-//                if error == nil {
-//                    for object in objects! {
-//                            
-//                        object.deleteInBackground()
-//                        
-//                    }
-//                } else {
-//                    println(error)
-//                }
-//            }
-//            
-//        } else {
-//    
-//            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-//            
-//            var following = PFObject(className: "followers")
-//            
-//            following["following"] = cell.textLabel?.text
-//            following["follower"] = PFUser.currentUser()!.username
-//            
-//            following.saveInBackground() //save our selections
-//        }
-    
     }
 
-    
-    
     
     /*
     // Override to support conditional editing of the table view.

@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import DigitsKit
 
-class postViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate {
+class PostViewController: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate {
 
     var photoSelected:Bool = false
     

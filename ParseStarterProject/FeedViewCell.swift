@@ -8,9 +8,9 @@
 
 import UIKit
 
-class cell: UITableViewCell, UIGestureRecognizerDelegate {
+class FeedViewCell: UITableViewCell, UIGestureRecognizerDelegate {
 
-//cell class, each photo is a class, feedViewController uses instances of cell class
+    //FeedViewCell class, each photo is a class, feedViewController uses instances of cell class
     @IBOutlet var username: UILabel!
     
     @IBOutlet var title: UILabel!

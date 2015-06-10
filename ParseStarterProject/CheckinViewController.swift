@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class EventViewController: UIViewController {
+class CheckinViewController: UIViewController {
     
     func displayAlert(title:String,error: String) {
         
@@ -76,9 +76,20 @@ class EventViewController: UIViewController {
     
     @IBAction func pastEventsButton(sender: AnyObject) {
         self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
-        
-    
     }
+    
+    // Two functions to allow off keyboard touch to close keyboard
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
     /*
     // MARK: - Navigation
 
