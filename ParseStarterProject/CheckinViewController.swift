@@ -76,9 +76,20 @@ class CheckinViewController: UIViewController {
     
     @IBAction func pastEventsButton(sender: AnyObject) {
         self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
-        
-    
     }
+    
+    // Two functions to allow off keyboard touch to close keyboard
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
     /*
     // MARK: - Navigation
 
