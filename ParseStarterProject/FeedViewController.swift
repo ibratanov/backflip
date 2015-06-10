@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class feedViewController: UITableViewController {
+class FeedViewController: UITableViewController {
 
 //we need to create a new class for each image
 //various arrays for storing data
@@ -125,7 +125,7 @@ class feedViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var myCell:cell = self.tableView.dequeueReusableCellWithIdentifier("myCell") as! cell
+        var myCell:FeedViewCell = self.tableView.dequeueReusableCellWithIdentifier("myCell") as! FeedViewCell
       
         myCell.title.text = captions[indexPath.row]
         myCell.username.text = usernames[indexPath.row]
@@ -152,7 +152,7 @@ class feedViewController: UITableViewController {
         
         if segue.identifier == "toFullScreen" {
             
-            var moveVC: fullScreenViewController = segue.destinationViewController as! fullScreenViewController
+            var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
             
             //get the selected row number
             var selectedRowIndex = self.tableView.indexPathForSelectedRow()

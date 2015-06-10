@@ -11,7 +11,7 @@ import Parse
 
 let reuseIdentifier = "albumCell"
 
-class albumViewController: UICollectionViewController {
+class AlbumViewController: UICollectionViewController {
     
     // Variable for storing PFFile as image, pass through segue
     var images = [UIImage]()
@@ -179,7 +179,7 @@ class albumViewController: UICollectionViewController {
     func viewChange() {
         
         let storyboard = UIStoryboard(name: "albumView", bundle: nil)
-        let newVC = storyboard.instantiateViewControllerWithIdentifier("feedView") as? feedViewController
+        let newVC = storyboard.instantiateViewControllerWithIdentifier("feedView") as? FeedViewController
         self.presentViewController(newVC!, animated: true, completion: nil)
         
     }
@@ -214,7 +214,7 @@ class albumViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! albumViewCell
+        let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
 
         if sortedByLikes == false {
             
@@ -264,7 +264,7 @@ class albumViewController: UICollectionViewController {
 
         if segue.identifier == "toFull" {
             
-            var moveVC: fullScreenViewController = segue.destinationViewController as! fullScreenViewController
+            var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
             var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
             
             // Sorted by time

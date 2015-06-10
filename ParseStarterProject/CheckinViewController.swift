@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class EventViewController: UIViewController {
+class CheckinViewController: UIViewController {
     
     func displayAlert(title:String,error: String) {
         

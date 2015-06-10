@@ -8,13 +8,8 @@
 
 import UIKit
 
-class albumViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
-    
-    
-    
+class AlbumViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
 
     @IBOutlet var imageView: UIImageView!
-    
-    
     
 }

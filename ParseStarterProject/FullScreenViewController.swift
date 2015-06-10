@@ -10,7 +10,7 @@ import UIKit
 import Social
 import Parse
 
-class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
+class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet var likeCount: UILabel!
     

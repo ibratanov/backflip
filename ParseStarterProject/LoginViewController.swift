@@ -9,7 +9,7 @@ import Parse
 import DigitsKit
 
 
-class ViewController: UIViewController, UINavigationControllerDelegate {
+class LoginViewController: UIViewController, UINavigationControllerDelegate {
     
     @IBAction func privacyPolicy(sender: AnyObject) {
     
