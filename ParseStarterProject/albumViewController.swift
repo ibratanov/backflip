@@ -17,20 +17,17 @@ class albumViewController: UICollectionViewController {
     var images = [UIImage]()
     
     // Tuple for sorting
-    var imageFilesTemp : [(image: PFFile , likes: Int , id: String, title: String, date: NSDate)] = []
+    var imageFilesTemp : [(image: PFFile , likes: Int , id: String,date: NSDate)] = []
     
     // Arrays for like sort
     var imageFilesLikes = [PFFile]()
     var objectIdLikes = [String]()
     var datesLikes = [NSDate]()
-    var titlesLikes = [String]()
-    var created = [NSDate]()
     
     // Arrays for time sort
     var imageFilesTime = [PFFile]()
     var objectIdTime = [String]()
     var datesTime = [NSDate]()
-    var titlesTime = [String]()
     
     // Checker for sort button. Automatically starts with chronological order
     var sorted = false
@@ -86,7 +83,7 @@ class albumViewController: UICollectionViewController {
                     object["caption"] as! String
                     object.createdAt!! as NSDate
                     
-                    let tup = (image: object["image"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String, title: object["caption"] as! String , date: object.createdAt!! as NSDate)
+                    let tup = (image: object["image"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
                     
                     self.imageFilesTemp.append(tup)
                 
@@ -97,11 +94,10 @@ class albumViewController: UICollectionViewController {
                 // Sort tuple of images by likes, and fill new array with photos in order of likes
                 self.imageFilesTemp.sort{ $0.likes > $1.likes}
                 
-                for (image,likes, id, title, date) in self.imageFilesTemp {
+                for (image,likes, id,date) in self.imageFilesTemp {
                     
                     self.imageFilesLikes.append(image)
                     self.objectIdLikes.append(id)
-                    self.titlesLikes.append(title)
                     self.datesLikes.append(date)
     
                 }
@@ -109,11 +105,10 @@ class albumViewController: UICollectionViewController {
                 // Sort tuple of images,
                 self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
                 
-                for (image, likes, id, title, date) in self.imageFilesTemp {
+                for (image, likes, id, date) in self.imageFilesTemp {
                     
                     self.imageFilesTime.append(image)
                     self.objectIdTime.append(id)
-                    self.titlesTime.append(title)
                     self.datesTime.append(date)
                     
                     
@@ -243,18 +238,12 @@ class albumViewController: UICollectionViewController {
             
             // Sorted by time
             if self.sorted == false {
-                
-                moveVC.cellImage = images[selectedCellIndex!.row]
+
                 moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
-                moveVC.tempDate = datesTime[selectedCellIndex!.row]
-                moveVC.tempTitle = titlesTime[selectedCellIndex!.row]
                 
             } else {
             // Sorted by like count
-                moveVC.cellImage = images[selectedCellIndex!.row]
                 moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
-                moveVC.tempDate = datesLikes[selectedCellIndex!.row]
-                moveVC.tempTitle = titlesLikes[selectedCellIndex!.row]
             }
         
         }  

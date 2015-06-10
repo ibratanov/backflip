@@ -25,7 +25,6 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var cellImage : UIImage!
     var tempTitle : String = ""
-    var tempDate : NSDate!
     var objectIdTemp : String = ""
     var likeActive = false
     var liked = UIImage(named: "liked.png") as UIImage!
@@ -186,9 +185,8 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             
             if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
                 var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-                facebookSheet.setInitialText("Share on Facebook")
                 
-                facebookSheet.addImage(self.fullScreenImage.image)
+                facebookSheet.addImage(self.fullScreenImage.image!)
                 
                 self.presentViewController(facebookSheet, animated: true, completion: nil)
            
@@ -205,7 +203,6 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
                 
                 var twitterSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-                twitterSheet.setInitialText("Share on Twitter")
                 
                 twitterSheet.addImage(self.fullScreenImage.image)
                 
@@ -270,48 +267,57 @@ class fullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
        
         super.viewDidLoad()
-        
-        // check for image from previous VC, if true, set the image
-        if((cellImage) != nil) {
-            
-            self.fullScreenImage.image = cellImage
-            
-        } else {
-        
-            println("no photo")
-        
-        }
-        
-        // check for title/event name from previous VC, display the title
-        if tempTitle != "" {
-            
-            eventTitle.text = tempTitle
-            
-        } else {
-            
-            println("no title")
-        }
-        
-        // check for date from previous VC, format and display the date
-        if tempDate != nil {
-            
-            //formatting to display date how we want it
-            let formatter = NSDateFormatter()
-            
-            formatter.dateStyle = NSDateFormatterStyle.LongStyle
-            
-            formatter.timeStyle = .MediumStyle
-            
-            let dateStamp = formatter.stringFromDate(tempDate)
 
-            eventInfo.text = "Photo taken on \(dateStamp)"
+        var photoQuery = PFQuery(className: "Photo")
+        
+        photoQuery.getObjectInBackgroundWithId(objectIdTemp) { (objects, error) -> Void in
             
-        } else {
-            
-            println("no date")
+            if error == nil {
+                
+                var tempImage = objects?.objectForKey("image") as! PFFile
+                self.eventTitle.text = objects?.objectForKey("caption") as? String
+                var tempDate = objects?.createdAt! as NSDate!
+
+                // check for date from previous VC, format and display the date
+                if tempDate != nil {
+                    
+                    //formatting to display date how we want it
+                    let formatter = NSDateFormatter()
+                    
+                    formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                    
+                    formatter.timeStyle = .MediumStyle
+                    
+                    let dateStamp = formatter.stringFromDate(tempDate)
+                    
+                    self.eventInfo.text = "Photo taken on \(dateStamp)"
+                    
+                } else {
+                    
+                    println("no date")
+                    
+                }
+                
+                tempImage.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
+                    
+                    if error == nil {
+                        
+                        self.fullScreenImage.image = UIImage(data: imageData!)
+                        
+                    } else {
+                        
+                        println(error)
+                    }
+                    
+                    
+
+                }
+                
+                
+            }
             
         }
-        
+        println(objectIdTemp)
         
         // block to check if user has already liked photo, and set button label accordingly
         var query5 = PFUser.query()
