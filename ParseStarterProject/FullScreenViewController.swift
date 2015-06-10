@@ -308,11 +308,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                         
                         println(error)
                     }
-                    
-                    
 
                 }
-                
                 
             }
             
@@ -376,8 +373,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
         
         self.view.bringSubviewToFront(likeCount)
     }
-    
-   
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

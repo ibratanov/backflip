@@ -51,52 +51,6 @@ class FeedViewController: UITableViewController {
             } else {
                 println(error)
             }
-
-        
-//        var getFollowedUsersQuery = PFQuery(className: "followers")
-//        
-//        getFollowedUsersQuery.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
-//        getFollowedUsersQuery.findObjectsInBackgroundWithBlock{
-//            (objects, error) -> Void in
-//            
-//            if error == nil {
-//                
-//                var followedUser = ""
-//                
-//                for object in objects! {
-//                    followedUser = object["following"] as! String
-//                    
-//                    var query = PFQuery(className: "Post")
-//                    query.whereKey("username", equalTo: followedUser)
-//                    query.findObjectsInBackgroundWithBlock {
-//                        (objects, error) -> Void in
-//                        
-//                        if error == nil {
-//                            
-//                            for object in objects! {
-//                                
-//                                
-//                                self.captions.append(object["Title"] as! String)
-//                                
-//                                self.imageFiles.append(object["imageFile"] as! PFFile)
-//                                self.usernames.append(object["username"] as! String)
-//                                self.dates.append(object["timeStamp"] as! NSDate)
-//                                
-//                                self.tableView.reloadData()
-//                                
-//                            }
-//                            
-//                            
-//                            
-//                        } else {
-//                            println(error)
-//                        }
-//                    }
-//                    
-//                }
-//                
-//            }
-//            
         }
     }
 
