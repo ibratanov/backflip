@@ -8,10 +8,17 @@
 
 import UIKit
 import Parse
+import DigitsKit
 
-class UserTableViewController: UITableViewController {
+class EventTableViewController: UITableViewController {
     
+<<<<<<< HEAD
     var users = [""]
+=======
+
+    
+    var events = [""]
+>>>>>>> master
 //    var following = [Bool]()
     
     var refresher: UIRefreshControl! //allows us to control the pull to refresh function
@@ -20,7 +27,7 @@ class UserTableViewController: UITableViewController {
         super.viewDidLoad()
         
         
-        updateUsers()
+        updateEvents()
         
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh") //text that appears
@@ -30,60 +37,22 @@ class UserTableViewController: UITableViewController {
 
     }
     
-    func updateUsers(){
-        var query = PFQuery(className: "Events")
+    func updateEvents(){
+        var query = PFQuery(className: "Event")
         
         query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
             
-            self.users.removeAll(keepCapacity: true)
+            self.events.removeAll(keepCapacity: true)
             
             for object in objects! {
 
-                self.users.append((object["eventName"] as! String))
-                println(self.users)
+                self.events.append((object["eventName"] as! String))
+                println(self.events)
                 
                 self.tableView.reloadData()
-
-                
-//                var user: PFUser = object as! PFUser
-//
-////                var isFollowing: Bool
-//                
-//                if user.username != PFUser.currentUser()?.username {
-//                    
-////                    self.users.append(user.username!)
-//                    
-//                    isFollowing = false
-//                    
-//                    var query = PFQuery(className:"followers")
-//                    query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
-//                    query.whereKey("following", equalTo: user.username!)
-//                    
-//                    query.findObjectsInBackgroundWithBlock {
-//                        (objects, error) -> Void in
-//                        
-//                        if error == nil {
-//                            
-//                            for object in objects! {
-//                                
-//                                isFollowing = true
-//                            }
-//                            
-//                            self.following.append(isFollowing)
-//                            
-//                            self.tableView.reloadData()
-//                            
-//                        } else {
-//                            println(error)
-//                        }
-//                        
-//                        //stop animation when finished
-//                        self.refresher.endRefreshing()
-//
-//                    }
-//                }
                 
             }
+            self.refresher.endRefreshing()
         })
     }
     
@@ -91,7 +60,7 @@ class UserTableViewController: UITableViewController {
         
         println("refreshed")
         
-        updateUsers()
+        updateEvents()
         
     }
 
@@ -111,28 +80,18 @@ class UserTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-     
+    
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //println(following)
-        return users.count
+        return events.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        
-//        if following.count > indexPath.row{
-//        
-//            if following[indexPath.row] == true {
-//                
-//                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-//            }
-//    
-//        }
-        
-        cell.textLabel?.text = users[indexPath.row]
+        cell.textLabel?.text = events[indexPath.row]
 
         return cell
     }
@@ -142,49 +101,9 @@ class UserTableViewController: UITableViewController {
         
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
     
-        self.performSegueWithIdentifier("toAlbumFeed", sender: self)
-
-    
-        //.self explanation: http://stackoverflow.com/questions/26108843/in-swift-what-is-the-difference-between-the-two-different-usages-of-self
-    
-//        if cell.accessoryType == UITableViewCellAccessoryType.Checkmark.self {
-//            
-//            cell.accessoryType = UITableViewCellAccessoryType.None
-//            
-//            var query = PFQuery(className:"followers")
-//            query.whereKey("follower", equalTo: PFUser.currentUser()!.username!)
-//            query.whereKey("following", equalTo: cell.textLabel!.text!)
-//            
-//            query.findObjectsInBackgroundWithBlock {
-//                (objects: [AnyObject]?, error: NSError?) -> Void in
-//                
-//                if error == nil {
-//                    for object in objects! {
-//                            
-//                        object.deleteInBackground()
-//                        
-//                    }
-//                } else {
-//                    println(error)
-//                }
-//            }
-//            
-//        } else {
-//    
-//            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-//            
-//            var following = PFObject(className: "followers")
-//            
-//            following["following"] = cell.textLabel?.text
-//            following["follower"] = PFUser.currentUser()!.username
-//            
-//            following.saveInBackground() //save our selections
-//        }
-    
+        self.performSegueWithIdentifier("toAlbum", sender: self)
     }
 
-    
-    
     
     /*
     // Override to support conditional editing of the table view.

@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import CoreLocation
 
+<<<<<<< HEAD
 class EventViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableInfo: UITableView!
@@ -19,14 +20,17 @@ class EventViewController: UIViewController, CLLocationManagerDelegate, UITableV
     var locationManager = CLLocationManager()
     
     var cellContent:NSMutableArray = []
+=======
+class CheckinViewController: UIViewController {
+>>>>>>> master
     
     func displayAlert(title:String,error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
             
-            //set to false, to prevent login screen flashes on failed login attempt
-            self.dismissViewControllerAnimated(false, completion: nil)
+            // Commented out below, causes flashing view when display is dismissed
+            //self.dismissViewControllerAnimated(false, completion: nil)
             
         }))
         
@@ -183,9 +187,7 @@ class EventViewController: UIViewController, CLLocationManagerDelegate, UITableV
             
             error = "Please enter an event name."
             
-        }
-        
-        if (count(eventField.text) < 2)  {
+        } else if (count(eventField.text) < 2)  {
             
             error = "Please enter a valid event name."
         }
@@ -195,7 +197,11 @@ class EventViewController: UIViewController, CLLocationManagerDelegate, UITableV
             displayAlert("Event creation error:", error: error)
             
         } else {
+<<<<<<< HEAD
             
+=======
+        
+>>>>>>> master
             var event = PFObject(className:"Event")
             event["eventName"] = eventField.text
             //event["startTime"] =
@@ -251,12 +257,17 @@ class EventViewController: UIViewController, CLLocationManagerDelegate, UITableV
             
         }
     }
+    
     @IBAction func pastEventsButton(sender: AnyObject) {
         self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
-        
-    
     }
     
+    // Two functions to allow off keyboard touch to close keyboard
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        self.view.endEditing(true)
+    }
+    
+<<<<<<< HEAD
     
     // This is a listener that constantly checks if the user's location is close to an event
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
@@ -296,6 +307,13 @@ class EventViewController: UIViewController, CLLocationManagerDelegate, UITableV
             cellContent.append(description)
         }
         */
+=======
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+>>>>>>> master
     }
     
     /*
