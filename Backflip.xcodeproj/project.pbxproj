@@ -38,6 +38,9 @@
 		81BA817D1A49E0EA00E65899 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817C1A49E0EA00E65899 /* MobileCoreServices.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		81BA81811A49E10C00E65899 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81801A49E10C00E65899 /* ParseUI.framework */; };
+		92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C0F1B28280D007DE812 /* backfliplogo80.png */; };
+		92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C101B28280D007DE812 /* backfliplogo120.png */; };
+		92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C111B28280D007DE812 /* backfliplogo180.png */; };
 		B61801331B0BCBF8000CF25E /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61801321B0BCBF8000CF25E /* CheckinViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,7 +63,7 @@
 		50CE7E751B03999D00F4B6B1 /* postViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = postViewController.swift; sourceTree = "<group>"; };
 		50CE7E791B03DB2F00F4B6B1 /* feedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = feedViewController.swift; sourceTree = "<group>"; };
 		50CE7E7B1B03DBC100F4B6B1 /* cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cell.swift; sourceTree = "<group>"; };
-		81BA81451A49DA1800E65899 /* ParseStarterProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParseStarterProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		81BA81451A49DA1800E65899 /* Backflip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Backflip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA81491A49DA1800E65899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81BA814C1A49DA1800E65899 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +79,9 @@
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		81BA81821A49E27F00E65899 /* ParseStarterProject-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ParseStarterProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		92EF7C0F1B28280D007DE812 /* backfliplogo80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo80.png; sourceTree = "<group>"; };
+		92EF7C101B28280D007DE812 /* backfliplogo120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo120.png; sourceTree = "<group>"; };
+		92EF7C111B28280D007DE812 /* backfliplogo180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo180.png; sourceTree = "<group>"; };
 		B61801321B0BCBF8000CF25E /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,7 +113,7 @@
 		81BA813C1A49DA1800E65899 = {
 			isa = PBXGroup;
 			children = (
-				81BA81471A49DA1800E65899 /* ParseStarterProject */,
+				81BA81471A49DA1800E65899 /* Backflip */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
 				81BA81461A49DA1800E65899 /* Products */,
 			);
@@ -116,12 +122,12 @@
 		81BA81461A49DA1800E65899 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				81BA81451A49DA1800E65899 /* ParseStarterProject.app */,
+				81BA81451A49DA1800E65899 /* Backflip.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		81BA81471A49DA1800E65899 /* ParseStarterProject */ = {
+		81BA81471A49DA1800E65899 /* Backflip */ = {
 			isa = PBXGroup;
 			children = (
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
@@ -136,13 +142,11 @@
 				504D96E01B1CA3A400A1B95B /* albumViewController.swift */,
 				50BBCFDD1B1605C00055DE32 /* Main.storyboard */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
-				50BBCFDB1B1514E10055DE32 /* backButton.png */,
-				50BBCFD61B150F250055DE32 /* downloadButton.png */,
-				50BBCFD81B150FA50055DE32 /* shareButton.png */,
-				50BBCFE01B16458E0055DE32 /* liked.png */,
-				50BBCFE21B1645A50055DE32 /* unliked.png */,
+				92EF7C0E1B2827EA007DE812 /* Logo Icons */,
+				92EF7C0C1B2827D2007DE812 /* Button Icons */,
 				81BA81481A49DA1800E65899 /* Supporting Files */,
 			);
+			name = Backflip;
 			path = ParseStarterProject;
 			sourceTree = "<group>";
 		};
@@ -185,12 +189,34 @@
 			name = "System Frameworks";
 			sourceTree = "<group>";
 		};
+		92EF7C0C1B2827D2007DE812 /* Button Icons */ = {
+			isa = PBXGroup;
+			children = (
+				50BBCFDB1B1514E10055DE32 /* backButton.png */,
+				50BBCFD61B150F250055DE32 /* downloadButton.png */,
+				50BBCFD81B150FA50055DE32 /* shareButton.png */,
+				50BBCFE01B16458E0055DE32 /* liked.png */,
+				50BBCFE21B1645A50055DE32 /* unliked.png */,
+			);
+			name = "Button Icons";
+			sourceTree = "<group>";
+		};
+		92EF7C0E1B2827EA007DE812 /* Logo Icons */ = {
+			isa = PBXGroup;
+			children = (
+				92EF7C0F1B28280D007DE812 /* backfliplogo80.png */,
+				92EF7C101B28280D007DE812 /* backfliplogo120.png */,
+				92EF7C111B28280D007DE812 /* backfliplogo180.png */,
+			);
+			name = "Logo Icons";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		81BA81441A49DA1800E65899 /* ParseStarterProject */ = {
+		81BA81441A49DA1800E65899 /* Backflip */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "ParseStarterProject" */;
+			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Backflip" */;
 			buildPhases = (
 				81BA81411A49DA1800E65899 /* Sources */,
 				81BA81421A49DA1800E65899 /* Frameworks */,
@@ -202,9 +228,9 @@
 			);
 			dependencies = (
 			);
-			name = ParseStarterProject;
+			name = Backflip;
 			productName = ParseStarterProject;
-			productReference = 81BA81451A49DA1800E65899 /* ParseStarterProject.app */;
+			productReference = 81BA81451A49DA1800E65899 /* Backflip.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -221,7 +247,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "ParseStarterProject" */;
+			buildConfigurationList = 81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "Backflip" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -234,7 +260,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				81BA81441A49DA1800E65899 /* ParseStarterProject */,
+				81BA81441A49DA1800E65899 /* Backflip */,
 			);
 		};
 /* End PBXProject section */
@@ -248,9 +274,12 @@
 				50BBCFD71B150F250055DE32 /* downloadButton.png in Resources */,
 				50BBCFDF1B1605C00055DE32 /* Main.storyboard in Resources */,
 				50BBCFE31B1645A50055DE32 /* unliked.png in Resources */,
+				92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */,
 				50BBCFD91B150FA50055DE32 /* shareButton.png in Resources */,
+				92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */,
 				50BBCFDC1B1514E10055DE32 /* backButton.png in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
+				92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */,
 				50BBCFE11B16458E0055DE32 /* liked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,7 +439,7 @@
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Backflip;
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Debug;
@@ -426,7 +455,7 @@
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Backflip;
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Release;
@@ -434,7 +463,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "ParseStarterProject" */ = {
+		81BA81401A49DA1800E65899 /* Build configuration list for PBXProject "Backflip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81BA81621A49DA1800E65899 /* Debug */,
@@ -443,7 +472,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "ParseStarterProject" */ = {
+		81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Backflip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81BA81651A49DA1800E65899 /* Debug */,
