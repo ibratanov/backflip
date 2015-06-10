@@ -11,14 +11,10 @@ import Parse
 import DigitsKit
 
 class EventTableViewController: UITableViewController {
-    
-<<<<<<< HEAD
     var users = [""]
-=======
 
     
     var events = [""]
->>>>>>> master
 //    var following = [Bool]()
     
     var refresher: UIRefreshControl! //allows us to control the pull to refresh function
