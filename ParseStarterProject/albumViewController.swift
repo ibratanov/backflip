@@ -29,8 +29,8 @@ class albumViewController: UICollectionViewController {
     var objectIdTime = [String]()
     var datesTime = [NSDate]()
     
-    // Checker for sort button. Automatically starts with chronological order
-    var sorted = false
+    // Checker for sort button. Sort in chronological order by default.
+    var sortedByLikes = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,17 +52,6 @@ class albumViewController: UICollectionViewController {
         viewChangeButton.addTarget(self, action: "sortButton", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(viewChangeButton)
         self.view.bringSubviewToFront(viewChangeButton)
-        
-        // Button to switch between feed view and album view
-        let feedChangeButton = UIButton(frame: CGRectMake(250,250,50,50))
-        feedChangeButton.center.y = self.view.bounds.height - 50
-        feedChangeButton.backgroundColor = UIColor.whiteColor()
-        feedChangeButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        feedChangeButton.setTitle("View", forState: UIControlState.Normal)
-        feedChangeButton.addTarget(self, action:"viewChange", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(feedChangeButton)
-        self.view.bringSubviewToFront(feedChangeButton)
-        
 
         // Load information from parse db
         var getUploadedImages = PFQuery(className: "Photo")
@@ -72,16 +61,6 @@ class albumViewController: UICollectionViewController {
             if error == nil {
                 
                 for object in objects! {
-                    
-                    // Creates tuple for easier sorting
-                    object["image"] as! PFFile
-                    object["upvoteCount"] as! Int
-                    object.objectId!! as String
-//                    if let ID = object.objectId as!! String {
-//                        
-//                    }
-                    object["caption"] as! String
-                    object.createdAt!! as NSDate
                     
                     let tup = (image: object["image"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
                     
@@ -94,7 +73,7 @@ class albumViewController: UICollectionViewController {
                 // Sort tuple of images by likes, and fill new array with photos in order of likes
                 self.imageFilesTemp.sort{ $0.likes > $1.likes}
                 
-                for (image,likes, id,date) in self.imageFilesTemp {
+                for (image, likes, id, date) in self.imageFilesTemp {
                     
                     self.imageFilesLikes.append(image)
                     self.objectIdLikes.append(id)
@@ -111,8 +90,6 @@ class albumViewController: UICollectionViewController {
                     self.objectIdTime.append(id)
                     self.datesTime.append(date)
                     
-                    
-                    
                 }
                 
             } else {
@@ -124,23 +101,79 @@ class albumViewController: UICollectionViewController {
         
     }
     
+    // TODO: Smart loading of photos - only reload photos which are new/were modified
+    func updatePhotos() {
+        self.imageFilesTemp.removeAll(keepCapacity: true)
+        
+        self.imageFilesLikes.removeAll(keepCapacity: true)
+        self.objectIdLikes.removeAll(keepCapacity: true)
+        self.datesLikes.removeAll(keepCapacity: true)
+        
+        self.imageFilesTime.removeAll(keepCapacity: true)
+        self.objectIdTime.removeAll(keepCapacity: true)
+        self.datesTime.removeAll(keepCapacity: true)
+        
+        self.images.removeAll(keepCapacity: true)
+        
+        // Load information from parse db
+        var getUploadedImages = PFQuery(className: "Photo")
+        
+        getUploadedImages.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            
+            if error == nil {
+                
+                for object in objects! {
+                    
+                    let tup = (image: object["image"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
+                    
+                    self.imageFilesTemp.append(tup)
+                    
+                    self.collectionView?.reloadData()
+                    
+                }
+                
+                // Sort tuple of images by likes, and fill new array with photos in order of likes
+                self.imageFilesTemp.sort{ $0.likes > $1.likes}
+                
+                for (image, likes, id, date) in self.imageFilesTemp {
+                    
+                    self.imageFilesLikes.append(image)
+                    self.objectIdLikes.append(id)
+                    self.datesLikes.append(date)
+                    
+                }
+                
+                // Sort tuple of images,
+                self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
+                
+                for (image, likes, id, date) in self.imageFilesTemp {
+                    
+                    self.imageFilesTime.append(image)
+                    self.objectIdTime.append(id)
+                    self.datesTime.append(date)
+                    
+                }
+                
+            } else {
+                
+                println(error)
+                
+            }
+        }
+    }
+    
     func sortButton() {
         
-        // Change boolean, reload data, to sort images
-        if sorted == true {
+        updatePhotos()
         
-        sorted = false
-            
-        self.collectionView?.reloadData()
-        
+        // Change boolean, reload data to sort images
+        if sortedByLikes == true {
+            sortedByLikes = false
         } else {
-        
-        sorted = true
-
-        self.collectionView?.reloadData()
-            
+            sortedByLikes = true
         }
-
+        
+        //self.collectionView?.reloadData()
     }
     
     func viewChange() {
@@ -150,8 +183,6 @@ class albumViewController: UICollectionViewController {
         self.presentViewController(newVC!, animated: true, completion: nil)
         
     }
-    
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -185,7 +216,7 @@ class albumViewController: UICollectionViewController {
         
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! albumViewCell
 
-        if sorted == false {
+        if sortedByLikes == false {
             
             // Default, fill the cells with photos sorted by time
             imageFilesTime[indexPath.row].getDataInBackgroundWithBlock { (imageData, error) -> Void in
@@ -237,7 +268,7 @@ class albumViewController: UICollectionViewController {
             var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
             
             // Sorted by time
-            if self.sorted == false {
+            if self.sortedByLikes == false {
 
                 moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
                 
