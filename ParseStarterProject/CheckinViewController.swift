@@ -178,7 +178,7 @@ class EventViewController: UIViewController, CLLocationManagerDelegate, UITableV
     @IBAction func checkInClicked(sender: AnyObject) {
         
         var error = ""
-        
+        print("Get's here")
         if (eventField.text == "") {
             
             error = "Please enter an event name."
@@ -195,8 +195,8 @@ class EventViewController: UIViewController, CLLocationManagerDelegate, UITableV
             displayAlert("Event creation error:", error: error)
             
         } else {
-        
-            var event = PFObject(className:"Events")
+            
+            var event = PFObject(className:"Event")
             event["eventName"] = eventField.text
             //event["startTime"] =
             event.saveInBackgroundWithBlock {
@@ -209,6 +209,45 @@ class EventViewController: UIViewController, CLLocationManagerDelegate, UITableV
                     println("fail")
                 }
             }
+            
+            
+            
+            
+            
+            //let user2:PFUser = PFUser.currentUser()!.objectId
+            
+            let query = PFUser.query()
+
+            //var eventList:[AnyObject] = []
+            
+            println(PFUser.currentUser()!.objectId!)
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                
+                if error != nil {
+                    println(error)
+                }
+                else
+                {
+                    let eventRel = PFObject(className: "Event")
+                    eventRel["eventName"] = self.eventField.text
+                    let relation = eventRel.relationForKey("observers")
+                    relation.addObject(object!)
+                    
+                    
+                    
+                    // TODO: Check for existing event_list for eventName
+                    object?.addUniqueObject(self.eventField.text!, forKey:"savedEvents")
+                    
+                    let eventList = object?.objectForKey("savedEvents") as! [String]
+                    
+                    object!.saveInBackground()
+                    
+                    eventRel.saveInBackground()
+                    
+                    println("Saved")
+                }
+            })
+            
             
         }
     }
@@ -234,7 +273,7 @@ class EventViewController: UIViewController, CLLocationManagerDelegate, UITableV
         
         // Queries events table for locations that are close to user
         // Return top 3 closest events
-        var query = PFQuery(className: "Events")
+        var query = PFQuery(className: "Event")
         query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
         query.limit = 3
         let placesObjects = query.findObjects() as! [PFObject]
