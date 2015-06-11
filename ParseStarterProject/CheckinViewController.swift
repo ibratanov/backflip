@@ -13,6 +13,7 @@ import CoreLocation
 class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     var userLocation:PFGeoPoint = PFGeoPoint()
+    
     @IBOutlet var pickerInfo: UIPickerView!
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -66,6 +67,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
+        
+        print("Get's here")
     
     }
     
@@ -132,11 +135,24 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 }
                 else
                 {
-                    let eventRel = PFObject(className: "Event")
-                    eventRel["eventName"] = self.eventField.text
-                    let relation = eventRel.relationForKey("observers")
-                    relation.addObject(object!)
                     
+                    //Check if event already exists
+                    let query = PFQuery(className: "Event")
+                    query.whereKey("eventName", equalTo: self.eventField.text)
+                    let scoreArray = query.findObjects()
+                    
+                    if scoreArray!.count == 0 {
+                        let eventRel = PFObject(className: "Event")
+                        eventRel["eventName"] = self.eventField.text
+                        let relation = eventRel.relationForKey("observers")
+                        relation.addObject(object!)
+                    
+                        eventRel.saveInBackground()
+                    }
+                    else {
+                        
+                    }
+                        
                     // TODO: Check for existing event_list for eventName
                     var listEvents = object!.objectForKey("savedEvents") as! [String]
                     if contains(listEvents,self.eventField.text)
@@ -147,11 +163,11 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     {
                         object?.addUniqueObject(self.eventField.text!, forKey:"savedEvents")
                     
-                        let eventList = object?.objectForKey("savedEvents") as! [String]
+                        //let eventList = object?.objectForKey("savedEvents") as! [String]
                     
                         object!.saveInBackground()
                     
-                        eventRel.saveInBackground()
+                        
                     
                         println("Saved")
                     }
