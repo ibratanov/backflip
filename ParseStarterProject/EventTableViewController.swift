@@ -12,10 +12,7 @@ import DigitsKit
 
 class EventTableViewController: UITableViewController {
     
-
-    
     var events = [""]
-//    var following = [Bool]()
     
     var refresher: UIRefreshControl! //allows us to control the pull to refresh function
     
