@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -130,16 +129,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Where are you?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tzm-B1-aQM">
-                                <rect key="frame" x="42" y="78" width="237" height="47"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="33"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WHERE ARE YOU?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tzm-B1-aQM">
+                                <rect key="frame" x="20" y="20" width="280" height="119"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="44"/>
+                                <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z95-Tc-ZXl">
-                                <rect key="frame" x="0.0" y="408" width="320" height="80"/>
-                                <color key="backgroundColor" red="1" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                <rect key="frame" x="0.0" y="397" width="320" height="57"/>
+                                <color key="backgroundColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="CHECK IN">
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -149,9 +148,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlL-up-cCN">
-                                <rect key="frame" x="0.0" y="488" width="320" height="80"/>
-                                <color key="backgroundColor" red="0.31372549019607843" green="0.80000000000000004" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                <rect key="frame" x="0.0" y="509" width="320" height="59"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="PAST EVENTS">
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -160,80 +159,138 @@
                                     <action selector="pastEventsButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="0Tq-1k-b0z"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. J. Cole @ OVO" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adM-Oa-W25">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HN-DF-hmf">
+                                <rect key="frame" x="0.0" y="452" width="320" height="59"/>
+                                <color key="backgroundColor" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="PRIVATE TRIBE">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pastEventsButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="xKh-iH-Izl"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. Jay-Z,..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adM-Oa-W25">
                                 <rect key="frame" x="16" y="140" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="y53-An-BD3">
-                                <rect key="frame" x="16" y="253" width="288" height="147"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="288" id="nik-gj-Rbh"/>
-                                </constraints>
-                                <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <prototypes>
-                                    <tableViewCell alpha="0.39999999999999963" contentMode="scaleToFill" selectionStyle="gray" showsReorderControl="YES" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="Sep-iK-BRd" rowHeight="36" style="IBUITableViewCellStyleDefault" id="cfp-1k-saR">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="center" tableViewCell="cfp-1k-saR" id="jIY-xm-yaB">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sep-iK-BRd">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <rect key="contentStretch" x="0.0" y="0.0" width="0.74999999999999978" height="1"/>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.40706197769890051" green="0.60199408126150344" blue="1" alpha="0.58999999999999997" colorSpace="calibratedRGB"/>
-                                        <rect key="contentStretch" x="1.3877787807814457e-17" y="0.0" width="1" height="1"/>
-                                        <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="eGV-gf-aJ6" id="dvO-Zq-O5U"/>
-                                    <outlet property="delegate" destination="eGV-gf-aJ6" id="I2G-WU-X0E"/>
-                                </connections>
-                            </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Events in your area:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o84-EI-uYq">
-                                <rect key="frame" x="16" y="210" width="151" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="151" id="VjK-DT-LX8"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Gq-e9-xDg">
-                                <rect key="frame" x="210" y="196" width="94" height="59"/>
-                                <state key="normal" title="Button">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xu3-Ge-spa">
+                                <rect key="frame" x="92" y="315" width="136" height="30"/>
+                                <state key="normal" title="Create Public Event">
+                                    <color key="titleColor" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="clearTable:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="zfl-rp-ES7"/>
+                                    <segue destination="jaA-7R-ZG2" kind="show" identifier="CreateEvent" id="ofY-SC-By2"/>
                                 </connections>
                             </button>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bk-ji-zDx">
+                                <rect key="frame" x="46" y="159" width="229" height="130"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="eGV-gf-aJ6" id="lm3-8o-t5g"/>
+                                    <outlet property="delegate" destination="eGV-gf-aJ6" id="AYe-sq-sh8"/>
+                                </connections>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="o84-EI-uYq" secondAttribute="trailing" constant="137" id="KAa-nC-Y06"/>
-                            <constraint firstItem="o84-EI-uYq" firstAttribute="leading" secondItem="KZH-TS-jb6" secondAttribute="leadingMargin" id="xHd-9Z-gZX"/>
-                            <constraint firstItem="o84-EI-uYq" firstAttribute="top" secondItem="adM-Oa-W25" secondAttribute="bottom" constant="54" id="zGv-P9-nQ8"/>
-                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="checkInButton" destination="Z95-Tc-ZXl" id="3dd-tl-qzj"/>
                         <outlet property="eventField" destination="adM-Oa-W25" id="7Iq-dL-aBT"/>
-                        <outlet property="tableInfo" destination="y53-An-BD3" id="mr4-Is-qYP"/>
+                        <outlet property="pickerInfo" destination="7bk-ji-zDx" id="mqR-fI-uj0"/>
                         <segue destination="9AY-mp-rfS" kind="show" identifier="whereAreYouToEvents" id="Ju0-Hh-YW7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nw0-yu-PiL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1861" y="423"/>
+            <point key="canvasLocation" x="1833" y="442"/>
+        </scene>
+        <!--CreateEvent-->
+        <scene sceneID="nsu-6S-uCn">
+            <objects>
+                <viewController storyboardIdentifier="CreateEvent" title="CreateEvent" id="jaA-7R-ZG2" customClass="CreatePublicEventViewController" customModule="Backflip" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vma-OX-gnT"/>
+                        <viewControllerLayoutGuide type="bottom" id="V9s-SO-STL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Luo-6z-Om5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Public Event" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qLG-oc-9AL">
+                                <rect key="frame" x="16" y="167" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3B-Tg-D5K">
+                                <rect key="frame" x="0.0" y="397" width="320" height="57"/>
+                                <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="CREATE EVENT">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkInClicked:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="7ou-ys-DfT"/>
+                                    <action selector="createEvent:" destination="jaA-7R-ZG2" eventType="touchUpInside" id="kQv-f2-a3U"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OC9-P3-L1K">
+                                <rect key="frame" x="0.0" y="509" width="320" height="59"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="PAST EVENTS">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pastEvents:" destination="jaA-7R-ZG2" eventType="touchUpInside" id="3Ke-Im-AE9"/>
+                                    <action selector="pastEventsButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="V5N-MA-ckt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCr-wQ-BO9">
+                                <rect key="frame" x="0.0" y="452" width="320" height="59"/>
+                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="PRIVATE TRIBE">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pastEventsButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="rfe-gS-rI1"/>
+                                    <action selector="privateTribe:" destination="jaA-7R-ZG2" eventType="touchUpInside" id="3Wz-Bg-PGl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tYx-2F-mIG">
+                                <rect key="frame" x="101" y="315" width="119" height="30"/>
+                                <state key="normal" title="Join Public Event">
+                                    <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="eGV-gf-aJ6" kind="show" identifier="backToCheckIn" id="mOF-VI-e0Q"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WHERE ARE YOU?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9i-Rb-Hg0">
+                                <rect key="frame" x="20" y="28" width="280" height="119"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="44"/>
+                                <color key="textColor" red="0.50196081400000003" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="publicEvent" destination="qLG-oc-9AL" id="Oxt-Va-Hda"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NBi-xB-G5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2358" y="788"/>
         </scene>
         <!--[Event Name]-->
         <scene sceneID="fge-kj-K8y">
@@ -519,7 +576,8 @@
         <image name="shareButton.png" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VCX-vA-6qG"/>
-        <segue reference="Ax8-uE-80J"/>
+        <segue reference="mOF-VI-e0Q"/>
+        <segue reference="Ju0-Hh-YW7"/>
+        <segue reference="FSk-Fu-Rj2"/>
     </inferredMetricsTieBreakers>
 </document>

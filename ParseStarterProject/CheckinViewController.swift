@@ -10,9 +10,15 @@ import UIKit
 import Parse
 import CoreLocation
 
-class CheckinViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    @IBOutlet var tableInfo: UITableView!
+    @IBAction func publicEventSegue(sender: AnyObject) {
+        performSegueWithIdentifier("CreateEvent", sender: sender)
+        
+    }
+    var userLocation:PFGeoPoint = PFGeoPoint()
+    
+    @IBOutlet var pickerInfo: UIPickerView!
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -32,127 +38,46 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UITabl
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
     
-    @IBAction func clearTable(sender: AnyObject) {
-        
-        cellContent.removeAllObjects()
-        //tableInfo.reloadData()
-        
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
-        
-        activityIndicator.startAnimating()
-        
-        /*
-        PFGeoPoint.geoPoint {
-            (geoPoint: PFGeoPoint?, error: NSError?) -> Void in
-            if error == nil {
-                var userLatitude = geoPoint!.latitude //latitude of user who creates event
-                var userLongitude = geoPoint!.longitude //longitude of user who creates event
-                
-                var event = PFObject(className: "Events") //creates table of Events
-                
-                let point = PFGeoPoint(latitude: userLatitude, longitude: userLongitude)
-                
-                println(point)
-                
-                var query = PFQuery(className: "Events")
-                query.whereKey("geoLocation", nearGeoPoint: point)
-                query.limit = 3
-                let placesObjects = query.findObjects() as! [PFObject]
-                
-                //dump(placesObjects)
-                
-                for object in placesObjects {
-                    var eventName = object.objectForKey("eventName")
-                    //println(eventName)
-                    
-                    // hack, fix later
-                    if cells2.count < query.limit {
-                        cells2.addObject(eventName!)
-                        //println("Get's here")
-                    }
-                    dump(cells2)
-                    
-                }
-            }
-            
-            
-        }
-*/
-        
-        
-        self.tableInfo.reloadData()
-        
-        activityIndicator.stopAnimating()
+    //Scroll wheel table view
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
     }
     
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.cellContent.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        return self.cellContent[row] as! String
+    }
+    
+    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int)
+    {
+        eventField.text = self.cellContent[row] as! String
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
+        print("Gets here")
         // Gets location of the user
         locationManager.delegate = self
         
         // locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
-        //locationManager.distanceFilter = 300 //every 300 meters it updates user's location
+        locationManager.distanceFilter = 300 //every 300 meters it updates user's location
         locationManager.requestWhenInUseAuthorization() //for testing purposes only
         
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
-
-        // Do any additional setup after loading the view.
-    }
     
-    // Allows us to return an integer that will be the number sections in the table
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return cellContent.count
-        
-    }
-    
-    // Define contents of each individual cell
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        //let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-
-        var cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell
-        
-        cell?.layer.cornerRadius = 5.0
-        
-        if !(cell != nil) {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")}
-        
-        cell!.textLabel?.text = cellContent[indexPath.row] as! String
-        
-        return cell!
-        
-    }
-    
-    func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
-        return true
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var selectedCell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        eventField.text = selectedCell.textLabel?.text
-    }
-    
-    func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            // handle delete (by removing the data from your array and updating the tableview)
-            cellContent.removeObjectAtIndex(indexPath.row)
-            tableInfo.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
@@ -161,9 +86,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UITabl
         
         activityIndicator.startAnimating()
         
-        self.tableInfo.reloadData()
-        self.tableInfo.separatorStyle = UITableViewCellSeparatorStyle.None
-        
+        self.pickerInfo.reloadAllComponents()
         activityIndicator.stopAnimating()
     }
 
@@ -193,7 +116,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UITabl
             displayAlert("Event creation error:", error: error)
             
         } else {
-        
             var event = PFObject(className:"Event")
             event["eventName"] = eventField.text
             //event["startTime"] =
@@ -207,6 +129,56 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UITabl
                     println("fail")
                 }
             }
+            
+            let query = PFUser.query()
+            
+            println(PFUser.currentUser()!.objectId!)
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                
+                if error != nil {
+                    println(error)
+                }
+                else
+                {
+                    
+                    //Check if event already exists
+                    let query = PFQuery(className: "Event")
+                    query.whereKey("eventName", equalTo: self.eventField.text)
+                    let scoreArray = query.findObjects()
+                    
+                    if scoreArray!.count == 0 {
+                        let eventRel = PFObject(className: "Event")
+                        eventRel["eventName"] = self.eventField.text
+                        let relation = eventRel.relationForKey("observers")
+                        relation.addObject(object!)
+                    
+                        eventRel.saveInBackground()
+                    }
+                    else {
+                        
+                    }
+                        
+                    // TODO: Check for existing event_list for eventName
+                    var listEvents = object!.objectForKey("savedEvents") as! [String]
+                    if contains(listEvents,self.eventField.text)
+                    {
+                        print("Event already in list")
+                    }
+                    else
+                    {
+                        object?.addUniqueObject(self.eventField.text!, forKey:"savedEvents")
+                    
+                        //let eventList = object?.objectForKey("savedEvents") as! [String]
+                    
+                        object!.saveInBackground()
+                    
+                        
+                    
+                        println("Saved")
+                    }
+                }
+            })
+            
             
         }
     }
@@ -230,10 +202,14 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UITabl
         
         // Queries events table for locations that are close to user
         // Return top 3 closest events
-        var query = PFQuery(className: "Events")
-        query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
-        query.limit = 3
+        var query = PFQuery(className: "Event")
+        //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
+        query.whereKey("geoLocation", nearGeoPoint: userGeoPoint, withinKilometers: 10.0)
+        query.limit = 5
         let placesObjects = query.findObjects() as! [PFObject]
+        print("Gets her")
+        print(placesObjects.count)
+        dump(placesObjects)
         
         for object in placesObjects {
             var eventName = object.objectForKey("eventName")
@@ -244,22 +220,14 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UITabl
             }
            
         }
-        //dump(cellContent)
-        
 
-        /*
-        for result in placesObjects {
-            var description = result.objectForKey("eventName") as! NSString
-            cellContent.append(description)
-        }
-        */
     }
     
     // Two functions to allow off keyboard touch to close keyboard
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true)
     }
-        
+
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
