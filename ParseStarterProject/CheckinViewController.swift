@@ -12,6 +12,10 @@ import CoreLocation
 
 class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBAction func publicEventSegue(sender: AnyObject) {
+        performSegueWithIdentifier("CreateEvent", sender: sender)
+        
+    }
     var userLocation:PFGeoPoint = PFGeoPoint()
     
     @IBOutlet var pickerInfo: UIPickerView!
@@ -67,8 +71,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
-        
-        print("Get's here")
     
     }
     
@@ -96,7 +98,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     @IBAction func checkInClicked(sender: AnyObject) {
         
         var error = ""
-        print("Get's here")
+        
         if (eventField.text == "") {
             
             error = "Please enter an event name."
