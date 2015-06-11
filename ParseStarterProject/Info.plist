@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.parse.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>com.getbackflip.$(PRODUCT_NAME:rfc1034identifier)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -20,6 +20,25 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.7.2</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>ef7a1ebf7fc603f162c02e071c9bec17cfc2117e</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>consumerKey</key>
+					<string>ox9XhinStUXVK8D9YdcVkc9Hm</string>
+					<key>consumerSecret</key>
+					<string>rMG5k3PSTYMQLGZkAFZuBxr1LHC8bSZ6d4JyVfIxtuGKzdcUnv</string>
+				</dict>
+				<key>KitName</key>
+				<string>Digits</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIMainStoryboardFile</key>
