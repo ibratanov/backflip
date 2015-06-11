@@ -7,17 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-<<<<<<< HEAD:ParseStarterProject.xcodeproj/project.pbxproj
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
-		505A465A1B0A55A600B9BB4F /* fullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505A46591B0A55A600B9BB4F /* fullScreenViewController.swift */; };
-=======
+		3A7D030F1B29DCC700B446C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A7D030D1B29DCC700B446C5 /* Main.storyboard */; };
+		3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */; };
 		504D96DF1B1CA38B00A1B95B /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */; };
 		504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */; };
 		505A465A1B0A55A600B9BB4F /* FullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */; };
 		50BBCFD71B150F250055DE32 /* downloadButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFD61B150F250055DE32 /* downloadButton.png */; };
 		50BBCFD91B150FA50055DE32 /* shareButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFD81B150FA50055DE32 /* shareButton.png */; };
 		50BBCFDC1B1514E10055DE32 /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFDB1B1514E10055DE32 /* backButton.png */; };
-		50BBCFDF1B1605C00055DE32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFDD1B1605C00055DE32 /* Main.storyboard */; };
 		50BBCFE11B16458E0055DE32 /* liked.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFE01B16458E0055DE32 /* liked.png */; };
 		50BBCFE31B1645A50055DE32 /* unliked.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFE21B1645A50055DE32 /* unliked.png */; };
 		50BED87D1B21E05100CBB715 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED8791B21E05100CBB715 /* Fabric.framework */; };
@@ -25,7 +23,6 @@
 		50BED87F1B21E05100CBB715 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 50BED87B1B21E05100CBB715 /* DigitsKitResources.bundle */; };
 		50BED8801B21E05100CBB715 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED87C1B21E05100CBB715 /* TwitterCore.framework */; };
 		50C9A7931B276F430091FEC9 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C9A7921B276F430091FEC9 /* Social.framework */; };
->>>>>>> master:Backflip.xcodeproj/project.pbxproj
 		50CE7E741B027C9000F4B6B1 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E731B027C9000F4B6B1 /* EventTableViewController.swift */; };
 		50CE7E761B03999D00F4B6B1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E751B03999D00F4B6B1 /* PostViewController.swift */; };
 		50CE7E7A1B03DB2F00F4B6B1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E791B03DB2F00F4B6B1 /* FeedViewController.swift */; };
@@ -50,17 +47,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-<<<<<<< HEAD:ParseStarterProject.xcodeproj/project.pbxproj
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		505A46591B0A55A600B9BB4F /* fullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fullScreenViewController.swift; sourceTree = "<group>"; };
-=======
+		3A7D030E1B29DCC700B446C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
 		504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
 		504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenViewController.swift; sourceTree = "<group>"; };
 		50BBCFD61B150F250055DE32 /* downloadButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downloadButton.png; sourceTree = "<group>"; };
 		50BBCFD81B150FA50055DE32 /* shareButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareButton.png; sourceTree = "<group>"; };
 		50BBCFDB1B1514E10055DE32 /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
-		50BBCFDE1B1605C00055DE32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ParseStarterProject/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		50BBCFE01B16458E0055DE32 /* liked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liked.png; sourceTree = "<group>"; };
 		50BBCFE21B1645A50055DE32 /* unliked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unliked.png; sourceTree = "<group>"; };
 		50BED8791B21E05100CBB715 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -68,7 +63,6 @@
 		50BED87B1B21E05100CBB715 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
 		50BED87C1B21E05100CBB715 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
 		50C9A7921B276F430091FEC9 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
->>>>>>> master:Backflip.xcodeproj/project.pbxproj
 		50CE7E731B027C9000F4B6B1 /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		50CE7E751B03999D00F4B6B1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		50CE7E791B03DB2F00F4B6B1 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -100,11 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD:ParseStarterProject.xcodeproj/project.pbxproj
 				3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */,
-=======
 				50C9A7931B276F430091FEC9 /* Social.framework in Frameworks */,
->>>>>>> master:Backflip.xcodeproj/project.pbxproj
 				81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */,
 				81BA817D1A49E0EA00E65899 /* MobileCoreServices.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
@@ -144,17 +135,18 @@
 		81BA81471A49DA1800E65899 /* Backflip */ = {
 			isa = PBXGroup;
 			children = (
+				3A7D030D1B29DCC700B446C5 /* Main.storyboard */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
 				B61801321B0BCBF8000CF25E /* CheckinViewController.swift */,
 				50CE7E731B027C9000F4B6B1 /* EventTableViewController.swift */,
+				3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */,
 				50CE7E751B03999D00F4B6B1 /* PostViewController.swift */,
 				50CE7E791B03DB2F00F4B6B1 /* FeedViewController.swift */,
 				50CE7E7B1B03DBC100F4B6B1 /* FeedViewCell.swift */,
 				504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */,
 				504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */,
 				505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */,
-				50BBCFDD1B1605C00055DE32 /* Main.storyboard */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				92EF7C0E1B2827EA007DE812 /* Logo Icons */,
 				92EF7C0C1B2827D2007DE812 /* Button Icons */,
@@ -176,15 +168,12 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD:ParseStarterProject.xcodeproj/project.pbxproj
 				3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */,
-=======
 				50C9A7921B276F430091FEC9 /* Social.framework */,
 				50BED8791B21E05100CBB715 /* Fabric.framework */,
 				50BED87A1B21E05100CBB715 /* DigitsKit.framework */,
 				50BED87B1B21E05100CBB715 /* DigitsKitResources.bundle */,
 				50BED87C1B21E05100CBB715 /* TwitterCore.framework */,
->>>>>>> master:Backflip.xcodeproj/project.pbxproj
 				81BA816B1A49DB6800E65899 /* Bolts.framework */,
 				81BA816C1A49DB6800E65899 /* Parse.framework */,
 				81BA816D1A49DB6800E65899 /* ParseCrashReporting.framework */,
@@ -241,6 +230,7 @@
 				81BA81431A49DA1800E65899 /* Resources */,
 				81CC85E11A49F6D40076DE19 /* Upload Symbol Files */,
 				50BED8481B21DC7900CBB715 /* ShellScript */,
+				3AC579361B28808700EB9252 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -290,10 +280,10 @@
 			files = (
 				50BED87F1B21E05100CBB715 /* DigitsKitResources.bundle in Resources */,
 				50BBCFD71B150F250055DE32 /* downloadButton.png in Resources */,
-				50BBCFDF1B1605C00055DE32 /* Main.storyboard in Resources */,
 				50BBCFE31B1645A50055DE32 /* unliked.png in Resources */,
 				92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */,
 				50BBCFD91B150FA50055DE32 /* shareButton.png in Resources */,
+				3A7D030F1B29DCC700B446C5 /* Main.storyboard in Resources */,
 				92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */,
 				50BBCFDC1B1514E10055DE32 /* backButton.png in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
@@ -305,6 +295,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3AC579361B28808700EB9252 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
 		50BED8481B21DC7900CBB715 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -316,7 +319,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run ef7a1ebf7fc603f162c02e071c9bec17cfc2117e d0aff69e43930b8d6d34dd135139bf53ce643941c235e4e1a299e8384d76406e";
+			shellScript = "./Fabric.framework/run 2536c21aa9a9edce636bfa2b489d140c6f93b6cb 5533ca91dd34ad36985a7c1db7da62fcd4165b134ee8670419e8d02bc2232e6d";
 		};
 		81CC85E11A49F6D40076DE19 /* Upload Symbol Files */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -340,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				505A465A1B0A55A600B9BB4F /* FullScreenViewController.swift in Sources */,
+				3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */,
 				50CE7E7A1B03DB2F00F4B6B1 /* FeedViewController.swift in Sources */,
 				504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */,
 				50CE7E7C1B03DBC100F4B6B1 /* FeedViewCell.swift in Sources */,
@@ -355,13 +359,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		50BBCFDD1B1605C00055DE32 /* Main.storyboard */ = {
+		3A7D030D1B29DCC700B446C5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				50BBCFDE1B1605C00055DE32 /* Base */,
+				3A7D030E1B29DCC700B446C5 /* Base */,
 			);
 			name = Main.storyboard;
-			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

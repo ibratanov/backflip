@@ -60,6 +60,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
+        print("Gets here")
         // Gets location of the user
         locationManager.delegate = self
         
@@ -75,6 +77,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
@@ -209,8 +212,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         query.whereKey("geoLocation", nearGeoPoint: userGeoPoint, withinKilometers: 10.0)
         query.limit = 5
         let placesObjects = query.findObjects() as! [PFObject]
-        
-        //print(placesObjects.count)
+        print("Gets her")
+        print(placesObjects.count)
         dump(placesObjects)
         
         for object in placesObjects {
