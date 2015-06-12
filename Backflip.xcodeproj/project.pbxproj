@@ -25,6 +25,7 @@
 		50CE7E761B03999D00F4B6B1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E751B03999D00F4B6B1 /* PostViewController.swift */; };
 		50CE7E7A1B03DB2F00F4B6B1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E791B03DB2F00F4B6B1 /* FeedViewController.swift */; };
 		50CE7E7C1B03DBC100F4B6B1 /* FeedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E7B1B03DBC100F4B6B1 /* FeedViewCell.swift */; };
+		674DD2621B2A61AE008C68E6 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674DD2611B2A61AD008C68E6 /* Branch.framework */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA814D1A49DA1800E65899 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* LoginViewController.swift */; };
 		81BA81521A49DA1800E65899 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
@@ -63,6 +64,7 @@
 		50CE7E751B03999D00F4B6B1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		50CE7E791B03DB2F00F4B6B1 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		50CE7E7B1B03DBC100F4B6B1 /* FeedViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewCell.swift; sourceTree = "<group>"; };
+		674DD2611B2A61AD008C68E6 /* Branch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Branch.framework; path = ../Branch.framework; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* Backflip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Backflip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA81491A49DA1800E65899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				674DD2621B2A61AE008C68E6 /* Branch.framework in Frameworks */,
 				50C9A7931B276F430091FEC9 /* Social.framework in Frameworks */,
 				81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */,
 				81BA817D1A49E0EA00E65899 /* MobileCoreServices.framework in Frameworks */,
@@ -162,6 +165,7 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				674DD2611B2A61AD008C68E6 /* Branch.framework */,
 				50C9A7921B276F430091FEC9 /* Social.framework */,
 				50BED8791B21E05100CBB715 /* Fabric.framework */,
 				50BED87A1B21E05100CBB715 /* DigitsKit.framework */,
@@ -436,6 +440,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					/Users/mwars/Desktop,
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -452,6 +457,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					/Users/mwars/Desktop,
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
