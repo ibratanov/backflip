@@ -232,8 +232,7 @@ class AlbumViewController: UICollectionViewController {
                 // Event is still active (currentTime < expiry time)
                 if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
 
-                    
-                    //self.displayAlert("Heads Up!", error: "Active")
+                //self.displayAlert("Heads Up!", error: "Active")
 
                     
                 // Event is no longer active (currentTime > expiry time)
@@ -397,6 +396,9 @@ class AlbumViewController: UICollectionViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        self.images.removeAll(keepCapacity: true)
+
+        self.collectionView?.reloadData()
         // Dispose of any resources that can be recreated.
     }
 
@@ -424,7 +426,6 @@ class AlbumViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
 
         if sortedByLikes == false {
@@ -467,7 +468,8 @@ class AlbumViewController: UICollectionViewController {
             }
     
        }
-    
+        albumCell.layer.shouldRasterize = true
+        albumCell.layer.rasterizationScale = UIScreen.mainScreen().scale    
         return albumCell
     }
     
