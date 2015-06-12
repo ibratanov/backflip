@@ -60,14 +60,17 @@ class AlbumViewController: UICollectionViewController {
         
         switch sender.selectedSegmentIndex {
             
+            // Rating
             case 0 :    sortedByLikes = true
                         updatePhotos()
                         self.collectionView?.reloadData()
             
+            // Time
             case 1:     sortedByLikes = false
                         updatePhotos()
                         self.collectionView?.reloadData()
             
+            // My Photos
             case 2 :    println("hi")
             
             
@@ -78,8 +81,7 @@ class AlbumViewController: UICollectionViewController {
     
     
     override func viewDidAppear(animated: Bool) {
-     
-        
+
         // Initialize segmented control button
         let items = ["RATING", "NEWEST", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
@@ -95,16 +97,15 @@ class AlbumViewController: UICollectionViewController {
         
         // Set characteristics of segmented controller
         var backColor : UIColor = UIColor.blackColor()
-        var titleFont : UIFont = UIFont(name: "avenir", size: 12.0)!
+        var titleFont : UIFont = UIFont(name: "Avenir", size: 12.0)!
         var textColor : UIColor = UIColor.whiteColor()
         var underline  =  NSUnderlineStyle.StyleSingle.rawValue
         var blue : UIColor = UIColor.blueColor()
         
         
         // Attributes for non selected segments
-        
-     
         var segAttributes = [
+            
             NSForegroundColorAttributeName : backColor,
 
             NSFontAttributeName : titleFont,
@@ -124,14 +125,16 @@ class AlbumViewController: UICollectionViewController {
             NSUnderlineColorAttributeName : blue
             
         ]
-
+        
+        // Implement the above attributes on our segmented control
         segC.setTitleTextAttributes(segAttributes as [NSObject:AnyObject],forState: UIControlState.Normal)
         segC.setTitleTextAttributes(segAttributes1 as [NSObject:AnyObject], forState: UIControlState.Selected)
-
+        
+        // Implement base colors on our segmented control
         segC.tintColor = UIColor.whiteColor()
         segC.backgroundColor = UIColor.whiteColor()
         
-        // Add targets, initialize in the view
+        // Add targets, initialize segmented control
         segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
         self.view.addSubview(segC)
         
@@ -153,6 +156,7 @@ class AlbumViewController: UICollectionViewController {
         // Left nav bar button item
         let back = UIButton.buttonWithType(.System) as! UIButton
         back.setBackgroundImage(goBack, forState: .Normal)
+        back.backgroundColor = UIColor.whiteColor()
         back.frame = CGRectMake(10, 65, 25, 25)
         back.addTarget(self, action: "print", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
@@ -166,13 +170,13 @@ class AlbumViewController: UICollectionViewController {
 
         self.view.addSubview(navBar)
 
-        // Create bottom plain white rectangle bar view
+        // Creates the plain white bar on the bottom of the screen
         let bottomBar = UIView(frame: CGRectMake(0, 455, self.view.frame.size.width, 125))
         bottomBar.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(bottomBar)
         
         // Post a photo button, a subview of the bottom bar
-        let postPhoto = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
             postPhoto.setBackgroundImage(bgImage, forState: .Normal)
             postPhoto.setImage(cam, forState: .Normal)
             postPhoto.frame = CGRectMake(0, 0, 80, 80)
@@ -196,15 +200,14 @@ class AlbumViewController: UICollectionViewController {
         // Set VC color
         self.collectionView!.backgroundColor = UIColor.whiteColor()
         
-        // Pushes collection view down
+        // Pushes collection view down, higher value pushes collection view downwards
         collectionView?.contentInset = UIEdgeInsetsMake(150.0,0.0,0.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
  
         // Pull down to refresh
         refresher = UIRefreshControl()
-        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh") //text that appears
-        refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged) //run this method when value is changed
-        
+        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
         self.collectionView!.addSubview(refresher)
 
         
@@ -215,16 +218,15 @@ class AlbumViewController: UICollectionViewController {
         components.hour = 48
         let components2 = NSDateComponents()
         components2.hour = 24
-
-       
-        let date2 = cal.dateByAddingComponents(components2, toDate: currentTime, options: NSCalendarOptions.allZeros)
         
         var eventQuery = PFQuery(className: "Event")
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
             
             if error == nil {
                 
+                //TODO: determine how this can be set automatically
                 let endTime = objects?.objectForKey("endTime") as! NSDate
+                
                 //date is the end time of event plus 48hours
                 let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
                 
@@ -254,19 +256,7 @@ class AlbumViewController: UICollectionViewController {
             
         }
         
-        println(eventId)
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
-        
         updateAlbum()
-        
-        
 
     }
     
@@ -288,10 +278,11 @@ class AlbumViewController: UICollectionViewController {
     
     func updateAlbum() {
         
-        // Load information from parse db
         var getUploadedImages = PFQuery(className: "Photo")
         
+        // Parse query limit default is 100 objects
         getUploadedImages.limit = 1000
+        
         getUploadedImages.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             
             if error == nil {
@@ -404,17 +395,6 @@ class AlbumViewController: UICollectionViewController {
             }
         }
     }
-    
-    
-    
-    // WIP function to change to feed view
-    /*func viewChange() {
-        
-        let storyboard = UIStoryboard(name: "albumView", bundle: nil)
-        let newVC = storyboard.instantiateViewControllerWithIdentifier("feedView") as? FeedViewController
-        self.presentViewController(newVC!, animated: true, completion: nil)
-        
-    }*/
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -499,7 +479,7 @@ class AlbumViewController: UICollectionViewController {
             var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
             var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
             
-            // Sorted by time
+            // Sorted by time (from newest to oldest)
             if self.sortedByLikes == false {
 
                 moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
