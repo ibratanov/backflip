@@ -24,11 +24,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     var cellImage : UIImage!
-    var tempTitle : String = ""
+    //var tempTitle : String = ""
     var objectIdTemp : String = ""
     var likeActive = false
     var liked = UIImage(named: "liked.png") as UIImage!
     var unliked = UIImage(named: "unliked.png") as UIImage!
+    
     
     
     // function to handle double tap on image
@@ -41,10 +42,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             
         }
     }
-    
-    
-    
-    
     
     // toggles the like button from "like" to "unlike" when clicked
     @IBAction func likeToggle(sender: AnyObject) {
@@ -73,7 +70,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             likeActive = false
             
             likeButtonLabel.setImage(unliked, forState:.Normal)
-            
         
         }
     }
@@ -83,16 +79,16 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBAction func likeButton(sender: AnyObject) {
         
         if likeActive == false {
-         
+            
             // add username to photos list of users who liked
             var query1 = PFQuery(className: "Photo")
             
             query1.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
-                
+
                 if error == nil {
                     
                     objects?.addUniqueObject(PFUser.currentUser()!.username!, forKey:"usersLiked")
-                    
+
                     let array = objects?.objectForKey("usersLiked") as! [String]
                     
                     objects?.incrementKey("upvoteCount", byAmount: 1)
@@ -100,6 +96,30 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                     //TODO: is this more efficient or is it more efficient to get the upvoteCount value? Same below in "unlike"
                     self.likeCount.text = String(array.count)
                     
+                    // Add both photo object and id to arrays in user class
+                    var query2 = PFUser.query()
+                    
+                    query2?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (object, error) -> Void in
+                        
+                        if error == nil {
+                            
+                            //print(image)
+                            println(objects)
+                            object?.addObject(objects!, forKey: "photoObjects")
+                            
+                            println("test2")
+                            
+                            object?.addUniqueObject(self.objectIdTemp, forKey:"photosLiked")
+                            
+                            object!.saveInBackground()
+                            
+                            
+                        } else {
+                            
+                            println("Error: \(error!) \(error!.userInfo!)")
+                        }
+                    }
+                    
                     objects!.saveInBackground()
                     
                 } else {
@@ -107,26 +127,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
-            
-            // add photo ID to users list of photos liked
-            var query2 = PFUser.query()
-            
-            query2?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
-                
-                if error == nil {
-                    
-                    objects?.addUniqueObject(self.objectIdTemp, forKey:"photosLiked")
-
-                    objects!.saveInBackground()
-
-                    
-                } else {
-                    
-                    println("Error: \(error!) \(error!.userInfo!)")
-                }
-            }
-            
-            
             
         } else {
             
@@ -139,11 +139,32 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                     
                     objects?.removeObject(PFUser.currentUser()!.username!, forKey:"usersLiked")
                     
+                    
                     let array = objects?.objectForKey("usersLiked") as! [String]
                     
                     objects?.incrementKey("upvoteCount", byAmount: -1)
                     
                     self.likeCount.text = String(array.count)
+                    
+                    // Remove photo ID to user photo liked list and photo object from photo object array
+                    var query4 = PFUser.query()
+                    
+                    query4?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (object, error) -> Void in
+                        
+                        if error == nil {
+                            
+                            object?.removeObject(objects!, forKey: "photoObjects")
+                            
+                            object?.removeObject(self.objectIdTemp, forKey:"photosLiked")
+                            
+                            object!.saveInBackground()
+                            
+                        } else {
+                            
+                            println("Error: \(error!) \(error!.userInfo!)")
+                            
+                        }
+                    }
  
                     objects!.saveInBackground()
 
@@ -152,26 +173,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
-            
-            // remove photo ID to user photo liked list
-            var query4 = PFUser.query()
-            
-            query4?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
-                
-                if error == nil {
-                    
-                    objects?.removeObject(self.objectIdTemp, forKey:"photosLiked")
-                    
-
-                    objects!.saveInBackground()
-
-                } else {
-                    
-                    println("Error: \(error!) \(error!.userInfo!)")
-                    
-                }
-            }
         }
+        
     }
 
  
@@ -275,7 +278,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
             if error == nil {
                 
                 var tempImage = objects?.objectForKey("image") as! PFFile
-                self.eventTitle.text = objects?.objectForKey("caption") as? String
+                //self.eventTitle.text = objects?.objectForKey("caption") as? String
                 var tempDate = objects?.createdAt! as NSDate!
 
                 // check for date from previous VC, format and display the date
