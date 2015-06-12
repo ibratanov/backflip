@@ -10,6 +10,7 @@ import DigitsKit
 
 
 class LoginViewController: UIViewController, UINavigationControllerDelegate {
+
     
     @IBAction func privacyPolicy(sender: AnyObject) {
     
@@ -40,7 +41,11 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         self.presentViewController(alert, animated: true, completion: nil)
     }
 
-    
+    //Hide the status bar
+    override func prefersStatusBarHidden() -> Bool {
+        
+        return true;
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
