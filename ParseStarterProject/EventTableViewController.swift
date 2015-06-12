@@ -12,6 +12,7 @@ import DigitsKit
 
 class EventTableViewController: UITableViewController {
     
+    
     var imageList: [PFFile] = []
     var events: [String] = []
     var eventId: [String] = []
@@ -95,22 +96,28 @@ class EventTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        cell.textLabel?.text = events[indexPath.row]
+        //var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         
-        var imageData = self.imageList[indexPath.row].getData()
+        let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
+                //let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
+    
+        var imageData1 = self.imageList[indexPath.row].getData()
+        tableCell.imageOne!.image = UIImage (data: imageData1!)
         
-        let xOffset: CGFloat = 10
-        let contentViewFrame = cell.contentView.frame
-        let imageView = UIImageView()
-        imageView.image = UIImage (data: imageData!)
-        imageView.frame = CGRectMake(xOffset, CGFloat(0), CGFloat(50), CGFloat(50))
-        cell.contentView.addSubview(imageView)
+        var imageData2 = self.imageList[indexPath.row+1].getData()
+        tableCell.imageTwo!.image = UIImage (data: imageData2!)
         
-        //cell.imageView!.image = image
+        var imageData3 = self.imageList[indexPath.row+2].getData()
+        tableCell.imageThree!.image = UIImage (data: imageData3!)
+        
+        var imageData4 = self.imageList[indexPath.row+2].getData()
+        tableCell.imageFour!.image = UIImage (data: imageData4!)
+        
+        tableCell.eventName.text = "Event Name" + String(indexPath.row)
+        tableCell.eventLocation.text = "Event Location" + String(indexPath.row)
         
         
-        return cell
+        return tableCell
     }
     
    /*override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
