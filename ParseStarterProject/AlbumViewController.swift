@@ -13,7 +13,6 @@ let reuseIdentifier = "albumCell"
 
 class AlbumViewController: UICollectionViewController {
     
-    
     var refresher: UIRefreshControl!
     
     // Title passed from previous VC

@@ -3,7 +3,7 @@
 //
 //  Copyright 2011-present Parse Inc. All rights reserved.
 //
-
+#import <Branch/Branch.h>
 #ifndef ParseStarterProject_Bridging_Header_h
 #define ParseStarterProject_Bridging_Header_h
 
