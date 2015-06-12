@@ -59,11 +59,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     
     func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int?)
     {
-        if (self.cellContent.count == 0) {
-            println("Cell content empty")
-        } else {
-            eventField.text = self.cellContent[row] as! String
-        }
+        
+        eventField.text = self.cellContent[row] as! String
     }
     
     override func viewDidLoad() {
@@ -139,10 +136,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
 */
     
     override func viewDidAppear(animated: Bool) {
-        //self.pickerInfo.reloadAllComponents()
+        self.pickerInfo.reloadAllComponents()
         locationManager.stopUpdatingLocation()
         
-        self.pickerInfo.reloadAllComponents()
+        self.pickerInfo.
+        
+        //self.pickerInfo.reloadAllComponents()
     }
 
     override func didReceiveMemoryWarning() {
