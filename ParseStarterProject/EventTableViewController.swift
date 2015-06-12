@@ -19,7 +19,7 @@ class EventTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+  
         
         updateEvents()
         

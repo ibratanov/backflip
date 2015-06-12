@@ -21,6 +21,12 @@ class AlbumViewController: UICollectionViewController {
     
     // Variable for storing PFFile as image, pass through segue
     var images = [UIImage]()
+    var postLogo = UIImage(named: "liked.png") as UIImage!
+    var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
+    var share = UIImage(named: "share-icon") as UIImage!
+    var bgImage = UIImage(named: "goto-camera-background") as UIImage!
+    var cam = UIImage(named:"goto-camera") as UIImage!
+
     
     // Tuple for sorting
     var imageFilesTemp : [(image: PFFile , likes: Int , id: String,date: NSDate)] = []
@@ -48,11 +54,153 @@ class AlbumViewController: UICollectionViewController {
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    
+    func viewChanger (sender: UISegmentedControl) {
+        
+        switch sender.selectedSegmentIndex {
+            
+            case 0 :    sortedByLikes = true
+                        updatePhotos()
+                        self.collectionView?.reloadData()
+            
+            case 1:     sortedByLikes = false
+                        updatePhotos()
+                        self.collectionView?.reloadData()
+            
+            case 2 :    println("hi")
+            
+            
+            default:    updateAlbum()
+            
+        }
+    }
+    
+    
+    override func viewDidAppear(animated: Bool) {
+     
+        
+        // Initialize segmented control button
+        let items = ["RATING", "NEWEST", "MY PHOTOS"]
+        let segC = UISegmentedControl(items: items)
+        segC.selectedSegmentIndex = 0
+        
+        // Defines where seg control is positioned
+        let frame: CGRect = UIScreen.mainScreen().bounds
+        println(frame)
+        let screenWidth = frame.width
+        let screenHeight = frame.height
+        var superCenter = CGPointMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds))
+        segC.frame = CGRectMake(CGRectGetMinX(frame),100,screenWidth,40)
+        
+        // Set characteristics of segmented controller
+        var backColor : UIColor = UIColor.blackColor()
+        var titleFont : UIFont = UIFont(name: "avenir", size: 12.0)!
+        var textColor : UIColor = UIColor.whiteColor()
+        var underline  =  NSUnderlineStyle.StyleSingle.rawValue
+        var blue : UIColor = UIColor.blueColor()
+        
+        
+        // Attributes for non selected segments
+        
+     
+        var segAttributes = [
+            NSForegroundColorAttributeName : backColor,
+
+            NSFontAttributeName : titleFont,
+            
+            NSBackgroundColorAttributeName : textColor
+        ]
+
+        // Attributes for when segment is selected
+        var segAttributes1 = [
+            
+            NSForegroundColorAttributeName : backColor,
+            
+            NSFontAttributeName : titleFont,
+            
+            NSUnderlineStyleAttributeName : underline,
+            
+            NSUnderlineColorAttributeName : blue
+            
+        ]
+
+        segC.setTitleTextAttributes(segAttributes as [NSObject:AnyObject],forState: UIControlState.Normal)
+        segC.setTitleTextAttributes(segAttributes1 as [NSObject:AnyObject], forState: UIControlState.Selected)
+
+        segC.tintColor = UIColor.whiteColor()
+        segC.backgroundColor = UIColor.whiteColor()
+        
+        // Add targets, initialize in the view
+        segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
+        self.view.addSubview(segC)
+        
+        
+        // Nav Bar positioning
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 100))
+        navBar.backgroundColor =  UIColor.whiteColor()
+        
+        // Removes faint line under nav bar
+        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        navBar.shadowImage = UIImage()
+        
+        // Set the Nav bar properties
+        let navBarItem = UINavigationItem()
+        navBarItem.title = "EVENT TITLE"
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "avenir", size: 30)!]
+        navBar.items = [navBarItem]
+        
+        // Left nav bar button item
+        let back = UIButton.buttonWithType(.System) as! UIButton
+        back.setBackgroundImage(goBack, forState: .Normal)
+        back.frame = CGRectMake(10, 65, 25, 25)
+        back.addTarget(self, action: "print", forControlEvents: .TouchUpInside)
+        navBar.addSubview(back)
+        
+        // Right nav bar button item
+        let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
+        shareAlbum.setBackgroundImage(share, forState: .Normal)
+        shareAlbum.frame = CGRectMake(285,65,25,25)
+        shareAlbum.addTarget(self, action: "print", forControlEvents: .TouchUpInside)
+        navBar.addSubview(shareAlbum)
+
+        self.view.addSubview(navBar)
+
+        // Create bottom plain white rectangle bar view
+        let bottomBar = UIView(frame: CGRectMake(0, 455, self.view.frame.size.width, 125))
+        bottomBar.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(bottomBar)
+        
+        // Post a photo button, a subview of the bottom bar
+        let postPhoto = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+            postPhoto.setBackgroundImage(bgImage, forState: .Normal)
+            postPhoto.setImage(cam, forState: .Normal)
+            postPhoto.frame = CGRectMake(0, 0, 80, 80)
+            postPhoto.center = CGPointMake(bottomBar.frame.size.width/2, bottomBar.frame.size.height/2)
+            postPhoto.addTarget(self, action: "print", forControlEvents: UIControlEvents.TouchUpInside)
+            bottomBar.addSubview(postPhoto)
+            bottomBar.bringSubviewToFront(postPhoto)
+        
+    }
+    
+    func print(){
+        
+        println("test")
+        
+    }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set VC color
+        self.collectionView!.backgroundColor = UIColor.whiteColor()
+        
+        // Pushes collection view down
+        collectionView?.contentInset = UIEdgeInsetsMake(150.0,0.0,0.0,0.0)
+        self.automaticallyAdjustsScrollViewInsets = false
+ 
+        // Pull down to refresh
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh") //text that appears
         refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged) //run this method when value is changed
@@ -60,6 +208,7 @@ class AlbumViewController: UICollectionViewController {
         self.collectionView!.addSubview(refresher)
 
         
+        // Initialize date comparison components
         let currentTime = NSDate()
         let cal = NSCalendar.currentCalendar()
         let components = NSDateComponents()
@@ -93,14 +242,13 @@ class AlbumViewController: UICollectionViewController {
                     
                     // Delete if the event is no longer active
                     //objects?.deleteInBackground()
-
                     
                 }
 
                 
             } else {
                 
-                print (error)
+                println(error)
                 
             }
             
@@ -116,17 +264,6 @@ class AlbumViewController: UICollectionViewController {
 
         // Do any additional setup after loading the view.
         
-        // Button to switch sorting options
-        let viewChangeButton = UIButton(frame: CGRectMake(0, 0, 50, 50))
-        viewChangeButton.center.y = self.view.bounds.height - 50
-        viewChangeButton.backgroundColor = UIColor.whiteColor()
-        viewChangeButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        viewChangeButton.setTitle("Sort", forState: UIControlState.Normal)
-        viewChangeButton.addTarget(self, action: "sortButton", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(viewChangeButton)
-        self.view.bringSubviewToFront(viewChangeButton)
-        
-        
         updateAlbum()
         
         
@@ -140,19 +277,12 @@ class AlbumViewController: UICollectionViewController {
         
     }
     
-    
     func sortButton() {
         
-        updatePhotos()
-        
         // Change boolean, reload data to sort images
-        if sortedByLikes == true {
-            sortedByLikes = false
-        } else {
-            sortedByLikes = true
-        }
+        sortedByLikes == true
         
-        //self.collectionView?.reloadData()
+        self.collectionView?.reloadData()
     }
     
     
@@ -204,8 +334,6 @@ class AlbumViewController: UICollectionViewController {
                 println(error)
                 
             }
-            
-            dump(self.imageFilesTemp)
             
             //self.collectionView?.reloadData()
             //self.refresher.endRefreshing()
