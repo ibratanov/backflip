@@ -52,14 +52,18 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.cellContent.count
     }
-    
+
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         return self.cellContent[row] as! String
     }
     
-    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int)
+    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int?)
     {
-        eventField.text = self.cellContent[row] as! String
+        if (self.cellContent.count == 0) {
+            println("Cell content empty")
+        } else {
+            eventField.text = self.cellContent[row] as! String
+        }
     }
     
     override func viewDidLoad() {
@@ -262,14 +266,22 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         print(placesObjects.count)
         dump(placesObjects)
         
-        for object in placesObjects {
-            var eventName = object.objectForKey("eventName")
-            
-            // hack, fix later
-            if cellContent.count < query.limit {
-                cellContent.addObject(eventName!)
+        if (placesObjects.count == 0) {
+            pickerInfo.hidden = true
+        } else {
+        
+            for object in placesObjects {
+                var eventName: AnyObject? = object.objectForKey("eventName")
+                
+                // hack, fix later
+                if cellContent.count < query.limit {
+                    cellContent.addObject(eventName!)
+                }
+
             }
-           
+            
+            self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
+            
         }
 
     }
@@ -285,6 +297,35 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         return true
     }
+
+// TEMP WORK ON SCROLLABLE PICKERVIEW - http://codereply.com/answer/8crh93/uipickerview-loop-data.html
+//    func valueForRow(row: Int) -> String {
+//        //the rows repeat every cellContent.count items
+//        return "test" //self.cellContent[row % self.cellContent.count] as! String
+//    }
+//    
+//    func rowForValue(value: Int) -> Int? {
+//        //if let valueIndex: AnyObject = self.cellContent[value] {
+//            return 2 + value
+//        //}
+//        //return nil
+//    }
+//    
+//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+//        return valueForRow(row)//"\(valueForRow(row))"
+//    }
+//    
+//    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return 20
+//    }
+//    
+//    // whenever the picker view comes to rest, we'll jump back to
+//    // the row with the current value that is closest to the middle
+//    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        let newRow = 2 + (row % self.cellContent.count)
+//        pickerView.selectRow(newRow, inComponent: 0, animated: false)
+//        println("Resetting row to \(newRow)")
+//    }
     
     /*
     // MARK: - Navigation
