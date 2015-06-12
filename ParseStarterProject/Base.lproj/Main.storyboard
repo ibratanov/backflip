@@ -158,6 +158,18 @@
                                     <action selector="pastEventsButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="0Tq-1k-b0z"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HN-DF-hmf">
+                                <rect key="frame" x="0.0" y="452" width="320" height="59"/>
+                                <color key="backgroundColor" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="PRIVATE TRIBE">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pastEventsButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="xKh-iH-Izl"/>
+                                </connections>
+                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. Jay-Z,..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adM-Oa-W25">
                                 <rect key="frame" x="16" y="140" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -180,6 +192,11 @@
                                     <outlet property="delegate" destination="eGV-gf-aJ6" id="AYe-sq-sh8"/>
                                 </connections>
                             </pickerView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. Jay-Z,..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adM-Oa-W25">
+                                <rect key="frame" x="16" y="140" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z95-Tc-ZXl">
                                 <rect key="frame" x="0.0" y="453" width="320" height="57"/>
                                 <color key="backgroundColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
@@ -584,5 +601,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="Ju0-Hh-YW7"/>
         <segue reference="FSk-Fu-Rj2"/>
+        <segue reference="62M-ib-0xv"/>
+        <segue reference="Ju0-Hh-YW7"/>
     </inferredMetricsTieBreakers>
 </document>
