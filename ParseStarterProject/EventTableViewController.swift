@@ -14,8 +14,7 @@ class EventTableViewController: UITableViewController {
     
     var events: [String] = []
     var eventId: [String] = []
-//    var following = [Bool]()
-    
+
     var refresher: UIRefreshControl! //allows us to control the pull to refresh function
     
     override func viewDidLoad() {
