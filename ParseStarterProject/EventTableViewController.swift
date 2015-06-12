@@ -12,8 +12,9 @@ import DigitsKit
 
 class EventTableViewController: UITableViewController {
     
-    var events = [""]
-    
+    var events: [String] = []
+    var eventId: [String] = []
+
     var refresher: UIRefreshControl! //allows us to control the pull to refresh function
     
     override func viewDidLoad() {
@@ -25,7 +26,7 @@ class EventTableViewController: UITableViewController {
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh") //text that appears
         refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged) //run this method when value is changed
-        
+
         self.tableView.addSubview(refresher)
 
     }
@@ -40,11 +41,13 @@ class EventTableViewController: UITableViewController {
             for object in objects! {
 
                 self.events.append((object["eventName"] as! String))
+                self.eventId.append(object.objectId! as String!)
                 println(self.events)
                 
                 self.tableView.reloadData()
                 
             }
+            dump(self.events)
             self.refresher.endRefreshing()
         })
     }
@@ -89,14 +92,30 @@ class EventTableViewController: UITableViewController {
         return cell
     }
     
-   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+   /*override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath.row)
         
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
     
         self.performSegueWithIdentifier("toAlbum", sender: self)
-    }
+    }*/
 
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "toAlbum" {
+            
+            let moveVC = segue.destinationViewController as! AlbumViewController
+            
+            if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                moveVC.eventId =  eventId[selectedPath.row]
+            }
+        }
+    }
+    
+    
+    
+    
     
     /*
     // Override to support conditional editing of the table view.

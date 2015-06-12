@@ -215,6 +215,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         print(placesObjects.count)
         dump(placesObjects)
         
+<<<<<<< HEAD
         if (placesObjects.count == 0) {
             pickerInfo.hidden = true
         } else {
@@ -227,6 +228,14 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     cellContent.addObject(eventName!)
                 }
                
+=======
+        for object in placesObjects {
+            var eventName: AnyObject? = object.objectForKey("eventName")
+            
+            // hack, fix later
+            if cellContent.count < query.limit {
+                cellContent.addObject(eventName!)
+>>>>>>> master
             }
             
             self.pickerInfo.selectRow(2, inComponent: 0, animated: true)

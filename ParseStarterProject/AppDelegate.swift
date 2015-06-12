@@ -81,6 +81,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotificationTypes(types)
         }
         Fabric.with([Digits()])
+        
+        //--------------------------BRANCH.IO------------------------------------
+        let branch: Branch = Branch.getInstance()
+        //Now a connection can be established between a referring user and a referred user during anysession, not just the very first time a user opens the app.
+        branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
+            if (error == nil) {
+                // This can now count as a referred session even if this isn't
+                // the first time a user has opened the app (aka an "Install").
+                //Custom logic goes here --> dependent on access to cloud services
+            }
+        })
+        //------------------------------------------------------------------------
+
         return true
     }
 
@@ -115,6 +128,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if application.applicationState == UIApplicationState.Inactive {
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        println(url)
+        println(url.host as String!)
+        if(url.host == "events"){
+            //SMSInviteMwars://events---id
+            window?.rootViewController?.performSegueWithIdentifier("gotoEventScene", sender: nil)
+        }
+        // pass the url to the handle deep link call
+        // if handleDeepLink returns true, and you registered a callback in initSessionAndRegisterDeepLinkHandler, the callback will be called with the data associated with the deep link
+        if (!Branch.getInstance().handleDeepLink(url)) {
+            // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+            println(url)
+            println(url.host as String!)
+            
+        }
+        
+        return true
     }
 
     ///////////////////////////////////////////////////////////
