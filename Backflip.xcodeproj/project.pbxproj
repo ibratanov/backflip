@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
-		3A7D030F1B29DCC700B446C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A7D030D1B29DCC700B446C5 /* Main.storyboard */; };
 		3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */; };
 		3AAA7B751B2B25F20045EE76 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */; };
+		503BB1A61B2B62EF0042B16F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 503BB1A51B2B62EF0042B16F /* Main.storyboard */; };
 		504D96DF1B1CA38B00A1B95B /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */; };
 		504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */; };
 		505A465A1B0A55A600B9BB4F /* FullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */; };
@@ -50,9 +50,9 @@
 
 /* Begin PBXFileReference section */
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		3A7D030E1B29DCC700B446C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
 		3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		503BB1A51B2B62EF0042B16F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
 		504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenViewController.swift; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 		81BA81471A49DA1800E65899 /* Backflip */ = {
 			isa = PBXGroup;
 			children = (
-				3A7D030D1B29DCC700B446C5 /* Main.storyboard */,
+				503BB1A51B2B62EF0042B16F /* Main.storyboard */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
 				B61801321B0BCBF8000CF25E /* CheckinViewController.swift */,
@@ -290,7 +290,7 @@
 				50BBCFE31B1645A50055DE32 /* unliked.png in Resources */,
 				92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */,
 				50BBCFD91B150FA50055DE32 /* shareButton.png in Resources */,
-				3A7D030F1B29DCC700B446C5 /* Main.storyboard in Resources */,
+				503BB1A61B2B62EF0042B16F /* Main.storyboard in Resources */,
 				92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */,
 				50BBCFDC1B1514E10055DE32 /* backButton.png in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
@@ -365,17 +365,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		3A7D030D1B29DCC700B446C5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A7D030E1B29DCC700B446C5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		81BA81621A49DA1800E65899 /* Debug */ = {
@@ -465,7 +454,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					/Users/mwars/Desktop,
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -482,7 +470,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					/Users/mwars/Desktop,
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
