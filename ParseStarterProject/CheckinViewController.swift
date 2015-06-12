@@ -52,7 +52,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         return self.cellContent[row] as! String
     }
     
-    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int)
+    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int?)
     {
         eventField.text = self.cellContent[row] as! String
     }
@@ -212,7 +212,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         dump(placesObjects)
         
         for object in placesObjects {
-            var eventName = object.objectForKey("eventName")
+            var eventName: AnyObject? = object.objectForKey("eventName")
             
             // hack, fix later
             if cellContent.count < query.limit {

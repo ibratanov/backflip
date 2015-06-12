@@ -9,8 +9,10 @@
 import UIKit
 import Social
 import Parse
+import MessageUI
 
-class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
+
+class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate {
     
     @IBOutlet var likeCount: UILabel!
     
@@ -36,13 +38,19 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
     func handleTap (sender: UITapGestureRecognizer) {
         
         if sender.state == .Ended {
-            
+    
             likeButton(self)
             likeToggle(self)
             
         }
     }
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    //delegate method for the MessageComposeViewController
+    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
     // toggles the like button from "like" to "unlike" when clicked
     @IBAction func likeToggle(sender: AnyObject) {
         
@@ -375,6 +383,44 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate {
         fullScreenImage.addGestureRecognizer(gesture)
         
         self.view.bringSubviewToFront(likeCount)
+    }
+    
+    @IBAction func shareButtonBeta(sender:UIButton){
+        var params = [ "referringUsername": "User1",
+            "referringUserId": "12345",  "pictureId": "987666",
+        "pictureURL": "http://yoursite.com/pics/987666",
+        "pictureCaption": "BOOM" ]
+        
+        // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
+        
+        self.spinner.startAnimating()
+        //disable button
+        
+        
+        Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
+            if (error == nil) {
+                if MFMessageComposeViewController.canSendText() {
+                    
+                    let messageComposer = MFMessageComposeViewController()
+                    
+                    messageComposer.body = String(format: "Check this out: %@", url)
+                    
+                    messageComposer.messageComposeDelegate = self
+                    
+                    self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
+                        // stop spinner on main thread
+                        self.spinner.stopAnimating()
+                    })
+                } else {
+                    
+                    self.spinner.stopAnimating()
+                    
+                    var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        })
     }
     
     override func didReceiveMemoryWarning() {
