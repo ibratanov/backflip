@@ -20,7 +20,7 @@ class EventTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         var getUploadedImages = PFQuery(className: "Photo")
         getUploadedImages.limit = 40
         
@@ -28,6 +28,7 @@ class EventTableViewController: UITableViewController {
         for object in objects! {
             self.imageList.append(object["thumbnail"] as! PFFile)
         }
+
         
         updateEvents()
         
