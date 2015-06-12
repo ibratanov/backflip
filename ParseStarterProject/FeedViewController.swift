@@ -112,7 +112,7 @@ class FeedViewController: UITableViewController {
             var selectedRowIndex = self.tableView.indexPathForSelectedRow()
 
             moveVC.cellImage = images[selectedRowIndex!.row]
-            moveVC.tempTitle = captions[selectedRowIndex!.row]
+            //moveVC.tempTitle = captions[selectedRowIndex!.row]
             //moveVC.tempDate = dates[selectedRowIndex!.row]
             moveVC.objectIdTemp = objectIDs[selectedRowIndex!.row]
        

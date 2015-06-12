@@ -58,6 +58,10 @@
 	<true/>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>6Tribe would like to use your location.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>6Tribe would like to use your location.</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
