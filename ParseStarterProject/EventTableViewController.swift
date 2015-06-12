@@ -12,6 +12,7 @@ import DigitsKit
 
 class EventTableViewController: UITableViewController {
     
+    var imageList: [PFFile] = []
     var events: [String] = []
     var eventId: [String] = []
 
@@ -20,6 +21,13 @@ class EventTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var getUploadedImages = PFQuery(className: "Photo")
+        getUploadedImages.limit = 40
+        
+        var objects = getUploadedImages.findObjects()
+        for object in objects! {
+            self.imageList.append(object["thumbnail"] as! PFFile)
+        }
         
         updateEvents()
         
@@ -47,7 +55,7 @@ class EventTableViewController: UITableViewController {
                 self.tableView.reloadData()
                 
             }
-            dump(self.events)
+            //dump(self.events)
             self.refresher.endRefreshing()
         })
     }
@@ -88,7 +96,19 @@ class EventTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         cell.textLabel?.text = events[indexPath.row]
-
+        
+        var imageData = self.imageList[indexPath.row].getData()
+        
+        let xOffset: CGFloat = 10
+        let contentViewFrame = cell.contentView.frame
+        let imageView = UIImageView()
+        imageView.image = UIImage (data: imageData!)
+        imageView.frame = CGRectMake(xOffset, CGFloat(0), CGFloat(50), CGFloat(50))
+        cell.contentView.addSubview(imageView)
+        
+        //cell.imageView!.image = image
+        
+        
         return cell
     }
     

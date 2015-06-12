@@ -143,10 +143,13 @@ class CreatePublicEventViewController: UIViewController {
             }
             
         })
+        
+        self.performSegueWithIdentifier("eventsPage", sender: self)
     }
     
     
     @IBAction func pastEvents(sender: AnyObject) {
+        self.performSegueWithIdentifier("pastEventsTrans", sender: self)
     }
     
     

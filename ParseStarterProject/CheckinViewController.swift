@@ -12,6 +12,11 @@ import CoreLocation
 
 class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    
+    var userGeoPoint = PFGeoPoint()
+    
+    
+    
     @IBAction func publicEventSegue(sender: AnyObject) {
         performSegueWithIdentifier("CreateEvent", sender: sender)
         
@@ -60,34 +65,80 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
-        print("Gets here")
+        /*
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
+            if error == nil {
+                print(geoPoint)
+                self.userGeoPoint = geoPoint!
+                print("Get's here")
+                
+                
+            }
+            else {
+                print("Error with User Geopoint")
+            }
+        }
+*/
+        
+        //self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
+        
+        //calcNearbyEvents()
         // Gets location of the user
         locationManager.delegate = self
         
-        // locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
         locationManager.distanceFilter = 300 //every 300 meters it updates user's location
-        locationManager.requestWhenInUseAuthorization() //for testing purposes only
+        //locationManager.requestWhenInUseAuthorization() //for testing purposes only
+        
+        locationManager.requestAlwaysAuthorization()
         
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
     
     }
     
+    /*
+    func calcNearbyEvents() {
+        
+        var userLatitude = self.userGeoPoint.latitude
+        var userLongitude = self.userGeoPoint.longitude
+        let userGeoPoint = PFGeoPoint(latitude:userLatitude, longitude:userLongitude)
+        
+        print("This is geopoint")
+        print(userGeoPoint)
+        
+        
+        // Queries events table for locations that are close to user
+        // Return top 3 closest events
+        var query = PFQuery(className: "Event")
+        //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
+        query.whereKey("geoLocation", nearGeoPoint: userGeoPoint, withinKilometers: 10.0)
+        query.limit = 5
+        let placesObjects = query.findObjects() as! [PFObject]
+        
+        print(placesObjects.count)
+        //dump(placesObjects)
+        
+        for object in placesObjects {
+            var eventName = object.objectForKey("eventName")
+            
+            // hack, fix later
+            if cellContent.count < query.limit {
+                cellContent.addObject(eventName!)
+            }
+            
+        }
+        
+    }
+*/
+    
     override func viewDidAppear(animated: Bool) {
-        
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
-        
-        activityIndicator.startAnimating()
+        //self.pickerInfo.reloadAllComponents()
+        locationManager.stopUpdatingLocation()
         
         self.pickerInfo.reloadAllComponents()
-        activityIndicator.stopAnimating()
     }
 
     override func didReceiveMemoryWarning() {
