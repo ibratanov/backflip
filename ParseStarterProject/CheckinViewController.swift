@@ -102,6 +102,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     @IBOutlet var eventField: UITextField!
 
     @IBOutlet weak var checkInButton: UIButton!
+    
     @IBAction func checkInClicked(sender: AnyObject) {
         
         var error = ""
@@ -122,7 +123,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         } else {
             var event = PFObject(className:"Event")
             event["eventName"] = eventField.text
-            //event["startTime"] =
+            event["startTime"] = NSDate()
+            event["isLive"] = true
             event.saveInBackgroundWithBlock {
                 (success: Bool, error: NSError?) -> Void in
                 if (success) {
@@ -177,7 +179,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         object!.saveInBackground()
                     
                         
-                    
                         println("Saved")
                     }
                 }

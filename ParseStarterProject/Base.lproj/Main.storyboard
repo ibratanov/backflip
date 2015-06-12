@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -255,10 +255,10 @@ you acknowledge that you have read the                        .</string>
             </objects>
             <point key="canvasLocation" x="1833" y="442"/>
         </scene>
-        <!--CreateEvent-->
+        <!--Create Event View Controller-->
         <scene sceneID="nsu-6S-uCn">
             <objects>
-                <viewController storyboardIdentifier="CreateEvent" title="CreateEvent" id="jaA-7R-ZG2" customClass="CreatePublicEventViewController" customModule="Backflip" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateEvent" title="Create Event View Controller" id="jaA-7R-ZG2" customClass="CreatePublicEventViewController" customModule="Backflip" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Vma-OX-gnT"/>
                         <viewControllerLayoutGuide type="bottom" id="V9s-SO-STL"/>
@@ -326,11 +326,12 @@ you acknowledge that you have read the                        .</string>
                         <outlet property="addressField" destination="H7F-GV-XEZ" id="tfs-3k-cGS"/>
                         <outlet property="eventName" destination="qLG-oc-9AL" id="0Nc-Ex-Le1"/>
                         <outlet property="userAddressButton" destination="Kdw-nl-2al" id="NJ1-mA-7pH"/>
+                        <segue destination="9AY-mp-rfS" kind="show" identifier="createEventToEvents" id="a2A-3C-fBn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NBi-xB-G5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2358" y="788"/>
+            <point key="canvasLocation" x="2271" y="666"/>
         </scene>
         <!--[Event Name]-->
         <scene sceneID="fge-kj-K8y">
@@ -621,7 +622,7 @@ you acknowledge that you have read the                        .</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6l-V7-87z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2279" y="-140"/>
+            <point key="canvasLocation" x="2271" y="-140"/>
         </scene>
     </scenes>
     <resources>
@@ -632,7 +633,7 @@ you acknowledge that you have read the                        .</string>
         <image name="shareButton.png" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="a2A-3C-fBn"/>
         <segue reference="FSk-Fu-Rj2"/>
-        <segue reference="VCX-vA-6qG"/>
     </inferredMetricsTieBreakers>
 </document>

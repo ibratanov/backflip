@@ -105,7 +105,7 @@ class CreatePublicEventViewController: UIViewController {
     }
 
     
-    //Add event to event class
+    // Add event to event class
     @IBAction func createEvent(sender: AnyObject) {
         
         var address = self.addressField.text
@@ -139,7 +139,6 @@ class CreatePublicEventViewController: UIViewController {
                     }
                 }
                 
-                
             }
             
         })
@@ -147,6 +146,7 @@ class CreatePublicEventViewController: UIViewController {
     
     
     @IBAction func pastEvents(sender: AnyObject) {
+        self.performSegueWithIdentifier("createEventToEvents", sender: self)
     }
     
     
@@ -159,7 +159,7 @@ class CreatePublicEventViewController: UIViewController {
                 self.userGeoPoint = geoPoint!
             }
             else {
-                print("Error with User Geopoint")
+                println("Error with User Geopoint")
             }
         }
         
