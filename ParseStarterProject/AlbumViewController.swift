@@ -8,12 +8,37 @@
 
 import UIKit
 import Parse
+import MobileCoreServices
+import AssetsLibrary
+import Foundation
+import Photos
+
 
 let reuseIdentifier = "albumCell"
 
-class AlbumViewController: UICollectionViewController {
+class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate{
     
     var refresher: UIRefreshControl!
+    
+    //------------------Camera Att.-----------------
+    @IBOutlet weak var thumbnailButton: UIButton!
+    @IBOutlet weak var flashButton: UIButton!
+    var testCamera = UIImagePickerController()
+
+    
+    @IBOutlet weak var imageView: UIImageView!
+    var overlayView: UIView?
+    var image = UIImage()
+    var picker = UIImagePickerController()
+    var zoomImage = (camera: true, display: true)
+    var newMedia: Bool = true
+    //var flashOn = UIImage(named: "flash on") as UIImage?
+    //var flashOff = UIImage(named: "flash_icon") as UIImage?
+    //TO-DO: Button pressed button released attributes
+    
+
+    //----------------------------------------
     
     // Title passed from previous VC
     var eventId : String?
@@ -180,7 +205,7 @@ class AlbumViewController: UICollectionViewController {
             postPhoto.setImage(cam, forState: .Normal)
             postPhoto.frame = CGRectMake(0, 0, 80, 80)
             postPhoto.center = CGPointMake(bottomBar.frame.size.width/2, bottomBar.frame.size.height/2)
-            postPhoto.addTarget(self, action: "print", forControlEvents: UIControlEvents.TouchUpInside)
+            postPhoto.addTarget(self, action: "captureTest:", forControlEvents: UIControlEvents.TouchUpInside)
             bottomBar.addSubview(postPhoto)
             bottomBar.bringSubviewToFront(postPhoto)
         
@@ -492,6 +517,258 @@ class AlbumViewController: UICollectionViewController {
         
         }  
     }
+    
+    //--------------------------------Camera-----------------------------------------------------
+    //initialize camera
+    @IBAction func takePhoto(sender: UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+            println("Button capture")
+
+            //primary delegate for the picker
+            picker.delegate = self
+            picker.sourceType = .Camera
+            picker.mediaTypes = [kUTTypeImage]
+            picker.allowsEditing = false
+            self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+            self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+            
+            // resize
+            if (zoomImage.camera) {
+                self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.5, 1.5);
+                self.zoomImage.camera = false
+            }
+            
+            // custom camera overlayview
+            picker.showsCameraControls = false
+            NSBundle.mainBundle().loadNibNamed("CameraOverlayView", owner:self, options:nil)
+            self.overlayView!.frame = picker.cameraOverlayView!.frame
+            picker.cameraOverlayView = self.overlayView
+            self.overlayView = nil
+            
+            self.presentViewController(picker, animated:true, completion:{})
+            setLastPhoto()
+            newMedia = true
+        } else {
+            if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
+                var picker = UIImagePickerController()
+                picker.delegate = self;
+                picker.sourceType = .PhotoLibrary
+                picker.mediaTypes = [kUTTypeImage]
+                picker.allowsEditing = false
+                
+                self.presentViewController(picker, animated:true, completion:{})
+                setLastPhoto()
+                newMedia = false
+            }
+        }
+        
+        
+    }
+    
+    func saveImageAlert()
+    {
+        var alert:UIAlertView = UIAlertView()
+        alert.title = "Saved!"
+        alert.message = "Saved to Camera Roll"
+        alert.delegate = self
+        alert.addButtonWithTitle("Ok")
+        alert.show()
+    }
+    
+    @IBAction func loadFromLibrary(sender: AnyObject) {
+        var picker = UIImagePickerController()
+        picker.sourceType =
+            UIImagePickerControllerSourceType.SavedPhotosAlbum
+        picker.delegate = self
+        self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
+    {
+        image =
+            info[UIImagePickerControllerOriginalImage] as! UIImage
+        //set image cropped square
+        
+        self.imageView.image = cropToSquare(image:image)
+        
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+    }
+    func imagePickerControllerDidCancel(picker: UIImagePickerController){
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    func cropToSquare(image originalImage: UIImage) -> UIImage {
+        // Create a copy of the image without the imageOrientation property so it is in its native orientation (landscape)
+        let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage)!
+        
+        // Get the size of the contextImage
+        let contextSize: CGSize = contextImage.size
+        
+        let posX: CGFloat
+        let posY: CGFloat
+        let width: CGFloat
+        let height: CGFloat
+        
+        // Check to see which length is the longest and create the offset based on that length, then set the width and height of our rect
+        if contextSize.width > contextSize.height {
+            posX = ((contextSize.width - contextSize.height) / 2)
+            posY = 0
+            width = contextSize.height
+            height = contextSize.height
+        } else {
+            posX = 0
+            posY = ((contextSize.height - contextSize.width) / 2)
+            width = contextSize.width
+            height = contextSize.width
+        }
+        
+        let rect: CGRect = CGRectMake(posX, posY, width, height)
+        
+        // Create bitmap image from context using the rect
+        let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)
+        
+        // Create a new image based on the imageRef and rotate back to the original orientation
+        let image: UIImage = UIImage(CGImage: imageRef, scale: originalImage.scale, orientation: originalImage.imageOrientation)!
+        
+        return image
+    }
+    
+    func testCalled()
+    {
+        
+        let sourceType = UIImagePickerControllerSourceType.Camera
+        if (!UIImagePickerController.isSourceTypeAvailable(sourceType))
+        {
+            var alert:UIAlertView = UIAlertView()
+            alert.title = "Cannot access camera!"
+            alert.message = " "
+            alert.delegate = self
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        }
+        
+        let frontCamera = UIImagePickerControllerCameraDevice.Front
+        let rearCamera = UIImagePickerControllerCameraDevice.Rear
+        if (!UIImagePickerController.isCameraDeviceAvailable(frontCamera))
+        {
+            var alert:UIAlertView = UIAlertView()
+            alert.title = "Cannot access front-facing camera!"
+            alert.message = " "
+            alert.delegate = self
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        }
+        if (!UIImagePickerController.isCameraDeviceAvailable(rearCamera))
+        {
+            var alert:UIAlertView = UIAlertView()
+            alert.title = "Cannot access rear-facing camera!"
+            alert.message = " "
+            alert.delegate = self
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        }
+    }
+    
+    @IBAction func reverseCamera(sender: UIButton) {
+        //TO-DO: add transition when reversed
+        if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
+            self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
+            self.flashButton.hidden = false
+        }else{
+            self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
+            self.flashButton.hidden = true
+        }
+    }
+    
+    @IBAction func showCameraRoll(sender: UIButton) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        var controller = UIImagePickerController()
+        controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+        controller.mediaTypes = [kUTTypeImage]
+        controller.delegate = self
+        self.presentViewController(controller, animated:true, completion:nil)
+        
+    }
+    
+    @IBAction func capture(sender: UIButton) {
+        picker.takePicture()
+        updateThumbnail()
+    }
+    
+    func updateThumbnail(){
+        thumbnailButton.setBackgroundImage(image, forState: .Normal)
+        //thumbnailButton.setImage(image, forState: .Normal)
+        thumbnailButton.layer.borderColor = UIColor.blueColor().CGColor
+        thumbnailButton.layer.borderWidth=1.0
+        
+    }
+    @IBAction func toggleTorch(sender: UIButton) {
+        //TO-DO: add indication of toggle (image change)
+        if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
+            self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
+            //self.flashButton.setImage(flashOff, forState: .Normal)
+            var alert:UIAlertView = UIAlertView()
+            alert.title = "Flash off!"
+            alert.message = " "
+            alert.delegate = self
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        }else{
+            self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.On
+            //self.flashButton.setImage(flashOn, forState: .Normal)
+            var alert:UIAlertView = UIAlertView()
+            alert.title = "Flash on!"
+            alert.message = " "
+            alert.delegate = self
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        }
+    }
+    
+    //TO-DO: restriction through geotagged image
+    func setLastPhoto(){
+        var fetchOptions: PHFetchOptions = PHFetchOptions()
+        
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        
+        var fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
+        
+        if (fetchResult.lastObject != nil) {
+            
+            var lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
+            
+            PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: self.imageView.bounds.size, contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
+                
+                self.thumbnailButton.setBackgroundImage(result, forState: .Normal)
+                self.thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
+                self.thumbnailButton.layer.borderWidth=1.0
+                self.thumbnailButton.layer.cornerRadius = 5
+            }
+            
+        }
+    }
+//    @IBAction func openSettings(sender: UIButton) {
+//        UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!);
+//    }
+    
+    func captureTest(sender : UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+            println("Button capture")
+            
+            testCamera.delegate = self
+            testCamera.sourceType = UIImagePickerControllerSourceType.Camera;
+            testCamera.mediaTypes = [kUTTypeImage]
+            testCamera.allowsEditing = false
+            
+            self.presentViewController(testCamera, animated: true, completion: nil)
+        }
+    }
+    
+    //TO-DO: UIDeviceOrientationIsLandscape --> then rotate image
+    
 
     // MARK: UICollectionViewDelegate
 
@@ -523,5 +800,7 @@ class AlbumViewController: UICollectionViewController {
     
     }
     */
+    
+    
 
 }
