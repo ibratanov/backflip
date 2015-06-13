@@ -28,7 +28,7 @@
 		50CE7E761B03999D00F4B6B1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E751B03999D00F4B6B1 /* PostViewController.swift */; };
 		50CE7E7A1B03DB2F00F4B6B1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E791B03DB2F00F4B6B1 /* FeedViewController.swift */; };
 		50CE7E7C1B03DBC100F4B6B1 /* FeedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE7E7B1B03DBC100F4B6B1 /* FeedViewCell.swift */; };
-		67A795D61B2CCBA0006E489D /* CameraOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67A795D51B2CCBA0006E489D /* CameraOverlayView.xib */; };
+		67A795D81B2CE9F8006E489D /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67A795D71B2CE9F8006E489D /* OverlayView.xib */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA814D1A49DA1800E65899 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* LoginViewController.swift */; };
 		81BA81521A49DA1800E65899 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
@@ -71,7 +71,7 @@
 		50CE7E751B03999D00F4B6B1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		50CE7E791B03DB2F00F4B6B1 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		50CE7E7B1B03DBC100F4B6B1 /* FeedViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewCell.swift; sourceTree = "<group>"; };
-		67A795D51B2CCBA0006E489D /* CameraOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraOverlayView.xib; sourceTree = "<group>"; };
+		67A795D71B2CE9F8006E489D /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayView.xib; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* Backflip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Backflip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA81491A49DA1800E65899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				503BB1A51B2B62EF0042B16F /* Main.storyboard */,
-				67A795D51B2CCBA0006E489D /* CameraOverlayView.xib */,
+				67A795D71B2CE9F8006E489D /* OverlayView.xib */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
 				B61801321B0BCBF8000CF25E /* CheckinViewController.swift */,
@@ -292,12 +292,12 @@
 				50BBCFD71B150F250055DE32 /* downloadButton.png in Resources */,
 				50BBCFE31B1645A50055DE32 /* unliked.png in Resources */,
 				92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */,
-				67A795D61B2CCBA0006E489D /* CameraOverlayView.xib in Resources */,
 				50BBCFD91B150FA50055DE32 /* shareButton.png in Resources */,
 				503BB1A61B2B62EF0042B16F /* Main.storyboard in Resources */,
 				92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */,
 				50BBCFDC1B1514E10055DE32 /* backButton.png in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
+				67A795D81B2CE9F8006E489D /* OverlayView.xib in Resources */,
 				92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */,
 				50BBCFE11B16458E0055DE32 /* liked.png in Resources */,
 			);

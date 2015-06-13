@@ -27,7 +27,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var testCamera = UIImagePickerController()
 
     
-    @IBOutlet weak var imageView: UIImageView!
+    //@IBOutlet weak var imageView: UIImageView!
+    var imageViewContent = UIImage()
     var overlayView: UIView?
     var image = UIImage()
     var picker = UIImagePickerController()
@@ -205,7 +206,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             postPhoto.setImage(cam, forState: .Normal)
             postPhoto.frame = CGRectMake(0, 0, 80, 80)
             postPhoto.center = CGPointMake(bottomBar.frame.size.width/2, bottomBar.frame.size.height/2)
-            postPhoto.addTarget(self, action: "captureTest:", forControlEvents: UIControlEvents.TouchUpInside)
+            postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
             bottomBar.addSubview(postPhoto)
             bottomBar.bringSubviewToFront(postPhoto)
         
@@ -520,7 +521,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     //--------------------------------Camera-----------------------------------------------------
     //initialize camera
-    @IBAction func takePhoto(sender: UIButton) {
+    func takePhoto(sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             println("Button capture")
 
@@ -540,7 +541,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             // custom camera overlayview
             picker.showsCameraControls = false
-            NSBundle.mainBundle().loadNibNamed("CameraOverlayView", owner:self, options:nil)
+            NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
             self.overlayView!.frame = picker.cameraOverlayView!.frame
             picker.cameraOverlayView = self.overlayView
             self.overlayView = nil
@@ -590,7 +591,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             info[UIImagePickerControllerOriginalImage] as! UIImage
         //set image cropped square
         
-        self.imageView.image = cropToSquare(image:image)
+        self.imageViewContent = cropToSquare(image:image)
         
         picker.dismissViewControllerAnimated(true, completion: nil)
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
@@ -740,7 +741,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             var lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
             
-            PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: self.imageView.bounds.size, contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
+            PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: self.imageViewContent.size, contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
                 
                 self.thumbnailButton.setBackgroundImage(result, forState: .Normal)
                 self.thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
@@ -754,6 +755,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 //        UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!);
 //    }
     
+    @IBAction func cancelCamera(sender: AnyObject) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+
+    }
+
     func captureTest(sender : UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             println("Button capture")
