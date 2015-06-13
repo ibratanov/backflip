@@ -157,7 +157,7 @@ class AlbumViewController: UICollectionViewController {
         back.setBackgroundImage(goBack, forState: .Normal)
         back.backgroundColor = UIColor.whiteColor()
         back.frame = CGRectMake(10, 65, 25, 25)
-        back.addTarget(self, action: "print", forControlEvents: .TouchUpInside)
+        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
         // Right nav bar button item
@@ -191,10 +191,22 @@ class AlbumViewController: UICollectionViewController {
         println("test")
         
     }
+    
+    func seg() {
+        
+        //self.performSegueWithIdentifier("backButton", sender: self)
+        self.navigationController?.popViewControllerAnimated(true)
+        
+    }
 
 
     override func viewDidLoad() {
+        
+        
         super.viewDidLoad()
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+
         
         // Set VC color
         self.collectionView!.backgroundColor = UIColor.whiteColor()

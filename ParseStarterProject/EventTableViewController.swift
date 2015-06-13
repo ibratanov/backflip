@@ -18,8 +18,13 @@ class EventTableViewController: UITableViewController {
 
     var refresher: UIRefreshControl! //allows us to control the pull to refresh function
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         var getUploadedImages = PFQuery(className: "Photo")
         getUploadedImages.limit = 40
@@ -127,6 +132,7 @@ class EventTableViewController: UITableViewController {
         if segue.identifier == "toAlbum" {
             
             let moveVC = segue.destinationViewController as! AlbumViewController
+            //self.navigationController?.popViewControllerAnimated(true)
             
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                 moveVC.eventId =  eventId[selectedPath.row]
