@@ -831,6 +831,8 @@ you acknowledge that you have read the                        .</string>
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Ju0-Hh-YW7"/>
+        <segue reference="Ax8-uE-80J"/>
         <segue reference="FSk-Fu-Rj2"/>
         <segue reference="eA9-TU-XJn"/>
         <segue reference="hKp-Y7-lrD"/>
