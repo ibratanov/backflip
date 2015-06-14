@@ -57,9 +57,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         return self.cellContent[row] as! String
     }
     
-    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int?)
-    {
-        
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(self.cellContent[row])
+        print("Get's here")
         eventField.text = self.cellContent[row] as! String
     }
     
@@ -97,6 +97,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
+        
+        //self.pickerInfo.reloadAllComponents()
     
     }
     
@@ -136,8 +138,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
 */
     
     override func viewDidAppear(animated: Bool) {
-        self.pickerInfo.reloadAllComponents()
-        locationManager.stopUpdatingLocation()
+        //self.pickerInfo.reloadAllComponents()
+        //locationManager.stopUpdatingLocation()
         
         //self.pickerInfo.
         
@@ -282,6 +284,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
             
         }
+        
+        self.pickerInfo.reloadAllComponents()
 
     }
     
