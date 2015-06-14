@@ -272,12 +272,53 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.presentViewController(alert, animated: true, completion: nil)
         
     }
+    
+    
+    func seg() {
+        
+        self.navigationController?.popViewControllerAnimated(true)
+        
+    }
 
 
     
     override func viewDidLoad() {
        
         super.viewDidLoad()
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+
+        // Nav Bar positioning
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 100))
+        navBar.backgroundColor =  UIColor.blackColor()
+        
+        // Removes faint line under nav bar
+        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        navBar.shadowImage = UIImage()
+        
+        // Set the Nav bar properties
+        let navBarItem = UINavigationItem()
+        navBarItem.title = "EVENT TITLE"
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "avenir", size: 20)!]
+        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        navBar.items = [navBarItem]
+        
+        // Left nav bar button item
+        let back = UIButton.buttonWithType(.Custom) as! UIButton
+        back.setTitle("Back", forState: .Normal)
+        back.frame = CGRectMake(10, 65, 50,30)
+        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
+        navBar.addSubview(back)
+        
+        // Right nav bar button item
+        let shareAlbum = UIButton.buttonWithType(.Custom) as! UIButton
+        shareAlbum.setTitle("Action", forState: .Normal)
+        shareAlbum.frame = CGRectMake(250,65,70,30)
+        shareAlbum.addTarget(self, action: nil, forControlEvents: .TouchUpInside)
+        navBar.addSubview(shareAlbum)
+        
+        self.view.addSubview(navBar)
+
 
         var photoQuery = PFQuery(className: "Photo")
         
@@ -368,12 +409,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-        
-        
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        //self.navigationController?.navigationBarHidden = true
-        
         
         // gesture implementation
         var gesture = UITapGestureRecognizer(target: self, action: "handleTap:")
