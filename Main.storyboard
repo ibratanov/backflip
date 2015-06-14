@@ -799,7 +799,7 @@ you acknowledge that you have read the                        .</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ysJ-Me-BVH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3550" y="191"/>
+            <point key="canvasLocation" x="3569" y="-434"/>
         </scene>
         <!--NavController-->
         <scene sceneID="kuC-kA-2m0">
@@ -831,8 +831,8 @@ you acknowledge that you have read the                        .</string>
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eA9-TU-XJn"/>
         <segue reference="hKp-Y7-lrD"/>
+        <segue reference="eA9-TU-XJn"/>
         <segue reference="FSk-Fu-Rj2"/>
     </inferredMetricsTieBreakers>
 </document>
