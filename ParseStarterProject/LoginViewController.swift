@@ -11,6 +11,7 @@ import DigitsKit
 
 class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
+    @IBOutlet weak var termsTextView: UITextView!
     
     @IBAction func privacyPolicy(sender: AnyObject) {
     
@@ -50,6 +51,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        termsTextView.editable = false
     }
     
     

@@ -29,8 +29,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     //var tempTitle : String = ""
     var objectIdTemp : String = ""
     var likeActive = false
-    var liked = UIImage(named: "liked.png") as UIImage!
-    var unliked = UIImage(named: "unliked.png") as UIImage!
+    var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
+    var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
+    var back = UIImage(named: "backp.pdf") as UIImage!
     
     
     
@@ -53,17 +54,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 
     // toggles the like button from "like" to "unlike" when clicked
     @IBAction func likeToggle(sender: AnyObject) {
-        
-        // adjust font size based on like count
-        if (likeCount.text)!.toInt() > 9 {
-            
-            likeCount.font.fontWithSize(10)
-            
-        } else if (likeCount.text)!.toInt() > 99 {
-            
-            likeCount.font.fontWithSize(8)
-        }
-
         
         // adjust heart image
         if likeActive == false {
@@ -102,7 +92,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     objects?.incrementKey("upvoteCount", byAmount: 1)
                     
                     //TODO: is this more efficient or is it more efficient to get the upvoteCount value? Same below in "unlike"
-                    self.likeCount.text = String(array.count)
+                    let count = array.count
+                    if (count == 1) {
+                        self.likeCount.text = String(count) + " like"
+                    } else {
+                        self.likeCount.text = String(count) + " likes"
+                    }
                     
                     // Add both photo object and id to arrays in user class
                     var query2 = PFUser.query()
@@ -152,7 +147,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                     objects?.incrementKey("upvoteCount", byAmount: -1)
                     
-                    self.likeCount.text = String(array.count)
+                    let count = array.count
+                    if (count == 1) {
+                        self.likeCount.text = String(count) + " like"
+                    } else {
+                        self.likeCount.text = String(count) + " likes"
+                    }
                     
                     // Remove photo ID to user photo liked list and photo object from photo object array
                     var query4 = PFUser.query()
@@ -290,7 +290,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 
         // Nav Bar positioning
         let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 100))
-        navBar.backgroundColor =  UIColor.blackColor()
+        navBar.backgroundColor =  UIColor.whiteColor()
         
         // Removes faint line under nav bar
         navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
@@ -299,12 +299,16 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
         navBarItem.title = "EVENT TITLE"
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "avenir", size: 20)!]
-        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        navBar.titleTextAttributes = [NSFontAttributeName :
+            UIFont(name: "avenir", size: 18)!]
+        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
         navBar.items = [navBarItem]
         
         // Left nav bar button item
         let back = UIButton.buttonWithType(.Custom) as! UIButton
+        
+        back.setTitleColor(UIColor.blackColor(), forState: .Normal)
+//        back.setImage(self.back, forState: .Normal)
         back.setTitle("Back", forState: .Normal)
         back.frame = CGRectMake(10, 65, 50,30)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
@@ -312,6 +316,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Right nav bar button item
         let shareAlbum = UIButton.buttonWithType(.Custom) as! UIButton
+        shareAlbum.setTitleColor(UIColor.blackColor(), forState: .Normal)
         shareAlbum.setTitle("Action", forState: .Normal)
         shareAlbum.frame = CGRectMake(250,65,70,30)
         shareAlbum.addTarget(self, action: nil, forControlEvents: .TouchUpInside)
@@ -336,9 +341,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     //formatting to display date how we want it
                     let formatter = NSDateFormatter()
                     
-                    formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                    formatter.dateStyle = NSDateFormatterStyle.MediumStyle
                     
-                    formatter.timeStyle = .MediumStyle
+//                    formatter.dateFormat = "MMMM, d"
+                    
+                    formatter.timeStyle = .ShortStyle
                     
                     let dateStamp = formatter.stringFromDate(tempDate)
                     
@@ -402,7 +409,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             if error == nil {
                 
                 let array = objects?.objectForKey("usersLiked") as! [String]
-                self.likeCount.text = String(array.count)
+                let count = array.count
+                if (count == 1) {
+                    self.likeCount.text = String(count) + " like"
+                } else {
+                    self.likeCount.text = String(count) + " likes"
+                }
                 
             } else {
                 

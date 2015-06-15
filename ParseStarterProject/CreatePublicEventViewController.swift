@@ -12,14 +12,50 @@ import Parse
 
 class CreatePublicEventViewController: UIViewController {
     
+    
+    @IBAction func settingButton(sender: AnyObject) {
+        displayAlert("Would you like to log out?", error: "")
+    }
+    
     var userGeoPoint = PFGeoPoint()
     
-    @IBOutlet var eventName: UITextField!
+    // Disable navigation
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    var address2:String = ""
     
+    @IBOutlet var eventName: UITextField!
     
     @IBOutlet var userAddressButton: UIButton!
     
     @IBOutlet var addressField: UITextField!
+    
+    /*
+    func displayAlert(title:String, error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+*/
+    
+    func displayAlert(title:String,error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // Facebook share feature
+        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
     
     
     @IBAction func getUserAddressButton(sender: AnyObject) {
@@ -76,6 +112,7 @@ class CreatePublicEventViewController: UIViewController {
             }
             
             var address = streetNumber + ", " + streetAddress
+            self.address2 = streetNumber + ", " + cityName + ", " + countryName
             self.addressField.text = address
             
             
@@ -89,44 +126,75 @@ class CreatePublicEventViewController: UIViewController {
         let userGeoPoint = PFGeoPoint(latitude:userLatitude, longitude:userLongitude)
         event["geoLocation"] = userGeoPoint
         
-        event.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if (success) {
-                // The object has been saved.
-                println("success \(event.objectId)")
-            } else {
-                // There was a problem, check error.description
-                println("fail")
-            }
-        }
-        
-        
-        
+//        event.saveInBackgroundWithBlock {
+//            (success: Bool, error: NSError?) -> Void in
+//            if (success) {
+//                // The object has been saved.
+//                println("success \(event.objectId)")
+//            } else {
+//                // There was a problem, check error.description
+//                println("fail")
+//            }
+//        }
     }
 
     
-    //Add event to event class
+    // Add event to event class
     @IBAction func createEvent(sender: AnyObject) {
         
-        var address = self.addressField.text
+        var error = ""
+        
+        //var address = self.addressField.text
+        
+        var address = self.address2
+        println("======================" + self.address2)
+        
+        // Template for address
+        //var address = "289-303 Yonge St, Toronto, Canada"
         
         var eventName = self.eventName.text
         
-        var geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-            //print(placemarks?[0])
+        if (eventName == "" || address == "") {
+            error = "Please enter an event name and location."
+        } else if (count(eventName) < 2 || count(address) < 2) {
+            error = "Please enter a valid event name and location."
+        }
+        
+        if (error != "") {
+            displayAlert("Event creation error:", error: error)
+        } else {
             
-            if let placemark = placemarks?[0] as? CLPlacemark {
-                var location = placemark.location as CLLocation
-                var eventLatitude = location.coordinate.latitude
-                var eventLongitude = location.coordinate.longitude
+            var event = PFObject(className: "Event")
+            
+            var geocoder = CLGeocoder()
+            geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+                print(placemarks?[0])
                 
-                //Create Event
-                var event = PFObject(className:"Event")
+                if let placemark = placemarks?[0] as? CLPlacemark {
+                    var location = placemark.location as CLLocation
+                    var eventLatitude = location.coordinate.latitude
+                    var eventLongitude = location.coordinate.longitude
+                    
+                    let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
+                    
+                    //event["geoLocation"] = userGeoPoint
+                    self.userGeoPoint = userGeoPoint
+                }
+            })
+            
+            print("====================")
+            print(self.userGeoPoint)
+            event["geoLocation"] = userGeoPoint
+            //Check if event already exists
+            let query = PFQuery(className: "Event")
+            query.whereKey("eventName", equalTo: eventName)
+            let scoreArray = query.findObjects()
+            
+            if scoreArray!.count == 0 {
                 event["eventName"] = eventName
-                
-                let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
-                event["geoLocation"] = userGeoPoint
+                event["venue"] = address
+                event["startTime"] = NSDate()
+                event["isLive"] = true
                 
                 event.saveInBackgroundWithBlock {
                     (success: Bool, error: NSError?) -> Void in
@@ -139,19 +207,20 @@ class CreatePublicEventViewController: UIViewController {
                     }
                 }
                 
+                // Store the relation
+                //let relation = event.relationForKey("observers")
+                //relation.addObject(object!)
                 
+            } else {
+                println("event exists")
             }
             
-        })
-        
-        self.performSegueWithIdentifier("eventsPage", sender: self)
+        }
     }
     
-    
-    @IBAction func pastEvents(sender: AnyObject) {
-        self.performSegueWithIdentifier("pastEventsTrans", sender: self)
+    @IBAction func pastEventsButton(sender: AnyObject) {
+        self.performSegueWithIdentifier("toEventsPage", sender: self)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -162,10 +231,9 @@ class CreatePublicEventViewController: UIViewController {
                 self.userGeoPoint = geoPoint!
             }
             else {
-                print("Error with User Geopoint")
+                println("Error with User Geopoint")
             }
         }
-        
     }
     
     // Two functions to allow off keyboard touch to close keyboard
