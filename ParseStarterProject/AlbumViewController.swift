@@ -34,8 +34,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var picker = UIImagePickerController()
     var zoomImage = (camera: true, display: true)
     var newMedia: Bool = true
-    //var flashOn = UIImage(named: "flash on") as UIImage?
-    //var flashOff = UIImage(named: "flash_icon") as UIImage?
     //TO-DO: Button pressed button released attributes
     
 
@@ -49,8 +47,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
     var share = UIImage(named: "share-icon") as UIImage!
-    var bgImage = UIImage(named: "goto-camera-background") as UIImage!
-    var cam = UIImage(named:"goto-camera") as UIImage!
+//    var bgImage = UIImage(named: "goto-camera-background") as UIImage!
+//    var cam = UIImage(named:"goto-camera") as UIImage!
+    var newCam = UIImage(named:"goto-camera-full") as UIImage!
 
     
     // Tuple for sorting
@@ -108,7 +107,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func viewDidAppear(animated: Bool) {
 
         // Initialize segmented control button
-        let items = ["RATING", "NEWEST", "MY PHOTOS"]
+        let items = ["SORT BY RATING", "SORT BY TIME", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
         segC.selectedSegmentIndex = 0
         
@@ -118,14 +117,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let screenWidth = frame.width
         let screenHeight = frame.height
         var superCenter = CGPointMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds))
-        segC.frame = CGRectMake(CGRectGetMinX(frame),100,screenWidth,40)
+        segC.frame = CGRectMake(CGRectGetMinX(frame),60,screenWidth,30)
         
         // Set characteristics of segmented controller
-        var backColor : UIColor = UIColor.blackColor()
+        var backColor : UIColor = UIColor(red: 114/255, green: 114/255, blue: 114/255, alpha: 1)
         var titleFont : UIFont = UIFont(name: "Avenir", size: 12.0)!
         var textColor : UIColor = UIColor.whiteColor()
         var underline  =  NSUnderlineStyle.StyleSingle.rawValue
-        var blue : UIColor = UIColor.blueColor()
+        var underlineColor : UIColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
         
         
         // Attributes for non selected segments
@@ -147,7 +146,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             NSUnderlineStyleAttributeName : underline,
             
-            NSUnderlineColorAttributeName : blue
+            NSUnderlineColorAttributeName : underlineColor
             
         ]
         
@@ -165,7 +164,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         
         // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 100))
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 60))
         navBar.backgroundColor =  UIColor.whiteColor()
         
         // Removes faint line under nav bar
@@ -175,40 +174,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
         navBarItem.title = "EVENT TITLE"
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "avenir", size: 30)!]
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "avenir", size: 18)!]
         navBar.items = [navBarItem]
         
         // Left nav bar button item
         let back = UIButton.buttonWithType(.System) as! UIButton
         back.setBackgroundImage(goBack, forState: .Normal)
-        back.backgroundColor = UIColor.whiteColor()
-        back.frame = CGRectMake(10, 65, 25, 25)
+        back.frame = CGRectMake(10, 25, 25, 25)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
         // Right nav bar button item
         let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
         shareAlbum.setBackgroundImage(share, forState: .Normal)
-        shareAlbum.frame = CGRectMake(285,65,25,25)
+        shareAlbum.frame = CGRectMake(285,25,25,25)
         shareAlbum.addTarget(self, action: "print", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
 
         self.view.addSubview(navBar)
 
-        // Creates the plain white bar on the bottom of the screen
-        let bottomBar = UIView(frame: CGRectMake(0, 455, self.view.frame.size.width, 125))
-        bottomBar.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(bottomBar)
-        
-        // Post a photo button, a subview of the bottom bar
+        // Post photo button
         let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-            postPhoto.setBackgroundImage(bgImage, forState: .Normal)
-            postPhoto.setImage(cam, forState: .Normal)
-            postPhoto.frame = CGRectMake(0, 0, 80, 80)
-            postPhoto.center = CGPointMake(bottomBar.frame.size.width/2, bottomBar.frame.size.height/2)
-            postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
-            bottomBar.addSubview(postPhoto)
-            bottomBar.bringSubviewToFront(postPhoto)
+        postPhoto.setImage(newCam, forState: .Normal)
+        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-95, 80, 80)
+        postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(postPhoto)
+        
         
     }
     
@@ -235,10 +226,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
         
         // Set VC color
-        self.collectionView!.backgroundColor = UIColor.whiteColor()
+        self.collectionView!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         
         // Pushes collection view down, higher value pushes collection view downwards
-        collectionView?.contentInset = UIEdgeInsetsMake(150.0,0.0,0.0,0.0)
+        collectionView?.contentInset = UIEdgeInsetsMake(90.0,0.0,0.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
  
         // Pull down to refresh
