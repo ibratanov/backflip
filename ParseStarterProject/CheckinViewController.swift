@@ -15,12 +15,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     
     var userGeoPoint = PFGeoPoint()
     
-    
-    
-    @IBAction func publicEventSegue(sender: AnyObject) {
-        performSegueWithIdentifier("CreateEvent", sender: sender)
-        
-    }
+    var eventSelected = ""
     
     var userLocation:PFGeoPoint = PFGeoPoint()
     
@@ -55,8 +50,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print(self.cellContent[row])
-        print("Get's here")
-        eventField.text = self.cellContent[row] as! String
+        eventSelected = self.cellContent[row] as! String
     }
     
     override func viewDidLoad() {
@@ -140,6 +134,10 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         //self.pickerInfo.
         
         //self.pickerInfo.reloadAllComponents()
+        
+        if (self.cellContent.count > 0) {
+            self.eventSelected = self.cellContent[0] as! String//self.cellContent[(cellContent.count/2)] as! String
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -147,99 +145,84 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         // Dispose of any resources that can be recreated.
     }
     
-    @IBOutlet var eventField: UITextField!
-
     @IBOutlet weak var checkInButton: UIButton!
     
     @IBAction func checkInClicked(sender: AnyObject) {
         
-        var error = ""
+        // Add user to this event
+        var eventName = self.eventSelected
+        println("\n\nchecking in to " + eventSelected)
         
-        if (eventField.text == "") {
-            
-            error = "Please enter an event name."
-            
-        } else if (count(eventField.text) < 2)  {
-            
-            error = "Please enter a valid event name."
-        }
+        let query = PFUser.query()
         
-        if (error != "") {
+        println(PFUser.currentUser()!.objectId!)
+        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
             
-            displayAlert("Event creation error:", error: error)
-            
-        } else {
-            let query = PFUser.query()
-            
-            println(PFUser.currentUser()!.objectId!)
-            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+            if error != nil {
+                println(error)
+            }
+            else
+            {
                 
-                if error != nil {
-                    println(error)
+                //Check if event already exists
+                let query = PFQuery(className: "Event")
+                query.whereKey("eventName", equalTo: self.eventSelected)
+                let scoreArray = query.findObjects()
+                
+                if scoreArray!.count == 0 {
+                    
+                    self.displayAlert("No Nearby Events", error: "Please create a new event")
+//                    let event = PFObject(className: "Event")
+//                    event["eventName"] = self.eventSelected
+//                    event["startTime"] = NSDate()
+//                    event["isLive"] = true
+//                    
+//                    let relation = event.relationForKey("observers")
+//                    relation.addObject(object!)
+//                
+//                    event.saveInBackgroundWithBlock {
+//                        (success: Bool, error: NSError?) -> Void in
+//                        if (success) {
+//                            // The object has been saved.
+//                            println("\n=================\nsuccess \(event.objectId)")
+//                        } else {
+//                            // There was a problem, check error.description
+//                            println("\n=================\nfail")
+//                        }
+//                    }
+                }
+                else {
+                    
+                }
+                    
+                // TODO: Check for existing event_list for eventName
+                var listEvents = object!.objectForKey("savedEvents") as! [String]
+                if contains(listEvents, self.eventSelected)
+                {
+                    print("Event already in list")
                 }
                 else
                 {
+                    object?.addUniqueObject(self.eventSelected, forKey:"savedEvents")
+                
+                    //let eventList = object?.objectForKey("savedEvents") as! [String]
+                
+                    object!.saveInBackground()
                     
-                    //Check if event already exists
-                    let query = PFQuery(className: "Event")
-                    query.whereKey("eventName", equalTo: self.eventField.text)
-                    let scoreArray = query.findObjects()
                     
-                    if scoreArray!.count == 0 {
-                        let event = PFObject(className: "Event")
-                        event["eventName"] = self.eventField.text
-                        event["startTime"] = NSDate()
-                        event["isLive"] = true
-                        
-                        let relation = event.relationForKey("observers")
-                        relation.addObject(object!)
-                    
-                        event.saveInBackgroundWithBlock {
-                            (success: Bool, error: NSError?) -> Void in
-                            if (success) {
-                                // The object has been saved.
-                                println("\n=================\nsuccess \(event.objectId)")
-                            } else {
-                                // There was a problem, check error.description
-                                println("\n=================\nfail")
-                            }
-                        }
-                    }
-                    else {
-                        
-                    }
-                        
-                    // TODO: Check for existing event_list for eventName
-                    var listEvents = object!.objectForKey("savedEvents") as! [String]
-                    if contains(listEvents, self.eventField.text)
-                    {
-                        print("Event already in list")
-                    }
-                    else
-                    {
-                        object?.addUniqueObject(self.eventField.text!, forKey:"savedEvents")
-                    
-                        //let eventList = object?.objectForKey("savedEvents") as! [String]
-                    
-                        object!.saveInBackground()
-                        
-                        
-                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                        var attendance = PFObject(className:"EventAttendance")
+                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                    var attendance = PFObject(className:"EventAttendance")
 //                        attendance["eventID"] = event.objectId
-                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
 //                        attendance.setObject(event, forKey: "event")
-                        
-                        attendance.saveInBackground()
-                        
-                        println("Saved")
-                    }
+                    
+                    attendance.saveInBackground()
+                    
+                    println("Saved")
                 }
-            })
-            
-            
-        }
+            }
+        })
     }
     
     @IBAction func pastEventsButton(sender: AnyObject) {
@@ -266,7 +249,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         query.whereKey("geoLocation", nearGeoPoint: userGeoPoint, withinKilometers: 10.0)
         query.limit = 5
         let placesObjects = query.findObjects() as! [PFObject]
-        print("Gets her")
+        print("Gets here===============")
         print(placesObjects.count)
         dump(placesObjects)
         
@@ -284,7 +267,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
 
             }
             
-            self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
+            self.pickerInfo.selectRow(0, inComponent: 0, animated: true)
+            self.eventSelected = self.cellContent[0] as! String
             
         }
         

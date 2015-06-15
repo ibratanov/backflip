@@ -101,16 +101,16 @@ class CreatePublicEventViewController: UIViewController {
         let userGeoPoint = PFGeoPoint(latitude:userLatitude, longitude:userLongitude)
         event["geoLocation"] = userGeoPoint
         
-        event.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if (success) {
-                // The object has been saved.
-                println("success \(event.objectId)")
-            } else {
-                // There was a problem, check error.description
-                println("fail")
-            }
-        }
+//        event.saveInBackgroundWithBlock {
+//            (success: Bool, error: NSError?) -> Void in
+//            if (success) {
+//                // The object has been saved.
+//                println("success \(event.objectId)")
+//            } else {
+//                // There was a problem, check error.description
+//                println("fail")
+//            }
+//        }
     }
 
     
@@ -166,22 +166,22 @@ class CreatePublicEventViewController: UIViewController {
                                 println("fail")
                             }
                         }
+                        
+                        // Store the relation
+                        //let relation = event.relationForKey("observers")
+                        //relation.addObject(object!)
+                        
                     } else {
                         println("event exists")
                     }
                 }
             })
-            
         }
-// weird segue - cody?
-//        self.performSegueWithIdentifier("eventsPage", sender: self)
     }
     
-    
-    @IBAction func pastEvents(sender: AnyObject) {
-        self.performSegueWithIdentifier("createEventToEvents", sender: self)
+    @IBAction func pastEventsButton(sender: AnyObject) {
+        self.performSegueWithIdentifier("toEventsPage", sender: self)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

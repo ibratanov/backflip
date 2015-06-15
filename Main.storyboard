@@ -214,15 +214,6 @@
                                     <outlet property="delegate" destination="eGV-gf-aJ6" id="AYe-sq-sh8"/>
                                 </connections>
                             </pickerView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. Jay-Z,..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adM-Oa-W25">
-                                <rect key="frame" x="10" y="155" width="300" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="H89-9X-RNJ"/>
-                                    <constraint firstAttribute="width" constant="300" id="dKJ-PB-Qut"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHERE ARE YOU?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7OL-xV-MgK">
                                 <rect key="frame" x="25" y="75" width="271" height="44"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="32"/>
@@ -301,7 +292,6 @@
                             <constraint firstAttribute="centerX" secondItem="7OL-xV-MgK" secondAttribute="centerX" id="1wm-1F-w2j"/>
                             <constraint firstItem="Xu3-Ge-spa" firstAttribute="top" secondItem="7bk-ji-zDx" secondAttribute="bottom" constant="10" id="2py-Gm-MGt"/>
                             <constraint firstItem="Z95-Tc-ZXl" firstAttribute="top" secondItem="Xu3-Ge-spa" secondAttribute="bottom" constant="25" id="3OX-hr-5Pm"/>
-                            <constraint firstAttribute="centerX" secondItem="adM-Oa-W25" secondAttribute="centerX" id="3Zi-4o-5X1"/>
                             <constraint firstItem="FlL-up-cCN" firstAttribute="leading" secondItem="KZH-TS-jb6" secondAttribute="leading" id="9bE-YL-8jS"/>
                             <constraint firstAttribute="centerX" secondItem="zMI-sN-Ee9" secondAttribute="centerX" id="CKF-R3-G19"/>
                             <constraint firstAttribute="bottom" secondItem="FlL-up-cCN" secondAttribute="bottom" id="Dnn-gP-zDi"/>
@@ -315,7 +305,6 @@
                             <constraint firstAttribute="trailing" secondItem="7bk-ji-zDx" secondAttribute="trailing" id="b6h-ym-LaZ"/>
                             <constraint firstItem="Xu3-Ge-spa" firstAttribute="top" secondItem="7bk-ji-zDx" secondAttribute="bottom" constant="20" id="gN4-gw-tUJ"/>
                             <constraint firstAttribute="bottom" secondItem="Xu3-Ge-spa" secondAttribute="bottom" constant="50" id="i1p-Ve-8T2"/>
-                            <constraint firstItem="adM-Oa-W25" firstAttribute="top" secondItem="zMI-sN-Ee9" secondAttribute="bottom" constant="10" id="ksi-67-Can"/>
                             <constraint firstItem="Z95-Tc-ZXl" firstAttribute="top" secondItem="Xu3-Ge-spa" secondAttribute="bottom" constant="20" id="kt3-Jq-KOn"/>
                             <constraint firstItem="Xu3-Ge-spa" firstAttribute="top" secondItem="7bk-ji-zDx" secondAttribute="bottom" constant="10" id="nYI-UT-CH6"/>
                             <constraint firstItem="7bk-ji-zDx" firstAttribute="top" secondItem="zMI-sN-Ee9" secondAttribute="bottom" constant="30" id="nty-7S-TwL"/>
@@ -335,7 +324,6 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="checkInButton" destination="Z95-Tc-ZXl" id="3dd-tl-qzj"/>
-                        <outlet property="eventField" destination="adM-Oa-W25" id="7Iq-dL-aBT"/>
                         <outlet property="pickerInfo" destination="7bk-ji-zDx" id="mqR-fI-uj0"/>
                         <segue destination="9AY-mp-rfS" kind="show" identifier="whereAreYouToEvents" id="Ju0-Hh-YW7"/>
                     </connections>
@@ -397,6 +385,7 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="pastEventsButton:" destination="jaA-7R-ZG2" eventType="touchUpInside" id="Kjr-rf-72T"/>
                                     <action selector="pastEventsButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="V5N-MA-ckt"/>
                                 </connections>
                             </button>
@@ -874,9 +863,9 @@
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FSk-Fu-Rj2"/>
-        <segue reference="62M-ib-0xv"/>
-        <segue reference="VCX-vA-6qG"/>
+        <segue reference="eA9-TU-XJn"/>
         <segue reference="ofY-SC-By2"/>
+        <segue reference="hKp-Y7-lrD"/>
+        <segue reference="FSk-Fu-Rj2"/>
     </inferredMetricsTieBreakers>
 </document>
