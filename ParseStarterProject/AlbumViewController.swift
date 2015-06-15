@@ -21,6 +21,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     var refresher: UIRefreshControl!
     
+    
+    
 
     //------------------Camera Att.-----------------
     @IBOutlet weak var thumbnailButton: UIButton!
@@ -241,6 +243,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         
         super.viewDidLoad()
+
+
+        let currentInstallation = PFInstallation.currentInstallation()
+        currentInstallation.addUniqueObject("Test", forKey: "channels")
+        currentInstallation.saveInBackground()
+
+        let push = PFPush()
+        push.setChannel("Test")
+        push.setMessage("PUSH WORKED YO!")
+        push.sendPushInBackground()
+        
         
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
