@@ -147,7 +147,7 @@ class EventTableViewController: UITableViewController {
             //self.navigationController?.popViewControllerAnimated(true)
             
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                moveVC.eventId =  eventId[selectedPath.row]
+                moveVC.eventId =  events[selectedPath.row]
             }
         }
     }
