@@ -542,17 +542,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
     {
-        image =
-            info[UIImagePickerControllerOriginalImage] as! UIImage
-        //set image cropped square
-        
-        self.imageViewContent = cropToSquare(image:image)
-        
+        image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        self.imageViewContent = image
         picker.dismissViewControllerAnimated(true, completion: nil)
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        //Retake and crop options------------------------------------------------------------------------
+        let previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
+        previewViewController.cropCompletionHandler = {
+            self.imageViewContent = $0!
+            previewViewController.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil);
+        }
+        previewViewController.cancelCompletionHandler = {
+            //retake image
+            //self.dismissViewControllerAnimated(true, completion: nil)
+            self.presentViewController(picker, animated:true, completion:{})
+            
+        }
+        previewViewController.imageToCrop = imageViewContent;
+        
+        self.presentViewController(previewViewController, animated: true, completion: nil);
+        //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
+        //ensure image is cropped to a square
+        //self.imageView.image = image
+        
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
         picker.dismissViewControllerAnimated(true, completion: nil)

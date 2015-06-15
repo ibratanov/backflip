@@ -12,12 +12,18 @@ import Parse
 
 class CreatePublicEventViewController: UIViewController {
     
+    
+    @IBAction func settingButton(sender: AnyObject) {
+        displayAlert("Would you like to log out?", error: "")
+    }
+    
     var userGeoPoint = PFGeoPoint()
     
     // Disable navigation
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    var address2:String = ""
     
     @IBOutlet var eventName: UITextField!
     
@@ -25,12 +31,30 @@ class CreatePublicEventViewController: UIViewController {
     
     @IBOutlet var addressField: UITextField!
     
+    /*
     func displayAlert(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+*/
+    
+    func displayAlert(title:String,error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // Facebook share feature
+        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
     
     
@@ -88,6 +112,7 @@ class CreatePublicEventViewController: UIViewController {
             }
             
             var address = streetNumber + ", " + streetAddress
+            self.address2 = streetNumber + ", " + cityName + ", " + countryName
             self.addressField.text = address
             
             
@@ -119,7 +144,13 @@ class CreatePublicEventViewController: UIViewController {
         
         var error = ""
         
-        var address = self.addressField.text
+        //var address = self.addressField.text
+        
+        var address = self.address2
+        println("======================" + self.address2)
+        
+        // Template for address
+        //var address = "289-303 Yonge St, Toronto, Canada"
         
         var eventName = self.eventName.text
         
@@ -132,50 +163,58 @@ class CreatePublicEventViewController: UIViewController {
         if (error != "") {
             displayAlert("Event creation error:", error: error)
         } else {
+            
+            var event = PFObject(className: "Event")
+            
             var geocoder = CLGeocoder()
             geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-                //print(placemarks?[0])
+                print(placemarks?[0])
                 
                 if let placemark = placemarks?[0] as? CLPlacemark {
                     var location = placemark.location as CLLocation
                     var eventLatitude = location.coordinate.latitude
                     var eventLongitude = location.coordinate.longitude
                     
-                    //Check if event already exists
-                    let query = PFQuery(className: "Event")
-                    query.whereKey("eventName", equalTo: eventName)
-                    let scoreArray = query.findObjects()
+                    let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
                     
-                    if scoreArray!.count == 0 {
-                        var event = PFObject(className: "Event")
-                        event["eventName"] = eventName
-                        event["venue"] = address
-                        event["startTime"] = NSDate()
-                        event["isLive"] = true
-                        
-                        let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
-                        event["geoLocation"] = userGeoPoint
-                        
-                        event.saveInBackgroundWithBlock {
-                            (success: Bool, error: NSError?) -> Void in
-                            if (success) {
-                                // The object has been saved.
-                                println("success \(event.objectId)")
-                            } else {
-                                // There was a problem, check error.description
-                                println("fail")
-                            }
-                        }
-                        
-                        // Store the relation
-                        //let relation = event.relationForKey("observers")
-                        //relation.addObject(object!)
-                        
-                    } else {
-                        println("event exists")
-                    }
+                    //event["geoLocation"] = userGeoPoint
+                    self.userGeoPoint = userGeoPoint
                 }
             })
+            
+            print("====================")
+            print(self.userGeoPoint)
+            event["geoLocation"] = userGeoPoint
+            //Check if event already exists
+            let query = PFQuery(className: "Event")
+            query.whereKey("eventName", equalTo: eventName)
+            let scoreArray = query.findObjects()
+            
+            if scoreArray!.count == 0 {
+                event["eventName"] = eventName
+                event["venue"] = address
+                event["startTime"] = NSDate()
+                event["isLive"] = true
+                
+                event.saveInBackgroundWithBlock {
+                    (success: Bool, error: NSError?) -> Void in
+                    if (success) {
+                        // The object has been saved.
+                        println("success \(event.objectId)")
+                    } else {
+                        // There was a problem, check error.description
+                        println("fail")
+                    }
+                }
+                
+                // Store the relation
+                //let relation = event.relationForKey("observers")
+                //relation.addObject(object!)
+                
+            } else {
+                println("event exists")
+            }
+            
         }
     }
     
