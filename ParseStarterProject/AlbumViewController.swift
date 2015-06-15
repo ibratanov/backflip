@@ -295,17 +295,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         super.viewDidLoad()
 
-
-        let currentInstallation = PFInstallation.currentInstallation()
-        currentInstallation.addUniqueObject("Test", forKey: "channels")
-        currentInstallation.saveInBackground()
-
-        let push = PFPush()
-        push.setChannel("Test")
-        push.setMessage("PUSH WORKED YO!")
-        push.sendPushInBackground()
-        
-        
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
         
