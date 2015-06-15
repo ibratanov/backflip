@@ -166,11 +166,7 @@ class CreatePublicEventViewController: UIViewController {
             
             var event = PFObject(className: "Event")
             
-            // Subscribe current device to event channel for push notifications
-            let currentInstallation = PFInstallation.currentInstallation()
-            currentInstallation.addUniqueObject(self.eventName.text, forKey: "channels")
-            currentInstallation.saveInBackground()
-            
+          
             
             var geocoder = CLGeocoder()
             geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
@@ -195,18 +191,27 @@ class CreatePublicEventViewController: UIViewController {
             let query = PFQuery(className: "Event")
             query.whereKey("eventName", equalTo: eventName)
             let scoreArray = query.findObjects()
+            //var eventObject = scoreArray?[0] as! PFObject
+
             
             if scoreArray!.count == 0 {
                 event["eventName"] = eventName
                 event["venue"] = address
                 event["startTime"] = NSDate()
                 event["isLive"] = true
-                
+
                 event.saveInBackgroundWithBlock {
                     (success: Bool, error: NSError?) -> Void in
                     if (success) {
                         // The object has been saved.
                         println("success \(event.objectId)")
+                        
+                        // Subscribe current device to event channel for push notifications
+                        let currentInstallation = PFInstallation.currentInstallation()
+                        currentInstallation.addUniqueObject(event.objectId!, forKey: "channels")
+                        currentInstallation.saveInBackground()
+                        
+                        
                     } else {
                         // There was a problem, check error.description
                         println("fail")
