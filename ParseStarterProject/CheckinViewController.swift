@@ -71,10 +71,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             }
         }
 */
-        
+        //locationManager.delegate = self
+        //locationManager.requestWhenInUseAuthorization()
         //self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
+
         
-        calcNearbyEvents()
+        self.calcNearByEvents()
         // Gets location of the user
         /*
         locationManager.delegate = self
@@ -83,27 +85,25 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
         locationManager.distanceFilter = 300 //every 300 meters it updates user's location
-        //locationManager.requestWhenInUseAuthorization() //for testing purposes only
+        locationManager.requestWhenInUseAuthorization() //for testing purposes only
         
-        locationManager.requestAlwaysAuthorization()
+        //locationManager.requestAlwaysAuthorization()
         
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
+*/
         
         //self.pickerInfo.reloadAllComponents()
-*/
     
     }
     
-    
-    func calcNearbyEvents() {
-        
-    
-        
+    func calcNearByEvents() {
+
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
             if error == nil {
                 print(geoPoint)
                 self.userGeoPoint = geoPoint!
+                print("successfully retrieved User GeoPoint")
                 // Queries events table for locations that are close to user
                 // Return top 3 closest events
                 var query = PFQuery(className: "Event")
@@ -113,7 +113,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 let placesObjects = query.findObjects() as! [PFObject]
                 
                 print(placesObjects.count)
-                //dump(placesObjects)
                 
                 for object in placesObjects {
                     var eventName = object.objectForKey("eventName")
@@ -125,14 +124,13 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     
                 }
                 
-                
-                
             }
             else {
                 print("Error with User Geopoint")
             }
             
             self.pickerInfo.reloadAllComponents()
+
         }
         
         
