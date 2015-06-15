@@ -47,6 +47,10 @@
 		92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C101B28280D007DE812 /* backfliplogo120.png */; };
 		92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C111B28280D007DE812 /* backfliplogo180.png */; };
 		B61801331B0BCBF8000CF25E /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61801321B0BCBF8000CF25E /* CheckinViewController.swift */; };
+		B68CDED61B2E1FBC00374158 /* heart-icon-empty.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */; };
+		B68CDED71B2E1FBC00374158 /* heart-icon-filled.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */; };
+		B68CDED91B2E336300374158 /* back.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED81B2E336300374158 /* back.pdf */; };
+		B6E180071B2E9ACE00D6EA12 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +97,10 @@
 		92EF7C101B28280D007DE812 /* backfliplogo120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo120.png; sourceTree = "<group>"; };
 		92EF7C111B28280D007DE812 /* backfliplogo180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo180.png; sourceTree = "<group>"; };
 		B61801321B0BCBF8000CF25E /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
+		B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-empty.pdf"; sourceTree = "<group>"; };
+		B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-filled.pdf"; sourceTree = "<group>"; };
+		B68CDED81B2E336300374158 /* back.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = back.pdf; sourceTree = "<group>"; };
+		B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +168,7 @@
 				92EF7C0E1B2827EA007DE812 /* Logo Icons */,
 				92EF7C0C1B2827D2007DE812 /* Button Icons */,
 				81BA81481A49DA1800E65899 /* Supporting Files */,
+				B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */,
 			);
 			name = Backflip;
 			path = ParseStarterProject;
@@ -209,6 +218,9 @@
 		92EF7C0C1B2827D2007DE812 /* Button Icons */ = {
 			isa = PBXGroup;
 			children = (
+				B68CDED81B2E336300374158 /* back.pdf */,
+				B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */,
+				B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */,
 				50BBCFDB1B1514E10055DE32 /* backButton.png */,
 				50BBCFD61B150F250055DE32 /* downloadButton.png */,
 				50BBCFD81B150FA50055DE32 /* shareButton.png */,
@@ -292,6 +304,7 @@
 				50BED87F1B21E05100CBB715 /* DigitsKitResources.bundle in Resources */,
 				50BBCFD71B150F250055DE32 /* downloadButton.png in Resources */,
 				50BBCFE31B1645A50055DE32 /* unliked.png in Resources */,
+				B68CDED61B2E1FBC00374158 /* heart-icon-empty.pdf in Resources */,
 				92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */,
 				50BBCFD91B150FA50055DE32 /* shareButton.png in Resources */,
 				503BB1A61B2B62EF0042B16F /* Main.storyboard in Resources */,
@@ -300,7 +313,10 @@
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
 				67A795D81B2CE9F8006E489D /* OverlayView.xib in Resources */,
 				92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */,
+				B68CDED71B2E1FBC00374158 /* heart-icon-filled.pdf in Resources */,
+				B6E180071B2E9ACE00D6EA12 /* Launch Screen.xib in Resources */,
 				50BBCFE11B16458E0055DE32 /* liked.png in Resources */,
+				B68CDED91B2E336300374158 /* back.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

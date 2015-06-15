@@ -14,6 +14,11 @@ class CreatePublicEventViewController: UIViewController {
     
     var userGeoPoint = PFGeoPoint()
     
+    // Disable navigation
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     @IBOutlet var eventName: UITextField!
     
     @IBOutlet var userAddressButton: UIButton!
