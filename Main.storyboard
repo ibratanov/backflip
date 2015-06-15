@@ -863,9 +863,9 @@
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eA9-TU-XJn"/>
-        <segue reference="ofY-SC-By2"/>
+        <segue reference="Ju0-Hh-YW7"/>
         <segue reference="hKp-Y7-lrD"/>
+        <segue reference="ofY-SC-By2"/>
         <segue reference="FSk-Fu-Rj2"/>
     </inferredMetricsTieBreakers>
 </document>

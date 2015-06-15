@@ -51,6 +51,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print(self.cellContent[row])
         eventSelected = self.cellContent[row] as! String
+        
     }
     
     override func viewDidLoad() {
@@ -73,8 +74,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         //self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
         
-        //calcNearbyEvents()
+        calcNearbyEvents()
         // Gets location of the user
+        /*
         locationManager.delegate = self
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -89,43 +91,54 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         locationManager.startUpdatingLocation()
         
         //self.pickerInfo.reloadAllComponents()
+*/
     
     }
     
-    /*
+    
     func calcNearbyEvents() {
         
-        var userLatitude = self.userGeoPoint.latitude
-        var userLongitude = self.userGeoPoint.longitude
-        let userGeoPoint = PFGeoPoint(latitude:userLatitude, longitude:userLongitude)
+    
         
-        print("This is geopoint")
-        print(userGeoPoint)
-        
-        
-        // Queries events table for locations that are close to user
-        // Return top 3 closest events
-        var query = PFQuery(className: "Event")
-        //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
-        query.whereKey("geoLocation", nearGeoPoint: userGeoPoint, withinKilometers: 10.0)
-        query.limit = 5
-        let placesObjects = query.findObjects() as! [PFObject]
-        
-        print(placesObjects.count)
-        //dump(placesObjects)
-        
-        for object in placesObjects {
-            var eventName = object.objectForKey("eventName")
-            
-            // hack, fix later
-            if cellContent.count < query.limit {
-                cellContent.addObject(eventName!)
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
+            if error == nil {
+                print(geoPoint)
+                self.userGeoPoint = geoPoint!
+                // Queries events table for locations that are close to user
+                // Return top 3 closest events
+                var query = PFQuery(className: "Event")
+                //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
+                query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: 10.0)
+                query.limit = 5
+                let placesObjects = query.findObjects() as! [PFObject]
+                
+                print(placesObjects.count)
+                //dump(placesObjects)
+                
+                for object in placesObjects {
+                    var eventName = object.objectForKey("eventName")
+                    
+                    // hack, fix later
+                    if self.cellContent.count < query.limit {
+                        self.cellContent.addObject(eventName!)
+                    }
+                    
+                }
+                
+                
+                
+            }
+            else {
+                print("Error with User Geopoint")
             }
             
+            self.pickerInfo.reloadAllComponents()
         }
         
+        
+        
     }
-*/
+
     
     override func viewDidAppear(animated: Bool) {
         //self.pickerInfo.reloadAllComponents()
@@ -227,6 +240,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
     }
     
+    /*
     // This is a listener that constantly checks if the user's location is close to an event
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
@@ -273,6 +287,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         self.pickerInfo.reloadAllComponents()
 
     }
+*/
     
     // Two functions to allow off keyboard touch to close keyboard
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
