@@ -160,6 +160,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         // Add user to this event
         var eventName = self.eventSelected
+        
         println("\n\nchecking in to " + eventSelected)
         
         let query = PFUser.query()
@@ -177,6 +178,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 let query = PFQuery(className: "Event")
                 query.whereKey("eventName", equalTo: self.eventSelected)
                 let scoreArray = query.findObjects()
+                var eventObject : PFObject = scoreArray?[0] as! PFObject
+                
+                //Subscribe user to the channel of the event for push notifications
+                let currentInstallation = PFInstallation.currentInstallation()
+                currentInstallation.addUniqueObject(eventObject.objectId! , forKey: "channels")
+                currentInstallation.saveInBackground()
                 
                 if scoreArray!.count == 0 {
                     
