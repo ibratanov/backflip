@@ -34,8 +34,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var picker = UIImagePickerController()
     var zoomImage = (camera: true, display: true)
     var newMedia: Bool = true
-    //var flashOn = UIImage(named: "flash on") as UIImage?
-    //var flashOff = UIImage(named: "flash_icon") as UIImage?
     //TO-DO: Button pressed button released attributes
     
 
@@ -49,8 +47,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
     var share = UIImage(named: "share-icon") as UIImage!
-    var bgImage = UIImage(named: "goto-camera-background") as UIImage!
-    var cam = UIImage(named:"goto-camera") as UIImage!
+//    var bgImage = UIImage(named: "goto-camera-background") as UIImage!
+//    var cam = UIImage(named:"goto-camera") as UIImage!
+    var newCam = UIImage(named:"goto-camera-full") as UIImage!
 
     
     // Tuple for sorting
@@ -195,20 +194,13 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
         self.view.addSubview(navBar)
 
-        // Creates the plain white bar on the bottom of the screen
-        let bottomBar = UIView(frame: CGRectMake(0, 455, self.view.frame.size.width, 125))
-        bottomBar.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(bottomBar)
-        
-        // Post a photo button, a subview of the bottom bar
+        // Post photo button
         let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-            postPhoto.setBackgroundImage(bgImage, forState: .Normal)
-            postPhoto.setImage(cam, forState: .Normal)
-            postPhoto.frame = CGRectMake(0, 0, 80, 80)
-            postPhoto.center = CGPointMake(bottomBar.frame.size.width/2, bottomBar.frame.size.height/2)
-            postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
-            bottomBar.addSubview(postPhoto)
-            bottomBar.bringSubviewToFront(postPhoto)
+        postPhoto.setImage(newCam, forState: .Normal)
+        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-95, 80, 80)
+        postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(postPhoto)
+        
         
     }
     
