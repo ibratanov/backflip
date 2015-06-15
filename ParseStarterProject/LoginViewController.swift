@@ -63,8 +63,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         
         // Appearance settings for Digits pop up menu
         let digitsAppearance = DGTAppearance()
-        digitsAppearance.backgroundColor = UIColor.whiteColor()
-        digitsAppearance.accentColor = UIColor.cyanColor()
+        digitsAppearance.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+        digitsAppearance.accentColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
 
         let digits = Digits.sharedInstance()
         

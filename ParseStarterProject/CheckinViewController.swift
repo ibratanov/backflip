@@ -12,6 +12,11 @@ import CoreLocation
 
 class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    
+    var userGeoPoint = PFGeoPoint()
+    
+    
+    
     @IBAction func publicEventSegue(sender: AnyObject) {
         performSegueWithIdentifier("CreateEvent", sender: sender)
         
@@ -48,46 +53,93 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         return self.cellContent[row] as! String
     }
     
-    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int?)
-    {
-        if (self.cellContent.count == 0) {
-            println("Cell content empty")
-        } else {
-            eventField.text = self.cellContent[row] as! String
-        }
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(self.cellContent[row])
+        print("Get's here")
+        eventField.text = self.cellContent[row] as! String
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
-        print("Gets here")
+        /*
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
+            if error == nil {
+                print(geoPoint)
+                self.userGeoPoint = geoPoint!
+                print("Get's here")
+                
+                
+            }
+            else {
+                print("Error with User Geopoint")
+            }
+        }
+*/
+        
+        //self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
+        
+        //calcNearbyEvents()
         // Gets location of the user
         locationManager.delegate = self
         
-        // locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
         locationManager.distanceFilter = 300 //every 300 meters it updates user's location
-        locationManager.requestWhenInUseAuthorization() //for testing purposes only
+        //locationManager.requestWhenInUseAuthorization() //for testing purposes only
+        
+        locationManager.requestAlwaysAuthorization()
         
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
+        
+        //self.pickerInfo.reloadAllComponents()
     
     }
     
+    /*
+    func calcNearbyEvents() {
+        
+        var userLatitude = self.userGeoPoint.latitude
+        var userLongitude = self.userGeoPoint.longitude
+        let userGeoPoint = PFGeoPoint(latitude:userLatitude, longitude:userLongitude)
+        
+        print("This is geopoint")
+        print(userGeoPoint)
+        
+        
+        // Queries events table for locations that are close to user
+        // Return top 3 closest events
+        var query = PFQuery(className: "Event")
+        //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
+        query.whereKey("geoLocation", nearGeoPoint: userGeoPoint, withinKilometers: 10.0)
+        query.limit = 5
+        let placesObjects = query.findObjects() as! [PFObject]
+        
+        print(placesObjects.count)
+        //dump(placesObjects)
+        
+        for object in placesObjects {
+            var eventName = object.objectForKey("eventName")
+            
+            // hack, fix later
+            if cellContent.count < query.limit {
+                cellContent.addObject(eventName!)
+            }
+            
+        }
+        
+    }
+*/
+    
     override func viewDidAppear(animated: Bool) {
+        //self.pickerInfo.reloadAllComponents()
+        //locationManager.stopUpdatingLocation()
         
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(activityIndicator)
+        //self.pickerInfo.
         
-        activityIndicator.startAnimating()
-        
-        self.pickerInfo.reloadAllComponents()
-        activityIndicator.stopAnimating()
+        //self.pickerInfo.reloadAllComponents()
     }
 
     override func didReceiveMemoryWarning() {
@@ -235,6 +287,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
             
         }
+        
+        self.pickerInfo.reloadAllComponents()
 
     }
     

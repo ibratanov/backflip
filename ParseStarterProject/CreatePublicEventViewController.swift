@@ -166,7 +166,10 @@ class CreatePublicEventViewController: UIViewController {
                     }
                 }
             })
+            
         }
+// weird segue - cody?
+//        self.performSegueWithIdentifier("eventsPage", sender: self)
     }
     
     

@@ -71,6 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             }
         }
+        
+        //------------Parse Push Notifications------------------------------------
         if application.respondsToSelector("registerUserNotificationSettings:") {
             let userNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
             let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
@@ -80,6 +82,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let types = UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound
             application.registerForRemoteNotificationTypes(types)
         }
+
+        // Used to add the device to the Parse push notification settings.
+        PFInstallation.currentInstallation().saveInBackground()
+        //------------------------------------------------------------------------
+
         Fabric.with([Digits()])
         
         //--------------------------BRANCH.IO------------------------------------

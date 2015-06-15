@@ -12,14 +12,29 @@ import DigitsKit
 
 class EventTableViewController: UITableViewController {
     
+    
+    var imageList: [PFFile] = []
     var events: [String] = []
     var eventId: [String] = []
 
     var refresher: UIRefreshControl! //allows us to control the pull to refresh function
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        var getUploadedImages = PFQuery(className: "Photo")
+        getUploadedImages.limit = 40
+        
+        var objects = getUploadedImages.findObjects()
+        for object in objects! {
+            self.imageList.append(object["thumbnail"] as! PFFile)
+        }
+
         
         updateEvents()
         
@@ -47,7 +62,7 @@ class EventTableViewController: UITableViewController {
                 self.tableView.reloadData()
                 
             }
-            dump(self.events)
+            //dump(self.events)
             self.refresher.endRefreshing()
         })
     }
@@ -86,10 +101,28 @@ class EventTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        cell.textLabel?.text = events[indexPath.row]
-
-        return cell
+        //var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        
+        let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
+                //let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
+    
+        var imageData1 = self.imageList[indexPath.row].getData()
+        tableCell.imageOne!.image = UIImage (data: imageData1!)
+        
+        var imageData2 = self.imageList[indexPath.row+1].getData()
+        tableCell.imageTwo!.image = UIImage (data: imageData2!)
+        
+        var imageData3 = self.imageList[indexPath.row+2].getData()
+        tableCell.imageThree!.image = UIImage (data: imageData3!)
+        
+        var imageData4 = self.imageList[indexPath.row+2].getData()
+        tableCell.imageFour!.image = UIImage (data: imageData4!)
+        
+        tableCell.eventName.text = "Event Name" + String(indexPath.row)
+        tableCell.eventLocation.text = "Event Location" + String(indexPath.row)
+        
+        
+        return tableCell
     }
     
    /*override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -106,6 +139,7 @@ class EventTableViewController: UITableViewController {
         if segue.identifier == "toAlbum" {
             
             let moveVC = segue.destinationViewController as! AlbumViewController
+            //self.navigationController?.popViewControllerAnimated(true)
             
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                 moveVC.eventId =  eventId[selectedPath.row]
