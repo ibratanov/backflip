@@ -18,6 +18,10 @@ class EventTableViewController: UITableViewController {
     
     var imageList: [PFFile] = []
     var events: [String] = []
+    
+    var eventWithPhotos = [String:[PFFile]]()
+    
+    
     var eventId: [String] = []
     var venues: [String] = []
     
@@ -38,6 +42,8 @@ class EventTableViewController: UITableViewController {
         }
 
         updateEvents()
+        
+        //updatePhotosForEvent("4b71Y7QbXH")
 
     }
     
@@ -64,21 +70,65 @@ class EventTableViewController: UITableViewController {
     func updateEvents(){
         var query = PFQuery(className: "Event")
         
+        //query event names, venues, and objectId
         query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
             
             self.events.removeAll(keepCapacity: true)
             
             for object in objects! {
-
-                self.events.append((object["eventName"] as! String))
-                self.eventId.append(object.objectId! as String!)
-                self.venues.append(object["venue"] as! String)
-                println(self.events)
+                
+                var eventName = object["eventName"] as! String
+                var objectId = object.objectId! as String!
+                var venue = object["venue"] as! String
+                
+                self.eventWithPhotos[objectId] = self.updatePhotosForEvent(objectId)
+                
+                self.events.append(eventName)
+                self.eventId.append(objectId)
+                self.venues.append(venue)
                 
                 self.tableView.reloadData()
                 
             }
+            print(self.eventWithPhotos)
         })
+        
+        
+    }
+    
+    func updatePhotosForEvent(objectId: String) -> [PFFile] {
+        /*
+        var query = PFQuery(className: "Event")
+        query.orderByAscending("createdAt")
+        
+        query.includeKey("photos")
+        query.whereKey("objectId", equalTo: "4b71Y7QbXH")
+        */
+        
+        //var innerQuery = PFQuery(className: "Photo")
+        //innerQuery.whereKeyExists("objectId")
+        
+        var query = PFQuery(className: "Event")
+        query.whereKey("objectId", equalTo: "4b71Y7QbXH")
+        
+        var photoListForEvent: [PFFile] = []
+        
+        //query.whereKey("photos", equalTo: PFObject(withoutDataWithClassName: "Photo", objectId: "4b71Y7QbXH"))
+        
+        var object = query.findObjects()?.first as! PFObject
+        
+        var photos = object["photos"] as! PFRelation
+        
+        var photoList = photos.query()?.findObjects() as! [PFObject]
+        
+        for photo in photoList {
+            var image = photo["image"] as! PFFile
+            photoListForEvent.append(image)
+        }
+        
+        return photoListForEvent
+        
+        
     }
 
         // Uncomment the following line to preserve selection between presentations
@@ -111,7 +161,35 @@ class EventTableViewController: UITableViewController {
         
         let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
                 //let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
-    
+        
+        
+        var eventObjectId = self.eventId[indexPath.row]
+        var listPhotos = self.eventWithPhotos[eventObjectId] as [PFFile]!
+        dump(listPhotos)
+        
+        if(listPhotos.count == 0){
+            
+        }
+        else {
+            println("========================")
+            println(indexPath.row)
+            var imageData1 = listPhotos[0].getData()
+            tableCell.imageOne!.image = UIImage (data: imageData1!)
+        
+            dump(listPhotos)
+            var imageData2 = listPhotos[1].getData()
+            tableCell.imageTwo!.image = UIImage (data: imageData2!)
+        }
+        
+        /*
+        var imageData3 = self.imageList[indexPath.row+2].getData()
+        tableCell.imageThree!.image = UIImage (data: imageData3!)
+        
+        var imageData4 = self.imageList[indexPath.row+2].getData()
+        tableCell.imageFour!.image = UIImage (data: imageData4!)
+        
+        
+        
         var imageData1 = self.imageList[indexPath.row].getData()
         tableCell.imageOne!.image = UIImage (data: imageData1!)
         
@@ -124,6 +202,7 @@ class EventTableViewController: UITableViewController {
         var imageData4 = self.imageList[indexPath.row+2].getData()
         tableCell.imageFour!.image = UIImage (data: imageData4!)
         
+*/
         tableCell.eventName.text = self.events[indexPath.row]//"Event Name" + String(indexPath.row)
         tableCell.eventLocation.text = self.venues[indexPath.row]
         
