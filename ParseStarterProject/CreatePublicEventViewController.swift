@@ -12,6 +12,11 @@ import Parse
 
 class CreatePublicEventViewController: UIViewController {
     
+    
+    @IBAction func settingButton(sender: AnyObject) {
+        displayAlert("Would you like to log out?", error: "")
+    }
+    
     var userGeoPoint = PFGeoPoint()
     
     // Disable navigation
@@ -25,12 +30,30 @@ class CreatePublicEventViewController: UIViewController {
     
     @IBOutlet var addressField: UITextField!
     
+    /*
     func displayAlert(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+*/
+    
+    func displayAlert(title:String,error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // Facebook share feature
+        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
     
     
@@ -119,7 +142,9 @@ class CreatePublicEventViewController: UIViewController {
         
         var error = ""
         
-        var address = self.addressField.text
+        //var address = self.addressField.text
+        
+        var address = "289-303 Yonge St, Toronto, Canada"
         
         var eventName = self.eventName.text
         
@@ -134,7 +159,7 @@ class CreatePublicEventViewController: UIViewController {
         } else {
             var geocoder = CLGeocoder()
             geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-                //print(placemarks?[0])
+                print(placemarks?[0])
                 
                 if let placemark = placemarks?[0] as? CLPlacemark {
                     var location = placemark.location as CLLocation
