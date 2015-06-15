@@ -12,6 +12,9 @@ import DigitsKit
 
 class EventTableViewController: UITableViewController {
     
+    @IBAction func logoutButton(sender: AnyObject) {
+        displayAlertLogout("Would you like to log out?", error: "")
+    }
     
     var imageList: [PFFile] = []
     var events: [String] = []
@@ -36,6 +39,26 @@ class EventTableViewController: UITableViewController {
 
         updateEvents()
 
+    }
+    
+    
+    func displayAlertLogout(title:String,error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // Facebook share feature
+        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            PFUser.logOut()
+            Digits.sharedInstance().logOut()
+            self.performSegueWithIdentifier("logoutEventView", sender: self)
+            
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
     
     func updateEvents(){

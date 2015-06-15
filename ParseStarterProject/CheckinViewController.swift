@@ -9,10 +9,15 @@
 import UIKit
 import Parse
 import CoreLocation
+import DigitsKit
 
 class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     
+    @IBAction func logoutButton(sender: AnyObject) {
+        displayAlertLogout("Would you like to log out?", error: "")
+        
+    }
     var userGeoPoint = PFGeoPoint()
     
     var eventSelected = ""
@@ -51,6 +56,26 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print(self.cellContent[row])
         eventSelected = self.cellContent[row] as! String
+        
+    }
+    
+    
+    func displayAlertLogout(title:String,error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // Facebook share feature
+        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            
+            PFUser.logOut()
+            Digits.sharedInstance().logOut()
+            self.performSegueWithIdentifier("logoutCheckIn", sender: self)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
         
     }
     

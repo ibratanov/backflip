@@ -181,6 +181,9 @@
                     <navigationItem key="navigationItem" title="EVENT HISTORY" id="LHV-eB-VzO">
                         <barButtonItem key="leftBarButtonItem" image="settings-icon" id="2LT-oK-jZI">
                             <color key="tintColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="logoutButton:" destination="KbJ-H0-F5d" id="T7e-US-yMU"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="add-icon" id="FEB-Tt-XaJ">
                             <color key="tintColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -190,10 +193,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="logoutEventView" id="gz0-ak-oAk"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ubu-Yz-5Xj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2687" y="-140"/>
+            <point key="canvasLocation" x="2116" y="-259"/>
         </scene>
         <!--Checkin View Controller-->
         <scene sceneID="lvA-2M-Sre">
@@ -229,18 +235,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fs2-mx-lLt">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="settings-icon" translatesAutoresizingMaskIntoConstraints="NO" id="S3t-Nx-82g">
-                                        <rect key="frame" x="15" y="25" width="25" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="jzy-yc-q5r"/>
-                                            <constraint firstAttribute="width" constant="25" id="zGc-TO-wRx"/>
-                                        </constraints>
-                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x4s-Id-sHs">
+                                        <rect key="frame" x="8" y="22" width="34" height="22"/>
+                                        <state key="normal" image="settings-icon">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="logoutButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="wMH-1K-WxS"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="S3t-Nx-82g" firstAttribute="leading" secondItem="Fs2-mx-lLt" secondAttribute="leading" constant="15" id="CRo-Yb-4nW"/>
-                                    <constraint firstItem="S3t-Nx-82g" firstAttribute="top" secondItem="Fs2-mx-lLt" secondAttribute="top" constant="25" id="S4i-nC-Lc0"/>
                                     <constraint firstAttribute="height" constant="65" id="WQL-Ti-d4C"/>
                                 </constraints>
                             </view>
@@ -326,6 +332,7 @@
                         <outlet property="checkInButton" destination="Z95-Tc-ZXl" id="3dd-tl-qzj"/>
                         <outlet property="pickerInfo" destination="7bk-ji-zDx" id="mqR-fI-uj0"/>
                         <segue destination="9AY-mp-rfS" kind="show" identifier="whereAreYouToEvents" id="Ju0-Hh-YW7"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="logoutCheckIn" id="g9n-sU-jyC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nw0-yu-PiL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -440,13 +447,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ger-To-0KF">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFb-ly-FhW">
-                                        <rect key="frame" x="15" y="22" width="21" height="22"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fmy-SM-ZMv">
+                                        <rect key="frame" x="0.0" y="22" width="46" height="21"/>
                                         <state key="normal" image="settings-icon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="settingButton:" destination="jaA-7R-ZG2" eventType="touchUpInside" id="gSG-TV-0ej"/>
+                                            <action selector="settingButton:" destination="jaA-7R-ZG2" eventType="touchUpInside" id="YwX-16-H89"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -514,6 +521,7 @@
                         <outlet property="addressField" destination="H7F-GV-XEZ" id="tfs-3k-cGS"/>
                         <outlet property="eventName" destination="qLG-oc-9AL" id="0Nc-Ex-Le1"/>
                         <outlet property="userAddressButton" destination="Kdw-nl-2al" id="NJ1-mA-7pH"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="logoutCreatePublic" id="Akq-ph-AFX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NBi-xB-G5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -864,8 +872,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="eA9-TU-XJn"/>
-        <segue reference="Fno-vP-GvK"/>
+        <segue reference="ofY-SC-By2"/>
         <segue reference="hKp-Y7-lrD"/>
+        <segue reference="Akq-ph-AFX"/>
         <segue reference="FSk-Fu-Rj2"/>
     </inferredMetricsTieBreakers>
 </document>
