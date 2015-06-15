@@ -131,8 +131,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         //self.pickerInfo.reloadAllComponents()
         //locationManager.stopUpdatingLocation()
         
-        //self.pickerInfo.
-        
         //self.pickerInfo.reloadAllComponents()
         
         if (self.cellContent.count > 0) {
