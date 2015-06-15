@@ -55,17 +55,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     // toggles the like button from "like" to "unlike" when clicked
     @IBAction func likeToggle(sender: AnyObject) {
         
-//        // adjust font size based on like count
-//        if (likeCount.text)!.toInt() > 9 {
-//            
-//            likeCount.font.fontWithSize(10)
-//            
-//        } else if (likeCount.text)!.toInt() > 99 {
-//            
-//            likeCount.font.fontWithSize(8)
-//        }
-
-        
         // adjust heart image
         if likeActive == false {
         
@@ -103,7 +92,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     objects?.incrementKey("upvoteCount", byAmount: 1)
                     
                     //TODO: is this more efficient or is it more efficient to get the upvoteCount value? Same below in "unlike"
-                    self.likeCount.text = String(array.count)
+                    let count = array.count
+                    if (count == 1) {
+                        self.likeCount.text = String(count) + " like"
+                    } else {
+                        self.likeCount.text = String(count) + " likes"
+                    }
                     
                     // Add both photo object and id to arrays in user class
                     var query2 = PFUser.query()
@@ -153,7 +147,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                     objects?.incrementKey("upvoteCount", byAmount: -1)
                     
-                    self.likeCount.text = String(array.count)
+                    let count = array.count
+                    if (count == 1) {
+                        self.likeCount.text = String(count) + " like"
+                    } else {
+                        self.likeCount.text = String(count) + " likes"
+                    }
                     
                     // Remove photo ID to user photo liked list and photo object from photo object array
                     var query4 = PFUser.query()
@@ -410,7 +409,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             if error == nil {
                 
                 let array = objects?.objectForKey("usersLiked") as! [String]
-                self.likeCount.text = String(array.count)
+                let count = array.count
+                if (count == 1) {
+                    self.likeCount.text = String(count) + " like"
+                } else {
+                    self.likeCount.text = String(count) + " likes"
+                }
                 
             } else {
                 
