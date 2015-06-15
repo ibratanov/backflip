@@ -129,13 +129,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[CURRENT EVENT]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJ1-gm-970">
-                                            <rect key="frame" x="11" y="18" width="149" height="21"/>
+                                            <rect key="frame" x="11" y="18" width="206" height="21"/>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[LOCATION]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxn-kS-Jbx">
-                                            <rect key="frame" x="11" y="40" width="80" height="21"/>
+                                            <rect key="frame" x="11" y="40" width="193" height="21"/>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -440,19 +440,19 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ger-To-0KF">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="settings-icon" translatesAutoresizingMaskIntoConstraints="NO" id="jTg-07-HZZ">
-                                        <rect key="frame" x="15" y="25" width="25" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="25" id="COC-Ul-W25"/>
-                                            <constraint firstAttribute="height" constant="25" id="YLA-nh-M1c"/>
-                                        </constraints>
-                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFb-ly-FhW">
+                                        <rect key="frame" x="15" y="22" width="21" height="22"/>
+                                        <state key="normal" image="settings-icon">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="settingButton:" destination="jaA-7R-ZG2" eventType="touchUpInside" id="gSG-TV-0ej"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="jTg-07-HZZ" firstAttribute="leading" secondItem="ger-To-0KF" secondAttribute="leading" constant="15" id="mAX-bP-Rjy"/>
                                     <constraint firstAttribute="height" constant="65" id="mLI-x6-iwy"/>
-                                    <constraint firstItem="jTg-07-HZZ" firstAttribute="top" secondItem="ger-To-0KF" secondAttribute="top" constant="25" id="vh7-cC-rjB"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -864,7 +864,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="eA9-TU-XJn"/>
-        <segue reference="ofY-SC-By2"/>
+        <segue reference="Fno-vP-GvK"/>
         <segue reference="hKp-Y7-lrD"/>
         <segue reference="FSk-Fu-Rj2"/>
     </inferredMetricsTieBreakers>

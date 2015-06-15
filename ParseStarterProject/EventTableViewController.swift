@@ -16,8 +16,7 @@ class EventTableViewController: UITableViewController {
     var imageList: [PFFile] = []
     var events: [String] = []
     var eventId: [String] = []
-
-    var refresher: UIRefreshControl! //allows us to control the pull to refresh function
+    var venues: [String] = []
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -35,14 +34,7 @@ class EventTableViewController: UITableViewController {
             self.imageList.append(object["thumbnail"] as! PFFile)
         }
 
-        
         updateEvents()
-        
-        refresher = UIRefreshControl()
-        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh") //text that appears
-        refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged) //run this method when value is changed
-
-        self.tableView.addSubview(refresher)
 
     }
     
@@ -57,22 +49,13 @@ class EventTableViewController: UITableViewController {
 
                 self.events.append((object["eventName"] as! String))
                 self.eventId.append(object.objectId! as String!)
+                self.venues.append(object["venue"] as! String)
                 println(self.events)
                 
                 self.tableView.reloadData()
                 
             }
-            //dump(self.events)
-            self.refresher.endRefreshing()
         })
-    }
-    
-    func refresh() {
-        
-        println("refreshed")
-        
-        updateEvents()
-        
     }
 
         // Uncomment the following line to preserve selection between presentations
@@ -118,11 +101,33 @@ class EventTableViewController: UITableViewController {
         var imageData4 = self.imageList[indexPath.row+2].getData()
         tableCell.imageFour!.image = UIImage (data: imageData4!)
         
-        tableCell.eventName.text = "Event Name" + String(indexPath.row)
-        tableCell.eventLocation.text = "Event Location" + String(indexPath.row)
+        tableCell.eventName.text = self.events[indexPath.row]//"Event Name" + String(indexPath.row)
+        tableCell.eventLocation.text = self.venues[indexPath.row]
         
         
         return tableCell
+    }
+    
+    func displayAlert(title:String,error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // Facebook share feature
+        alert.addAction(UIAlertAction(title: "Facebook", style: .Default, handler: { action in
+            
+           
+        }))
+        
+        // Twitter share feature
+        alert.addAction(UIAlertAction(title: "Twitter", style: .Default, handler: { action in
+            
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
     
    /*override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
