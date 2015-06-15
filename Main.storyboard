@@ -874,9 +874,9 @@ you acknowledge that you have read the                        .</string>
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="eA9-TU-XJn"/>
+        <segue reference="ofY-SC-By2"/>
         <segue reference="hKp-Y7-lrD"/>
-        <segue reference="Fno-vP-GvK"/>
-        <segue reference="Ju0-Hh-YW7"/>
         <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>

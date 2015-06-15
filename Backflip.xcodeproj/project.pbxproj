@@ -50,6 +50,7 @@
 		B68CDED61B2E1FBC00374158 /* heart-icon-empty.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */; };
 		B68CDED71B2E1FBC00374158 /* heart-icon-filled.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */; };
 		B68CDED91B2E336300374158 /* back.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED81B2E336300374158 /* back.pdf */; };
+		B6E180071B2E9ACE00D6EA12 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-empty.pdf"; sourceTree = "<group>"; };
 		B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-filled.pdf"; sourceTree = "<group>"; };
 		B68CDED81B2E336300374158 /* back.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = back.pdf; sourceTree = "<group>"; };
+		B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				92EF7C0E1B2827EA007DE812 /* Logo Icons */,
 				92EF7C0C1B2827D2007DE812 /* Button Icons */,
 				81BA81481A49DA1800E65899 /* Supporting Files */,
+				B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */,
 			);
 			name = Backflip;
 			path = ParseStarterProject;
@@ -311,6 +314,7 @@
 				67A795D81B2CE9F8006E489D /* OverlayView.xib in Resources */,
 				92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */,
 				B68CDED71B2E1FBC00374158 /* heart-icon-filled.pdf in Resources */,
+				B6E180071B2E9ACE00D6EA12 /* Launch Screen.xib in Resources */,
 				50BBCFE11B16458E0055DE32 /* liked.png in Resources */,
 				B68CDED91B2E336300374158 /* back.pdf in Resources */,
 			);
