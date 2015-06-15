@@ -16,6 +16,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         performSegueWithIdentifier("CreateEvent", sender: sender)
         
     }
+    
     var userLocation:PFGeoPoint = PFGeoPoint()
     
     @IBOutlet var pickerInfo: UIPickerView!
@@ -26,15 +27,10 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     
     var cellContent:NSMutableArray = []
     
-    func displayAlert(title:String,error: String) {
+    func displayAlert(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
-            
-            // Commented out below, causes flashing view when display is dismissed
-            //self.dismissViewControllerAnimated(false, completion: nil)
-            
-        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -121,21 +117,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             displayAlert("Event creation error:", error: error)
             
         } else {
-            var event = PFObject(className:"Event")
-            event["eventName"] = eventField.text
-            event["startTime"] = NSDate()
-            event["isLive"] = true
-            event.saveInBackgroundWithBlock {
-                (success: Bool, error: NSError?) -> Void in
-                if (success) {
-                    // The object has been saved.
-                    println("success \(event.objectId)")
-                } else {
-                    // There was a problem, check error.description
-                    println("fail")
-                }
-            }
-            
             let query = PFUser.query()
             
             println(PFUser.currentUser()!.objectId!)
@@ -153,12 +134,24 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     let scoreArray = query.findObjects()
                     
                     if scoreArray!.count == 0 {
-                        let eventRel = PFObject(className: "Event")
-                        eventRel["eventName"] = self.eventField.text
-                        let relation = eventRel.relationForKey("observers")
+                        let event = PFObject(className: "Event")
+                        event["eventName"] = self.eventField.text
+                        event["startTime"] = NSDate()
+                        event["isLive"] = true
+                        
+                        let relation = event.relationForKey("observers")
                         relation.addObject(object!)
                     
-                        eventRel.saveInBackground()
+                        event.saveInBackgroundWithBlock {
+                            (success: Bool, error: NSError?) -> Void in
+                            if (success) {
+                                // The object has been saved.
+                                println("\n=================\nsuccess \(event.objectId)")
+                            } else {
+                                // There was a problem, check error.description
+                                println("\n=================\nfail")
+                            }
+                        }
                     }
                     else {
                         
@@ -166,7 +159,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         
                     // TODO: Check for existing event_list for eventName
                     var listEvents = object!.objectForKey("savedEvents") as! [String]
-                    if contains(listEvents,self.eventField.text)
+                    if contains(listEvents, self.eventField.text)
                     {
                         print("Event already in list")
                     }
@@ -177,7 +170,16 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         //let eventList = object?.objectForKey("savedEvents") as! [String]
                     
                         object!.saveInBackground()
-                    
+                        
+                        
+                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                        var attendance = PFObject(className:"EventAttendance")
+//                        attendance["eventID"] = event.objectId
+                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+//                        attendance.setObject(event, forKey: "event")
+                        
+                        attendance.saveInBackground()
                         
                         println("Saved")
                     }
