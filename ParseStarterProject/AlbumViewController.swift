@@ -20,6 +20,9 @@ let reuseIdentifier = "albumCell"
 class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
     UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     
+    // Temporary solution to duplicate photo image
+    var firstLoad = true
+    
     var refresher: UIRefreshControl!
     
     
@@ -51,8 +54,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
     var share = UIImage(named: "share-icon") as UIImage!
-//    var bgImage = UIImage(named: "goto-camera-background") as UIImage!
-//    var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
 
     
@@ -213,7 +214,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
         navBarItem.title = eventId
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "avenir", size: 18)!]
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
         navBar.items = [navBarItem]
         
         // Left nav bar button item
@@ -237,7 +238,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         postPhoto.setImage(newCam, forState: .Normal)
         postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-95, 80, 80)
         postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(postPhoto)
+        
+        // Dupliccate post photo button hack
+        if (firstLoad == true) {
+            self.view.addSubview(postPhoto)
+        }
+        firstLoad = false
         
         
         
