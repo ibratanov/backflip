@@ -21,6 +21,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     var refresher: UIRefreshControl!
     
+
     //------------------Camera Att.-----------------
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var flashButton: UIButton!
@@ -66,7 +67,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var datesTime = [NSDate]()
     
     // Checker for sort button. Sort in chronological order by default.
-    var sortedByLikes = false
+    var sortedByLikes = true
+    var myPhotoSelected = false
     
     // Display alert function for when an album timer is going to run out
     func displayAlert(title:String,error: String) {
@@ -86,19 +88,24 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             // Rating
             case 0 :    sortedByLikes = true
+                        myPhotoSelected = false
                         updatePhotos()
                         self.collectionView?.reloadData()
             
             // Time
             case 1:     sortedByLikes = false
+                        myPhotoSelected = false
                         updatePhotos()
                         self.collectionView?.reloadData()
             
             // My Photos
-            case 2 :    println("hi")
+            case 2 :    myPhotoSelected = true
             
             
-            default:    updateAlbum()
+            default:
+                
+                println("hi")
+            
             
         }
     }
@@ -109,8 +116,26 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Initialize segmented control button
         let items = ["SORT BY RATING", "SORT BY TIME", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
-        segC.selectedSegmentIndex = 0
         
+        // Persistence of segmented control selection
+        if sortedByLikes == true && myPhotoSelected == false {
+            
+            segC.selectedSegmentIndex = 0
+            
+        }
+        
+        if sortedByLikes == false && myPhotoSelected == false {
+            
+            segC.selectedSegmentIndex = 1
+        
+        }
+        
+        if myPhotoSelected == true  {
+            
+            segC.selectedSegmentIndex = 2
+            
+        }
+    
         // Defines where seg control is positioned
         let frame: CGRect = UIScreen.mainScreen().bounds
         println(frame)
@@ -188,7 +213,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
         shareAlbum.setBackgroundImage(share, forState: .Normal)
         shareAlbum.frame = CGRectMake(285,25,25,25)
-        shareAlbum.addTarget(self, action: "print", forControlEvents: .TouchUpInside)
+        shareAlbum.addTarget(self, action: nil, forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
 
         self.view.addSubview(navBar)
@@ -201,11 +226,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.view.addSubview(postPhoto)
         
         
-    }
-    
-    func print(){
-        
-        println("test")
         
     }
     
@@ -283,83 +303,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
         }
         
-        updateAlbum()
+        updatePhotos()
 
     }
     
     func refresh() {
         
         updatePhotos()
+        self.collectionView?.reloadData()
         self.refresher.endRefreshing()
         
     }
-    
-    func sortButton() {
-        
-        // Change boolean, reload data to sort images
-        sortedByLikes == true
-        
-        self.collectionView?.reloadData()
-    }
-    
-    
-    func updateAlbum() {
-        
-        var getUploadedImages = PFQuery(className: "Photo")
-        
-        // Parse query limit default is 100 objects
-        getUploadedImages.limit = 1000
-        
-        getUploadedImages.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-            
-            if error == nil {
-                
-                for object in objects! {
-                    
-                    let tup = (image: object["image"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
-                    
-                    
-                    self.imageFilesTemp.append(tup)
-                    
-                    self.collectionView?.reloadData()
-                    
-                }
-                
-                // Sort tuple of images by likes, and fill new array with photos in order of likes
-                self.imageFilesTemp.sort{ $0.likes > $1.likes}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
-                    
-                    self.imageFilesLikes.append(image)
-                    self.objectIdLikes.append(id)
-                    self.datesLikes.append(date)
-                    
-                }
-                
-                // Sort tuple of images,
-                self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
-                    
-                    self.imageFilesTime.append(image)
-                    self.objectIdTime.append(id)
-                    self.datesTime.append(date)
-                    
-                }
-                
-            } else {
-                
-                println(error)
-                
-            }
-            
-            //self.collectionView?.reloadData()
-            //self.refresher.endRefreshing()
-        }
-    }
-    
-    
-    
     
     
     // TODO: Smart loading of photos - only reload photos which are new/were modified
@@ -385,7 +339,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
                 for object in objects! {
                     
-                    let tup = (image: object["image"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
+                    let tup = (image: object["thumbnail"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
                     
                     self.imageFilesTemp.append(tup)
                     
@@ -422,6 +376,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

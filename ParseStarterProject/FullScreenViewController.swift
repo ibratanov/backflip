@@ -26,12 +26,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     
     var cellImage : UIImage!
-    //var tempTitle : String = ""
     var objectIdTemp : String = ""
     var likeActive = false
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
     var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
-    var back = UIImage(named: "backp.pdf") as UIImage!
+    var back = UIImage(named: "back.pdf") as UIImage!
     
     
     
@@ -186,7 +185,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     }
 
  
-    
+    // Alerts for sharing to Facebook and Twitter
     func displayAlert(title:String,error: String) {
     
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
@@ -233,9 +232,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.presentViewController(alert, animated: true, completion: nil)
     
     }
-    
-    
-
     
     
     @IBAction func share(sender: AnyObject) {
@@ -308,8 +304,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let back = UIButton.buttonWithType(.Custom) as! UIButton
         
         back.setTitleColor(UIColor.blackColor(), forState: .Normal)
-//        back.setImage(self.back, forState: .Normal)
-        back.setTitle("Back", forState: .Normal)
+        back.setImage(self.back, forState: .Normal)
+        //back.setTitle("Back", forState: .Normal)
         back.frame = CGRectMake(10, 65, 50,30)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
@@ -332,7 +328,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             if error == nil {
                 
                 var tempImage = objects?.objectForKey("image") as! PFFile
-                //self.eventTitle.text = objects?.objectForKey("caption") as? String
                 var tempDate = objects?.createdAt! as NSDate!
 
                 // check for date from previous VC, format and display the date
@@ -342,8 +337,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     let formatter = NSDateFormatter()
                     
                     formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-                    
-//                    formatter.dateFormat = "MMMM, d"
                     
                     formatter.timeStyle = .ShortStyle
                     
