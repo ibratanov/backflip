@@ -196,6 +196,10 @@ class CreatePublicEventViewController: UIViewController {
                 event["startTime"] = NSDate()
                 event["isLive"] = true
                 
+                // Store the relation
+                let relation = event.relationForKey("observers")
+                relation.addObject(PFUser.currentUser()!)//object!)
+                
                 event.saveInBackgroundWithBlock {
                     (success: Bool, error: NSError?) -> Void in
                     if (success) {
@@ -206,10 +210,6 @@ class CreatePublicEventViewController: UIViewController {
                         println("fail")
                     }
                 }
-                
-                // Store the relation
-                //let relation = event.relationForKey("observers")
-                //relation.addObject(object!)
                 
             } else {
                 println("event exists")
