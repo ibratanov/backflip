@@ -70,62 +70,71 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             }
         }
 */
-        
+        //locationManager.delegate = self
+        //locationManager.requestWhenInUseAuthorization()
         //self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
+
         
-        //calcNearbyEvents()
+        self.calcNearByEvents()
         // Gets location of the user
+        /*
         locationManager.delegate = self
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
         locationManager.distanceFilter = 300 //every 300 meters it updates user's location
-        //locationManager.requestWhenInUseAuthorization() //for testing purposes only
+        locationManager.requestWhenInUseAuthorization() //for testing purposes only
         
-        locationManager.requestAlwaysAuthorization()
+        //locationManager.requestAlwaysAuthorization()
         
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
+*/
         
         //self.pickerInfo.reloadAllComponents()
     
     }
     
-    /*
-    func calcNearbyEvents() {
+    func calcNearByEvents() {
         
-        var userLatitude = self.userGeoPoint.latitude
-        var userLongitude = self.userGeoPoint.longitude
-        let userGeoPoint = PFGeoPoint(latitude:userLatitude, longitude:userLongitude)
-        
-        print("This is geopoint")
-        print(userGeoPoint)
-        
-        
-        // Queries events table for locations that are close to user
-        // Return top 3 closest events
-        var query = PFQuery(className: "Event")
-        //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
-        query.whereKey("geoLocation", nearGeoPoint: userGeoPoint, withinKilometers: 10.0)
-        query.limit = 5
-        let placesObjects = query.findObjects() as! [PFObject]
-        
-        print(placesObjects.count)
-        //dump(placesObjects)
-        
-        for object in placesObjects {
-            var eventName = object.objectForKey("eventName")
-            
-            // hack, fix later
-            if cellContent.count < query.limit {
-                cellContent.addObject(eventName!)
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
+            if error == nil {
+                print(geoPoint)
+                self.userGeoPoint = geoPoint!
+                print("successfully retrieved User GeoPoint")
+                
+                // Queries events table for locations that are close to user
+                // Return top 3 closest events
+                var query = PFQuery(className: "Event")
+                //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
+                query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: 10.0)
+                query.limit = 5
+                let placesObjects = query.findObjects() as! [PFObject]
+                
+                print(placesObjects.count)
+                dump(placesObjects)
+                
+                for object in placesObjects {
+                    var eventName = object.objectForKey("eventName")
+                    
+                    // hack, fix later
+                    if self.cellContent.count < query.limit {
+                        self.cellContent.addObject(eventName!)
+                    }
+                    
+                }
+                
+                self.pickerInfo.reloadAllComponents()
+                
             }
-            
+            else {
+                print("Error with User Geopoint")
+            }
         }
         
     }
-*/
+
     
     override func viewDidAppear(animated: Bool) {
         //self.pickerInfo.reloadAllComponents()
