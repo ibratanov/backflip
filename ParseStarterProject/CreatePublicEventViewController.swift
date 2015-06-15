@@ -166,6 +166,12 @@ class CreatePublicEventViewController: UIViewController {
             
             var event = PFObject(className: "Event")
             
+            // Subscribe current device to event channel for push notifications
+            let currentInstallation = PFInstallation.currentInstallation()
+            currentInstallation.addUniqueObject(self.eventName.text, forKey: "channels")
+            currentInstallation.saveInBackground()
+            
+            
             var geocoder = CLGeocoder()
             geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
                 print(placemarks?[0])

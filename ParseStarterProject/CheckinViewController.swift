@@ -160,6 +160,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         // Add user to this event
         var eventName = self.eventSelected
+        
+        //Subscribe user to the channel of the event for push notifications
+        let currentInstallation = PFInstallation.currentInstallation()
+        currentInstallation.addUniqueObject(self.eventSelected, forKey: "channels")
+        currentInstallation.saveInBackground()
+        
         println("\n\nchecking in to " + eventSelected)
         
         let query = PFUser.query()
