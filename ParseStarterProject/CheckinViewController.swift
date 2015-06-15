@@ -115,7 +115,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 print(placesObjects.count)
                 
                 for object in placesObjects {
-                    var eventName = object.objectForKey("eventName")
+                    var eventName: AnyObject? = object.objectForKey("eventName")
                     
                     // hack, fix later
                     if self.cellContent.count < query.limit {
