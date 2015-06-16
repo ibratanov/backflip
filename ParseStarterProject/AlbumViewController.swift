@@ -362,6 +362,27 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     
+    func displayMyPhotos() {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
     // TODO: Smart loading of photos - only reload photos which are new/were modified
     func updatePhotos() {
         self.imageFilesTemp.removeAll(keepCapacity: true)
@@ -507,6 +528,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
             var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
+            moveVC.eventId = eventId!
             
             // Sorted by time (from newest to oldest)
             if self.sortedByLikes == false {

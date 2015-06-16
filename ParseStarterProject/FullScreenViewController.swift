@@ -27,6 +27,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     var cellImage : UIImage!
     var objectIdTemp : String = ""
+    var eventId : String = ""
     var likeActive = false
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
     var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
@@ -362,7 +363,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.view.addSubview(navBar)
 
 
-        var photoQuery = PFQuery(className: "Photo")
+        /*var photoQuery = PFQuery(className: "Photo")
         
         photoQuery.getObjectInBackgroundWithId(objectIdTemp) { (objects, error) -> Void in
             
@@ -389,9 +390,27 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                     println("no date")
                     
-                }
-                
-                tempImage.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
+                }*/
+        
+        
+        // Load information from parse db
+        var getUploadedImages = PFQuery(className: "Event")
+        getUploadedImages.limit = 1000
+        getUploadedImages.whereKey("objectId", equalTo: eventId)
+        
+        // Retrieval from corresponding photos from relation to event
+        var object = getUploadedImages.findObjects()?.first as! PFObject
+        
+        var photos = object["photos"] as! PFRelation
+        var tempImage: PFFile?
+        
+        var photoList = photos.query()?.getObjectWithId(objectIdTemp)
+        
+        
+        // Once retrieved from relation, set the UIImage view for fullscreen view
+        tempImage = photoList!.objectForKey("image") as? PFFile
+
+        tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
                     
                     if error == nil {
                         
@@ -401,13 +420,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         println(error)
                     }
-
-                }
-                
             }
-            
-        }
-        println(objectIdTemp)
         
         // block to check if user has already liked photo, and set button label accordingly
         var query5 = PFUser.query()
