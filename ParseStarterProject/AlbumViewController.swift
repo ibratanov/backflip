@@ -47,6 +47,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var eventId : String?
     var eventTitle: String?
     
+    
     // Variable for storing PFFile as image, pass through segue
     var images = [UIImage]()
     var postLogo = UIImage(named: "liked.png") as UIImage!
@@ -58,15 +59,20 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // Tuple for sorting
     var imageFilesTemp : [(image: PFFile , likes: Int , id: String,date: NSDate)] = []
     
-    // Arrays for like sort
+    // Arrays for like sort selected
     var imageFilesLikes = [PFFile]()
     var objectIdLikes = [String]()
     var datesLikes = [NSDate]()
     
-    // Arrays for time sort
+    // Arrays for time sort selected
     var imageFilesTime = [PFFile]()
     var objectIdTime = [String]()
     var datesTime = [NSDate]()
+    
+    //Arrays for when my photos is selected
+    var myPhotos = [PFFile]()
+    var myObjectId = [String]()
+    var myDate = [NSDate]()
     
     // Checker for sort button. Sort in chronological order by default.
     var sortedByLikes = true
@@ -108,6 +114,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             // My Photos
             case 2 :    myPhotoSelected = true
+                        displayMyPhotos()
+                        self.collectionView?.reloadData()
             
             
             default:
@@ -348,16 +356,31 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
             
         }
-        
-        updatePhotos()
+        if myPhotoSelected == false {
+            
+            updatePhotos()
+            
+        } else {
+            
+            displayMyPhotos()
+        }
 
     }
     
     func refresh(sender: AnyObject) {
         
-        updatePhotos()
-        self.collectionView?.reloadData()
-        self.refresher.endRefreshing()
+        if myPhotoSelected == false {
+            
+            updatePhotos()
+            self.collectionView?.reloadData()
+            self.refresher.endRefreshing()
+            
+        } else {
+            
+            displayMyPhotos()
+            self.collectionView?.reloadData()
+            self.refresher.endRefreshing()
+        }
         
     }
     
@@ -365,27 +388,74 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     func displayMyPhotos() {
         
         
+        // Clean our arrays for use again
+        self.imageFilesTemp.removeAll(keepCapacity: true)
+        
+        self.myPhotos.removeAll(keepCapacity: true)
+        self.myObjectId.removeAll(keepCapacity: true)
+        
+        self.imageFilesLikes.removeAll(keepCapacity: true)
+        self.objectIdLikes.removeAll(keepCapacity: true)
+        self.datesLikes.removeAll(keepCapacity: true)
+        
+        self.imageFilesTime.removeAll(keepCapacity: true)
+        self.objectIdTime.removeAll(keepCapacity: true)
+        self.datesTime.removeAll(keepCapacity: true)
+        
+        self.images.removeAll(keepCapacity: true)
+
         
         
+        // Load information from parse db
+        var getUploadedImages = PFQuery(className: "Event")
+        getUploadedImages.limit = 1000
+        getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
+        // Retrieval from corresponding photos from relation to event
+        var object = getUploadedImages.findObjects()?.first as! PFObject
         
+    
+        var photos = object["photos"] as! PFRelation
+
         
+        // List of objects in the photo relation
+        var photosList = photos.query()?.findObjects() as! [PFObject]
+  
         
+        var displayPhotos : [PFFile]
         
-        
-        
-        
-        
-        
-        
-        
+        for photo in photosList {
+            
+            var userList = photo["usersLiked"] as! [String]
+            var currPhoto = photo["thumbnail"] as! PFFile
+            
+            for users in userList {
+                
+                if users == PFUser.currentUser()?.username {
+                    
+                    self.myPhotos.append(currPhoto)
+                    self.myObjectId.append(photo.objectId!)
+                    
+                }
+            }
+            
+        }
+
+        dump(myPhotos)
+        dump(myObjectId)
         
     }
     
     
     // TODO: Smart loading of photos - only reload photos which are new/were modified
     func updatePhotos() {
+        
+        // Clean all our arrays for use again
         self.imageFilesTemp.removeAll(keepCapacity: true)
+        
+        self.myPhotos.removeAll(keepCapacity: true)
+        self.myObjectId.removeAll(keepCapacity: true)
+
         
         self.imageFilesLikes.removeAll(keepCapacity: true)
         self.objectIdLikes.removeAll(keepCapacity: true)
@@ -411,6 +481,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
                 for photo in photoList {
                     
+                    // Fill our array of tuples for sorting
                     let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId! as String,date: photo.createdAt! as NSDate)
                     
                     self.imageFilesTemp.append(tup)
@@ -430,7 +501,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                 }
                 
-                // Sort tuple of images,
+                // Sort tuple of images, fill the array with photos in order of time
                 self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
                 
                 for (image, likes, id, date) in self.imageFilesTemp {
@@ -471,13 +542,27 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return imageFilesTime.count
+        
+        if sortedByLikes == true && myPhotoSelected == false {
+            
+            return imageFilesTime.count
+            
+        } else if sortedByLikes == false && myPhotoSelected == false{
+            
+            return imageFilesLikes.count
+            
+        } else {
+            
+            // Returns the count of cells, which may be less or more, depending on myphotos array
+            return myPhotos.count
+        }
+        
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
 
-        if sortedByLikes == false {
+        if sortedByLikes == false && myPhotoSelected == false {
             
             // Default, fill the cells with photos sorted by time
             imageFilesTime[indexPath.row].getDataInBackgroundWithBlock { (imageData, error) -> Void in
@@ -496,7 +581,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 }
                 
             }
-        } else {
+        } else if sortedByLikes == true && myPhotoSelected == false {
             
             // Fill the cells with the sorted photos by likes
             imageFilesLikes[indexPath.row].getDataInBackgroundWithBlock { (imageD,error) -> Void in
@@ -516,7 +601,26 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
             }
     
-       }
+        } else if myPhotoSelected == true {
+            
+            
+            myPhotos[indexPath.row].getDataInBackgroundWithBlock { (imgDat, error) -> Void in
+                
+                if error == nil {
+                    
+                    let image = UIImage(data: imgDat!)
+                    self.images.append(image!)
+                    
+                    albumCell.imageView.image = image
+                    
+                    
+                } else {
+                    
+                    println(error)
+                }
+ 
+            }
+        }
         albumCell.layer.shouldRasterize = true
         albumCell.layer.rasterizationScale = UIScreen.mainScreen().scale    
         return albumCell
@@ -531,13 +635,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             moveVC.eventId = eventId!
             
             // Sorted by time (from newest to oldest)
-            if self.sortedByLikes == false {
+            if self.sortedByLikes == false && self.myPhotoSelected == false {
 
                 moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
                 
-            } else {
+            } else if self.sortedByLikes == true && self.myPhotoSelected == false {
             // Sorted by like count
                 moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
+            } else {
+                
+                moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
             }
         
         }  
