@@ -20,9 +20,6 @@ let reuseIdentifier = "albumCell"
 class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
     UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     
-    // Temporary solution to duplicate photo image
-    var firstLoad = true
-    
     var refresher: UIRefreshControl!
     
     
@@ -96,7 +93,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     
     
-    
     func viewChanger (sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
@@ -125,128 +121,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
     }
     
-    
     override func viewDidAppear(animated: Bool) {
 
-        // Initialize segmented control button
-        let items = ["SORT BY RATING", "SORT BY TIME", "MY PHOTOS"]
-        let segC = UISegmentedControl(items: items)
-        
-        // Persistence of segmented control selection
-        if sortedByLikes == true && myPhotoSelected == false {
-            
-            segC.selectedSegmentIndex = 0
-            
-        }
-        
-        if sortedByLikes == false && myPhotoSelected == false {
-            
-            segC.selectedSegmentIndex = 1
-        
-        }
-        
-        if myPhotoSelected == true  {
-            
-            segC.selectedSegmentIndex = 2
-            
-        }
-    
-        // Defines where seg control is positioned
-        let frame: CGRect = UIScreen.mainScreen().bounds
-        println(frame)
-        let screenWidth = frame.width
-        let screenHeight = frame.height
-        var superCenter = CGPointMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds))
-        segC.frame = CGRectMake(CGRectGetMinX(frame),60,screenWidth,30)
-        
-        // Set characteristics of segmented controller
-        var backColor : UIColor = UIColor(red: 114/255, green: 114/255, blue: 114/255, alpha: 1)
-        var titleFont : UIFont = UIFont(name: "Avenir", size: 12.0)!
-        var textColor : UIColor = UIColor.whiteColor()
-        var underline  =  NSUnderlineStyle.StyleSingle.rawValue
-        var underlineColor : UIColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        
-        
-        // Attributes for non selected segments
-        var segAttributes = [
-            
-            NSForegroundColorAttributeName : backColor,
-
-            NSFontAttributeName : titleFont,
-            
-            NSBackgroundColorAttributeName : textColor
-        ]
-
-        // Attributes for when segment is selected
-        var segAttributes1 = [
-            
-            NSForegroundColorAttributeName : backColor,
-            
-            NSFontAttributeName : titleFont,
-            
-            NSUnderlineStyleAttributeName : underline,
-            
-            NSUnderlineColorAttributeName : underlineColor
-            
-        ]
-        
-        // Implement the above attributes on our segmented control
-        segC.setTitleTextAttributes(segAttributes as [NSObject:AnyObject],forState: UIControlState.Normal)
-        segC.setTitleTextAttributes(segAttributes1 as [NSObject:AnyObject], forState: UIControlState.Selected)
-        
-        // Implement base colors on our segmented control
-        segC.tintColor = UIColor.whiteColor()
-        segC.backgroundColor = UIColor.whiteColor()
-        
-        // Add targets, initialize segmented control
-        segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
-        self.view.addSubview(segC)
-        
-        
-        // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 60))
-        navBar.backgroundColor =  UIColor.whiteColor()
-        
-        // Removes faint line under nav bar
-        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        navBar.shadowImage = UIImage()
-        
-        // Set the Nav bar properties
-        let navBarItem = UINavigationItem()
-        navBarItem.title = eventId
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-        navBar.items = [navBarItem]
-        
-        // Left nav bar button item
-        let back = UIButton.buttonWithType(.System) as! UIButton
-        back.setBackgroundImage(goBack, forState: .Normal)
-        back.frame = CGRectMake(10, 25, 25, 25)
-        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
-        navBar.addSubview(back)
-        
-        // Right nav bar button item
-        let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
-        shareAlbum.setBackgroundImage(share, forState: .Normal)
-        shareAlbum.frame = CGRectMake(285,25,25,25)
-        shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
-        navBar.addSubview(shareAlbum)
-
-        self.view.addSubview(navBar)
-
-        // Post photo button
-        let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        postPhoto.setImage(newCam, forState: .Normal)
-        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-95, 80, 80)
-        postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        // Dupliccate post photo button hack
-        if (firstLoad == true) {
-            self.view.addSubview(postPhoto)
-        }
-        firstLoad = false
-        
-        
-        
     }
     
     func seg() {
@@ -295,20 +171,134 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         })
     }
 
-
     override func viewDidLoad() {
         
-        
         super.viewDidLoad()
+        
+        //--------------- LIKE/TIME/MY PHOTOS ---------------
 
+        // Initialize segmented control button
+        let items = ["LIKES", "TIME", "MY PHOTOS"]
+        let segC = UISegmentedControl(items: items)
+        
+        // Persistence of segmented control selection
+        if sortedByLikes == true && myPhotoSelected == false {
+            
+            segC.selectedSegmentIndex = 0
+            
+        }
+        
+        if sortedByLikes == false && myPhotoSelected == false {
+            
+            segC.selectedSegmentIndex = 1
+            
+        }
+        
+        if myPhotoSelected == true  {
+            
+            segC.selectedSegmentIndex = 2
+            
+        }
+        
+        // Defines where seg control is positioned
+        let frame: CGRect = UIScreen.mainScreen().bounds
+        println(frame)
+        let screenWidth = frame.width
+        let screenHeight = frame.height
+        var superCenter = CGPointMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds))
+        segC.frame = CGRectMake(CGRectGetMinX(frame),64,screenWidth,30)
+        
+        // Set characteristics of segmented controller
+        var backColor : UIColor = UIColor(red: 114/255, green: 114/255, blue: 114/255, alpha: 1)
+        var titleFont : UIFont = UIFont(name: "Avenir", size: 12.0)!
+        var textColor : UIColor = UIColor.whiteColor()
+        
+        
+        // Implement base colors on our segmented control
+        segC.tintColor = UIColor.whiteColor()
+        segC.backgroundColor = UIColor.whiteColor()
+        
+        // Attributes for non selected segments
+        var segAttributes = [
+            
+            NSForegroundColorAttributeName : backColor,
+            
+            NSFontAttributeName : titleFont,
+            
+            NSBackgroundColorAttributeName : textColor
+        ]
+        
+        // Attributes for when segment is selected
+        var underline  =  NSUnderlineStyle.StyleSingle.rawValue
+        var underlineColor : UIColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        
+        var segAttributes1 = [
+            
+            NSForegroundColorAttributeName : backColor,
+            
+            NSFontAttributeName : titleFont,
+            
+            NSUnderlineStyleAttributeName : underline,
+            
+            NSUnderlineColorAttributeName : underlineColor
+            
+        ]
+        
+        // Implement the above attributes on our segmented control
+        segC.setTitleTextAttributes(segAttributes as [NSObject:AnyObject],forState: UIControlState.Normal)
+        segC.setTitleTextAttributes(segAttributes1 as [NSObject:AnyObject], forState: UIControlState.Selected)
+        
+        // Add targets, initialize segmented control
+        segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
+        self.view.addSubview(segC)
+        
+        //--------------- Draw UI ---------------
+        
+        // Hide UI controller item
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-
+        
+        // Nav Bar positioning
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
+        navBar.backgroundColor =  UIColor.whiteColor()
+        
+        // Removes faint line under nav bar
+        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        navBar.shadowImage = UIImage()
+        
+        // Set the Nav bar properties
+        let navBarItem = UINavigationItem()
+        navBarItem.title = eventId
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+        navBar.items = [navBarItem]
+        
+        // Left nav bar button item
+        let back = UIButton.buttonWithType(.System) as! UIButton
+        back.setBackgroundImage(goBack, forState: .Normal)
+        back.frame = CGRectMake(15, 31, 22, 22)
+        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
+        navBar.addSubview(back)
+        
+        // Right nav bar button item
+        let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
+        shareAlbum.setBackgroundImage(share, forState: .Normal)
+        shareAlbum.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
+        shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
+        navBar.addSubview(shareAlbum)
+        
+        self.view.addSubview(navBar)
+        
+        // Post photo button
+        let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        postPhoto.setImage(newCam, forState: .Normal)
+        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-60, 80, 80)
+        postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(postPhoto)
         
         // Set VC color
         self.collectionView!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         
         // Pushes collection view down, higher value pushes collection view downwards
-        collectionView?.contentInset = UIEdgeInsetsMake(90.0,0.0,0.0,0.0)
+        collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,0.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
  
         // Pull down to refresh
@@ -536,7 +526,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }  
     }
     
-    //--------------------------------Camera-----------------------------------------------------
+    //--------------- Camera ---------------
     //initialize camera
     func takePhoto(sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){

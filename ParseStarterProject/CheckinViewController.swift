@@ -9,10 +9,18 @@
 import UIKit
 import Parse
 import CoreLocation
+import DigitsKit
 
 class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     
+    @IBAction func logoutButton(sender: AnyObject) {
+        displayAlertLogout("Would you like to log out?", error: "")
+        
+    }
+    
+    var logoutButton = UIImage(named: "settings-icon") as UIImage!
+
     var userGeoPoint = PFGeoPoint()
     
     var eventSelected = ""
@@ -54,8 +62,57 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
     }
     
+    
+    func displayAlertLogout(title:String,error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // Facebook share feature
+        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            
+            PFUser.logOut()
+            Digits.sharedInstance().logOut()
+            self.performSegueWithIdentifier("logoutCheckIn", sender: self)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        //--------------- Draw UI ---------------
+        
+        // Hide UI controller item
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        // Nav Bar positioning
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
+        navBar.backgroundColor =  UIColor.whiteColor()
+        
+        // Removes faint line under nav bar
+        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        navBar.shadowImage = UIImage()
+        
+        // Set the Nav bar properties
+        let navBarItem = UINavigationItem()
+        navBarItem.title = "Event Check In"
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+        navBar.items = [navBarItem]
+        
+        // Left nav bar button item
+        let logout = UIButton.buttonWithType(.System) as! UIButton
+            logout.setBackgroundImage(logoutButton, forState: .Normal)
+            logout.frame = CGRectMake(15, 31, 22, 22)
+            logout.addTarget(self, action: "logoutButton", forControlEvents: .TouchUpInside)
+        navBar.addSubview(logout)
+
+        self.view.addSubview(navBar)
         
         /*
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
