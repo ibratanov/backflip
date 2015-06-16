@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import Parse
+import DigitsKit
 
 class CreatePublicEventViewController: UIViewController {
     
@@ -47,6 +48,9 @@ class CreatePublicEventViewController: UIViewController {
         
         // Facebook share feature
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            PFUser.logOut()
+            Digits.sharedInstance().logOut()
+            self.performSegueWithIdentifier("logoutCreatePublic", sender: self)
             
             
         }))
