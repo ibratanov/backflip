@@ -14,7 +14,7 @@ class CreatePublicEventViewController: UIViewController {
     
     
     @IBAction func settingButton(sender: AnyObject) {
-        displayAlert("Would you like to log out?", error: "")
+        displayAlertLogout("Would you like to log out?", error: "")
     }
     
     var userGeoPoint = PFGeoPoint()
@@ -31,7 +31,7 @@ class CreatePublicEventViewController: UIViewController {
     
     @IBOutlet var addressField: UITextField!
     
-    /*
+    
     func displayAlert(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
@@ -39,13 +39,11 @@ class CreatePublicEventViewController: UIViewController {
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-*/
     
-    func displayAlert(title:String,error: String) {
+    func displayAlertLogout(title:String,error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
-        // Facebook share feature
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
             
             
@@ -164,57 +162,89 @@ class CreatePublicEventViewController: UIViewController {
             displayAlert("Event creation error:", error: error)
         } else {
             
-            var event = PFObject(className: "Event")
-            
-            var geocoder = CLGeocoder()
-            geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-                print(placemarks?[0])
+            let query = PFUser.query()
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                 
-                if let placemark = placemarks?[0] as? CLPlacemark {
-                    var location = placemark.location as CLLocation
-                    var eventLatitude = location.coordinate.latitude
-                    var eventLongitude = location.coordinate.longitude
-                    
-                    let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
-                    
-                    //event["geoLocation"] = userGeoPoint
-                    self.userGeoPoint = userGeoPoint
+                if error != nil {
+                    println(error)
                 }
-            })
-            
-            print("====================")
-            print(self.userGeoPoint)
-            event["geoLocation"] = userGeoPoint
-            //Check if event already exists
-            let query = PFQuery(className: "Event")
-            query.whereKey("eventName", equalTo: eventName)
-            let scoreArray = query.findObjects()
-            
-            if scoreArray!.count == 0 {
-                event["eventName"] = eventName
-                event["venue"] = address
-                event["startTime"] = NSDate()
-                event["isLive"] = true
-                
-                // Store the relation
-                let relation = event.relationForKey("observers")
-                relation.addObject(PFUser.currentUser()!)//object!)
-                
-                event.saveInBackgroundWithBlock {
-                    (success: Bool, error: NSError?) -> Void in
-                    if (success) {
-                        // The object has been saved.
-                        println("success \(event.objectId)")
+                else
+                {
+                    
+
+                    var event = PFObject(className: "Event")
+                    
+                    var geocoder = CLGeocoder()
+                    geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+                        print(placemarks?[0])
+                        
+                        if let placemark = placemarks?[0] as? CLPlacemark {
+                            var location = placemark.location as CLLocation
+                            var eventLatitude = location.coordinate.latitude
+                            var eventLongitude = location.coordinate.longitude
+                            
+                            let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
+                            
+                            //event["geoLocation"] = userGeoPoint
+                            self.userGeoPoint = userGeoPoint
+                        }
+                    })
+                    
+                    print("====================")
+                    print(self.userGeoPoint)
+                    event["geoLocation"] = self.userGeoPoint
+                    
+                    //Check if event already exists
+                    let query = PFQuery(className: "Event")
+                    query.whereKey("eventName", equalTo: eventName)
+                    let scoreArray = query.findObjects()
+                    
+                    if scoreArray!.count == 0 {
+                        event["eventName"] = eventName
+                        event["venue"] = address
+                        event["startTime"] = NSDate()
+                        event["isLive"] = true
+                        var eventACL = PFACL(user: PFUser.currentUser()!)
+                        eventACL.setPublicWriteAccess(true)
+                        eventACL.setPublicReadAccess(true)
+                        event.ACL = eventACL
+                        
+                        // Store the relation
+                        let relation = event.relationForKey("attendees")
+                        relation.addObject(PFUser.currentUser()!)
+                        
+                        event.saveInBackgroundWithBlock {
+                            (success: Bool, error: NSError?) -> Void in
+                            if (success) {
+                                // The object has been saved.
+                                println("success \(event.objectId)")
+                            } else {
+                                // There was a problem, check error.description
+                                println("fail")
+                            }
+                        }
+                        
+                        object?.addUniqueObject(event, forKey:"savedEvents")
+                        object?.addUniqueObject(eventName, forKey:"savedEventNames")
+                        
+                        object!.saveInBackground()
+                        
+                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                        var attendance = PFObject(className:"EventAttendance")
+                        attendance["eventID"] = event.objectId
+                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                        attendance.setObject(event, forKey: "event")
+                        
+                        attendance.saveInBackground()
+                        
+                        println("Saved")
+                        
                     } else {
-                        // There was a problem, check error.description
-                        println("fail")
+                        self.displayAlert("This event already exists", error: "Join an existing event below")
                     }
                 }
-                
-            } else {
-                println("event exists")
-            }
-            
+            })
         }
     }
     

@@ -160,7 +160,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         // Add user to this event
         var eventName = self.eventSelected
-        println("\n\nchecking in to " + eventSelected)
+        println("\n\nchecking in to " + self.eventSelected)
         
         let query = PFUser.query()
         
@@ -173,62 +173,61 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             else
             {
                 
-                //Check if event already exists
+                //Check if event exists
                 let query = PFQuery(className: "Event")
                 query.whereKey("eventName", equalTo: self.eventSelected)
                 let scoreArray = query.findObjects()
                 
                 if scoreArray!.count == 0 {
                     
-                    self.displayAlert("No Nearby Events", error: "Please create a new event")
-//                    let event = PFObject(className: "Event")
-//                    event["eventName"] = self.eventSelected
-//                    event["startTime"] = NSDate()
-//                    event["isLive"] = true
-//                    
-//                    let relation = event.relationForKey("observers")
-//                    relation.addObject(object!)
-//                
-//                    event.saveInBackgroundWithBlock {
-//                        (success: Bool, error: NSError?) -> Void in
-//                        if (success) {
-//                            // The object has been saved.
-//                            println("\n=================\nsuccess \(event.objectId)")
-//                        } else {
-//                            // There was a problem, check error.description
-//                            println("\n=================\nfail")
-//                        }
-//                    }
+                    self.displayAlert("No Nearby Events", error: "Create a new event below.")
+
                 }
                 else {
+                    var event = scoreArray?[0] as! PFObject
                     
-                }
+                    // Store the relation
+                    let relation = event.relationForKey("attendees")
+                    relation.addObject(object!)
                     
-                // TODO: Check for existing event_list for eventName
-                var listEvents = object!.objectForKey("savedEvents") as! [String]
-                if contains(listEvents, self.eventSelected)
-                {
-                    print("Event already in list")
-                }
-                else
-                {
-                    object?.addUniqueObject(self.eventSelected, forKey:"savedEvents")
-                
-                    //let eventList = object?.objectForKey("savedEvents") as! [String]
-                
-                    object!.saveInBackground()
+                    event.saveInBackgroundWithBlock {
+                        (success: Bool, error: NSError?) -> Void in
+                        if (success) {
+                            // The object has been saved.
+                            println("\n\nSuccess, event saved \(event.objectId)")
+                        } else {
+                            // There was a problem, check error.description
+                            println("\n\nFailed to save the event object \(error)")
+                        }
+                    }
                     
-                    
-                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                    var attendance = PFObject(className:"EventAttendance")
-//                        attendance["eventID"] = event.objectId
-                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-//                        attendance.setObject(event, forKey: "event")
-                    
-                    attendance.saveInBackground()
-                    
-                    println("Saved")
+                    // TODO: Check for existing event_list for eventName
+                    var listEvents = object!.objectForKey("savedEvents") as! [String]
+                    if contains(listEvents, self.eventSelected)
+                    {
+                        print("Event already in list")
+                    }
+                    else
+                    {
+                        object?.addUniqueObject(event, forKey:"savedEvents")
+                        object?.addUniqueObject(self.eventSelected, forKey:"savedEventNames")
+                        
+                        //let eventList = object?.objectForKey("savedEvents") as! [String]
+                        
+                        object!.saveInBackground()
+                        
+                        
+                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                        var attendance = PFObject(className:"EventAttendance")
+                        attendance["eventID"] = event.objectId
+                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                        attendance.setObject(event, forKey: "event")
+                        
+                        attendance.saveInBackground()
+                        
+                        println("Saved")
+                    }
                 }
             }
         })
