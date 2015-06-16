@@ -542,7 +542,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             // resize
             if (zoomImage.camera) {
-                self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.5, 1.5);
+                self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0);
                 self.zoomImage.camera = false
             }
             
