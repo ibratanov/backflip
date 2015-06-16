@@ -324,10 +324,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
        
         super.viewDidLoad()
         
+        //--------------- Draw UI ---------------
+
+        // Hide UI controller item
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
         // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 60))
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64 ))
         navBar.backgroundColor =  UIColor.whiteColor()
         
         // Removes faint line under nav bar
@@ -347,7 +350,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         back.setTitleColor(UIColor.blackColor(), forState: .Normal)
         back.setImage(self.back, forState: .Normal)
         //back.setTitle("Back", forState: .Normal)
-        back.frame = CGRectMake(10, 25, 25,25)
+        back.frame = CGRectMake(15, 31, 22,22)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
@@ -355,7 +358,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let shareAlbum = UIButton.buttonWithType(.Custom) as! UIButton
         shareAlbum.setTitleColor(UIColor.blackColor(), forState: .Normal)
         shareAlbum.setTitle("Action", forState: .Normal)
-        shareAlbum.frame = CGRectMake(285,25,25,25)
+        shareAlbum.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
         shareAlbum.addTarget(self, action: nil, forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
         
