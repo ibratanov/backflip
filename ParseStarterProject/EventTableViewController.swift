@@ -16,22 +16,65 @@ class EventTableViewController: UITableViewController {
         displayAlertLogout("Would you like to log out?", error: "")
     }
     
+    func addEvent(sender: AnyObject) {
+        performSegueWithIdentifier("addEventSegue", sender: nil)
+    }
+    
     var imageList: [PFFile] = []
     var events: [String] = []
     
     var eventWithPhotos = [String:[PFFile]]()
     
+    var logoutButton = UIImage(named: "settings-icon") as UIImage!
+    var addButton = UIImage(named: "add-icon") as UIImage!
+
     
     var eventId: [String] = []
     var venues: [String] = []
     
+//    Enable UI Navigation Item
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
+        //--------------- Draw UI ---------------
+        
+//        // Hide UI controller item
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//        
+//        // Nav Bar positioning
+//        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
+//        navBar.backgroundColor =  UIColor.whiteColor()
+//        
+//        // Removes faint line under nav bar
+//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        navBar.shadowImage = UIImage()
+//        
+//        // Set the Nav bar properties
+//        let navBarItem = UINavigationItem()
+//        navBarItem.title = "Event History"
+//        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+//        navBar.items = [navBarItem]
+//        
+//        // Left nav bar button item
+//        let logout = UIButton.buttonWithType(.System) as! UIButton
+//        logout.setBackgroundImage(logoutButton, forState: .Normal)
+//        logout.frame = CGRectMake(15, 31, 22, 22)
+//        logout.addTarget(self, action: "logoutButton", forControlEvents: .TouchUpInside)
+//        navBar.addSubview(logout)
+//        
+//        // Right nav bar button item
+//        let add = UIButton.buttonWithType(.System) as! UIButton
+//        add.setBackgroundImage(addButton, forState: .Normal)
+//        add.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
+//        add.addTarget(self, action: "addEvent", forControlEvents: .TouchUpInside)
+//        navBar.addSubview(add)
+//        
+//        self.view.addSubview(navBar)
 
         var getUploadedImages = PFQuery(className: "Photo")
         getUploadedImages.limit = 40
