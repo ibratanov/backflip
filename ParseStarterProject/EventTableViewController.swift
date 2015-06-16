@@ -202,8 +202,10 @@ class EventTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         
+        
         let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
                 //let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
+        tableCell.selectionStyle = UITableViewCellSelectionStyle.None
         
         var key : String = Array(self.eventWithPhotos.keys)[indexPath.row]
         
