@@ -683,7 +683,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.flashButton.hidden = false
             
         }
-        previewViewController.imageToCrop = imageFixOrientation(imageViewContent);
+        if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
+            previewViewController.imageToCrop = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
+        }
+        else{
+            previewViewController.imageToCrop = imageViewContent
+        }
         
         self.presentViewController(previewViewController, animated: true, completion: nil);
         //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
@@ -771,11 +776,38 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     @IBAction func reverseCamera(sender: UIButton) {
         //TO-DO: add transition when reversed
         if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
+            //self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+            //self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+
+                var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
+                var cameraAspectRatio: CGFloat = 4.0/3.0
+                var cameraViewHeight = screenBounds.width * cameraAspectRatio
+                var scale = screenBounds.height / cameraViewHeight
+                picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
+                picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
+                //self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
+                self.zoomImage.camera = false
+            
+            
             self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
 
             self.flashButton.hidden = false
         }else{
+            
+            //----------------------------------------------------------------------------
+            self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, -5.0)
+            //self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, -5.0), 1.333333, 1.333333)
+            self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
+
+            // resize
+            if (zoomImage.camera) {
+                //self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 0.7, 0.7);
+                self.zoomImage.camera = false
+            }
+            //----------------------------------------------------------------------------
+
             self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
+
             self.flashButton.hidden = true
         }
     }
