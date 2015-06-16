@@ -16,7 +16,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     @IBOutlet var likeCount: UILabel!
     
-    @IBOutlet var eventTitle: UILabel!
+//    @IBOutlet var eventTitle: UILabel!
     
     @IBOutlet var eventInfo: UILabel!
     
@@ -32,7 +32,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
     var back = UIImage(named: "back.pdf") as UIImage!
     
-    
+    // Title passed from previous VC
+    var eventId : String?
     
     // function to handle double tap on image
     func handleTap (sender: UITapGestureRecognizer) {
@@ -226,6 +227,47 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 
             }
             }))
+        
+        
+        // SMS sharing feature
+        alert.addAction(UIAlertAction(title: "Invite Friends (SMS)", style: .Default, handler: { action in
+            
+            var params = [ "referringUsername": "User1",
+                "referringUserId": "12345",  "pictureId": "987666",
+                "pictureURL": "http://yoursite.com/pics/987666",
+                "pictureCaption": "BOOM" ]
+            
+            // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
+            
+            self.spinner.startAnimating()
+            //disable button
+            
+            
+            Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
+                if (error == nil) {
+                    if MFMessageComposeViewController.canSendText() {
+                        
+                        let messageComposer = MFMessageComposeViewController()
+                        
+                        messageComposer.body = String(format: "Check this out: %@", url)
+                        
+                        messageComposer.messageComposeDelegate = self
+                        
+                        self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
+                            // stop spinner on main thread
+                            self.spinner.stopAnimating()
+                        })
+                    } else {
+                        
+                        self.spinner.stopAnimating()
+                        
+                        var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                }
+            })
+        }))
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
 
@@ -236,7 +278,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     @IBAction func share(sender: AnyObject) {
         
-         displayAlert("Share:", error: "Select an option")
+         displayAlert("Share", error: "How do you want to share this photo?")
     }
   
     
@@ -282,10 +324,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
        
         super.viewDidLoad()
         
+        //--------------- Draw UI ---------------
+
+        // Hide UI controller item
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
         // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 100))
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64 ))
         navBar.backgroundColor =  UIColor.whiteColor()
         
         // Removes faint line under nav bar
@@ -294,10 +339,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-        navBarItem.title = "EVENT TITLE"
-        navBar.titleTextAttributes = [NSFontAttributeName :
-            UIFont(name: "avenir", size: 18)!]
-        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
+        navBarItem.title = "Event Name"
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+//        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
         navBar.items = [navBarItem]
         
         // Left nav bar button item
@@ -306,7 +350,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         back.setTitleColor(UIColor.blackColor(), forState: .Normal)
         back.setImage(self.back, forState: .Normal)
         //back.setTitle("Back", forState: .Normal)
-        back.frame = CGRectMake(10, 65, 50,30)
+        back.frame = CGRectMake(15, 31, 22,22)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
@@ -314,7 +358,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let shareAlbum = UIButton.buttonWithType(.Custom) as! UIButton
         shareAlbum.setTitleColor(UIColor.blackColor(), forState: .Normal)
         shareAlbum.setTitle("Action", forState: .Normal)
-        shareAlbum.frame = CGRectMake(250,65,70,30)
+        shareAlbum.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
         shareAlbum.addTarget(self, action: nil, forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
         
@@ -425,7 +469,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.view.bringSubviewToFront(likeCount)
     }
     
-    @IBAction func shareButtonBeta(sender:UIButton){
+    /*@IBAction func shareButtonBeta(sender:UIButton){
         var params = [ "referringUsername": "User1",
             "referringUserId": "12345",  "pictureId": "987666",
         "pictureURL": "http://yoursite.com/pics/987666",
@@ -461,7 +505,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 }
             }
         })
-    }
+    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

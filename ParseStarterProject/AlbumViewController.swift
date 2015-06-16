@@ -12,14 +12,17 @@ import MobileCoreServices
 import AssetsLibrary
 import Foundation
 import Photos
+import MessageUI
 
 
 let reuseIdentifier = "albumCell"
 
 class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate{
+    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     var refresher: UIRefreshControl!
+    
+    
     
 
     //------------------Camera Att.-----------------
@@ -48,8 +51,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
     var share = UIImage(named: "share-icon") as UIImage!
-//    var bgImage = UIImage(named: "goto-camera-background") as UIImage!
-//    var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
 
     
@@ -82,6 +83,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     
+    
+    @IBOutlet weak var spinner:UIActivityIndicatorView!
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    
     func viewChanger (sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
@@ -110,11 +121,64 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
     }
     
-    
     override func viewDidAppear(animated: Bool) {
 
+    }
+    
+    func seg() {
+        
+        //self.performSegueWithIdentifier("backButton", sender: self)
+        self.navigationController?.popViewControllerAnimated(true)
+        
+    }
+    
+    func smsShare() {
+        
+        var params = [ "referringUsername": "User1",
+            "referringUserId": "12345",  "pictureId": "987666",
+            "pictureURL": "http://yoursite.com/pics/987666",
+            "pictureCaption": "BOOM" ]
+        
+        // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
+        
+        //self.spinner.startAnimating()
+        //disable button
+        
+        
+        Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
+            if (error == nil) {
+                if MFMessageComposeViewController.canSendText() {
+                    
+                    let messageComposer = MFMessageComposeViewController()
+                    
+                    messageComposer.body = String(format: "Check this out: %@", url)
+                    
+                    messageComposer.messageComposeDelegate = self
+                    
+                    self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
+                        // stop spinner on main thread
+                        self.spinner.stopAnimating()
+                    })
+                } else {
+                    
+                    self.spinner.stopAnimating()
+                    
+                    var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        })
+    }
+
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        //--------------- LIKE/TIME/MY PHOTOS ---------------
+
         // Initialize segmented control button
-        let items = ["SORT BY RATING", "SORT BY TIME", "MY PHOTOS"]
+        let items = ["LIKES", "TIME", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
         
         // Persistence of segmented control selection
@@ -127,7 +191,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         if sortedByLikes == false && myPhotoSelected == false {
             
             segC.selectedSegmentIndex = 1
-        
+            
         }
         
         if myPhotoSelected == true  {
@@ -135,34 +199,39 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             segC.selectedSegmentIndex = 2
             
         }
-    
+        
         // Defines where seg control is positioned
         let frame: CGRect = UIScreen.mainScreen().bounds
         println(frame)
         let screenWidth = frame.width
         let screenHeight = frame.height
         var superCenter = CGPointMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds))
-        segC.frame = CGRectMake(CGRectGetMinX(frame),60,screenWidth,30)
+        segC.frame = CGRectMake(CGRectGetMinX(frame),64,screenWidth,30)
         
         // Set characteristics of segmented controller
         var backColor : UIColor = UIColor(red: 114/255, green: 114/255, blue: 114/255, alpha: 1)
         var titleFont : UIFont = UIFont(name: "Avenir", size: 12.0)!
         var textColor : UIColor = UIColor.whiteColor()
-        var underline  =  NSUnderlineStyle.StyleSingle.rawValue
-        var underlineColor : UIColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
         
+        
+        // Implement base colors on our segmented control
+        segC.tintColor = UIColor.whiteColor()
+        segC.backgroundColor = UIColor.whiteColor()
         
         // Attributes for non selected segments
         var segAttributes = [
             
             NSForegroundColorAttributeName : backColor,
-
+            
             NSFontAttributeName : titleFont,
             
             NSBackgroundColorAttributeName : textColor
         ]
-
+        
         // Attributes for when segment is selected
+        var underline  =  NSUnderlineStyle.StyleSingle.rawValue
+        var underlineColor : UIColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        
         var segAttributes1 = [
             
             NSForegroundColorAttributeName : backColor,
@@ -179,17 +248,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         segC.setTitleTextAttributes(segAttributes as [NSObject:AnyObject],forState: UIControlState.Normal)
         segC.setTitleTextAttributes(segAttributes1 as [NSObject:AnyObject], forState: UIControlState.Selected)
         
-        // Implement base colors on our segmented control
-        segC.tintColor = UIColor.whiteColor()
-        segC.backgroundColor = UIColor.whiteColor()
-        
         // Add targets, initialize segmented control
         segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
         self.view.addSubview(segC)
         
+        //--------------- Draw UI ---------------
+        
+        // Hide UI controller item
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 60))
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
         navBar.backgroundColor =  UIColor.whiteColor()
         
         // Removes faint line under nav bar
@@ -198,58 +267,38 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-        navBarItem.title = "EVENT TITLE"
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "avenir", size: 18)!]
+        navBarItem.title = eventId
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
         navBar.items = [navBarItem]
         
         // Left nav bar button item
         let back = UIButton.buttonWithType(.System) as! UIButton
         back.setBackgroundImage(goBack, forState: .Normal)
-        back.frame = CGRectMake(10, 25, 25, 25)
+        back.frame = CGRectMake(15, 31, 22, 22)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
         // Right nav bar button item
         let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
         shareAlbum.setBackgroundImage(share, forState: .Normal)
-        shareAlbum.frame = CGRectMake(285,25,25,25)
-        shareAlbum.addTarget(self, action: nil, forControlEvents: .TouchUpInside)
+        shareAlbum.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
+        shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
-
+        
         self.view.addSubview(navBar)
-
+        
         // Post photo button
         let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         postPhoto.setImage(newCam, forState: .Normal)
-        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-95, 80, 80)
+        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-60, 80, 80)
         postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(postPhoto)
-        
-        
-        
-    }
-    
-    func seg() {
-        
-        //self.performSegueWithIdentifier("backButton", sender: self)
-        self.navigationController?.popViewControllerAnimated(true)
-        
-    }
-
-
-    override func viewDidLoad() {
-        
-        
-        super.viewDidLoad()
-        
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-
         
         // Set VC color
         self.collectionView!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         
         // Pushes collection view down, higher value pushes collection view downwards
-        collectionView?.contentInset = UIEdgeInsetsMake(90.0,0.0,0.0,0.0)
+        collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,0.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
  
         // Pull down to refresh
@@ -483,7 +532,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }  
     }
     
-    //--------------------------------Camera-----------------------------------------------------
+    //--------------- Camera ---------------
     //initialize camera
     func takePhoto(sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
@@ -499,7 +548,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             // resize
             if (zoomImage.camera) {
-                self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.5, 1.5);
+                self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0);
                 self.zoomImage.camera = false
             }
             

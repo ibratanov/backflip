@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import Parse
+import DigitsKit
 
 class CreatePublicEventViewController: UIViewController {
     
@@ -16,6 +17,8 @@ class CreatePublicEventViewController: UIViewController {
     @IBAction func settingButton(sender: AnyObject) {
         displayAlertLogout("Would you like to log out?", error: "")
     }
+    
+    var logoutButton = UIImage(named: "settings-icon") as UIImage!
     
     var userGeoPoint = PFGeoPoint()
     
@@ -45,6 +48,9 @@ class CreatePublicEventViewController: UIViewController {
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            PFUser.logOut()
+            Digits.sharedInstance().logOut()
+            self.performSegueWithIdentifier("logoutCreatePublic", sender: self)
             
             
         }))
@@ -171,7 +177,6 @@ class CreatePublicEventViewController: UIViewController {
                 else
                 {
                     
-
                     var event = PFObject(className: "Event")
                     
                     var geocoder = CLGeocoder()
@@ -218,6 +223,11 @@ class CreatePublicEventViewController: UIViewController {
                             if (success) {
                                 // The object has been saved.
                                 println("success \(event.objectId)")
+                                
+                                // Subscribe current device to event channel for push notifications
+                                //let currentInstallation = PFInstallation.currentInstallation()
+                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
+                                //currentInstallation.saveInBackground()
                             } else {
                                 // There was a problem, check error.description
                                 println("fail")
@@ -253,8 +263,36 @@ class CreatePublicEventViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
+        //--------------- Draw UI ---------------
+        
+        // Hide UI controller item
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        // Nav Bar positioning
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
+        navBar.backgroundColor =  UIColor.whiteColor()
+        
+        // Removes faint line under nav bar
+        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        navBar.shadowImage = UIImage()
+        
+        // Set the Nav bar properties
+        let navBarItem = UINavigationItem()
+        navBarItem.title = "Create An Event"
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+        navBar.items = [navBarItem]
+        
+        // Left nav bar button item
+        let logout = UIButton.buttonWithType(.System) as! UIButton
+        logout.setBackgroundImage(logoutButton, forState: .Normal)
+        logout.frame = CGRectMake(15, 31, 22, 22)
+        logout.addTarget(self, action: "settingButton:", forControlEvents: .TouchUpInside)
+        navBar.addSubview(logout)
+        
+        self.view.addSubview(navBar)
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
             if error == nil {
                 print(geoPoint)

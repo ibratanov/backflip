@@ -59,8 +59,42 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
         
-        imageView.image = imageToCrop!
+        imageView.image = resizeImage(imageToCrop!, newHeight: 2134, newWidth: 2134) //imageToCrop!
     }
+    
+     func resizeImage(image: UIImage, newHeight: CGFloat, newWidth: CGFloat) -> UIImage {
+        if(image.size.width > image.size.height){
+            
+        let scale = newHeight / image.size.height
+        let newWidthI = image.size.width * scale
+        UIGraphicsBeginImageContext(CGSizeMake(newWidthI, newHeight))
+        image.drawInRect(CGRectMake(0, 0, newWidthI, newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage
+        } else if(image.size.height > image.size.width){
+            
+            let scale = newWidth / image.size.width
+            let newHeightI = image.size.height * scale
+            UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeightI))
+            image.drawInRect(CGRectMake(0, 0, newWidth, newHeightI))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return newImage
+            
+        }else{
+            
+            let scale = newHeight / image.size.height
+            let newWidthI = image.size.width * scale
+            UIGraphicsBeginImageContext(CGSizeMake(newWidthI, newHeight))
+            image.drawInRect(CGRectMake(0, 0, newWidthI, newHeight))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage
+            
+        }
+            }
     
     override func updateViewConstraints() {
         imageView.sizeToFit()
