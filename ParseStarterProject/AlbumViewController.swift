@@ -43,16 +43,15 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
     //----------------------------------------
     
-    // Title passed from previous VC
+    // Title and ID of event passed from previous VC, based on selected row
     var eventId : String?
+    var eventTitle: String?
     
     // Variable for storing PFFile as image, pass through segue
     var images = [UIImage]()
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
     var share = UIImage(named: "share-icon") as UIImage!
-//    var bgImage = UIImage(named: "goto-camera-background") as UIImage!
-//    var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
 
     
@@ -83,19 +82,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-    
-    
+
     @IBOutlet weak var spinner:UIActivityIndicatorView!
     
     func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    
-    
-    
+
     func viewChanger (sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
@@ -212,7 +206,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-        navBarItem.title = eventId
+        navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "avenir", size: 18)!]
         navBar.items = [navBarItem]
         
@@ -275,11 +269,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                     self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
                         // stop spinner on main thread
-                        self.spinner.stopAnimating()
+                        //self.spinner.stopAnimating()
                     })
                 } else {
                     
-                    self.spinner.stopAnimating()
+                    //self.spinner.stopAnimating()
                     
                     var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
@@ -295,9 +289,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         super.viewDidLoad()
 
+        // Hide the navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
-        
         // Set VC color
         self.collectionView!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         
@@ -308,8 +302,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Pull down to refresh
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        refresher.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         self.collectionView!.addSubview(refresher)
+        self.collectionView?.alwaysBounceVertical = true
 
         
         // Initialize date comparison components
@@ -319,10 +314,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         components.hour = 48
         let components2 = NSDateComponents()
         components2.hour = 24
-        
         var eventQuery = PFQuery(className: "Event")
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
-            
             if error == nil {
                 
                 //TODO: determine how this can be set automatically
@@ -360,7 +353,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
     }
     
-    func refresh() {
+    func refresh(sender: AnyObject) {
         
         updatePhotos()
         self.collectionView?.reloadData()
@@ -384,15 +377,20 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.images.removeAll(keepCapacity: true)
         
         // Load information from parse db
-        var getUploadedImages = PFQuery(className: "Photo")
+        var getUploadedImages = PFQuery(className: "Event")
         getUploadedImages.limit = 1000
-        getUploadedImages.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-            
-            if error == nil {
+        getUploadedImages.whereKey("objectId", equalTo: eventId!)
+        
+        // Retrieval from corresponding photos from relation to event
+        var object = getUploadedImages.findObjects()?.first as! PFObject
+        
+        var photos = object["photos"] as! PFRelation
+        
+        var photoList = photos.query()?.findObjects() as! [PFObject]
                 
-                for object in objects! {
+                for photo in photoList {
                     
-                    let tup = (image: object["thumbnail"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
+                    let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId! as String,date: photo.createdAt! as NSDate)
                     
                     self.imageFilesTemp.append(tup)
                     
@@ -421,13 +419,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     self.datesTime.append(date)
                     
                 }
-                
-            } else {
-                
-                println(error)
-                
-            }
-        }
     }
     
 
