@@ -109,7 +109,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         let logout = UIButton.buttonWithType(.System) as! UIButton
             logout.setBackgroundImage(logoutButton, forState: .Normal)
             logout.frame = CGRectMake(15, 31, 22, 22)
-            logout.addTarget(self, action: "logoutButton", forControlEvents: .TouchUpInside)
+            logout.addTarget(self, action: "logoutButton:", forControlEvents: .TouchUpInside)
         navBar.addSubview(logout)
 
         self.view.addSubview(navBar)
