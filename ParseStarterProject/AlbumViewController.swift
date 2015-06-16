@@ -12,15 +12,22 @@ import MobileCoreServices
 import AssetsLibrary
 import Foundation
 import Photos
+import MessageUI
 
 
 let reuseIdentifier = "albumCell"
 
 class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate{
+    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
+    
+    // Temporary solution to duplicate photo image
+    var firstLoad = true
     
     var refresher: UIRefreshControl!
     
+    
+    
+
     //------------------Camera Att.-----------------
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var flashButton: UIButton!
@@ -47,8 +54,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
     var share = UIImage(named: "share-icon") as UIImage!
-//    var bgImage = UIImage(named: "goto-camera-background") as UIImage!
-//    var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
 
     
@@ -66,7 +71,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var datesTime = [NSDate]()
     
     // Checker for sort button. Sort in chronological order by default.
-    var sortedByLikes = false
+    var sortedByLikes = true
+    var myPhotoSelected = false
     
     // Display alert function for when an album timer is going to run out
     func displayAlert(title:String,error: String) {
@@ -80,25 +86,41 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     
+    
+    @IBOutlet weak var spinner:UIActivityIndicatorView!
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    
+    
     func viewChanger (sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
             
             // Rating
             case 0 :    sortedByLikes = true
+                        myPhotoSelected = false
                         updatePhotos()
                         self.collectionView?.reloadData()
             
             // Time
             case 1:     sortedByLikes = false
+                        myPhotoSelected = false
                         updatePhotos()
                         self.collectionView?.reloadData()
             
             // My Photos
-            case 2 :    println("hi")
+            case 2 :    myPhotoSelected = true
             
             
-            default:    updateAlbum()
+            default:
+                
+                println("hi")
+            
             
         }
     }
@@ -109,8 +131,26 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Initialize segmented control button
         let items = ["SORT BY RATING", "SORT BY TIME", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
-        segC.selectedSegmentIndex = 0
         
+        // Persistence of segmented control selection
+        if sortedByLikes == true && myPhotoSelected == false {
+            
+            segC.selectedSegmentIndex = 0
+            
+        }
+        
+        if sortedByLikes == false && myPhotoSelected == false {
+            
+            segC.selectedSegmentIndex = 1
+        
+        }
+        
+        if myPhotoSelected == true  {
+            
+            segC.selectedSegmentIndex = 2
+            
+        }
+    
         // Defines where seg control is positioned
         let frame: CGRect = UIScreen.mainScreen().bounds
         println(frame)
@@ -173,8 +213,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-        navBarItem.title = "EVENT TITLE"
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "avenir", size: 18)!]
+        navBarItem.title = eventId
+        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
         navBar.items = [navBarItem]
         
         // Left nav bar button item
@@ -188,7 +228,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
         shareAlbum.setBackgroundImage(share, forState: .Normal)
         shareAlbum.frame = CGRectMake(285,25,25,25)
-        shareAlbum.addTarget(self, action: "print", forControlEvents: .TouchUpInside)
+        shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
 
         self.view.addSubview(navBar)
@@ -198,14 +238,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         postPhoto.setImage(newCam, forState: .Normal)
         postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-95, 80, 80)
         postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(postPhoto)
+        
+        // Dupliccate post photo button hack
+        if (firstLoad == true) {
+            self.view.addSubview(postPhoto)
+        }
+        firstLoad = false
         
         
-    }
-    
-    func print(){
-        
-        println("test")
         
     }
     
@@ -215,13 +255,52 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.navigationController?.popViewControllerAnimated(true)
         
     }
+    
+    func smsShare() {
+        
+        var params = [ "referringUsername": "User1",
+            "referringUserId": "12345",  "pictureId": "987666",
+            "pictureURL": "http://yoursite.com/pics/987666",
+            "pictureCaption": "BOOM" ]
+        
+        // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
+        
+        //self.spinner.startAnimating()
+        //disable button
+        
+        
+        Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
+            if (error == nil) {
+                if MFMessageComposeViewController.canSendText() {
+                    
+                    let messageComposer = MFMessageComposeViewController()
+                    
+                    messageComposer.body = String(format: "Check this out: %@", url)
+                    
+                    messageComposer.messageComposeDelegate = self
+                    
+                    self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
+                        // stop spinner on main thread
+                        self.spinner.stopAnimating()
+                    })
+                } else {
+                    
+                    self.spinner.stopAnimating()
+                    
+                    var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        })
+    }
 
 
     override func viewDidLoad() {
         
         
         super.viewDidLoad()
-        
+
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
         
@@ -283,83 +362,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
         }
         
-        updateAlbum()
+        updatePhotos()
 
     }
     
     func refresh() {
         
         updatePhotos()
+        self.collectionView?.reloadData()
         self.refresher.endRefreshing()
         
     }
-    
-    func sortButton() {
-        
-        // Change boolean, reload data to sort images
-        sortedByLikes == true
-        
-        self.collectionView?.reloadData()
-    }
-    
-    
-    func updateAlbum() {
-        
-        var getUploadedImages = PFQuery(className: "Photo")
-        
-        // Parse query limit default is 100 objects
-        getUploadedImages.limit = 1000
-        
-        getUploadedImages.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-            
-            if error == nil {
-                
-                for object in objects! {
-                    
-                    let tup = (image: object["image"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
-                    
-                    
-                    self.imageFilesTemp.append(tup)
-                    
-                    self.collectionView?.reloadData()
-                    
-                }
-                
-                // Sort tuple of images by likes, and fill new array with photos in order of likes
-                self.imageFilesTemp.sort{ $0.likes > $1.likes}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
-                    
-                    self.imageFilesLikes.append(image)
-                    self.objectIdLikes.append(id)
-                    self.datesLikes.append(date)
-                    
-                }
-                
-                // Sort tuple of images,
-                self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
-                    
-                    self.imageFilesTime.append(image)
-                    self.objectIdTime.append(id)
-                    self.datesTime.append(date)
-                    
-                }
-                
-            } else {
-                
-                println(error)
-                
-            }
-            
-            //self.collectionView?.reloadData()
-            //self.refresher.endRefreshing()
-        }
-    }
-    
-    
-    
     
     
     // TODO: Smart loading of photos - only reload photos which are new/were modified
@@ -385,7 +398,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
                 for object in objects! {
                     
-                    let tup = (image: object["image"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
+                    let tup = (image: object["thumbnail"] as! PFFile, likes: object["upvoteCount"] as! Int, id: object.objectId!! as String,date: object.createdAt!! as NSDate)
                     
                     self.imageFilesTemp.append(tup)
                     
@@ -422,6 +435,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -587,17 +601,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
     {
-        image =
-            info[UIImagePickerControllerOriginalImage] as! UIImage
-        //set image cropped square
-        
-        self.imageViewContent = cropToSquare(image:image)
-        
+        image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        self.imageViewContent = image
         picker.dismissViewControllerAnimated(true, completion: nil)
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        //Retake and crop options------------------------------------------------------------------------
+        let previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
+        previewViewController.cropCompletionHandler = {
+            self.imageViewContent = $0!
+            previewViewController.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil);
+        }
+        previewViewController.cancelCompletionHandler = {
+            //retake image
+            //self.dismissViewControllerAnimated(true, completion: nil)
+            self.presentViewController(picker, animated:true, completion:{})
+            
+        }
+        previewViewController.imageToCrop = imageViewContent;
+        
+        self.presentViewController(previewViewController, animated: true, completion: nil);
+        //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
+        //ensure image is cropped to a square
+        //self.imageView.image = image
+        
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
         picker.dismissViewControllerAnimated(true, completion: nil)

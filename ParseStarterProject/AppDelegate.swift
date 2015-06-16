@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //------------Parse Push Notifications------------------------------------
-        if application.respondsToSelector("registerUserNotificationSettings:") {
+        /*if application.respondsToSelector("registerUserNotificationSettings:") {
             let userNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
             let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
             application.registerUserNotificationSettings(settings)
@@ -81,6 +81,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             let types = UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound
             application.registerForRemoteNotificationTypes(types)
+        }*/
+        
+        
+        let userNotificationTypes = (UIUserNotificationType.Alert |  UIUserNotificationType.Badge |  UIUserNotificationType.Sound);
+        
+        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
+        func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+            // Store the deviceToken in the current Installation and save it to Parse
+            let installation = PFInstallation.currentInstallation()
+            installation.setDeviceTokenFromData(deviceToken)
+            installation.saveInBackground()
         }
 
         // Used to add the device to the Parse push notification settings.
@@ -155,6 +169,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+
 
     ///////////////////////////////////////////////////////////
     // Uncomment this method if you want to use Push Notifications with Background App Refresh
