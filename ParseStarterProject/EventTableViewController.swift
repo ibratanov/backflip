@@ -109,7 +109,7 @@ class EventTableViewController: UITableViewController {
         //innerQuery.whereKeyExists("objectId")
         
         var query = PFQuery(className: "Event")
-        query.whereKey("objectId", equalTo: "4b71Y7QbXH")
+        query.whereKey("objectId", equalTo: objectId)
         
         var photoListForEvent: [PFFile] = []
         
@@ -162,34 +162,43 @@ class EventTableViewController: UITableViewController {
         let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
                 //let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
         
+        var key : String = Array(self.eventWithPhotos.keys)[indexPath.row]
         
-        var eventObjectId = self.eventId[indexPath.row]
-        var listPhotos = self.eventWithPhotos[eventObjectId] as [PFFile]!
-        dump(listPhotos)
         
-        if(listPhotos.count == 0){
-            
-        }
-        else {
-            println("========================")
-            println(indexPath.row)
-            var imageData1 = listPhotos[0].getData()
-            tableCell.imageOne!.image = UIImage (data: imageData1!)
-        
-            dump(listPhotos)
-            var imageData2 = listPhotos[1].getData()
-            tableCell.imageTwo!.image = UIImage (data: imageData2!)
-        }
+        //var eventObjectId = self.eventId[indexPath.row]
+        var listPhotos = self.eventWithPhotos[key] as [PFFile]!
         
         /*
-        var imageData3 = self.imageList[indexPath.row+2].getData()
-        tableCell.imageThree!.image = UIImage (data: imageData3!)
+        for (index,photo) in enumerate(listPhotos) {
+            var imageData = listPhotos[index].getData()
+            tableCell.image
+            
+        }
         
-        var imageData4 = self.imageList[indexPath.row+2].getData()
-        tableCell.imageFour!.image = UIImage (data: imageData4!)
+*/
+        print(listPhotos.count)
         
+        if listPhotos.count != 0 {
+            var imageData1 = listPhotos[0].getData()
+            tableCell.imageOne!.image = UIImage (data: imageData1!)
+            
+            var imageData2 = listPhotos[1].getData()
+            tableCell.imageTwo!.image = UIImage (data: imageData2!)
+            
+            var imageData3 = listPhotos[2].getData()
+            tableCell.imageThree!.image = UIImage (data: imageData3!)
+            
+            var imageData4 = listPhotos[3].getData()
+            tableCell.imageFour!.image = UIImage (data: imageData4!)
+            
+            tableCell.eventName.text = self.events[indexPath.row]//"Event Name" + String(indexPath.row)
+            tableCell.eventLocation.text = self.venues[indexPath.row]
+        }
         
+        tableCell.eventName.text = self.events[indexPath.row]//"Event Name" + String(indexPath.row)
+        tableCell.eventLocation.text = self.venues[indexPath.row]
         
+        /*
         var imageData1 = self.imageList[indexPath.row].getData()
         tableCell.imageOne!.image = UIImage (data: imageData1!)
         
@@ -201,11 +210,11 @@ class EventTableViewController: UITableViewController {
         
         var imageData4 = self.imageList[indexPath.row+2].getData()
         tableCell.imageFour!.image = UIImage (data: imageData4!)
-        
-*/
+
+
         tableCell.eventName.text = self.events[indexPath.row]//"Event Name" + String(indexPath.row)
         tableCell.eventLocation.text = self.venues[indexPath.row]
-        
+        */
         
         return tableCell
     }
