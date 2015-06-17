@@ -213,6 +213,11 @@ class CreatePublicEventViewController: UIViewController {
 //        }
     }
 */
+    func checkMaxLength(textField: UITextField!, maxLength: Int) {
+        if (count(textField.text!) > maxLength) {
+            textField.deleteBackward()
+        }
+    }
 
     // Add event to event class
     @IBAction func createEvent(sender: AnyObject) {
@@ -227,8 +232,14 @@ class CreatePublicEventViewController: UIViewController {
         // Template for address
         //var address = " 62 Shadyglen dr,Toronto, Canada"
         
-        var eventName = self.eventName.text
+        //Limit number of characters in event name
+        var myStr = self.eventName.text as NSString
+        if (count(self.eventName.text) > 25){
+            myStr = myStr.substringToIndex(25)
+        }
         
+        var eventName = myStr as String
+
         if (eventName == "" || address == "") {
             error = "Please enter an event name and location."
         } else if (count(eventName) < 2) {
@@ -261,7 +272,6 @@ class CreatePublicEventViewController: UIViewController {
                 }
             })
 */
-            
             
 
             event["geoLocation"] = userGeoPoint

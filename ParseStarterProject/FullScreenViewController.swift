@@ -387,6 +387,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
+//        var shortTitle: String?
+//        if (count(eventTitle) > 25) {
+//            shortTitle = eventTitle?.substringToIndex(25) + " . . ."
+//            navBarItem.title = shortTitle
+//        }
         navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
 //        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
