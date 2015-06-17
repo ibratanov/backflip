@@ -451,7 +451,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         var photos = object["photos"] as! PFRelation
         var tempImage: PFFile?
-        
+        // Finds associated photo object in relation
         var photoList = photos.query()?.getObjectWithId(objectIdTemp)
         
         
@@ -470,34 +470,72 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     }
             }
         
-        // block to check if user has already liked photo, and set button label accordingly
-        var query5 = PFUser.query()
+        // Block to check if user has already liked photo, and set button label accordingly
+        var query5 = PFQuery(className: "Event")
         
-        query5?.whereKey("photosLiked", equalTo: objectIdTemp)
+        query5.whereKey("objectId", equalTo: eventId!)
         
-        query5?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
+        var eventObject = query5.findObjects()?.first as! PFObject
+        var relation = eventObject["photos"] as! PFRelation
+        
+        // User like list that will be filled
+        var likeList : [String]
+        // Finds associated photo object in relation
+        var likeRetrieve = relation.query()?.getObjectWithId(objectIdTemp)
+        
+        // Fill the like list with the user liked list array from photo relation
+        likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
+        
+        // Iterate through the like list to check if user has liked it
+        for users in likeList {
             
-            if error == nil {
+            if users == PFUser.currentUser()?.username {
                 
-                let array = objects?.objectForKey("photosLiked") as! [String]
+                self.likeActive = true
+                self.likeButtonLabel.setImage(self.liked, forState: .Normal)
                 
-                if contains(array, self.objectIdTemp) == true {
-                    
-                    self.likeActive = true
-                    self.likeButtonLabel.setImage(self.liked, forState: .Normal)
-                    
-                } else {
-                    self.likeActive = false
-                    self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
-                    
-                }
+            } else {
+                
+                self.likeActive = false
+                self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
+                
             }
+            
+            
         }
         
         
+        var query6 = PFQuery(className: "Event")
+        
+        query6.whereKey("objectId", equalTo: eventId!)
+        
+        var events = query5.findObjects()?.first as! PFObject
+        var relations = eventObject["photos"] as! PFRelation
+        
+        // User like list that will be filled
+        var likeUserList : [String]
+        // Finds associated photo object in relation
+        var likesRetrieved = relation.query()?.getObjectWithId(objectIdTemp)
+        
+        // Fill the like list with the user liked list array from photo relation
+        likeUserList = (likesRetrieved!.objectForKey("usersLiked") as? [String])!
+        
+        let count = likeUserList.count
+        
+        if (count == 1) {
+            
+            self.likeCount.text = String(count) + " like"
+            
+        } else {
+            
+            self.likeCount.text = String(count) + " likes"
+        }
+   
+
+        
         // block to display current like count based on array size when view is loaded
         
-        var query6 = PFQuery(className: "Photo")
+        /*var query6 = PFQuery(className: "Photo")
         
         query6.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
             
@@ -524,7 +562,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         fullScreenImage.userInteractionEnabled = true
         fullScreenImage.addGestureRecognizer(gesture)
         
-        self.view.bringSubviewToFront(likeCount)
+        self.view.bringSubviewToFront(likeCount)*/
     }
     
     /*@IBAction func shareButtonBeta(sender:UIButton){
