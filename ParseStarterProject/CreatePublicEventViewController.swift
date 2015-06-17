@@ -291,21 +291,23 @@ class CreatePublicEventViewController: UIViewController {
                         let relation = event.relationForKey("attendees")
                         relation.addObject(PFUser.currentUser()!)
                         
-                        event.saveInBackgroundWithBlock {
-                            (success: Bool, error: NSError?) -> Void in
-                            if (success) {
-                                // The object has been saved.
-                                //println("**************************success \(event.objectId)")
-                                
-                                // Subscribe current device to event channel for push notifications
-                                //let currentInstallation = PFInstallation.currentInstallation()
-                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
-                                //currentInstallation.saveInBackground()
-                            } else {
-                                // There was a problem, check error.description
-                                println("fail")
-                            }
-                        }
+//                        event.saveInBackgroundWithBlock {
+//                            (success: Bool, error: NSError?) -> Void in
+//                            if (success) {
+//                                // The object has been saved.
+//                                //println("**************************success \(event.objectId)")
+//                                
+//                                // Subscribe current device to event channel for push notifications
+//                                //let currentInstallation = PFInstallation.currentInstallation()
+//                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
+//                                //currentInstallation.saveInBackground()
+//                            } else {
+//                                // There was a problem, check error.description
+//                                println("fail")
+//                            }
+//                        }
+                        
+                        event.save()
                         println("---------------GETSHERE--------------")
                         object?.addUniqueObject(event, forKey:"savedEvents")
                         object?.addUniqueObject(eventName, forKey:"savedEventNames")
@@ -332,22 +334,24 @@ class CreatePublicEventViewController: UIViewController {
                         attendance.setObject(event, forKey: "event")
                         println("---------------GETSHERE7--------------")
                         
-                        attendance.saveInBackgroundWithBlock{ (success, error) -> Void in
-                            if (success) {
-                                // The object has been saved.
-                                println("suxess")//success \(event.objectId)")
-                                
-                                // Subscribe current device to event channel for push notifications
-                                //let currentInstallation = PFInstallation.currentInstallation()
-                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
-                                //currentInstallation.saveInBackground()
-                            } else {
-                                // There was a problem, check error.description
-                                println("fail")
-                                println(error)
-                            }
-
-                        }
+//                        attendance.saveInBackgroundWithBlock{ (success, error) -> Void in
+//                            if (success) {
+//                                // The object has been saved.
+//                                println("suxess")//success \(event.objectId)")
+//                                
+//                                // Subscribe current device to event channel for push notifications
+//                                //let currentInstallation = PFInstallation.currentInstallation()
+//                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
+//                                //currentInstallation.saveInBackground()
+//                            } else {
+//                                // There was a problem, check error.description
+//                                println("fail")
+//                                println(error)
+//                            }
+//
+//                        }
+                        
+                        attendance.save()
                         
                         println("Saved")
                         

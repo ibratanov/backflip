@@ -133,10 +133,9 @@ class EventTableViewController: UITableViewController {
                 self.eventId.append(objectId)
                 self.venues.append(venue)
                 
-                self.tableView.reloadData()
-                
             }
             print(self.eventWithPhotos)
+            self.tableView.reloadData()
         })
         
         
