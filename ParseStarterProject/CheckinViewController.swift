@@ -162,36 +162,35 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 self.userGeoPoint = geoPoint!
                 print("successfully retrieved User GeoPoint")
                 // Queries events table for locations that are close to user
-                // Return top 3 closest events
+                // Return top 5 closest events
                 var query = PFQuery(className: "Event")
                 //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
                 query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: 10.0)
                 query.limit = 5
-                let placesObjects = query.findObjects() as! [PFObject]
-                
-                print(placesObjects.count)
-                
-                for object in placesObjects {
-                    var eventName: AnyObject? = object.objectForKey("eventName")
+
+                query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                    self.cellContent.removeAllObjects()
                     
-                    // hack, fix later
-                    if self.cellContent.count < query.limit {
-                        self.cellContent.addObject(eventName!)
+                    print(objects!.count)
+                    
+                    for object in objects as! [PFObject] {
+                        var eventName: AnyObject? = object.objectForKey("eventName")
+                        
+                        // hack, fix later
+                        if self.cellContent.count < query.limit {
+                            self.cellContent.addObject(eventName!)
+                        }
+                        
                     }
-                    
-                }
+                    self.pickerInfo.reloadAllComponents()
+
+                })
                 
             }
             else {
                 print("Error with User Geopoint")
             }
-            
-            self.pickerInfo.reloadAllComponents()
-
         }
-        
-        
-        
     }
 
     
@@ -199,10 +198,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         //self.pickerInfo.reloadAllComponents()
         //locationManager.stopUpdatingLocation()
         
-        //self.pickerInfo.reloadAllComponents()
-        
         if (self.cellContent.count > 0) {
-            self.eventSelected = self.cellContent[0] as! String//self.cellContent[(cellContent.count/2)] as! String
+            self.eventSelected = self.cellContent[0] as! String
         }
     }
 
@@ -214,6 +211,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     @IBOutlet weak var checkInButton: UIButton!
     
     @IBAction func checkInClicked(sender: AnyObject) {
+        if (self.cellContent.count > 0) {
+            self.eventSelected = self.cellContent[0] as! String
+        }
         
         // Add user to this event
         var eventName = self.eventSelected
@@ -235,19 +235,18 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 let query = PFQuery(className: "Event")
                 query.whereKey("eventName", equalTo: self.eventSelected)
                 let scoreArray = query.findObjects()
-                
                 if scoreArray!.count == 0 {
-                    
+                    println(scoreArray)
                     self.displayAlert("No Nearby Events", error: "Create a new event below.")
 
                 }
                 else {
                     var event = scoreArray?[0] as! PFObject
 
-                    //Subscribe user to the channel of the event for push notifications
-//                    let currentInstallation = PFInstallation.currentInstallation()
-//                    currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
-//                    currentInstallation.saveInBackground()
+                    // Subscribe user to the channel of the event for push notifications
+                    let currentInstallation = PFInstallation.currentInstallation()
+                    currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
+                    currentInstallation.saveInBackground()
                     
                     // Store the relation
                     let relation = event.relationForKey("attendees")
