@@ -37,18 +37,18 @@
                     </view>
                     <blurEffect style="dark"/>
                 </visualEffectView>
-                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9EA-5S-QFp">
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9EA-5S-QFp" userLabel="Square">
                     <rect key="frame" x="0.0" y="60" width="375" height="375"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="9EA-5S-QFp" secondAttribute="height" multiplier="1:1" id="IUn-Ue-3JE"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qfU-Uh-CqL">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qfU-Uh-CqL" userLabel="Top">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xZg-RP-CaS">
-                            <rect key="frame" x="10" y="5" width="64" height="50"/>
+                            <rect key="frame" x="10" y="5" width="55" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="dqa-Ud-6pd"/>
                             </constraints>
@@ -73,11 +73,19 @@
                                 <action selector="reverseCamera:" destination="-1" eventType="touchUpInside" id="STg-4z-962"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cy-rg-dc5">
+                            <rect key="frame" x="187" y="30" width="0.0" height="0.0"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="zyY-vh-xKq" secondAttribute="trailing" constant="10" id="8yw-s9-HTC"/>
                         <constraint firstAttribute="centerY" secondItem="xZg-RP-CaS" secondAttribute="centerY" id="R4C-M5-Reh"/>
+                        <constraint firstAttribute="centerX" secondItem="6cy-rg-dc5" secondAttribute="centerX" id="TmL-3r-h7G"/>
+                        <constraint firstAttribute="centerY" secondItem="6cy-rg-dc5" secondAttribute="centerY" constant="0.5" id="ckw-XH-THs"/>
                         <constraint firstItem="xZg-RP-CaS" firstAttribute="leading" secondItem="qfU-Uh-CqL" secondAttribute="leading" constant="10" id="fza-mV-fbd"/>
                         <constraint firstAttribute="height" constant="60" id="kWi-29-2A5"/>
                         <constraint firstAttribute="centerY" secondItem="zyY-vh-xKq" secondAttribute="centerY" id="uPy-uG-6NM"/>
@@ -86,7 +94,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="400" height="48"/>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qVi-TP-Qk1">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qVi-TP-Qk1" userLabel="Bottom">
                     <rect key="frame" x="0.0" y="495" width="375" height="172"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fto-9h-tb5">
@@ -139,17 +147,9 @@
                         <constraint firstItem="fOS-wJ-nCH" firstAttribute="centerY" secondItem="Fto-9h-tb5" secondAttribute="centerY" id="Mxz-E8-9Uv"/>
                         <constraint firstAttribute="centerY" secondItem="fOS-wJ-nCH" secondAttribute="centerY" id="iIn-bE-Lge"/>
                         <constraint firstAttribute="trailing" secondItem="wbM-nH-FAU" secondAttribute="trailing" constant="10" id="izu-an-Wmg"/>
-                        <constraint firstItem="fOS-wJ-nCH" firstAttribute="top" secondItem="qVi-TP-Qk1" secondAttribute="top" constant="20" id="mVd-Dt-bAM"/>
                         <constraint firstItem="Fto-9h-tb5" firstAttribute="leading" secondItem="qVi-TP-Qk1" secondAttribute="leading" constant="10" id="nnu-QL-eac"/>
-                        <constraint firstAttribute="centerX" secondItem="fOS-wJ-nCH" secondAttribute="centerX" constant="-0.5" id="rmT-pg-HrO"/>
                         <constraint firstItem="fOS-wJ-nCH" firstAttribute="centerY" secondItem="wbM-nH-FAU" secondAttribute="centerY" id="yUI-uU-TIu"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="mVd-Dt-bAM"/>
-                            <exclude reference="rmT-pg-HrO"/>
-                        </mask>
-                    </variation>
                     <variation key="widthClass=compact" fixedFrame="YES">
                         <rect key="frame" x="0.0" y="490" width="400" height="110"/>
                     </variation>
@@ -159,7 +159,7 @@
                         </mask>
                     </variation>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARE TO EVENT ALBUM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rf-AH-Lfq">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rf-AH-Lfq">
                     <rect key="frame" x="0.0" y="435" width="375" height="60"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -209,7 +209,7 @@
     <resources>
         <image name="camera-button" width="92" height="92"/>
         <image name="close-icon-large" width="28" height="27"/>
-        <image name="flash-icon-large" width="64" height="38"/>
-        <image name="reverse-camera-icon-large" width="35" height="35"/>
+        <image name="flash-icon-large" width="55" height="26"/>
+        <image name="reverse-camera-icon-large" width="35" height="26"/>
     </resources>
 </document>

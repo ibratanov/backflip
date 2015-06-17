@@ -286,15 +286,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Left nav bar button item
         let back = UIButton.buttonWithType(.System) as! UIButton
-        back.setBackgroundImage(goBack, forState: .Normal)
-        back.frame = CGRectMake(15, 31, 22, 22)
+        back.setImage(goBack, forState: .Normal)
+        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        back.frame = CGRectMake(-10, 20, 72, 44)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
         // Right nav bar button item
         let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
-        shareAlbum.setBackgroundImage(share, forState: .Normal)
-        shareAlbum.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
+        shareAlbum.setImage(share, forState: .Normal)
+        shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        shareAlbum.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
         shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
         

@@ -50,6 +50,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         super.init(nibName: NibName, bundle: nil);
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
     }

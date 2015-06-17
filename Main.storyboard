@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -180,13 +181,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Event History" id="LHV-eB-VzO">
                         <barButtonItem key="leftBarButtonItem" image="settings-icon" id="2LT-oK-jZI">
-                            <color key="tintColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.0" green="0.58823529411764708" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="logoutButton:" destination="KbJ-H0-F5d" id="T7e-US-yMU"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="add-icon" id="FEB-Tt-XaJ">
-                            <color key="tintColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.0" green="0.58823529409999997" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="jaA-7R-ZG2" kind="show" id="Fno-vP-GvK"/>
                             </connections>
@@ -272,7 +273,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="jaA-7R-ZG2" kind="show" identifier="CreateEvent" id="ofY-SC-By2"/>
+                                    <segue destination="jaA-7R-ZG2" kind="presentation" identifier="CreateEvent" modalTransitionStyle="crossDissolve" animates="NO" id="ofY-SC-By2"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlL-up-cCN">
@@ -296,8 +297,6 @@
                             <constraint firstItem="7OL-xV-MgK" firstAttribute="top" secondItem="Fs2-mx-lLt" secondAttribute="bottom" constant="10" id="1cc-z9-d4k"/>
                             <constraint firstAttribute="centerX" secondItem="Xu3-Ge-spa" secondAttribute="centerX" id="1q9-Lf-eX8"/>
                             <constraint firstAttribute="centerX" secondItem="7OL-xV-MgK" secondAttribute="centerX" id="1wm-1F-w2j"/>
-                            <constraint firstItem="Xu3-Ge-spa" firstAttribute="top" secondItem="7bk-ji-zDx" secondAttribute="bottom" constant="10" id="2py-Gm-MGt"/>
-                            <constraint firstItem="Z95-Tc-ZXl" firstAttribute="top" secondItem="Xu3-Ge-spa" secondAttribute="bottom" constant="25" id="3OX-hr-5Pm"/>
                             <constraint firstItem="FlL-up-cCN" firstAttribute="leading" secondItem="KZH-TS-jb6" secondAttribute="leading" id="9bE-YL-8jS"/>
                             <constraint firstAttribute="centerX" secondItem="zMI-sN-Ee9" secondAttribute="centerX" id="CKF-R3-G19"/>
                             <constraint firstAttribute="bottom" secondItem="FlL-up-cCN" secondAttribute="bottom" id="Dnn-gP-zDi"/>
@@ -309,23 +308,11 @@
                             <constraint firstItem="Z95-Tc-ZXl" firstAttribute="leading" secondItem="KZH-TS-jb6" secondAttribute="leading" id="XQT-aS-e9M"/>
                             <constraint firstAttribute="trailing" secondItem="Fs2-mx-lLt" secondAttribute="trailing" id="Yg6-9Y-eZB"/>
                             <constraint firstAttribute="trailing" secondItem="7bk-ji-zDx" secondAttribute="trailing" id="b6h-ym-LaZ"/>
-                            <constraint firstItem="Xu3-Ge-spa" firstAttribute="top" secondItem="7bk-ji-zDx" secondAttribute="bottom" constant="20" id="gN4-gw-tUJ"/>
-                            <constraint firstAttribute="bottom" secondItem="Xu3-Ge-spa" secondAttribute="bottom" constant="50" id="i1p-Ve-8T2"/>
                             <constraint firstItem="Z95-Tc-ZXl" firstAttribute="top" secondItem="Xu3-Ge-spa" secondAttribute="bottom" constant="20" id="kt3-Jq-KOn"/>
-                            <constraint firstItem="Xu3-Ge-spa" firstAttribute="top" secondItem="7bk-ji-zDx" secondAttribute="bottom" constant="10" id="nYI-UT-CH6"/>
                             <constraint firstItem="7bk-ji-zDx" firstAttribute="top" secondItem="zMI-sN-Ee9" secondAttribute="bottom" id="nty-7S-TwL"/>
                             <constraint firstAttribute="trailing" secondItem="Z95-Tc-ZXl" secondAttribute="trailing" id="vfr-Pr-jan"/>
                             <constraint firstItem="Fs2-mx-lLt" firstAttribute="leading" secondItem="KZH-TS-jb6" secondAttribute="leading" id="xIW-Un-e9q"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="2py-Gm-MGt"/>
-                                <exclude reference="gN4-gw-tUJ"/>
-                                <exclude reference="i1p-Ve-8T2"/>
-                                <exclude reference="nYI-UT-CH6"/>
-                                <exclude reference="3OX-hr-5Pm"/>
-                            </mask>
-                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -411,13 +398,13 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rhx-us-hV1">
-                                <rect key="frame" x="82" y="359" width="156" height="34"/>
+                                <rect key="frame" x="82" y="364" width="156" height="34"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                 <state key="normal" title="Join an existing event">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="eGV-gf-aJ6" kind="show" id="hKp-Y7-lrD"/>
+                                    <segue destination="eGV-gf-aJ6" kind="presentation" modalTransitionStyle="crossDissolve" animates="NO" id="hKp-Y7-lrD"/>
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ger-To-0KF">
@@ -457,7 +444,7 @@
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="Rhx-us-hV1" secondAttribute="centerX" id="1eJ-EM-S6S"/>
                             <constraint firstItem="ger-To-0KF" firstAttribute="leading" secondItem="Luo-6z-Om5" secondAttribute="leading" id="21f-3x-wNB"/>
-                            <constraint firstItem="G3B-Tg-D5K" firstAttribute="top" secondItem="Rhx-us-hV1" secondAttribute="bottom" constant="25" id="3wI-wp-QFv"/>
+                            <constraint firstItem="G3B-Tg-D5K" firstAttribute="top" secondItem="Rhx-us-hV1" secondAttribute="bottom" constant="20" id="3wI-wp-QFv"/>
                             <constraint firstAttribute="centerX" secondItem="1OW-51-wYQ" secondAttribute="centerX" id="4tr-yN-atC"/>
                             <constraint firstItem="TJn-ak-3S3" firstAttribute="leading" secondItem="Luo-6z-Om5" secondAttribute="leading" id="8jt-gz-1Y5"/>
                             <constraint firstAttribute="trailing" secondItem="G3B-Tg-D5K" secondAttribute="trailing" id="DL8-CV-rPF"/>
@@ -710,32 +697,6 @@
                                     <constraint firstAttribute="width" secondItem="uoI-tj-emU" secondAttribute="height" multiplier="1:1" id="KeX-h1-jgh"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dH6-Zt-XFx">
-                                <rect key="frame" x="280" y="460" width="25" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="BHN-0E-cdq"/>
-                                    <constraint firstAttribute="height" constant="25" id="GzV-nS-q4A"/>
-                                </constraints>
-                                <state key="normal" image="share-icon">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="share:" destination="OvI-dv-VgA" eventType="touchUpInside" id="zMw-MV-GRn"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcr-SV-QKe">
-                                <rect key="frame" x="230" y="460" width="25" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="Ysb-MW-COD"/>
-                                    <constraint firstAttribute="height" constant="25" id="zcm-3m-bRh"/>
-                                </constraints>
-                                <state key="normal" image="download-icon">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="downloadImage:" destination="OvI-dv-VgA" eventType="touchUpInside" id="MrD-dZ-r4f"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uv5-ir-czh">
                                 <rect key="frame" x="59" y="460" width="100" height="25"/>
                                 <constraints>
@@ -776,24 +737,36 @@
                                     <action selector="likeToggle:" destination="OvI-dv-VgA" eventType="touchUpInside" id="7ez-Ih-yXz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcr-SV-QKe">
+                                <rect key="frame" x="280" y="460" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="Ysb-MW-COD"/>
+                                    <constraint firstAttribute="height" constant="25" id="zcm-3m-bRh"/>
+                                </constraints>
+                                <state key="normal" image="download-icon">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="downloadImage:" destination="OvI-dv-VgA" eventType="touchUpInside" id="MrD-dZ-r4f"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="dH6-Zt-XFx" secondAttribute="trailing" constant="15" id="2Xc-S3-jje"/>
                             <constraint firstItem="Cld-aL-GAw" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="10" id="6MM-HL-hpm"/>
                             <constraint firstItem="pu8-Va-BEQ" firstAttribute="top" secondItem="TGj-Tl-8TS" secondAttribute="top" constant="64" id="AAF-YU-rTZ"/>
                             <constraint firstAttribute="trailing" secondItem="uoI-tj-emU" secondAttribute="trailing" id="Kpa-O8-1Dz"/>
                             <constraint firstItem="Cld-aL-GAw" firstAttribute="leading" secondItem="TGj-Tl-8TS" secondAttribute="leading" constant="15" id="Kvb-ih-l7n"/>
                             <constraint firstItem="pu8-Va-BEQ" firstAttribute="leading" secondItem="TGj-Tl-8TS" secondAttribute="leading" constant="40" id="ScD-cF-Wh4"/>
                             <constraint firstItem="uv5-ir-czh" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="10" id="TSe-TD-Ws5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Vcr-SV-QKe" secondAttribute="trailing" constant="15" id="VRX-aj-Zd6"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="top" secondItem="TGj-Tl-8TS" secondAttribute="top" constant="130" id="WEP-1k-wZu"/>
                             <constraint firstAttribute="trailing" secondItem="pu8-Va-BEQ" secondAttribute="trailing" constant="40" id="bL7-yP-p68"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="centerX" secondItem="UJg-Xx-CgL" secondAttribute="centerX" id="c5b-7o-lHI"/>
                             <constraint firstItem="pu8-Va-BEQ" firstAttribute="top" secondItem="pwg-gk-2Bt" secondAttribute="bottom" constant="70" id="d5P-Om-7QT"/>
                             <constraint firstItem="avA-h5-Fas" firstAttribute="top" secondItem="pwg-gk-2Bt" secondAttribute="bottom" constant="20" id="dgB-y2-WF7"/>
+                            <constraint firstAttribute="trailing" secondItem="Vcr-SV-QKe" secondAttribute="trailing" constant="15" id="inT-iv-C3f"/>
                             <constraint firstItem="uv5-ir-czh" firstAttribute="leading" secondItem="Cld-aL-GAw" secondAttribute="trailing" constant="15" id="k2b-sz-AvD"/>
-                            <constraint firstItem="dH6-Zt-XFx" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="10" id="kP6-JR-Y69"/>
-                            <constraint firstItem="dH6-Zt-XFx" firstAttribute="leading" secondItem="Vcr-SV-QKe" secondAttribute="trailing" constant="25" id="m9X-iO-XJ4"/>
                             <constraint firstItem="Vcr-SV-QKe" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="10" id="phk-1m-2hn"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="leading" secondItem="TGj-Tl-8TS" secondAttribute="leading" id="tmV-Md-Atd"/>
                             <constraint firstAttribute="trailing" secondItem="avA-h5-Fas" secondAttribute="trailing" constant="40" id="uhk-3f-rJe"/>
@@ -803,6 +776,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="d5P-Om-7QT"/>
+                                <exclude reference="VRX-aj-Zd6"/>
                             </mask>
                         </variation>
                     </view>
@@ -851,14 +825,13 @@
         <image name="input-outline" width="375" height="76"/>
         <image name="location-icon" width="21" height="30"/>
         <image name="settings-icon" width="21" height="21"/>
-        <image name="share-icon" width="28" height="26"/>
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gz0-ak-oAk"/>
-        <segue reference="Ju0-Hh-YW7"/>
         <segue reference="hKp-Y7-lrD"/>
-        <segue reference="Fno-vP-GvK"/>
+        <segue reference="ofY-SC-By2"/>
+        <segue reference="Akq-ph-AFX"/>
+        <segue reference="eA9-TU-XJn"/>
         <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>

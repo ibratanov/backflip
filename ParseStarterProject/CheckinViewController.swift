@@ -107,8 +107,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         // Left nav bar button item
         let logout = UIButton.buttonWithType(.System) as! UIButton
-            logout.setBackgroundImage(logoutButton, forState: .Normal)
-            logout.frame = CGRectMake(15, 31, 22, 22)
+            logout.setImage(logoutButton, forState: .Normal)
+            logout.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+            logout.frame = CGRectMake(-10, 20, 72, 44)
             logout.addTarget(self, action: "logoutButton:", forControlEvents: .TouchUpInside)
         navBar.addSubview(logout)
 

@@ -349,15 +349,17 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let back = UIButton.buttonWithType(.Custom) as! UIButton
         back.setTitleColor(UIColor.blackColor(), forState: .Normal)
         back.setImage(self.back, forState: .Normal)
-        back.frame = CGRectMake(15, 29, 30,24)
+        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        back.frame = CGRectMake(-10, 20, 72, 44)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
         // Right nav bar button item
         let shareImage = UIButton.buttonWithType(.Custom) as! UIButton
         shareImage.setImage(self.share, forState:.Normal)
-        shareImage.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
-        shareImage.addTarget(self, action: "share", forControlEvents: .TouchUpInside)
+        shareImage.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        shareImage.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
+        shareImage.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareImage)
         
         self.view.addSubview(navBar)
