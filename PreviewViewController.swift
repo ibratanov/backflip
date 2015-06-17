@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import Parse
 
 class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
+    // Title passed from previous VC
+    var eventId : String?
+    var eventTitle : String?
+    var eventLocation: PFGeoPoint?
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
@@ -56,11 +61,46 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        println(eventId)
         
         assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
         
-        imageView.image = imageToCrop!
+        imageView.image = resizeImage(imageToCrop!, newHeight: 2134, newWidth: 2134) //imageToCrop!
     }
+    
+     func resizeImage(image: UIImage, newHeight: CGFloat, newWidth: CGFloat) -> UIImage {
+        if(image.size.width > image.size.height){
+            
+        let scale = newHeight / image.size.height
+        let newWidthI = image.size.width * scale
+        UIGraphicsBeginImageContext(CGSizeMake(newWidthI, newHeight))
+        image.drawInRect(CGRectMake(0, 0, newWidthI, newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage
+        } else if(image.size.height > image.size.width){
+            
+            let scale = newWidth / image.size.width
+            let newHeightI = image.size.height * scale
+            UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeightI))
+            image.drawInRect(CGRectMake(0, 0, newWidth, newHeightI))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return newImage
+            
+        }else{
+            
+            let scale = newHeight / image.size.height
+            let newWidthI = image.size.width * scale
+            UIGraphicsBeginImageContext(CGSizeMake(newWidthI, newHeight))
+            image.drawInRect(CGRectMake(0, 0, newWidthI, newHeight))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage
+            
+        }
+            }
     
     override func updateViewConstraints() {
         imageView.sizeToFit()
@@ -121,9 +161,104 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 self.cropCompletionHandler!(self.imageView.image?.croppedToRect(imageViewRect))
             }
         })
-        UIImageWriteToSavedPhotosAlbum(self.imageView.image?.croppedToRect(imageViewRect), nil, nil, nil)
+        var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
+        UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
         
         
+        var imageData = compressImage(capturedImage, shrinkRatio: 1.0)
+        var imageFile = PFFile(name: "image.png", data: imageData)
+        
+        var thumbnailData = compressImage(capturedImage, shrinkRatio: 0.5)
+        var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+        
+        
+        //Upload photos to database
+        var photo = PFObject(className: "Photo")
+        photo["caption"] = "Camera roll upload"
+        photo["image"] = imageFile
+        photo["thumbnail"] = thumbnailFile
+        photo["upvoteCount"] = 1
+        photo["usersLiked"] = [PFUser.currentUser()!.username!]
+        
+        var queryEvent = PFQuery(className: "Event")
+        queryEvent.whereKey("objectId", equalTo: self.eventId!)
+        var objects = queryEvent.findObjects() as! [PFObject]
+        var eventObject = objects[0]
+        
+        let relation = eventObject.relationForKey("photos")
+        
+        println("TEST")
+        
+        photo.saveInBackgroundWithBlock { (success, error) -> Void in
+            if (success) {
+                relation.addObject(photo)
+                
+                eventObject.saveInBackground()
+                
+                println("PHOTO UPLOADED!------------------")
+            } else {
+                println("FAILED PHOTO UPLOAD!------------------")
+            }
+        }
+        
+        /*var queryEvent = PFQuery(className: "Event")
+        queryEvent.whereKey("eventName", equalTo: self.eventTitle!)
+        var objects = queryEvent.findObjects() as! [PFObject]
+        var eventObject = objects[0]
+        
+        let relation = eventObject.relationForKey("photos")
+        relation.addObject(photo)
+        
+        eventObject.saveInBackground()*/
+        
+        
+        
+    }
+    
+    func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
+        var imageHeight:CGFloat = image.size.height
+        var imageWidth:CGFloat = image.size.width
+        var maxHeight:CGFloat = 1136.0 * shrinkRatio
+        var maxWidth:CGFloat = 640.0 * shrinkRatio
+        var imageRatio:CGFloat = imageWidth/imageHeight
+        var scalingRatio:CGFloat = maxWidth/maxHeight
+        //lowest quality rating with acceptable encoding
+        var quality:CGFloat = 0.5
+        
+        if (imageHeight > maxHeight || imageWidth > maxWidth){
+            if(imageRatio < scalingRatio){
+                /* To ensure aspect ratio is maintained adjust
+                witdth of image in relation to scaling height */
+                imageRatio = maxHeight / imageHeight;
+                imageWidth = imageRatio * imageWidth;
+                imageHeight = maxHeight;
+            }
+            else if(imageRatio > scalingRatio){
+                /* To ensure aspect ratio is maintained adjust
+                height of image in relation to scaling width */
+                imageRatio = maxWidth / imageWidth;
+                imageHeight = imageRatio * imageHeight;
+                imageWidth = maxWidth;
+            }
+            else{
+                /* If image is equivalent to scaling ratio
+                image should not be compressed any further
+                scaled down to max resolution*/
+                imageHeight = maxHeight;
+                imageWidth = maxWidth;
+                quality = 1;
+            }
+        }
+        
+        var rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
+        //bit-map based graphic context and set the boundaries of still image
+        UIGraphicsBeginImageContext(rect.size);
+        image.drawInRect(rect)
+        var imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
+        let imageData = UIImageJPEGRepresentation(imageCompressed, quality);
+        UIGraphicsEndImageContext();
+        
+        return imageData;
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {

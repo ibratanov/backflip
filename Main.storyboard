@@ -660,10 +660,6 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
-                        <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="W6o-bX-c00">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </activityIndicatorView>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="albumCell" id="t65-2j-iDm" customClass="AlbumViewCell" customModule="Backflip" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -697,9 +693,6 @@
                         </barButtonItem>
                     </toolbarItems>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="spinner" destination="W6o-bX-c00" id="hPW-oO-BC8"/>
-                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NXK-9Z-o8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -868,10 +861,10 @@
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ax8-uE-80J"/>
-        <segue reference="VCX-vA-6qG"/>
-        <segue reference="Akq-ph-AFX"/>
+        <segue reference="j85-ZN-Egd"/>
+        <segue reference="FSk-Fu-Rj2"/>
+        <segue reference="eA9-TU-XJn"/>
         <segue reference="Fno-vP-GvK"/>
-        <segue reference="62M-ib-0xv"/>
+        <segue reference="hKp-Y7-lrD"/>
     </inferredMetricsTieBreakers>
 </document>

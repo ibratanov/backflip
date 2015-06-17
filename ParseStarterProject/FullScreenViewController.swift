@@ -16,8 +16,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     @IBOutlet var likeCount: UILabel!
     
-//    @IBOutlet var eventTitle: UILabel!
-    
     @IBOutlet var eventInfo: UILabel!
     
     @IBOutlet var fullScreenImage: UIImageView!
@@ -28,14 +26,17 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     var cellImage : UIImage!
     var objectIdTemp : String = ""
     var likeActive = false
+    
+    // Icon image variables
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
     var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
     var back = UIImage(named: "back.pdf") as UIImage!
     
     // Title passed from previous VC
     var eventId : String?
+    var eventTitle : String?
     
-    // function to handle double tap on image
+    // Function to handle double tap on image
     func handleTap (sender: UITapGestureRecognizer) {
         
         if sender.state == .Ended {
@@ -188,6 +189,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
  
     // Alerts for sharing to Facebook and Twitter
     func displayAlert(title:String,error: String) {
+        
+   
     
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
             
@@ -200,6 +203,22 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 facebookSheet.addImage(self.fullScreenImage.image!)
                 
                 self.presentViewController(facebookSheet, animated: true, completion: nil)
+                
+                facebookSheet.completionHandler = { (result: SLComposeViewControllerResult) -> Void in
+                    switch(result) {
+                        
+                    case SLComposeViewControllerResult.Cancelled:
+                        
+                        println("cancelled")
+                        
+                    case SLComposeViewControllerResult.Done:
+                        
+                        self.dismissViewControllerAnimated(false, completion: nil)
+                        self.displaySuccess("Posted!", error: "Not Working? Make sure you are logged in to FB in iOS settings")
+
+                    }
+                    
+                }
            
             } else {
                 var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -218,6 +237,24 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 twitterSheet.addImage(self.fullScreenImage.image)
                 
                 self.presentViewController(twitterSheet, animated: true, completion: nil)
+
+                twitterSheet.completionHandler = { (result: SLComposeViewControllerResult) -> Void in
+                    switch(result) {
+                        
+                    case SLComposeViewControllerResult.Cancelled:
+                        
+                        println("cancelled")
+                        
+                    case SLComposeViewControllerResult.Done:
+                        
+                        self.dismissViewControllerAnimated(false, completion: nil)
+                        self.displaySuccess("Posted!", error: "Successfully posted to Twitter")
+                        
+
+    
+                    }
+                }
+                
             
             } else {
                 
@@ -280,6 +317,15 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
          displayAlert("Share", error: "How do you want to share this photo?")
     }
+    
+    func displaySuccess(title: String, error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
   
     
     
@@ -339,7 +385,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-        navBarItem.title = "Event Name"
+        navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
 //        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
         navBar.items = [navBarItem]
@@ -365,7 +411,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.view.addSubview(navBar)
 
 
-        var photoQuery = PFQuery(className: "Photo")
+        /*var photoQuery = PFQuery(className: "Photo")
         
         photoQuery.getObjectInBackgroundWithId(objectIdTemp) { (objects, error) -> Void in
             
@@ -392,9 +438,27 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                     println("no date")
                     
-                }
-                
-                tempImage.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
+                }*/
+        
+        
+        // Load information from parse db
+        var getUploadedImages = PFQuery(className: "Event")
+        getUploadedImages.limit = 1000
+        getUploadedImages.whereKey("objectId", equalTo: eventId!)
+        
+        // Retrieval from corresponding photos from relation to event
+        var object = getUploadedImages.findObjects()?.first as! PFObject
+        
+        var photos = object["photos"] as! PFRelation
+        var tempImage: PFFile?
+        
+        var photoList = photos.query()?.getObjectWithId(objectIdTemp)
+        
+        
+        // Once retrieved from relation, set the UIImage view for fullscreen view
+        tempImage = photoList!.objectForKey("image") as? PFFile
+
+        tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
                     
                     if error == nil {
                         
@@ -404,13 +468,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         println(error)
                     }
-
-                }
-                
             }
-            
-        }
-        println(objectIdTemp)
         
         // block to check if user has already liked photo, and set button label accordingly
         var query5 = PFUser.query()
