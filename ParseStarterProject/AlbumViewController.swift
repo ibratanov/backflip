@@ -542,7 +542,13 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             // resize
             if (zoomImage.camera) {
-                self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0);
+                var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
+                var cameraAspectRatio: CGFloat = 4.0/3.0
+                var cameraViewHeight = screenBounds.width * cameraAspectRatio
+                var scale = screenBounds.height / cameraViewHeight
+                picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
+                picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
+                //self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
                 self.zoomImage.camera = false
             }
             
@@ -571,6 +577,71 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
         
         
+    }
+    
+    func imageFixOrientation(img:UIImage) -> UIImage {
+        
+        if (img.imageOrientation == UIImageOrientation.Up) {
+            return img;
+        }
+
+        var transform:CGAffineTransform = CGAffineTransformIdentity
+        
+        if (img.imageOrientation == UIImageOrientation.Down
+            || img.imageOrientation == UIImageOrientation.DownMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, img.size.width, img.size.height)
+                transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
+        }
+        
+        if (img.imageOrientation == UIImageOrientation.Left
+            || img.imageOrientation == UIImageOrientation.LeftMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, img.size.width, 0)
+                transform = CGAffineTransformRotate(transform, CGFloat(M_PI_2))
+        }
+        
+        if (img.imageOrientation == UIImageOrientation.Right
+            || img.imageOrientation == UIImageOrientation.RightMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, 0, img.size.height);
+                transform = CGAffineTransformRotate(transform,  CGFloat(-M_PI_2));
+        }
+        
+        if (img.imageOrientation == UIImageOrientation.UpMirrored
+            || img.imageOrientation == UIImageOrientation.DownMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, img.size.width, 0)
+                transform = CGAffineTransformScale(transform, -1, 1)
+        }
+        
+        if (img.imageOrientation == UIImageOrientation.LeftMirrored
+            || img.imageOrientation == UIImageOrientation.RightMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, img.size.height, 0);
+                transform = CGAffineTransformScale(transform, -1, 1);
+        }
+         //var ctx:CGContextRef = CGBitmapContextCreate(<#data: UnsafeMutablePointer<Void>#>, <#width: Int#>, <#height: Int#>, <#bitsPerComponent: Int#>, <#bytesPerRow: Int#>, <#space: CGColorSpace!#>, <#bitmapInfo: CGBitmapInfo#>)
+
+        var ctx:CGContextRef = CGBitmapContextCreate(nil, Int(img.size.width), Int(img.size.height), CGImageGetBitsPerComponent(img.CGImage), 0, CGImageGetColorSpace(img.CGImage), CGImageGetBitmapInfo(img.CGImage))
+        
+        CGContextConcatCTM(ctx, transform)
+        
+        if (img.imageOrientation == UIImageOrientation.Left
+            || img.imageOrientation == UIImageOrientation.LeftMirrored
+            || img.imageOrientation == UIImageOrientation.Right
+            || img.imageOrientation == UIImageOrientation.RightMirrored
+            ) {
+                
+                CGContextDrawImage(ctx, CGRectMake(0,0,img.size.height,img.size.width), img.CGImage)
+        } else {
+            CGContextDrawImage(ctx, CGRectMake(0,0,img.size.width,img.size.height), img.CGImage)
+        }
+        
+        var cgimg:CGImageRef = CGBitmapContextCreateImage(ctx)
+        var imgEnd:UIImage = UIImage(CGImage: cgimg)!
+        
+        return imgEnd
     }
     
     func saveImageAlert()
@@ -607,10 +678,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         previewViewController.cancelCompletionHandler = {
             //retake image
             //self.dismissViewControllerAnimated(true, completion: nil)
+            
             self.presentViewController(picker, animated:true, completion:{})
+            self.flashButton.hidden = false
             
         }
-        previewViewController.imageToCrop = imageViewContent;
+        if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
+            previewViewController.imageToCrop = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
+        }
+        else{
+            previewViewController.imageToCrop = imageViewContent
+        }
         
         self.presentViewController(previewViewController, animated: true, completion: nil);
         //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
@@ -698,10 +776,38 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     @IBAction func reverseCamera(sender: UIButton) {
         //TO-DO: add transition when reversed
         if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
+            //self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+            //self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+
+                var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
+                var cameraAspectRatio: CGFloat = 4.0/3.0
+                var cameraViewHeight = screenBounds.width * cameraAspectRatio
+                var scale = screenBounds.height / cameraViewHeight
+                picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
+                picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
+                //self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
+                self.zoomImage.camera = false
+            
+            
             self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
+
             self.flashButton.hidden = false
         }else{
+            
+            //----------------------------------------------------------------------------
+            self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, -5.0)
+            //self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, -5.0), 1.333333, 1.333333)
+            self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
+
+            // resize
+            if (zoomImage.camera) {
+                //self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 0.7, 0.7);
+                self.zoomImage.camera = false
+            }
+            //----------------------------------------------------------------------------
+
             self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
+
             self.flashButton.hidden = true
         }
     }
