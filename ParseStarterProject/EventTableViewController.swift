@@ -314,7 +314,10 @@ class EventTableViewController: UITableViewController {
             //self.navigationController?.popViewControllerAnimated(true)
             
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                moveVC.eventId =  events[selectedPath.row]
+                println(events[selectedPath.row])
+                println(eventId[selectedPath.row])
+                moveVC.eventId =  eventId[selectedPath.row]
+                moveVC.eventTitle = events[selectedPath.row]
             }
         }
     }
