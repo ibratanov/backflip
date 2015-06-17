@@ -13,16 +13,18 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var termsTextView: UITextView!
     
-    @IBAction func privacyPolicy(sender: AnyObject) {
-    
-        displayAlert("Backflip Privacy Policy:", error: "Our privacy policy")
-    
-    }
     
     @IBAction func termsOfService(sender: AnyObject) {
-        
-        displayAlert("Backflip Terms of Service:", error: "Our terms of service")
-        
+        if let url = NSURL(string: "http://getbackflip.com/eula") {
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
+    
+    
+    @IBAction func privacyPolicy(sender: AnyObject) {
+        if let url = NSURL(string: "http://getbackflip.com/privacy") {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
     
     @IBAction func loginButton(sender: AnyObject) {
@@ -38,6 +40,13 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         alert.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: { action in
 
         }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func displayAlertUserBlocked(title:String,error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -93,6 +102,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         user["nearbyEvents"] = []
                         user["phone"] = session.phoneNumber
                         user["savedEvents"] = []
+                        user["blocked"] = false
+                        user["firstUse"] = true
                         
                         user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
                             
@@ -118,11 +129,22 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         
         // Check if the user is already logged in
         if PFUser.currentUser() != nil {
+            println(PFUser.currentUser())
+            var phone: AnyObject? = PFUser.currentUser()?.valueForKey("phone")
+            println(phone)
             
-            // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
-            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-
-            println(PFUser.currentUser()!)
+            var blocked = PFUser.currentUser()?.valueForKey("blocked") as! Bool
+            println(blocked)
+            ///if blocked == false {
+                // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
+                println("GEEEEEE")
+                self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                
+            //}
+            //else {
+              //  println("User is Blocked")
+                //displayAlertUserBlocked("You have been Blocked", error: "You have uploaded inappropriate photos")
+            //}
             
         }
     }
