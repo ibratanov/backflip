@@ -189,9 +189,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
  
     // Alerts for sharing to Facebook and Twitter
     func displayAlert(title:String,error: String) {
-        
-   
-    
+
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
             
         // Facebook share feature
@@ -312,12 +310,14 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     }
     
-    
+    // Alert pop up with Twitter, Facebook and SMS options
     @IBAction func share(sender: AnyObject) {
         
          displayAlert("Share", error: "How do you want to share this photo?")
     }
     
+    
+    // Alert for successful posting to Twitter or Facebook
     func displaySuccess(title: String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
@@ -327,8 +327,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.presentViewController(alert, animated: true, completion: nil)
     }
   
-    
-    
+    // Download to camera roll button
     @IBAction func downloadImage(sender: AnyObject) {
         
         
@@ -346,7 +345,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     }
     
     
-    
+    // Alert displayed when an image is successfully saved to camera roll
     func saveImageAlert (title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
@@ -357,7 +356,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
     }
     
-    
+    // Back button to album view
     func seg() {
         
         self.navigationController?.popViewControllerAnimated(true)
@@ -387,7 +386,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let navBarItem = UINavigationItem()
         navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-//        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
+        //navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
         navBar.items = [navBarItem]
         
         // Left nav bar button item
@@ -410,38 +409,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         self.view.addSubview(navBar)
 
-
-        /*var photoQuery = PFQuery(className: "Photo")
-        
-        photoQuery.getObjectInBackgroundWithId(objectIdTemp) { (objects, error) -> Void in
-            
-            if error == nil {
-                
-                var tempImage = objects?.objectForKey("image") as! PFFile
-                var tempDate = objects?.createdAt! as NSDate!
-
-                // check for date from previous VC, format and display the date
-                if tempDate != nil {
-                    
-                    //formatting to display date how we want it
-                    let formatter = NSDateFormatter()
-                    
-                    formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-                    
-                    formatter.timeStyle = .ShortStyle
-                    
-                    let dateStamp = formatter.stringFromDate(tempDate)
-                    
-                    self.eventInfo.text = "Photo taken on \(dateStamp)"
-                    
-                } else {
-                    
-                    println("no date")
-                    
-                }*/
-        
-        
-        // Load information from parse db
+        //----------- Query for image display----------
         var getUploadedImages = PFQuery(className: "Event")
         getUploadedImages.limit = 1000
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
@@ -470,7 +438,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     }
             }
         
-        // Block to check if user has already liked photo, and set button label accordingly
+        //----------- Query for Like Image label----------
         var query5 = PFQuery(className: "Event")
         
         query5.whereKey("objectId", equalTo: eventId!)
@@ -480,6 +448,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // User like list that will be filled
         var likeList : [String]
+        
         // Finds associated photo object in relation
         var likeRetrieve = relation.query()?.getObjectWithId(objectIdTemp)
         
@@ -504,7 +473,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
         }
         
-        
+        //----------- Query for Like Count Label----------
         var query6 = PFQuery(className: "Event")
         
         query6.whereKey("objectId", equalTo: eventId!)
@@ -514,6 +483,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // User like list that will be filled
         var likeUserList : [String]
+        
         // Finds associated photo object in relation
         var likesRetrieved = relation.query()?.getObjectWithId(objectIdTemp)
         
@@ -530,78 +500,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             self.likeCount.text = String(count) + " likes"
         }
-   
 
-        
-        // block to display current like count based on array size when view is loaded
-        
-        /*var query6 = PFQuery(className: "Photo")
-        
-        query6.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
-            
-            if error == nil {
-                
-                let array = objects?.objectForKey("usersLiked") as! [String]
-                let count = array.count
-                if (count == 1) {
-                    self.likeCount.text = String(count) + " like"
-                } else {
-                    self.likeCount.text = String(count) + " likes"
-                }
-                
-            } else {
-                
-                println("Error: \(error!) \(error!.userInfo!)")
-            }
-        }
-        
-        // gesture implementation
-        var gesture = UITapGestureRecognizer(target: self, action: "handleTap:")
-        gesture.numberOfTapsRequired = 2
-        
-        fullScreenImage.userInteractionEnabled = true
-        fullScreenImage.addGestureRecognizer(gesture)
-        
-        self.view.bringSubviewToFront(likeCount)*/
     }
-    
-    /*@IBAction func shareButtonBeta(sender:UIButton){
-        var params = [ "referringUsername": "User1",
-            "referringUserId": "12345",  "pictureId": "987666",
-        "pictureURL": "http://yoursite.com/pics/987666",
-        "pictureCaption": "BOOM" ]
-        
-        // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
-        
-        self.spinner.startAnimating()
-        //disable button
-        
-        
-        Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
-            if (error == nil) {
-                if MFMessageComposeViewController.canSendText() {
-                    
-                    let messageComposer = MFMessageComposeViewController()
-                    
-                    messageComposer.body = String(format: "Check this out: %@", url)
-                    
-                    messageComposer.messageComposeDelegate = self
-                    
-                    self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
-                        // stop spinner on main thread
-                        self.spinner.stopAnimating()
-                    })
-                } else {
-                    
-                    self.spinner.stopAnimating()
-                    
-                    var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-        })
-    }*/
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
