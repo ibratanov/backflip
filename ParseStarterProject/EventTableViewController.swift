@@ -35,6 +35,9 @@ class EventTableViewController: UITableViewController {
 //    Enable UI Navigation Item
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Medium",size: 18)!]
+        
+        
     }
     
     override func viewDidLoad() {
@@ -151,6 +154,14 @@ class EventTableViewController: UITableViewController {
         //var innerQuery = PFQuery(className: "Photo")
         //innerQuery.whereKeyExists("objectId")
         
+        //Workspace - Get's photos liked by user
+        /*
+        var query = PFQuery(className: "EventAttendance")
+        query.whereKey(<#key: String#>, matchesQuery: <#PFQuery#>)
+        */
+        
+        ///////////////////////
+        
         var query = PFQuery(className: "Event")
         query.whereKey("objectId", equalTo: objectId)
         
@@ -202,8 +213,10 @@ class EventTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         
+        
         let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
                 //let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
+        tableCell.selectionStyle = UITableViewCellSelectionStyle.None
         
         var key : String = Array(self.eventWithPhotos.keys)[indexPath.row]
         
@@ -301,7 +314,10 @@ class EventTableViewController: UITableViewController {
             //self.navigationController?.popViewControllerAnimated(true)
             
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                moveVC.eventId =  events[selectedPath.row]
+                println(events[selectedPath.row])
+                println(eventId[selectedPath.row])
+                moveVC.eventId =  eventId[selectedPath.row]
+                moveVC.eventTitle = events[selectedPath.row]
             }
         }
     }
