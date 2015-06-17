@@ -61,6 +61,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        println(eventId)
         
         assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
         
@@ -177,16 +178,30 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         photo["image"] = imageFile
         photo["thumbnail"] = thumbnailFile
         photo["upvoteCount"] = 1
+        photo["usersLiked"] = [PFUser.currentUser()!.username!]
+        
+        var queryEvent = PFQuery(className: "Event")
+        queryEvent.whereKey("objectId", equalTo: self.eventId!)
+        var objects = queryEvent.findObjects() as! [PFObject]
+        var eventObject = objects[0]
+        
+        let relation = eventObject.relationForKey("photos")
+        
+        println("TEST")
         
         photo.saveInBackgroundWithBlock { (success, error) -> Void in
             if (success) {
+                relation.addObject(photo)
+                
+                eventObject.saveInBackground()
+                
                 println("PHOTO UPLOADED!------------------")
             } else {
                 println("FAILED PHOTO UPLOAD!------------------")
             }
         }
         
-        var queryEvent = PFQuery(className: "Event")
+        /*var queryEvent = PFQuery(className: "Event")
         queryEvent.whereKey("eventName", equalTo: self.eventTitle!)
         var objects = queryEvent.findObjects() as! [PFObject]
         var eventObject = objects[0]
@@ -194,7 +209,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         let relation = eventObject.relationForKey("photos")
         relation.addObject(photo)
         
-        eventObject.saveInBackground()
+        eventObject.saveInBackground()*/
         
         
         
