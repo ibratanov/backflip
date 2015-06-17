@@ -15,14 +15,14 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     
     
     @IBAction func termsOfService(sender: AnyObject) {
-        if let url = NSURL(string: "http://stackoverflow.com/questions/26938495/make-button-hyperlink-swift") {
+        if let url = NSURL(string: "http://getbackflip.com/eula") {
             UIApplication.sharedApplication().openURL(url)
         }
     }
     
     
     @IBAction func privacyPolicy(sender: AnyObject) {
-        if let url = NSURL(string: "http://stackoverflow.com/questions/26938495/make-button-hyperlink-swift") {
+        if let url = NSURL(string: "http://getbackflip.com/privacy") {
             UIApplication.sharedApplication().openURL(url)
         }
     }
