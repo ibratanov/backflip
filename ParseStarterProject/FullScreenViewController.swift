@@ -79,111 +79,122 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         if likeActive == false {
             
-            // add username to photos list of users who liked
-            var query1 = PFQuery(className: "Photo")
             
-            query1.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
-
-                if error == nil {
-                    
-                    objects?.addUniqueObject(PFUser.currentUser()!.username!, forKey:"usersLiked")
-
-                    let array = objects?.objectForKey("usersLiked") as! [String]
-                    
-                    objects?.incrementKey("upvoteCount", byAmount: 1)
-                    
-                    //TODO: is this more efficient or is it more efficient to get the upvoteCount value? Same below in "unlike"
-                    let count = array.count
-                    if (count == 1) {
-                        self.likeCount.text = String(count) + " like"
-                    } else {
-                        self.likeCount.text = String(count) + " likes"
-                    }
+            //----------- Query for Adjusting Likes in the case of an like in DB----------
+            var likeQuery = PFQuery(className: "Event")
+            
+            likeQuery.whereKey("objectId", equalTo: eventId!)
+            
+            var likeEvents = likeQuery.findObjects()?.first as! PFObject
+            var likeRelation = likeEvents["photos"] as! PFRelation
+            
+            // User like list that will be filled
+            var likeList : [String]
+            var upVote : Int
+            
+            // Finds associated photo object in relation
+            var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
+            
+            // Add user to like list, add 1 to the upvote count
+            retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
+            retrieveLikes?.incrementKey("upVoteCount", byAmount: 1)
+            
+            // Grab specific element fromobject
+            likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
+            
+            let counter = likeList.count
+            if counter == 1 {
+                
+                self.likeCount.text = String(counter) + " likes"
+                
+            } else {
+                
+                self.likeCount.text = String(counter) + " likes"
+            }
                     
                     // Add both photo object and id to arrays in user class
-                    var query2 = PFUser.query()
-                    
-                    query2?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (object, error) -> Void in
+            var query2 = PFQuery(className: "EventAttendance")
+            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+            query2.whereKey("eventID", equalTo: eventId!)
+            
+            query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
                         
-                        if error == nil {
+                if error == nil {
+
+                    object?.addObject(retrieveLikes!, forKey: "photosLiked")
                             
-                            //print(image)
-                            println(objects)
-                            object?.addObject(objects!, forKey: "photoObjects")
+                    object?.addUniqueObject(self.objectIdTemp, forKey:"photosLikedID")
                             
-                            println("test2")
-                            
-                            object?.addUniqueObject(self.objectIdTemp, forKey:"photosLiked")
-                            
-                            object!.saveInBackground()
+                    object!.saveInBackground()
                             
                             
-                        } else {
-                            
-                            println("Error: \(error!) \(error!.userInfo!)")
-                        }
-                    }
-                    
-                    objects!.saveInBackground()
-                    
                 } else {
-                    
+                            
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
+                    
+            retrieveLikes!.saveInBackground()
             
         } else {
             
-            // remove user ID from list of users who liked photo
-            var query3 = PFQuery(className: "Photo")
+            //----------- Query for Adjusting Likes in the case of an unlike in DB----------
+            var likeQuery = PFQuery(className: "Event")
             
-            query3.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
+            likeQuery.whereKey("objectId", equalTo: eventId!)
+            
+            var likeEvents = likeQuery.findObjects()?.first as! PFObject
+            var likeRelation = likeEvents["photos"] as! PFRelation
+            
+            // User like list that will be filled
+            var likeList : [String]
+            var upVote : Int
+            
+            // Finds associated photo object in relation
+            var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
+            
+            // Add user to like list, add 1 to the upvote count
+            retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
+            retrieveLikes?.incrementKey("upVoteCount", byAmount: -1)
+            
+            // Grab specific element fromobject
+            likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
+            
+            let counter = likeList.count
+            if counter == 1 {
+                
+                self.likeCount.text = String(counter) + " likes"
+                
+            } else {
+                
+                self.likeCount.text = String(counter) + " likes"
+            }
+            
+            // Add both photo object and id to arrays in user class
+            var query2 = PFQuery(className: "EventAttendance")
+            query2.whereKey("attendeeID", equalTo: eventId!)
+            query2.whereKey("eventID", equalTo: eventId!)
+            
+            query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
                 
                 if error == nil {
                     
-                    objects?.removeObject(PFUser.currentUser()!.username!, forKey:"usersLiked")
+                    object?.removeObject(retrieveLikes!, forKey: "photosLiked")
+                    
+                    object?.removeObject(self.objectIdTemp, forKey:"photosLikedID")
+                    
+                    object!.saveInBackground()
                     
                     
-                    let array = objects?.objectForKey("usersLiked") as! [String]
-                    
-                    objects?.incrementKey("upvoteCount", byAmount: -1)
-                    
-                    let count = array.count
-                    if (count == 1) {
-                        self.likeCount.text = String(count) + " like"
-                    } else {
-                        self.likeCount.text = String(count) + " likes"
-                    }
-                    
-                    // Remove photo ID to user photo liked list and photo object from photo object array
-                    var query4 = PFUser.query()
-                    
-                    query4?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (object, error) -> Void in
-                        
-                        if error == nil {
-                            
-                            object?.removeObject(objects!, forKey: "photoObjects")
-                            
-                            object?.removeObject(self.objectIdTemp, forKey:"photosLiked")
-                            
-                            object!.saveInBackground()
-                            
-                        } else {
-                            
-                            println("Error: \(error!) \(error!.userInfo!)")
-                            
-                        }
-                    }
- 
-                    objects!.saveInBackground()
-
                 } else {
                     
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
+            
+            retrieveLikes!.saveInBackground()
+
         }
-        
     }
 
  
