@@ -98,11 +98,15 @@ class EventTableViewController: UITableViewController {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
-        // Facebook share feature
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            
+            
             PFUser.logOut()
             Digits.sharedInstance().logOut()
+            
             self.performSegueWithIdentifier("logoutEventView", sender: self)
+            
             
             
         }))
@@ -233,9 +237,9 @@ class EventTableViewController: UITableViewController {
         let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
                 //let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
         tableCell.selectionStyle = UITableViewCellSelectionStyle.None
-        
+        println(self.eventWithPhotos)
         var key : String = Array(self.eventWithPhotos.keys)[indexPath.row]
-        
+        println(key)
         
         //var eventObjectId = self.eventId[indexPath.row]
         var listPhotos = self.eventWithPhotos[key] as [PFFile]!
@@ -336,6 +340,7 @@ class EventTableViewController: UITableViewController {
             tableCell.eventName.text = key//"Event Name" + String(indexPath.row)
             tableCell.eventLocation.text = self.venues[indexPath.row]
             return tableCell
+
         }
         
         
