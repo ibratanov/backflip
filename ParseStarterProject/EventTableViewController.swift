@@ -35,6 +35,9 @@ class EventTableViewController: UITableViewController {
 //    Enable UI Navigation Item
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Medium",size: 18)!]
+        
+        
     }
     
     override func viewDidLoad() {
@@ -150,6 +153,14 @@ class EventTableViewController: UITableViewController {
         
         //var innerQuery = PFQuery(className: "Photo")
         //innerQuery.whereKeyExists("objectId")
+        
+        //Workspace - Get's photos liked by user
+        /*
+        var query = PFQuery(className: "EventAttendance")
+        query.whereKey(<#key: String#>, matchesQuery: <#PFQuery#>)
+        */
+        
+        ///////////////////////
         
         var query = PFQuery(className: "Event")
         query.whereKey("objectId", equalTo: objectId)
