@@ -32,11 +32,11 @@ class EventTableViewController: UITableViewController {
     var eventId: [String] = []
     var venues: [String] = []
     
-//    Enable UI Navigation Item
+//    Enable UI Navigation Itemr
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Medium",size: 18)!]
-        
+        self.tableView.reloadData()
         
     }
     
@@ -131,7 +131,7 @@ class EventTableViewController: UITableViewController {
                 var objectId = object.objectId! as String!
                 var venue = object["venue"] as! String
                 
-                self.eventWithPhotos[objectId] = self.updatePhotosForEvent(objectId)
+                self.eventWithPhotos[eventName] = self.updatePhotosForEvent(objectId)
                 
                 self.events.append(eventName)
                 self.eventId.append(objectId)
@@ -211,9 +211,25 @@ class EventTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //println(following)
-        return events.count
+        println("===================")
+        println(Array(self.eventWithPhotos.keys))
+        return Array(self.eventWithPhotos.keys).count
     }
 
+    /*
+    func getImageWithColor() -> UIImage {
+        
+        var color = CGColor
+        var rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+*/
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         
@@ -227,6 +243,12 @@ class EventTableViewController: UITableViewController {
         
         //var eventObjectId = self.eventId[indexPath.row]
         var listPhotos = self.eventWithPhotos[key] as [PFFile]!
+        //var eventName = self.event
+        println(self.events[indexPath.row])
+//        println(self.events[indexPath.row])
+//        println(key)
+//        println(listPhotos)
+//        println(self.eventWithPhotos)
         
         /*
         for (index,photo) in enumerate(listPhotos) {
@@ -235,10 +257,74 @@ class EventTableViewController: UITableViewController {
             
         }
         
-*/
-        print(listPhotos.count)
         
-        if listPhotos.count != 0 {
+        
+*/
+        
+        print(listPhotos.count)
+        print(indexPath.row)
+        
+        if listPhotos.count == 0 {
+            tableCell.imageOne!.image = UIImage ()
+            tableCell.imageTwo!.image = UIImage ()
+            tableCell.imageThree!.image = UIImage ()
+            tableCell.imageFour!.image = UIImage ()
+            
+            tableCell.eventName.text = key//"Event Name" + String(indexPath.row)
+            tableCell.eventLocation.text = self.venues[indexPath.row]
+            return tableCell
+        }
+        
+        if listPhotos.count == 1 {
+            var imageData1 = listPhotos[0].getData()
+            tableCell.imageOne!.image = UIImage (data: imageData1!)
+            
+            tableCell.imageTwo!.image = UIImage ()
+            tableCell.imageThree!.image = UIImage ()
+            tableCell.imageFour!.image = UIImage ()
+            
+            tableCell.eventName.text = key//"Event Name" + String(indexPath.row)
+            tableCell.eventLocation.text = self.venues[indexPath.row]
+            
+            return tableCell
+        }
+        
+        if listPhotos.count == 2 {
+            var imageData1 = listPhotos[0].getData()
+            tableCell.imageOne!.image = UIImage (data: imageData1!)
+            
+            var imageData2 = listPhotos[1].getData()
+            tableCell.imageTwo!.image = UIImage (data: imageData2!)
+            
+            tableCell.imageThree!.image = UIImage ()
+            tableCell.imageFour!.image = UIImage ()
+            
+            
+            tableCell.eventName.text = key //"Event Name" + String(indexPath.row)
+            tableCell.eventLocation.text = self.venues[indexPath.row]
+            
+            return tableCell
+        }
+        
+        if listPhotos.count == 3 {
+            var imageData1 = listPhotos[0].getData()
+            tableCell.imageOne!.image = UIImage (data: imageData1!)
+            
+            var imageData2 = listPhotos[1].getData()
+            tableCell.imageTwo!.image = UIImage (data: imageData2!)
+            
+            var imageData3 = listPhotos[2].getData()
+            tableCell.imageThree!.image = UIImage (data: imageData3!)
+            
+            tableCell.imageFour!.image = UIImage ()
+            
+            tableCell.eventName.text = key//"Event Name" + String(indexPath.row)
+            tableCell.eventLocation.text = self.venues[indexPath.row]
+            
+            return tableCell
+        }
+        
+        if listPhotos.count >= 4 {
             var imageData1 = listPhotos[0].getData()
             tableCell.imageOne!.image = UIImage (data: imageData1!)
             
@@ -251,12 +337,13 @@ class EventTableViewController: UITableViewController {
             var imageData4 = listPhotos[3].getData()
             tableCell.imageFour!.image = UIImage (data: imageData4!)
             
-            //tableCell.eventName.text = self.events[indexPath.row]//"Event Name" + String(indexPath.row)
-            //tableCell.eventLocation.text = self.venues[indexPath.row]
+            tableCell.eventName.text = key//"Event Name" + String(indexPath.row)
+            tableCell.eventLocation.text = self.venues[indexPath.row]
+            return tableCell
+
         }
         
-        tableCell.eventName.text = self.events[indexPath.row]//"Event Name" + String(indexPath.row)
-        tableCell.eventLocation.text = self.venues[indexPath.row]
+        
         
         /*
         var imageData1 = self.imageList[indexPath.row].getData()
