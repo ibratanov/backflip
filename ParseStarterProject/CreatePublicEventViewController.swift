@@ -11,6 +11,7 @@ import CoreLocation
 import Parse
 import DigitsKit
 
+
 class CreatePublicEventViewController: UIViewController {
     
     
@@ -22,6 +23,10 @@ class CreatePublicEventViewController: UIViewController {
     
     var userGeoPoint = PFGeoPoint()
     
+    
+    @IBOutlet var addressText: UIImageView!
+    
+    
     // Disable navigation
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -32,7 +37,8 @@ class CreatePublicEventViewController: UIViewController {
     
     @IBOutlet var userAddressButton: UIButton!
     
-    @IBOutlet var addressField: UITextField!
+    
+    @IBOutlet var addressField: UILabel!
     
     
     func displayAlert(title:String, error: String) {
@@ -61,6 +67,69 @@ class CreatePublicEventViewController: UIViewController {
         
     }
     
+    func getUserAddress() {
+        var userLatitude = self.userGeoPoint.latitude
+        var userLongitude = self.userGeoPoint.longitude
+        
+        
+        var geoCoder = CLGeocoder()
+        var location = CLLocation(latitude: userLatitude, longitude: userLongitude)
+        
+        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            let placeArray = placemarks as! [CLPlacemark]
+            
+            // Place details
+            var placeMark: CLPlacemark!
+            placeMark = placeArray[0]
+            
+            // Address dictionary
+            println(placeMark.addressDictionary)
+            
+            // Location name
+            var streetNumber = ""
+            if let locationName = placeMark.addressDictionary["Name"] as? NSString {
+                println(locationName)
+                streetNumber = locationName as String
+            }
+            
+            var streetAddress = ""
+            // Street address
+            if let street = placeMark.addressDictionary["Thoroughfare"] as? NSString {
+                println(street)
+                streetAddress = street as String
+            }
+            
+            var cityName = ""
+            // City
+            if let city = placeMark.addressDictionary["City"] as? NSString {
+                println(city)
+                cityName = city as String
+                
+            }
+            
+            // Zip code
+            if let zip = placeMark.addressDictionary["ZIP"] as? NSString {
+                println(zip)
+            }
+            
+            // Country
+            var countryName = ""
+            if let country = placeMark.addressDictionary["Country"] as? NSString {
+                println(country)
+                countryName = country as String
+            }
+            
+            var address = streetNumber + ", " + streetAddress
+            self.address2 = streetNumber + ", " + cityName + ", " + countryName
+            self.addressField.text = address
+            
+            
+        })
+
+        
+    }
+    
+    /*
     
     @IBAction func getUserAddressButton(sender: AnyObject) {
         
@@ -141,26 +210,26 @@ class CreatePublicEventViewController: UIViewController {
 //            }
 //        }
     }
+*/
 
-    
     // Add event to event class
     @IBAction func createEvent(sender: AnyObject) {
         
         var error = ""
         
-        //var address = self.addressField.text
+        var address = self.addressField.text
         
-        var address = self.address2
+        //var address = self.address2
         println("======================" + self.address2)
         
         // Template for address
-        //var address = "289-303 Yonge St, Toronto, Canada"
+        //var address = " 62 Shadyglen dr,Toronto, Canada"
         
         var eventName = self.eventName.text
         
         if (eventName == "" || address == "") {
             error = "Please enter an event name and location."
-        } else if (count(eventName) < 2 || count(address) < 2) {
+        } else if (count(eventName) < 2) {
             error = "Please enter a valid event name and location."
         }
         
@@ -170,6 +239,10 @@ class CreatePublicEventViewController: UIViewController {
             
             let query = PFUser.query()
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+
+            //TODO: remove?
+            var result = self.getUserLocationFromAddress()
+
                 
                 if error != nil {
                     println(error)
@@ -240,7 +313,6 @@ class CreatePublicEventViewController: UIViewController {
                         println("---------------GETSHERE2--------------")
                         object!.saveInBackground()
                         println("---------------GETSHERE3--------------")
-
                         
                         // Add the EventAttendance join table relationship for photos (liked and uploaded)
                         var attendance = PFObject(className:"EventAttendance")
@@ -287,6 +359,23 @@ class CreatePublicEventViewController: UIViewController {
         }
     }
     
+    func getUserLocationFromAddress() -> NSString {
+        var address = "1 Infinite Loop, CA, USA"
+        var geocoder = CLGeocoder()
+        
+        geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+            println(error)
+            if let placemark = placemarks?[0] as? CLPlacemark {
+                println(placemark.location)
+                println(placemark.location.coordinate.latitude)
+                println(placemark.location.coordinate.longitude)
+            }
+        })
+        
+        return ""
+    
+    }
+    
     @IBAction func pastEventsButton(sender: AnyObject) {
         self.performSegueWithIdentifier("toEventsPage", sender: self)
     }
@@ -331,6 +420,14 @@ class CreatePublicEventViewController: UIViewController {
                 println("Error with User Geopoint")
             }
         }
+        
+        
+        
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        getUserAddress()
     }
     
     // Two functions to allow off keyboard touch to close keyboard

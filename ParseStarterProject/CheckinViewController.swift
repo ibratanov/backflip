@@ -155,7 +155,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     }
     
     func calcNearByEvents() {
-
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
             if error == nil {
                 print(geoPoint)

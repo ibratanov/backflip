@@ -34,6 +34,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     // Title passed from previous VC
     var eventId : String?
+    var eventTitle : String?
     
     // function to handle double tap on image
     func handleTap (sender: UITapGestureRecognizer) {
@@ -339,7 +340,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-        navBarItem.title = "Event Name"
+        navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
 //        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
         navBar.items = [navBarItem]
@@ -365,7 +366,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.view.addSubview(navBar)
 
 
-        var photoQuery = PFQuery(className: "Photo")
+        /*var photoQuery = PFQuery(className: "Photo")
         
         photoQuery.getObjectInBackgroundWithId(objectIdTemp) { (objects, error) -> Void in
             
@@ -392,9 +393,27 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                     println("no date")
                     
-                }
-                
-                tempImage.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
+                }*/
+        
+        
+        // Load information from parse db
+        var getUploadedImages = PFQuery(className: "Event")
+        getUploadedImages.limit = 1000
+        getUploadedImages.whereKey("objectId", equalTo: eventId!)
+        
+        // Retrieval from corresponding photos from relation to event
+        var object = getUploadedImages.findObjects()?.first as! PFObject
+        
+        var photos = object["photos"] as! PFRelation
+        var tempImage: PFFile?
+        
+        var photoList = photos.query()?.getObjectWithId(objectIdTemp)
+        
+        
+        // Once retrieved from relation, set the UIImage view for fullscreen view
+        tempImage = photoList!.objectForKey("image") as? PFFile
+
+        tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
                     
                     if error == nil {
                         
@@ -404,13 +423,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         println(error)
                     }
-
-                }
-                
             }
-            
-        }
-        println(objectIdTemp)
         
         // block to check if user has already liked photo, and set button label accordingly
         var query5 = PFUser.query()
