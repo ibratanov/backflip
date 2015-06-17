@@ -321,6 +321,11 @@ class CreatePublicEventViewController: UIViewController {
                         attendance["attendeeID"] = PFUser.currentUser()?.objectId
                         attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
                         attendance.setObject(event, forKey: "event")
+                        attendance["photosLikedID"] = []
+                        attendance["photosLiked"] = []
+                        attendance["photosUploadedID"] = []
+                        attendance["photosUploaded"] = []
+
                         
 //                        attendance.saveInBackgroundWithBlock{ (success, error) -> Void in
 //                            if (success) {
