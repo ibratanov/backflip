@@ -14,6 +14,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     // Title passed from previous VC
     var eventId : String?
     var eventTitle : String?
+    var eventLocation: PFGeoPoint?
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
@@ -184,6 +185,17 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 println("FAILED PHOTO UPLOAD!------------------")
             }
         }
+        
+        var queryEvent = PFQuery(className: "Event")
+        queryEvent.whereKey("eventName", equalTo: self.eventTitle!)
+        var objects = queryEvent.findObjects() as! [PFObject]
+        var eventObject = objects[0]
+        
+        let relation = eventObject.relationForKey("photos")
+        relation.addObject(photo)
+        
+        eventObject.saveInBackground()
+        
         
         
     }
