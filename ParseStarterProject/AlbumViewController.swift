@@ -683,7 +683,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.flashButton.hidden = false
             
         }
-        previewViewController.imageToCrop = imageFixOrientation(imageViewContent);
+        previewViewController.imageToCrop = imageViewContent//imageFixOrientation(imageViewContent);
         
         self.presentViewController(previewViewController, animated: true, completion: nil);
         //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
