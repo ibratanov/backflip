@@ -166,11 +166,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                     self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
                         // stop spinner on main thread
-                        self.spinner.stopAnimating()
+                        //self.spinner.stopAnimating()
                     })
                 } else {
                     
-                    self.spinner.stopAnimating()
+                    //self.spinner.stopAnimating()
                     
                     var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
@@ -833,6 +833,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         else{
             previewViewController.imageToCrop = imageViewContent
         }
+        
+        previewViewController.eventId = self.eventId
+        previewViewController.eventTitle = self.eventTitle
         
         self.presentViewController(previewViewController, animated: true, completion: nil);
         //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)

@@ -26,6 +26,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     var cellImage : UIImage!
     var objectIdTemp : String = ""
     var likeActive = false
+    
+    // Icon image variables
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
     var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
     var back = UIImage(named: "back.pdf") as UIImage!
@@ -36,7 +38,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     var eventId : String?
     var eventTitle : String?
     
-    // function to handle double tap on image
+    // Function to handle double tap on image
     func handleTap (sender: UITapGestureRecognizer) {
         
         if sender.state == .Ended {
@@ -189,6 +191,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
  
     // Alerts for sharing to Facebook and Twitter
     func displayAlert(title:String,error: String) {
+        
+   
     
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
             
@@ -201,6 +205,22 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 facebookSheet.addImage(self.fullScreenImage.image!)
                 
                 self.presentViewController(facebookSheet, animated: true, completion: nil)
+                
+                facebookSheet.completionHandler = { (result: SLComposeViewControllerResult) -> Void in
+                    switch(result) {
+                        
+                    case SLComposeViewControllerResult.Cancelled:
+                        
+                        println("cancelled")
+                        
+                    case SLComposeViewControllerResult.Done:
+                        
+                        self.dismissViewControllerAnimated(false, completion: nil)
+                        self.displaySuccess("Posted!", error: "Not Working? Make sure you are logged in to FB in iOS settings")
+
+                    }
+                    
+                }
            
             } else {
                 var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -219,6 +239,24 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 twitterSheet.addImage(self.fullScreenImage.image)
                 
                 self.presentViewController(twitterSheet, animated: true, completion: nil)
+
+                twitterSheet.completionHandler = { (result: SLComposeViewControllerResult) -> Void in
+                    switch(result) {
+                        
+                    case SLComposeViewControllerResult.Cancelled:
+                        
+                        println("cancelled")
+                        
+                    case SLComposeViewControllerResult.Done:
+                        
+                        self.dismissViewControllerAnimated(false, completion: nil)
+                        self.displaySuccess("Posted!", error: "Successfully posted to Twitter")
+                        
+
+    
+                    }
+                }
+                
             
             } else {
                 
@@ -280,6 +318,15 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     @IBAction func share(sender: AnyObject) {
         
          displayAlert("Share", error: "How do you want to share this photo?")
+    }
+    
+    func displaySuccess(title: String, error: String) {
+        
+        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
   
     

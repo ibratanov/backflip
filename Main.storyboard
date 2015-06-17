@@ -38,6 +38,9 @@
                                         <state key="normal" title="Privacy Policy">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="privacyPolicy:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7oB-d0-RHP"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hME-Uu-iar">
                                         <rect key="frame" x="174" y="15" width="80" height="28"/>
@@ -45,6 +48,9 @@
                                         <state key="normal" title="Terms of Service">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="termsOfService:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jWr-gg-EyA"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -833,5 +839,10 @@
         <segue reference="Akq-ph-AFX"/>
         <segue reference="eA9-TU-XJn"/>
         <segue reference="Ax8-uE-80J"/>
+        <segue reference="j85-ZN-Egd"/>
+        <segue reference="FSk-Fu-Rj2"/>
+        <segue reference="eA9-TU-XJn"/>
+        <segue reference="Fno-vP-GvK"/>
+        <segue reference="hKp-Y7-lrD"/>
     </inferredMetricsTieBreakers>
 </document>
