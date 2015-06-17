@@ -308,31 +308,19 @@ class CreatePublicEventViewController: UIViewController {
 //                        }
                         
                         event.save()
-                        println("---------------GETSHERE--------------")
+                        
                         object?.addUniqueObject(event, forKey:"savedEvents")
                         object?.addUniqueObject(eventName, forKey:"savedEventNames")
                         
-                        println("---------------GETSHERE2--------------")
                         object!.saveInBackground()
-                        println("---------------GETSHERE3--------------")
                         
                         // Add the EventAttendance join table relationship for photos (liked and uploaded)
                         var attendance = PFObject(className:"EventAttendance")
-                        println("---------------GETSHERE4--------------")
-
-                        attendance["eventID"] = "test"//event.objectId
-                        println("---------------GETSHERE4.5--------------")
-
-                        let temp = "test2"//PFUser.currentUser()?.objectId// as String
-                        attendance["attendeeID"] = temp
-                        println("---------------GETSHERE5--------------")
-
+                        attendance["eventID"] = event.objectId
+                        //let temp = PFUser.currentUser()?.objectId// as String
+                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
                         attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                        
-                        println("---------------GETSHERE6--------------")
-
                         attendance.setObject(event, forKey: "event")
-                        println("---------------GETSHERE7--------------")
                         
 //                        attendance.saveInBackgroundWithBlock{ (success, error) -> Void in
 //                            if (success) {
