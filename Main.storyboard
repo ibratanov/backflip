@@ -855,10 +855,10 @@
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="FSk-Fu-Rj2"/>
+        <segue reference="j85-ZN-Egd"/>
         <segue reference="eA9-TU-XJn"/>
         <segue reference="Fno-vP-GvK"/>
-        <segue reference="Ax8-uE-80J"/>
         <segue reference="hKp-Y7-lrD"/>
-        <segue reference="Akq-ph-AFX"/>
     </inferredMetricsTieBreakers>
 </document>

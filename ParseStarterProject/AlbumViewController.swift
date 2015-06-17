@@ -815,6 +815,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             previewViewController.imageToCrop = imageViewContent
         }
         
+        previewViewController.eventId = self.eventId
+        previewViewController.eventTitle = self.eventTitle
+        
         self.presentViewController(previewViewController, animated: true, completion: nil);
         //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
         //ensure image is cropped to a square
