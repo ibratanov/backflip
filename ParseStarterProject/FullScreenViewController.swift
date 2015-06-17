@@ -16,8 +16,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     @IBOutlet var likeCount: UILabel!
     
-//    @IBOutlet var eventTitle: UILabel!
-    
     @IBOutlet var eventInfo: UILabel!
     
     @IBOutlet var fullScreenImage: UIImageView!
@@ -31,6 +29,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
     var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
     var back = UIImage(named: "back.pdf") as UIImage!
+    var share = UIImage(named: "share-icon.pdf") as UIImage!
+
     
     // Title passed from previous VC
     var eventId : String?
@@ -334,9 +334,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64 ))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-        // Removes faint line under nav bar
-        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        navBar.shadowImage = UIImage()
+//        // Removes faint line under nav bar
+//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        navBar.shadowImage = UIImage()
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
@@ -347,21 +347,18 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Left nav bar button item
         let back = UIButton.buttonWithType(.Custom) as! UIButton
-        
         back.setTitleColor(UIColor.blackColor(), forState: .Normal)
         back.setImage(self.back, forState: .Normal)
-        //back.setTitle("Back", forState: .Normal)
-        back.frame = CGRectMake(15, 31, 22,22)
+        back.frame = CGRectMake(15, 29, 30,24)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
         // Right nav bar button item
-        let shareAlbum = UIButton.buttonWithType(.Custom) as! UIButton
-        shareAlbum.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        shareAlbum.setTitle("Action", forState: .Normal)
-        shareAlbum.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
-        shareAlbum.addTarget(self, action: nil, forControlEvents: .TouchUpInside)
-        navBar.addSubview(shareAlbum)
+        let shareImage = UIButton.buttonWithType(.Custom) as! UIButton
+        shareImage.setImage(self.share, forState:.Normal)
+        shareImage.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
+        shareImage.addTarget(self, action: "share", forControlEvents: .TouchUpInside)
+        navBar.addSubview(shareImage)
         
         self.view.addSubview(navBar)
 

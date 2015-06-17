@@ -48,7 +48,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xZg-RP-CaS">
-                            <rect key="frame" x="10" y="5" width="27" height="50"/>
+                            <rect key="frame" x="10" y="5" width="64" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="dqa-Ud-6pd"/>
                             </constraints>
@@ -89,8 +89,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qVi-TP-Qk1">
                     <rect key="frame" x="0.0" y="495" width="375" height="172"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fto-9h-tb5">
-                            <rect key="frame" x="10" y="62" width="50" height="50"/>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fto-9h-tb5">
+                            <rect key="frame" x="10" y="61" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="D9r-Kv-JvS"/>
                                 <constraint firstAttribute="height" constant="50" id="Lx1-ot-oMd"/>
@@ -102,8 +102,8 @@
                                 <action selector="cancelCamera:" destination="-1" eventType="touchUpInside" id="ga7-RM-p5R"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fOS-wJ-nCH">
-                            <rect key="frame" x="148" y="47" width="80" height="80"/>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fOS-wJ-nCH">
+                            <rect key="frame" x="148" y="46" width="80" height="80"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="8BP-1P-ZRn"/>
                                 <constraint firstAttribute="width" secondItem="fOS-wJ-nCH" secondAttribute="height" multiplier="1:1" id="fwT-bW-cOg"/>
@@ -118,8 +118,8 @@
                                 <action selector="capture:" destination="-1" eventType="touchUpInside" id="aak-pU-4za"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbM-nH-FAU">
-                            <rect key="frame" x="315" y="62" width="50" height="50"/>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbM-nH-FAU">
+                            <rect key="frame" x="315" y="61" width="50" height="50"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="ZM4-bN-CrD"/>
@@ -209,7 +209,7 @@
     <resources>
         <image name="camera-button" width="92" height="92"/>
         <image name="close-icon-large" width="28" height="27"/>
-        <image name="flash-icon-large" width="27" height="38"/>
+        <image name="flash-icon-large" width="64" height="38"/>
         <image name="reverse-camera-icon-large" width="35" height="35"/>
     </resources>
 </document>

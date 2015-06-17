@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -130,13 +130,13 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[CURRENT EVENT]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJ1-gm-970">
                                             <rect key="frame" x="11" y="18" width="206" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[LOCATION]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxn-kS-Jbx">
                                             <rect key="frame" x="11" y="40" width="193" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                            <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -291,7 +291,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="7OL-xV-MgK" firstAttribute="top" secondItem="Fs2-mx-lLt" secondAttribute="bottom" constant="10" id="1cc-z9-d4k"/>
                             <constraint firstAttribute="centerX" secondItem="Xu3-Ge-spa" secondAttribute="centerX" id="1q9-Lf-eX8"/>
@@ -453,7 +453,7 @@
                                 <rect key="frame" x="275" y="257" width="20" height="30"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="Rhx-us-hV1" secondAttribute="centerX" id="1eJ-EM-S6S"/>
                             <constraint firstItem="ger-To-0KF" firstAttribute="leading" secondItem="Luo-6z-Om5" secondAttribute="leading" id="21f-3x-wNB"/>
@@ -855,10 +855,10 @@
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eA9-TU-XJn"/>
+        <segue reference="gz0-ak-oAk"/>
+        <segue reference="Ju0-Hh-YW7"/>
+        <segue reference="hKp-Y7-lrD"/>
         <segue reference="Fno-vP-GvK"/>
         <segue reference="Ax8-uE-80J"/>
-        <segue reference="hKp-Y7-lrD"/>
-        <segue reference="Akq-ph-AFX"/>
     </inferredMetricsTieBreakers>
 </document>

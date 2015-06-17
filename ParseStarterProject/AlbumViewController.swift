@@ -53,7 +53,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
     var share = UIImage(named: "share-icon") as UIImage!
+    var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
+    
+    var flashOff = UIImage(named:"flash-icon-large") as UIImage!
+    var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
 
     
     // Tuple for sorting
@@ -183,7 +187,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         //--------------- LIKE/TIME/MY PHOTOS ---------------
 
         // Initialize segmented control button
-        let items = ["LIKES", "TIME", "MY PHOTOS"]
+        let items = ["SORT BY LIKES", "SORT BY TIME", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
         
         // Persistence of segmented control selection
@@ -216,12 +220,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Set characteristics of segmented controller
         var backColor : UIColor = UIColor(red: 114/255, green: 114/255, blue: 114/255, alpha: 1)
         var titleFont : UIFont = UIFont(name: "Avenir", size: 12.0)!
-        var textColor : UIColor = UIColor.whiteColor()
+//        var textColor : UIColor = UIColor.whiteColor()
         
         
         // Implement base colors on our segmented control
-        segC.tintColor = UIColor.whiteColor()
-        segC.backgroundColor = UIColor.whiteColor()
+        segC.tintColor = UIColor.clearColor()
+//        segC.backgroundColor = UIColor.whiteColor()
         
         // Attributes for non selected segments
         var segAttributes = [
@@ -230,7 +234,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             NSFontAttributeName : titleFont,
             
-            NSBackgroundColorAttributeName : textColor
+//            NSBackgroundColorAttributeName : textColor
         ]
         
         // Attributes for when segment is selected
@@ -255,7 +259,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Add targets, initialize segmented control
         segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
-        self.view.addSubview(segC)
+//        self.view.addSubview(segC)
         
         //--------------- Draw UI ---------------
         
@@ -263,18 +267,21 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 94))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-        // Removes faint line under nav bar
-        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        navBar.shadowImage = UIImage()
+//        // Removes faint line under nav bar
+//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        navBar.shadowImage = UIImage()
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-
+        
         navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+        let verticalOffset: CGFloat = -30
+        navBar.setTitleVerticalPositionAdjustment(verticalOffset, forBarMetrics: .Default)
+//        navBar.titleVerticalPositionAdjustmentForBarMetrics(barMetrics: UIBarMetrics)
         navBar.items = [navBarItem]
         
         // Left nav bar button item
@@ -291,12 +298,21 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
         
+        navBar.addSubview(segC)
         self.view.addSubview(navBar)
         
-        // Post photo button
+//        // Post photo button
+//        let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+//        postPhoto.setImage(newCam, forState: .Normal)
+//        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-60, 80, 80)
+//        postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
+//        self.view.addSubview(postPhoto)
+        
+        // Post photo button new
         let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        postPhoto.setImage(newCam, forState: .Normal)
-        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-60, 80, 80)
+        postPhoto.setImage(cam, forState: .Normal)
+        postPhoto.frame = CGRectMake(0, self.view.frame.size.height-55, self.view.frame.size.width, 75)
+        postPhoto.backgroundColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
         postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(postPhoto)
         
@@ -956,7 +972,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     func updateThumbnail(){
         thumbnailButton.setBackgroundImage(image, forState: .Normal)
         //thumbnailButton.setImage(image, forState: .Normal)
-        thumbnailButton.layer.borderColor = UIColor.blueColor().CGColor
+        thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
         thumbnailButton.layer.borderWidth=1.0
         
     }
@@ -964,22 +980,22 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         //TO-DO: add indication of toggle (image change)
         if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
-            //self.flashButton.setImage(flashOff, forState: .Normal)
-            var alert:UIAlertView = UIAlertView()
-            alert.title = "Flash off!"
-            alert.message = " "
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
+            self.flashButton.setImage(flashOff, forState: .Normal)
+//            var alert:UIAlertView = UIAlertView()
+//            alert.title = "Flash off!"
+//            alert.message = " "
+//            alert.delegate = self
+//            alert.addButtonWithTitle("Ok")
+//            alert.show()
         }else{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.On
-            //self.flashButton.setImage(flashOn, forState: .Normal)
-            var alert:UIAlertView = UIAlertView()
-            alert.title = "Flash on!"
-            alert.message = " "
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
+            self.flashButton.setImage(flashOn, forState: .Normal)
+//            var alert:UIAlertView = UIAlertView()
+//            alert.title = "Flash on!"
+//            alert.message = " "
+//            alert.delegate = self
+//            alert.addButtonWithTitle("Ok")
+//            alert.show()
         }
     }
     
