@@ -98,11 +98,15 @@ class EventTableViewController: UITableViewController {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
-        // Facebook share feature
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            
+            
             PFUser.logOut()
             Digits.sharedInstance().logOut()
+            
             self.performSegueWithIdentifier("logoutEventView", sender: self)
+            
             
             
         }))

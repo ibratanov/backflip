@@ -13,16 +13,18 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var termsTextView: UITextView!
     
-    @IBAction func privacyPolicy(sender: AnyObject) {
-    
-        displayAlert("Backflip Privacy Policy:", error: "Our privacy policy")
-    
-    }
     
     @IBAction func termsOfService(sender: AnyObject) {
-        
-        displayAlert("Backflip Terms of Service:", error: "Our terms of service")
-        
+        if let url = NSURL(string: "http://stackoverflow.com/questions/26938495/make-button-hyperlink-swift") {
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
+    
+    
+    @IBAction func privacyPolicy(sender: AnyObject) {
+        if let url = NSURL(string: "http://stackoverflow.com/questions/26938495/make-button-hyperlink-swift") {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
     
     @IBAction func loginButton(sender: AnyObject) {
@@ -133,16 +135,16 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
             
             var blocked = PFUser.currentUser()?.valueForKey("blocked") as! Bool
             println(blocked)
-            if blocked == false {
+            ///if blocked == false {
                 // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
                 println("GEEEEEE")
                 self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                 
-            }
-            else {
-                println("User is Blocked")
-                displayAlertUserBlocked("You have been Blocked", error: "You have uploaded inappropriate photos")
-            }
+            //}
+            //else {
+              //  println("User is Blocked")
+                //displayAlertUserBlocked("You have been Blocked", error: "You have uploaded inappropriate photos")
+            //}
             
         }
     }
