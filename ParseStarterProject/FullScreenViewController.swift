@@ -91,16 +91,18 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             // User like list that will be filled
             var likeList : [String]
             var upVote : Int
+            var thumbnail : PFFile
             
             // Finds associated photo object in relation
             var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
             
             // Add user to like list, add 1 to the upvote count
             retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
-            retrieveLikes?.incrementKey("upVoteCount", byAmount: 1)
+            retrieveLikes?.incrementKey("upvoteCount", byAmount: 1)
             
             // Grab specific element fromobject
             likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
+            thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
             
             let counter = likeList.count
             if counter == 1 {
@@ -121,7 +123,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                 if error == nil {
 
-                    object?.addObject(retrieveLikes!, forKey: "photosLiked")
+                    object?.addObject(thumbnail, forKey: "photosLiked")
                             
                     object?.addUniqueObject(self.objectIdTemp, forKey:"photosLikedID")
                             
@@ -149,16 +151,19 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             // User like list that will be filled
             var likeList : [String]
             var upVote : Int
+            var thumbnail : PFFile
             
             // Finds associated photo object in relation
             var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
             
             // Add user to like list, add 1 to the upvote count
-            retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
-            retrieveLikes?.incrementKey("upVoteCount", byAmount: -1)
+            retrieveLikes?.removeObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
+            retrieveLikes?.incrementKey("upvoteCount", byAmount: -1)
+
             
             // Grab specific element fromobject
             likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
+            thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
             
             let counter = likeList.count
             if counter == 1 {
@@ -172,14 +177,14 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             // Add both photo object and id to arrays in user class
             var query2 = PFQuery(className: "EventAttendance")
-            query2.whereKey("attendeeID", equalTo: eventId!)
+            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
             query2.whereKey("eventID", equalTo: eventId!)
             
             query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
                 
                 if error == nil {
                     
-                    object?.removeObject(retrieveLikes!, forKey: "photosLiked")
+                    object?.removeObject(thumbnail, forKey: "photosLiked")
                     
                     object?.removeObject(self.objectIdTemp, forKey:"photosLikedID")
                     
@@ -511,6 +516,19 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             self.likeCount.text = String(count) + " likes"
         }
+        
+        
+        // gesture implementation
+        var gesture = UITapGestureRecognizer(target: self, action: "handleTap:")
+        gesture.numberOfTapsRequired = 2
+        
+        fullScreenImage.userInteractionEnabled = true
+        fullScreenImage.addGestureRecognizer(gesture)
+        
+        self.view.bringSubviewToFront(likeCount)
+
+
+        
 
     }
 
