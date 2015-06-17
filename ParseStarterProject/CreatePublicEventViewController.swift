@@ -222,7 +222,7 @@ class CreatePublicEventViewController: UIViewController {
                             (success: Bool, error: NSError?) -> Void in
                             if (success) {
                                 // The object has been saved.
-                                println("success \(event.objectId)")
+                                //println("**************************success \(event.objectId)")
                                 
                                 // Subscribe current device to event channel for push notifications
                                 //let currentInstallation = PFInstallation.currentInstallation()
@@ -233,20 +233,49 @@ class CreatePublicEventViewController: UIViewController {
                                 println("fail")
                             }
                         }
-                        
+                        println("---------------GETSHERE--------------")
                         object?.addUniqueObject(event, forKey:"savedEvents")
                         object?.addUniqueObject(eventName, forKey:"savedEventNames")
                         
+                        println("---------------GETSHERE2--------------")
                         object!.saveInBackground()
+                        println("---------------GETSHERE3--------------")
+
                         
                         // Add the EventAttendance join table relationship for photos (liked and uploaded)
                         var attendance = PFObject(className:"EventAttendance")
-                        attendance["eventID"] = event.objectId
-                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                        println("---------------GETSHERE4--------------")
+
+                        attendance["eventID"] = "test"//event.objectId
+                        println("---------------GETSHERE4.5--------------")
+
+                        let temp = "test2"//PFUser.currentUser()?.objectId// as String
+                        attendance["attendeeID"] = temp
+                        println("---------------GETSHERE5--------------")
+
                         attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                        attendance.setObject(event, forKey: "event")
                         
-                        attendance.saveInBackground()
+                        println("---------------GETSHERE6--------------")
+
+                        attendance.setObject(event, forKey: "event")
+                        println("---------------GETSHERE7--------------")
+                        
+                        attendance.saveInBackgroundWithBlock{ (success, error) -> Void in
+                            if (success) {
+                                // The object has been saved.
+                                println("suxess")//success \(event.objectId)")
+                                
+                                // Subscribe current device to event channel for push notifications
+                                //let currentInstallation = PFInstallation.currentInstallation()
+                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
+                                //currentInstallation.saveInBackground()
+                            } else {
+                                // There was a problem, check error.description
+                                println("fail")
+                                println(error)
+                            }
+
+                        }
                         
                         println("Saved")
                         
