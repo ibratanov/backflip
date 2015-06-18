@@ -180,6 +180,25 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         photo["upvoteCount"] = 1
         photo["usersLiked"] = [PFUser.currentUser()!.username!]
         
+        var photoACL = PFACL(user: PFUser.currentUser()!)
+        photoACL.setPublicWriteAccess(true)
+        photoACL.setPublicReadAccess(true)
+        photo.ACL = photoACL
+        
+        
+        var query2 = PFQuery(className: "EventAttendance")
+        query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+        query2.whereKey("eventID", equalTo: eventId!)
+        var photoObject = query2.findObjects()!.first as! PFObject
+
+        
+        photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+        photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+        
+ 
+        //photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+        
+        
         var queryEvent = PFQuery(className: "Event")
         queryEvent.whereKey("objectId", equalTo: self.eventId!)
         var objects = queryEvent.findObjects() as! [PFObject]
@@ -192,8 +211,12 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         photo.saveInBackgroundWithBlock { (success, error) -> Void in
             if (success) {
                 relation.addObject(photo)
+                photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+                photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
                 
                 eventObject.saveInBackground()
+                
+                photoObject.saveInBackground()
                 
                 println("PHOTO UPLOADED!------------------")
             } else {
