@@ -22,13 +22,20 @@ import DigitsKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    //-------Branch
+    var inviteImage = UIImage()
+    var inviteViewController = InviteViewController(nibName: "InviteViewController", bundle: nil);
+    //-------------
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate
     //--------------------------------------
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Enable storing and querying data from Local Datastore. 
+        //-------Branch
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setImageViewNotification:", name: "MySetImageViewNotification", object: nil)
+        // Enable storing and querying data from Local Datastore.
         // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
         Parse.enableLocalDatastore()
 
@@ -104,6 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Digits()])
         
         //--------------------------BRANCH.IO------------------------------------
+        
         let branch: Branch = Branch.getInstance()
         //Now a connection can be established between a referring user and a referred user during anysession, not just the very first time a user opens the app.
         branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
@@ -111,13 +119,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // This can now count as a referred session even if this isn't
                 // the first time a user has opened the app (aka an "Install").
                 //Custom logic goes here --> dependent on access to cloud services
+                if((params["eventId"]) != nil){
+                    let eventIIden: AnyObject? = params["eventId"]
+                    var objectIdTemp : String = ""
+                    
+                    // Load information from parse db
+                    var query = PFQuery(className: "Event")
+                    query.limit = 10
+                    query.whereKey("objectId", equalTo: "Yd16h1FBB1")
+                    
+        
+                    var object = query.findObjects()?.first as! PFObject
+                    
+                    var photos = object["photos"] as! PFRelation
+                    var tempImage: PFFile?
+                    
+                    var photoList = photos.query()?.getObjectWithId(eventIIden as! String)
+                    print("\(eventIIden as! String)")
+                    
+                    tempImage = photoList!.objectForKey("image") as? PFFile
+                    
+                    tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
+                        
+                        if error == nil {
+                            
+                            self.inviteImage = UIImage(data: imageData!)!
+                            
+                        } else {
+                            
+                            println(error)
+                        }
+                    }
+                    var topView = UIApplication.sharedApplication().keyWindow?.rootViewController
+                    while (topView?.presentedViewController != nil){
+                        topView = topView!.presentedViewController
+                    }
+                    
+                    
+                    topView?.presentViewController(self.inviteViewController, animated: true, completion: nil)
+                    
+                }
             }
+            
         })
-        //------------------------------------------------------------------------
-
+        
         return true
     }
-
+    
+    func setImageViewNotification(note: NSNotification){
+        
+        let userInfo = note.userInfo as! [String: UIImageView]
+        let imageView = userInfo["imageView"]
+        imageView?.image = self.inviteImage
+        self.inviteViewController.imageView.image = self.inviteImage
+    }
     //--------------------------------------
     // MARK: Push Notifications
     //--------------------------------------
