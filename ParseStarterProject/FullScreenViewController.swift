@@ -74,13 +74,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     }
 
     
-    // both users and images have associated arrays with list of images liked for users, list of users who liked image, for images
+    // Like button fills 4 arays in database with IDs and thumbnails. Four arrays are in Event Attendance class
     @IBAction func likeButton(sender: AnyObject) {
         
         if likeActive == false {
             
             
-            //----------- Query for Adjusting Likes in the case of an like in DB----------
+            //----------- Query for Adjusting DB in the case of liking a photo ----------
             var likeQuery = PFQuery(className: "Event")
             
             likeQuery.whereKey("objectId", equalTo: eventId!)
@@ -114,7 +114,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 self.likeCount.text = String(counter) + " likes"
             }
                     
-                    // Add both photo object and id to arrays in user class
+            // Add both photo object (thumbnail) and id to arrays in user class
             var query2 = PFQuery(className: "EventAttendance")
             query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
             query2.whereKey("eventID", equalTo: eventId!)
@@ -140,9 +140,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
         } else {
             
-            //----------- Query for Adjusting Likes in the case of an unlike in DB----------
+            //----------- Query for Adjusting DB in the case of an unlike----------
             var likeQuery = PFQuery(className: "Event")
-            
             likeQuery.whereKey("objectId", equalTo: eventId!)
             
             var likeEvents = likeQuery.findObjects()?.first as! PFObject
@@ -161,10 +160,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             retrieveLikes?.incrementKey("upvoteCount", byAmount: -1)
 
             
-            // Grab specific element fromobject
+            // Grab specific element from object.
             likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
             thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
             
+            //Set appropriate labal on the view
             let counter = likeList.count
             if counter == 1 {
                 
@@ -263,8 +263,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         self.dismissViewControllerAnimated(false, completion: nil)
                         self.displaySuccess("Posted!", error: "Successfully posted to Twitter")
-                        
-
     
                     }
                 }
@@ -379,8 +377,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
     }
 
-
-    
     override func viewDidLoad() {
        
         super.viewDidLoad()
