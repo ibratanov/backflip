@@ -270,11 +270,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         alert.addAction(UIAlertAction(title: "Invite Friends (SMS)", style: .Default, handler: { action in
             
             var params = [ "referringUsername": "friend",
-                "referringUserId": "6", "eventId": "\(self.objectIdTemp)"]
-            //        [ "referringUsername": "friend",
-            //            "referringUserId": "6",  "eventId": "\(self.eventId)",
-            //            "pictureId": "\(self.objectIdTemp)",
-            //            "pictureCaption": "\(self.eventTitle)" ]
+                "referringUserId": "6", "eventId": "\(self.objectIdTemp)", "albumId":"album", "eventTitle": "Title"]
+            //        [ "referringUsername": "friend", "referringUserId": "6",  "eventId": "\(self.eventId)", "pictureId": "\(self.objectIdTemp)", "pictureCaption": "\(self.eventTitle)" ]
             
             // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
             
