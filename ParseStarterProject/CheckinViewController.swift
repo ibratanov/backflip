@@ -164,7 +164,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 var query = PFQuery(className: "Event")
                 //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
                 query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: 10.0)
-                query.limit = 5
+                query.limit = 10
 
                 query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
                     self.cellContent.removeAllObjects()

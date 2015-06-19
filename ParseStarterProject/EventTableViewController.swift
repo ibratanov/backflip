@@ -498,7 +498,7 @@ class EventTableViewController: UITableViewController {
                 
                 var event = eventObjs[selectedPath.row]
                 moveVC.eventId = event.objectId
-                moveVC.eventTitle = event["eventName"] as! String
+                moveVC.eventTitle = event["eventName"] as? String
             }
         }
     }
