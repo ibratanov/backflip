@@ -677,13 +677,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             if self.sortedByLikes == false && self.myPhotoSelected == false {
 
                 moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
+                moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
                 
             } else if self.sortedByLikes == true && self.myPhotoSelected == false {
             // Sorted by like count
                 moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
+                moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
             } else {
                 
                 moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
+                moveVC.tempDate = self.myDate[selectedCellIndex!.row]
             }
         
         }  
