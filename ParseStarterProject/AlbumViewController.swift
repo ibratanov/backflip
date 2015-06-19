@@ -326,26 +326,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
             if error == nil {
                 
-                //TODO: determine how this can be set automatically
-                let endTime = objects?.objectForKey("endTime") as! NSDate
-                
-                //date is the end time of event plus 48hours
-                let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
-                
-                // Event is still active (currentTime < expiry time)
-                if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
+                if let endTime: AnyObject = objects?.objectForKey("endTime") {
+                    //endDate has been set and is valide
+                    
+                    //TODO: determine how this can be set automatically
+                    let endTime = objects?.objectForKey("endTime") as! NSDate
+                    
+                    //date is the end time of event plus 48hours
+                    let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
+                    
+                    // Event is still active (currentTime < expiry time)
+                    if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
 
-                //self.displayAlert("Heads Up!", error: "Active")
+                    //self.displayAlert("Heads Up!", error: "Active")
 
+                        
+                    // Event is no longer active (currentTime > expiry time)
+                    } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
+                        
+                        //self.displayAlert("Heads Up!", error: "Inactive")
+                        
+                        // Delete if the event is no longer active
+                        //objects?.deleteInBackground()
+                    }
                     
-                // Event is no longer active (currentTime > expiry time)
-                } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
-                    
-                    //self.displayAlert("Heads Up!", error: "Inactive")
-                    
-                    // Delete if the event is no longer active
-                    //objects?.deleteInBackground()
-                    
+                } else {
+                    //endDate has not been set or was invalid
                 }
 
                 

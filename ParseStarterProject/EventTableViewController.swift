@@ -23,7 +23,11 @@ class EventTableViewController: UITableViewController {
     var imageList: [PFFile] = []
     var events: [String] = []
     
+    //test
+    var eventObjs: [PFObject] = []
+    
     var eventWithPhotos = [String:[PFFile]]()
+    var eventWithPhotosID = [String:[PFFile]]()
     
     var logoutButton = UIImage(named: "settings-icon") as UIImage!
     var addButton = UIImage(named: "add-icon") as UIImage!
@@ -118,30 +122,44 @@ class EventTableViewController: UITableViewController {
     }
     
     func updateEvents(){
-        var query = PFQuery(className: "Event")
+        //var query = PFQuery(className: "Event")
+
+        let query = PFUser.query()
+        query?.includeKey("savedEvents")
+        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+            self.eventObjs.removeAll(keepCapacity: true)
+            //self.eventObjs = object["savedEvents"]// as! [PFObject]
+            
+            self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
+            for event in self.eventObjs {
+                println(event)
+                self.eventWithPhotos[event.objectId!] = self.updatePhotosForEvent(event.objectId!)
+            }
+            
+        })
         
         //query event names, venues, and objectId
-        query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-            
-            self.events.removeAll(keepCapacity: true)
-            
-            for object in objects! {
-                
-                var eventName = object["eventName"] as! String
-                var objectId = object.objectId! as String!
-                var venue = object["venue"] as! String
-                
-                self.eventWithPhotos[eventName] = self.updatePhotosForEvent(objectId)
-                
-                self.events.append(eventName)
-                self.eventId.append(objectId)
-                self.venues.append(venue)
-                
-                self.tableView.reloadData()
-                
-            }
-            print(self.eventWithPhotos)
-        })
+//        query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+//            
+//            self.events.removeAll(keepCapacity: true)
+//            
+//            for object in objects! {
+//                
+//                var eventName = object["eventName"] as! String
+//                var objectId = object.objectId! as String!
+//                var venue = object["venue"] as! String
+//                
+//                self.eventWithPhotos[eventName] = self.updatePhotosForEvent(objectId)
+//                //self.eventWithPhotosID[objectId] = self.updatePhotosForEvent(objectId)
+//                
+//                self.events.append(eventName)
+//                self.eventId.append(objectId)
+//                self.venues.append(venue)
+//                
+//            }
+//            print(self.eventWithPhotos)
+//            self.tableView.reloadData()
+//        })
         
         
     }
@@ -173,6 +191,8 @@ class EventTableViewController: UITableViewController {
         
         //query.whereKey("photos", equalTo: PFObject(withoutDataWithClassName: "Photo", objectId: "4b71Y7QbXH"))
         
+        //TODO: Sort the photos to display the top 4 liked photos
+        query.limit = 4
         var object = query.findObjects()?.first as! PFObject
         
         var photos = object["photos"] as! PFRelation
@@ -180,7 +200,7 @@ class EventTableViewController: UITableViewController {
         var photoList = photos.query()?.findObjects() as! [PFObject]
         
         for photo in photoList {
-            var image = photo["image"] as! PFFile
+            var image = photo["thumbnail"] as! PFFile
             photoListForEvent.append(image)
         }
         
@@ -239,6 +259,7 @@ class EventTableViewController: UITableViewController {
         tableCell.selectionStyle = UITableViewCellSelectionStyle.None
         println(self.eventWithPhotos)
         var key : String = Array(self.eventWithPhotos.keys)[indexPath.row]
+        println("KEY-----------------")
         println(key)
         
         //var eventObjectId = self.eventId[indexPath.row]
@@ -257,12 +278,13 @@ class EventTableViewController: UITableViewController {
             
         }
         
-        
-        
 */
         
         print(listPhotos.count)
         print(indexPath.row)
+        
+        var currentEvent = eventObjs[indexPath.row]
+        println("REACHESHERE______________________")
         
         if listPhotos.count == 0 {
             tableCell.imageOne!.image = UIImage ()
@@ -407,8 +429,13 @@ class EventTableViewController: UITableViewController {
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                 println(events[selectedPath.row])
                 println(eventId[selectedPath.row])
-                moveVC.eventId =  eventId[selectedPath.row]
+                //moveVC.eventId = Array(self.eventWithPhotosID.keys)[selectedPath.row]
+                //moveVC.eventTitle = Array(self.eventWithPhotos.keys)[selectedPath.row]
+                moveVC.eventId = eventId[selectedPath.row]
                 moveVC.eventTitle = events[selectedPath.row]
+                println("------------------------")
+                println(moveVC.eventTitle)
+                println(moveVC.eventId)
             }
         }
     }

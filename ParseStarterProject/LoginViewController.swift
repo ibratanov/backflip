@@ -133,8 +133,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
             var phone: AnyObject? = PFUser.currentUser()?.valueForKey("phone")
             println(phone)
             
-            var blocked = PFUser.currentUser()?.valueForKey("blocked") as! Bool
-            println(blocked)
+            //var blocked = PFUser.currentUser()?.valueForKey("blocked") as! Bool
+            //println(blocked)
             ///if blocked == false {
                 // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
                 println("GEEEEEE")
