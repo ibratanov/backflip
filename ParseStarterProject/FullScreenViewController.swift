@@ -14,7 +14,6 @@ import MessageUI
 
 class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate {
     
-    let mixpanel = Mixpanel.sharedInstance()
     @IBOutlet var likeCount: UILabel!
     
     @IBOutlet var eventInfo: UILabel!
@@ -228,8 +227,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                     case SLComposeViewControllerResult.Done:
                         
-                        
-                        self.mixpanel.track("Facebook Share")
                         self.dismissViewControllerAnimated(false, completion: nil)
                         self.displaySuccess("Posted!", error: "Not Working? Make sure you are logged in to FB in iOS settings")
 
@@ -264,7 +261,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                     case SLComposeViewControllerResult.Done:
                         
-                        self.mixpanel.track("Twitter Share")
                         self.dismissViewControllerAnimated(false, completion: nil)
                         self.displaySuccess("Posted!", error: "Successfully posted to Twitter")
     
