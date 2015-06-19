@@ -10,6 +10,19 @@
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
 		3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */; };
 		3AAA7B751B2B25F20045EE76 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */; };
+		4CE6FAAFA9BADFF88D06B3D7 /* libPods-Backflip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C116EE2CC19CBF3122D5899B /* libPods-Backflip.a */; };
+		502199AE1B33817100A64387 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199AD1B33817100A64387 /* Accounts.framework */; };
+		502199B01B3381D000A64387 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199AF1B3381D000A64387 /* ParseFacebookUtilsV4.framework */; };
+		502199C01B33830300A64387 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199BF1B33830300A64387 /* AdSupport.framework */; };
+		502199C21B33833E00A64387 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C11B33833E00A64387 /* AVFoundation.framework */; };
+		502199C41B33836600A64387 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C31B33836600A64387 /* StoreKit.framework */; };
+		502199C61B33838A00A64387 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C51B33838A00A64387 /* CoreMotion.framework */; };
+		502199CF1B33840F00A64387 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C81B33840F00A64387 /* FBAudienceNetwork.framework */; };
+		502199D01B33840F00A64387 /* FBAudienceNetwork.README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 502199C91B33840F00A64387 /* FBAudienceNetwork.README.txt */; };
+		502199D11B33840F00A64387 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199CA1B33840F00A64387 /* FBSDKCoreKit.framework */; };
+		502199D21B33840F00A64387 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199CB1B33840F00A64387 /* FBSDKLoginKit.framework */; };
+		502199D31B33840F00A64387 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199CC1B33840F00A64387 /* FBSDKMessengerShareKit.framework */; };
+		502199D41B33840F00A64387 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199CD1B33840F00A64387 /* FBSDKShareKit.framework */; };
 		503BB1A61B2B62EF0042B16F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 503BB1A51B2B62EF0042B16F /* Main.storyboard */; };
 		504D96DF1B1CA38B00A1B95B /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */; };
 		504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */; };
@@ -42,7 +55,6 @@
 		81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816B1A49DB6800E65899 /* Bolts.framework */; };
 		81BA81711A49DB6800E65899 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816C1A49DB6800E65899 /* Parse.framework */; };
 		81BA81721A49DB6800E65899 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816D1A49DB6800E65899 /* ParseCrashReporting.framework */; };
-		81BA81731A49DB6800E65899 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA816E1A49DB6800E65899 /* ParseFacebookUtils.framework */; };
 		81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81761A49E0D500E65899 /* libsqlite3.dylib */; };
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
@@ -64,6 +76,25 @@
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
 		3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		45B08E26AC006AD2F7F956CE /* Pods-Backflip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Backflip.release.xcconfig"; path = "Pods/Target Support Files/Pods-Backflip/Pods-Backflip.release.xcconfig"; sourceTree = "<group>"; };
+		502199AD1B33817100A64387 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		502199AF1B3381D000A64387 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = "../../../../Downloads/parse-library-1.7.4/ParseFacebookUtilsV4.framework"; sourceTree = "<group>"; };
+		502199B11B33828A00A64387 /* FacebookSDKs-iOS-20150528.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FacebookSDKs-iOS-20150528.pkg"; path = "../../../../Downloads/FacebookSDKs-iOS-20150528.pkg"; sourceTree = "<group>"; };
+		502199B41B3382C800A64387 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../../../FacebookSDK/FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		502199B51B3382C800A64387 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		502199B61B3382C800A64387 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		502199B71B3382C800A64387 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = ../../../FacebookSDK/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
+		502199B81B3382C800A64387 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		502199BF1B33830300A64387 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		502199C11B33833E00A64387 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		502199C31B33836600A64387 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		502199C51B33838A00A64387 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		502199C81B33840F00A64387 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../../../FacebookSDK/FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		502199C91B33840F00A64387 /* FBAudienceNetwork.README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = FBAudienceNetwork.README.txt; path = ../../../FacebookSDK/FBAudienceNetwork.README.txt; sourceTree = "<group>"; };
+		502199CA1B33840F00A64387 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		502199CB1B33840F00A64387 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		502199CC1B33840F00A64387 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = ../../../FacebookSDK/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
+		502199CD1B33840F00A64387 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		503BB1A51B2B62EF0042B16F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
 		504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
@@ -98,7 +129,6 @@
 		81BA816B1A49DB6800E65899 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		81BA816C1A49DB6800E65899 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		81BA816D1A49DB6800E65899 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
-		81BA816E1A49DB6800E65899 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		81BA81761A49E0D500E65899 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		81BA81781A49E0DB00E65899 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -110,11 +140,13 @@
 		92EF7C0F1B28280D007DE812 /* backfliplogo80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo80.png; sourceTree = "<group>"; };
 		92EF7C101B28280D007DE812 /* backfliplogo120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo120.png; sourceTree = "<group>"; };
 		92EF7C111B28280D007DE812 /* backfliplogo180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo180.png; sourceTree = "<group>"; };
+		A946191ACC95956DC5C1351E /* Pods-Backflip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Backflip.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Backflip/Pods-Backflip.debug.xcconfig"; sourceTree = "<group>"; };
 		B61801321B0BCBF8000CF25E /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 		B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-empty.pdf"; sourceTree = "<group>"; };
 		B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-filled.pdf"; sourceTree = "<group>"; };
 		B68CDED81B2E336300374158 /* back.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = back.pdf; sourceTree = "<group>"; };
 		B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
+		C116EE2CC19CBF3122D5899B /* libPods-Backflip.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Backflip.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,22 +154,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				922D4A0F1B2A95B600F5AE11 /* Branch.framework in Frameworks */,
-				3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */,
+				502199C61B33838A00A64387 /* CoreMotion.framework in Frameworks */,
 				50C9A7931B276F430091FEC9 /* Social.framework in Frameworks */,
+				502199C41B33836600A64387 /* StoreKit.framework in Frameworks */,
+				3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */,
+				502199AE1B33817100A64387 /* Accounts.framework in Frameworks */,
+				502199D41B33840F00A64387 /* FBSDKShareKit.framework in Frameworks */,
+				502199C21B33833E00A64387 /* AVFoundation.framework in Frameworks */,
+				502199D31B33840F00A64387 /* FBSDKMessengerShareKit.framework in Frameworks */,
+				502199C01B33830300A64387 /* AdSupport.framework in Frameworks */,
+				502199D21B33840F00A64387 /* FBSDKLoginKit.framework in Frameworks */,
+				502199B01B3381D000A64387 /* ParseFacebookUtilsV4.framework in Frameworks */,
+				922D4A0F1B2A95B600F5AE11 /* Branch.framework in Frameworks */,
 				81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */,
 				81BA817D1A49E0EA00E65899 /* MobileCoreServices.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				50BED87E1B21E05100CBB715 /* DigitsKit.framework in Frameworks */,
+				502199D11B33840F00A64387 /* FBSDKCoreKit.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */,
 				81BA81711A49DB6800E65899 /* Parse.framework in Frameworks */,
 				81BA81721A49DB6800E65899 /* ParseCrashReporting.framework in Frameworks */,
-				81BA81731A49DB6800E65899 /* ParseFacebookUtils.framework in Frameworks */,
 				81BA81811A49E10C00E65899 /* ParseUI.framework in Frameworks */,
+				502199CF1B33840F00A64387 /* FBAudienceNetwork.framework in Frameworks */,
 				81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */,
 				50BED87D1B21E05100CBB715 /* Fabric.framework in Frameworks */,
 				50BED8801B21E05100CBB715 /* TwitterCore.framework in Frameworks */,
+				4CE6FAAFA9BADFF88D06B3D7 /* libPods-Backflip.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +193,7 @@
 				81BA81471A49DA1800E65899 /* Backflip */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
 				81BA81461A49DA1800E65899 /* Products */,
+				FF5F47684B6489D65236B5E2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -207,6 +251,24 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				502199C81B33840F00A64387 /* FBAudienceNetwork.framework */,
+				502199C91B33840F00A64387 /* FBAudienceNetwork.README.txt */,
+				502199CA1B33840F00A64387 /* FBSDKCoreKit.framework */,
+				502199CB1B33840F00A64387 /* FBSDKLoginKit.framework */,
+				502199CC1B33840F00A64387 /* FBSDKMessengerShareKit.framework */,
+				502199CD1B33840F00A64387 /* FBSDKShareKit.framework */,
+				502199C51B33838A00A64387 /* CoreMotion.framework */,
+				502199C31B33836600A64387 /* StoreKit.framework */,
+				502199C11B33833E00A64387 /* AVFoundation.framework */,
+				502199BF1B33830300A64387 /* AdSupport.framework */,
+				502199B41B3382C800A64387 /* FBAudienceNetwork.framework */,
+				502199B51B3382C800A64387 /* FBSDKCoreKit.framework */,
+				502199B61B3382C800A64387 /* FBSDKLoginKit.framework */,
+				502199B71B3382C800A64387 /* FBSDKMessengerShareKit.framework */,
+				502199B81B3382C800A64387 /* FBSDKShareKit.framework */,
+				502199B11B33828A00A64387 /* FacebookSDKs-iOS-20150528.pkg */,
+				502199AF1B3381D000A64387 /* ParseFacebookUtilsV4.framework */,
+				502199AD1B33817100A64387 /* Accounts.framework */,
 				922D4A0E1B2A95B600F5AE11 /* Branch.framework */,
 				3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */,
 				50C9A7921B276F430091FEC9 /* Social.framework */,
@@ -217,9 +279,9 @@
 				81BA816B1A49DB6800E65899 /* Bolts.framework */,
 				81BA816C1A49DB6800E65899 /* Parse.framework */,
 				81BA816D1A49DB6800E65899 /* ParseCrashReporting.framework */,
-				81BA816E1A49DB6800E65899 /* ParseFacebookUtils.framework */,
 				81BA81801A49E10C00E65899 /* ParseUI.framework */,
 				81BA81751A49E0C500E65899 /* System Frameworks */,
+				C116EE2CC19CBF3122D5899B /* libPods-Backflip.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -261,6 +323,15 @@
 			name = "Logo Icons";
 			sourceTree = "<group>";
 		};
+		FF5F47684B6489D65236B5E2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A946191ACC95956DC5C1351E /* Pods-Backflip.debug.xcconfig */,
+				45B08E26AC006AD2F7F956CE /* Pods-Backflip.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -268,12 +339,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81BA81641A49DA1800E65899 /* Build configuration list for PBXNativeTarget "Backflip" */;
 			buildPhases = (
+				2285E94AB3A2067F54E938EB /* Check Pods Manifest.lock */,
 				81BA81411A49DA1800E65899 /* Sources */,
 				81BA81421A49DA1800E65899 /* Frameworks */,
 				81BA81431A49DA1800E65899 /* Resources */,
 				81CC85E11A49F6D40076DE19 /* Upload Symbol Files */,
 				50BED8481B21DC7900CBB715 /* ShellScript */,
 				3AC579361B28808700EB9252 /* ShellScript */,
+				4692CD32490EA5FCA87E386B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -295,7 +368,7 @@
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 2VFN7Z827A;
+						DevelopmentTeam = 59T8YRE4TR;
 					};
 				};
 			};
@@ -334,6 +407,7 @@
 				50BBCFDC1B1514E10055DE32 /* backButton.png in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
 				67A795D81B2CE9F8006E489D /* OverlayView.xib in Resources */,
+				502199D01B33840F00A64387 /* FBAudienceNetwork.README.txt in Resources */,
 				92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */,
 				67A796081B2EE4C5006E489D /* PreviewViewController.xib in Resources */,
 				B68CDED71B2E1FBC00374158 /* heart-icon-filled.pdf in Resources */,
@@ -346,6 +420,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2285E94AB3A2067F54E938EB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		3AC579361B28808700EB9252 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -358,6 +447,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "";
+		};
+		4692CD32490EA5FCA87E386B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Backflip/Pods-Backflip-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		50BED8481B21DC7900CBB715 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -501,6 +605,7 @@
 		};
 		81BA81651A49DA1800E65899 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A946191ACC95956DC5C1351E /* Pods-Backflip.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -509,9 +614,32 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"/Users/jonathanarlauskas/Downloads/parse-library-1.7.4",
+					/Users/jonathanarlauskas/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"MPCategoryHelpers\"",
+					"-l\"Pods-Backflip-Mixpanel\"",
+					"-l\"icucore\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-ObjC",
+				);
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "e7be3853-0318-40de-a3b2-3136a7b8fdbd";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
@@ -520,6 +648,7 @@
 		};
 		81BA81661A49DA1800E65899 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 45B08E26AC006AD2F7F956CE /* Pods-Backflip.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -528,9 +657,32 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"/Users/jonathanarlauskas/Downloads/parse-library-1.7.4",
+					/Users/jonathanarlauskas/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"MPCategoryHelpers\"",
+					"-l\"Pods-Backflip-Mixpanel\"",
+					"-l\"icucore\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-ObjC",
+				);
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "e7be3853-0318-40de-a3b2-3136a7b8fdbd";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";

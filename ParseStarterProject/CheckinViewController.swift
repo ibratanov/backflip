@@ -95,9 +95,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-        // Removes faint line under nav bar
-        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        navBar.shadowImage = UIImage()
+//        // Removes faint line under nav bar
+//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        navBar.shadowImage = UIImage()
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
@@ -107,8 +107,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         // Left nav bar button item
         let logout = UIButton.buttonWithType(.System) as! UIButton
-            logout.setBackgroundImage(logoutButton, forState: .Normal)
-            logout.frame = CGRectMake(15, 31, 22, 22)
+            logout.setImage(logoutButton, forState: .Normal)
+            logout.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+            logout.frame = CGRectMake(-10, 20, 72, 44)
             logout.addTarget(self, action: "logoutButton:", forControlEvents: .TouchUpInside)
         navBar.addSubview(logout)
 
@@ -215,7 +216,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 var query = PFQuery(className: "Event")
                 //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
                 query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: 10.0)
-                query.limit = 5
+                query.limit = 10
 
                 var objects = query.findObjects()
                 for object in objects as! [PFObject] {
@@ -355,6 +356,10 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         var attendance = PFObject(className:"EventAttendance")
                         attendance["eventID"] = event.objectId
                         attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                        attendance["photosLikedID"] = []
+                        attendance["photosLiked"] = []
+                        attendance["photosUploadedID"] = []
+                        attendance["photosUploaded"] = []
                         attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
                         attendance.setObject(event, forKey: "event")
                         

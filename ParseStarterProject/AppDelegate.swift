@@ -47,6 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX",
             clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
         
+        Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
+        let mixpanel: Mixpanel = Mixpanel.sharedInstance()
+        mixpanel.track("App launched")
+        
         //
         // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
         // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
@@ -57,6 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //PFUser.enableAutomaticUser()
 
         let defaultACL = PFACL();
+        
+        
 
         // If you would like all objects to be private by default, remove this line.
         defaultACL.setPublicReadAccess(true)
@@ -224,6 +230,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    
+    
 
 
     ///////////////////////////////////////////////////////////
