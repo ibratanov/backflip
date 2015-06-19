@@ -126,37 +126,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     // Load information from parse db
                     var query = PFQuery(className: "Event")
                     query.limit = 10
-                    query.whereKey("objectId", equalTo: "Yd16h1FBB1")
+                    query.whereKey("objectId", equalTo: eventIIden!)
                     
         
                     var object = query.findObjects()?.first as! PFObject
                     
-                    var photos = object["photos"] as! PFRelation
-                    var tempImage: PFFile?
+                    self.checkinToEvent(object)
                     
-                    var photoList = photos.query()?.getObjectWithId(eventIIden as! String)
-                    print("\(eventIIden as! String)")
-                    
-                    tempImage = photoList!.objectForKey("image") as? PFFile
-                    
-                    tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
-                        
-                        if error == nil {
-                            
-                            self.inviteImage = UIImage(data: imageData!)!
-                            
-                        } else {
-                            
-                            println(error)
-                        }
-                    }
-                    var topView = UIApplication.sharedApplication().keyWindow?.rootViewController
-                    while (topView?.presentedViewController != nil){
-                        topView = topView!.presentedViewController
-                    }
-                    
-                    
-                    topView?.presentViewController(self.inviteViewController, animated: true, completion: nil)
+//                    var photos = object["photos"] as! PFRelation
+//                    var tempImage: PFFile?
+//                    
+//                    var photoList = photos.query()?.getObjectWithId(eventIIden as! String)
+//                    print("\(eventIIden as! String)")
+//                    
+//                    tempImage = photoList!.objectForKey("image") as? PFFile
+//                    
+//                    tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
+//                        
+//                        if error == nil {
+//                            
+//                            self.inviteImage = UIImage(data: imageData!)!
+//                            
+//                        } else {
+//                            
+//                            println(error)
+//                        }
+//                    }
+//                    var topView = UIApplication.sharedApplication().keyWindow?.rootViewController
+//                    while (topView?.presentedViewController != nil){
+//                        topView = topView!.presentedViewController
+//                    }
+//                    
+//                    
+//                    topView?.presentViewController(self.inviteViewController, animated: true, completion: nil)
                     
                 }
             }
@@ -164,6 +166,74 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         return true
+    }
+    
+    func checkinToEvent(event: PFObject) {
+        let query = PFUser.query()
+        
+        println(PFUser.currentUser()!.objectId!)
+        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+            
+            if error != nil {
+                println(error)
+            }
+            else
+            {
+            
+                // Subscribe user to the channel of the event for push notifications
+                let currentInstallation = PFInstallation.currentInstallation()
+                currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
+                currentInstallation.saveInBackground()
+                
+                // Store the relation
+                let relation = event.relationForKey("attendees")
+                relation.addObject(object!)
+                
+                //                    event.saveInBackgroundWithBlock {
+                //                        (success: Bool, error: NSError?) -> Void in
+                //                        if (success) {
+                //                            // The object has been saved.
+                //                            println("\n\nSuccess, event saved \(event.objectId)")
+                //                        } else {
+                //                            // There was a problem, check error.description
+                //                            println("\n\nFailed to save the event object \(error)")
+                //                        }
+                //                    }
+                event.save()
+                
+                // TODO: Check for existing event_list for eventName
+                var listEvents = object!.objectForKey("savedEventNames") as! [String]
+                if contains(listEvents, event["eventName"] as! String)
+                {
+                    print("Event already in list")
+                }
+                else
+                {
+                    // Add the event to the User object
+                    object?.addUniqueObject(event, forKey:"savedEvents")
+                    object?.addUniqueObject(event["eventName"] as! String, forKey:"savedEventNames")
+                    
+                    object!.saveInBackground()
+                    
+                    
+                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                    var attendance = PFObject(className:"EventAttendance")
+                    attendance["eventID"] = event.objectId
+                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                    attendance["photosLikedID"] = []
+                    attendance["photosLiked"] = []
+                    attendance["photosUploadedID"] = []
+                    attendance["photosUploaded"] = []
+                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                    attendance.setObject(event, forKey: "event")
+                    
+                    attendance.saveInBackground()
+                    
+                    println("Saved")
+                }
+            }
+        })
+
     }
     
     func setImageViewNotification(note: NSNotification){
