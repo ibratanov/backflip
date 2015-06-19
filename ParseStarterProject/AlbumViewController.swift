@@ -725,13 +725,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 picker.allowsEditing = false
                 
                 self.presentViewController(picker, animated:true, completion:{})
-                setLastPhoto()
-                updateThumbnail()
+              
 
                 newMedia = false
+                setLastPhoto()
+                updateThumbnail()
             }
         }
 
+        setLastPhoto()
+        updateThumbnail()
         
     }
     
@@ -816,7 +819,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             UIImagePickerControllerSourceType.SavedPhotosAlbum
         picker.delegate = self
         self.presentViewController(picker, animated: true, completion: nil)
+
     }
+
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
     {
@@ -837,6 +842,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             self.presentViewController(picker, animated:true, completion:{})
             self.flashButton.hidden = false
+            self.setLastPhoto()
+            self.updateThumbnail()
             
         }
         if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
@@ -853,9 +860,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
         //ensure image is cropped to a square
         //self.imageView.image = image
+        setLastPhoto()
+        updateThumbnail()
         
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
+       
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
