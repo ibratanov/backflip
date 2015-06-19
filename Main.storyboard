@@ -390,7 +390,6 @@
                                 <connections>
                                     <action selector="checkInClicked:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="7ou-ys-DfT"/>
                                     <action selector="createEvent:" destination="jaA-7R-ZG2" eventType="touchUpInside" id="kQv-f2-a3U"/>
-                                    <segue destination="9AY-mp-rfS" kind="show" identifier="toEventsPage" id="eA9-TU-XJn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OC9-P3-L1K">
@@ -523,6 +522,7 @@
                         <outlet property="addressText" destination="xdS-n7-HJr" id="glg-Ta-PfM"/>
                         <outlet property="eventName" destination="qLG-oc-9AL" id="0Nc-Ex-Le1"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="logoutCreatePublic" id="Akq-ph-AFX"/>
+                        <segue destination="9AY-mp-rfS" kind="show" identifier="eventsPage" id="bXg-ML-DEH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NBi-xB-G5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -868,10 +868,10 @@
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="g9n-sU-jyC"/>
-        <segue reference="62M-ib-0xv"/>
+        <segue reference="Akq-ph-AFX"/>
         <segue reference="ofY-SC-By2"/>
-        <segue reference="Ju0-Hh-YW7"/>
+        <segue reference="hKp-Y7-lrD"/>
+        <segue reference="bXg-ML-DEH"/>
         <segue reference="FSk-Fu-Rj2"/>
     </inferredMetricsTieBreakers>
 </document>
