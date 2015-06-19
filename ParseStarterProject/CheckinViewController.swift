@@ -13,6 +13,7 @@ import DigitsKit
 
 class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet var noEventLabel: UILabel!
     
     @IBAction func logoutButton(sender: AnyObject) {
         displayAlertLogout("Would you like to log out?", error: "")
@@ -134,6 +135,11 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
 
         
         self.calcNearByEvents()
+        
+        if self.cellContent.count == 0 {
+            self.pickerInfo.hidden = true
+            self.noEventLabel.text = "No Suggested Events. Please create a Public Event"
+        }
         // Gets location of the user
         /*
         locationManager.delegate = self
@@ -183,6 +189,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             }
             else {
                 print("Error with User Geopoint")
+                println(error)
             }
             
             self.pickerInfo.reloadAllComponents()

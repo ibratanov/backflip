@@ -296,6 +296,12 @@
                                     <action selector="pastEventsButton:" destination="eGV-gf-aJ6" eventType="touchUpInside" id="0Tq-1k-b0z"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KdT-lX-30F">
+                                <rect key="frame" x="25" y="179" width="271" height="144"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -336,6 +342,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="checkInButton" destination="Z95-Tc-ZXl" id="3dd-tl-qzj"/>
+                        <outlet property="noEventLabel" destination="KdT-lX-30F" id="S7Z-Ud-hdK"/>
                         <outlet property="pickerInfo" destination="7bk-ji-zDx" id="mqR-fI-uj0"/>
                         <segue destination="9AY-mp-rfS" kind="show" identifier="whereAreYouToEvents" id="Ju0-Hh-YW7"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="logoutCheckIn" id="g9n-sU-jyC"/>
@@ -861,10 +868,10 @@
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="j85-ZN-Egd"/>
         <segue reference="FSk-Fu-Rj2"/>
-        <segue reference="eA9-TU-XJn"/>
-        <segue reference="Fno-vP-GvK"/>
+        <segue reference="ofY-SC-By2"/>
         <segue reference="hKp-Y7-lrD"/>
+        <segue reference="g9n-sU-jyC"/>
+        <segue reference="Ju0-Hh-YW7"/>
     </inferredMetricsTieBreakers>
 </document>
