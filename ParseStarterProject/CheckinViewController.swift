@@ -60,7 +60,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print(self.cellContent[row])
         eventSelected = self.cellContent[row] as! String
-        
     }
     
     
@@ -136,10 +135,10 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         self.calcNearByEvents()
         
-        if self.cellContent.count == 0 {
-            self.pickerInfo.hidden = true
-            self.noEventLabel.text = "No Events Nearby"
-        }
+//        if self.cellContent.count == 0 {
+//            self.pickerInfo.hidden = true
+//            self.noEventLabel.text = "No Events Nearby"
+//        }
         // Gets location of the user
         /*
         locationManager.delegate = self
@@ -167,16 +166,14 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 self.userGeoPoint = geoPoint!
                 print("successfully retrieved User GeoPoint")
                 // Queries events table for locations that are close to user
-                // Return top 3 closest events
+                // Return top 5 closest events
                 var query = PFQuery(className: "Event")
                 //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
                 query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: 10.0)
                 query.limit = 5
-                let placesObjects = query.findObjects() as! [PFObject]
-                
-                print(placesObjects.count)
-                
-                for object in placesObjects {
+
+                var objects = query.findObjects()
+                for object in objects as! [PFObject] {
                     var eventName: AnyObject? = object.objectForKey("eventName")
                     
                     // hack, fix later
@@ -186,18 +183,37 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     
                 }
                 
+                if self.cellContent.count == 0 {
+                    self.pickerInfo.hidden = true
+                    self.noEventLabel.text = "No Events Nearby"
+                }
+                else {
+                    self.pickerInfo.reloadAllComponents()
+                }
+//                query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+//                    self.cellContent.removeAllObjects()
+//
+//                    print(objects!.count)
+//                    
+//                    for object in objects as! [PFObject] {
+//                        var eventName: AnyObject? = object.objectForKey("eventName")
+//                        
+//                        // hack, fix later
+//                        if self.cellContent.count < query.limit {
+//                            self.cellContent.addObject(eventName!)
+//                        }
+//                        
+//                    }
+//                    self.pickerInfo.reloadAllComponents()
+//
+//                })
+                
             }
             else {
                 print("Error with User Geopoint")
                 println(error)
             }
-            
-            self.pickerInfo.reloadAllComponents()
-
         }
-        
-        
-        
     }
 
     
@@ -205,10 +221,11 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         //self.pickerInfo.reloadAllComponents()
         //locationManager.stopUpdatingLocation()
         
-        //self.pickerInfo.reloadAllComponents()
+        
+
         
         if (self.cellContent.count > 0) {
-            self.eventSelected = self.cellContent[0] as! String//self.cellContent[(cellContent.count/2)] as! String
+            self.eventSelected = self.cellContent[0] as! String
         }
     }
 
@@ -220,11 +237,14 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     @IBOutlet weak var checkInButton: UIButton!
     
     @IBAction func checkInClicked(sender: AnyObject) {
+        if (self.eventSelected == "" && self.cellContent.count > 0) {
+            self.eventSelected = self.cellContent[0] as! String
+        }
         
         // Add user to this event
         var eventName = self.eventSelected
-        
-        println("\n\nchecking in to " + eventSelected)
+
+        println("\n\nchecking in to " + self.eventSelected)
         
         let query = PFUser.query()
         
@@ -237,68 +257,67 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             else
             {
                 
-                //Check if event already exists
+                //Check if event exists
                 let query = PFQuery(className: "Event")
                 query.whereKey("eventName", equalTo: self.eventSelected)
                 let scoreArray = query.findObjects()
-                var eventObject : PFObject = scoreArray?[0] as! PFObject
-                
-                //Subscribe user to the channel of the event for push notifications
-                let currentInstallation = PFInstallation.currentInstallation()
-                currentInstallation.addUniqueObject(eventObject.objectId! , forKey: "channels")
-                currentInstallation.saveInBackground()
-                
                 if scoreArray!.count == 0 {
+                    println(scoreArray)
+                    self.displayAlert("No Nearby Events", error: "Create a new event below.")
+
+                }
+                else {
+                    var event = scoreArray?[0] as! PFObject
+
+                    // Subscribe user to the channel of the event for push notifications
+                    let currentInstallation = PFInstallation.currentInstallation()
+                    currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
+                    currentInstallation.saveInBackground()
                     
-                    self.displayAlert("No Nearby Events", error: "Please create a new event")
-//                    let event = PFObject(className: "Event")
-//                    event["eventName"] = self.eventSelected
-//                    event["startTime"] = NSDate()
-//                    event["isLive"] = true
-//                    
-//                    let relation = event.relationForKey("observers")
-//                    relation.addObject(object!)
-//                
+                    // Store the relation
+                    let relation = event.relationForKey("attendees")
+                    relation.addObject(object!)
+                    
 //                    event.saveInBackgroundWithBlock {
 //                        (success: Bool, error: NSError?) -> Void in
 //                        if (success) {
 //                            // The object has been saved.
-//                            println("\n=================\nsuccess \(event.objectId)")
+//                            println("\n\nSuccess, event saved \(event.objectId)")
 //                        } else {
 //                            // There was a problem, check error.description
-//                            println("\n=================\nfail")
+//                            println("\n\nFailed to save the event object \(error)")
 //                        }
 //                    }
-                }
-                else {
+                    event.save()
                     
-                }
-                    
-                // TODO: Check for existing event_list for eventName
-                var listEvents = object!.objectForKey("savedEvents") as! [String]
-                if contains(listEvents, self.eventSelected)
-                {
-                    print("Event already in list")
-                }
-                else
-                {
-                    object?.addUniqueObject(self.eventSelected, forKey:"savedEvents")
-                
-                    //let eventList = object?.objectForKey("savedEvents") as! [String]
-                
-                    object!.saveInBackground()
-                    
-                    
-                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                    var attendance = PFObject(className:"EventAttendance")
-//                        attendance["eventID"] = event.objectId
-                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-//                        attendance.setObject(event, forKey: "event")
-                    
-                    attendance.saveInBackground()
-                    
-                    println("Saved")
+                    // TODO: Check for existing event_list for eventName
+                    var listEvents = object!.objectForKey("savedEventNames") as! [String]
+                    if contains(listEvents, self.eventSelected)
+                    {
+                        print("Event already in list")
+                        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                    }
+                    else
+                    {
+                        // Add the event to the User object
+                        object?.addUniqueObject(event, forKey:"savedEvents")
+                        object?.addUniqueObject(self.eventSelected, forKey:"savedEventNames")
+                        
+                        object!.saveInBackground()
+                        
+                        
+                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                        var attendance = PFObject(className:"EventAttendance")
+                        attendance["eventID"] = event.objectId
+                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                        attendance.setObject(event, forKey: "event")
+                        
+                        attendance.saveInBackground()
+                        
+                        println("Saved")
+                        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                    }
                 }
             }
         })

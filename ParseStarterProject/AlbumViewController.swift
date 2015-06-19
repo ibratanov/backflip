@@ -181,7 +181,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         super.viewDidLoad()
         
         //--------------- LIKE/TIME/MY PHOTOS ---------------
-
+        println("//--------------- LIKE/TIME/MY PHOTOS ---------------")
+        println(eventId)
+        println(eventTitle)
+        
         // Initialize segmented control button
         let items = ["LIKES", "TIME", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
@@ -328,26 +331,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
             if error == nil {
                 
-                //TODO: determine how this can be set automatically
-                let endTime = objects?.objectForKey("endTime") as! NSDate
-                
-                //date is the end time of event plus 48hours
-                let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
-                
-                // Event is still active (currentTime < expiry time)
-                if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
+                if let endTime: AnyObject = objects?.objectForKey("endTime") {
+                    //endDate has been set and is valide
+                    
+                    //TODO: determine how this can be set automatically
+                    let endTime = objects?.objectForKey("endTime") as! NSDate
+                    
+                    //date is the end time of event plus 48hours
+                    let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
+                    
+                    // Event is still active (currentTime < expiry time)
+                    if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
 
-                //self.displayAlert("Heads Up!", error: "Active")
+                    //self.displayAlert("Heads Up!", error: "Active")
 
+                        
+                    // Event is no longer active (currentTime > expiry time)
+                    } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
+                        
+                        //self.displayAlert("Heads Up!", error: "Inactive")
+                        
+                        // Delete if the event is no longer active
+                        //objects?.deleteInBackground()
+                    }
                     
-                // Event is no longer active (currentTime > expiry time)
-                } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
-                    
-                    //self.displayAlert("Heads Up!", error: "Inactive")
-                    
-                    // Delete if the event is no longer active
-                    //objects?.deleteInBackground()
-                    
+                } else {
+                    //endDate has not been set or was invalid
                 }
 
                 
@@ -405,10 +414,37 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.datesTime.removeAll(keepCapacity: true)
         
         self.images.removeAll(keepCapacity: true)
-
         
         
-        // Load information from parse db
+        
+        
+        var query = PFQuery(className: "EventAttendance")
+        query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+        query.whereKey("eventID", equalTo: eventId!)
+        
+        var queryResult = query.findObjects()!
+        
+        //TODO: Check if this is an actual issue when events & users are properly linked up
+        if (queryResult.count != 0) {
+            var eventAttendance = queryResult.first as! PFObject
+            
+            var pList = eventAttendance["photosLiked"] as! [PFFile]
+            println(pList)
+            var id = eventAttendance["photosLikedID"] as! [String]
+            
+            for photos in pList {
+                
+                self.myPhotos.append(photos)
+                
+            }
+            
+            for ids in id {
+                
+                self.myObjectId.append(ids)
+            }
+        }
+        
+        /*// Load information from parse db
         var getUploadedImages = PFQuery(className: "Event")
         getUploadedImages.limit = 1000
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
@@ -444,7 +480,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
 
         dump(myPhotos)
-        dump(myObjectId)
+        dump(myObjectId)*/
         
     }
     
@@ -666,7 +702,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             picker.allowsEditing = false
             self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
             self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-            
             // resize
             if (zoomImage.camera) {
                 var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
@@ -688,6 +723,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             self.presentViewController(picker, animated:true, completion:{})
             setLastPhoto()
+            updateThumbnail()
+
             newMedia = true
         } else {
             if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
@@ -699,10 +736,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
                 self.presentViewController(picker, animated:true, completion:{})
                 setLastPhoto()
+                updateThumbnail()
+
                 newMedia = false
             }
         }
-        
+
         
     }
     
@@ -919,7 +958,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 self.zoomImage.camera = false
             
             
-            self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
+            UIView.transitionWithView(self.picker.view, duration: 1.0, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionCurlDown , animations: { () -> Void in
+                self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
+                }, completion: nil)
+            //self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
 
             self.flashButton.hidden = false
         }else{
@@ -936,7 +978,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
             //----------------------------------------------------------------------------
 
-            self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
+            UIView.transitionWithView(self.picker.view, duration: 1.0, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionCurlDown , animations: { () -> Void in
+                self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
+                }, completion: nil)
+            //self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
 
             self.flashButton.hidden = true
         }
@@ -944,6 +989,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     @IBAction func showCameraRoll(sender: UIButton) {
         picker.dismissViewControllerAnimated(true, completion: nil)
+        
         var controller = UIImagePickerController()
         controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
         controller.mediaTypes = [kUTTypeImage]
@@ -969,6 +1015,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
             //self.flashButton.setImage(flashOff, forState: .Normal)
+
             var alert:UIAlertView = UIAlertView()
             alert.title = "Flash off!"
             alert.message = " "

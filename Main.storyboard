@@ -868,10 +868,10 @@
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FSk-Fu-Rj2"/>
-        <segue reference="ofY-SC-By2"/>
-        <segue reference="hKp-Y7-lrD"/>
         <segue reference="g9n-sU-jyC"/>
+        <segue reference="62M-ib-0xv"/>
+        <segue reference="ofY-SC-By2"/>
         <segue reference="Ju0-Hh-YW7"/>
+        <segue reference="FSk-Fu-Rj2"/>
     </inferredMetricsTieBreakers>
 </document>
