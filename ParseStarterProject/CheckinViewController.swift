@@ -251,16 +251,17 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     let relation = event.relationForKey("attendees")
                     relation.addObject(object!)
                     
-                    event.saveInBackgroundWithBlock {
-                        (success: Bool, error: NSError?) -> Void in
-                        if (success) {
-                            // The object has been saved.
-                            println("\n\nSuccess, event saved \(event.objectId)")
-                        } else {
-                            // There was a problem, check error.description
-                            println("\n\nFailed to save the event object \(error)")
-                        }
-                    }
+//                    event.saveInBackgroundWithBlock {
+//                        (success: Bool, error: NSError?) -> Void in
+//                        if (success) {
+//                            // The object has been saved.
+//                            println("\n\nSuccess, event saved \(event.objectId)")
+//                        } else {
+//                            // There was a problem, check error.description
+//                            println("\n\nFailed to save the event object \(error)")
+//                        }
+//                    }
+                    event.save()
                     
                     // TODO: Check for existing event_list for eventName
                     var listEvents = object!.objectForKey("savedEventNames") as! [String]
@@ -270,6 +271,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     }
                     else
                     {
+                        // Add the event to the User object
                         object?.addUniqueObject(event, forKey:"savedEvents")
                         object?.addUniqueObject(self.eventSelected, forKey:"savedEventNames")
                         
