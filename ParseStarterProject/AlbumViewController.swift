@@ -82,7 +82,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var sortedByLikes = true
     var myPhotoSelected = false
     var fullScreen = false
-    var posted = true
+    var posted = false
     
     // Display alert function for when an album timer is going to run out
     func displayAlert(title:String,error: String) {
@@ -133,9 +133,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     override func viewDidAppear(animated: Bool) {
-        
-
-        if fullScreen == false && posted == true{
+    // fullscreen is false, posted is true
+    println(fullScreen)
+    println(posted)
+        if fullScreen == false || posted == true {
             
             if myPhotoSelected == false {
                 
@@ -149,6 +150,26 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         }
 
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        // fullscreen is false, posted is true
+        println(fullScreen)
+        println(posted)
+        if fullScreen == false || posted == true {
+            
+            if myPhotoSelected == false {
+                
+                updatePhotos()
+                self.collectionView?.reloadData()
+                
+            } else {
+                
+                displayMyPhotos()
+                self.collectionView?.reloadData()
+            }
+        }
+        
     }
     
     func seg() {
@@ -722,6 +743,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     //initialize camera
     func takePhoto(sender: UIButton) {
         fullScreen = false
+        posted = true
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             println("Button capture")
 

@@ -282,6 +282,10 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         var attendance = PFObject(className:"EventAttendance")
                         attendance["eventID"] = event.objectId
                         attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                        attendance["photosLikedID"] = []
+                        attendance["photosLiked"] = []
+                        attendance["photosUploadedID"] = []
+                        attendance["photosUploaded"] = []
                         attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
                         attendance.setObject(event, forKey: "event")
                         
