@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -861,10 +861,10 @@
         <image name="time-icon" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="VCX-vA-6qG"/>
         <segue reference="j85-ZN-Egd"/>
         <segue reference="FSk-Fu-Rj2"/>
-        <segue reference="eA9-TU-XJn"/>
+        <segue reference="62M-ib-0xv"/>
         <segue reference="Fno-vP-GvK"/>
-        <segue reference="hKp-Y7-lrD"/>
     </inferredMetricsTieBreakers>
 </document>
