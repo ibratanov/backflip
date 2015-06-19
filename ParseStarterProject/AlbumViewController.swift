@@ -323,6 +323,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let components2 = NSDateComponents()
         components2.hour = 24
         var eventQuery = PFQuery(className: "Event")
+        println(self.eventId)
+        
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
             if error == nil {
                 
@@ -697,7 +699,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             picker.allowsEditing = false
             self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
             self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-            
             // resize
             if (zoomImage.camera) {
                 var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
@@ -719,6 +720,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             self.presentViewController(picker, animated:true, completion:{})
             setLastPhoto()
+            updateThumbnail()
+
             newMedia = true
         } else {
             if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
@@ -730,10 +733,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
                 self.presentViewController(picker, animated:true, completion:{})
                 setLastPhoto()
+                updateThumbnail()
+
                 newMedia = false
             }
         }
-        
+
         
     }
     
@@ -950,7 +955,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 self.zoomImage.camera = false
             
             
-            self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
+            UIView.transitionWithView(self.picker.view, duration: 1.0, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionCurlDown , animations: { () -> Void in
+                self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
+                }, completion: nil)
+            //self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
 
             self.flashButton.hidden = false
         }else{
@@ -967,7 +975,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
             //----------------------------------------------------------------------------
 
-            self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
+            UIView.transitionWithView(self.picker.view, duration: 1.0, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionCurlDown , animations: { () -> Void in
+                self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
+                }, completion: nil)
+            //self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
 
             self.flashButton.hidden = true
         }
@@ -975,6 +986,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     @IBAction func showCameraRoll(sender: UIButton) {
         picker.dismissViewControllerAnimated(true, completion: nil)
+        
         var controller = UIImagePickerController()
         controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
         controller.mediaTypes = [kUTTypeImage]
@@ -1000,6 +1012,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
             //self.flashButton.setImage(flashOff, forState: .Normal)
+
             var alert:UIAlertView = UIAlertView()
             alert.title = "Flash off!"
             alert.message = " "
