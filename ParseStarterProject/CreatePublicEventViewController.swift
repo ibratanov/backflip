@@ -16,7 +16,7 @@ class CreatePublicEventViewController: UIViewController {
     
     
     @IBAction func settingButton(sender: AnyObject) {
-        displayAlert("Would you like to log out?", error: "")
+        displayAlertLogout("Would you like to log out?", error: "")
     }
     
     var logoutButton = UIImage(named: "settings-icon") as UIImage!
@@ -40,7 +40,7 @@ class CreatePublicEventViewController: UIViewController {
     
     @IBOutlet var addressField: UILabel!
     
-    /*
+    
     func displayAlert(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
@@ -48,13 +48,11 @@ class CreatePublicEventViewController: UIViewController {
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-*/
     
-    func displayAlert(title:String,error: String) {
+    func displayAlertLogout(title:String,error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
-        // Facebook share feature
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
             PFUser.logOut()
             Digits.sharedInstance().logOut()
@@ -213,6 +211,11 @@ class CreatePublicEventViewController: UIViewController {
 //        }
     }
 */
+    func checkMaxLength(textField: UITextField!, maxLength: Int) {
+        if (count(textField.text!) > maxLength) {
+            textField.deleteBackward()
+        }
+    }
 
     // Add event to event class
     @IBAction func createEvent(sender: AnyObject) {
@@ -227,8 +230,14 @@ class CreatePublicEventViewController: UIViewController {
         // Template for address
         //var address = " 62 Shadyglen dr,Toronto, Canada"
         
-        var eventName = self.eventName.text
+        //Limit number of characters in event name
+        var myStr = self.eventName.text as NSString
+        if (count(self.eventName.text) > 25){
+            myStr = myStr.substringToIndex(25)
+        }
         
+        var eventName = myStr as String
+
         if (eventName == "" || address == "") {
             error = "Please enter an event name and location."
         } else if (count(eventName) < 2) {
@@ -239,71 +248,122 @@ class CreatePublicEventViewController: UIViewController {
             displayAlert("Event creation error:", error: error)
         } else {
             
-            print("Get's")
-            var event = PFObject(className: "Event")
-            print(address)
-            
-            var result = getUserLocationFromAddress()
-            /*
-            var geocoder = CLGeocoder()
-            geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-                print(placemarks?[0])
+            let query = PFUser.query()
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+
+            //TODO: remove?
+            var result = self.getUserLocationFromAddress()
+
                 
-                if let placemark = placemarks?[0] as? CLPlacemark {
-                    var location = placemark.location as CLLocation
-                    var eventLatitude = location.coordinate.latitude
-                    var eventLongitude = location.coordinate.longitude
-                    
-                    let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
-                    
-                    //event["geoLocation"] = userGeoPoint
-                    self.userGeoPoint = userGeoPoint
+                if error != nil {
+                    println(error)
                 }
-            })
-*/
-            
-            
-
-            event["geoLocation"] = userGeoPoint
-            //Check if event already exists
-            let query = PFQuery(className: "Event")
-            query.whereKey("eventName", equalTo: eventName)
-            let scoreArray = query.findObjects()
-            //var eventObject = scoreArray?[0] as! PFObject
-
-            
-            if scoreArray!.count == 0 {
-                event["eventName"] = eventName
-                event["venue"] = address
-                event["startTime"] = NSDate()
-                event["isLive"] = true
-
-                event.saveInBackgroundWithBlock {
-                    (success: Bool, error: NSError?) -> Void in
-                    if (success) {
-                        // The object has been saved.
-                        println("success \(event.objectId)")
+                else
+                {
+                    
+                    var event = PFObject(className: "Event")
+                    
+                    var geocoder = CLGeocoder()
+                    geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+                        print(placemarks?[0])
                         
-                        // Subscribe current device to event channel for push notifications
-                        let currentInstallation = PFInstallation.currentInstallation()
-                        currentInstallation.addUniqueObject(event.objectId!, forKey: "channels")
-                        currentInstallation.saveInBackground()
+                        if let placemark = placemarks?[0] as? CLPlacemark {
+                            var location = placemark.location as CLLocation
+                            var eventLatitude = location.coordinate.latitude
+                            var eventLongitude = location.coordinate.longitude
+                            
+                            let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
+                            
+                            //event["geoLocation"] = userGeoPoint
+                            self.userGeoPoint = userGeoPoint
+                        }
+                    })
+                    
+                    print("====================")
+                    print(self.userGeoPoint)
+                    event["geoLocation"] = self.userGeoPoint
+                    
+                    //Check if event already exists
+                    let query = PFQuery(className: "Event")
+                    query.whereKey("eventName", equalTo: eventName)
+                    let scoreArray = query.findObjects()
+                    
+                    if scoreArray!.count == 0 {
+                        event["eventName"] = eventName
+                        event["venue"] = address
+                        event["startTime"] = NSDate()
+                        event["isLive"] = true
+                        var eventACL = PFACL(user: PFUser.currentUser()!)
+                        eventACL.setPublicWriteAccess(true)
+                        eventACL.setPublicReadAccess(true)
+                        event.ACL = eventACL
                         
+                        // Store the relation
+                        let relation = event.relationForKey("attendees")
+                        relation.addObject(PFUser.currentUser()!)
+                        
+//                        event.saveInBackgroundWithBlock {
+//                            (success: Bool, error: NSError?) -> Void in
+//                            if (success) {
+//                                // The object has been saved.
+//                                //println("**************************success \(event.objectId)")
+//                                
+//                                // Subscribe current device to event channel for push notifications
+//                                //let currentInstallation = PFInstallation.currentInstallation()
+//                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
+//                                //currentInstallation.saveInBackground()
+//                            } else {
+//                                // There was a problem, check error.description
+//                                println("fail")
+//                            }
+//                        }
+                        
+                        event.save()
+                        
+                        object?.addUniqueObject(event, forKey:"savedEvents")
+                        object?.addUniqueObject(eventName, forKey:"savedEventNames")
+                        
+                        object!.saveInBackground()
+                        
+                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                        var attendance = PFObject(className:"EventAttendance")
+                        attendance["eventID"] = event.objectId
+                        //let temp = PFUser.currentUser()?.objectId// as String
+                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                        attendance.setObject(event, forKey: "event")
+                        attendance["photosLikedID"] = []
+                        attendance["photosLiked"] = []
+                        attendance["photosUploadedID"] = []
+                        attendance["photosUploaded"] = []
+
+                        
+//                        attendance.saveInBackgroundWithBlock{ (success, error) -> Void in
+//                            if (success) {
+//                                // The object has been saved.
+//                                println("suxess")//success \(event.objectId)")
+//                                
+//                                // Subscribe current device to event channel for push notifications
+//                                //let currentInstallation = PFInstallation.currentInstallation()
+//                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
+//                                //currentInstallation.saveInBackground()
+//                            } else {
+//                                // There was a problem, check error.description
+//                                println("fail")
+//                                println(error)
+//                            }
+//
+//                        }
+                        
+                        attendance.save()
+                        
+                        println("Saved")
                         
                     } else {
-                        // There was a problem, check error.description
-                        println("fail")
+                        self.displayAlert("This event already exists", error: "Join an existing event below")
                     }
                 }
-                
-                // Store the relation
-                //let relation = event.relationForKey("observers")
-                //relation.addObject(object!)
-                
-            } else {
-                println("event exists")
-            }
-            
+            })
         }
     }
     
@@ -341,9 +401,9 @@ class CreatePublicEventViewController: UIViewController {
         let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-        // Removes faint line under nav bar
-        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        navBar.shadowImage = UIImage()
+//        // Removes faint line under nav bar
+//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        navBar.shadowImage = UIImage()
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
@@ -353,8 +413,9 @@ class CreatePublicEventViewController: UIViewController {
         
         // Left nav bar button item
         let logout = UIButton.buttonWithType(.System) as! UIButton
-        logout.setBackgroundImage(logoutButton, forState: .Normal)
-        logout.frame = CGRectMake(15, 31, 22, 22)
+        logout.setImage(logoutButton, forState: .Normal)
+        logout.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        logout.frame = CGRectMake(-10, 20, 72, 44)
         logout.addTarget(self, action: "settingButton:", forControlEvents: .TouchUpInside)
         navBar.addSubview(logout)
         

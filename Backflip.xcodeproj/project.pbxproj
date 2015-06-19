@@ -368,7 +368,7 @@
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 2VFN7Z827A;
+						DevelopmentTeam = 59T8YRE4TR;
 					};
 				};
 			};
@@ -641,7 +641,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = Backflip;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e7be3853-0318-40de-a3b2-3136a7b8fdbd";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Debug;
@@ -684,7 +684,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = Backflip;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e7be3853-0318-40de-a3b2-3136a7b8fdbd";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Release;
