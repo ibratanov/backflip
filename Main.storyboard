@@ -832,10 +832,10 @@
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gz0-ak-oAk"/>
+        <segue reference="FSk-Fu-Rj2"/>
         <segue reference="bXg-ML-DEH"/>
         <segue reference="Fno-vP-GvK"/>
         <segue reference="hKp-Y7-lrD"/>
-        <segue reference="FSk-Fu-Rj2"/>
+        <segue reference="gz0-ak-oAk"/>
     </inferredMetricsTieBreakers>
 </document>

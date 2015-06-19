@@ -388,7 +388,7 @@ class CreatePublicEventViewController: UIViewController {
     }
     
     @IBAction func pastEventsButton(sender: AnyObject) {
-        self.performSegueWithIdentifier("toEventsPage", sender: self)
+        self.performSegueWithIdentifier("eventsPage", sender: self)
     }
     
     override func viewDidLoad() {
