@@ -181,7 +181,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         super.viewDidLoad()
         
         //--------------- LIKE/TIME/MY PHOTOS ---------------
-
+        println("//--------------- LIKE/TIME/MY PHOTOS ---------------")
+        println(eventId)
+        println(eventTitle)
+        
         // Initialize segmented control button
         let items = ["LIKES", "TIME", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
