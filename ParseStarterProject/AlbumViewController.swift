@@ -403,10 +403,38 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.datesTime.removeAll(keepCapacity: true)
         
         self.images.removeAll(keepCapacity: true)
+        
+        
+        
+        
+        var query = PFQuery(className: "EventAttendance")
+        query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+        query.whereKey("eventID", equalTo: eventId!)
+        
+        var photoObjects = query.findObjects()?.first as! PFObject
+        
+        var pList = photoObjects["photosLiked"] as! [PFFile]
+        var id = photoObjects["photosLikedID"] as! [String]
+        
+        for photos in pList {
+            
+            self.myPhotos.append(photos)
+            
+            
+        }
+        
+        for ids in id {
+            
+            
+            self.myObjectId.append(ids)
+        }
+        
+        
+        
 
         
         
-        // Load information from parse db
+        /*// Load information from parse db
         var getUploadedImages = PFQuery(className: "Event")
         getUploadedImages.limit = 1000
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
@@ -442,7 +470,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
 
         dump(myPhotos)
-        dump(myObjectId)
+        dump(myObjectId)*/
         
     }
     

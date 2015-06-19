@@ -74,124 +74,138 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     }
 
     
-    // both users and images have associated arrays with list of images liked for users, list of users who liked image, for images
+    // Like button fills 4 arays in database with IDs and thumbnails. Four arrays are in Event Attendance class
     @IBAction func likeButton(sender: AnyObject) {
         
         if likeActive == false {
             
-            // add username to photos list of users who liked
-            var query1 = PFQuery(className: "Photo")
             
-            query1.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
-
-                if error == nil {
+            //----------- Query for Adjusting DB in the case of liking a photo ----------
+            var likeQuery = PFQuery(className: "Event")
+            
+            likeQuery.whereKey("objectId", equalTo: eventId!)
+            
+            var likeEvents = likeQuery.findObjects()?.first as! PFObject
+            var likeRelation = likeEvents["photos"] as! PFRelation
+            
+            // User like list that will be filled
+            var likeList : [String]
+            var upVote : Int
+            var thumbnail : PFFile
+            
+            // Finds associated photo object in relation
+            var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
+            
+            // Add user to like list, add 1 to the upvote count
+            retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
+            retrieveLikes?.incrementKey("upvoteCount", byAmount: 1)
+            
+            // Grab specific element fromobject
+            likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
+            thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
+            
+            let counter = likeList.count
+            if counter == 1 {
+                
+                self.likeCount.text = String(counter) + " likes"
+                
+            } else {
+                
+                self.likeCount.text = String(counter) + " likes"
+            }
                     
-                    objects?.addUniqueObject(PFUser.currentUser()!.username!, forKey:"usersLiked")
-
-                    let array = objects?.objectForKey("usersLiked") as! [String]
-                    
-                    objects?.incrementKey("upvoteCount", byAmount: 1)
-                    
-                    //TODO: is this more efficient or is it more efficient to get the upvoteCount value? Same below in "unlike"
-                    let count = array.count
-                    if (count == 1) {
-                        self.likeCount.text = String(count) + " like"
-                    } else {
-                        self.likeCount.text = String(count) + " likes"
-                    }
-                    
-                    // Add both photo object and id to arrays in user class
-                    var query2 = PFUser.query()
-                    
-                    query2?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (object, error) -> Void in
+            // Add both photo object (thumbnail) and id to arrays in user class
+            var query2 = PFQuery(className: "EventAttendance")
+            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+            query2.whereKey("eventID", equalTo: eventId!)
+            
+            query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
                         
-                        if error == nil {
+                if error == nil {
+
+                    object?.addObject(thumbnail, forKey: "photosLiked")
                             
-                            //print(image)
-                            println(objects)
-                            object?.addObject(objects!, forKey: "photoObjects")
+                    object?.addUniqueObject(self.objectIdTemp, forKey:"photosLikedID")
                             
-                            println("test2")
-                            
-                            object?.addUniqueObject(self.objectIdTemp, forKey:"photosLiked")
-                            
-                            object!.saveInBackground()
+                    object!.saveInBackground()
                             
                             
-                        } else {
-                            
-                            println("Error: \(error!) \(error!.userInfo!)")
-                        }
-                    }
-                    
-                    objects!.saveInBackground()
-                    
                 } else {
-                    
+                            
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
+                    
+            retrieveLikes!.saveInBackground()
             
         } else {
             
-            // remove user ID from list of users who liked photo
-            var query3 = PFQuery(className: "Photo")
+            //----------- Query for Adjusting DB in the case of an unlike----------
+            var likeQuery = PFQuery(className: "Event")
+            likeQuery.whereKey("objectId", equalTo: eventId!)
             
-            query3.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
+            var likeEvents = likeQuery.findObjects()?.first as! PFObject
+            var likeRelation = likeEvents["photos"] as! PFRelation
+            
+            // User like list that will be filled
+            var likeList : [String]
+            var upVote : Int
+            var thumbnail : PFFile
+            
+            // Finds associated photo object in relation
+            var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
+            
+            // Add user to like list, add 1 to the upvote count
+            retrieveLikes?.removeObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
+            retrieveLikes?.incrementKey("upvoteCount", byAmount: -1)
+
+            
+            // Grab specific element from object.
+            likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
+            thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
+            
+            //Set appropriate labal on the view
+            let counter = likeList.count
+            if counter == 1 {
+                
+                self.likeCount.text = String(counter) + " likes"
+                
+            } else {
+                
+                self.likeCount.text = String(counter) + " likes"
+            }
+            
+            // Add both photo object and id to arrays in user class
+            var query2 = PFQuery(className: "EventAttendance")
+            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+            query2.whereKey("eventID", equalTo: eventId!)
+            
+            query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
                 
                 if error == nil {
                     
-                    objects?.removeObject(PFUser.currentUser()!.username!, forKey:"usersLiked")
+                    object?.removeObject(thumbnail, forKey: "photosLiked")
+                    
+                    object?.removeObject(self.objectIdTemp, forKey:"photosLikedID")
+                    
+                    object!.saveInBackground()
                     
                     
-                    let array = objects?.objectForKey("usersLiked") as! [String]
-                    
-                    objects?.incrementKey("upvoteCount", byAmount: -1)
-                    
-                    let count = array.count
-                    if (count == 1) {
-                        self.likeCount.text = String(count) + " like"
-                    } else {
-                        self.likeCount.text = String(count) + " likes"
-                    }
-                    
-                    // Remove photo ID to user photo liked list and photo object from photo object array
-                    var query4 = PFUser.query()
-                    
-                    query4?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (object, error) -> Void in
-                        
-                        if error == nil {
-                            
-                            object?.removeObject(objects!, forKey: "photoObjects")
-                            
-                            object?.removeObject(self.objectIdTemp, forKey:"photosLiked")
-                            
-                            object!.saveInBackground()
-                            
-                        } else {
-                            
-                            println("Error: \(error!) \(error!.userInfo!)")
-                            
-                        }
-                    }
- 
-                    objects!.saveInBackground()
-
                 } else {
                     
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
+            
+            retrieveLikes!.saveInBackground()
+
         }
-        
     }
 
  
     // Alerts for sharing to Facebook and Twitter
     func displayAlert(title:String,error: String) {
-        
-   
-    
+
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
             
         // Facebook share feature
@@ -249,8 +263,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         self.dismissViewControllerAnimated(false, completion: nil)
                         self.displaySuccess("Posted!", error: "Successfully posted to Twitter")
-                        
-
     
                     }
                 }
@@ -312,12 +324,14 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     }
     
-    
+    // Alert pop up with Twitter, Facebook and SMS options
     @IBAction func share(sender: AnyObject) {
         
          displayAlert("Share", error: "How do you want to share this photo?")
     }
     
+    
+    // Alert for successful posting to Twitter or Facebook
     func displaySuccess(title: String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
@@ -327,8 +341,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.presentViewController(alert, animated: true, completion: nil)
     }
   
-    
-    
+    // Download to camera roll button
     @IBAction func downloadImage(sender: AnyObject) {
         
         
@@ -346,7 +359,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     }
     
     
-    
+    // Alert displayed when an image is successfully saved to camera roll
     func saveImageAlert (title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
@@ -357,15 +370,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
     }
     
-    
+    // Back button to album view
     func seg() {
         
         self.navigationController?.popViewControllerAnimated(true)
         
     }
 
-
-    
     override func viewDidLoad() {
        
         super.viewDidLoad()
@@ -387,7 +398,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let navBarItem = UINavigationItem()
         navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-//        navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
+        //navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
         navBar.items = [navBarItem]
         
         // Left nav bar button item
@@ -410,38 +421,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         self.view.addSubview(navBar)
 
-
-        /*var photoQuery = PFQuery(className: "Photo")
-        
-        photoQuery.getObjectInBackgroundWithId(objectIdTemp) { (objects, error) -> Void in
-            
-            if error == nil {
-                
-                var tempImage = objects?.objectForKey("image") as! PFFile
-                var tempDate = objects?.createdAt! as NSDate!
-
-                // check for date from previous VC, format and display the date
-                if tempDate != nil {
-                    
-                    //formatting to display date how we want it
-                    let formatter = NSDateFormatter()
-                    
-                    formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-                    
-                    formatter.timeStyle = .ShortStyle
-                    
-                    let dateStamp = formatter.stringFromDate(tempDate)
-                    
-                    self.eventInfo.text = "Photo taken on \(dateStamp)"
-                    
-                } else {
-                    
-                    println("no date")
-                    
-                }*/
-        
-        
-        // Load information from parse db
+        //----------- Query for image display----------
         var getUploadedImages = PFQuery(className: "Event")
         getUploadedImages.limit = 1000
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
@@ -451,7 +431,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         var photos = object["photos"] as! PFRelation
         var tempImage: PFFile?
-        
+        // Finds associated photo object in relation
         var photoList = photos.query()?.getObjectWithId(objectIdTemp)
         
         
@@ -470,52 +450,69 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     }
             }
         
-        // block to check if user has already liked photo, and set button label accordingly
-        var query5 = PFUser.query()
+        //----------- Query for Like Image label----------
+        var query5 = PFQuery(className: "Event")
         
-        query5?.whereKey("photosLiked", equalTo: objectIdTemp)
+        query5.whereKey("objectId", equalTo: eventId!)
         
-        query5?.getObjectInBackgroundWithId (PFUser.currentUser()!.objectId!) { (objects, error) -> Void in
+        var eventObject = query5.findObjects()?.first as! PFObject
+        var relation = eventObject["photos"] as! PFRelation
+        
+        // User like list that will be filled
+        var likeList : [String]
+        
+        // Finds associated photo object in relation
+        var likeRetrieve = relation.query()?.getObjectWithId(objectIdTemp)
+        
+        // Fill the like list with the user liked list array from photo relation
+        likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
+        
+        // Iterate through the like list to check if user has liked it
+        for users in likeList {
             
-            if error == nil {
+            if users == PFUser.currentUser()?.username {
                 
-                let array = objects?.objectForKey("photosLiked") as! [String]
-                
-                if contains(array, self.objectIdTemp) == true {
-                    
-                    self.likeActive = true
-                    self.likeButtonLabel.setImage(self.liked, forState: .Normal)
-                    
-                } else {
-                    self.likeActive = false
-                    self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
-                    
-                }
-            }
-        }
-        
-        
-        // block to display current like count based on array size when view is loaded
-        
-        var query6 = PFQuery(className: "Photo")
-        
-        query6.getObjectInBackgroundWithId (objectIdTemp) { (objects, error) -> Void in
-            
-            if error == nil {
-                
-                let array = objects?.objectForKey("usersLiked") as! [String]
-                let count = array.count
-                if (count == 1) {
-                    self.likeCount.text = String(count) + " like"
-                } else {
-                    self.likeCount.text = String(count) + " likes"
-                }
+                self.likeActive = true
+                self.likeButtonLabel.setImage(self.liked, forState: .Normal)
                 
             } else {
                 
-                println("Error: \(error!) \(error!.userInfo!)")
+                self.likeActive = false
+                self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
+                
             }
+            
+            
         }
+        
+        //----------- Query for Like Count Label----------
+        var query6 = PFQuery(className: "Event")
+        
+        query6.whereKey("objectId", equalTo: eventId!)
+        
+        var events = query5.findObjects()?.first as! PFObject
+        var relations = eventObject["photos"] as! PFRelation
+        
+        // User like list that will be filled
+        var likeUserList : [String]
+        
+        // Finds associated photo object in relation
+        var likesRetrieved = relation.query()?.getObjectWithId(objectIdTemp)
+        
+        // Fill the like list with the user liked list array from photo relation
+        likeUserList = (likesRetrieved!.objectForKey("usersLiked") as? [String])!
+        
+        let count = likeUserList.count
+        
+        if (count == 1) {
+            
+            self.likeCount.text = String(count) + " like"
+            
+        } else {
+            
+            self.likeCount.text = String(count) + " likes"
+        }
+        
         
         // gesture implementation
         var gesture = UITapGestureRecognizer(target: self, action: "handleTap:")
@@ -525,45 +522,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         fullScreenImage.addGestureRecognizer(gesture)
         
         self.view.bringSubviewToFront(likeCount)
+
+
+        
+
     }
-    
-    /*@IBAction func shareButtonBeta(sender:UIButton){
-        var params = [ "referringUsername": "User1",
-            "referringUserId": "12345",  "pictureId": "987666",
-        "pictureURL": "http://yoursite.com/pics/987666",
-        "pictureCaption": "BOOM" ]
-        
-        // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
-        
-        self.spinner.startAnimating()
-        //disable button
-        
-        
-        Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
-            if (error == nil) {
-                if MFMessageComposeViewController.canSendText() {
-                    
-                    let messageComposer = MFMessageComposeViewController()
-                    
-                    messageComposer.body = String(format: "Check this out: %@", url)
-                    
-                    messageComposer.messageComposeDelegate = self
-                    
-                    self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
-                        // stop spinner on main thread
-                        self.spinner.stopAnimating()
-                    })
-                } else {
-                    
-                    self.spinner.stopAnimating()
-                    
-                    var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-        })
-    }*/
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
