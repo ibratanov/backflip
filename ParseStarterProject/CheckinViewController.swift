@@ -138,7 +138,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         if self.cellContent.count == 0 {
             self.pickerInfo.hidden = true
-            self.noEventLabel.text = "No Suggested Events. Please create a Public Event"
+            self.noEventLabel.text = "No Events Nearby"
         }
         // Gets location of the user
         /*
