@@ -224,6 +224,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
+        
         /*var queryEvent = PFQuery(className: "Event")
         queryEvent.whereKey("eventName", equalTo: self.eventTitle!)
         var objects = queryEvent.findObjects() as! [PFObject]

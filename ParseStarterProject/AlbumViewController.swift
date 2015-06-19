@@ -323,6 +323,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let components2 = NSDateComponents()
         components2.hour = 24
         var eventQuery = PFQuery(className: "Event")
+        println(self.eventId)
+        
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
             if error == nil {
                 
