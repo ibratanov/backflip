@@ -513,7 +513,7 @@
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Backflip;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e7be3853-0318-40de-a3b2-3136a7b8fdbd";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Debug;
@@ -532,7 +532,7 @@
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Backflip;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e7be3853-0318-40de-a3b2-3136a7b8fdbd";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Release;

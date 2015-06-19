@@ -129,22 +129,22 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         
         // Check if the user is already logged in
         if PFUser.currentUser() != nil {
-            println(PFUser.currentUser())
-            var phone: AnyObject? = PFUser.currentUser()?.valueForKey("phone")
-            println(phone)
+//            println(PFUser.currentUser())
+//            var phone: AnyObject? = PFUser.currentUser()?.valueForKey("phone")
+//            println(phone)
             
             var blocked = PFUser.currentUser()?.valueForKey("blocked") as! Bool
             println(blocked)
-            ///if blocked == false {
+            if blocked == false {
                 // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
                 println("GEEEEEE")
                 self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                 
-            //}
-            //else {
-              //  println("User is Blocked")
-                //displayAlertUserBlocked("You have been Blocked", error: "You have uploaded inappropriate photos")
-            //}
+            }
+            else {
+                println("User is Blocked")
+                displayAlertUserBlocked("You have been Blocked", error: "You have uploaded inappropriate photos")
+            }
             
         }
     }

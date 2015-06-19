@@ -181,7 +181,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         super.viewDidLoad()
         
         //--------------- LIKE/TIME/MY PHOTOS ---------------
-
+        println("//--------------- LIKE/TIME/MY PHOTOS ---------------")
+        println(eventId)
+        println(eventTitle)
+        
         // Initialize segmented control button
         let items = ["LIKES", "TIME", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
@@ -328,26 +331,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
             if error == nil {
                 
-                //TODO: determine how this can be set automatically
-                let endTime = objects?.objectForKey("endTime") as! NSDate
-                
-                //date is the end time of event plus 48hours
-                let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
-                
-                // Event is still active (currentTime < expiry time)
-                if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
+                if let endTime: AnyObject = objects?.objectForKey("endTime") {
+                    //endDate has been set and is valide
+                    
+                    //TODO: determine how this can be set automatically
+                    let endTime = objects?.objectForKey("endTime") as! NSDate
+                    
+                    //date is the end time of event plus 48hours
+                    let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
+                    
+                    // Event is still active (currentTime < expiry time)
+                    if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
 
-                //self.displayAlert("Heads Up!", error: "Active")
+                    //self.displayAlert("Heads Up!", error: "Active")
 
+                        
+                    // Event is no longer active (currentTime > expiry time)
+                    } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
+                        
+                        //self.displayAlert("Heads Up!", error: "Inactive")
+                        
+                        // Delete if the event is no longer active
+                        //objects?.deleteInBackground()
+                    }
                     
-                // Event is no longer active (currentTime > expiry time)
-                } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
-                    
-                    //self.displayAlert("Heads Up!", error: "Inactive")
-                    
-                    // Delete if the event is no longer active
-                    //objects?.deleteInBackground()
-                    
+                } else {
+                    //endDate has not been set or was invalid
                 }
 
                 
@@ -413,28 +422,27 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
         query.whereKey("eventID", equalTo: eventId!)
         
-        var photoObjects = query.findObjects()?.first as! PFObject
+        var queryResult = query.findObjects()!
         
-        var pList = photoObjects["photosLiked"] as! [PFFile]
-        var id = photoObjects["photosLikedID"] as! [String]
-        
-        for photos in pList {
+        //TODO: Check if this is an actual issue when events & users are properly linked up
+        if (queryResult.count != 0) {
+            var eventAttendance = queryResult.first as! PFObject
             
-            self.myPhotos.append(photos)
+            var pList = eventAttendance["photosLiked"] as! [PFFile]
+            println(pList)
+            var id = eventAttendance["photosLikedID"] as! [String]
             
+            for photos in pList {
+                
+                self.myPhotos.append(photos)
+                
+            }
             
+            for ids in id {
+                
+                self.myObjectId.append(ids)
+            }
         }
-        
-        for ids in id {
-            
-            
-            self.myObjectId.append(ids)
-        }
-        
-        
-        
-
-        
         
         /*// Load information from parse db
         var getUploadedImages = PFQuery(className: "Event")
