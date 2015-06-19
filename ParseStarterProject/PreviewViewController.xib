@@ -3,8 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -65,21 +63,11 @@
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INT-Kr-uVX" userLabel="Bottom">
                     <rect key="frame" x="0.0" y="500" width="600" height="100"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4j-er-GaZ" userLabel="Cancel">
-                            <rect key="frame" x="27" y="58" width="110" height="27"/>
-                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
-                            <state key="normal" title="  CANCEL" image="close-icon-large">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="oHM-g9-VWz"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8YX-N6-quC">
-                            <rect key="frame" x="466" y="58" width="126" height="27"/>
+                            <rect key="frame" x="462" y="8" width="130" height="50"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="126" id="hhn-rs-Ubs"/>
+                                <constraint firstAttribute="height" constant="50" id="kdk-dq-ykq"/>
+                                <constraint firstAttribute="width" constant="130" id="oBF-aB-aWX"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                             <inset key="imageEdgeInsets" minX="110" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -91,37 +79,33 @@
                                 <action selector="cropButtonPressed:" destination="-1" eventType="touchUpInside" id="XP9-2H-SRh"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4j-er-GaZ" userLabel="Cancel">
+                            <rect key="frame" x="8" y="8" width="130" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="MCr-Ir-2Ms"/>
+                                <constraint firstAttribute="width" constant="130" id="YM0-Ma-GP4"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
+                            <state key="normal" title="  CANCEL" image="close-icon-large">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="oHM-g9-VWz"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="8YX-N6-quC" secondAttribute="trailing" constant="8" id="0ci-cc-gPn"/>
-                        <constraint firstItem="8YX-N6-quC" firstAttribute="top" secondItem="N4j-er-GaZ" secondAttribute="top" id="4VP-Rz-Exc"/>
-                        <constraint firstItem="8YX-N6-quC" firstAttribute="baseline" secondItem="N4j-er-GaZ" secondAttribute="firstBaseline" id="5cU-oQ-a7Y"/>
-                        <constraint firstAttribute="bottom" secondItem="N4j-er-GaZ" secondAttribute="bottom" constant="15" id="9Os-JW-PlY"/>
-                        <constraint firstItem="N4j-er-GaZ" firstAttribute="leading" secondItem="INT-Kr-uVX" secondAttribute="leading" constant="27" id="I6o-ZJ-Uhj"/>
-                        <constraint firstItem="8YX-N6-quC" firstAttribute="firstBaseline" secondItem="N4j-er-GaZ" secondAttribute="baseline" id="O6E-5X-xQp"/>
+                        <constraint firstItem="N4j-er-GaZ" firstAttribute="top" secondItem="INT-Kr-uVX" secondAttribute="top" constant="8" id="3eJ-Dr-S76"/>
+                        <constraint firstAttribute="trailing" secondItem="8YX-N6-quC" secondAttribute="trailing" constant="8" id="JBe-EO-Csm"/>
+                        <constraint firstItem="N4j-er-GaZ" firstAttribute="leading" secondItem="INT-Kr-uVX" secondAttribute="leading" constant="8" id="SQh-i1-jmJ"/>
+                        <constraint firstItem="8YX-N6-quC" firstAttribute="top" secondItem="INT-Kr-uVX" secondAttribute="top" constant="8" id="vlt-ml-TtJ"/>
                     </constraints>
                 </view>
                 <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="600" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="UPf-Gi-Swq" userLabel="Top">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doX-Fu-548">
-                            <rect key="frame" x="0.0" y="52" width="548" height="48"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="sYj-s1-6jU"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="doX-Fu-548" secondAttribute="trailing" constant="52" id="6t6-FS-V5A"/>
-                        <constraint firstAttribute="bottom" secondItem="doX-Fu-548" secondAttribute="bottom" id="bpj-nI-afE"/>
-                        <constraint firstItem="doX-Fu-548" firstAttribute="leading" secondItem="UPf-Gi-Swq" secondAttribute="leading" id="sVq-vm-8oe"/>
-                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
