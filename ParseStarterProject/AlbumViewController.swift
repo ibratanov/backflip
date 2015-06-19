@@ -417,28 +417,27 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
         query.whereKey("eventID", equalTo: eventId!)
         
-        var photoObjects = query.findObjects()?.first as! PFObject
+        var queryResult = query.findObjects()!
         
-        var pList = photoObjects["photosLiked"] as! [PFFile]
-        var id = photoObjects["photosLikedID"] as! [String]
-        
-        for photos in pList {
+        //TODO: Check if this is an actual issue when events & users are properly linked up
+        if (queryResult.count != 0) {
+            var eventAttendance = queryResult.first as! PFObject
             
-            self.myPhotos.append(photos)
+            var pList = eventAttendance["photosLiked"] as! [PFFile]
+            println(pList)
+            var id = eventAttendance["photosLikedID"] as! [String]
             
+            for photos in pList {
+                
+                self.myPhotos.append(photos)
+                
+            }
             
+            for ids in id {
+                
+                self.myObjectId.append(ids)
+            }
         }
-        
-        for ids in id {
-            
-            
-            self.myObjectId.append(ids)
-        }
-        
-        
-        
-
-        
         
         /*// Load information from parse db
         var getUploadedImages = PFQuery(className: "Event")
