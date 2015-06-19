@@ -158,7 +158,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         self.dismissViewControllerAnimated(true, completion: {
             if self.cropCompletionHandler != nil {
+
                 self.cropCompletionHandler!(self.imageView.image?.croppedToRect(imageViewRect))
+                
             }
         })
         var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
@@ -219,9 +221,13 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 photoObject.saveInBackground()
                 
                 println("PHOTO UPLOADED!------------------")
+
+
             } else {
                 println("FAILED PHOTO UPLOAD!------------------")
             }
+            
+           
         }
         
         
@@ -293,4 +299,5 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
     }
+    
 }

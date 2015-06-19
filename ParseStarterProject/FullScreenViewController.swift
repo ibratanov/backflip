@@ -371,7 +371,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     // Back button to album view
     func seg() {
-        
+
         self.navigationController?.popViewControllerAnimated(true)
         
     }

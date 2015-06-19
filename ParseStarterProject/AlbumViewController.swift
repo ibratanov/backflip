@@ -77,6 +77,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // Checker for sort button. Sort in chronological order by default.
     var sortedByLikes = true
     var myPhotoSelected = false
+    var fullScreen = false
+    var posted = true
     
     // Display alert function for when an album timer is going to run out
     func displayAlert(title:String,error: String) {
@@ -127,12 +129,26 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+
+        if fullScreen == false && posted == true{
+            
+            if myPhotoSelected == false {
+                
+                updatePhotos()
+                self.collectionView?.reloadData()
+                
+            } else {
+                
+                displayMyPhotos()
+                self.collectionView?.reloadData()
+            }
+        }
 
     }
     
     func seg() {
         
-        //self.performSegueWithIdentifier("backButton", sender: self)
         self.navigationController?.popViewControllerAnimated(true)
         
     }
@@ -367,14 +383,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
             
         }
-        if myPhotoSelected == false {
-            
-            updatePhotos()
-            
-        } else {
-            
-            displayMyPhotos()
-        }
+
 
     }
     
@@ -483,6 +492,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         dump(myObjectId)*/
         
     }
+    
     
     
     // TODO: Smart loading of photos - only reload photos which are new/were modified
@@ -672,6 +682,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
             moveVC.eventId = eventId!
             moveVC.eventTitle = eventTitle!
+            fullScreen = true
             
             // Sorted by time (from newest to oldest)
             if self.sortedByLikes == false && self.myPhotoSelected == false {
@@ -692,6 +703,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     //--------------- Camera ---------------
     //initialize camera
     func takePhoto(sender: UIButton) {
+        fullScreen = false
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             println("Button capture")
 
@@ -1077,6 +1089,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.presentViewController(testCamera, animated: true, completion: nil)
         }
     }
+
     
     //TO-DO: UIDeviceOrientationIsLandscape --> then rotate image
     
