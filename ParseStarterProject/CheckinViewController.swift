@@ -59,7 +59,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print(self.cellContent[row])
         eventSelected = self.cellContent[row] as! String
-        
     }
     
     
@@ -210,7 +209,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     @IBOutlet weak var checkInButton: UIButton!
     
     @IBAction func checkInClicked(sender: AnyObject) {
-        if (self.cellContent.count > 0) {
+        if (self.eventSelected == "" && self.cellContent.count > 0) {
             self.eventSelected = self.cellContent[0] as! String
         }
         
