@@ -340,8 +340,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Set VC color
         self.collectionView!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         
-        // Pushes collection view down, higher value pushes collection view downwards
-        collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,0.0,0.0)
+        // Pushes collection view down, higher value pushes collection view downwards, and push from bottom of screen (3rd number)
+        collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,80.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
  
         // Pull down to refresh
