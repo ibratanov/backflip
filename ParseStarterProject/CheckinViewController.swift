@@ -241,16 +241,25 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
                 query.limit = 10
 
-                var objects = query.findObjects()
-                for object in objects as! [PFObject] {
-                    var eventName: AnyObject? = object.objectForKey("eventName")
+                let usrQuery = PFUser.query()
+                
+                usrQuery!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                    var savedEvents: [String] = object?.objectForKey("savedEventNames") as! [String]
                     
-                    // TODO: Check
-                    if self.cellContent.count < query.limit {
-                        self.cellContent.addObject(eventName!)
+                    var objects = query.findObjects()
+                    for object in objects as! [PFObject] {
+                        var eventName = object.objectForKey("eventName") as! String
+                        
+                        // TODO: Check
+                        if self.cellContent.count < query.limit && !contains(savedEvents, eventName) {
+                            self.cellContent.addObject(eventName)
+                        }
+                        
                     }
                     
-                }
+                    
+                })
+
                 
                 if self.cellContent.count == 0 {
                     self.pickerInfo.hidden = true
@@ -317,7 +326,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         let query = PFUser.query()
         
-        println(PFUser.currentUser()!.objectId!)
         query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
             
             if error != nil {
