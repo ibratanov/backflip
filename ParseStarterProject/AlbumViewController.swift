@@ -838,6 +838,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             //self.dismissViewControllerAnimated(true, completion: nil)
             
             self.presentViewController(picker, animated:true, completion:{})
+            self.setLastPhoto()
+            self.updateThumbnail()
             self.flashButton.hidden = false
             
         }
@@ -1038,8 +1040,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             var lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
             
-            PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: self.imageViewContent.size, contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
-                
+            var sizeIM = CGSizeMake(50,50)
+            PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: sizeIM , contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
                 self.thumbnailButton.setBackgroundImage(result, forState: .Normal)
                 self.thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
                 self.thumbnailButton.layer.borderWidth=1.0
