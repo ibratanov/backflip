@@ -145,7 +145,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 
                 //Check if event exists
                 let query = PFQuery(className: "Event")
-                query.whereKey("eventName", equalTo: "Welcome to BackFlip")
+                query.whereKey("eventName", equalTo: "Welcome to Backflip")
                 let scoreArray = query.findObjects()
                 
                 
