@@ -220,7 +220,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+        self.fullScreen = false
+        self.posted = false
         //--------------- LIKE/TIME/MY PHOTOS ---------------
         println("//--------------- LIKE/TIME/MY PHOTOS ---------------")
         println(eventId)

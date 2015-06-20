@@ -26,7 +26,7 @@ class CreatePublicEventViewController: UIViewController {
     
     @IBOutlet var addressText: UIImageView!
     
-    
+    @IBOutlet weak var albumview: AlbumViewController?
     // Disable navigation
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -36,6 +36,8 @@ class CreatePublicEventViewController: UIViewController {
     @IBOutlet var eventName: UITextField!
     
     @IBOutlet var userAddressButton: UIButton!
+    
+    var eventID : String?
     
     
     @IBOutlet var addressField: UILabel!
@@ -318,7 +320,7 @@ class CreatePublicEventViewController: UIViewController {
 //                                println("fail")
 //                            }
 //                        }
-                        
+                        self.eventID = event.objectId
                         event.save()
                         
                         object?.addUniqueObject(event, forKey:"savedEvents")
@@ -359,6 +361,7 @@ class CreatePublicEventViewController: UIViewController {
                         attendance.save()
                         
                         println("Saved")
+                        self.albumview?.eventId = self.eventID
                         self.performSegueWithIdentifier("eventsPage", sender: self)
                         
                     } else {
@@ -369,6 +372,8 @@ class CreatePublicEventViewController: UIViewController {
             })
         }
     }
+    
+
     
     func getUserLocationFromAddress() -> NSString {
         var address = "1 Infinite Loop, CA, USA"

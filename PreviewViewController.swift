@@ -107,24 +107,23 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             }
     
     override func updateViewConstraints() {
-        imageView.sizeToFit()
-        if imageView.bounds.size.aspect() >= 1 {
-            leftSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
-            topSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
-        }
-        else {
-            leftSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
-            topSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
-        }
-        if imageView.bounds.size.aspect() >= 1 {
-            topBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
-            leftBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
-        }
-        else {
-            topBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
-            leftBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
-        }
-        
+//        imageView.sizeToFit()
+//        if imageView.bounds.size.aspect() >= 1 {
+//            leftSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
+//            topSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
+//        }
+//        else {
+//            leftSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
+//            topSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
+//        }
+//        if imageView.bounds.size.aspect() >= 1 {
+//            topBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
+//            leftBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
+//        }
+//        else {
+//            topBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
+//            leftBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
+//        }
         super.updateViewConstraints()
     }
     
