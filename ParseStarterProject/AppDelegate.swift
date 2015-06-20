@@ -128,16 +128,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if((params["referringOut"])  != nil){
                     //image ID
                     let eventIIden: AnyObject? = params["eventId"]
-                    let albumIIden: AnyObject? = params["albumId"]
+                    //let albumIIden: AnyObject? = params["albumId"]
                     let eventTitle: AnyObject? = params["eventTitle"]
-                    print("=======================user with: \(eventIIden) \(albumIIden) \(eventTitle)")
+                    print("=======================user with: \(eventIIden) \(eventTitle)")
                     
                     // Load information from parse db
                     var queryEvent = PFQuery(className: "Event")
-                    queryEvent.limit = 10
+                    queryEvent.limit = 1
                     //queryEvent.whereKey("objectId", equalTo: albumIIden!)
                     //queryEvent.whereKey("objectId", equalTo: "b8BYLy5cLW")
-                    queryEvent.whereKey("eventName", equalTo: eventTitle!)
+                    queryEvent.whereKey("objectId", equalTo: eventIIden!)
         
                     var objectE = queryEvent.findObjects()?.first as! PFObject
                     

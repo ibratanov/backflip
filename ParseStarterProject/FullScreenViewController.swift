@@ -235,7 +235,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         self.mixpanel.track("Facebook Share")
                         self.dismissViewControllerAnimated(false, completion: nil)
-                        self.displaySuccess("Posted!", error: "Not Working? Make sure you are logged in to FB in iOS settings")
+                        self.displaySuccess("Posted!", error: "Not appearing on Facebook? Make sure you are logged in to FB in iOS settings.")
 
                     }
                     
@@ -270,7 +270,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         self.mixpanel.track("Twitter Share")
                         self.dismissViewControllerAnimated(false, completion: nil)
-                        self.displaySuccess("Posted!", error: "Successfully posted to Twitter")
+                        self.displaySuccess("Posted!", error: "Successfully posted to Twitter.")
     
                     }
                 }
@@ -287,17 +287,16 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         
         // SMS sharing feature
-        alert.addAction(UIAlertAction(title: "Invite Friends (SMS)", style: .Default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Invite friends to album (SMS)", style: .Default, handler: { action in
             
-            
-            var params = [ "referringUsername": "friend", "referringOut": "FSVC", "eventId": "\(self.objectIdTemp)", "albumId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+            var params = [ "referringUsername": "friend", "referringOut": "FSVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+            //var params = [ "referringUsername": "friend", "referringOut": "FSVC", "eventId": "\(self.objectIdTemp)", "albumId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
             //        [ "referringUsername": "friend", "referringUserId": "6",  "eventId": "\(self.eventId)", "pictureId": "\(self.objectIdTemp)", "pictureCaption": "\(self.eventTitle)" ]
             
-            // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
+            // This is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
             
             self.spinner.startAnimating()
             //disable button
-            
             
             Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
                 if (error == nil) {
@@ -305,7 +304,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         let messageComposer = MFMessageComposeViewController()
                         
-                        messageComposer.body = String(format: "Check this out: %@", url)
+                        messageComposer.body = String(format: "Check out these photos on Backflip! %@", url)
                         
                         messageComposer.messageComposeDelegate = self
                         
@@ -333,7 +332,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     // Alert pop up with Twitter, Facebook and SMS options
     @IBAction func share(sender: AnyObject) {
-        
          displayAlert("Share", error: "How do you want to share this photo?")
     }
     
@@ -356,12 +354,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             UIImageWriteToSavedPhotosAlbum(fullScreenImage.image, nil, nil, nil)
             
-            saveImageAlert("Success!", error: "Image saved to camera roll")
+            saveImageAlert("Image saved to camera roll", error: "")
             
             
         } else {
             
-            saveImageAlert("Oops!", error: "Image could not save!")
+            saveImageAlert("Oops!", error: "Image failed to save. Please try again.")
         }
     }
     

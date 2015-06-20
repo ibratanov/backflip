@@ -61,6 +61,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
 
         termsTextView.editable = false
+        termsTextView.userInteractionEnabled = false
     }
     
     

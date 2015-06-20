@@ -51,11 +51,11 @@ class CreatePublicEventViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func displayAlertLogout(title:String,error: String) {
+    func displayAlertLogout(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
-        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
             PFUser.logOut()
             Digits.sharedInstance().logOut()
             self.performSegueWithIdentifier("logoutCreatePublic", sender: self)
@@ -247,7 +247,7 @@ class CreatePublicEventViewController: UIViewController {
         }
         
         if (error != "") {
-            displayAlert("Event creation error:", error: error)
+            displayAlert("Couldn't create event", error: error)
         } else {
             
             let query = PFUser.query()

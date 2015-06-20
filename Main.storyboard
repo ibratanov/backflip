@@ -26,13 +26,13 @@
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DQu-BE-CoJ">
                                         <rect key="frame" x="0.0" y="13" width="300" height="50"/>
-                                        <string key="text">By logging in you agree to the                                  and    you acknowledge that you have read the                        .</string>
+                                        <string key="text">By logging in you agree to the                                and you acknowledge that you have read the                        .</string>
                                         <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="11"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vnj-kb-ycR">
-                                        <rect key="frame" x="216" y="31" width="66" height="28"/>
+                                        <rect key="frame" x="206" y="31" width="66" height="28"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="11"/>
                                         <state key="normal" title="Privacy Policy">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,7 +42,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hME-Uu-iar">
-                                        <rect key="frame" x="174" y="15" width="80" height="28"/>
+                                        <rect key="frame" x="163" y="15" width="80" height="28"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="11"/>
                                         <state key="normal" title="Terms of Service">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -56,7 +56,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="7lr-tr-MYd"/>
                                     <constraint firstItem="hME-Uu-iar" firstAttribute="top" secondItem="QDq-by-SdQ" secondAttribute="top" constant="15" id="AsI-zg-TcU"/>
                                     <constraint firstAttribute="height" constant="75" id="C9K-hS-glU"/>
-                                    <constraint firstAttribute="trailing" secondItem="hME-Uu-iar" secondAttribute="trailing" constant="46" id="CvZ-Di-Vad"/>
+                                    <constraint firstAttribute="trailing" secondItem="hME-Uu-iar" secondAttribute="trailing" constant="57" id="CvZ-Di-Vad"/>
                                     <constraint firstItem="DQu-BE-CoJ" firstAttribute="top" secondItem="QDq-by-SdQ" secondAttribute="top" constant="13" id="Ihd-fW-mYm"/>
                                     <constraint firstAttribute="bottom" secondItem="DQu-BE-CoJ" secondAttribute="bottom" constant="12" id="M1O-Wf-4Mo"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="QUJ-Ou-YVc"/>
@@ -64,7 +64,7 @@
                                     <constraint firstAttribute="trailing" secondItem="DQu-BE-CoJ" secondAttribute="trailing" id="bTc-9C-Qwl"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="f4x-Zf-fER"/>
                                     <constraint firstAttribute="width" constant="300" id="q6M-KJ-2j3"/>
-                                    <constraint firstAttribute="trailing" secondItem="vnj-kb-ycR" secondAttribute="trailing" constant="18" id="rrJ-II-9ZI"/>
+                                    <constraint firstAttribute="trailing" secondItem="vnj-kb-ycR" secondAttribute="trailing" constant="28" id="rrJ-II-9ZI"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="uf8-rN-cYf"/>
                                     <constraint firstItem="DQu-BE-CoJ" firstAttribute="leading" secondItem="QDq-by-SdQ" secondAttribute="leading" id="wjV-MN-YNJ"/>
                                 </constraints>
@@ -120,7 +120,7 @@
             </objects>
             <point key="canvasLocation" x="1420" y="-140"/>
         </scene>
-        <!--Event History-->
+        <!--Event Albums-->
         <scene sceneID="zH2-Tk-H6K">
             <objects>
                 <tableViewController id="KbJ-H0-F5d" customClass="EventTableViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
@@ -135,13 +135,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[CURRENT EVENT]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJ1-gm-970">
-                                            <rect key="frame" x="11" y="18" width="206" height="21"/>
+                                            <rect key="frame" x="11" y="18" width="301" height="21"/>
                                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[LOCATION]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxn-kS-Jbx">
-                                            <rect key="frame" x="11" y="40" width="193" height="21"/>
+                                            <rect key="frame" x="11" y="40" width="301" height="21"/>
                                             <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -176,7 +176,7 @@
                             <outlet property="delegate" destination="KbJ-H0-F5d" id="aIb-i0-qbt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Event History" id="LHV-eB-VzO">
+                    <navigationItem key="navigationItem" title="Event Albums" id="LHV-eB-VzO">
                         <barButtonItem key="leftBarButtonItem" image="settings-icon" id="2LT-oK-jZI">
                             <color key="tintColor" red="0.0" green="0.58823529411764708" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -710,7 +710,7 @@
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avA-h5-Fas">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avA-h5-Fas">
                                 <rect key="frame" x="35" y="102" width="240" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Mtb-WW-OJC"/>
@@ -765,14 +765,14 @@
                             <constraint firstItem="uoI-tj-emU" firstAttribute="top" secondItem="TGj-Tl-8TS" secondAttribute="top" constant="130" id="WEP-1k-wZu"/>
                             <constraint firstAttribute="trailing" secondItem="pu8-Va-BEQ" secondAttribute="trailing" constant="40" id="bL7-yP-p68"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="centerX" secondItem="UJg-Xx-CgL" secondAttribute="centerX" id="c5b-7o-lHI"/>
-                            <constraint firstItem="avA-h5-Fas" firstAttribute="top" secondItem="pwg-gk-2Bt" secondAttribute="bottom" constant="20" id="dgB-y2-WF7"/>
+                            <constraint firstItem="avA-h5-Fas" firstAttribute="top" secondItem="pwg-gk-2Bt" secondAttribute="bottom" constant="82" id="dgB-y2-WF7"/>
                             <constraint firstAttribute="trailing" secondItem="Vcr-SV-QKe" secondAttribute="trailing" constant="15" id="inT-iv-C3f"/>
                             <constraint firstItem="uv5-ir-czh" firstAttribute="leading" secondItem="Cld-aL-GAw" secondAttribute="trailing" constant="15" id="k2b-sz-AvD"/>
                             <constraint firstItem="Vcr-SV-QKe" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="10" id="phk-1m-2hn"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="top" secondItem="pu8-Va-BEQ" secondAttribute="bottom" constant="10" id="s5S-rr-2Jo"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="leading" secondItem="TGj-Tl-8TS" secondAttribute="leading" id="tmV-Md-Atd"/>
-                            <constraint firstAttribute="trailing" secondItem="avA-h5-Fas" secondAttribute="trailing" constant="40" id="uhk-3f-rJe"/>
-                            <constraint firstItem="avA-h5-Fas" firstAttribute="leading" secondItem="TGj-Tl-8TS" secondAttribute="leading" constant="40" id="vls-ne-lg8"/>
+                            <constraint firstAttribute="trailing" secondItem="avA-h5-Fas" secondAttribute="trailing" constant="45" id="uhk-3f-rJe"/>
+                            <constraint firstItem="avA-h5-Fas" firstAttribute="leading" secondItem="TGj-Tl-8TS" secondAttribute="leading" constant="35" id="vls-ne-lg8"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="centerY" secondItem="UJg-Xx-CgL" secondAttribute="centerY" constant="6" id="wZq-lS-elA"/>
                         </constraints>
                     </view>
@@ -823,10 +823,10 @@
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FSk-Fu-Rj2"/>
-        <segue reference="bXg-ML-DEH"/>
+        <segue reference="Akq-ph-AFX"/>
         <segue reference="Fno-vP-GvK"/>
+        <segue reference="bXg-ML-DEH"/>
+        <segue reference="Ax8-uE-80J"/>
         <segue reference="hKp-Y7-lrD"/>
-        <segue reference="gz0-ak-oAk"/>
     </inferredMetricsTieBreakers>
 </document>
