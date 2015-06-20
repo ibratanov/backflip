@@ -14,6 +14,7 @@ import MessageUI
 
 class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate {
     
+    let mixpanel = Mixpanel.sharedInstance()
     @IBOutlet var likeCount: UILabel!
     
     @IBOutlet var eventInfo: UILabel!
@@ -21,6 +22,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     @IBOutlet var fullScreenImage: UIImageView!
     
     @IBOutlet var likeButtonLabel: UIButton!
+    
+    var tempDate: NSDate?
     
     
     var cellImage : UIImage!
@@ -31,6 +34,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
     var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
     var back = UIImage(named: "back.pdf") as UIImage!
+    var share = UIImage(named: "share-icon.pdf") as UIImage!
+
     
     // Title passed from previous VC
     var eventId : String?
@@ -227,6 +232,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                     case SLComposeViewControllerResult.Done:
                         
+                        
+                        self.mixpanel.track("Facebook Share")
                         self.dismissViewControllerAnimated(false, completion: nil)
                         self.displaySuccess("Posted!", error: "Not Working? Make sure you are logged in to FB in iOS settings")
 
@@ -261,6 +268,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                     case SLComposeViewControllerResult.Done:
                         
+                        self.mixpanel.track("Twitter Share")
                         self.dismissViewControllerAnimated(false, completion: nil)
                         self.displaySuccess("Posted!", error: "Successfully posted to Twitter")
     
@@ -371,7 +379,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     // Back button to album view
     func seg() {
-        
+
         self.navigationController?.popViewControllerAnimated(true)
         
     }
@@ -389,12 +397,17 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64 ))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-        // Removes faint line under nav bar
-        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        navBar.shadowImage = UIImage()
+//        // Removes faint line under nav bar
+//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        navBar.shadowImage = UIImage()
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
+//        var shortTitle: String?
+//        if (count(eventTitle) > 25) {
+//            shortTitle = eventTitle?.substringToIndex(25) + " . . ."
+//            navBarItem.title = shortTitle
+//        }
         navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
         //navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
@@ -402,21 +415,20 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Left nav bar button item
         let back = UIButton.buttonWithType(.Custom) as! UIButton
-        
         back.setTitleColor(UIColor.blackColor(), forState: .Normal)
         back.setImage(self.back, forState: .Normal)
-        //back.setTitle("Back", forState: .Normal)
-        back.frame = CGRectMake(15, 31, 22,22)
+        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        back.frame = CGRectMake(-10, 20, 72, 44)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
         // Right nav bar button item
-        let shareAlbum = UIButton.buttonWithType(.Custom) as! UIButton
-        shareAlbum.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        shareAlbum.setTitle("Action", forState: .Normal)
-        shareAlbum.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
-        shareAlbum.addTarget(self, action: nil, forControlEvents: .TouchUpInside)
-        navBar.addSubview(shareAlbum)
+        let shareImage = UIButton.buttonWithType(.Custom) as! UIButton
+        shareImage.setImage(self.share, forState:.Normal)
+        shareImage.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        shareImage.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
+        shareImage.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
+        navBar.addSubview(shareImage)
         
         self.view.addSubview(navBar)
 
@@ -511,6 +523,20 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             self.likeCount.text = String(count) + " likes"
         }
+        
+        
+        if tempDate != nil {
+            
+            //formatting to display date how we want it
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = NSDateFormatterStyle.LongStyle
+            formatter.timeStyle = .ShortStyle
+            let dateStamp = formatter.stringFromDate(tempDate!)
+    
+            eventInfo.text = "Photo taken on \(dateStamp)"
+            
+        }
+        
         
         
         // gesture implementation

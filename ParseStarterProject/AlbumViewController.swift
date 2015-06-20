@@ -53,7 +53,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
     var share = UIImage(named: "share-icon") as UIImage!
+    var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
+    
+    var flashOff = UIImage(named:"flash-icon-large") as UIImage!
+    var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
 
     
     // Tuple for sorting
@@ -77,6 +81,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // Checker for sort button. Sort in chronological order by default.
     var sortedByLikes = true
     var myPhotoSelected = false
+    var fullScreen = false
+    var posted = false
     
     // Display alert function for when an album timer is going to run out
     func displayAlert(title:String,error: String) {
@@ -127,12 +133,47 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     override func viewDidAppear(animated: Bool) {
+    // fullscreen is false, posted is true
+    println(fullScreen)
+    println(posted)
+        if fullScreen == false || posted == true {
+            
+            if myPhotoSelected == false {
+                
+                updatePhotos()
+                self.collectionView?.reloadData()
+                
+            } else {
+                
+                displayMyPhotos()
+                self.collectionView?.reloadData()
+            }
+        }
 
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        // fullscreen is false, posted is true
+        println(fullScreen)
+        println(posted)
+        if fullScreen == false || posted == true {
+            
+            if myPhotoSelected == false {
+                
+                updatePhotos()
+                self.collectionView?.reloadData()
+                
+            } else {
+                
+                displayMyPhotos()
+                self.collectionView?.reloadData()
+            }
+        }
+        
     }
     
     func seg() {
         
-        //self.performSegueWithIdentifier("backButton", sender: self)
         self.navigationController?.popViewControllerAnimated(true)
         
     }
@@ -181,9 +222,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         super.viewDidLoad()
         
         //--------------- LIKE/TIME/MY PHOTOS ---------------
-
+        println("//--------------- LIKE/TIME/MY PHOTOS ---------------")
+        println(eventId)
+        println(eventTitle)
+        
         // Initialize segmented control button
-        let items = ["LIKES", "TIME", "MY PHOTOS"]
+        let items = ["SORT BY LIKES", "SORT BY TIME", "MY PHOTOS"]
         let segC = UISegmentedControl(items: items)
         
         // Persistence of segmented control selection
@@ -216,12 +260,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Set characteristics of segmented controller
         var backColor : UIColor = UIColor(red: 114/255, green: 114/255, blue: 114/255, alpha: 1)
         var titleFont : UIFont = UIFont(name: "Avenir", size: 12.0)!
-        var textColor : UIColor = UIColor.whiteColor()
+//        var textColor : UIColor = UIColor.whiteColor()
         
         
         // Implement base colors on our segmented control
-        segC.tintColor = UIColor.whiteColor()
-        segC.backgroundColor = UIColor.whiteColor()
+        segC.tintColor = UIColor.clearColor()
+//        segC.backgroundColor = UIColor.whiteColor()
         
         // Attributes for non selected segments
         var segAttributes = [
@@ -230,7 +274,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             NSFontAttributeName : titleFont,
             
-            NSBackgroundColorAttributeName : textColor
+//            NSBackgroundColorAttributeName : textColor
         ]
         
         // Attributes for when segment is selected
@@ -255,7 +299,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Add targets, initialize segmented control
         segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
-        self.view.addSubview(segC)
+//        self.view.addSubview(segC)
         
         //--------------- Draw UI ---------------
         
@@ -263,48 +307,62 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
+        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 94))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-        // Removes faint line under nav bar
-        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        navBar.shadowImage = UIImage()
+//        // Removes faint line under nav bar
+//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        navBar.shadowImage = UIImage()
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-
+        
         navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+        let verticalOffset: CGFloat = -30
+        navBar.setTitleVerticalPositionAdjustment(verticalOffset, forBarMetrics: .Default)
+//        navBar.titleVerticalPositionAdjustmentForBarMetrics(barMetrics: UIBarMetrics)
         navBar.items = [navBarItem]
         
         // Left nav bar button item
         let back = UIButton.buttonWithType(.System) as! UIButton
-        back.setBackgroundImage(goBack, forState: .Normal)
-        back.frame = CGRectMake(15, 31, 22, 22)
+        back.setImage(goBack, forState: .Normal)
+        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        back.frame = CGRectMake(-10, 20, 72, 44)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
         
         // Right nav bar button item
         let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
-        shareAlbum.setBackgroundImage(share, forState: .Normal)
-        shareAlbum.frame = CGRectMake(self.view.frame.size.width-37,31,22,22)
+        shareAlbum.setImage(share, forState: .Normal)
+        shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        shareAlbum.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
         shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
         
+        navBar.addSubview(segC)
         self.view.addSubview(navBar)
         
-        // Post photo button
+//        // Post photo button
+//        let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+//        postPhoto.setImage(newCam, forState: .Normal)
+//        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-60, 80, 80)
+//        postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
+//        self.view.addSubview(postPhoto)
+        
+        // Post photo button new
         let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        postPhoto.setImage(newCam, forState: .Normal)
-        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-60, 80, 80)
+        postPhoto.setImage(cam, forState: .Normal)
+        postPhoto.frame = CGRectMake(0, self.view.frame.size.height-55, self.view.frame.size.width, 75)
+        postPhoto.backgroundColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
         postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(postPhoto)
         
         // Set VC color
         self.collectionView!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         
-        // Pushes collection view down, higher value pushes collection view downwards
-        collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,0.0,0.0)
+        // Pushes collection view down, higher value pushes collection view downwards, and push from bottom of screen (3rd number)
+        collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,80.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
  
         // Pull down to refresh
@@ -328,26 +386,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
             if error == nil {
                 
-                //TODO: determine how this can be set automatically
-                let endTime = objects?.objectForKey("endTime") as! NSDate
-                
-                //date is the end time of event plus 48hours
-                let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
-                
-                // Event is still active (currentTime < expiry time)
-                if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
+                if let endTime: AnyObject = objects?.objectForKey("endTime") {
+                    //endDate has been set and is valide
+                    
+                    //TODO: determine how this can be set automatically
+                    let endTime = objects?.objectForKey("endTime") as! NSDate
+                    
+                    //date is the end time of event plus 48hours
+                    let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
+                    
+                    // Event is still active (currentTime < expiry time)
+                    if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
 
-                //self.displayAlert("Heads Up!", error: "Active")
+                    //self.displayAlert("Heads Up!", error: "Active")
 
+                        
+                    // Event is no longer active (currentTime > expiry time)
+                    } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
+                        
+                        //self.displayAlert("Heads Up!", error: "Inactive")
+                        
+                        // Delete if the event is no longer active
+                        //objects?.deleteInBackground()
+                    }
                     
-                // Event is no longer active (currentTime > expiry time)
-                } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
-                    
-                    //self.displayAlert("Heads Up!", error: "Inactive")
-                    
-                    // Delete if the event is no longer active
-                    //objects?.deleteInBackground()
-                    
+                } else {
+                    //endDate has not been set or was invalid
                 }
 
                 
@@ -358,14 +422,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
             
         }
-        if myPhotoSelected == false {
-            
-            updatePhotos()
-            
-        } else {
-            
-            displayMyPhotos()
-        }
+
 
     }
     
@@ -413,28 +470,27 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
         query.whereKey("eventID", equalTo: eventId!)
         
-        var photoObjects = query.findObjects()?.first as! PFObject
+        var queryResult = query.findObjects()!
         
-        var pList = photoObjects["photosLiked"] as! [PFFile]
-        var id = photoObjects["photosLikedID"] as! [String]
-        
-        for photos in pList {
+        //TODO: Check if this is an actual issue when events & users are properly linked up
+        if (queryResult.count != 0) {
+            var eventAttendance = queryResult.first as! PFObject
             
-            self.myPhotos.append(photos)
+            var pList = eventAttendance["photosLiked"] as! [PFFile]
+            println(pList)
+            var id = eventAttendance["photosLikedID"] as! [String]
             
+            for photos in pList {
+                
+                self.myPhotos.append(photos)
+                
+            }
             
+            for ids in id {
+                
+                self.myObjectId.append(ids)
+            }
         }
-        
-        for ids in id {
-            
-            
-            self.myObjectId.append(ids)
-        }
-        
-        
-        
-
-        
         
         /*// Load information from parse db
         var getUploadedImages = PFQuery(className: "Event")
@@ -475,6 +531,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         dump(myObjectId)*/
         
     }
+    
     
     
     // TODO: Smart loading of photos - only reload photos which are new/were modified
@@ -664,18 +721,22 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
             moveVC.eventId = eventId!
             moveVC.eventTitle = eventTitle!
+            fullScreen = true
             
             // Sorted by time (from newest to oldest)
             if self.sortedByLikes == false && self.myPhotoSelected == false {
 
                 moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
+                moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
                 
             } else if self.sortedByLikes == true && self.myPhotoSelected == false {
             // Sorted by like count
                 moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
+                moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
             } else {
                 
                 moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
+                moveVC.tempDate = self.myDate[selectedCellIndex!.row]
             }
         
         }  
@@ -684,6 +745,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     //--------------- Camera ---------------
     //initialize camera
     func takePhoto(sender: UIButton) {
+        fullScreen = false
+        posted = true
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             println("Button capture")
 
@@ -727,13 +790,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 picker.allowsEditing = false
                 
                 self.presentViewController(picker, animated:true, completion:{})
-                setLastPhoto()
-                updateThumbnail()
+              
 
                 newMedia = false
+                setLastPhoto()
+                updateThumbnail()
             }
         }
 
+        setLastPhoto()
+        updateThumbnail()
         
     }
     
@@ -818,7 +884,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             UIImagePickerControllerSourceType.SavedPhotosAlbum
         picker.delegate = self
         self.presentViewController(picker, animated: true, completion: nil)
+
     }
+
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
     {
@@ -841,8 +909,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.setLastPhoto()
             self.updateThumbnail()
             self.flashButton.hidden = false
+            self.setLastPhoto()
+            self.updateThumbnail()
             
         }
+
         if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
             previewViewController.imageToCrop = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
         }
@@ -857,9 +928,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
         //ensure image is cropped to a square
         //self.imageView.image = image
+        setLastPhoto()
+        updateThumbnail()
         
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
+       
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -1000,7 +1074,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     func updateThumbnail(){
         thumbnailButton.setBackgroundImage(image, forState: .Normal)
         //thumbnailButton.setImage(image, forState: .Normal)
-        thumbnailButton.layer.borderColor = UIColor.blueColor().CGColor
+        thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
         thumbnailButton.layer.borderWidth=1.0
         
     }
@@ -1008,23 +1082,24 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         //TO-DO: add indication of toggle (image change)
         if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
-            //self.flashButton.setImage(flashOff, forState: .Normal)
 
-            var alert:UIAlertView = UIAlertView()
-            alert.title = "Flash off!"
-            alert.message = " "
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
+            self.flashButton.setImage(flashOff, forState: .Normal)
+//            var alert:UIAlertView = UIAlertView()
+//            alert.title = "Flash off!"
+//            alert.message = " "
+//            alert.delegate = self
+//            alert.addButtonWithTitle("Ok")
+//            alert.show()
+
         }else{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.On
-            //self.flashButton.setImage(flashOn, forState: .Normal)
-            var alert:UIAlertView = UIAlertView()
-            alert.title = "Flash on!"
-            alert.message = " "
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
+            self.flashButton.setImage(flashOn, forState: .Normal)
+//            var alert:UIAlertView = UIAlertView()
+//            alert.title = "Flash on!"
+//            alert.message = " "
+//            alert.delegate = self
+//            alert.addButtonWithTitle("Ok")
+//            alert.show()
         }
     }
     
@@ -1071,6 +1146,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.presentViewController(testCamera, animated: true, completion: nil)
         }
     }
+
     
     //TO-DO: UIDeviceOrientationIsLandscape --> then rotate image
     
