@@ -47,6 +47,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var eventId : String?
     var eventTitle: String?
     
+    // Keeps track of photo source and only downloads newly taken images
+    var downloadToCameraRoll = true
+    
     
     // Variable for storing PFFile as image, pass through segue
     var images = [UIImage]()
@@ -94,8 +97,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
-    @IBOutlet weak var spinner:UIActivityIndicatorView!
     
     func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
         
@@ -125,31 +126,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             
             default:
-                
-                println("hi")
-            
+                println("default")
             
         }
     }
     
     override func viewDidAppear(animated: Bool) {
-    // fullscreen is false, posted is true
-    println(fullScreen)
-    println(posted)
-        if fullScreen == false || posted == true {
-            
-            if myPhotoSelected == false {
-                
-                updatePhotos()
-                self.collectionView?.reloadData()
-                
-            } else {
-                
-                displayMyPhotos()
-                self.collectionView?.reloadData()
-            }
-        }
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -180,12 +162,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     func smsShare() {
         
-      
-        var params = [ "referringUsername": "friend", "referringOut": "AVC", "albumId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+        var params = [ "referringUsername": "friend", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+        //var params = [ "referringUsername": "friend", "referringOut": "AVC", "albumId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
         //        [ "referringUsername": "friend", "referringUserId": "6",  "eventId": "\(self.eventId)", "pictureId": "\(self.objectIdTemp)", "pictureCaption": "\(self.eventTitle)" ]
 
         
-        // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
+        // This is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
         
         //self.spinner.startAnimating()
         //disable button
@@ -197,7 +179,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                     let messageComposer = MFMessageComposeViewController()
                     
-                    messageComposer.body = String(format: "Check this out: %@", url)
+                    messageComposer.body = String(format: "Check out these photos on Backflip! %@", url)
                     
                     messageComposer.messageComposeDelegate = self
                     
@@ -223,9 +205,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.fullScreen = false
         self.posted = false
         //--------------- LIKE/TIME/MY PHOTOS ---------------
-        println("//--------------- LIKE/TIME/MY PHOTOS ---------------")
-        println(eventId)
-        println(eventTitle)
         
         // Initialize segmented control button
         let items = ["SORT BY LIKES", "SORT BY TIME", "MY PHOTOS"]
@@ -344,13 +323,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         navBar.addSubview(segC)
         self.view.addSubview(navBar)
         
-//        // Post photo button
-//        let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-//        postPhoto.setImage(newCam, forState: .Normal)
-//        postPhoto.frame = CGRectMake((self.view.frame.size.width/2)-40, self.view.frame.height-60, 80, 80)
-//        postPhoto.addTarget(self, action: "takePhoto:", forControlEvents: UIControlEvents.TouchUpInside)
-//        self.view.addSubview(postPhoto)
-        
         // Post photo button new
         let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         postPhoto.setImage(cam, forState: .Normal)
@@ -424,7 +396,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
         }
 
-
     }
     
     func refresh(sender: AnyObject) {
@@ -448,7 +419,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     func displayMyPhotos() {
         
         
-        // Clean our arrays for use again
+        // Clean the arrays for use again
         self.imageFilesTemp.removeAll(keepCapacity: true)
         
         self.myPhotos.removeAll(keepCapacity: true)
@@ -463,8 +434,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.datesTime.removeAll(keepCapacity: true)
         
         self.images.removeAll(keepCapacity: true)
-        
-        
         
         
         var query = PFQuery(className: "EventAttendance")
@@ -482,13 +451,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             var id = eventAttendance["photosLikedID"] as! [String]
             
             for photos in pList {
-                
                 self.myPhotos.append(photos)
-                
             }
             
             for ids in id {
-                
                 self.myObjectId.append(ids)
             }
         }
@@ -706,7 +672,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                     println(error)
                 }
- 
             }
         }
         albumCell.layer.shouldRasterize = true
@@ -924,6 +889,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         previewViewController.eventId = self.eventId
         previewViewController.eventTitle = self.eventTitle
+        previewViewController.downloadToCameraRoll = downloadToCameraRoll
+        println("--")
+        print("DOWNLOADTOCAMERA ROLL EQUALSSSSS")
+        print(downloadToCameraRoll)
+        println("--")
         
         self.presentViewController(previewViewController, animated: true, completion: nil);
         //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
@@ -1059,6 +1029,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     @IBAction func showCameraRoll(sender: UIButton) {
         picker.dismissViewControllerAnimated(true, completion: nil)
         
+        downloadToCameraRoll = false
+        
         var controller = UIImagePickerController()
         controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
         controller.mediaTypes = [kUTTypeImage]
@@ -1069,6 +1041,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     @IBAction func capture(sender: UIButton) {
         picker.takePicture()
+        
+        downloadToCameraRoll = true
+        
         updateThumbnail()
     }
     
@@ -1120,7 +1095,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: sizeIM , contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
                 self.thumbnailButton.setBackgroundImage(result, forState: .Normal)
                 self.thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
-                self.thumbnailButton.layer.borderWidth=1.0
+                self.thumbnailButton.layer.borderWidth = 1.0
                 self.thumbnailButton.layer.cornerRadius = 5
             }
             

@@ -15,6 +15,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     var eventId : String?
     var eventTitle : String?
     var eventLocation: PFGeoPoint?
+    var downloadToCameraRoll: Bool?
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
@@ -137,8 +138,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             }
         })
         var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
-        UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
         
+        if (downloadToCameraRoll!) {
+            UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
+        }
         
         var imageData = compressImage(capturedImage, shrinkRatio: 1.0)
         var imageFile = PFFile(name: "image.png", data: imageData)

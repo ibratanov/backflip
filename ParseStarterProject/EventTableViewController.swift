@@ -102,11 +102,11 @@ class EventTableViewController: UITableViewController {
     }
     
     
-    func displayAlertLogout(title:String,error: String) {
+    func displayAlertLogout(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
-        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
             self.navigationController?.setNavigationBarHidden(true, animated: false)
             
             
@@ -150,14 +150,14 @@ class EventTableViewController: UITableViewController {
         let query = PFUser.query()
         query?.includeKey("savedEvents")
         query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-            self.eventObjs.removeAll(keepCapacity: true)
-            //self.eventObjs = object["savedEvents"]// as! [PFObject]
             
+            self.eventObjs.removeAll(keepCapacity: true)
             self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
             for event in self.eventObjs {
                 println(event)
                 let relation = event.relationForKey("photos")
                 let query = relation.query()
+                query!.limit = 4
                 var photos = query!.findObjects() as! [PFObject]
                 var thumbnails: [PFFile] = []
                 for photo in photos {
@@ -166,7 +166,6 @@ class EventTableViewController: UITableViewController {
                 }
                 self.eventWithPhotos[event.objectId!] = thumbnails//self.updatePhotosForEvent(event.objectId!)
                 self.eventWithIds[event.objectId!] = thumbnails//self.updatePhotosForEvent(event.objectId!)
-
             }
             
             self.tableView.reloadData()
@@ -505,15 +504,6 @@ class EventTableViewController: UITableViewController {
             //self.navigationController?.popViewControllerAnimated(true)
             
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                //println(events[selectedPath.row])
-                //println(eventId[selectedPath.row])
-                var wrongOrder = Array(self.eventWithIds.keys)
-                //var rightOrder = wrongOrder.reverse()
-                moveVC.eventId =  wrongOrder[selectedPath.row]
-                moveVC.eventTitle = Array(self.eventWithPhotos.keys)[selectedPath.row]
-                println(moveVC.eventId)
-                println(moveVC.eventTitle)
-                
                 var event = eventObjs[selectedPath.row]
                 moveVC.eventId = event.objectId
                 moveVC.eventTitle = event["eventName"] as? String

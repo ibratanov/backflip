@@ -63,12 +63,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     }
     
     
-    func displayAlertLogout(title:String,error: String) {
+    func displayAlertLogout(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
         // Facebook share feature
-        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
             
             PFUser.logOut()
             Digits.sharedInstance().logOut()
@@ -101,7 +101,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-        navBarItem.title = "Event Check In"
+        navBarItem.title = "Nearby Events"
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
         navBar.items = [navBarItem]
         
@@ -133,7 +133,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         //locationManager.requestWhenInUseAuthorization()
         //self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
 
-        
         
         let query = PFUser.query()
         var userObjectId = PFUser.currentUser()?.objectId!
@@ -227,18 +226,26 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 print(geoPoint)
                 self.userGeoPoint = geoPoint!
                 print("successfully retrieved User GeoPoint")
+                
+                // Set default event radius
+                var eventRadius = 5.0
+                var distQuery = PFQuery(className: "Options")
+                var distance = distQuery.findObjects()
+                var result = distance?.first as! PFObject
+                eventRadius = result["value"] as! Double
+                
                 // Queries events table for locations that are close to user
                 // Return top 5 closest events
                 var query = PFQuery(className: "Event")
                 //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
-                query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: 10.0)
+                query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
                 query.limit = 10
 
                 var objects = query.findObjects()
                 for object in objects as! [PFObject] {
                     var eventName: AnyObject? = object.objectForKey("eventName")
                     
-                    // hack, fix later
+                    // TODO: Check
                     if self.cellContent.count < query.limit {
                         self.cellContent.addObject(eventName!)
                     }
