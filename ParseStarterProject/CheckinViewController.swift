@@ -13,6 +13,7 @@ import DigitsKit
 
 class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet var noEventLabel: UILabel!
     
     @IBAction func logoutButton(sender: AnyObject) {
         displayAlertLogout("Would you like to log out?", error: "")
@@ -132,8 +133,58 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         //locationManager.requestWhenInUseAuthorization()
         //self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
 
+        let query = PFUser.query()
+        var userObjectId = PFUser.currentUser()?.objectId!
+        query!.getObjectInBackgroundWithId(userObjectId!, block: { (object, error) -> Void in
+            
+            if error != nil {
+                println(error)
+            }
+            else
+            {
+                
+                //Check if event exists
+                let query = PFQuery(className: "Event")
+                query.whereKey("eventName", equalTo: "Welcome to BackFlip")
+                let scoreArray = query.findObjects()
+                
+                
+                var event = scoreArray?[0] as! PFObject
+                
+                
+                // Store the relation
+                let relation = event.relationForKey("attendees")
+                relation.addObject(object!)
+                
+                event.save()
+                
+                // Add the event to the User object
+                object?.addUniqueObject(event, forKey:"savedEvents")
+                object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
+                
+                object!.saveInBackground()
+                
+                
+                // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                var attendance = PFObject(className:"EventAttendance")
+                attendance["eventID"] = event.objectId
+                attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                attendance.setObject(event, forKey: "event")
+                
+                attendance.saveInBackground()
+                
+            }
+            
+        })
+        
         
         self.calcNearByEvents()
+        
+//        if self.cellContent.count == 0 {
+//            self.pickerInfo.hidden = true
+//            self.noEventLabel.text = "No Events Nearby"
+//        }
         // Gets location of the user
         /*
         locationManager.delegate = self
@@ -167,27 +218,46 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: 10.0)
                 query.limit = 10
 
-                query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-                    self.cellContent.removeAllObjects()
+                var objects = query.findObjects()
+                for object in objects as! [PFObject] {
+                    var eventName: AnyObject? = object.objectForKey("eventName")
                     
-                    print(objects!.count)
-                    
-                    for object in objects as! [PFObject] {
-                        var eventName: AnyObject? = object.objectForKey("eventName")
-                        
-                        // hack, fix later
-                        if self.cellContent.count < query.limit {
-                            self.cellContent.addObject(eventName!)
-                        }
-                        
+                    // hack, fix later
+                    if self.cellContent.count < query.limit {
+                        self.cellContent.addObject(eventName!)
                     }
+                    
+                }
+                
+                if self.cellContent.count == 0 {
+                    self.pickerInfo.hidden = true
+                    self.noEventLabel.text = "No Events Nearby"
+                }
+                else {
                     self.pickerInfo.reloadAllComponents()
-
-                })
+                }
+//                query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+//                    self.cellContent.removeAllObjects()
+//
+//                    print(objects!.count)
+//                    
+//                    for object in objects as! [PFObject] {
+//                        var eventName: AnyObject? = object.objectForKey("eventName")
+//                        
+//                        // hack, fix later
+//                        if self.cellContent.count < query.limit {
+//                            self.cellContent.addObject(eventName!)
+//                        }
+//                        
+//                    }
+//                    self.pickerInfo.reloadAllComponents()
+//
+//                })
                 
             }
             else {
                 print("Error with User Geopoint")
+                println(error)
             }
         }
     }
@@ -196,6 +266,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     override func viewDidAppear(animated: Bool) {
         //self.pickerInfo.reloadAllComponents()
         //locationManager.stopUpdatingLocation()
+        
+        
+
         
         if (self.cellContent.count > 0) {
             self.eventSelected = self.cellContent[0] as! String
@@ -268,6 +341,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     if contains(listEvents, self.eventSelected)
                     {
                         print("Event already in list")
+                        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
                     }
                     else
                     {
@@ -292,6 +366,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         attendance.saveInBackground()
                         
                         println("Saved")
+                        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
                     }
                 }
             }

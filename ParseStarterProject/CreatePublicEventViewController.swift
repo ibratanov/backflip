@@ -282,11 +282,12 @@ class CreatePublicEventViewController: UIViewController {
                     print("====================")
                     print(self.userGeoPoint)
                     event["geoLocation"] = self.userGeoPoint
-                    
+                    println(eventName)
                     //Check if event already exists
                     let query = PFQuery(className: "Event")
                     query.whereKey("eventName", equalTo: eventName)
                     let scoreArray = query.findObjects()
+                    dump(scoreArray)
                     
                     if scoreArray!.count == 0 {
                         event["eventName"] = eventName
@@ -358,9 +359,11 @@ class CreatePublicEventViewController: UIViewController {
                         attendance.save()
                         
                         println("Saved")
+                        self.performSegueWithIdentifier("eventsPage", sender: self)
                         
                     } else {
                         self.displayAlert("This event already exists", error: "Join an existing event below")
+                        
                     }
                 }
             })
@@ -385,7 +388,7 @@ class CreatePublicEventViewController: UIViewController {
     }
     
     @IBAction func pastEventsButton(sender: AnyObject) {
-        self.performSegueWithIdentifier("toEventsPage", sender: self)
+        self.performSegueWithIdentifier("eventsPage", sender: self)
     }
     
     override func viewDidLoad() {

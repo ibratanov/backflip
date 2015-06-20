@@ -23,6 +23,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     @IBOutlet var likeButtonLabel: UIButton!
     
+    var tempDate: NSDate?
+    
     
     var cellImage : UIImage!
     var objectIdTemp : String = ""
@@ -521,6 +523,20 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             self.likeCount.text = String(count) + " likes"
         }
+        
+        
+        if tempDate != nil {
+            
+            //formatting to display date how we want it
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = NSDateFormatterStyle.LongStyle
+            formatter.timeStyle = .MediumStyle
+            let dateStamp = formatter.stringFromDate(tempDate!)
+    
+            eventInfo.text = "Photo taken on \(dateStamp)"
+            
+        }
+        
         
         
         // gesture implementation

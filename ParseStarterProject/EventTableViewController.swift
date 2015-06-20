@@ -353,6 +353,8 @@ class EventTableViewController: UITableViewController {
         
         
 */
+        var underlineColor : UIColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        
         
         //print(listPhotos.count)
         //print(indexPath.row)
@@ -362,9 +364,16 @@ class EventTableViewController: UITableViewController {
         
         if listPhotos.count == 0 {
             tableCell.imageOne!.image = UIImage ()
+            tableCell.imageOne.backgroundColor = underlineColor
+            
             tableCell.imageTwo!.image = UIImage ()
+            tableCell.imageTwo.backgroundColor = underlineColor
+            
             tableCell.imageThree!.image = UIImage ()
+            tableCell.imageThree.backgroundColor = underlineColor
+            
             tableCell.imageFour!.image = UIImage ()
+            tableCell.imageFour.backgroundColor = underlineColor
 
             return tableCell
         }
@@ -374,8 +383,13 @@ class EventTableViewController: UITableViewController {
             tableCell.imageOne!.image = UIImage (data: imageData1!)
             
             tableCell.imageTwo!.image = UIImage ()
+            tableCell.imageTwo.backgroundColor = underlineColor
+            
             tableCell.imageThree!.image = UIImage ()
+            tableCell.imageThree.backgroundColor = underlineColor
+            
             tableCell.imageFour!.image = UIImage ()
+            tableCell.imageFour.backgroundColor = underlineColor
             
             return tableCell
         }
@@ -388,7 +402,10 @@ class EventTableViewController: UITableViewController {
             tableCell.imageTwo!.image = UIImage (data: imageData2!)
             
             tableCell.imageThree!.image = UIImage ()
+            tableCell.imageThree.backgroundColor = underlineColor
+            
             tableCell.imageFour!.image = UIImage ()
+            tableCell.imageFour.backgroundColor = underlineColor
             
             return tableCell
         }
@@ -404,6 +421,7 @@ class EventTableViewController: UITableViewController {
             tableCell.imageThree!.image = UIImage (data: imageData3!)
             
             tableCell.imageFour!.image = UIImage ()
+            tableCell.imageFour.backgroundColor = underlineColor
             
             return tableCell
         }
