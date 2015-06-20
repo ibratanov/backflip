@@ -132,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     // Load information from parse db
                     var query = PFQuery(className: "Event")
                     query.limit = 10
-                    query.whereKey("objectId", equalTo: eventIIden!)
+                    query.whereKey("objectId", equalTo: "hok0dvWB0Y")
                     
         
                     var object = query.findObjects()?.first as! PFObject
