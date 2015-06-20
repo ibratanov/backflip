@@ -530,7 +530,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             //formatting to display date how we want it
             let formatter = NSDateFormatter()
             formatter.dateStyle = NSDateFormatterStyle.LongStyle
-            formatter.timeStyle = .MediumStyle
+            formatter.timeStyle = .ShortStyle
             let dateStamp = formatter.stringFromDate(tempDate!)
     
             eventInfo.text = "Photo taken on \(dateStamp)"

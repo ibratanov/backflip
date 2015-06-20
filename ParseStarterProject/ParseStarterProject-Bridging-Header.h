@@ -12,6 +12,6 @@
 //#import <ParseFacebookUtils/PFFacebookUtils.h>
 
 
-#import </Users/jonathanarlauskas/Documents/Work:Finances/Tribal/6tribe/Pods/Mixpanel/Mixpanel/Mixpanel.h>
+#import <Mixpanel/Mixpanel.h>
 
 #endif

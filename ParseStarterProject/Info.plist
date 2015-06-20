@@ -55,9 +55,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>6Tribe would like to use your location.</string>
+	<string>Backflip would like to use your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>6Tribe would like to use your location.</string>
+	<string>Backflip would like to use your location.</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

@@ -138,10 +138,11 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         let query = PFUser.query()
         var userObjectId = PFUser.currentUser()?.objectId!
         query!.getObjectInBackgroundWithId(userObjectId!, block: { (object, error) -> Void in
-            
+
             var firstTime = PFUser.currentUser()?.objectForKey("firstUse") as! Bool
             
             if (firstTime == true) {
+
                 
                 if error != nil {
                     println(error)
