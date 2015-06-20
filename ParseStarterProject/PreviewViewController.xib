@@ -126,22 +126,14 @@
                 <constraint firstItem="INT-Kr-uVX" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="avS-rY-xTU"/>
                 <constraint firstAttribute="bottom" secondItem="Qr6-XV-dtf" secondAttribute="bottom" id="ilZ-3H-GxU"/>
                 <constraint firstAttribute="trailing" secondItem="R6s-Gn-XjS" secondAttribute="trailing" id="jtN-Tl-YP7"/>
-                <constraint firstItem="INT-Kr-uVX" firstAttribute="top" secondItem="Qr6-XV-dtf" secondAttribute="bottom" id="qkM-s8-mis"/>
                 <constraint firstAttribute="right" secondItem="ys9-ZT-loK" secondAttribute="right" id="uwS-dO-CG0"/>
                 <constraint firstItem="UPf-Gi-Swq" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="w7Q-Aw-3LH"/>
-                <constraint firstItem="INT-Kr-uVX" firstAttribute="top" secondItem="R6s-Gn-XjS" secondAttribute="bottom" id="wRE-C8-CVW"/>
                 <constraint firstItem="ys9-ZT-loK" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="wb8-vO-aQU"/>
                 <constraint firstItem="UPf-Gi-Swq" firstAttribute="left" secondItem="GLu-AF-z8l" secondAttribute="left" id="wzn-9B-dpC"/>
                 <constraint firstItem="R6s-Gn-XjS" firstAttribute="top" secondItem="UPf-Gi-Swq" secondAttribute="bottom" id="zHF-QT-ehN"/>
                 <constraint firstItem="INT-Kr-uVX" firstAttribute="top" secondItem="BBL-aR-gtQ" secondAttribute="bottom" id="ztJ-JM-dKN"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="qkM-s8-mis"/>
-                    <exclude reference="wRE-C8-CVW"/>
-                </mask>
-            </variation>
         </view>
     </objects>
     <resources>
