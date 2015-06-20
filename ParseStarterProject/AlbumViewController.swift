@@ -448,14 +448,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             var pList = eventAttendance["photosLiked"] as! [PFFile]
             println(pList)
-            var id = eventAttendance["photosLikedID"] as! [String]
+            var ids = eventAttendance["photosLikedID"] as! [String]
             
-            for photos in pList {
-                self.myPhotos.append(photos)
+            for photo in pList {
+                self.myPhotos.append(photo)
             }
             
-            for ids in id {
-                self.myObjectId.append(ids)
+            for id in ids {
+                self.myObjectId.append(id)
             }
         }
         
@@ -702,9 +702,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             } else {
                 
                 moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
-                moveVC.tempDate = self.myDate[selectedCellIndex!.row]
             }
-        
         }  
     }
     
@@ -890,10 +888,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         previewViewController.eventId = self.eventId
         previewViewController.eventTitle = self.eventTitle
         previewViewController.downloadToCameraRoll = downloadToCameraRoll
-        println("--")
-        print("DOWNLOADTOCAMERA ROLL EQUALSSSSS")
-        print(downloadToCameraRoll)
-        println("--")
         
         self.presentViewController(previewViewController, animated: true, completion: nil);
         //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
