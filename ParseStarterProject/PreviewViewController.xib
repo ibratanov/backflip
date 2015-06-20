@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -10,12 +10,8 @@
             <connections>
                 <outlet property="cropOpeningView" destination="R6s-Gn-XjS" id="Qio-2i-K3H"/>
                 <outlet property="imageView" destination="MYo-N8-JBd" id="cQC-Wt-whp"/>
-                <outlet property="leftBlockerScrollViewConstraint" destination="q6Q-fw-2PW" id="Z7S-7Z-S4C"/>
-                <outlet property="leftSuperviewScrollViewConstraint" destination="brs-ve-bbt" id="e2c-rw-FVp"/>
                 <outlet property="referenceView" destination="ys9-ZT-loK" id="dwb-T8-gat"/>
                 <outlet property="scrollView" destination="Qr6-XV-dtf" id="uW7-Yc-jqW"/>
-                <outlet property="topBlockerScrollViewConstraint" destination="ywU-Yw-UGs" id="FTV-oD-PPE"/>
-                <outlet property="topSuperviewScrollViewConstraint" destination="LX2-xf-QRa" id="9ur-ys-cLG"/>
                 <outlet property="view" destination="GLu-AF-z8l" id="Aep-cJ-Vi1"/>
             </connections>
         </placeholder>
@@ -29,7 +25,7 @@
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="500" placeholderIntrinsicHeight="500" translatesAutoresizingMaskIntoConstraints="NO" id="Qr6-XV-dtf">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="-257" y="0.0" width="889" height="667"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="532" placeholderIntrinsicHeight="400" image="unable-phone@3x.png" translatesAutoresizingMaskIntoConstraints="NO" id="MYo-N8-JBd">
                             <rect key="frame" x="0.0" y="0.0" width="532" height="400"/>
@@ -40,6 +36,7 @@
                         <constraint firstAttribute="trailing" secondItem="MYo-N8-JBd" secondAttribute="trailing" id="E8A-zG-4PX"/>
                         <constraint firstItem="MYo-N8-JBd" firstAttribute="leading" secondItem="Qr6-XV-dtf" secondAttribute="leading" id="UdX-M9-4wB"/>
                         <constraint firstAttribute="bottom" secondItem="MYo-N8-JBd" secondAttribute="bottom" id="dUo-YE-G6H"/>
+                        <constraint firstAttribute="width" secondItem="Qr6-XV-dtf" secondAttribute="height" multiplier="4:3" id="gW1-lf-vYM"/>
                         <constraint firstItem="MYo-N8-JBd" firstAttribute="top" secondItem="Qr6-XV-dtf" secondAttribute="top" id="mBJ-St-VMa"/>
                     </constraints>
                     <connections>
@@ -89,14 +86,6 @@
                         <constraint firstAttribute="centerY" secondItem="N4j-er-GaZ" secondAttribute="centerY" id="pEY-ze-SlG"/>
                     </constraints>
                 </view>
-                <view hidden="YES" alpha="0.30000001192092896" contentMode="scaleToFill" misplaced="YES" placeholderIntrinsicWidth="100" placeholderIntrinsicHeight="600" translatesAutoresizingMaskIntoConstraints="NO" id="LVK-jm-cSa" userLabel="Left">
-                    <rect key="frame" x="0.0" y="0.0" width="60" height="667"/>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
-                <view hidden="YES" alpha="0.30000001192092896" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dj0-gs-G0V" userLabel="Right">
-                    <rect key="frame" x="540" y="0.0" width="60" height="667"/>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="600" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="UPf-Gi-Swq" userLabel="Top">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
@@ -123,51 +112,32 @@
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="right" secondItem="Qr6-XV-dtf" secondAttribute="right" id="10B-Me-MIX"/>
-                <constraint firstItem="Dj0-gs-G0V" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="29o-LO-i3f"/>
-                <constraint firstAttribute="bottom" secondItem="LVK-jm-cSa" secondAttribute="bottom" id="4bz-ep-x8e"/>
-                <constraint firstAttribute="right" secondItem="Dj0-gs-G0V" secondAttribute="right" id="6VI-vi-1dJ"/>
                 <constraint firstAttribute="trailing" secondItem="INT-Kr-uVX" secondAttribute="trailing" id="8Hf-yV-Ksw"/>
                 <constraint firstAttribute="right" secondItem="UPf-Gi-Swq" secondAttribute="right" id="Fu2-eg-mwm"/>
                 <constraint firstItem="Qr6-XV-dtf" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="Gmu-Xm-vEJ"/>
                 <constraint firstAttribute="bottom" secondItem="INT-Kr-uVX" secondAttribute="bottom" id="Gv2-5m-Lrb"/>
                 <constraint firstAttribute="trailing" secondItem="BBL-aR-gtQ" secondAttribute="trailing" id="IWV-Xt-4Oi"/>
-                <constraint firstItem="Qr6-XV-dtf" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" priority="250" id="LX2-xf-QRa"/>
                 <constraint firstItem="R6s-Gn-XjS" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="N1d-oS-snV"/>
                 <constraint firstAttribute="bottom" secondItem="ys9-ZT-loK" secondAttribute="bottom" id="O6V-5t-m8Q"/>
+                <constraint firstAttribute="centerX" secondItem="Qr6-XV-dtf" secondAttribute="centerX" id="Sma-42-UI0"/>
                 <constraint firstItem="BBL-aR-gtQ" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="TMV-c4-CBU"/>
                 <constraint firstItem="BBL-aR-gtQ" firstAttribute="top" secondItem="R6s-Gn-XjS" secondAttribute="bottom" id="TQN-Yv-9G7"/>
                 <constraint firstItem="ys9-ZT-loK" firstAttribute="left" secondItem="GLu-AF-z8l" secondAttribute="left" id="YPq-oI-x8j"/>
-                <constraint firstAttribute="trailing" secondItem="Qr6-XV-dtf" secondAttribute="trailing" id="aTn-fB-vTX"/>
                 <constraint firstItem="INT-Kr-uVX" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="avS-rY-xTU"/>
-                <constraint firstItem="Qr6-XV-dtf" firstAttribute="left" secondItem="GLu-AF-z8l" secondAttribute="left" priority="250" id="brs-ve-bbt"/>
-                <constraint firstItem="Qr6-XV-dtf" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="dSI-Nl-Dmr"/>
-                <constraint firstAttribute="bottom" secondItem="Qr6-XV-dtf" secondAttribute="bottom" id="esX-hF-rQG"/>
-                <constraint firstAttribute="bottom" secondItem="Dj0-gs-G0V" secondAttribute="bottom" id="gZv-eb-T58"/>
                 <constraint firstAttribute="bottom" secondItem="Qr6-XV-dtf" secondAttribute="bottom" id="ilZ-3H-GxU"/>
                 <constraint firstAttribute="trailing" secondItem="R6s-Gn-XjS" secondAttribute="trailing" id="jtN-Tl-YP7"/>
-                <constraint firstItem="Qr6-XV-dtf" firstAttribute="left" secondItem="LVK-jm-cSa" secondAttribute="right" priority="750" id="q6Q-fw-2PW"/>
                 <constraint firstItem="INT-Kr-uVX" firstAttribute="top" secondItem="Qr6-XV-dtf" secondAttribute="bottom" id="qkM-s8-mis"/>
-                <constraint firstItem="LVK-jm-cSa" firstAttribute="left" secondItem="GLu-AF-z8l" secondAttribute="left" id="s45-xs-cme"/>
                 <constraint firstAttribute="right" secondItem="ys9-ZT-loK" secondAttribute="right" id="uwS-dO-CG0"/>
                 <constraint firstItem="UPf-Gi-Swq" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="w7Q-Aw-3LH"/>
                 <constraint firstItem="INT-Kr-uVX" firstAttribute="top" secondItem="R6s-Gn-XjS" secondAttribute="bottom" id="wRE-C8-CVW"/>
                 <constraint firstItem="ys9-ZT-loK" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="wb8-vO-aQU"/>
-                <constraint firstItem="LVK-jm-cSa" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="wro-nf-VMh"/>
                 <constraint firstItem="UPf-Gi-Swq" firstAttribute="left" secondItem="GLu-AF-z8l" secondAttribute="left" id="wzn-9B-dpC"/>
-                <constraint firstItem="Qr6-XV-dtf" firstAttribute="top" secondItem="UPf-Gi-Swq" secondAttribute="bottom" priority="750" id="ywU-Yw-UGs"/>
                 <constraint firstItem="R6s-Gn-XjS" firstAttribute="top" secondItem="UPf-Gi-Swq" secondAttribute="bottom" id="zHF-QT-ehN"/>
                 <constraint firstItem="INT-Kr-uVX" firstAttribute="top" secondItem="BBL-aR-gtQ" secondAttribute="bottom" id="ztJ-JM-dKN"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="10B-Me-MIX"/>
-                    <exclude reference="LX2-xf-QRa"/>
-                    <exclude reference="brs-ve-bbt"/>
-                    <exclude reference="esX-hF-rQG"/>
-                    <exclude reference="q6Q-fw-2PW"/>
-                    <exclude reference="ywU-Yw-UGs"/>
                     <exclude reference="qkM-s8-mis"/>
                     <exclude reference="wRE-C8-CVW"/>
                 </mask>
