@@ -180,10 +180,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     func smsShare() {
         
-        var params = [ "referringUsername": "User1",
-            "referringUserId": "12345",  "pictureId": "987666",
-            "pictureURL": "http://yoursite.com/pics/987666",
-            "pictureCaption": "BOOM" ]
+      
+        var params = [ "referringUsername": "friend", "referringOut": "AVC", "albumId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+        //        [ "referringUsername": "friend", "referringUserId": "6",  "eventId": "\(self.eventId)", "pictureId": "\(self.objectIdTemp)", "pictureCaption": "\(self.eventTitle)" ]
+
         
         // this is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
         

@@ -125,40 +125,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // This can now count as a referred session even if this isn't
                 // the first time a user has opened the app (aka an "Install").
                 //Custom logic goes here --> dependent on access to cloud services
-                if((params["eventId"]) != nil){
+                if((params["referringOut"])  != nil){
+                    //image ID
                     let eventIIden: AnyObject? = params["eventId"]
-                    var objectIdTemp : String = ""
+                    let albumIIden: AnyObject? = params["albumId"]
+                    let eventTitle: AnyObject? = params["eventTitle"]
+                    print("=======================user with: \(eventIIden) \(albumIIden) \(eventTitle)")
                     
                     // Load information from parse db
-                    var query = PFQuery(className: "Event")
-                    query.limit = 10
-                    query.whereKey("objectId", equalTo: "hok0dvWB0Y")
-                    
+                    var queryEvent = PFQuery(className: "Event")
+                    queryEvent.limit = 10
+                    //queryEvent.whereKey("objectId", equalTo: albumIIden!)
+                    //queryEvent.whereKey("objectId", equalTo: "b8BYLy5cLW")
+                    queryEvent.whereKey("eventName", equalTo: eventTitle!)
         
-                    var object = query.findObjects()?.first as! PFObject
+                    var objectE = queryEvent.findObjects()?.first as! PFObject
                     
-                    self.checkinToEvent(object)
+                    //self.checkinToEvent(object)
                     
-//                    var photos = object["photos"] as! PFRelation
-//                    var tempImage: PFFile?
-//                    
-//                    var photoList = photos.query()?.getObjectWithId(eventIIden as! String)
-//                    print("\(eventIIden as! String)")
-//                    
-//                    tempImage = photoList!.objectForKey("image") as? PFFile
-//                    
-//                    tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
-//                        
-//                        if error == nil {
-//                            
-//                            self.inviteImage = UIImage(data: imageData!)!
-//                            
-//                        } else {
-//                            
-//                            println(error)
-//                        }
-//                    }
-//                    var topView = UIApplication.sharedApplication().keyWindow?.rootViewController
+                    let query = PFUser.query()
+                    
+                    println(PFUser.currentUser()!.objectId!)
+                    query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                        
+                        if error != nil {
+                            println(error)
+                        }
+                        else
+                        {
+                            
+                            // Subscribe user to the channel of the event for push notifications
+                            let currentInstallation = PFInstallation.currentInstallation()
+                            currentInstallation.addUniqueObject(("a" + objectE.objectId!) , forKey: "channels")
+                            currentInstallation.saveInBackground()
+                            
+                            // Store the relation
+                            let relation = objectE.relationForKey("attendees")
+                            relation.addObject(object!)
+                            
+                            objectE.save()
+                            
+                            // TODO: Check for existing event_list for eventName
+                            var listEvents = object!.objectForKey("savedEventNames") as! [String]
+                            if contains(listEvents, objectE["eventName"] as! String)
+                            {
+                                print("Event already in list")
+                            }
+                            else
+                            {
+                                // Add the event to the User object
+                                object?.addUniqueObject(objectE, forKey:"savedEvents")
+                                object?.addUniqueObject(objectE["eventName"] as! String, forKey:"savedEventNames")
+                                
+                                object!.saveInBackground()
+                                
+                                
+                                // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                                var attendance = PFObject(className:"EventAttendance")
+                                attendance["eventID"] = objectE.objectId
+                                attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                                attendance["photosLikedID"] = []
+                                attendance["photosLiked"] = []
+                                attendance["photosUploadedID"] = []
+                                attendance["photosUploaded"] = []
+                                attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                                attendance.setObject(objectE, forKey: "event")
+                                
+                                attendance.saveInBackground()
+                                
+                                println("Saved")
+                                let alert = UIAlertView()
+                                alert.title = "Congratulations"
+                               alert.message = "You have been added to \(eventTitle!)"
+                               alert.addButtonWithTitle("Done")
+                                
+                                alert.delegate = self
+                               alert.show()
+                            }
+                        }
+                    })
+                    //                    var topView = UIApplication.sharedApplication().keyWindow?.rootViewController
 //                    while (topView?.presentedViewController != nil){
 //                        topView = topView!.presentedViewController
 //                    }
