@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ADSquareCropViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreviewViewController" customModule="Backflip" customModuleProvider="target">
             <connections>
                 <outlet property="cropOpeningView" destination="R6s-Gn-XjS" id="Qio-2i-K3H"/>
                 <outlet property="imageView" destination="MYo-N8-JBd" id="cQC-Wt-whp"/>
@@ -31,7 +31,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="532" height="400"/>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="MYo-N8-JBd" secondAttribute="trailing" id="E8A-zG-4PX"/>
                         <constraint firstItem="MYo-N8-JBd" firstAttribute="leading" secondItem="Qr6-XV-dtf" secondAttribute="leading" id="UdX-M9-4wB"/>
@@ -39,6 +39,7 @@
                         <constraint firstAttribute="width" secondItem="Qr6-XV-dtf" secondAttribute="height" multiplier="4:3" id="gW1-lf-vYM"/>
                         <constraint firstItem="MYo-N8-JBd" firstAttribute="top" secondItem="Qr6-XV-dtf" secondAttribute="top" id="mBJ-St-VMa"/>
                     </constraints>
+                    <inset key="scrollIndicatorInsets" minX="0.0" minY="-60" maxX="0.0" maxY="0.0"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="9aO-cw-RzD"/>
                     </connections>
@@ -58,7 +59,7 @@
                                 <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="cropButtonPressed:" destination="-1" eventType="touchUpInside" id="XP9-2H-SRh"/>
+                                <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="Z2G-ue-Red"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8YX-N6-quC">
@@ -74,7 +75,7 @@
                                 <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="oHM-g9-VWz"/>
+                                <action selector="cropButtonPressed:" destination="-1" eventType="touchUpInside" id="tfh-29-abo"/>
                             </connections>
                         </button>
                     </subviews>
@@ -87,13 +88,13 @@
                     </constraints>
                 </view>
                 <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="600" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="UPf-Gi-Swq" userLabel="Top">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="AUD-dB-sqq"/>
+                        <constraint firstAttribute="height" constant="121" id="AUD-dB-sqq"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBL-aR-gtQ">
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.5499999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBL-aR-gtQ">
                     <rect key="frame" x="0.0" y="435" width="375" height="60"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -130,7 +131,7 @@
                 <constraint firstItem="UPf-Gi-Swq" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="w7Q-Aw-3LH"/>
                 <constraint firstItem="ys9-ZT-loK" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="wb8-vO-aQU"/>
                 <constraint firstItem="UPf-Gi-Swq" firstAttribute="left" secondItem="GLu-AF-z8l" secondAttribute="left" id="wzn-9B-dpC"/>
-                <constraint firstItem="R6s-Gn-XjS" firstAttribute="top" secondItem="UPf-Gi-Swq" secondAttribute="bottom" id="zHF-QT-ehN"/>
+                <constraint firstItem="R6s-Gn-XjS" firstAttribute="top" secondItem="UPf-Gi-Swq" secondAttribute="bottom" constant="-61" id="zHF-QT-ehN"/>
                 <constraint firstItem="INT-Kr-uVX" firstAttribute="top" secondItem="BBL-aR-gtQ" secondAttribute="bottom" id="ztJ-JM-dKN"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

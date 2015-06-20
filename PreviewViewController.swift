@@ -19,10 +19,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var referenceView: UIView!
-    @IBOutlet weak var topBlockerScrollViewConstraint: NSLayoutConstraint!
-    @IBOutlet weak var topSuperviewScrollViewConstraint: NSLayoutConstraint!
-    @IBOutlet weak var leftBlockerScrollViewConstraint: NSLayoutConstraint!
-    @IBOutlet weak var leftSuperviewScrollViewConstraint: NSLayoutConstraint!
+
     
     @IBOutlet weak var cropOpeningView: UIView!
     
@@ -40,13 +37,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 imageView.setNeedsUpdateConstraints()
             }
         }
-    }
-    
-    enum ADLayoutPriority: UILayoutPriority {
-        case Required  = 1000
-        case DefaultHigh  = 750
-        case DefaultLow  = 250
-        case FittingSizeLevel  = 50
     }
     
     private let NibName = "PreviewViewController"
@@ -106,26 +96,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         }
             }
     
-    override func updateViewConstraints() {
-//        imageView.sizeToFit()
-//        if imageView.bounds.size.aspect() >= 1 {
-//            leftSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
-//            topSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
-//        }
-//        else {
-//            leftSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
-//            topSuperviewScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
-//        }
-//        if imageView.bounds.size.aspect() >= 1 {
-//            topBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
-//            leftBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
-//        }
-//        else {
-//            topBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultLow.rawValue
-//            leftBlockerScrollViewConstraint.priority = ADLayoutPriority.DefaultHigh.rawValue
-//        }
-        super.updateViewConstraints()
-    }
     
     override func viewDidLayoutSubviews() {
         
