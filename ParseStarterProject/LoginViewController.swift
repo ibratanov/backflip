@@ -102,6 +102,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         user["nearbyEvents"] = []
                         user["phone"] = session.phoneNumber
                         user["savedEvents"] = []
+                        user["savedEventNames"] = []
                         user["blocked"] = false
                         user["firstUse"] = true
                         

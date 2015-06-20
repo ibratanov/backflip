@@ -133,50 +133,65 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         //locationManager.requestWhenInUseAuthorization()
         //self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
 
+        
+        
         let query = PFUser.query()
         var userObjectId = PFUser.currentUser()?.objectId!
         query!.getObjectInBackgroundWithId(userObjectId!, block: { (object, error) -> Void in
             
-            if error != nil {
-                println(error)
-            }
-            else
-            {
+            var firstTime = PFUser.currentUser()?.objectForKey("firstUse") as! Bool
+            
+            if (firstTime == true) {
                 
-                //Check if event exists
-                let query = PFQuery(className: "Event")
-                query.whereKey("eventName", equalTo: "Welcome to BackFlip")
-                let scoreArray = query.findObjects()
-                
-                
-                var event = scoreArray?[0] as! PFObject
-                
-                
-                // Store the relation
-                let relation = event.relationForKey("attendees")
-                relation.addObject(object!)
-                
-                event.save()
-                
-                // Add the event to the User object
-                object?.addUniqueObject(event, forKey:"savedEvents")
-                object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
-                
-                object!.saveInBackground()
-                
-                
-                // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                var attendance = PFObject(className:"EventAttendance")
-                attendance["eventID"] = event.objectId
-                attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                attendance.setObject(event, forKey: "event")
-                
-                attendance.saveInBackground()
-                
+                if error != nil {
+                    println(error)
+                }
+                else
+                {
+                    
+                    //Check if event exists
+                    let query = PFQuery(className: "Event")
+                    query.whereKey("eventName", equalTo: "Welcome to Backflip")
+                    let scoreArray = query.findObjects()
+                    
+                    
+                    var event = scoreArray?[0] as! PFObject
+                    
+                    
+                    // Store the relation
+                    let relation = event.relationForKey("attendees")
+                    relation.addObject(object!)
+                    
+                    event.save()
+                    
+                    // Add the event to the User object
+                    object?.addUniqueObject(event, forKey:"savedEvents")
+                    object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
+                    
+                    object!.saveInBackground()
+                    
+                    
+                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                    var attendance = PFObject(className:"EventAttendance")
+                    attendance["eventID"] = event.objectId
+                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                    attendance.setObject(event, forKey: "event")
+                    attendance["photosLikedID"] = []
+                    attendance["photosLiked"] = []
+                    attendance["photosUploaded"] = []
+                    attendance["photosUploadedID"] = []
+                    
+                    
+                    attendance.saveInBackground()
+                    PFUser.currentUser()?.setObject(false, forKey: "firstUse")
+        
+                    
+                }
             }
             
         })
+            
         
         
         self.calcNearByEvents()
