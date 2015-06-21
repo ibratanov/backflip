@@ -146,12 +146,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
             
             self.collectionView?.reloadData()
-            
-            println("SUCESSSFULLY REFRESHED______________")
         }
-        
-        println("ENTERED VIEWWILLAPPEAR________")
-        
     }
     
     func seg() {
