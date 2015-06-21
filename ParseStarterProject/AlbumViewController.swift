@@ -54,7 +54,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // Variable for storing PFFile as image, pass through segue
     var images = [UIImage]()
     var postLogo = UIImage(named: "liked.png") as UIImage!
-    var goBack = UIImage(named: "goto-eventhistory-icon") as UIImage!
+    var goBack = UIImage(named: "back") as UIImage!
     var share = UIImage(named: "share-icon") as UIImage!
     var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
