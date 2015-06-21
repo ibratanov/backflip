@@ -28,6 +28,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     
     var userLocation:PFGeoPoint = PFGeoPoint()
     
+    var locationDisabled = false
+    
     @IBOutlet var pickerInfo: UIPickerView!
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -241,13 +243,17 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
                 query.limit = 10
 
+                var usr = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
+                var savedEvents: [String] = usr!.objectForKey("savedEventNames") as! [String]
+                
                 var objects = query.findObjects()
                 for object in objects as! [PFObject] {
-                    var eventName: AnyObject? = object.objectForKey("eventName")
+                    var eventName = object.objectForKey("eventName") as! String
+                    var active = object.objectForKey("isLive") as! Bool
                     
                     // TODO: Check
-                    if self.cellContent.count < query.limit {
-                        self.cellContent.addObject(eventName!)
+                    if active && self.cellContent.count < query.limit && !contains(savedEvents, eventName) {
+                        self.cellContent.addObject(eventName)
                     }
                     
                 }
@@ -259,28 +265,15 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 else {
                     self.pickerInfo.reloadAllComponents()
                 }
-//                query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-//                    self.cellContent.removeAllObjects()
-//
-//                    print(objects!.count)
-//                    
-//                    for object in objects as! [PFObject] {
-//                        var eventName: AnyObject? = object.objectForKey("eventName")
-//                        
-//                        // hack, fix later
-//                        if self.cellContent.count < query.limit {
-//                            self.cellContent.addObject(eventName!)
-//                        }
-//                        
-//                    }
-//                    self.pickerInfo.reloadAllComponents()
-//
-//                })
                 
             }
             else {
                 print("Error with User Geopoint")
                 println(error)
+                
+                self.locationDisabled = true
+                self.pickerInfo.hidden = true
+                self.noEventLabel.text = "No Events Nearby"
             }
         }
     }
@@ -317,7 +310,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         let query = PFUser.query()
         
-        println(PFUser.currentUser()!.objectId!)
         query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
             
             if error != nil {
@@ -330,10 +322,11 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 let query = PFQuery(className: "Event")
                 query.whereKey("eventName", equalTo: self.eventSelected)
                 let scoreArray = query.findObjects()
-                if scoreArray!.count == 0 {
+                if self.locationDisabled == true {
+                    self.displayAlert("No Nearby Events", error: "Please enable location access in the iOS settings for Backflip.")
+                } else if scoreArray!.count == 0 {
                     println(scoreArray)
-                    self.displayAlert("No Nearby Events", error: "Create a new event below.")
-
+                    self.displayAlert("No Nearby Events", error: "Create a new event!")
                 }
                 else {
                     var event = scoreArray?[0] as! PFObject

@@ -33,6 +33,8 @@ class CreatePublicEventViewController: UIViewController {
     }
     var address2:String = ""
     
+    var locationDisabled = false
+    
     @IBOutlet var eventName: UITextField!
     
     @IBOutlet var userAddressButton: UIButton!
@@ -73,146 +75,63 @@ class CreatePublicEventViewController: UIViewController {
         var userLatitude = self.userGeoPoint.latitude
         var userLongitude = self.userGeoPoint.longitude
         
-        
-        var geoCoder = CLGeocoder()
-        var location = CLLocation(latitude: userLatitude, longitude: userLongitude)
-        
-        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
-            let placeArray = placemarks as! [CLPlacemark]
+        if (self.locationDisabled == true) {
+            self.addressField.text = "No location found"
+        } else {
+            var geoCoder = CLGeocoder()
+            var location = CLLocation(latitude: userLatitude, longitude: userLongitude)
             
-            // Place details
-            var placeMark: CLPlacemark!
-            placeMark = placeArray[0]
-            
-            // Address dictionary
-            println(placeMark.addressDictionary)
-            
-            // Location name
-            var streetNumber = ""
-            if let locationName = placeMark.addressDictionary["Name"] as? NSString {
-                println(locationName)
-                streetNumber = locationName as String
-            }
-            
-            var streetAddress = ""
-            // Street address
-            if let street = placeMark.addressDictionary["Thoroughfare"] as? NSString {
-                println(street)
-                streetAddress = street as String
-            }
-            
-            var cityName = ""
-            // City
-            if let city = placeMark.addressDictionary["City"] as? NSString {
-                println(city)
-                cityName = city as String
+            geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+                let placeArray = placemarks as! [CLPlacemark]
                 
-            }
-            
-            // Zip code
-            if let zip = placeMark.addressDictionary["ZIP"] as? NSString {
-                println(zip)
-            }
-            
-            // Country
-            var countryName = ""
-            if let country = placeMark.addressDictionary["Country"] as? NSString {
-                println(country)
-                countryName = country as String
-            }
-            
-            var address = streetNumber + ", " + streetAddress
-            self.address2 = streetNumber + ", " + cityName + ", " + countryName
-            self.addressField.text = address
-            
-            
-        })
-
-        
+                // Place details
+                var placeMark: CLPlacemark!
+                placeMark = placeArray[0]
+                
+                // Address dictionary
+                println(placeMark.addressDictionary)
+                
+                // Location name
+                var streetNumber = ""
+                if let locationName = placeMark.addressDictionary["Name"] as? NSString {
+                    println(locationName)
+                    streetNumber = locationName as String
+                }
+                
+                var streetAddress = ""
+                // Street address
+                if let street = placeMark.addressDictionary["Thoroughfare"] as? NSString {
+                    println(street)
+                    streetAddress = street as String
+                }
+                
+                var cityName = ""
+                // City
+                if let city = placeMark.addressDictionary["City"] as? NSString {
+                    println(city)
+                    cityName = city as String
+                    
+                }
+                
+                // Zip code
+                if let zip = placeMark.addressDictionary["ZIP"] as? NSString {
+                    println(zip)
+                }
+                
+                // Country
+                var countryName = ""
+                if let country = placeMark.addressDictionary["Country"] as? NSString {
+                    println(country)
+                    countryName = country as String
+                }
+                
+                var address = streetNumber + ", " + streetAddress
+                self.address2 = streetNumber + ", " + cityName + ", " + countryName
+                self.addressField.text = address
+            })
+        }
     }
     
-    /*
-    
-    @IBAction func getUserAddressButton(sender: AnyObject) {
-        
-        var userLatitude = self.userGeoPoint.latitude
-        var userLongitude = self.userGeoPoint.longitude
-        
-        
-        var geoCoder = CLGeocoder()
-        var location = CLLocation(latitude: userLatitude, longitude: userLongitude)
-        
-        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
-            let placeArray = placemarks as! [CLPlacemark]
-            
-            // Place details
-            var placeMark: CLPlacemark!
-            placeMark = placeArray[0]
-            
-            // Address dictionary
-            println(placeMark.addressDictionary)
-            
-            // Location name
-            var streetNumber = ""
-            if let locationName = placeMark.addressDictionary["Name"] as? NSString {
-                println(locationName)
-                streetNumber = locationName as String
-            }
-            
-            var streetAddress = ""
-            // Street address
-            if let street = placeMark.addressDictionary["Thoroughfare"] as? NSString {
-                println(street)
-                streetAddress = street as String
-            }
-            
-            var cityName = ""
-            // City
-            if let city = placeMark.addressDictionary["City"] as? NSString {
-                println(city)
-                cityName = city as String
-                
-            }
-            
-            // Zip code
-            if let zip = placeMark.addressDictionary["ZIP"] as? NSString {
-                println(zip)
-            }
-            
-            // Country
-            var countryName = ""
-            if let country = placeMark.addressDictionary["Country"] as? NSString {
-                println(country)
-                countryName = country as String
-            }
-            
-            var address = streetNumber + ", " + streetAddress
-            self.address2 = streetNumber + ", " + cityName + ", " + countryName
-            self.addressField.text = address
-            
-            
-        })
-        
-        self.userAddressButton.hidden = true
-        
-        var event = PFObject(className:"Event")
-        event["eventName"] = self.eventName.text
-        
-        let userGeoPoint = PFGeoPoint(latitude:userLatitude, longitude:userLongitude)
-        event["geoLocation"] = userGeoPoint
-        
-//        event.saveInBackgroundWithBlock {
-//            (success: Bool, error: NSError?) -> Void in
-//            if (success) {
-//                // The object has been saved.
-//                println("success \(event.objectId)")
-//            } else {
-//                // There was a problem, check error.description
-//                println("fail")
-//            }
-//        }
-    }
-*/
     func checkMaxLength(textField: UITextField!, maxLength: Int) {
         if (count(textField.text!) > maxLength) {
             textField.deleteBackward()
@@ -240,10 +159,12 @@ class CreatePublicEventViewController: UIViewController {
         
         var eventName = myStr as String
 
-        if (eventName == "" || address == "") {
-            error = "Please enter an event name and location."
+        if (locationDisabled == true) {
+            error = "Please enable location access in the iOS settings for Backflip."
+        } else if (eventName == "" || address == "") {
+            error = "Please enter an event name."
         } else if (count(eventName) < 2) {
-            error = "Please enter a valid event name and location."
+            error = "Please enter a valid event name."
         }
         
         if (error != "") {
@@ -305,21 +226,6 @@ class CreatePublicEventViewController: UIViewController {
                         let relation = event.relationForKey("attendees")
                         relation.addObject(PFUser.currentUser()!)
                         
-//                        event.saveInBackgroundWithBlock {
-//                            (success: Bool, error: NSError?) -> Void in
-//                            if (success) {
-//                                // The object has been saved.
-//                                //println("**************************success \(event.objectId)")
-//                                
-//                                // Subscribe current device to event channel for push notifications
-//                                //let currentInstallation = PFInstallation.currentInstallation()
-//                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
-//                                //currentInstallation.saveInBackground()
-//                            } else {
-//                                // There was a problem, check error.description
-//                                println("fail")
-//                            }
-//                        }
                         self.eventID = event.objectId
                         event.save()
                         
@@ -339,24 +245,6 @@ class CreatePublicEventViewController: UIViewController {
                         attendance["photosLiked"] = []
                         attendance["photosUploadedID"] = []
                         attendance["photosUploaded"] = []
-
-                        
-//                        attendance.saveInBackgroundWithBlock{ (success, error) -> Void in
-//                            if (success) {
-//                                // The object has been saved.
-//                                println("suxess")//success \(event.objectId)")
-//                                
-//                                // Subscribe current device to event channel for push notifications
-//                                //let currentInstallation = PFInstallation.currentInstallation()
-//                                //currentInstallation.addUniqueObject(("a" + event.objectId!), forKey: "channels")
-//                                //currentInstallation.saveInBackground()
-//                            } else {
-//                                // There was a problem, check error.description
-//                                println("fail")
-//                                println(error)
-//                            }
-//
-//                        }
                         
                         attendance.save()
                         
@@ -435,12 +323,9 @@ class CreatePublicEventViewController: UIViewController {
             }
             else {
                 println("Error with User Geopoint")
+                self.locationDisabled = true
             }
         }
-        
-        
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {

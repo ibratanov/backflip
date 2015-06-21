@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -119,7 +118,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1420" y="-140"/>
+            <point key="canvasLocation" x="1372" y="-190"/>
         </scene>
         <!--Event Albums-->
         <scene sceneID="zH2-Tk-H6K">
@@ -198,7 +197,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ubu-Yz-5Xj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2007" y="-240"/>
+            <point key="canvasLocation" x="2570" y="-190"/>
         </scene>
         <!--Checkin View Controller-->
         <scene sceneID="lvA-2M-Sre">
@@ -365,7 +364,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nw0-yu-PiL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1775" y="781"/>
+            <point key="canvasLocation" x="1026" y="641"/>
         </scene>
         <!--CreateEvent-->
         <scene sceneID="nsu-6S-uCn">
@@ -542,7 +541,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NBi-xB-G5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2412" y="781"/>
+            <point key="canvasLocation" x="1710" y="641"/>
         </scene>
         <!--[Event Name]-->
         <scene sceneID="fge-kj-K8y">
@@ -718,7 +717,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NXK-9Z-o8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3044" y="-103"/>
+            <point key="canvasLocation" x="3062" y="-190"/>
         </scene>
         <!--Full Screen View Controller-->
         <scene sceneID="Rgz-H5-2NK">
@@ -853,7 +852,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ysJ-Me-BVH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3591" y="211"/>
+            <point key="canvasLocation" x="3577" y="-190"/>
         </scene>
         <!--NavController-->
         <scene sceneID="kuC-kA-2m0">
@@ -871,7 +870,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6l-V7-87z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2660" y="-240"/>
+            <point key="canvasLocation" x="2130" y="-190"/>
         </scene>
     </scenes>
     <resources>
@@ -886,9 +885,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ax8-uE-80J"/>
-        <segue reference="Ju0-Hh-YW7"/>
-        <segue reference="hKp-Y7-lrD"/>
+        <segue reference="bXg-ML-DEH"/>
         <segue reference="ofY-SC-By2"/>
-        <segue reference="g9n-sU-jyC"/>
+        <segue reference="hKp-Y7-lrD"/>
+        <segue reference="Akq-ph-AFX"/>
     </inferredMetricsTieBreakers>
 </document>
