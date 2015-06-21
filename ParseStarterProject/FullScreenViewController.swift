@@ -235,7 +235,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         self.mixpanel.track("Facebook Share")
                         self.dismissViewControllerAnimated(false, completion: nil)
-                        self.displaySuccess("Posted!", error: "Not appearing on Facebook? Make sure you are logged in to FB in iOS settings.")
+                        self.displaySuccess("Posted!", error: "Not appearing on Facebook? Check the iOS settings for Facebook and make sure you're logged in.")
 
                     }
                     
@@ -432,7 +432,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 
         //----------- Query for image display----------
         var getUploadedImages = PFQuery(className: "Event")
-        getUploadedImages.limit = 1000
+        getUploadedImages.limit = 1
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
@@ -442,7 +442,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         var tempImage: PFFile?
         // Finds associated photo object in relation
         var photoList = photos.query()?.getObjectWithId(objectIdTemp)
-        
+        self.tempDate = photoList?.createdAt
         
         // Once retrieved from relation, set the UIImage view for fullscreen view
         tempImage = photoList!.objectForKey("image") as? PFFile
@@ -491,36 +491,43 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 
             }
             
-            
         }
-        
-        //----------- Query for Like Count Label----------
-        var query6 = PFQuery(className: "Event")
-        
-        query6.whereKey("objectId", equalTo: eventId!)
-        
-        var events = query5.findObjects()?.first as! PFObject
-        var relations = eventObject["photos"] as! PFRelation
-        
-        // User like list that will be filled
-        var likeUserList : [String]
-        
-        // Finds associated photo object in relation
-        var likesRetrieved = relation.query()?.getObjectWithId(objectIdTemp)
-        
-        // Fill the like list with the user liked list array from photo relation
-        likeUserList = (likesRetrieved!.objectForKey("usersLiked") as? [String])!
-        
-        let count = likeUserList.count
-        
+        let count = likeList.count
+
         if (count == 1) {
-            
             self.likeCount.text = String(count) + " like"
-            
         } else {
-            
             self.likeCount.text = String(count) + " likes"
         }
+        
+        
+//        //----------- Query for Like Count Label----------
+//        var query6 = PFQuery(className: "Event")
+//        
+//        query6.whereKey("objectId", equalTo: eventId!)
+//        
+//        var events = query5.findObjects()?.first as! PFObject
+//        var relations = eventObject["photos"] as! PFRelation
+//        
+//        // User like list that will be filled
+//        var likeUserList : [String]
+//        
+//        // Finds associated photo object in relation
+//        var likesRetrieved = relation.query()?.getObjectWithId(objectIdTemp)
+//        
+//        // Fill the like list with the user liked list array from photo relation
+//        likeUserList = (likesRetrieved!.objectForKey("usersLiked") as? [String])!
+//        
+//        let count = likeUserList.count
+//        
+//        if (count == 1) {
+//            
+//            self.likeCount.text = String(count) + " like"
+//            
+//        } else {
+//            
+//            self.likeCount.text = String(count) + " likes"
+//        }
         
         
         if tempDate != nil {
@@ -545,9 +552,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         fullScreenImage.addGestureRecognizer(gesture)
         
         self.view.bringSubviewToFront(likeCount)
-
-
-        
 
     }
 

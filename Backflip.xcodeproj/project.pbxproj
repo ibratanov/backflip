@@ -63,6 +63,8 @@
 		92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C0F1B28280D007DE812 /* backfliplogo80.png */; };
 		92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C101B28280D007DE812 /* backfliplogo120.png */; };
 		92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C111B28280D007DE812 /* backfliplogo180.png */; };
+		B60389C21B36552A00525DBA /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B60389C01B36552A00525DBA /* FBAudienceNetwork.framework */; };
+		B60389C31B36552A00525DBA /* FBAudienceNetwork.README.txt in Resources */ = {isa = PBXBuildFile; fileRef = B60389C11B36552A00525DBA /* FBAudienceNetwork.README.txt */; };
 		B61801331B0BCBF8000CF25E /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61801321B0BCBF8000CF25E /* CheckinViewController.swift */; };
 		B68CDED61B2E1FBC00374158 /* heart-icon-empty.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */; };
 		B68CDED71B2E1FBC00374158 /* heart-icon-filled.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */; };
@@ -76,15 +78,12 @@
 		3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		45B08E26AC006AD2F7F956CE /* Pods-Backflip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Backflip.release.xcconfig"; path = "Pods/Target Support Files/Pods-Backflip/Pods-Backflip.release.xcconfig"; sourceTree = "<group>"; };
 		502199AD1B33817100A64387 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		502199AF1B3381D000A64387 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = "../../../../Downloads/parse-library-1.7.4/ParseFacebookUtilsV4.framework"; sourceTree = "<group>"; };
 		502199B11B33828A00A64387 /* FacebookSDKs-iOS-20150528.pkg */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.installer-pkg"; name = "FacebookSDKs-iOS-20150528.pkg"; path = "../../../../Downloads/FacebookSDKs-iOS-20150528.pkg"; sourceTree = "<group>"; };
 		502199B41B3382C800A64387 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../../../FacebookSDK/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		502199BF1B33830300A64387 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		502199C11B33833E00A64387 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		502199C31B33836600A64387 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		502199C51B33838A00A64387 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		502199C81B33840F00A64387 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../../../FacebookSDK/FBAudienceNetwork.framework; sourceTree = "<group>"; };
-		502199C91B33840F00A64387 /* FBAudienceNetwork.README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = FBAudienceNetwork.README.txt; path = ../../../FacebookSDK/FBAudienceNetwork.README.txt; sourceTree = "<group>"; };
 		502348F31B34F5FF00614FE6 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		502348F41B34F5FF00614FE6 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		502348F51B34F5FF00614FE6 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
@@ -136,6 +135,8 @@
 		92EF7C101B28280D007DE812 /* backfliplogo120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo120.png; sourceTree = "<group>"; };
 		92EF7C111B28280D007DE812 /* backfliplogo180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo180.png; sourceTree = "<group>"; };
 		A946191ACC95956DC5C1351E /* Pods-Backflip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Backflip.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Backflip/Pods-Backflip.debug.xcconfig"; sourceTree = "<group>"; };
+		B60389C01B36552A00525DBA /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		B60389C11B36552A00525DBA /* FBAudienceNetwork.README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FBAudienceNetwork.README.txt; sourceTree = "<group>"; };
 		B61801321B0BCBF8000CF25E /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 		B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-empty.pdf"; sourceTree = "<group>"; };
 		B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-filled.pdf"; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 				81BA81701A49DB6800E65899 /* Bolts.framework in Frameworks */,
 				50BED87D1B21E05100CBB715 /* Fabric.framework in Frameworks */,
 				502348F71B34F5FF00614FE6 /* FBSDKCoreKit.framework in Frameworks */,
+				B60389C21B36552A00525DBA /* FBAudienceNetwork.framework in Frameworks */,
 				50BED8801B21E05100CBB715 /* TwitterCore.framework in Frameworks */,
 				4CE6FAAFA9BADFF88D06B3D7 /* libPods-Backflip.a in Frameworks */,
 			);
@@ -245,20 +247,19 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B60389C01B36552A00525DBA /* FBAudienceNetwork.framework */,
+				B60389C11B36552A00525DBA /* FBAudienceNetwork.README.txt */,
 				502348F31B34F5FF00614FE6 /* FBSDKCoreKit.framework */,
 				502348F41B34F5FF00614FE6 /* FBSDKLoginKit.framework */,
 				502348F51B34F5FF00614FE6 /* FBSDKMessengerShareKit.framework */,
 				502348F61B34F5FF00614FE6 /* FBSDKShareKit.framework */,
 				506F8BCD1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework */,
-				502199C81B33840F00A64387 /* FBAudienceNetwork.framework */,
-				502199C91B33840F00A64387 /* FBAudienceNetwork.README.txt */,
 				502199C51B33838A00A64387 /* CoreMotion.framework */,
 				502199C31B33836600A64387 /* StoreKit.framework */,
 				502199C11B33833E00A64387 /* AVFoundation.framework */,
 				502199BF1B33830300A64387 /* AdSupport.framework */,
 				502199B41B3382C800A64387 /* FBAudienceNetwork.framework */,
 				502199B11B33828A00A64387 /* FacebookSDKs-iOS-20150528.pkg */,
-				502199AF1B3381D000A64387 /* ParseFacebookUtilsV4.framework */,
 				502199AD1B33817100A64387 /* Accounts.framework */,
 				922D4A0E1B2A95B600F5AE11 /* Branch.framework */,
 				3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */,
@@ -397,6 +398,7 @@
 				92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */,
 				50BBCFDC1B1514E10055DE32 /* backButton.png in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
+				B60389C31B36552A00525DBA /* FBAudienceNetwork.README.txt in Resources */,
 				67A795D81B2CE9F8006E489D /* OverlayView.xib in Resources */,
 				92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */,
 				67A796081B2EE4C5006E489D /* PreviewViewController.xib in Resources */,
@@ -606,6 +608,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -631,6 +634,7 @@
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -647,6 +651,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -672,6 +677,7 @@
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
