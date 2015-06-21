@@ -13,6 +13,7 @@ import AssetsLibrary
 import Foundation
 import Photos
 import MessageUI
+import AVFoundation
 
 
 let reuseIdentifier = "albumCell"
@@ -21,8 +22,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     var refresher: UIRefreshControl!
-    
-    
     
 
     //------------------Camera Att.-----------------
@@ -141,17 +140,13 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         if fullScreen == false || posted == true {
             
             if myPhotoSelected == false {
-                
                 updatePhotos()
-                self.collectionView?.reloadData()
-                
             } else {
-                
                 displayMyPhotos()
-                self.collectionView?.reloadData()
             }
+            
+            self.collectionView?.reloadData()
         }
-        
     }
     
     func seg() {
@@ -565,7 +560,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     self.datesTime.append(date)
                     
                 }
-    }
+        }
     
 
     override func didReceiveMemoryWarning() {
@@ -743,7 +738,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.presentViewController(picker, animated:true, completion:{})
             setLastPhoto()
             updateThumbnail()
-
             newMedia = true
         } else {
             if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
@@ -754,13 +748,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 picker.allowsEditing = false
                 
                 self.presentViewController(picker, animated:true, completion:{})
-              
 
                 newMedia = false
                 setLastPhoto()
                 updateThumbnail()
             }
         }
+        
+        testCalled()
 
         setLastPhoto()
         updateThumbnail()
@@ -973,6 +968,25 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             alert.addButtonWithTitle("Ok")
             alert.show()
         }
+        
+        var status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+        if (status == AVAuthorizationStatus.Authorized) {
+            println("authorized")
+        } else if(status == AVAuthorizationStatus.Denied){
+            var alert:UIAlertView = UIAlertView()
+            alert.title = "Camera Disabled"
+            alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
+            alert.delegate = self
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        } else if(status == AVAuthorizationStatus.Restricted){
+            var alert:UIAlertView = UIAlertView()
+            alert.title = "Camera Disabled"
+            alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
+            alert.delegate = self
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        }
     }
     
     @IBAction func reverseCamera(sender: UIButton) {
@@ -991,7 +1005,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 self.zoomImage.camera = false
             
             
-            UIView.transitionWithView(self.picker.view, duration: 1.0, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionCurlDown , animations: { () -> Void in
+            UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
                 self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
                 }, completion: nil)
             //self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
@@ -1011,7 +1025,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
             //----------------------------------------------------------------------------
 
-            UIView.transitionWithView(self.picker.view, duration: 1.0, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionCurlDown , animations: { () -> Void in
+            UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromRight , animations: { () -> Void in
                 self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
                 }, completion: nil)
             //self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front

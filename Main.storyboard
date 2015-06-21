@@ -302,7 +302,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="PAST EVENTS">
+                                <state key="normal" title="EVENT ALBUMS">
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -414,7 +414,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="PAST EVENTS">
+                                <state key="normal" title="EVENT ALBUMS">
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -884,10 +884,10 @@
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ax8-uE-80J"/>
         <segue reference="bXg-ML-DEH"/>
         <segue reference="ofY-SC-By2"/>
         <segue reference="hKp-Y7-lrD"/>
         <segue reference="Akq-ph-AFX"/>
+        <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>
