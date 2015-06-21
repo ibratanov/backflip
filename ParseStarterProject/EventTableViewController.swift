@@ -81,6 +81,9 @@ class EventTableViewController: UITableViewController {
             
             self.eventObjs.removeAll(keepCapacity: true)
             self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
+            
+            self.eventObjs = sorted(self.eventObjs, { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending })
+            
             for event in self.eventObjs {
                 println(event)
                 let relation = event.relationForKey("photos")
@@ -97,7 +100,10 @@ class EventTableViewController: UITableViewController {
             }
             
             self.tableView.reloadData()
+
+            
         })
+        
     }
     
     func updatePhotosForEvent(objectId: String) -> [PFFile] {

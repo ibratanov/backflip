@@ -823,10 +823,10 @@
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Akq-ph-AFX"/>
-        <segue reference="Fno-vP-GvK"/>
+        <segue reference="gz0-ak-oAk"/>
         <segue reference="bXg-ML-DEH"/>
-        <segue reference="Ax8-uE-80J"/>
+        <segue reference="Fno-vP-GvK"/>
         <segue reference="hKp-Y7-lrD"/>
+        <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>

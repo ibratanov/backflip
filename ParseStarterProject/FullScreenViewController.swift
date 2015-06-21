@@ -235,7 +235,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         
                         self.mixpanel.track("Facebook Share")
                         self.dismissViewControllerAnimated(false, completion: nil)
-                        self.displaySuccess("Posted!", error: "Not appearing on Facebook? Make sure you are logged in to FB in iOS settings.")
+                        self.displaySuccess("Posted!", error: "Not appearing on Facebook? Check the iOS settings for Facebook and make sure you are logged in.")
 
                     }
                     
