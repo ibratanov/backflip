@@ -12,6 +12,6 @@
 //#import <ParseFacebookUtils/PFFacebookUtils.h>
 
 
-#import <Mixpanel/Mixpanel.h>
+//#import <Mixpanel/Mixpanel.h>
 
 #endif
