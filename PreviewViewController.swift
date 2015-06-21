@@ -186,38 +186,28 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         println("TEST")
         
-        photo.saveInBackgroundWithBlock { (success, error) -> Void in
-            if (success) {
-                relation.addObject(photo)
-                photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-                photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-                
-                eventObject.saveInBackground()
-                
-                photoObject.saveInBackground()
-                
-                println("PHOTO UPLOADED!------------------")
-
-
-            } else {
-                println("FAILED PHOTO UPLOAD!------------------")
-            }
-            
-           
-        }
+//        photo.saveInBackgroundWithBlock { (success, error) -> Void in
+//            if (success) {
+//
+//                
+//                println("PHOTO UPLOADED!------------------")
+//
+//            } else {
+//                println("FAILED PHOTO UPLOAD!------------------")
+//            }
+//            
+//           
+//        }
         
+        photo.save()
         
-        /*var queryEvent = PFQuery(className: "Event")
-        queryEvent.whereKey("eventName", equalTo: self.eventTitle!)
-        var objects = queryEvent.findObjects() as! [PFObject]
-        var eventObject = objects[0]
-        
-        let relation = eventObject.relationForKey("photos")
         relation.addObject(photo)
+        photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+        photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
         
-        eventObject.saveInBackground()*/
+        eventObject.saveInBackground()
         
-        
+        photoObject.saveInBackground()
         
     }
     

@@ -23,8 +23,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     var refresher: UIRefreshControl!
     
-    
-    
 
     //------------------Camera Att.-----------------
     @IBOutlet weak var thumbnailButton: UIButton!
@@ -142,16 +140,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         if fullScreen == false || posted == true {
             
             if myPhotoSelected == false {
-                
                 updatePhotos()
-                self.collectionView?.reloadData()
-                
             } else {
-                
                 displayMyPhotos()
-                self.collectionView?.reloadData()
             }
+            
+            self.collectionView?.reloadData()
+            
+            println("SUCESSSFULLY REFRESHED______________")
         }
+        
+        println("ENTERED VIEWWILLAPPEAR________")
         
     }
     
