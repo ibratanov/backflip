@@ -35,13 +35,23 @@ class EventTableViewController: UITableViewController {
     var eventId: [String] = []
     var venues: [String] = []
     
-//    Enable UI Navigation Itemr
+//    Enable UI Navigation Item
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Medium",size: 18)!]
         self.tableView.reloadData()
         
-        updateEvents()
+        if NetworkAvailable.networkConnection() == true {
+            
+            updateEvents()
+            
+        } else {
+
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
+        }
     }
     
     override func viewDidLoad() {

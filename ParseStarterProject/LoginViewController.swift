@@ -65,6 +65,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         termsTextView.userInteractionEnabled = false
     }
     
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -74,75 +75,93 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     
     func didTapButton() {
         
-        // Appearance settings for Digits pop up menu
-        let digitsAppearance = DGTAppearance()
-        digitsAppearance.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
-        digitsAppearance.accentColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-
-        let digits = Digits.sharedInstance()
-        
-        // Initiate digits session
-        digits.authenticateWithDigitsAppearance(digitsAppearance, viewController: nil, title: "Sign in to Backflip") { (session, error) in
+        // Check for availability of network connection using Network available class
+        if NetworkAvailable.networkConnection() == true {
             
-            if session != nil {
+            // Appearance settings for Digits pop up menu
+            let digitsAppearance = DGTAppearance()
+            digitsAppearance.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+            digitsAppearance.accentColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
 
-                // If user proceeds with phone authentication, login with phonenumber to parse database
-                PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
+            let digits = Digits.sharedInstance()
+            
+            // Initiate digits session
+            digits.authenticateWithDigitsAppearance(digitsAppearance, viewController: nil, title: "Sign in to Backflip") { (session, error) in
+                
+                if session != nil {
 
-                    if user != nil {
-                        
-                        println("Log in successful")
-                        self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                        
-                    } else {
-                        
-                        // Initialize whatever data necessary for every user being put in database
-                        var user = PFUser()
-                        user.username = session.phoneNumber
-                        user.password = session.phoneNumber
-                        user["photosLiked"] = []
-                        user["nearbyEvents"] = []
-                        user["phone"] = session.phoneNumber
-                        user["savedEvents"] = []
-                        user["savedEventNames"] = []
-                        user["blocked"] = false
-                        user["firstUse"] = true
-                        
-                        user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
+                    // If user proceeds with phone authentication, login with phonenumber to parse database
+                    PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
+
+                        if user != nil {
                             
-                            if error == nil {
+                            println("Log in successful")
+                            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                            
+                        } else {
+                            
+                            // Initialize whatever data necessary for every user being put in database
+                            var user = PFUser()
+                            user.username = session.phoneNumber
+                            user.password = session.phoneNumber
+                            user["photosLiked"] = []
+                            user["nearbyEvents"] = []
+                            user["phone"] = session.phoneNumber
+                            user["savedEvents"] = []
+                            user["savedEventNames"] = []
+                            user["blocked"] = false
+                            user["firstUse"] = true
+                            
+                            user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
+                                
+                                if error == nil {
 
-                                println("Signed Up")
-                                self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                
-                            } else {
-                                
-                                println(error)
+                                    println("Signed Up")
+                                    self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                    
+                                } else {
+                                    
+                                    println(error)
+                                }
                             }
                         }
                     }
                 }
             }
-        }        
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+            
+        }
     }
 
 
 
     override func viewDidAppear(animated: Bool) {
         
-        // Check if the user is already logged in
-        if PFUser.currentUser() != nil {
-            var blocked = PFUser.currentUser()?.valueForKey("blocked") as! Bool
-            if blocked == false {
-                // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
-                self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+        if NetworkAvailable.networkConnection() == true{
+            // Check if the user is already logged in
+            if PFUser.currentUser() != nil {
+                var blocked = PFUser.currentUser()?.valueForKey("blocked") as! Bool
+                if blocked == false {
+                    // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
+                    self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                    
+                }
+                else {
+                    println("User is Blocked")
+                    displayAlertUserBlocked("You have been Blocked", error: "You have uploaded inappropriate photos")
+                }
                 
             }
-            else {
-                println("User is Blocked")
-                displayAlertUserBlocked("You have been Blocked", error: "You have uploaded inappropriate photos")
-            }
+        }else {
             
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
         }
     }
 }
