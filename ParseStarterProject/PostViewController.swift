@@ -25,8 +25,6 @@ class PostViewController: UIViewController,UINavigationControllerDelegate,UIImag
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
             
-            //Commented out below line to remove flip to login screen upon failed image post
-            //self.dismissViewControllerAnimated(false, completion: nil)
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
@@ -97,7 +95,6 @@ class PostViewController: UIViewController,UINavigationControllerDelegate,UIImag
             var photo = PFObject(className: "Photo")
             photo["caption"] = shareText.text //save the text, and object, then add image to it
             photo["uploaderName"] = PFUser.currentUser()!.username
-            //photo["timeStamp"] = NSDate()
             photo["upvotes"] = 0
             photo["usersLiked"] = []
             
@@ -140,7 +137,6 @@ class PostViewController: UIViewController,UINavigationControllerDelegate,UIImag
                         
                         self.imageToPost.image = nil
                         //sets image back to original one
-                        //can do UIImage(named: "file_name")
                         
                         self.shareText.text = ""
                         

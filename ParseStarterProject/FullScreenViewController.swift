@@ -14,7 +14,6 @@ import MessageUI
 
 class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate {
     
-    //let mixpanel = Mixpanel.sharedInstance()
     @IBOutlet var likeCount: UILabel!
     
     @IBOutlet var eventInfo: UILabel!
@@ -290,8 +289,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         alert.addAction(UIAlertAction(title: "Invite friends to album (SMS)", style: .Default, handler: { action in
             
             var params = [ "referringUsername": "friend", "referringOut": "FSVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
-            //var params = [ "referringUsername": "friend", "referringOut": "FSVC", "eventId": "\(self.objectIdTemp)", "albumId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
-            //        [ "referringUsername": "friend", "referringUserId": "6",  "eventId": "\(self.eventId)", "pictureId": "\(self.objectIdTemp)", "pictureCaption": "\(self.eventTitle)" ]
             
             // This is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
             
@@ -395,20 +392,10 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64 ))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-//        // Removes faint line under nav bar
-//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-//        navBar.shadowImage = UIImage()
-        
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
-//        var shortTitle: String?
-//        if (count(eventTitle) > 25) {
-//            shortTitle = eventTitle?.substringToIndex(25) + " . . ."
-//            navBarItem.title = shortTitle
-//        }
         navBarItem.title = eventTitle
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-        //navBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()]
         navBar.items = [navBarItem]
         
         // Left nav bar button item
@@ -499,36 +486,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         } else {
             self.likeCount.text = String(count) + " likes"
         }
-        
-        
-//        //----------- Query for Like Count Label----------
-//        var query6 = PFQuery(className: "Event")
-//        
-//        query6.whereKey("objectId", equalTo: eventId!)
-//        
-//        var events = query5.findObjects()?.first as! PFObject
-//        var relations = eventObject["photos"] as! PFRelation
-//        
-//        // User like list that will be filled
-//        var likeUserList : [String]
-//        
-//        // Finds associated photo object in relation
-//        var likesRetrieved = relation.query()?.getObjectWithId(objectIdTemp)
-//        
-//        // Fill the like list with the user liked list array from photo relation
-//        likeUserList = (likesRetrieved!.objectForKey("usersLiked") as? [String])!
-//        
-//        let count = likeUserList.count
-//        
-//        if (count == 1) {
-//            
-//            self.likeCount.text = String(count) + " like"
-//            
-//        } else {
-//            
-//            self.likeCount.text = String(count) + " likes"
-//        }
-        
         
         if tempDate != nil {
             
