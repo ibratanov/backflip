@@ -29,18 +29,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     @IBOutlet weak var flashButton: UIButton!
     var testCamera = UIImagePickerController()
 
-    
-    //@IBOutlet weak var imageView: UIImageView!
     var imageViewContent = UIImage()
     var overlayView: UIView?
     var image = UIImage()
     var picker = UIImagePickerController()
     var zoomImage = (camera: true, display: true)
     var newMedia: Bool = true
-    //TO-DO: Button pressed button released attributes
-    
-
-    //----------------------------------------
     
     // Title and ID of event passed from previous VC, based on selected row
     var eventId : String?
@@ -135,8 +129,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     override func viewWillAppear(animated: Bool) {
         // fullscreen is false, posted is true
-        println(fullScreen)
-        println(posted)
         if fullScreen == false || posted == true {
             
             if myPhotoSelected == false {
@@ -158,15 +150,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     func smsShare() {
         
         var params = [ "referringUsername": "friend", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
-        //var params = [ "referringUsername": "friend", "referringOut": "AVC", "albumId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
-        //        [ "referringUsername": "friend", "referringUserId": "6",  "eventId": "\(self.eventId)", "pictureId": "\(self.objectIdTemp)", "pictureCaption": "\(self.eventTitle)" ]
-
-        
-        // This is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
-        
-        //self.spinner.startAnimating()
-        //disable button
-        
         
         Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
             if (error == nil) {
@@ -179,12 +162,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     messageComposer.messageComposeDelegate = self
                     
                     self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
-                        // stop spinner on main thread
-                        //self.spinner.stopAnimating()
                     })
                 } else {
-                    
-                    //self.spinner.stopAnimating()
                     
                     var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
@@ -226,7 +205,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Defines where seg control is positioned
         let frame: CGRect = UIScreen.mainScreen().bounds
-        println(frame)
         let screenWidth = frame.width
         let screenHeight = frame.height
         var superCenter = CGPointMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds))
@@ -235,12 +213,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Set characteristics of segmented controller
         var backColor : UIColor = UIColor(red: 114/255, green: 114/255, blue: 114/255, alpha: 1)
         var titleFont : UIFont = UIFont(name: "Avenir", size: 12.0)!
-//        var textColor : UIColor = UIColor.whiteColor()
-        
         
         // Implement base colors on our segmented control
         segC.tintColor = UIColor.clearColor()
-//        segC.backgroundColor = UIColor.whiteColor()
         
         // Attributes for non selected segments
         var segAttributes = [
@@ -249,7 +224,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             NSFontAttributeName : titleFont,
             
-//            NSBackgroundColorAttributeName : textColor
         ]
         
         // Attributes for when segment is selected
@@ -274,7 +248,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Add targets, initialize segmented control
         segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
-//        self.view.addSubview(segC)
         
         //--------------- Draw UI ---------------
         
@@ -285,10 +258,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 94))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-//        // Removes faint line under nav bar
-//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-//        navBar.shadowImage = UIImage()
-        
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
         
@@ -296,7 +265,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
         let verticalOffset: CGFloat = -30
         navBar.setTitleVerticalPositionAdjustment(verticalOffset, forBarMetrics: .Default)
-//        navBar.titleVerticalPositionAdjustmentForBarMetrics(barMetrics: UIBarMetrics)
         navBar.items = [navBarItem]
         
         // Left nav bar button item
@@ -349,7 +317,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let components2 = NSDateComponents()
         components2.hour = 24
         var eventQuery = PFQuery(className: "Event")
-        println(self.eventId)
         
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
             if error == nil {
@@ -365,17 +332,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                     // Event is still active (currentTime < expiry time)
                     if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
-
-                    //self.displayAlert("Heads Up!", error: "Active")
-
                         
                     // Event is no longer active (currentTime > expiry time)
                     } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
                         
-                        //self.displayAlert("Heads Up!", error: "Inactive")
-                        
-                        // Delete if the event is no longer active
-                        //objects?.deleteInBackground()
                     }
                     
                 } else {
@@ -442,7 +402,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             var eventAttendance = queryResult.first as! PFObject
             
             var pList = eventAttendance["photosLiked"] as! [PFFile]
-            println(pList)
             var ids = eventAttendance["photosLikedID"] as! [String]
             
             for photo in pList {
@@ -453,44 +412,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 self.myObjectId.append(id)
             }
         }
-        
-        /*// Load information from parse db
-        var getUploadedImages = PFQuery(className: "Event")
-        getUploadedImages.limit = 1000
-        getUploadedImages.whereKey("objectId", equalTo: eventId!)
-        
-        // Retrieval from corresponding photos from relation to event
-        var object = getUploadedImages.findObjects()?.first as! PFObject
-        
-    
-        var photos = object["photos"] as! PFRelation
-
-        
-        // List of objects in the photo relation
-        var photosList = photos.query()?.findObjects() as! [PFObject]
-  
-        
-        var displayPhotos : [PFFile]
-        
-        for photo in photosList {
-            
-            var userList = photo["usersLiked"] as! [String]
-            var currPhoto = photo["thumbnail"] as! PFFile
-            
-            for users in userList {
-                
-                if users == PFUser.currentUser()?.username {
-                    
-                    self.myPhotos.append(currPhoto)
-                    self.myObjectId.append(photo.objectId!)
-                    
-                }
-            }
-            
-        }
-
-        dump(myPhotos)
-        dump(myObjectId)*/
         
     }
     
@@ -568,20 +489,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.images.removeAll(keepCapacity: true)
 
         self.collectionView?.reloadData()
-        // Dispose of any resources that can be recreated.
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
@@ -724,7 +632,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 var scale = screenBounds.height / cameraViewHeight
                 picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
                 picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
-                //self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
                 self.zoomImage.camera = false
             }
             
@@ -804,7 +711,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 transform = CGAffineTransformTranslate(transform, img.size.height, 0);
                 transform = CGAffineTransformScale(transform, -1, 1);
         }
-         //var ctx:CGContextRef = CGBitmapContextCreate(<#data: UnsafeMutablePointer<Void>#>, <#width: Int#>, <#height: Int#>, <#bitsPerComponent: Int#>, <#bytesPerRow: Int#>, <#space: CGColorSpace!#>, <#bitmapInfo: CGBitmapInfo#>)
 
         var ctx:CGContextRef = CGBitmapContextCreate(nil, Int(img.size.width), Int(img.size.height), CGImageGetBitsPerComponent(img.CGImage), 0, CGImageGetColorSpace(img.CGImage), CGImageGetBitmapInfo(img.CGImage))
         
@@ -852,17 +758,15 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         image = info[UIImagePickerControllerOriginalImage] as! UIImage
         self.imageViewContent = image
         picker.dismissViewControllerAnimated(true, completion: nil)
-        //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+
         //Retake and crop options------------------------------------------------------------------------
         let previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
         previewViewController.cropCompletionHandler = {
             self.imageViewContent = $0!
             previewViewController.dismissViewControllerAnimated(true, completion: nil)
-            //self.dismissViewControllerAnimated(true, completion: nil);
         }
         previewViewController.cancelCompletionHandler = {
             //retake image
-            //self.dismissViewControllerAnimated(true, completion: nil)
             
             self.presentViewController(picker, animated:true, completion:{})
             self.setLastPhoto()
@@ -885,9 +789,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         previewViewController.downloadToCameraRoll = downloadToCameraRoll
         
         self.presentViewController(previewViewController, animated: true, completion: nil);
-        //UIImageWriteToSavedPhotosAlbum(previewViewController.imageToCrop, nil, nil, nil)
-        //ensure image is cropped to a square
-        //self.imageView.image = image
         setLastPhoto()
         updateThumbnail()
         
@@ -992,8 +893,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     @IBAction func reverseCamera(sender: UIButton) {
         //TO-DO: add transition when reversed
         if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-            //self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-            //self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
 
                 var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
                 var cameraAspectRatio: CGFloat = 4.0/3.0
@@ -1001,26 +900,22 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 var scale = screenBounds.height / cameraViewHeight
                 picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
                 picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
-                //self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
                 self.zoomImage.camera = false
             
             
             UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
                 self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
                 }, completion: nil)
-            //self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
 
             self.flashButton.hidden = false
         }else{
             
             //----------------------------------------------------------------------------
             self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, -5.0)
-            //self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, -5.0), 1.333333, 1.333333)
             self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
 
             // resize
             if (zoomImage.camera) {
-                //self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 0.7, 0.7);
                 self.zoomImage.camera = false
             }
             //----------------------------------------------------------------------------
@@ -1028,7 +923,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromRight , animations: { () -> Void in
                 self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
                 }, completion: nil)
-            //self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
 
             self.flashButton.hidden = true
         }
@@ -1057,7 +951,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     func updateThumbnail(){
         thumbnailButton.setBackgroundImage(image, forState: .Normal)
-        //thumbnailButton.setImage(image, forState: .Normal)
         thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
         thumbnailButton.layer.borderWidth=1.0
         
@@ -1068,22 +961,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
 
             self.flashButton.setImage(flashOff, forState: .Normal)
-//            var alert:UIAlertView = UIAlertView()
-//            alert.title = "Flash off!"
-//            alert.message = " "
-//            alert.delegate = self
-//            alert.addButtonWithTitle("Ok")
-//            alert.show()
 
         }else{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.On
             self.flashButton.setImage(flashOn, forState: .Normal)
-//            var alert:UIAlertView = UIAlertView()
-//            alert.title = "Flash on!"
-//            alert.message = " "
-//            alert.delegate = self
-//            alert.addButtonWithTitle("Ok")
-//            alert.show()
         }
     }
     
@@ -1109,10 +990,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
         }
     }
-//    @IBAction func openSettings(sender: UIButton) {
-//        UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!);
-//    }
-    
+
     @IBAction func cancelCamera(sender: AnyObject) {
         picker.dismissViewControllerAnimated(true, completion: nil)
 
@@ -1130,42 +1008,4 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.presentViewController(testCamera, animated: true, completion: nil)
         }
     }
-
-    
-    //TO-DO: UIDeviceOrientationIsLandscape --> then rotate image
-    
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
-    
-    
-
 }

@@ -21,11 +21,7 @@ class InviteViewController: UIViewController {
         // post notification and pass imageview in userInfo
         
         NSNotificationCenter.defaultCenter().postNotificationName("MySetImageViewNotification", object: nil, userInfo: ["imageView": imageView])
-       // self.view.addSubview(imageView)
         imageView.contentMode = .ScaleAspectFit
-        //self.view.backgroundColor = UIColor.yellowColor()
-        //self.view.backgroundColor = UIColor(patternImage: imageView.image!)
-        
         
     }
     override func viewDidAppear(animated: Bool) {
@@ -35,10 +31,6 @@ class InviteViewController: UIViewController {
         self.view.addSubview(imageView)
         NSNotificationCenter.defaultCenter().postNotificationName("MySetImageViewNotification", object: nil, userInfo: ["imageView": imageView])
 
-        //self.view.backgroundColor = UIColor(patternImage: imageView.image!)
-
-       // self.imageView.image
-        
     }
 
 
