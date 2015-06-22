@@ -24,10 +24,14 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     var tempDate: NSDate?
     
+    // Scroll view
+    @IBOutlet weak var scroller: UIScrollView!
     
     var cellImage : UIImage!
     var objectIdTemp : String = ""
     var likeActive = false
+    var tempArray :[String]?
+    var selectedIndex : Int?
     
     // Icon image variables
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
@@ -49,6 +53,50 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             likeToggle(self)
             
         }
+    }
+    //selected index 0,1,2
+    //array 0,1,2
+    func handleSwipe (gesture: UISwipeGestureRecognizer) {
+        
+        if let swipeGesture: UISwipeGestureRecognizer = gesture as UISwipeGestureRecognizer! {
+            
+            switch swipeGesture.direction {
+                
+            case UISwipeGestureRecognizerDirection.Right:
+                
+                if selectedIndex! != 0 {
+                    
+                    selectedIndex! = selectedIndex! - 1
+                    self.viewDidLoad()
+                    
+                    
+                } else  {
+                    
+                    break
+                }
+                
+            case UISwipeGestureRecognizerDirection.Left:
+                
+                if tempArray?.count != selectedIndex! + 1 {
+                    
+                    selectedIndex! = selectedIndex! + 1
+                    self.viewDidLoad()
+                    
+                    
+                } else {
+                    
+                    break
+                    
+                }
+                
+                
+            default :
+                break
+
+            }
+ 
+        }
+        
     }
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -98,7 +146,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             var thumbnail : PFFile
             
             // Finds associated photo object in relation
-            var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
+            var retrieveLikes = likeRelation.query()?.getObjectWithId(tempArray![selectedIndex!])
             
             // Add user to like list, add 1 to the upvote count
             retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
@@ -129,7 +177,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 
                     object?.addObject(thumbnail, forKey: "photosLiked")
                             
-                    object?.addUniqueObject(self.objectIdTemp, forKey:"photosLikedID")
+                    object?.addUniqueObject(self.tempArray![self.selectedIndex!], forKey:"photosLikedID")
                             
                     object!.saveInBackground()
                             
@@ -157,7 +205,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             var thumbnail : PFFile
             
             // Finds associated photo object in relation
-            var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
+            var retrieveLikes = likeRelation.query()?.getObjectWithId(tempArray![self.selectedIndex!])
             
             // Add user to like list, add 1 to the upvote count
             retrieveLikes?.removeObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
@@ -190,7 +238,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                     object?.removeObject(thumbnail, forKey: "photosLiked")
                     
-                    object?.removeObject(self.objectIdTemp, forKey:"photosLikedID")
+                    object?.removeObject(self.tempArray![self.selectedIndex!], forKey:"photosLikedID")
                     
                     object!.saveInBackground()
                     
@@ -416,6 +464,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         navBar.addSubview(shareImage)
         
         self.view.addSubview(navBar)
+        
+        dump(tempArray)
+        println(selectedIndex)
 
         //----------- Query for image display----------
         var getUploadedImages = PFQuery(className: "Event")
@@ -428,7 +479,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         var photos = object["photos"] as! PFRelation
         var tempImage: PFFile?
         // Finds associated photo object in relation
-        var photoList = photos.query()?.getObjectWithId(objectIdTemp)
+        var photoList = photos.query()?.getObjectWithId(tempArray![selectedIndex!])
         self.tempDate = photoList?.createdAt
         
         // Once retrieved from relation, set the UIImage view for fullscreen view
@@ -458,7 +509,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         var likeList : [String]
         
         // Finds associated photo object in relation
-        var likeRetrieve = relation.query()?.getObjectWithId(objectIdTemp)
+        var likeRetrieve = relation.query()?.getObjectWithId(tempArray![self.selectedIndex!])
         
         // Fill the like list with the user liked list array from photo relation
         likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
@@ -509,7 +560,17 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         fullScreenImage.addGestureRecognizer(gesture)
         
         self.view.bringSubviewToFront(likeCount)
+        
+        let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        
+        var swipeRight = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(swipeRight)
 
+        self.view.userInteractionEnabled = true
     }
 
     

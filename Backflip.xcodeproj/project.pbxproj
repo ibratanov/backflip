@@ -22,11 +22,6 @@
 		504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */; };
 		505A465A1B0A55A600B9BB4F /* FullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */; };
 		506F8BCE1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506F8BCD1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework */; };
-		50BBCFD71B150F250055DE32 /* downloadButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFD61B150F250055DE32 /* downloadButton.png */; };
-		50BBCFD91B150FA50055DE32 /* shareButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFD81B150FA50055DE32 /* shareButton.png */; };
-		50BBCFDC1B1514E10055DE32 /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFDB1B1514E10055DE32 /* backButton.png */; };
-		50BBCFE11B16458E0055DE32 /* liked.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFE01B16458E0055DE32 /* liked.png */; };
-		50BBCFE31B1645A50055DE32 /* unliked.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BBCFE21B1645A50055DE32 /* unliked.png */; };
 		50BED87D1B21E05100CBB715 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED8791B21E05100CBB715 /* Fabric.framework */; };
 		50BED87E1B21E05100CBB715 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED87A1B21E05100CBB715 /* DigitsKit.framework */; };
 		50BED87F1B21E05100CBB715 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 50BED87B1B21E05100CBB715 /* DigitsKitResources.bundle */; };
@@ -83,11 +78,6 @@
 		504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenViewController.swift; sourceTree = "<group>"; };
 		506F8BCD1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
-		50BBCFD61B150F250055DE32 /* downloadButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downloadButton.png; sourceTree = "<group>"; };
-		50BBCFD81B150FA50055DE32 /* shareButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareButton.png; sourceTree = "<group>"; };
-		50BBCFDB1B1514E10055DE32 /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
-		50BBCFE01B16458E0055DE32 /* liked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liked.png; sourceTree = "<group>"; };
-		50BBCFE21B1645A50055DE32 /* unliked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unliked.png; sourceTree = "<group>"; };
 		50BED8791B21E05100CBB715 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		50BED87A1B21E05100CBB715 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
 		50BED87B1B21E05100CBB715 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
@@ -271,11 +261,6 @@
 				B68CDED81B2E336300374158 /* back.pdf */,
 				B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */,
 				B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */,
-				50BBCFDB1B1514E10055DE32 /* backButton.png */,
-				50BBCFD61B150F250055DE32 /* downloadButton.png */,
-				50BBCFD81B150FA50055DE32 /* shareButton.png */,
-				50BBCFE01B16458E0055DE32 /* liked.png */,
-				50BBCFE21B1645A50055DE32 /* unliked.png */,
 			);
 			name = "Button Icons";
 			sourceTree = "<group>";
@@ -365,21 +350,16 @@
 			files = (
 				50BED87F1B21E05100CBB715 /* DigitsKitResources.bundle in Resources */,
 				67B88BCE1B32D33A00BCE7C6 /* InviteViewController.xib in Resources */,
-				50BBCFD71B150F250055DE32 /* downloadButton.png in Resources */,
-				50BBCFE31B1645A50055DE32 /* unliked.png in Resources */,
 				B68CDED61B2E1FBC00374158 /* heart-icon-empty.pdf in Resources */,
 				92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */,
-				50BBCFD91B150FA50055DE32 /* shareButton.png in Resources */,
 				503BB1A61B2B62EF0042B16F /* Main.storyboard in Resources */,
 				92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */,
-				50BBCFDC1B1514E10055DE32 /* backButton.png in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
 				67A795D81B2CE9F8006E489D /* OverlayView.xib in Resources */,
 				92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */,
 				67A796081B2EE4C5006E489D /* PreviewViewController.xib in Resources */,
 				B68CDED71B2E1FBC00374158 /* heart-icon-filled.pdf in Resources */,
 				B6E180071B2E9ACE00D6EA12 /* Launch Screen.xib in Resources */,
-				50BBCFE11B16458E0055DE32 /* liked.png in Resources */,
 				B68CDED91B2E336300374158 /* back.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

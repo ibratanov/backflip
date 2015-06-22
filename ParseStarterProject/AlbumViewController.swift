@@ -54,6 +54,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     var flashOff = UIImage(named:"flash-icon-large") as UIImage!
     var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
+    
+    // Arrays of image files full size
+    var timesImages = [UIImage]()
+    var likeImages = [UIImage]()
+    var myImages = [UIImage]()
 
     
     // Tuple for sorting
@@ -595,16 +600,22 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             // Sorted by time (from newest to oldest)
             if self.sortedByLikes == false && self.myPhotoSelected == false {
 
-                moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
+                moveVC.tempArray = objectIdTime
                 moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
+                moveVC.selectedIndex = selectedCellIndex!.row
+                dump(selectedCellIndex!.row)
+                dump(objectIdTime)
                 
             } else if self.sortedByLikes == true && self.myPhotoSelected == false {
             // Sorted by like count
-                moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
+                moveVC.tempArray = objectIdLikes
                 moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                moveVC.selectedIndex = selectedCellIndex!.row
             } else {
                 
-                moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
+                moveVC.tempArray = myObjectId
+                moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                moveVC.selectedIndex = selectedCellIndex!.row
             }
         }  
     }

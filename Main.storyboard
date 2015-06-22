@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -797,6 +797,9 @@
                                     <action selector="downloadImage:" destination="OvI-dv-VgA" eventType="touchUpInside" id="MrD-dZ-r4f"/>
                                 </connections>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t0x-Jl-vwL">
+                                <rect key="frame" x="-7" y="126" width="327" height="320"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -847,6 +850,7 @@
                         <outlet property="fullScreenImage" destination="uoI-tj-emU" id="oNX-YR-p5u"/>
                         <outlet property="likeButtonLabel" destination="Cld-aL-GAw" id="Ky5-ON-eq8"/>
                         <outlet property="likeCount" destination="uv5-ir-czh" id="ClW-j3-qnO"/>
+                        <outlet property="scroller" destination="t0x-Jl-vwL" id="fjs-IH-yWd"/>
                         <outlet property="spinner" destination="UJg-Xx-CgL" id="RTo-ln-tem"/>
                     </connections>
                 </viewController>
@@ -884,10 +888,10 @@
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Fno-vP-GvK"/>
         <segue reference="bXg-ML-DEH"/>
-        <segue reference="ofY-SC-By2"/>
-        <segue reference="hKp-Y7-lrD"/>
-        <segue reference="Akq-ph-AFX"/>
+        <segue reference="gz0-ak-oAk"/>
         <segue reference="Ax8-uE-80J"/>
+        <segue reference="hKp-Y7-lrD"/>
     </inferredMetricsTieBreakers>
 </document>
