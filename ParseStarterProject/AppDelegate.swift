@@ -44,8 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // ParseCrashReporting.enable()
         //
         // Uncomment and fill in with your Parse credentials:
-        Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX",
-            clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
+        Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV",
+            clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
         
         Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()

@@ -98,28 +98,36 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
     func viewChanger (sender: UISegmentedControl) {
         
-        switch sender.selectedSegmentIndex {
+        if NetworkAvailable.networkConnection() == true {
+            switch sender.selectedSegmentIndex {
+                
+                // Rating
+                case 0 :    sortedByLikes = true
+                            myPhotoSelected = false
+                            updatePhotos()
+                            self.collectionView?.reloadData()
+                
+                // Time
+                case 1:     sortedByLikes = false
+                            myPhotoSelected = false
+                            updatePhotos()
+                            self.collectionView?.reloadData()
+                
+                // My Photos
+                case 2 :    myPhotoSelected = true
+                            displayMyPhotos()
+                            self.collectionView?.reloadData()
+                
+                
+                default:
+                    println("default")
+                
+            }
+        } else {
             
-            // Rating
-            case 0 :    sortedByLikes = true
-                        myPhotoSelected = false
-                        updatePhotos()
-                        self.collectionView?.reloadData()
-            
-            // Time
-            case 1:     sortedByLikes = false
-                        myPhotoSelected = false
-                        updatePhotos()
-                        self.collectionView?.reloadData()
-            
-            // My Photos
-            case 2 :    myPhotoSelected = true
-                        displayMyPhotos()
-                        self.collectionView?.reloadData()
-            
-            
-            default:
-                println("default")
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
             
         }
     }
@@ -128,16 +136,24 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     override func viewWillAppear(animated: Bool) {
-        // fullscreen is false, posted is true
-        if fullScreen == false || posted == true {
-            
-            if myPhotoSelected == false {
-                updatePhotos()
-            } else {
-                displayMyPhotos()
+        if NetworkAvailable.networkConnection() == true {
+            // fullscreen is false, posted is true
+            if fullScreen == false || posted == true {
+                
+                if myPhotoSelected == false {
+                    updatePhotos()
+                } else {
+                    displayMyPhotos()
+                }
+                
+                self.collectionView?.reloadData()
             }
+        } else {
             
-            self.collectionView?.reloadData()
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
         }
     }
     
@@ -176,6 +192,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        // Pull down to refresh
+        refresher = UIRefreshControl()
+        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.collectionView!.addSubview(refresher)
+        self.collectionView?.alwaysBounceVertical = true
+        
+        
+
         self.fullScreen = false
         self.posted = false
         //--------------- LIKE/TIME/MY PHOTOS ---------------
@@ -301,14 +327,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,80.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
  
-        // Pull down to refresh
-        refresher = UIRefreshControl()
-        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
-        self.collectionView!.addSubview(refresher)
-        self.collectionView?.alwaysBounceVertical = true
 
-        
+
+        if NetworkAvailable.networkConnection() == true {
         // Initialize date comparison components
         let currentTime = NSDate()
         let cal = NSCalendar.currentCalendar()
@@ -350,22 +371,38 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
             
         }
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+            
+        }
 
     }
     
     func refresh(sender: AnyObject) {
         
-        if myPhotoSelected == false {
-            
-            updatePhotos()
-            self.collectionView?.reloadData()
-            self.refresher.endRefreshing()
-            
+        if NetworkAvailable.networkConnection() == true {
+            if myPhotoSelected == false {
+                
+                updatePhotos()
+                self.collectionView?.reloadData()
+                self.refresher.endRefreshing()
+                
+            } else {
+                
+                displayMyPhotos()
+                self.collectionView?.reloadData()
+                self.refresher.endRefreshing()
+            }
         } else {
             
-            displayMyPhotos()
-            self.collectionView?.reloadData()
             self.refresher.endRefreshing()
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+ 
         }
         
     }

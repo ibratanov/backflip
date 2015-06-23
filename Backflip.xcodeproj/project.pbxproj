@@ -11,6 +11,7 @@
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
 		3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */; };
 		3AAA7B751B2B25F20045EE76 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */; };
+		50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */; };
 		502199AE1B33817100A64387 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199AD1B33817100A64387 /* Accounts.framework */; };
 		502199C21B33833E00A64387 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C11B33833E00A64387 /* AVFoundation.framework */; };
 		502199C61B33838A00A64387 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C51B33838A00A64387 /* CoreMotion.framework */; };
@@ -73,6 +74,7 @@
 		3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
 		3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		46E9C8A460839765CD930C9D /* Pods-Backflip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Backflip.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Backflip/Pods-Backflip.debug.xcconfig"; sourceTree = "<group>"; };
+		50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAvailable.swift; sourceTree = "<group>"; };
 		502199AD1B33817100A64387 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		502199C11B33833E00A64387 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		502199C51B33838A00A64387 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -199,6 +201,7 @@
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
 				B61801321B0BCBF8000CF25E /* CheckinViewController.swift */,
+				50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */,
 				3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */,
 				50CE7E731B027C9000F4B6B1 /* EventTableViewController.swift */,
 				3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */,
@@ -474,6 +477,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */,
 				505A465A1B0A55A600B9BB4F /* FullScreenViewController.swift in Sources */,
 				67B88BCF1B32D33A00BCE7C6 /* InviteViewController.swift in Sources */,
 				3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */,

@@ -134,6 +134,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 
             }
         })
+        
+        if NetworkAvailable.networkConnection() == true {
         var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
         
         if (downloadToCameraRoll!) {
@@ -193,7 +195,14 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         eventObject.saveInBackground()
         
         photoObject.saveInBackground()
-        
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
+            
+        }
     }
     
     func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
