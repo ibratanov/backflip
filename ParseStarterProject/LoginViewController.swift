@@ -60,6 +60,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Digits.sharedInstance().logOut()
 
         termsTextView.editable = false
         termsTextView.userInteractionEnabled = false
@@ -83,7 +85,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         
         // Initiate digits session
         digits.authenticateWithDigitsAppearance(digitsAppearance, viewController: nil, title: "Sign in to Backflip") { (session, error) in
-            
             if session != nil {
                 
                 let query = PFUser.query()
@@ -92,49 +93,87 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                 query!.whereKey("phone", equalTo: session.phoneNumber)
                 query!.limit = 1
                 var result = query!.findObjects()
-                var user = result?.first as! PFUser
-                if (user["blocked"] as! Bool == false) {
-                    
-                        // If user proceeds with phone authentication, login with phonenumber to parse database
-                        PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
+                if (result!.count == 0) {
+                    // If user proceeds with phone authentication, login with phonenumber to parse database
+                    PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
+                        
+                        if user != nil {
                             
-                            if user != nil {
+                            println("Log in successful")
+                            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                            
+                        } else {
+                            
+                            // Initialize whatever data necessary for every user being put in database
+                            var user = PFUser()
+                            user.username = session.phoneNumber
+                            user.password = session.phoneNumber
+                            user["photosLiked"] = []
+                            user["nearbyEvents"] = []
+                            user["phone"] = session.phoneNumber
+                            user["savedEvents"] = []
+                            user["savedEventNames"] = []
+                            user["blocked"] = false
+                            user["firstUse"] = true
+                            
+                            user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
                                 
-                                println("Log in successful")
-                                self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                
-                            } else {
-                                
-                                // Initialize whatever data necessary for every user being put in database
-                                var user = PFUser()
-                                user.username = session.phoneNumber
-                                user.password = session.phoneNumber
-                                user["photosLiked"] = []
-                                user["nearbyEvents"] = []
-                                user["phone"] = session.phoneNumber
-                                user["savedEvents"] = []
-                                user["savedEventNames"] = []
-                                user["blocked"] = false
-                                user["firstUse"] = true
-                                
-                                user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
+                                if error == nil {
                                     
-                                    if error == nil {
-                                        
-                                        println("Signed Up")
-                                        self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                        
-                                    } else {
-                                        
-                                        println(error)
-                                    }
+                                    println("Signed Up")
+                                    self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                    
+                                } else {
+                                    
+                                    println(error)
                                 }
                             }
                         }
+                    }
                 } else {
-                    Digits.sharedInstance().logOut()
-                    println("User is Blocked")
-                    self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
+                    var user = result?.first as! PFUser
+                    if (user["blocked"] as! Bool == false) {
+                            // If user proceeds with phone authentication, login with phonenumber to parse database
+                            PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
+                                
+                                if user != nil {
+                                    
+                                    println("Log in successful")
+                                    self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                    
+                                } else {
+                                    
+                                    // Initialize whatever data necessary for every user being put in database
+                                    var user = PFUser()
+                                    user.username = session.phoneNumber
+                                    user.password = session.phoneNumber
+                                    user["photosLiked"] = []
+                                    user["nearbyEvents"] = []
+                                    user["phone"] = session.phoneNumber
+                                    user["savedEvents"] = []
+                                    user["savedEventNames"] = []
+                                    user["blocked"] = false
+                                    user["firstUse"] = true
+                                    
+                                    user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
+                                        
+                                        if error == nil {
+                                            
+                                            println("Signed Up")
+                                            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                            
+                                        } else {
+                                            
+                                            println(error)
+                                        }
+                                    }
+                                }
+                            }
+                    } else {
+                        Digits.sharedInstance().logOut()
+                        println("User is Blocked")
+                        self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
+                    }
                 }
             }
         }
@@ -147,7 +186,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         if PFUser.currentUser() != nil {
             let query = PFUser.query()
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-                println(object)
                 var blocked = object!.valueForKey("blocked") as! Bool
                 if blocked == false {
                     // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
