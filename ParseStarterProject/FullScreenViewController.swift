@@ -26,10 +26,10 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     var tempDate: NSDate?
     
-    
     var cellImage : UIImage!
     var objectIdTemp : String = ""
     var likeActive = false
+    //var photoObj = PFObject()
     
     // Icon image variables
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
@@ -362,6 +362,46 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         }
     }
     
+    @IBAction func flagPhoto(sender: AnyObject) {
+        var getUploadedImages = PFQuery(className: "Event")
+        getUploadedImages.limit = 1
+        getUploadedImages.whereKey("objectId", equalTo: eventId!)
+        
+        // Retrieval from corresponding photos from relation to event
+        var object = getUploadedImages.findObjects()?.first as! PFObject
+        
+        var photos = object["photos"] as! PFRelation
+        
+        // Finds associated photo object in relation
+        var photoObj = photos.query()?.getObjectWithId(objectIdTemp)
+        
+        
+        var alert = UIAlertController(title: "Flag inappropriate content", message: "What is wrong with this photo?", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in }
+        
+        alert.addAction(UIAlertAction(title: "Flag", style: UIAlertActionStyle.Default, handler: { (action) in
+                var flagEntry = alert.textFields?.first as! UITextField
+                
+                photoObj!["flagged"] = true
+                photoObj!["reviewed"] = false
+                photoObj!["blocked"] = false
+                photoObj!["reporter"] = PFUser.currentUser()?.objectId
+                photoObj!["reportMessage"] = flagEntry.text
+            
+                photoObj?.save()
+            
+                print("photo flagged successfully. Msg: ")
+            
+                self.seg()
+            
+                println(flagEntry.text)
+            }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+
+    }
     
     // Alert displayed when an image is successfully saved to camera roll
     func saveImageAlert (title:String, error: String) {
@@ -429,12 +469,14 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         var photos = object["photos"] as! PFRelation
         var tempImage: PFFile?
+        
         // Finds associated photo object in relation
-        var photoList = photos.query()?.getObjectWithId(objectIdTemp)
-        self.tempDate = photoList?.createdAt
+        var photoObj = photos.query()?.getObjectWithId(objectIdTemp)
+        self.tempDate = photoObj?.createdAt
         
         // Once retrieved from relation, set the UIImage view for fullscreen view
-        tempImage = photoList!.objectForKey("image") as? PFFile
+        tempImage = photoObj!.objectForKey("image") as? PFFile
+
 
         tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
                     
@@ -500,8 +542,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             eventInfo.text = "Photo taken on \(dateStamp)"
             
         }
-        
-        
         
         // gesture implementation
         var gesture = UITapGestureRecognizer(target: self, action: "handleTap:")

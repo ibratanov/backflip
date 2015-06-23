@@ -61,8 +61,6 @@ class EventTableViewController: UITableViewController {
             
             self.performSegueWithIdentifier("logoutEventView", sender: self)
             
-            
-            
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
@@ -85,6 +83,8 @@ class EventTableViewController: UITableViewController {
             for event in self.eventObjs {
                 let relation = event.relationForKey("photos")
                 let query = relation.query()
+                query!.whereKey("flagged", equalTo: false)
+                query!.whereKey("blocked", equalTo: false)
                 query!.limit = 4
                 var photos = query!.findObjects() as! [PFObject]
                 var thumbnails: [PFFile] = []

@@ -154,6 +154,13 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         photo["thumbnail"] = thumbnailFile
         photo["upvoteCount"] = 1
         photo["usersLiked"] = [PFUser.currentUser()!.username!]
+        photo["uploader"] = PFUser.currentUser()!
+        photo["uploaderName"] = PFUser.currentUser()!.username!
+        photo["flagged"] = false
+        photo["reviewed"] = false
+        photo["blocked"] = false
+        photo["reporter"] = ""
+        photo["reportMessage"] = ""
         
         var photoACL = PFACL(user: PFUser.currentUser()!)
         photoACL.setPublicWriteAccess(true)
