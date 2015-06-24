@@ -84,41 +84,43 @@ class EventTableViewController: UITableViewController {
             let query = PFUser.query()
             query?.includeKey("savedEvents")
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-                
-                self.eventObjs.removeAll(keepCapacity: true)
-                self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
-                
-                self.eventObjs = sorted(self.eventObjs, { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending })
-                
-                for event in self.eventObjs {
-                    let relation = event.relationForKey("photos")
-                    let query = relation.query()
-                    query!.whereKey("flagged", equalTo: false)
-                    query!.whereKey("blocked", equalTo: false)
-                    query!.limit = 4
+                if (error == nil) {
+                    self.eventObjs.removeAll(keepCapacity: true)
+                    self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
                     
-                    //crash
-                    var photos = query!.findObjects() as! [PFObject]
+                    self.eventObjs = sorted(self.eventObjs, { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending })
                     
-                    if photos.count != 0 {
-                        var thumbnails: [PFFile] = []
+                    for event in self.eventObjs {
+                        let relation = event.relationForKey("photos")
+                        let query = relation.query()
+                        query!.whereKey("flagged", equalTo: false)
+                        query!.whereKey("blocked", equalTo: false)
+                        query!.limit = 4
                         
-                        for photo in photos {
-                            thumbnails.append(photo["thumbnail"] as! PFFile)
+                        //crash
+                        var photos = query!.findObjects() as! [PFObject]
+                        
+                        if photos.count != 0 {
+                            var thumbnails: [PFFile] = []
+                            
+                            for photo in photos {
+                                thumbnails.append(photo["thumbnail"] as! PFFile)
+                            }
+                            self.eventWithPhotos[event.objectId!] = thumbnails
+                            self.eventWithIds[event.objectId!] = thumbnails
                         }
-                        self.eventWithPhotos[event.objectId!] = thumbnails
-                        self.eventWithIds[event.objectId!] = thumbnails
+                        else {
+                            var thumbnails: [PFFile] = []
+                            self.eventWithPhotos[event.objectId!] = thumbnails
+                            self.eventWithIds[event.objectId!] = thumbnails
+                        }
                     }
-                    else {
-                        var thumbnails: [PFFile] = []
-                        self.eventWithPhotos[event.objectId!] = thumbnails
-                        self.eventWithIds[event.objectId!] = thumbnails
-                    }
+                    
+                    self.tableView.reloadData()
                 }
-                
-                self.tableView.reloadData()
-
-                
+                else {
+                    println(error)
+                }
             })
         }
         else {
