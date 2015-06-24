@@ -125,7 +125,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         } else {
             
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
             
@@ -150,7 +150,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         } else {
             
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
 
@@ -766,71 +766,84 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     //--------------- Camera ---------------
     //initialize camera
     func takePhoto(sender: UIButton) {
-        let query = PFUser.query()
-        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-            if (object!.valueForKey("blocked") as! Bool) {
-                PFUser.logOut()
-                Digits.sharedInstance().logOut()
-                self.performSegueWithIdentifier("logOutBlocked", sender: self)
-            } else {
-                self.fullScreen = false
-                self.posted = true
-                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-                    println("Button capture")
-                    
-                    //primary delegate for the picker
-                    self.picker.delegate = self
-                    self.picker.sourceType = .Camera
-                    self.picker.mediaTypes = [kUTTypeImage]
-                    self.picker.allowsEditing = false
-                    self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-                    self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-                    // resize
-                    if (self.zoomImage.camera) {
-                        var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
-                        var cameraAspectRatio: CGFloat = 4.0/3.0
-                        var cameraViewHeight = screenBounds.width * cameraAspectRatio
-                        var scale = screenBounds.height / cameraViewHeight
-                        self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
-                        self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, scale, scale)
-                        self.zoomImage.camera = false
-                    }
-                    
-                    // custom camera overlayview
-                    self.picker.showsCameraControls = false
-                    NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
-                    self.overlayView!.frame = self.picker.cameraOverlayView!.frame
-                    self.picker.cameraOverlayView = self.overlayView
-                    self.overlayView = nil
-                    
-                    self.presentViewController(self.picker, animated:true, completion:{})
-                    self.setLastPhoto()
-                    self.updateThumbnail()
-                    self.newMedia = true
-                } else {
-                    if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
-                        var picker = UIImagePickerController()
-                        picker.delegate = self;
-                        picker.sourceType = .PhotoLibrary
-                        picker.mediaTypes = [kUTTypeImage]
-                        picker.allowsEditing = false
+        
+        if NetworkAvailable.networkConnection() == true {
+            let query = PFUser.query()
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                if error == nil {
+                    if (object!.valueForKey("blocked") as! Bool) {
+                        PFUser.logOut()
+                        Digits.sharedInstance().logOut()
+                        self.performSegueWithIdentifier("logOutBlocked", sender: self)
+                    } else {
+                        self.fullScreen = false
+                        self.posted = true
+                        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+                            println("Button capture")
+                            
+                            //primary delegate for the picker
+                            self.picker.delegate = self
+                            self.picker.sourceType = .Camera
+                            self.picker.mediaTypes = [kUTTypeImage]
+                            self.picker.allowsEditing = false
+                            self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+                            self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+                            // resize
+                            if (self.zoomImage.camera) {
+                                var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
+                                var cameraAspectRatio: CGFloat = 4.0/3.0
+                                var cameraViewHeight = screenBounds.width * cameraAspectRatio
+                                var scale = screenBounds.height / cameraViewHeight
+                                self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
+                                self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, scale, scale)
+                                self.zoomImage.camera = false
+                            }
+                            
+                            // custom camera overlayview
+                            self.picker.showsCameraControls = false
+                            NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
+                            self.overlayView!.frame = self.picker.cameraOverlayView!.frame
+                            self.picker.cameraOverlayView = self.overlayView
+                            self.overlayView = nil
+                            
+                            self.presentViewController(self.picker, animated:true, completion:{})
+                            self.setLastPhoto()
+                            self.updateThumbnail()
+                            self.newMedia = true
+                        } else {
+                            if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
+                                var picker = UIImagePickerController()
+                                picker.delegate = self;
+                                picker.sourceType = .PhotoLibrary
+                                picker.mediaTypes = [kUTTypeImage]
+                                picker.allowsEditing = false
+                                
+                                self.presentViewController(picker, animated:true, completion:{})
+                                
+                                self.newMedia = false
+                                self.setLastPhoto()
+                                self.updateThumbnail()
+                            }
+                        }
                         
-                        self.presentViewController(picker, animated:true, completion:{})
+                        self.testCalled()
                         
-                        self.newMedia = false
                         self.setLastPhoto()
                         self.updateThumbnail()
-                    }
-                }
-                
-                self.testCalled()
-                
-                self.setLastPhoto()
-                self.updateThumbnail()
-                
+                        
 
-            }
-        })
+                    }
+                } else {
+                    
+                    println(error)
+                }
+            })
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to post photos")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+        }
     }
     
     func imageFixOrientation(img:UIImage) -> UIImage {
@@ -958,7 +971,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
-       
+
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -1156,6 +1169,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
 
     @IBAction func cancelCamera(sender: AnyObject) {
+        
+        println("hereon cancel")
         picker.dismissViewControllerAnimated(true, completion: nil)
 
     }
