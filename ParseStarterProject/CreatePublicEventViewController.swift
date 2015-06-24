@@ -71,6 +71,12 @@ class CreatePublicEventViewController: UIViewController {
         
     }
     
+    func displayNoInternetAlert() {
+        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+        self.presentViewController(alert, animated: true, completion: nil)
+        println("no internet")
+    }
+    
     func getUserAddress() {
         var userLatitude = self.userGeoPoint.latitude
         var userLongitude = self.userGeoPoint.longitude
@@ -257,9 +263,7 @@ class CreatePublicEventViewController: UIViewController {
                 })
             }
             else {
-                var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-                self.presentViewController(alert, animated: true, completion: nil)
-                println("no internet")
+                displayNoInternetAlert()
             }
         }
     }
@@ -329,11 +333,7 @@ class CreatePublicEventViewController: UIViewController {
                 }
             }
         } else {
-            
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-
+            displayNoInternetAlert()
         }
     }
     
@@ -341,9 +341,7 @@ class CreatePublicEventViewController: UIViewController {
         if NetworkAvailable.networkConnection() == true {
             getUserAddress()
         } else {
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
+            displayNoInternetAlert()
         }
     }
     
