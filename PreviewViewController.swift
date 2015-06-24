@@ -136,8 +136,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         })
         
         if NetworkAvailable.networkConnection() == true {
+
         var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
-        
             if (downloadToCameraRoll!) {
                 UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
             }
@@ -210,7 +210,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             
         } else {
             
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to post content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
 
