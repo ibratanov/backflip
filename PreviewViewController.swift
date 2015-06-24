@@ -21,7 +21,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var referenceView: UIView!
 
-    
     @IBOutlet weak var cropOpeningView: UIView!
     
     typealias CropCompletionHandlerType = (UIImage?) -> ()
@@ -56,7 +55,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        println(eventId)
         
         assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
         
@@ -104,7 +102,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         scrollView.maximumZoomScale = 5.0
         scrollView.minimumZoomScale = 0.15
         
-        //scrollView.zoomScale = scrollView.minimumZoomScale
         scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         
         let horizontalInset = (referenceView.bounds.width - cropDimension)/2 - scrollView.frame.origin.x
@@ -137,6 +134,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 
             }
         })
+        
+        if NetworkAvailable.networkConnection() == true {
         var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
         
         if (downloadToCameraRoll!) {
@@ -157,6 +156,13 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         photo["thumbnail"] = thumbnailFile
         photo["upvoteCount"] = 1
         photo["usersLiked"] = [PFUser.currentUser()!.username!]
+        photo["uploader"] = PFUser.currentUser()!
+        photo["uploaderName"] = PFUser.currentUser()!.username!
+        photo["flagged"] = false
+        photo["reviewed"] = false
+        photo["blocked"] = false
+        photo["reporter"] = ""
+        photo["reportMessage"] = ""
         
         var photoACL = PFACL(user: PFUser.currentUser()!)
         photoACL.setPublicWriteAccess(true)
@@ -173,31 +179,12 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
         photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
         
- 
-        //photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-        
-        
         var queryEvent = PFQuery(className: "Event")
         queryEvent.whereKey("objectId", equalTo: self.eventId!)
         var objects = queryEvent.findObjects() as! [PFObject]
         var eventObject = objects[0]
         
         let relation = eventObject.relationForKey("photos")
-        
-        println("TEST")
-        
-//        photo.saveInBackgroundWithBlock { (success, error) -> Void in
-//            if (success) {
-//
-//                
-//                println("PHOTO UPLOADED!------------------")
-//
-//            } else {
-//                println("FAILED PHOTO UPLOAD!------------------")
-//            }
-//            
-//           
-//        }
         
         photo.save()
         
@@ -208,7 +195,14 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         eventObject.saveInBackground()
         
         photoObject.saveInBackground()
-        
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
+            
+        }
     }
     
     func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
@@ -218,6 +212,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         var maxWidth:CGFloat = 640.0 * shrinkRatio
         var imageRatio:CGFloat = imageWidth/imageHeight
         var scalingRatio:CGFloat = maxWidth/maxHeight
+        
         //lowest quality rating with acceptable encoding
         var quality:CGFloat = 0.5
         

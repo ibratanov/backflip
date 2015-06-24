@@ -97,10 +97,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-//        // Removes faint line under nav bar
-//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-//        navBar.shadowImage = UIImage()
-        
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
         navBarItem.title = "Nearby Events"
@@ -117,109 +113,74 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
 
         self.view.addSubview(navBar)
         
-        /*
-        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
-            if error == nil {
-                print(geoPoint)
-                self.userGeoPoint = geoPoint!
-                print("Get's here")
+        if NetworkAvailable.networkConnection() == true {
+            
+            let query = PFUser.query()
+            var userObjectId = PFUser.currentUser()?.objectId!
+            query!.getObjectInBackgroundWithId(userObjectId!, block: { (object, error) -> Void in
+
+                var firstTime = PFUser.currentUser()?.objectForKey("firstUse") as! Bool
                 
+                if (firstTime == true) {
+
+                    
+                    if error != nil {
+                        println(error)
+                    }
+                    else
+                    {
+                        
+                        //Check if event exists
+                        let query = PFQuery(className: "Event")
+                        query.whereKey("eventName", equalTo: "Welcome to Backflip")
+                        let scoreArray = query.findObjects()
+                        
+                        
+                        var event = scoreArray?[0] as! PFObject
+                        
+                        
+                        // Store the relation
+                        let relation = event.relationForKey("attendees")
+                        relation.addObject(object!)
+                        
+                        event.save()
+                        
+                        // Add the event to the User object
+                        object?.addUniqueObject(event, forKey:"savedEvents")
+                        object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
+                        
+                        object!.saveInBackground()
+                        
+                        
+                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                        var attendance = PFObject(className:"EventAttendance")
+                        attendance["eventID"] = event.objectId
+                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                        attendance.setObject(event, forKey: "event")
+                        attendance["photosLikedID"] = []
+                        attendance["photosLiked"] = []
+                        attendance["photosUploaded"] = []
+                        attendance["photosUploadedID"] = []
+                        
+                        
+                        attendance.saveInBackground()
+                        PFUser.currentUser()?.setObject(false, forKey: "firstUse")
+            
+                        
+                    }
+                }
                 
-            }
-            else {
-                print("Error with User Geopoint")
-            }
+            })
+                
+            self.calcNearByEvents()
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
         }
-*/
-        //locationManager.delegate = self
-        //locationManager.requestWhenInUseAuthorization()
-        //self.pickerInfo.selectRow(2, inComponent: 0, animated: true)
-
-        
-        let query = PFUser.query()
-        var userObjectId = PFUser.currentUser()?.objectId!
-        query!.getObjectInBackgroundWithId(userObjectId!, block: { (object, error) -> Void in
-
-            var firstTime = PFUser.currentUser()?.objectForKey("firstUse") as! Bool
-            
-            if (firstTime == true) {
-
-                
-                if error != nil {
-                    println(error)
-                }
-                else
-                {
-                    
-                    //Check if event exists
-                    let query = PFQuery(className: "Event")
-                    query.whereKey("eventName", equalTo: "Welcome to Backflip")
-                    let scoreArray = query.findObjects()
-                    
-                    
-                    var event = scoreArray?[0] as! PFObject
-                    
-                    
-                    // Store the relation
-                    let relation = event.relationForKey("attendees")
-                    relation.addObject(object!)
-                    
-                    event.save()
-                    
-                    // Add the event to the User object
-                    object?.addUniqueObject(event, forKey:"savedEvents")
-                    object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
-                    
-                    object!.saveInBackground()
-                    
-                    
-                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                    var attendance = PFObject(className:"EventAttendance")
-                    attendance["eventID"] = event.objectId
-                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                    attendance.setObject(event, forKey: "event")
-                    attendance["photosLikedID"] = []
-                    attendance["photosLiked"] = []
-                    attendance["photosUploaded"] = []
-                    attendance["photosUploadedID"] = []
-                    
-                    
-                    attendance.saveInBackground()
-                    PFUser.currentUser()?.setObject(false, forKey: "firstUse")
-        
-                    
-                }
-            }
-            
-        })
-            
-        
-        
-        self.calcNearByEvents()
-        
-//        if self.cellContent.count == 0 {
-//            self.pickerInfo.hidden = true
-//            self.noEventLabel.text = "No Events Nearby"
-//        }
-        // Gets location of the user
-        /*
-        locationManager.delegate = self
-        
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        
-        locationManager.distanceFilter = 300 //every 300 meters it updates user's location
-        locationManager.requestWhenInUseAuthorization() //for testing purposes only
-        
-        //locationManager.requestAlwaysAuthorization()
-        
-        locationManager.startMonitoringSignificantLocationChanges()
-        locationManager.startUpdatingLocation()
-*/
-        
-        //self.pickerInfo.reloadAllComponents()
-    
     }
     
     func calcNearByEvents() {
@@ -282,12 +243,16 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     override func viewDidAppear(animated: Bool) {
         //self.pickerInfo.reloadAllComponents()
         //locationManager.stopUpdatingLocation()
-        
-        
 
-        
-        if (self.cellContent.count > 0) {
-            self.eventSelected = self.cellContent[0] as! String
+        if NetworkAvailable.networkConnection() == true {
+            if (self.cellContent.count > 0) {
+                self.eventSelected = self.cellContent[0] as! String
+            }
+        } else {
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
         }
     }
 
@@ -299,148 +264,99 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     @IBOutlet weak var checkInButton: UIButton!
     
     @IBAction func checkInClicked(sender: AnyObject) {
-        if (self.eventSelected == "" && self.cellContent.count > 0) {
-            self.eventSelected = self.cellContent[0] as! String
-        }
         
-        // Add user to this event
-        var eventName = self.eventSelected
-
-        println("\n\nchecking in to " + self.eventSelected)
-        
-        let query = PFUser.query()
-        
-        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+        if NetworkAvailable.networkConnection() == true {
+            if (self.eventSelected == "" && self.cellContent.count > 0) {
+                self.eventSelected = self.cellContent[0] as! String
+            }
             
-            if error != nil {
-                println(error)
-            }
-            else
-            {
-                
-                //Check if event exists
-                let query = PFQuery(className: "Event")
-                query.whereKey("eventName", equalTo: self.eventSelected)
-                let scoreArray = query.findObjects()
-                if self.locationDisabled == true {
-                    self.displayAlert("No Nearby Events", error: "Please enable location access in the iOS settings for Backflip.")
-                } else if scoreArray!.count == 0 {
-                    println(scoreArray)
-                    self.displayAlert("No Nearby Events", error: "Create a new event!")
-                }
-                else {
-                    var event = scoreArray?[0] as! PFObject
+            // Add user to this event
+            var eventName = self.eventSelected
 
-                    // Subscribe user to the channel of the event for push notifications
-                    let currentInstallation = PFInstallation.currentInstallation()
-                    currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
-                    currentInstallation.saveInBackground()
+            println("\n\nchecking in to " + self.eventSelected)
+            
+            let query = PFUser.query()
+            
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                
+                if error != nil {
+                    println(error)
+                }
+                else
+                {
                     
-                    // Store the relation
-                    let relation = event.relationForKey("attendees")
-                    relation.addObject(object!)
-                    
-//                    event.saveInBackgroundWithBlock {
-//                        (success: Bool, error: NSError?) -> Void in
-//                        if (success) {
-//                            // The object has been saved.
-//                            println("\n\nSuccess, event saved \(event.objectId)")
-//                        } else {
-//                            // There was a problem, check error.description
-//                            println("\n\nFailed to save the event object \(error)")
-//                        }
-//                    }
-                    event.save()
-                    
-                    // TODO: Check for existing event_list for eventName
-                    var listEvents = object!.objectForKey("savedEventNames") as! [String]
-                    if contains(listEvents, self.eventSelected)
-                    {
-                        print("Event already in list")
-                        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                    //Check if event exists
+                    let query = PFQuery(className: "Event")
+                    query.whereKey("eventName", equalTo: self.eventSelected)
+                    let scoreArray = query.findObjects()
+                    if self.locationDisabled == true {
+                        self.displayAlert("No Nearby Events", error: "Please enable location access in the iOS settings for Backflip.")
+                    } else if scoreArray!.count == 0 {
+                        self.displayAlert("No Nearby Events", error: "Create a new event!")
                     }
-                    else
-                    {
-                        // Add the event to the User object
-                        object?.addUniqueObject(event, forKey:"savedEvents")
-                        object?.addUniqueObject(self.eventSelected, forKey:"savedEventNames")
+                    else {
+                        var event = scoreArray?[0] as! PFObject
+
+                        // Subscribe user to the channel of the event for push notifications
+                        let currentInstallation = PFInstallation.currentInstallation()
+                        currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
+                        currentInstallation.saveInBackground()
                         
-                        object!.saveInBackground()
+                        // Store the relation
+                        let relation = event.relationForKey("attendees")
+                        relation.addObject(object!)
                         
+                        event.save()
                         
-                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                        var attendance = PFObject(className:"EventAttendance")
-                        attendance["eventID"] = event.objectId
-                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                        attendance["photosLikedID"] = []
-                        attendance["photosLiked"] = []
-                        attendance["photosUploadedID"] = []
-                        attendance["photosUploaded"] = []
-                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                        attendance.setObject(event, forKey: "event")
-                        
-                        attendance.saveInBackground()
-                        
-                        println("Saved")
-                        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                        var listEvents = object!.objectForKey("savedEventNames") as! [String]
+                        if contains(listEvents, self.eventSelected)
+                        {
+                            print("Event already in list")
+                            self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                        }
+                        else
+                        {
+                            // Add the event to the User object
+                            object?.addUniqueObject(event, forKey:"savedEvents")
+                            object?.addUniqueObject(self.eventSelected, forKey:"savedEventNames")
+                            
+                            object!.saveInBackground()
+                            
+                            
+                            // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                            var attendance = PFObject(className:"EventAttendance")
+                            attendance["eventID"] = event.objectId
+                            attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                            attendance["photosLikedID"] = []
+                            attendance["photosLiked"] = []
+                            attendance["photosUploadedID"] = []
+                            attendance["photosUploaded"] = []
+                            attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                            attendance.setObject(event, forKey: "event")
+                            
+                            attendance.saveInBackground()
+                            
+                            println("Saved")
+                            self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                        }
                     }
                 }
-            }
-        })
+            })
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
+            
+        }
+            
+    
     }
     
     @IBAction func pastEventsButton(sender: AnyObject) {
         self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
     }
-    
-    /*
-    // This is a listener that constantly checks if the user's location is close to an event
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        
-        // location of the user
-        var userLocation:CLLocation = locations[0] as! CLLocation
-        
-        // latitude and longitude of user
-        var latitude = userLocation.coordinate.latitude
-        var longitude = userLocation.coordinate.longitude
-        
-        // sets parse geopoint
-        let userGeoPoint = PFGeoPoint(latitude:latitude, longitude:longitude)
-        
-        // Queries events table for locations that are close to user
-        // Return top 3 closest events
-        var query = PFQuery(className: "Event")
-        //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
-        query.whereKey("geoLocation", nearGeoPoint: userGeoPoint, withinKilometers: 10.0)
-        query.limit = 5
-        let placesObjects = query.findObjects() as! [PFObject]
-        print("Gets here===============")
-        print(placesObjects.count)
-        dump(placesObjects)
-        
-        if (placesObjects.count == 0) {
-            pickerInfo.hidden = true
-        } else {
-        
-            for object in placesObjects {
-                var eventName: AnyObject? = object.objectForKey("eventName")
-                
-                // hack, fix later
-                if cellContent.count < query.limit {
-                    cellContent.addObject(eventName!)
-                }
-
-            }
-            
-            self.pickerInfo.selectRow(0, inComponent: 0, animated: true)
-            self.eventSelected = self.cellContent[0] as! String
-            
-        }
-        
-        self.pickerInfo.reloadAllComponents()
-
-    }
-*/
     
     // Two functions to allow off keyboard touch to close keyboard
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -453,44 +369,5 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         return true
     }
-
-// TEMP WORK ON SCROLLABLE PICKERVIEW - http://codereply.com/answer/8crh93/uipickerview-loop-data.html
-//    func valueForRow(row: Int) -> String {
-//        //the rows repeat every cellContent.count items
-//        return "test" //self.cellContent[row % self.cellContent.count] as! String
-//    }
-//    
-//    func rowForValue(value: Int) -> Int? {
-//        //if let valueIndex: AnyObject = self.cellContent[value] {
-//            return 2 + value
-//        //}
-//        //return nil
-//    }
-//    
-//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-//        return valueForRow(row)//"\(valueForRow(row))"
-//    }
-//    
-//    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return 20
-//    }
-//    
-//    // whenever the picker view comes to rest, we'll jump back to
-//    // the row with the current value that is closest to the middle
-//    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        let newRow = 2 + (row % self.cellContent.count)
-//        pickerView.selectRow(newRow, inComponent: 0, animated: false)
-//        println("Resetting row to \(newRow)")
-//    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

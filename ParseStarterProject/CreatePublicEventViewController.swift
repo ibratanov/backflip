@@ -145,12 +145,6 @@ class CreatePublicEventViewController: UIViewController {
         
         var address = self.addressField.text
         
-        //var address = self.address2
-        println("======================" + self.address2)
-        
-        // Template for address
-        //var address = " 62 Shadyglen dr,Toronto, Canada"
-        
         //Limit number of characters in event name
         var myStr = self.eventName.text as NSString
         if (count(self.eventName.text) > 25){
@@ -174,7 +168,6 @@ class CreatePublicEventViewController: UIViewController {
             let query = PFUser.query()
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
 
-            //TODO: remove?
             var result = self.getUserLocationFromAddress()
 
                 
@@ -197,20 +190,16 @@ class CreatePublicEventViewController: UIViewController {
                             
                             let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
                             
-                            //event["geoLocation"] = userGeoPoint
                             self.userGeoPoint = userGeoPoint
                         }
                     })
                     
-                    print("====================")
-                    print(self.userGeoPoint)
                     event["geoLocation"] = self.userGeoPoint
-                    println(eventName)
+
                     //Check if event already exists
                     let query = PFQuery(className: "Event")
                     query.whereKey("eventName", equalTo: eventName)
                     let scoreArray = query.findObjects()
-                    dump(scoreArray)
                     
                     if scoreArray!.count == 0 {
                         event["eventName"] = eventName
@@ -297,10 +286,6 @@ class CreatePublicEventViewController: UIViewController {
         let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
         navBar.backgroundColor =  UIColor.whiteColor()
         
-//        // Removes faint line under nav bar
-//        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-//        navBar.shadowImage = UIImage()
-        
         // Set the Nav bar properties
         let navBarItem = UINavigationItem()
         navBarItem.title = "Create An Event"
@@ -316,20 +301,35 @@ class CreatePublicEventViewController: UIViewController {
         navBar.addSubview(logout)
         
         self.view.addSubview(navBar)
-        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
-            if error == nil {
-                print(geoPoint)
-                self.userGeoPoint = geoPoint!
+        
+        if NetworkAvailable.networkConnection() == true {
+            PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
+                if error == nil {
+                    print(geoPoint)
+                    self.userGeoPoint = geoPoint!
+                }
+                else {
+                    println("Error with User Geopoint")
+                    self.locationDisabled = true
+                }
             }
-            else {
-                println("Error with User Geopoint")
-                self.locationDisabled = true
-            }
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
         }
     }
     
     override func viewDidAppear(animated: Bool) {
-        getUserAddress()
+        if NetworkAvailable.networkConnection() == true {
+            getUserAddress()
+        } else {
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+        }
     }
     
     // Two functions to allow off keyboard touch to close keyboard
