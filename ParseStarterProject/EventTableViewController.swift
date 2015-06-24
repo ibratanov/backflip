@@ -80,59 +80,90 @@ class EventTableViewController: UITableViewController {
     }
     
     func updateEvents(){
-  
-        let query = PFUser.query()
-        query?.includeKey("savedEvents")
-        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-            
-            self.eventObjs.removeAll(keepCapacity: true)
-            self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
-            
-            self.eventObjs = sorted(self.eventObjs, { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending })
-            
-            for event in self.eventObjs {
-                let relation = event.relationForKey("photos")
-                let query = relation.query()
-                query!.whereKey("flagged", equalTo: false)
-                query!.whereKey("blocked", equalTo: false)
-                query!.limit = 4
-                var photos = query!.findObjects() as! [PFObject]
-                var thumbnails: [PFFile] = []
-                for photo in photos {
-                    thumbnails.append(photo["thumbnail"] as! PFFile)
+        if NetworkAvailable.networkConnection() == true {
+            let query = PFUser.query()
+            query?.includeKey("savedEvents")
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                
+                self.eventObjs.removeAll(keepCapacity: true)
+                self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
+                
+                self.eventObjs = sorted(self.eventObjs, { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending })
+                
+                for event in self.eventObjs {
+                    let relation = event.relationForKey("photos")
+                    let query = relation.query()
+                    query!.whereKey("flagged", equalTo: false)
+                    query!.whereKey("blocked", equalTo: false)
+                    query!.limit = 4
+                    
+                    //crash
+                    var photos = query!.findObjects() as! [PFObject]
+                    
+                    if photos.count != 0 {
+                        var thumbnails: [PFFile] = []
+                        
+                        for photo in photos {
+                            thumbnails.append(photo["thumbnail"] as! PFFile)
+                        }
+                        self.eventWithPhotos[event.objectId!] = thumbnails
+                        self.eventWithIds[event.objectId!] = thumbnails
+                    }
+                    else {
+                        var thumbnails: [PFFile] = []
+                        self.eventWithPhotos[event.objectId!] = thumbnails
+                        self.eventWithIds[event.objectId!] = thumbnails
+                    }
                 }
-                self.eventWithPhotos[event.objectId!] = thumbnails
-                self.eventWithIds[event.objectId!] = thumbnails
-            }
-            
-            self.tableView.reloadData()
+                
+                self.tableView.reloadData()
 
+                
+            })
+        }
+        else {
             
-        })
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+            
+        }
         
     }
     
     func updatePhotosForEvent(objectId: String) -> [PFFile] {
-        
-        var query = PFQuery(className: "Event")
-        query.whereKey("objectId", equalTo: objectId)
-        
         var photoListForEvent: [PFFile] = []
         
-        var object = query.findObjects()?.first as! PFObject
-        
-        var photos = object["photos"] as! PFRelation
-        
-        var photoList = photos.query()?.findObjects() as! [PFObject]
-        
-        for photo in photoList {
-            var image = photo["image"] as! PFFile
-            photoListForEvent.append(image)
+        if NetworkAvailable.networkConnection() == true {
+            var query = PFQuery(className: "Event")
+            query.whereKey("objectId", equalTo: objectId)
+            
+            var objects = query.findObjects()
+            
+            if objects!.count != 0 {
+                var object = objects!.first as! PFObject
+                
+                var photos = object["photos"] as! PFRelation
+                
+                var photoList = photos.query()?.findObjects() as! [PFObject]
+                
+                if photoList.count != 0 {
+                    for photo in photoList {
+                        var image = photo["image"] as! PFFile
+                        photoListForEvent.append(image)
+                    }
+                    
+                    return photoListForEvent
+                }
+            }
         }
-        
+        else {
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+            
+        }
         return photoListForEvent
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
