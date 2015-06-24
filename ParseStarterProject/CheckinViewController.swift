@@ -173,10 +173,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         }
                         else
                         {
-                            self.pickerInfo.hidden = true
-                            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-                            self.presentViewController(alert, animated: true, completion: nil)
-                            println("no internet")
+                            println("Welcome to backflip event not there")
                         }
                             
                         
@@ -190,9 +187,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             self.calcNearByEvents()
         } else {
             self.pickerInfo.hidden = true
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
+            self.noEventLabel.text = "No Events Nearby"
 
         }
     }
@@ -248,9 +243,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         }
                     } else {
                         self.pickerInfo.hidden = true
-                        var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        println("no internet")
+                        self.noEventLabel.text = "No Events Nearby"
                     }
                 }
                 else {
