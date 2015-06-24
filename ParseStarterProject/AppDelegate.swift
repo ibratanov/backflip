@@ -130,13 +130,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let eventIIden: AnyObject? = params["eventId"]
                     //let albumIIden: AnyObject? = params["albumId"]
                     let eventTitle: AnyObject? = params["eventTitle"]
-                    print("=======================user with: \(eventIIden) \(eventTitle)")
                     
                     // Load information from parse db
                     var queryEvent = PFQuery(className: "Event")
                     queryEvent.limit = 1
-                    //queryEvent.whereKey("objectId", equalTo: albumIIden!)
-                    //queryEvent.whereKey("objectId", equalTo: "b8BYLy5cLW")
                     queryEvent.whereKey("objectId", equalTo: eventIIden!)
         
                     var objectE = queryEvent.findObjects()?.first as! PFObject
@@ -195,12 +192,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 
                                 println("Saved")
                                 let alert = UIAlertView()
-                                alert.title = "Congratulations"
-                               alert.message = "You have been added to \(eventTitle!)"
-                               alert.addButtonWithTitle("Done")
+                                alert.title = "Event Invitation"
+                                alert.message = "You have been added to \(eventTitle!)"
+                                alert.addButtonWithTitle("Done")
                                 
                                 alert.delegate = self
-                               alert.show()
+                                alert.show()
                             }
                         }
                     })

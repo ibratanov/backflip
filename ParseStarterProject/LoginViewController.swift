@@ -45,7 +45,13 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func displayAlertUserBlocked(title:String,error: String) {
+    func displayNoInternetAlert() {
+        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+        self.presentViewController(alert, animated: true, completion: nil)
+        println("no internet")
+    }
+    
+    func displayAlertUserBlocked(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -180,9 +186,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                 }
             }
         } else {
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
+            displayNoInternetAlert()
         }
     }
 
@@ -205,9 +209,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                 })
             }
         } else {
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
+            displayNoInternetAlert()
         }
     }
 }
