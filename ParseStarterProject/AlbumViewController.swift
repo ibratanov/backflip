@@ -449,9 +449,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
             if photoList.count == 0 {
 
-                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-                self.presentViewController(alert, animated: true, completion: nil)
-                println("no internet")
+               println("no photos")
                 
             } else {
 
@@ -465,9 +463,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
                 if queryResult.count == 0 {
                     
-                    var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    println("no internet")
+                    println("no photos")
                     
                 } else {
                     
@@ -536,10 +532,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         if eventArray?.count == 0 {
             
-            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-        
+            println("no photos")
+            
         } else {
             
             var object = eventArray!.first as! PFObject
@@ -549,9 +543,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             if photoList.count == 0 {
                 
-                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-                self.presentViewController(alert, animated: true, completion: nil)
-                println("no internet")
+                println("no photos")
                 
             } else {
                 
@@ -637,9 +629,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             if imageFilesTime.count == 0 {
                 
-                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-                self.presentViewController(alert, animated: true, completion: nil)
-                println("no internet")
+                println("no photos")
                 
             } else {
                 // Default, fill the cells with photos sorted by time
@@ -666,9 +656,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             if imageFilesLikes.count == 0 {
                 
-                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-                self.presentViewController(alert, animated: true, completion: nil)
-                println("no internet")
+                println("no photos")
                 
             } else {
                 // Fill the cells with the sorted photos by likes
@@ -694,9 +682,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             if myPhotos.count == 0 {
                 
-                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-                self.presentViewController(alert, animated: true, completion: nil)
-                println("no internet")
+                println("no photos")
                 
             } else {
                 
