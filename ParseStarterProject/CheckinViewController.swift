@@ -17,7 +17,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     
     @IBAction func logoutButton(sender: AnyObject) {
         displayAlertLogout("Would you like to log out?", error: "")
-        
     }
     
     var logoutButton = UIImage(named: "settings-icon") as UIImage!
@@ -44,6 +43,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func displayNoInternetAlert() {
+        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+        self.presentViewController(alert, animated: true, completion: nil)
+        println("no internet")
     }
     
     //Scroll wheel table view
@@ -174,21 +179,17 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         else
                         {
                             println("Welcome to backflip event not there")
+
                         }
-                            
-                        
-            
-                        
                     }
                 }
-                
             })
                 
             self.calcNearByEvents()
         } else {
             self.pickerInfo.hidden = true
             self.noEventLabel.text = "No Events Nearby"
-
+            displayNoInternetAlert()
         }
     }
     
@@ -247,10 +248,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     }
                 }
                 else {
-                    self.pickerInfo.hidden = true
-                    var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    println("no internet")
+                    self.displayNoInternetAlert()
                 }
             }
             else {
@@ -275,10 +273,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             }
         } else {
             self.pickerInfo.hidden = true
-            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-
+            displayNoInternetAlert()
         }
     }
 
@@ -370,14 +365,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             })
         } else {
             self.pickerInfo.hidden = true
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-
-            
+            displayNoInternetAlert()
         }
-            
-    
     }
     
     @IBAction func pastEventsButton(sender: AnyObject) {

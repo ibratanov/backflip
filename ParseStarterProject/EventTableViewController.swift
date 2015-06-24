@@ -46,11 +46,7 @@ class EventTableViewController: UITableViewController {
             updateEvents()
             
         } else {
-
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-
+            displayNoInternetAlert()
         }
     }
     
@@ -77,6 +73,12 @@ class EventTableViewController: UITableViewController {
         
         self.presentViewController(alert, animated: true, completion: nil)
         
+    }
+    
+    func displayNoInternetAlert() {
+        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+        self.presentViewController(alert, animated: true, completion: nil)
+        println("no internet")
     }
     
     func updateEvents(){
@@ -124,11 +126,7 @@ class EventTableViewController: UITableViewController {
             })
         }
         else {
-            
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-            
+            displayNoInternetAlert()
         }
         
     }
@@ -160,10 +158,7 @@ class EventTableViewController: UITableViewController {
             }
         }
         else {
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-            
+            displayNoInternetAlert()
         }
         return photoListForEvent
     }

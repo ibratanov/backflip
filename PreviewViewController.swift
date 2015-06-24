@@ -53,6 +53,12 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
     }
     
+    func displayNoInternetAlert() {
+        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to access content.")
+        self.presentViewController(alert, animated: true, completion: nil)
+        println("no internet")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -203,18 +209,12 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 photoObject.save()
             }
             else {
-                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
-                self.presentViewController(alert, animated: true, completion: nil)
+                displayNoInternetAlert()
                 println("Object Issue")
             }
             
         } else {
-            
-            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to post content")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-
-            
+            displayNoInternetAlert()
         }
     }
     

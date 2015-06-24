@@ -91,6 +91,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    func displayNoInternetAlert() {
+        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+        self.presentViewController(alert, animated: true, completion: nil)
+        println("no internet")
+    }
+    
     func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -125,7 +131,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         } else {
             
-            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
+            var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to internet to access content.")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
             
@@ -372,11 +378,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
         }
         } else {
-            
-            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-            
+            displayNoInternetAlert()
         }
 
     }
@@ -397,12 +399,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 self.refresher.endRefreshing()
             }
         } else {
-            
-            self.refresher.endRefreshing()
-            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
- 
+            displayNoInternetAlert()
         }
         
     }
@@ -723,10 +720,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             // Sorted by time (from newest to oldest)
             if self.sortedByLikes == false && self.myPhotoSelected == false {
                 if self.objectIdTime.count == 0 || self.datesTime.count == 0 {
-                    var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    println("no internet")
-                    
+                    displayNoInternetAlert()
                 } else {
                     moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
                     moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
@@ -735,11 +729,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             } else if self.sortedByLikes == true && self.myPhotoSelected == false {
             // Sorted by like count
                 if self.objectIdLikes.count == 0 || self.datesLikes.count == 0 {
-                    
-                    var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    println("no internet")
-                    
+                    displayNoInternetAlert()
                 } else {
                     
                     moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
@@ -749,11 +739,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             } else {
                 
                 if self.myObjectId.count == 0 {
-                    
-                    var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    println("no internet")
-                    
+                    displayNoInternetAlert()
                 } else {
                     
                     moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
@@ -839,10 +825,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 }
             })
         } else {
-            
-            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to post photos")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
+            displayNoInternetAlert()
         }
     }
     

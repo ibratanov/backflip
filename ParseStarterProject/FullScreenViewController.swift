@@ -223,10 +223,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 
             }
         } else {
-            
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
+            displayNoInternetAlert()
         }
     }
 
@@ -261,9 +258,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                                 self.displaySuccess("Posted!", error: "Not appearing on Facebook? Check the iOS settings for Facebook and make sure you're logged in.")
                             }
                             else {
-                                var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-                                self.presentViewController(alert, animated: true, completion: nil)
-                                println("no internet")
+                                self.displayNoInternetAlert()
                             }
 
                         }
@@ -304,9 +299,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                                 self.displaySuccess("Posted!", error: "Successfully posted to Twitter.")
                             }
                             else {
-                                var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-                                self.presentViewController(alert, animated: true, completion: nil)
-                                println("no internet")
+                                self.displayNoInternetAlert()
                             }
                         }
                     }
@@ -349,9 +342,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                                     })
                                 }
                                 else {
-                                    var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-                                    self.presentViewController(alert, animated: true, completion: nil)
-                                    println("no internet")
+                                    self.displayNoInternetAlert()
                                 }
                         } else {
                             
@@ -513,7 +504,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             // Retrieval from corresponding photos from relation to event
             var relatedEvents = getRelatedEvents.findObjects()
-            if (relatedEvents?.count == 0) {
+            if (relatedEvents == nil || relatedEvents!.count == 0) {
                 displayNoInternetAlert()
             } else {
                 var event = relatedEvents!.first as! PFObject
