@@ -400,6 +400,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         } else {
             displayNoInternetAlert()
+            self.refresher.endRefreshing()
         }
         
     }
@@ -432,8 +433,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Retrieval from corresponding photos from relation to event
         var eventNames = getUploadedImages.findObjects() //as! PFObject
 
-        if eventNames!.count == 0 {
-            
+        if (eventNames == nil || eventNames!.count == 0) {
             
             println("error")
 
@@ -442,9 +442,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
             var object = eventNames!.first as! PFObject
             var photos = object["photos"] as! PFRelation
-            var photoList = photos.query()?.findObjects() as! [PFObject]
+            var photoList = photos.query()!.findObjects()
 
-            if photoList.count == 0 {
+            if (photoList == nil || photoList!.count == 0) {
 
                println("no photos")
                 
@@ -456,17 +456,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
                 query.whereKey("eventID", equalTo: eventId!)
                 
-                var queryResult = query.findObjects()!
+                var queryResult = query.findObjects()
                 
-                if queryResult.count == 0 {
+                if (queryResult == nil || queryResult!.count == 0) {
                     
                     println("no photos")
                     
                 } else {
                     
                     //TODO: Check if this is an actual issue when events & users are properly linked up
-                    if (queryResult.count != 0) {
-                        var eventAttendance = queryResult.first as! PFObject
+                    if (queryResult!.count != 0) {
+                        var eventAttendance = queryResult!.first as! PFObject
                         
                         var pList = eventAttendance["photosLiked"] as! [PFFile]
                         var ids = eventAttendance["photosLikedID"] as! [String]
@@ -476,7 +476,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                             // Ensure the image wasn't flagged or blocked
                             var id = ids[index]
                             var hidden = false
-                            for p in photoList {
+                            for p in photoList! {
                                 if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
                                     hidden = true
                                 }
@@ -527,7 +527,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Retrieval from corresponding photos from relation to event
         var eventArray = getUploadedImages.findObjects()
         
-        if eventArray?.count == 0 {
+        if (eventArray == nil || eventArray!.count == 0) {
             
             println("no photos")
             
@@ -536,20 +536,20 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             var object = eventArray!.first as! PFObject
             var photos = object["photos"] as! PFRelation
             
-            var photoList = photos.query()?.findObjects() as! [PFObject]
+            var photoList = photos.query()!.findObjects()
             
-            if photoList.count == 0 {
+            if (photoList == nil || photoList!.count == 0) {
                 
                 println("no photos")
                 
             } else {
                 
-                for photo in photoList {
+                for photo in photoList! {
                     
                     // Ensure the image wasn't flagged or blocked
                     if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
                         // Fill our array of tuples for sorting
-                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId! as String,date: photo.createdAt! as NSDate)
+                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
                         
                         self.imageFilesTemp.append(tup)
                     }

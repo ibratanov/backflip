@@ -113,47 +113,52 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     // Finds associated photo object in relation
                     var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
                     
-                    // Add user to like list, add 1 to the upvote count
-                    retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
-                    retrieveLikes?.incrementKey("upvoteCount", byAmount: 1)
-                    
-                    // Grab specific element fromobject
-                    likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
-                    thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
-                    
-                    let counter = likeList.count
-                    if counter == 1 {
+                    if retrieveLikes != nil {
+                        // Add user to like list, add 1 to the upvote count
+                        retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
+                        retrieveLikes?.incrementKey("upvoteCount", byAmount: 1)
                         
-                        self.likeCount.text = String(counter) + " likes"
+                        // Grab specific element fromobject
+                        likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
+                        thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
                         
+                        let counter = likeList.count
+                        if counter == 1 {
+                            
+                            self.likeCount.text = String(counter) + " likes"
+                            
+                        } else {
+                            
+                            self.likeCount.text = String(counter) + " likes"
+                        }
+                            
+                        // Add both photo object (thumbnail) and id to arrays in user class
+                        var query2 = PFQuery(className: "EventAttendance")
+                        query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+                        query2.whereKey("eventID", equalTo: eventId!)
+                        
+                        query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
+                                    
+                            if error == nil {
+
+                                object?.addObject(thumbnail, forKey: "photosLiked")
+                                        
+                                object?.addUniqueObject(self.objectIdTemp, forKey:"photosLikedID")
+                                        
+                                object!.saveInBackground()
+                                        
+                                        
+                            } else {
+                                        
+                                println("Error: \(error!) \(error!.userInfo!)")
+                            }
+                        }
+                    
+                        retrieveLikes!.saveInBackground()
                     } else {
                         
-                        self.likeCount.text = String(counter) + " likes"
+                        displayNoInternetAlert()
                     }
-                        
-                    // Add both photo object (thumbnail) and id to arrays in user class
-                    var query2 = PFQuery(className: "EventAttendance")
-                    query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-                    query2.whereKey("eventID", equalTo: eventId!)
-                    
-                    query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
-                                
-                        if error == nil {
-
-                            object?.addObject(thumbnail, forKey: "photosLiked")
-                                    
-                            object?.addUniqueObject(self.objectIdTemp, forKey:"photosLikedID")
-                                    
-                            object!.saveInBackground()
-                                    
-                                    
-                        } else {
-                                    
-                            println("Error: \(error!) \(error!.userInfo!)")
-                        }
-                    }
-                
-                    retrieveLikes!.saveInBackground()
                 } else {
                     displayNoInternetAlert()
                 }
@@ -178,53 +183,56 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     // Finds associated photo object in relation
                     var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
                     
-                    // Add user to like list, add 1 to the upvote count
-                    retrieveLikes?.removeObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
-                    retrieveLikes?.incrementKey("upvoteCount", byAmount: -1)
+                    if retrieveLikes != nil {
+                        // Add user to like list, add 1 to the upvote count
+                        retrieveLikes?.removeObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
+                        retrieveLikes?.incrementKey("upvoteCount", byAmount: -1)
 
-                    
-                    // Grab specific element from object.
-                    likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
-                    thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
-                    
-                    //Set appropriate labal on the view
-                    let counter = likeList.count
-                    if counter == 1 {
                         
-                        self.likeCount.text = String(counter) + " likes"
+                        // Grab specific element from object.
+                        likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
+                        thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
                         
-                    } else {
-                        
-                        self.likeCount.text = String(counter) + " likes"
-                    }
-                    
-                    // Add both photo object and id to arrays in user class
-                    var query2 = PFQuery(className: "EventAttendance")
-                    query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-                    query2.whereKey("eventID", equalTo: eventId!)
-                    
-                    query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
-                        
-                        if error == nil {
+                        //Set appropriate labal on the view
+                        let counter = likeList.count
+                        if counter == 1 {
                             
-                            object?.removeObject(thumbnail, forKey: "photosLiked")
-                            
-                            object?.removeObject(self.objectIdTemp, forKey:"photosLikedID")
-                            
-                            object!.saveInBackground()
-                            
+                            self.likeCount.text = String(counter) + " likes"
                             
                         } else {
                             
-                            println("Error: \(error!) \(error!.userInfo!)")
+                            self.likeCount.text = String(counter) + " likes"
                         }
+                        
+                        // Add both photo object and id to arrays in user class
+                        var query2 = PFQuery(className: "EventAttendance")
+                        query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+                        query2.whereKey("eventID", equalTo: eventId!)
+                        
+                        query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
+                            
+                            if error == nil {
+                                
+                                object?.removeObject(thumbnail, forKey: "photosLiked")
+                                
+                                object?.removeObject(self.objectIdTemp, forKey:"photosLikedID")
+                                
+                                object!.saveInBackground()
+                                
+                                
+                            } else {
+                                
+                                println("Error: \(error!) \(error!.userInfo!)")
+                            }
+                        }
+                        
+                        retrieveLikes!.saveInBackground()
+                    } else {
+                        displayNoInternetAlert()
                     }
-                    
-                    retrieveLikes!.saveInBackground()
                 } else {
                     displayNoInternetAlert()
                 }
-
             }
         } else {
             displayNoInternetAlert()
@@ -419,31 +427,36 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             // Finds associated photo object in relation
             var photoObj = photos.query()?.getObjectWithId(objectIdTemp)
             
+            if photoObj != nil {
             
-            var alert = UIAlertController(title: "Flag inappropriate content", message: "What is wrong with this photo?", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addTextFieldWithConfigurationHandler { (textField) -> Void in }
-            
-            alert.addAction(UIAlertAction(title: "Flag", style: UIAlertActionStyle.Default, handler: { (action) in
-                    var flagEntry = alert.textFields?.first as! UITextField
+                var alert = UIAlertController(title: "Flag inappropriate content", message: "What is wrong with this photo?", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addTextFieldWithConfigurationHandler { (textField) -> Void in }
+                
+                alert.addAction(UIAlertAction(title: "Flag", style: UIAlertActionStyle.Default, handler: { (action) in
+                        var flagEntry = alert.textFields?.first as! UITextField
+                        
+                        photoObj!["flagged"] = true
+                        photoObj!["reviewed"] = false
+                        photoObj!["blocked"] = false
+                        photoObj!["reporter"] = PFUser.currentUser()?.objectId
+                        photoObj!["reportMessage"] = flagEntry.text
                     
-                    photoObj!["flagged"] = true
-                    photoObj!["reviewed"] = false
-                    photoObj!["blocked"] = false
-                    photoObj!["reporter"] = PFUser.currentUser()?.objectId
-                    photoObj!["reportMessage"] = flagEntry.text
-                
-                    photoObj?.save()
-                
-                    print("photo flagged successfully. Msg: ")
-                
-                    self.seg()
-                
-                    println(flagEntry.text)
-                }))
+                        photoObj?.save()
+                    
+                        print("photo flagged successfully. Msg: ")
+                    
+                        self.seg()
+                    
+                        println(flagEntry.text)
+                    }))
 
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-            
-            self.presentViewController(alert, animated: true, completion: nil)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                displayNoInternetAlert()
+            }
+
         }
 
     }
