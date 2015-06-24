@@ -68,6 +68,9 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         
         Digits.sharedInstance().logOut()
+        
+        //added
+        PFUser.logOut()
 
         termsTextView.editable = false
         termsTextView.userInteractionEnabled = false
@@ -181,6 +184,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                     }
                             } else {
                                 Digits.sharedInstance().logOut()
+                                PFUser.logOut()
                                 println("User is Blocked")
                                 self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
                             }

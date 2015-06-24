@@ -708,45 +708,48 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-        if segue.identifier == "toFull" {
-            
-            var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
-            var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
-            moveVC.eventId = eventId!
-            moveVC.eventTitle = eventTitle!
-            fullScreen = true
-            
-            // Sorted by time (from newest to oldest)
-            if self.sortedByLikes == false && self.myPhotoSelected == false {
-                if self.objectIdTime.count == 0 || self.datesTime.count == 0 {
-                    displayNoInternetAlert()
-                } else {
-                    moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
-                    moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
-                }
+        if NetworkAvailable.networkConnection() == true {
+            if segue.identifier == "toFull" {
                 
-            } else if self.sortedByLikes == true && self.myPhotoSelected == false {
-            // Sorted by like count
-                if self.objectIdLikes.count == 0 || self.datesLikes.count == 0 {
-                    displayNoInternetAlert()
-                } else {
-                    
-                    moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
-                    moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
-                    
-                }
-            } else {
+                var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
+                var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
+                moveVC.eventId = eventId!
+                moveVC.eventTitle = eventTitle!
+                fullScreen = true
                 
-                if self.myObjectId.count == 0 {
-                    displayNoInternetAlert()
+                // Sorted by time (from newest to oldest)
+                if self.sortedByLikes == false && self.myPhotoSelected == false {
+                    if self.objectIdTime.count == 0 || self.datesTime.count == 0 {
+                        displayNoInternetAlert()
+                    } else {
+                        moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
+                        moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
+                    }
+                    
+                } else if self.sortedByLikes == true && self.myPhotoSelected == false {
+                // Sorted by like count
+                    if self.objectIdLikes.count == 0 || self.datesLikes.count == 0 {
+                        displayNoInternetAlert()
+                    } else {
+                        
+                        moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
+                        moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                        
+                    }
                 } else {
                     
-                    moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
-                   
+                    if self.myObjectId.count == 0 {
+                        displayNoInternetAlert()
+                    } else {
+                        
+                        moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
+                       
+                    }
                 }
             }
-        }  
+        } else {
+            displayNoInternetAlert()
+        }
     }
     
     //--------------- Camera ---------------
