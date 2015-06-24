@@ -504,7 +504,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             // Retrieval from corresponding photos from relation to event
             var relatedEvents = getRelatedEvents.findObjects()
-            if (relatedEvents?.count == 0) {
+            if (relatedEvents == nil || relatedEvents!.count == 0) {
                 displayNoInternetAlert()
             } else {
                 var event = relatedEvents!.first as! PFObject

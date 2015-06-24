@@ -88,52 +88,59 @@ class CreatePublicEventViewController: UIViewController {
             var location = CLLocation(latitude: userLatitude, longitude: userLongitude)
             
             geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
-                let placeArray = placemarks as! [CLPlacemark]
-                
-                // Place details
-                var placeMark: CLPlacemark!
-                placeMark = placeArray[0]
-                
-                // Address dictionary
-                //println(placeMark.addressDictionary)
-                
-                // Location name
-                var streetNumber = ""
-                if let locationName = placeMark.addressDictionary["Name"] as? NSString {
-                    //println(locationName)
-                    streetNumber = locationName as String
-                }
-                
-                var streetAddress = ""
-                // Street address
-                if let street = placeMark.addressDictionary["Thoroughfare"] as? NSString {
-                    //println(street)
-                    streetAddress = street as String
-                }
-                
-                var cityName = ""
-                // City
-                if let city = placeMark.addressDictionary["City"] as? NSString {
-                    //println(city)
-                    cityName = city as String
+                if (error == nil) {
+                    let placeArray = placemarks as! [CLPlacemark]
                     
+                    // Place details
+                    var placeMark: CLPlacemark!
+                    placeMark = placeArray[0]
+                    
+                    // Address dictionary
+                    //println(placeMark.addressDictionary)
+                    
+                    // Location name
+                    var streetNumber = ""
+                    if let locationName = placeMark.addressDictionary["Name"] as? NSString {
+                        //println(locationName)
+                        streetNumber = locationName as String
+                    }
+                    
+                    var streetAddress = ""
+                    // Street address
+                    if let street = placeMark.addressDictionary["Thoroughfare"] as? NSString {
+                        //println(street)
+                        streetAddress = street as String
+                    }
+                    
+                    var cityName = ""
+                    // City
+                    if let city = placeMark.addressDictionary["City"] as? NSString {
+                        //println(city)
+                        cityName = city as String
+                        
+                    }
+                    
+                    // Zip code
+                    if let zip = placeMark.addressDictionary["ZIP"] as? NSString {
+                        //println(zip)
+                    }
+                    
+                    // Country
+                    var countryName = ""
+                    if let country = placeMark.addressDictionary["Country"] as? NSString {
+                        //println(country)
+                        countryName = country as String
+                    }
+                    
+                    var address = streetNumber + ", " + streetAddress
+                    self.address2 = streetNumber + ", " + cityName + ", " + countryName
+                    self.addressField.text = address
+                } else {
+                    self.displayNoInternetAlert()
+                    println("could not generate location - no internet")
+                    self.address2 = ""
+                    self.addressField.text = self.address2
                 }
-                
-                // Zip code
-                if let zip = placeMark.addressDictionary["ZIP"] as? NSString {
-                    //println(zip)
-                }
-                
-                // Country
-                var countryName = ""
-                if let country = placeMark.addressDictionary["Country"] as? NSString {
-                    //println(country)
-                    countryName = country as String
-                }
-                
-                var address = streetNumber + ", " + streetAddress
-                self.address2 = streetNumber + ", " + cityName + ", " + countryName
-                self.addressField.text = address
             })
         }
     }
