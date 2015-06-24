@@ -197,14 +197,18 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
             if PFUser.currentUser() != nil {
                 let query = PFUser.query()
                 query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-                    var blocked = object!.valueForKey("blocked") as! Bool
-                    if blocked == false {
-                        // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
-                        self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                    }
-                    else {
-                        println("User is Blocked")
-                        self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
+                    if (error == nil) {
+                        var blocked = object!.valueForKey("blocked") as! Bool
+                        if blocked == false {
+                            // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
+                            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                        }
+                        else {
+                            println("User is Blocked")
+                            self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
+                        }
+                    } else {
+                        println(error)
                     }
                 })
             }
