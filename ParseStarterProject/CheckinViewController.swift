@@ -133,39 +133,53 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         //Check if event exists
                         let query = PFQuery(className: "Event")
                         query.whereKey("eventName", equalTo: "Welcome to Backflip")
+                        
+                        //crash
                         let scoreArray = query.findObjects()
                         
+                        if (scoreArray!.count != 0)
+                        {
+                            var event = scoreArray?[0] as! PFObject
                         
-                        var event = scoreArray?[0] as! PFObject
+                            // Store the relation
+                            let relation = event.relationForKey("attendees")
+                            relation.addObject(object!)
+                            
+                            event.save()
+                            
+                            
+                            // Add the event to the User object
+                            object?.addUniqueObject(event, forKey:"savedEvents")
+                            object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
+                            
+                            object!.saveInBackground()
+                            
+                            
+                            // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                            var attendance = PFObject(className:"EventAttendance")
+                            attendance["eventID"] = event.objectId
+                            attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                            attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                            attendance.setObject(event, forKey: "event")
+                            attendance["photosLikedID"] = []
+                            attendance["photosLiked"] = []
+                            attendance["photosUploaded"] = []
+                            attendance["photosUploadedID"] = []
+                            
+                            
+                            attendance.saveInBackground()
+                            
+                            PFUser.currentUser()?.setObject(false, forKey: "firstUse")
+                        }
+                        else
+                        {
+                            self.pickerInfo.hidden = true
+                            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+                            self.presentViewController(alert, animated: true, completion: nil)
+                            println("no internet")
+                        }
+                            
                         
-                        
-                        // Store the relation
-                        let relation = event.relationForKey("attendees")
-                        relation.addObject(object!)
-                        
-                        event.save()
-                        
-                        // Add the event to the User object
-                        object?.addUniqueObject(event, forKey:"savedEvents")
-                        object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
-                        
-                        object!.saveInBackground()
-                        
-                        
-                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                        var attendance = PFObject(className:"EventAttendance")
-                        attendance["eventID"] = event.objectId
-                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                        attendance.setObject(event, forKey: "event")
-                        attendance["photosLikedID"] = []
-                        attendance["photosLiked"] = []
-                        attendance["photosUploaded"] = []
-                        attendance["photosUploadedID"] = []
-                        
-                        
-                        attendance.saveInBackground()
-                        PFUser.currentUser()?.setObject(false, forKey: "firstUse")
             
                         
                     }
@@ -175,7 +189,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 
             self.calcNearByEvents()
         } else {
-            
+            self.pickerInfo.hidden = true
             var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
@@ -193,40 +207,58 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 // Set default event radius
                 var eventRadius = 5.0
                 var distQuery = PFQuery(className: "Options")
+                
+                //crash check
                 var distance = distQuery.findObjects()
-                var result = distance?.first as! PFObject
-                eventRadius = result["value"] as! Double
                 
-                // Queries events table for locations that are close to user
-                // Return top 5 closest events
-                var query = PFQuery(className: "Event")
-                //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
-                query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
-                query.limit = 10
+                if (distance!.count != 0) {
+                    var result = distance?.first as! PFObject
+                    eventRadius = result["value"] as! Double
+                    
+                    // Queries events table for locations that are close to user
+                    // Return top 5 closest events
+                    var query = PFQuery(className: "Event")
+                    //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
+                    query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
+                    query.limit = 10
 
-                var usr = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
-                var savedEvents: [String] = usr!.objectForKey("savedEventNames") as! [String]
-                
-                var objects = query.findObjects()
-                for object in objects as! [PFObject] {
-                    var eventName = object.objectForKey("eventName") as! String
-                    var active = object.objectForKey("isLive") as! Bool
+                    var usr = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
+                    var savedEvents: [String] = usr!.objectForKey("savedEventNames") as! [String]
                     
-                    // TODO: Check
-                    if active && self.cellContent.count < query.limit && !contains(savedEvents, eventName) {
-                        self.cellContent.addObject(eventName)
+                    var objects = query.findObjects()
+                    
+                    if ( objects!.count != 0) {
+                        for object in objects as! [PFObject] {
+                            var eventName = object.objectForKey("eventName") as! String
+                            var active = object.objectForKey("isLive") as! Bool
+                            
+                            // TODO: Check
+                            if active && self.cellContent.count < query.limit && !contains(savedEvents, eventName) {
+                                self.cellContent.addObject(eventName)
+                            }
+                            
+                        }
+                        
+                        if self.cellContent.count == 0 {
+                            self.pickerInfo.hidden = true
+                            self.noEventLabel.text = "No Events Nearby"
+                        }
+                        else {
+                            self.pickerInfo.reloadAllComponents()
+                        }
+                    } else {
+                        self.pickerInfo.hidden = true
+                        var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        println("no internet")
                     }
-                    
-                }
-                
-                if self.cellContent.count == 0 {
-                    self.pickerInfo.hidden = true
-                    self.noEventLabel.text = "No Events Nearby"
                 }
                 else {
-                    self.pickerInfo.reloadAllComponents()
+                    self.pickerInfo.hidden = true
+                    var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    println("no internet")
                 }
-                
             }
             else {
                 print("Error with User Geopoint")
@@ -249,7 +281,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 self.eventSelected = self.cellContent[0] as! String
             }
         } else {
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.pickerInfo.hidden = true
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
 
@@ -343,7 +376,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 }
             })
         } else {
-            
+            self.pickerInfo.hidden = true
             var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")

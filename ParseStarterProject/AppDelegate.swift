@@ -154,7 +154,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             // Subscribe user to the channel of the event for push notifications
                             let currentInstallation = PFInstallation.currentInstallation()
                             currentInstallation.addUniqueObject(("a" + objectE.objectId!) , forKey: "channels")
-                            currentInstallation.saveInBackground()
+                            //currentInstallation.saveInBackground()
+                            currentInstallation.save()
                             
                             // Store the relation
                             let relation = objectE.relationForKey("attendees")
@@ -174,7 +175,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 object?.addUniqueObject(objectE, forKey:"savedEvents")
                                 object?.addUniqueObject(objectE["eventName"] as! String, forKey:"savedEventNames")
                                 
-                                object!.saveInBackground()
+                                //object!.saveInBackground()
+                                object!.save()
                                 
                                 
                                 // Add the EventAttendance join table relationship for photos (liked and uploaded)
@@ -188,7 +190,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
                                 attendance.setObject(objectE, forKey: "event")
                                 
-                                attendance.saveInBackground()
+                                //attendance.saveInBackground()
+                                attendance.save()
                                 
                                 println("Saved")
                                 let alert = UIAlertView()
@@ -232,7 +235,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // Subscribe user to the channel of the event for push notifications
                 let currentInstallation = PFInstallation.currentInstallation()
                 currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
-                currentInstallation.saveInBackground()
+                //currentInstallation.saveInBackground()
+                currentInstallation.save()
                 
                 // Store the relation
                 let relation = event.relationForKey("attendees")
@@ -262,7 +266,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     object?.addUniqueObject(event, forKey:"savedEvents")
                     object?.addUniqueObject(event["eventName"] as! String, forKey:"savedEventNames")
                     
-                    object!.saveInBackground()
+                    //object!.saveInBackground()
+                    object!.save()
                     
                     
                     // Add the EventAttendance join table relationship for photos (liked and uploaded)
@@ -276,7 +281,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
                     attendance.setObject(event, forKey: "event")
                     
-                    attendance.saveInBackground()
+                    //attendance.saveInBackground()
+                    attendance.save()
                     
                     println("Saved")
                 }

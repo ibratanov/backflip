@@ -136,68 +136,81 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         })
         
         if NetworkAvailable.networkConnection() == true {
-        var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
-        
-        if (downloadToCameraRoll!) {
-            UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
-        }
-        
-        var imageData = compressImage(capturedImage, shrinkRatio: 1.0)
-        var imageFile = PFFile(name: "image.png", data: imageData)
-        
-        var thumbnailData = compressImage(capturedImage, shrinkRatio: 0.5)
-        var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
-        
-        
-        //Upload photos to database
-        var photo = PFObject(className: "Photo")
-        photo["caption"] = "Camera roll upload"
-        photo["image"] = imageFile
-        photo["thumbnail"] = thumbnailFile
-        photo["upvoteCount"] = 1
-        photo["usersLiked"] = [PFUser.currentUser()!.username!]
-        photo["uploader"] = PFUser.currentUser()!
-        photo["uploaderName"] = PFUser.currentUser()!.username!
-        photo["flagged"] = false
-        photo["reviewed"] = false
-        photo["blocked"] = false
-        photo["reporter"] = ""
-        photo["reportMessage"] = ""
-        
-        var photoACL = PFACL(user: PFUser.currentUser()!)
-        photoACL.setPublicWriteAccess(true)
-        photoACL.setPublicReadAccess(true)
-        photo.ACL = photoACL
-        
-        
-        var query2 = PFQuery(className: "EventAttendance")
-        query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-        query2.whereKey("eventID", equalTo: eventId!)
-        var photoObject = query2.findObjects()!.first as! PFObject
 
-        
-        photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-        photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
-        
-        var queryEvent = PFQuery(className: "Event")
-        queryEvent.whereKey("objectId", equalTo: self.eventId!)
-        var objects = queryEvent.findObjects() as! [PFObject]
-        var eventObject = objects[0]
-        
-        let relation = eventObject.relationForKey("photos")
-        
-        photo.save()
-        
-        relation.addObject(photo)
-        photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-        photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-        
-        eventObject.saveInBackground()
-        
-        photoObject.saveInBackground()
+        var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
+            if (downloadToCameraRoll!) {
+                UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
+            }
+            
+            var imageData = compressImage(capturedImage, shrinkRatio: 1.0)
+            var imageFile = PFFile(name: "image.png", data: imageData)
+            
+            var thumbnailData = compressImage(capturedImage, shrinkRatio: 0.5)
+            var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+            
+            
+            //Upload photos to database
+            var photo = PFObject(className: "Photo")
+            photo["caption"] = "Camera roll upload"
+            photo["image"] = imageFile
+            photo["thumbnail"] = thumbnailFile
+            photo["upvoteCount"] = 1
+            photo["usersLiked"] = [PFUser.currentUser()!.username!]
+            photo["uploader"] = PFUser.currentUser()!
+            photo["uploaderName"] = PFUser.currentUser()!.username!
+            photo["flagged"] = false
+            photo["reviewed"] = false
+            photo["blocked"] = false
+            photo["reporter"] = ""
+            photo["reportMessage"] = ""
+            
+            var photoACL = PFACL(user: PFUser.currentUser()!)
+            photoACL.setPublicWriteAccess(true)
+            photoACL.setPublicReadAccess(true)
+            photo.ACL = photoACL
+            
+            
+            var query2 = PFQuery(className: "EventAttendance")
+            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+            query2.whereKey("eventID", equalTo: eventId!)
+            
+            //mine
+            var photoObjectList = query2.findObjects()
+            
+            if photoObjectList!.count != 0 {
+                var photoObject = photoObjectList!.first as! PFObject
+                
+                photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+                photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+                
+                var queryEvent = PFQuery(className: "Event")
+                queryEvent.whereKey("objectId", equalTo: self.eventId!)
+                var objects = queryEvent.findObjects() as! [PFObject]
+                var eventObject = objects[0]
+                
+                let relation = eventObject.relationForKey("photos")
+                
+                photo.save()
+                
+                relation.addObject(photo)
+                photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+                photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+                
+                //issue
+                eventObject.save()
+                
+                //issue
+                photoObject.save()
+            }
+            else {
+                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
+                self.presentViewController(alert, animated: true, completion: nil)
+                println("Object Issue")
+            }
+            
         } else {
             
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to post content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
 
