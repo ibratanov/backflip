@@ -214,7 +214,7 @@ class CreatePublicEventViewController: UIViewController {
                         query.whereKey("eventName", equalTo: eventName)
                         let scoreArray = query.findObjects()
                         
-                        if scoreArray!.count == 0 {
+                        if (scoreArray == nil || scoreArray!.count == 0) {
                             event["eventName"] = eventName
                             event["venue"] = address
                             event["startTime"] = NSDate()
