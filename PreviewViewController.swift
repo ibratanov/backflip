@@ -197,10 +197,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
                 
                 //issue
-                eventObject.saveInBackground()
+                eventObject.save()
                 
                 //issue
-                photoObject.saveInBackground()
+                photoObject.save()
             }
             else {
                 var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
