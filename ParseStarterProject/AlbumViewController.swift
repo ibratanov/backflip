@@ -373,7 +373,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
         } else {
             
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
             
@@ -399,7 +399,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         } else {
             
             self.refresher.endRefreshing()
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
  
@@ -433,46 +433,73 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
-        var object = getUploadedImages.findObjects()?.first as! PFObject
-        
-        var photos = object["photos"] as! PFRelation
-        
-        var photoList = photos.query()?.findObjects() as! [PFObject]
-        // End flag checking load
-        
-        var query = PFQuery(className: "EventAttendance")
-        query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-        query.whereKey("eventID", equalTo: eventId!)
-        
-        var queryResult = query.findObjects()!
-        
-        //TODO: Check if this is an actual issue when events & users are properly linked up
-        if (queryResult.count != 0) {
-            var eventAttendance = queryResult.first as! PFObject
+        var eventNames = getUploadedImages.findObjects() //as! PFObject
+
+        if eventNames!.count == 0 {
             
-            var pList = eventAttendance["photosLiked"] as! [PFFile]
-            var ids = eventAttendance["photosLikedID"] as! [String]
             
-            var index = 0
-            for photo in pList {
-                // Ensure the image wasn't flagged or blocked
-                var id = ids[index]
-                var hidden = false
-                for p in photoList {
-                    if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
-                        hidden = true
+            println("error")
+
+        } else {
+            
+
+            var object = eventNames!.first as! PFObject
+            var photos = object["photos"] as! PFRelation
+            var photoList = photos.query()?.findObjects() as! [PFObject]
+
+            if photoList.count == 0 {
+
+                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+                self.presentViewController(alert, animated: true, completion: nil)
+                println("no internet")
+                
+            } else {
+
+                // End flag checking load
+                
+                var query = PFQuery(className: "EventAttendance")
+                query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+                query.whereKey("eventID", equalTo: eventId!)
+                
+                var queryResult = query.findObjects()!
+                
+                if queryResult.count == 0 {
+                    
+                    var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    println("no internet")
+                    
+                } else {
+                    
+                    //TODO: Check if this is an actual issue when events & users are properly linked up
+                    if (queryResult.count != 0) {
+                        var eventAttendance = queryResult.first as! PFObject
+                        
+                        var pList = eventAttendance["photosLiked"] as! [PFFile]
+                        var ids = eventAttendance["photosLikedID"] as! [String]
+                        
+                        var index = 0
+                        for photo in pList {
+                            // Ensure the image wasn't flagged or blocked
+                            var id = ids[index]
+                            var hidden = false
+                            for p in photoList {
+                                if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
+                                    hidden = true
+                                }
+                            }
+                            if (!hidden) {
+                                self.myPhotos.append(photo)
+                                self.myObjectId.append(ids[index])
+                            }
+                            index++
+                        }
+
                     }
                 }
-                if (!hidden) {
-                    self.myPhotos.append(photo)
-                    self.myObjectId.append(ids[index])
-                }
-                index++
+                
             }
-            
-//            for id in ids {
-//                self.myObjectId.append(id)
-//            }
+ 
         }
         
     }
@@ -505,11 +532,28 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
-        var object = getUploadedImages.findObjects()?.first as! PFObject
+        var eventArray = getUploadedImages.findObjects()
         
-        var photos = object["photos"] as! PFRelation
+        if eventArray?.count == 0 {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
         
-        var photoList = photos.query()?.findObjects() as! [PFObject]
+        } else {
+            
+            var object = eventArray!.first as! PFObject
+            var photos = object["photos"] as! PFRelation
+            
+            var photoList = photos.query()?.findObjects() as! [PFObject]
+            
+            if photoList.count == 0 {
+                
+                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+                self.presentViewController(alert, animated: true, completion: nil)
+                println("no internet")
+                
+            } else {
                 
                 for photo in photoList {
                     
@@ -523,7 +567,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                 }
                 self.collectionView?.reloadData()
-
+                
                 
                 // Sort tuple of images by likes, and fill new array with photos in order of likes
                 self.imageFilesTemp.sort{ $0.likes > $1.likes}
@@ -546,7 +590,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     self.datesTime.append(date)
                     
                 }
+                
+            }
+            
         }
+    }
     
 
     override func didReceiveMemoryWarning() {
@@ -584,63 +632,92 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
 
+        
         if sortedByLikes == false && myPhotoSelected == false {
             
-            // Default, fill the cells with photos sorted by time
-            imageFilesTime[indexPath.row].getDataInBackgroundWithBlock { (imageData, error) -> Void in
+            if imageFilesTime.count == 0 {
                 
-                if error == nil {
+                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+                self.presentViewController(alert, animated: true, completion: nil)
+                println("no internet")
+                
+            } else {
+                // Default, fill the cells with photos sorted by time
+                imageFilesTime[indexPath.row].getDataInBackgroundWithBlock { (imageData, error) -> Void in
                     
-                    let image = UIImage (data: imageData!)
-                    self.images.append(image!)
-                    
-                    albumCell.imageView.image = image
-                    
-                } else {
-                    
-                    println(error)
+                    if error == nil {
+                        
+                        let image = UIImage (data: imageData!)
+                        self.images.append(image!)
+                        
+                        albumCell.imageView.image = image
+                        
+                    } else {
+                        
+                        println(error)
+                        
+                    }
                     
                 }
-                
+
             }
+            
         } else if sortedByLikes == true && myPhotoSelected == false {
             
-            // Fill the cells with the sorted photos by likes
-            imageFilesLikes[indexPath.row].getDataInBackgroundWithBlock { (imageD,error) -> Void in
-         
-                if error == nil {
+            if imageFilesLikes.count == 0 {
+                
+                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+                self.presentViewController(alert, animated: true, completion: nil)
+                println("no internet")
+                
+            } else {
+                // Fill the cells with the sorted photos by likes
+                imageFilesLikes[indexPath.row].getDataInBackgroundWithBlock { (imageD,error) -> Void in
                     
-                    let image = UIImage (data: imageD!)
-                    self.images.append(image!)
-                    
-                    albumCell.imageView.image = image
-                    
-                } else {
-                    
-                    println(error)
+                    if error == nil {
+                        
+                        let image = UIImage (data: imageD!)
+                        self.images.append(image!)
+                        
+                        albumCell.imageView.image = image
+                        
+                    } else {
+                        
+                        println(error)
+                        
+                    }
                     
                 }
-                
             }
     
         } else if myPhotoSelected == true {
             
-            
-            myPhotos[indexPath.row].getDataInBackgroundWithBlock { (imgDat, error) -> Void in
+            if myPhotos.count == 0 {
                 
-                if error == nil {
+                var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+                self.presentViewController(alert, animated: true, completion: nil)
+                println("no internet")
+                
+            } else {
+                
+                myPhotos[indexPath.row].getDataInBackgroundWithBlock { (imgDat, error) -> Void in
                     
-                    let image = UIImage(data: imgDat!)
-                    self.images.append(image!)
-                    
-                    albumCell.imageView.image = image
-                    
-                    
-                } else {
-                    
-                    println(error)
+                    if error == nil {
+                        
+                        let image = UIImage(data: imgDat!)
+                        self.images.append(image!)
+                        
+                        albumCell.imageView.image = image
+                        
+                        
+                    } else {
+                        
+                        println(error)
+                    }
                 }
+
             }
+
         }
         albumCell.layer.shouldRasterize = true
         albumCell.layer.rasterizationScale = UIScreen.mainScreen().scale    
@@ -659,17 +736,43 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             // Sorted by time (from newest to oldest)
             if self.sortedByLikes == false && self.myPhotoSelected == false {
-
-                moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
-                moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
+                if self.objectIdTime.count == 0 || self.datesTime.count == 0 {
+                    var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    println("no internet")
+                    
+                } else {
+                    moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
+                    moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
+                }
                 
             } else if self.sortedByLikes == true && self.myPhotoSelected == false {
             // Sorted by like count
-                moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
-                moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                if self.objectIdLikes.count == 0 || self.datesLikes.count == 0 {
+                    
+                    var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    println("no internet")
+                    
+                } else {
+                    
+                    moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
+                    moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                    
+                }
             } else {
                 
-                moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
+                if self.myObjectId.count == 0 {
+                    
+                    var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    println("no internet")
+                    
+                } else {
+                    
+                    moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
+                   
+                }
             }
         }  
     }

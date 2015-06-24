@@ -249,7 +249,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 self.eventSelected = self.cellContent[0] as! String
             }
         } else {
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to the internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
 
