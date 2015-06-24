@@ -101,7 +101,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 likeQuery.whereKey("objectId", equalTo: eventId!)
                 
                 var likeEventList = likeQuery.findObjects()
-                if likeEventList!.count != 0 {
+                if (likeEventList != nil && likeEventList!.count != 0) {
                     var likeEvents = likeEventList!.first as! PFObject
                     var likeRelation = likeEvents["photos"] as! PFRelation
                     
@@ -154,6 +154,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     }
                 
                     retrieveLikes!.saveInBackground()
+                } else {
+                    displayNoInternetAlert()
                 }
             } else {
                 
@@ -162,7 +164,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 likeQuery.whereKey("objectId", equalTo: eventId!)
                 
                 var likedEventList = likeQuery.findObjects()
-                if likedEventList!.count != 0 {
+                if (likedEventList != nil && likedEventList!.count != 0) {
                     var likeEvents = likedEventList!.first as! PFObject
                     
                     
@@ -219,6 +221,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     }
                     
                     retrieveLikes!.saveInBackground()
+                } else {
+                    displayNoInternetAlert()
                 }
 
             }
@@ -404,38 +408,43 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         getRelatedEvent.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
-        var object = getRelatedEvent.findObjects()?.first as! PFObject
+        var relatedEvents = getRelatedEvent.findObjects()
         
-        var photos = object["photos"] as! PFRelation
-        
-        // Finds associated photo object in relation
-        var photoObj = photos.query()?.getObjectWithId(objectIdTemp)
-        
-        
-        var alert = UIAlertController(title: "Flag inappropriate content", message: "What is wrong with this photo?", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in }
-        
-        alert.addAction(UIAlertAction(title: "Flag", style: UIAlertActionStyle.Default, handler: { (action) in
-                var flagEntry = alert.textFields?.first as! UITextField
+        if (relatedEvents == nil || relatedEvents!.count == 0) {
+            displayNoInternetAlert()
+        } else {
+            var object = relatedEvents!.first as! PFObject
+            var photos = object["photos"] as! PFRelation
+            
+            // Finds associated photo object in relation
+            var photoObj = photos.query()?.getObjectWithId(objectIdTemp)
+            
+            
+            var alert = UIAlertController(title: "Flag inappropriate content", message: "What is wrong with this photo?", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addTextFieldWithConfigurationHandler { (textField) -> Void in }
+            
+            alert.addAction(UIAlertAction(title: "Flag", style: UIAlertActionStyle.Default, handler: { (action) in
+                    var flagEntry = alert.textFields?.first as! UITextField
+                    
+                    photoObj!["flagged"] = true
+                    photoObj!["reviewed"] = false
+                    photoObj!["blocked"] = false
+                    photoObj!["reporter"] = PFUser.currentUser()?.objectId
+                    photoObj!["reportMessage"] = flagEntry.text
                 
-                photoObj!["flagged"] = true
-                photoObj!["reviewed"] = false
-                photoObj!["blocked"] = false
-                photoObj!["reporter"] = PFUser.currentUser()?.objectId
-                photoObj!["reportMessage"] = flagEntry.text
-            
-                photoObj?.save()
-            
-                print("photo flagged successfully. Msg: ")
-            
-                self.seg()
-            
-                println(flagEntry.text)
-            }))
+                    photoObj?.save()
+                
+                    print("photo flagged successfully. Msg: ")
+                
+                    self.seg()
+                
+                    println(flagEntry.text)
+                }))
 
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
 
     }
     

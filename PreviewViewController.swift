@@ -180,10 +180,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
             query2.whereKey("eventID", equalTo: eventId!)
             
-            //mine
             var photoObjectList = query2.findObjects()
             
-            if photoObjectList!.count != 0 {
+            if (photoObjectList != nil && photoObjectList!.count != 0) {
                 var photoObject = photoObjectList!.first as! PFObject
                 
                 photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
@@ -191,22 +190,27 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 
                 var queryEvent = PFQuery(className: "Event")
                 queryEvent.whereKey("objectId", equalTo: self.eventId!)
-                var objects = queryEvent.findObjects() as! [PFObject]
-                var eventObject = objects[0]
+                var objects = queryEvent.findObjects()
                 
-                let relation = eventObject.relationForKey("photos")
-                
-                photo.save()
-                
-                relation.addObject(photo)
-                photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-                photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-                
-                //issue
-                eventObject.save()
-                
-                //issue
-                photoObject.save()
+                if (objects != nil && objects!.count != 0) {
+                    var eventObject = objects!.first as! PFObject
+                    
+                    let relation = eventObject.relationForKey("photos")
+                    
+                    photo.save()
+                    
+                    relation.addObject(photo)
+                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+                    
+                    //issue
+                    eventObject.save()
+                    
+                    //issue
+                    photoObject.save()
+                } else {
+                    displayNoInternetAlert()
+                }
             }
             else {
                 displayNoInternetAlert()
