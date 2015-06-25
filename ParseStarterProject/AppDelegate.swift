@@ -44,8 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // ParseCrashReporting.enable()
         //
         // Uncomment and fill in with your Parse credentials:
-        Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV",
-            clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
+        Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX",
+            clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
         
         Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
@@ -138,10 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
                     var qArray = queryEvent.findObjects()
                     
-                   // var objectE = queryEvent.findObjects()?.first as! PFObject
-                    
-                    
-                    if (qArray != nil || qArray!.count != 0) {
+                    if (qArray != nil && qArray!.count != 0) {
                     //self.checkinToEvent(object)
                         var objectE = qArray!.first as! PFObject
                         

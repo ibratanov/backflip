@@ -99,10 +99,9 @@ class EventTableViewController: UITableViewController {
                         query!.whereKey("blocked", equalTo: false)
                         query!.limit = 4
                         
-                        //crash
                         var photos = query!.findObjects()
                         
-                        if (photos != nil || photos!.count != 0) {
+                        if (photos != nil && photos!.count != 0) {
                             var thumbnails: [PFFile] = []
                             
                             for photo in photos! {
@@ -140,14 +139,14 @@ class EventTableViewController: UITableViewController {
             
             var objects = query.findObjects()
             
-            if (objects != nil || objects!.count != 0) {
+            if (objects != nil && objects!.count != 0) {
                 var object = objects!.first as! PFObject
                 
                 var photos = object["photos"] as! PFRelation
                 
                 var photoList = photos.query()?.findObjects()
                 
-                if (photoList != nil || photoList!.count != 0) {
+                if (photoList != nil && photoList!.count != 0) {
                     for photo in photoList! {
                         var image = photo["image"] as! PFFile
                         photoListForEvent.append(image)

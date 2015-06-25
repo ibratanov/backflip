@@ -139,10 +139,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         let query = PFQuery(className: "Event")
                         query.whereKey("eventName", equalTo: "Welcome to Backflip")
                         
-                        //crash
                         let scoreArray = query.findObjects()
                         
-                        if (scoreArray != nil || scoreArray!.count != 0)
+                        if (scoreArray != nil && scoreArray!.count != 0)
                         {
                             var event = scoreArray?[0] as! PFObject
                         
@@ -204,10 +203,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 var eventRadius = 5.0
                 var distQuery = PFQuery(className: "Options")
                 
-                //crash check
                 var distance = distQuery.findObjects()
                 
-                if (distance != nil || distance!.count != 0) {
+                if (distance != nil && distance!.count != 0) {
                     var result = distance?.first as! PFObject
                     eventRadius = result["value"] as! Double
                     
@@ -223,31 +221,29 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     
                     var objects = query.findObjects()
                     
-                    if ( objects != nil || objects!.count != 0) {
-                        for object in objects as! [PFObject] {
-                            var eventName = object.objectForKey("eventName") as! String
-                            var active = object.objectForKey("isLive") as! Bool
-                            
-                            // TODO: Check
-                            if active && self.cellContent.count < query.limit && !contains(savedEvents, eventName) {
-                                self.cellContent.addObject(eventName)
+                    if (objects != nil) {
+                            for object in objects as! [PFObject] {
+                                var eventName = object.objectForKey("eventName") as! String
+                                var active = object.objectForKey("isLive") as! Bool
+                                
+                                // TODO: Check
+                                if active && self.cellContent.count < query.limit && !contains(savedEvents, eventName) {
+                                    self.cellContent.addObject(eventName)
+                                }
+                                
                             }
                             
-                        }
-                        
-                        if self.cellContent.count == 0 {
-                            self.pickerInfo.hidden = true
-                            self.noEventLabel.text = "No Events Nearby"
-                        }
-                        else {
-                            self.pickerInfo.reloadAllComponents()
-                        }
+                            if self.cellContent.count == 0 {
+                                self.pickerInfo.hidden = true
+                                self.noEventLabel.text = "No Events Nearby"
+                            }
+                            else {
+                                self.pickerInfo.reloadAllComponents()
+                            }
                     } else {
-                        self.pickerInfo.hidden = true
-                        self.noEventLabel.text = "No Events Nearby"
+                        self.displayNoInternetAlert()
                     }
-                }
-                else {
+                } else {
                     self.displayNoInternetAlert()
                 }
             }
@@ -311,7 +307,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     query.whereKey("eventName", equalTo: self.eventSelected)
                     let scoreArray = query.findObjects()
                     
-                    if scoreArray != nil || scoreArray!.count != 0 {
+                    if scoreArray != nil && scoreArray!.count != 0 {
                         if self.locationDisabled == true {
                             self.displayAlert("No Nearby Events", error: "Please enable location access in the iOS settings for Backflip.")
                         } else if scoreArray!.count == 0 {
