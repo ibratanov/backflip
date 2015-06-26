@@ -67,8 +67,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 if selectedIndex! != 0 {
                     
                     selectedIndex! = selectedIndex! - 1
-                    self.viewDidLoad()
-                    
+                    viewDidLoad()
                     
                 } else  {
                     
@@ -80,8 +79,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 if tempArray?.count != selectedIndex! + 1 {
                     
                     selectedIndex! = selectedIndex! + 1
-                    self.viewDidLoad()
-                    
+                    viewDidLoad()
+
                     
                 } else {
                     
@@ -91,6 +90,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 
                 
             default :
+                
                 break
 
             }
@@ -426,9 +426,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.navigationController?.popViewControllerAnimated(true)
         
     }
+    
 
     override func viewDidLoad() {
        
+        println(tempArray![selectedIndex!])
         super.viewDidLoad()
         
         //--------------- Draw UI ---------------
@@ -465,9 +467,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         self.view.addSubview(navBar)
         
-        dump(tempArray)
-        println(selectedIndex)
-
+        // Updating queries
+        
         //----------- Query for image display----------
         var getUploadedImages = PFQuery(className: "Event")
         getUploadedImages.limit = 1
@@ -484,22 +485,24 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Once retrieved from relation, set the UIImage view for fullscreen view
         tempImage = photoList!.objectForKey("image") as? PFFile
-
+        
         tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
-                    
-                    if error == nil {
-                        
-                        self.fullScreenImage.image = UIImage(data: imageData!)
-                        
-                    } else {
-                        
-                        println(error)
-                    }
+            
+            if error == nil {
+                
+                self.fullScreenImage.image = UIImage(data: imageData!)
+                
+            } else {
+                
+                println(error)
             }
+        }
+        
+
         
         //----------- Query for Like Image label----------
         var query5 = PFQuery(className: "Event")
-        
+        println("here")
         query5.whereKey("objectId", equalTo: eventId!)
         
         var eventObject = query5.findObjects()?.first as! PFObject
@@ -509,29 +512,51 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         var likeList : [String]
         
         // Finds associated photo object in relation
-        var likeRetrieve = relation.query()?.getObjectWithId(tempArray![self.selectedIndex!])
+        var likeRetrieve = relation.query()?.getObjectWithId(tempArray![selectedIndex!])
         
         // Fill the like list with the user liked list array from photo relation
         likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
+        println("BEFORE FOR LOOP")
+        dump(likeList)
+        var contained = contains(likeList, PFUser.currentUser()!.username!)
         
-        // Iterate through the like list to check if user has liked it
-        for users in likeList {
+        if contained == true {
             
-            if users == PFUser.currentUser()?.username {
-                
-                self.likeActive = true
-                self.likeButtonLabel.setImage(self.liked, forState: .Normal)
-                
-            } else {
-                
-                self.likeActive = false
-                self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
-                
-            }
+            println("liked")
+            self.likeActive = true
+            self.likeButtonLabel.setImage(self.liked, forState: .Normal)
+            
+        } else {
+            
+            println("unliked")
+            self.likeActive = false
+            self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
             
         }
-        let count = likeList.count
 
+        // Iterate through the like list to check if user has liked it
+        /*for users in likeList {
+        
+        println("IN FOR LOOP")
+        if users == PFUser.currentUser()!.username! {
+        
+        println("liked")
+        self.likeActive = true
+        self.likeButtonLabel.setImage(self.liked, forState: .Normal)
+        
+        } else {
+        
+        println("unliked")
+        self.likeActive = false
+        self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
+        
+        }
+        
+        }*/
+        
+        println("AFTER FOR LOOP")
+        let count = likeList.count
+        
         if (count == 1) {
             self.likeCount.text = String(count) + " like"
         } else {
@@ -545,32 +570,31 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             formatter.dateStyle = NSDateFormatterStyle.LongStyle
             formatter.timeStyle = .ShortStyle
             let dateStamp = formatter.stringFromDate(tempDate!)
-    
+            
             eventInfo.text = "Photo taken on \(dateStamp)"
             
         }
-        
-        
-        
+
         // gesture implementation
-        var gesture = UITapGestureRecognizer(target: self, action: "handleTap:")
+        var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
         gesture.numberOfTapsRequired = 2
         
         fullScreenImage.userInteractionEnabled = true
-        fullScreenImage.addGestureRecognizer(gesture)
+        self.view.addGestureRecognizer(gesture)
         
+        println("gestures")
         self.view.bringSubviewToFront(likeCount)
         
         let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        self.view.addGestureRecognizer(swipeLeft)
         
         
-        var swipeRight = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+        var swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        
+        self.view.addGestureRecognizer(swipeLeft)
         self.view.addGestureRecognizer(swipeRight)
 
-        self.view.userInteractionEnabled = true
     }
 
     
