@@ -301,20 +301,35 @@ class CreatePublicEventViewController: UIViewController {
         navBar.addSubview(logout)
         
         self.view.addSubview(navBar)
-        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
-            if error == nil {
-                print(geoPoint)
-                self.userGeoPoint = geoPoint!
+        
+        if NetworkAvailable.networkConnection() == true {
+            PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
+                if error == nil {
+                    print(geoPoint)
+                    self.userGeoPoint = geoPoint!
+                }
+                else {
+                    println("Error with User Geopoint")
+                    self.locationDisabled = true
+                }
             }
-            else {
-                println("Error with User Geopoint")
-                self.locationDisabled = true
-            }
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
         }
     }
     
     override func viewDidAppear(animated: Bool) {
-        getUserAddress()
+        if NetworkAvailable.networkConnection() == true {
+            getUserAddress()
+        } else {
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+        }
     }
     
     // Two functions to allow off keyboard touch to close keyboard

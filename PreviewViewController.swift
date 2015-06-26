@@ -134,6 +134,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 
             }
         })
+        
+        if NetworkAvailable.networkConnection() == true {
         var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
         
         if (downloadToCameraRoll!) {
@@ -154,6 +156,13 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         photo["thumbnail"] = thumbnailFile
         photo["upvoteCount"] = 1
         photo["usersLiked"] = [PFUser.currentUser()!.username!]
+        photo["uploader"] = PFUser.currentUser()!
+        photo["uploaderName"] = PFUser.currentUser()!.username!
+        photo["flagged"] = false
+        photo["reviewed"] = false
+        photo["blocked"] = false
+        photo["reporter"] = ""
+        photo["reportMessage"] = ""
         
         var photoACL = PFACL(user: PFUser.currentUser()!)
         photoACL.setPublicWriteAccess(true)
@@ -186,7 +195,14 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         eventObject.saveInBackground()
         
         photoObject.saveInBackground()
-        
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
+            
+        }
     }
     
     func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {

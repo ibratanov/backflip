@@ -14,7 +14,7 @@ import Foundation
 import Photos
 import MessageUI
 import AVFoundation
-
+import DigitsKit
 
 let reuseIdentifier = "albumCell"
 
@@ -103,28 +103,36 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
     func viewChanger (sender: UISegmentedControl) {
         
-        switch sender.selectedSegmentIndex {
+        if NetworkAvailable.networkConnection() == true {
+            switch sender.selectedSegmentIndex {
+                
+                // Rating
+                case 0 :    sortedByLikes = true
+                            myPhotoSelected = false
+                            updatePhotos()
+                            self.collectionView?.reloadData()
+                
+                // Time
+                case 1:     sortedByLikes = false
+                            myPhotoSelected = false
+                            updatePhotos()
+                            self.collectionView?.reloadData()
+                
+                // My Photos
+                case 2 :    myPhotoSelected = true
+                            displayMyPhotos()
+                            self.collectionView?.reloadData()
+                
+                
+                default:
+                    println("default")
+                
+            }
+        } else {
             
-            // Rating
-            case 0 :    sortedByLikes = true
-                        myPhotoSelected = false
-                        updatePhotos()
-                        self.collectionView?.reloadData()
-            
-            // Time
-            case 1:     sortedByLikes = false
-                        myPhotoSelected = false
-                        updatePhotos()
-                        self.collectionView?.reloadData()
-            
-            // My Photos
-            case 2 :    myPhotoSelected = true
-                        displayMyPhotos()
-                        self.collectionView?.reloadData()
-            
-            
-            default:
-                println("default")
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
             
         }
     }
@@ -133,16 +141,24 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     override func viewWillAppear(animated: Bool) {
-        // fullscreen is false, posted is true
-        if fullScreen == false || posted == true {
-            
-            if myPhotoSelected == false {
-                updatePhotos()
-            } else {
-                displayMyPhotos()
+        if NetworkAvailable.networkConnection() == true {
+            // fullscreen is false, posted is true
+            if fullScreen == false || posted == true {
+                
+                if myPhotoSelected == false {
+                    updatePhotos()
+                } else {
+                    displayMyPhotos()
+                }
+                
+                self.collectionView?.reloadData()
             }
+        } else {
             
-            self.collectionView?.reloadData()
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+
         }
     }
     
@@ -181,6 +197,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        // Pull down to refresh
+        refresher = UIRefreshControl()
+        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.collectionView!.addSubview(refresher)
+        self.collectionView?.alwaysBounceVertical = true
+        
+        
+
         self.fullScreen = false
         self.posted = false
         //--------------- LIKE/TIME/MY PHOTOS ---------------
@@ -306,14 +332,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,80.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
  
-        // Pull down to refresh
-        refresher = UIRefreshControl()
-        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
-        self.collectionView!.addSubview(refresher)
-        self.collectionView?.alwaysBounceVertical = true
 
-        
+
+        if NetworkAvailable.networkConnection() == true {
         // Initialize date comparison components
         let currentTime = NSDate()
         let cal = NSCalendar.currentCalendar()
@@ -355,22 +376,38 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
             
         }
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+            
+        }
 
     }
     
     func refresh(sender: AnyObject) {
         
-        if myPhotoSelected == false {
-            
-            updatePhotos()
-            self.collectionView?.reloadData()
-            self.refresher.endRefreshing()
-            
+        if NetworkAvailable.networkConnection() == true {
+            if myPhotoSelected == false {
+                
+                updatePhotos()
+                self.collectionView?.reloadData()
+                self.refresher.endRefreshing()
+                
+            } else {
+                
+                displayMyPhotos()
+                self.collectionView?.reloadData()
+                self.refresher.endRefreshing()
+            }
         } else {
             
-            displayMyPhotos()
-            self.collectionView?.reloadData()
             self.refresher.endRefreshing()
+            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+ 
         }
         
     }
@@ -395,6 +432,18 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         self.images.removeAll(keepCapacity: true)
         
+        // Load information from parse db -- purely for flag checking
+        var getUploadedImages = PFQuery(className: "Event")
+        getUploadedImages.limit = 1
+        getUploadedImages.whereKey("objectId", equalTo: eventId!)
+        
+        // Retrieval from corresponding photos from relation to event
+        var object = getUploadedImages.findObjects()?.first as! PFObject
+        
+        var photos = object["photos"] as! PFRelation
+        
+        var photoList = photos.query()?.findObjects() as! [PFObject]
+        // End flag checking load
         
         var query = PFQuery(className: "EventAttendance")
         query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
@@ -409,13 +458,26 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             var pList = eventAttendance["photosLiked"] as! [PFFile]
             var ids = eventAttendance["photosLikedID"] as! [String]
             
+            var index = 0
             for photo in pList {
-                self.myPhotos.append(photo)
+                // Ensure the image wasn't flagged or blocked
+                var id = ids[index]
+                var hidden = false
+                for p in photoList {
+                    if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
+                        hidden = true
+                    }
+                }
+                if (!hidden) {
+                    self.myPhotos.append(photo)
+                    self.myObjectId.append(ids[index])
+                }
+                index++
             }
             
-            for id in ids {
-                self.myObjectId.append(id)
-            }
+//            for id in ids {
+//                self.myObjectId.append(id)
+//            }
         }
         
     }
@@ -444,7 +506,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Load information from parse db
         var getUploadedImages = PFQuery(className: "Event")
-        getUploadedImages.limit = 1000
+        getUploadedImages.limit = 1
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
@@ -456,14 +518,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
                 for photo in photoList {
                     
-                    // Fill our array of tuples for sorting
-                    let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId! as String,date: photo.createdAt! as NSDate)
-                    
-                    self.imageFilesTemp.append(tup)
-                    
-                    self.collectionView?.reloadData()
+                    // Ensure the image wasn't flagged or blocked
+                    if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
+                        // Fill our array of tuples for sorting
+                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId! as String,date: photo.createdAt! as NSDate)
+                        
+                        self.imageFilesTemp.append(tup)
+                    }
                     
                 }
+                self.collectionView?.reloadData()
+
                 
                 // Sort tuple of images by likes, and fill new array with photos in order of likes
                 self.imageFilesTemp.sort{ $0.likes > $1.likes}
@@ -623,61 +688,71 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     //--------------- Camera ---------------
     //initialize camera
     func takePhoto(sender: UIButton) {
-        fullScreen = false
-        posted = true
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-            println("Button capture")
-
-            //primary delegate for the picker
-            picker.delegate = self
-            picker.sourceType = .Camera
-            picker.mediaTypes = [kUTTypeImage]
-            picker.allowsEditing = false
-            self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-            self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-            // resize
-            if (zoomImage.camera) {
-                var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
-                var cameraAspectRatio: CGFloat = 4.0/3.0
-                var cameraViewHeight = screenBounds.width * cameraAspectRatio
-                var scale = screenBounds.height / cameraViewHeight
-                picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
-                picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
-                self.zoomImage.camera = false
-            }
-            
-            // custom camera overlayview
-            picker.showsCameraControls = false
-            NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
-            self.overlayView!.frame = picker.cameraOverlayView!.frame
-            picker.cameraOverlayView = self.overlayView
-            self.overlayView = nil
-            
-            self.presentViewController(picker, animated:true, completion:{})
-            setLastPhoto()
-            updateThumbnail()
-            newMedia = true
-        } else {
-            if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
-                var picker = UIImagePickerController()
-                picker.delegate = self;
-                picker.sourceType = .PhotoLibrary
-                picker.mediaTypes = [kUTTypeImage]
-                picker.allowsEditing = false
+        let query = PFUser.query()
+        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+            if (object!.valueForKey("blocked") as! Bool) {
+                PFUser.logOut()
+                Digits.sharedInstance().logOut()
+                self.performSegueWithIdentifier("logOutBlocked", sender: self)
+            } else {
+                self.fullScreen = false
+                self.posted = true
+                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+                    println("Button capture")
+                    
+                    //primary delegate for the picker
+                    self.picker.delegate = self
+                    self.picker.sourceType = .Camera
+                    self.picker.mediaTypes = [kUTTypeImage]
+                    self.picker.allowsEditing = false
+                    self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+                    self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+                    // resize
+                    if (self.zoomImage.camera) {
+                        var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
+                        var cameraAspectRatio: CGFloat = 4.0/3.0
+                        var cameraViewHeight = screenBounds.width * cameraAspectRatio
+                        var scale = screenBounds.height / cameraViewHeight
+                        self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
+                        self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, scale, scale)
+                        self.zoomImage.camera = false
+                    }
+                    
+                    // custom camera overlayview
+                    self.picker.showsCameraControls = false
+                    NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
+                    self.overlayView!.frame = self.picker.cameraOverlayView!.frame
+                    self.picker.cameraOverlayView = self.overlayView
+                    self.overlayView = nil
+                    
+                    self.presentViewController(self.picker, animated:true, completion:{})
+                    self.setLastPhoto()
+                    self.updateThumbnail()
+                    self.newMedia = true
+                } else {
+                    if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
+                        var picker = UIImagePickerController()
+                        picker.delegate = self;
+                        picker.sourceType = .PhotoLibrary
+                        picker.mediaTypes = [kUTTypeImage]
+                        picker.allowsEditing = false
+                        
+                        self.presentViewController(picker, animated:true, completion:{})
+                        
+                        self.newMedia = false
+                        self.setLastPhoto()
+                        self.updateThumbnail()
+                    }
+                }
                 
-                self.presentViewController(picker, animated:true, completion:{})
+                self.testCalled()
+                
+                self.setLastPhoto()
+                self.updateThumbnail()
+                
 
-                newMedia = false
-                setLastPhoto()
-                updateThumbnail()
             }
-        }
-        
-        testCalled()
-
-        setLastPhoto()
-        updateThumbnail()
-        
+        })
     }
     
     func imageFixOrientation(img:UIImage) -> UIImage {
