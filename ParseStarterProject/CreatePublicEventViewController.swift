@@ -161,122 +161,124 @@ class CreatePublicEventViewController: UIViewController {
         //Limit number of characters in event name
         var myStr = self.eventName.text as NSString
         if (count(self.eventName.text) > 25){
-            myStr = myStr.substringToIndex(25)
-        }
-        
-        var eventName = myStr as String
-
-        if (locationDisabled == true) {
-            error = "Please enable location access in the iOS settings for Backflip."
-        } else if (eventName == "" || address == "") {
-            error = "Please enter an event name."
-        } else if (count(eventName) < 2) {
-            error = "Please enter a valid event name."
-        }
-        
-        if (error != "") {
-            displayAlert("Couldn't create event", error: error)
+            displayAlert("Couldn't Create Event", error: "The name of your event is too long. Please keep it under 25 characters.")
         } else {
-            if NetworkAvailable.networkConnection() == true {
-                let query = PFUser.query()
-                query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-
-//                var result = self.getUserLocationFromAddress()
-
-                    
-                    if error != nil {
-                        println(error)
-                    }
-                    else
-                    {
+            var eventName = myStr as String
+            
+            if (locationDisabled == true) {
+                error = "Please enable location access in the iOS settings for Backflip."
+            } else if (eventName == "" || address == "") {
+                error = "Please enter an event name."
+            } else if (count(eventName) < 2) {
+                error = "Please enter a valid event name."
+            }
+            
+            if (error != "") {
+                displayAlert("Couldn't Create Event", error: error)
+            } else {
+                if NetworkAvailable.networkConnection() == true {
+                    let query = PFUser.query()
+                    query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                         
-                        var event = PFObject(className: "Event")
+                        //                var result = self.getUserLocationFromAddress()
                         
-                        var geocoder = CLGeocoder()
-                        geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-                            //print(placemarks?[0])
-                            
-                            if let placemark = placemarks?[0] as? CLPlacemark {
-                                var location = placemark.location as CLLocation
-                                var eventLatitude = location.coordinate.latitude
-                                var eventLongitude = location.coordinate.longitude
-                                
-                                let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
-                                
-                                self.userGeoPoint = userGeoPoint
-                            }
-                        })
                         
-                        event["geoLocation"] = self.userGeoPoint
-
-                        //Check if event already exists
-                        let query = PFQuery(className: "Event")
-                        query.whereKey("eventName", equalTo: eventName)
-                        let scoreArray = query.findObjects()
-                        
-                        if (scoreArray != nil) {
-                            if (scoreArray!.count == 0) {
-                                event["eventName"] = eventName
-                                event["venue"] = address
-                                event["startTime"] = NSDate()
-                                event["isLive"] = true
-                                var eventACL = PFACL(user: PFUser.currentUser()!)
-                                eventACL.setPublicWriteAccess(true)
-                                eventACL.setPublicReadAccess(true)
-                                event.ACL = eventACL
-                                
-                                // Store the relation
-                                let relation = event.relationForKey("attendees")
-                                relation.addObject(PFUser.currentUser()!)
-                                
-                                self.eventID = event.objectId
-                                event.save()
-                                /*event.saveInBackgroundWithBlock({ (success, error) -> Void in
-                                    if (success) {
-                                        println("Objects has been successfully saved")
-                                    } else {
-                                        // There was a problem, check error.description
-                                        println(error)
-                                    }
-                                })*/
-                                
-                                object?.addUniqueObject(event, forKey:"savedEvents")
-                                object?.addUniqueObject(eventName, forKey:"savedEventNames")
-                                
-                                object!.save()
-                                
-                                // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                var attendance = PFObject(className:"EventAttendance")
-                                attendance["eventID"] = event.objectId
-                                //let temp = PFUser.currentUser()?.objectId// as String
-                                attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                                attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                                attendance.setObject(event, forKey: "event")
-                                attendance["photosLikedID"] = []
-                                attendance["photosLiked"] = []
-                                attendance["photosUploadedID"] = []
-                                attendance["photosUploaded"] = []
-                                
-                                attendance.save()
-                                
-                                println("Saved")
-                                self.albumview?.eventId = self.eventID
-                                self.performSegueWithIdentifier("eventsPage", sender: self)
-                                
-                            } else {
-                                self.displayAlert("This event already exists", error: "Join an existing event below")
-                                
-                            }
-                        } else {
-                            self.displayNoInternetAlert()
+                        if error != nil {
+                            println(error)
                         }
-                    }
-                })
+                        else
+                        {
+                            
+                            var event = PFObject(className: "Event")
+                            
+                            var geocoder = CLGeocoder()
+                            geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+                                //print(placemarks?[0])
+                                
+                                if let placemark = placemarks?[0] as? CLPlacemark {
+                                    var location = placemark.location as CLLocation
+                                    var eventLatitude = location.coordinate.latitude
+                                    var eventLongitude = location.coordinate.longitude
+                                    
+                                    let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
+                                    
+                                    self.userGeoPoint = userGeoPoint
+                                }
+                            })
+                            
+                            event["geoLocation"] = self.userGeoPoint
+                            
+                            //Check if event already exists
+                            let query = PFQuery(className: "Event")
+                            query.whereKey("eventName", equalTo: eventName)
+                            let scoreArray = query.findObjects()
+                            
+                            if (scoreArray != nil) {
+                                if (scoreArray!.count == 0) {
+                                    event["eventName"] = eventName
+                                    event["venue"] = address
+                                    event["startTime"] = NSDate()
+                                    event["isLive"] = true
+                                    var eventACL = PFACL(user: PFUser.currentUser()!)
+                                    eventACL.setPublicWriteAccess(true)
+                                    eventACL.setPublicReadAccess(true)
+                                    event.ACL = eventACL
+                                    
+                                    // Store the relation
+                                    let relation = event.relationForKey("attendees")
+                                    relation.addObject(PFUser.currentUser()!)
+                                    
+                                    self.eventID = event.objectId
+                                    event.save()
+                                    /*event.saveInBackgroundWithBlock({ (success, error) -> Void in
+                                    if (success) {
+                                    println("Objects has been successfully saved")
+                                    } else {
+                                    // There was a problem, check error.description
+                                    println(error)
+                                    }
+                                    })*/
+                                    
+                                    object?.addUniqueObject(event, forKey:"savedEvents")
+                                    object?.addUniqueObject(eventName, forKey:"savedEventNames")
+                                    
+                                    object!.save()
+                                    
+                                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                                    var attendance = PFObject(className:"EventAttendance")
+                                    attendance["eventID"] = event.objectId
+                                    //let temp = PFUser.currentUser()?.objectId// as String
+                                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                                    attendance.setObject(event, forKey: "event")
+                                    attendance["photosLikedID"] = []
+                                    attendance["photosLiked"] = []
+                                    attendance["photosUploadedID"] = []
+                                    attendance["photosUploaded"] = []
+                                    
+                                    attendance.save()
+                                    
+                                    println("Saved")
+                                    self.albumview?.eventId = self.eventID
+                                    self.performSegueWithIdentifier("eventsPage", sender: self)
+                                    
+                                } else {
+                                    self.displayAlert("This event already exists", error: "Join an existing event below")
+                                    
+                                }
+                            } else {
+                                self.displayNoInternetAlert()
+                            }
+                        }
+                    })
+                }
+                else {
+                    displayNoInternetAlert()
+                }
             }
-            else {
-                displayNoInternetAlert()
-            }
+
         }
+        
     }
     
 
