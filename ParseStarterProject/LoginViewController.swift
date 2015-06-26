@@ -66,11 +66,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        Digits.sharedInstance().logOut()
-        
-        //added
-        //PFUser.logOut()
 
         termsTextView.editable = false
         termsTextView.userInteractionEnabled = false
@@ -208,6 +203,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         var blocked = object!.valueForKey("blocked") as! Bool
                         if blocked == false {
                             // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
+                            println(Digits.sharedInstance().session())
                             self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                         }
                         else {

@@ -95,6 +95,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         //--------------- Draw UI ---------------
         
+        // Hide picker until events are found
+        self.pickerInfo.hidden = true
+        
         // Hide UI controller item
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
@@ -238,6 +241,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                                 self.noEventLabel.text = "No Events Nearby"
                             }
                             else {
+                                self.pickerInfo.hidden = false
                                 self.pickerInfo.reloadAllComponents()
                             }
                     } else {
@@ -307,13 +311,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     query.whereKey("eventName", equalTo: self.eventSelected)
                     let scoreArray = query.findObjects()
                     
-                    if scoreArray != nil && scoreArray!.count != 0 {
+                    if scoreArray != nil {
                         if self.locationDisabled == true {
                             self.displayAlert("No Nearby Events", error: "Please enable location access in the iOS settings for Backflip.")
                         } else if scoreArray!.count == 0 {
                             self.displayAlert("No Nearby Events", error: "Create a new event!")
-                        }
-                        else {
+                        } else {
                             var event = scoreArray?[0] as! PFObject
 
                             // Subscribe user to the channel of the event for push notifications

@@ -903,10 +903,10 @@
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Akq-ph-AFX"/>
+        <segue reference="bXg-ML-DEH"/>
         <segue reference="ofY-SC-By2"/>
         <segue reference="hKp-Y7-lrD"/>
-        <segue reference="bXg-ML-DEH"/>
+        <segue reference="Akq-ph-AFX"/>
         <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>
