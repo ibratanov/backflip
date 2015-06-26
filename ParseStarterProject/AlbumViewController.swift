@@ -91,6 +91,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    func displayNoInternetAlert() {
+        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+        self.presentViewController(alert, animated: true, completion: nil)
+        println("no internet")
+    }
+    
     func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -125,7 +131,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         } else {
             
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to internet to access content.")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
             
@@ -150,7 +156,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         } else {
             
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
 
@@ -372,11 +378,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
         }
         } else {
-            
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
-            
+            displayNoInternetAlert()
         }
 
     }
@@ -397,12 +399,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 self.refresher.endRefreshing()
             }
         } else {
-            
+            displayNoInternetAlert()
             self.refresher.endRefreshing()
-            var alert = NetworkAvailable.networkAlert("Error", error: "No internet")
-            self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
- 
         }
         
     }
@@ -433,46 +431,68 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
-        var object = getUploadedImages.findObjects()?.first as! PFObject
-        
-        var photos = object["photos"] as! PFRelation
-        
-        var photoList = photos.query()?.findObjects() as! [PFObject]
-        // End flag checking load
-        
-        var query = PFQuery(className: "EventAttendance")
-        query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-        query.whereKey("eventID", equalTo: eventId!)
-        
-        var queryResult = query.findObjects()!
-        
-        //TODO: Check if this is an actual issue when events & users are properly linked up
-        if (queryResult.count != 0) {
-            var eventAttendance = queryResult.first as! PFObject
+        var eventNames = getUploadedImages.findObjects() //as! PFObject
+
+        if (eventNames == nil || eventNames!.count == 0) {
             
-            var pList = eventAttendance["photosLiked"] as! [PFFile]
-            var ids = eventAttendance["photosLikedID"] as! [String]
+            println("error")
+
+        } else {
             
-            var index = 0
-            for photo in pList {
-                // Ensure the image wasn't flagged or blocked
-                var id = ids[index]
-                var hidden = false
-                for p in photoList {
-                    if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
-                        hidden = true
+
+            var object = eventNames!.first as! PFObject
+            var photos = object["photos"] as! PFRelation
+            var photoList = photos.query()!.findObjects()
+
+            if (photoList == nil || photoList!.count == 0) {
+
+               println("no photos")
+                
+            } else {
+
+                // End flag checking load
+                
+                var query = PFQuery(className: "EventAttendance")
+                query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+                query.whereKey("eventID", equalTo: eventId!)
+                
+                var queryResult = query.findObjects()
+                
+                if (queryResult == nil || queryResult!.count == 0) {
+                    
+                    println("no photos")
+                    
+                } else {
+                    
+                    //TODO: Check if this is an actual issue when events & users are properly linked up
+                    if (queryResult!.count != 0) {
+                        var eventAttendance = queryResult!.first as! PFObject
+                        
+                        var pList = eventAttendance["photosLiked"] as! [PFFile]
+                        var ids = eventAttendance["photosLikedID"] as! [String]
+                        
+                        var index = 0
+                        for photo in pList {
+                            // Ensure the image wasn't flagged or blocked
+                            var id = ids[index]
+                            var hidden = false
+                            for p in photoList! {
+                                if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
+                                    hidden = true
+                                }
+                            }
+                            if (!hidden) {
+                                self.myPhotos.append(photo)
+                                self.myObjectId.append(ids[index])
+                            }
+                            index++
+                        }
+
                     }
                 }
-                if (!hidden) {
-                    self.myPhotos.append(photo)
-                    self.myObjectId.append(ids[index])
-                }
-                index++
+                
             }
-            
-//            for id in ids {
-//                self.myObjectId.append(id)
-//            }
+ 
         }
         
     }
@@ -505,25 +525,38 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
-        var object = getUploadedImages.findObjects()?.first as! PFObject
+        var eventArray = getUploadedImages.findObjects()
         
-        var photos = object["photos"] as! PFRelation
-        
-        var photoList = photos.query()?.findObjects() as! [PFObject]
+        if (eventArray == nil || eventArray!.count == 0) {
+            
+            println("no photos")
+            
+        } else {
+            
+            var object = eventArray!.first as! PFObject
+            var photos = object["photos"] as! PFRelation
+            
+            var photoList = photos.query()!.findObjects()
+            
+            if (photoList == nil || photoList!.count == 0) {
                 
-                for photo in photoList {
+                println("no photos")
+                
+            } else {
+                
+                for photo in photoList! {
                     
                     // Ensure the image wasn't flagged or blocked
                     if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
                         // Fill our array of tuples for sorting
-                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId! as String,date: photo.createdAt! as NSDate)
+                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
                         
                         self.imageFilesTemp.append(tup)
                     }
                     
                 }
                 self.collectionView?.reloadData()
-
+                
                 
                 // Sort tuple of images by likes, and fill new array with photos in order of likes
                 self.imageFilesTemp.sort{ $0.likes > $1.likes}
@@ -546,7 +579,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     self.datesTime.append(date)
                     
                 }
+                
+            }
+            
         }
+    }
     
 
     override func didReceiveMemoryWarning() {
@@ -584,63 +621,86 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
 
+        
         if sortedByLikes == false && myPhotoSelected == false {
             
-            // Default, fill the cells with photos sorted by time
-            imageFilesTime[indexPath.row].getDataInBackgroundWithBlock { (imageData, error) -> Void in
+            if imageFilesTime.count == 0 {
                 
-                if error == nil {
+                println("no photos")
+                
+            } else {
+                // Default, fill the cells with photos sorted by time
+                imageFilesTime[indexPath.row].getDataInBackgroundWithBlock { (imageData, error) -> Void in
                     
-                    let image = UIImage (data: imageData!)
-                    self.images.append(image!)
-                    
-                    albumCell.imageView.image = image
-                    
-                } else {
-                    
-                    println(error)
+                    if error == nil {
+                        
+                        let image = UIImage (data: imageData!)
+                        self.images.append(image!)
+                        
+                        albumCell.imageView.image = image
+                        
+                    } else {
+                        
+                        println(error)
+                        
+                    }
                     
                 }
-                
+
             }
+            
         } else if sortedByLikes == true && myPhotoSelected == false {
             
-            // Fill the cells with the sorted photos by likes
-            imageFilesLikes[indexPath.row].getDataInBackgroundWithBlock { (imageD,error) -> Void in
-         
-                if error == nil {
+            if imageFilesLikes.count == 0 {
+                
+                println("no photos")
+                
+            } else {
+                // Fill the cells with the sorted photos by likes
+                imageFilesLikes[indexPath.row].getDataInBackgroundWithBlock { (imageD,error) -> Void in
                     
-                    let image = UIImage (data: imageD!)
-                    self.images.append(image!)
-                    
-                    albumCell.imageView.image = image
-                    
-                } else {
-                    
-                    println(error)
+                    if error == nil {
+                        
+                        let image = UIImage (data: imageD!)
+                        self.images.append(image!)
+                        
+                        albumCell.imageView.image = image
+                        
+                    } else {
+                        
+                        println(error)
+                        
+                    }
                     
                 }
-                
             }
     
         } else if myPhotoSelected == true {
             
-            
-            myPhotos[indexPath.row].getDataInBackgroundWithBlock { (imgDat, error) -> Void in
+            if myPhotos.count == 0 {
                 
-                if error == nil {
+                println("no photos")
+                
+            } else {
+                
+                myPhotos[indexPath.row].getDataInBackgroundWithBlock { (imgDat, error) -> Void in
                     
-                    let image = UIImage(data: imgDat!)
-                    self.images.append(image!)
-                    
-                    albumCell.imageView.image = image
-                    
-                    
-                } else {
-                    
-                    println(error)
+                    if error == nil {
+                        
+                        let image = UIImage(data: imgDat!)
+                        self.images.append(image!)
+                        
+                        albumCell.imageView.image = image
+                        
+                        
+                    } else {
+                        
+                        println(error)
+                    }
                 }
+
             }
+
         }
         albumCell.layer.shouldRasterize = true
         albumCell.layer.rasterizationScale = UIScreen.mainScreen().scale    
@@ -648,100 +708,128 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-        if segue.identifier == "toFull" {
-            
-            var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
-            var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
-            moveVC.eventId = eventId!
-            moveVC.eventTitle = eventTitle!
-            fullScreen = true
-            
-            // Sorted by time (from newest to oldest)
-            if self.sortedByLikes == false && self.myPhotoSelected == false {
-
-                moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
-                moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
+        if NetworkAvailable.networkConnection() == true {
+            if segue.identifier == "toFull" {
                 
-            } else if self.sortedByLikes == true && self.myPhotoSelected == false {
-            // Sorted by like count
-                moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
-                moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
-            } else {
+                var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
+                var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
+                moveVC.eventId = eventId!
+                moveVC.eventTitle = eventTitle!
+                fullScreen = true
                 
-                moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
+                // Sorted by time (from newest to oldest)
+                if self.sortedByLikes == false && self.myPhotoSelected == false {
+                    if self.objectIdTime.count == 0 || self.datesTime.count == 0 {
+                        displayNoInternetAlert()
+                    } else {
+                        moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
+                        moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
+                    }
+                    
+                } else if self.sortedByLikes == true && self.myPhotoSelected == false {
+                // Sorted by like count
+                    if self.objectIdLikes.count == 0 || self.datesLikes.count == 0 {
+                        displayNoInternetAlert()
+                    } else {
+                        
+                        moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
+                        moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                        
+                    }
+                } else {
+                    
+                    if self.myObjectId.count == 0 {
+                        displayNoInternetAlert()
+                    } else {
+                        
+                        moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
+                       
+                    }
+                }
             }
-        }  
+        } else {
+            displayNoInternetAlert()
+        }
     }
     
     //--------------- Camera ---------------
     //initialize camera
     func takePhoto(sender: UIButton) {
-        let query = PFUser.query()
-        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-            if (object!.valueForKey("blocked") as! Bool) {
-                PFUser.logOut()
-                Digits.sharedInstance().logOut()
-                self.performSegueWithIdentifier("logOutBlocked", sender: self)
-            } else {
-                self.fullScreen = false
-                self.posted = true
-                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-                    println("Button capture")
-                    
-                    //primary delegate for the picker
-                    self.picker.delegate = self
-                    self.picker.sourceType = .Camera
-                    self.picker.mediaTypes = [kUTTypeImage]
-                    self.picker.allowsEditing = false
-                    self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-                    self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-                    // resize
-                    if (self.zoomImage.camera) {
-                        var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
-                        var cameraAspectRatio: CGFloat = 4.0/3.0
-                        var cameraViewHeight = screenBounds.width * cameraAspectRatio
-                        var scale = screenBounds.height / cameraViewHeight
-                        self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
-                        self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, scale, scale)
-                        self.zoomImage.camera = false
-                    }
-                    
-                    // custom camera overlayview
-                    self.picker.showsCameraControls = false
-                    NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
-                    self.overlayView!.frame = self.picker.cameraOverlayView!.frame
-                    self.picker.cameraOverlayView = self.overlayView
-                    self.overlayView = nil
-                    
-                    self.presentViewController(self.picker, animated:true, completion:{})
-                    self.setLastPhoto()
-                    self.updateThumbnail()
-                    self.newMedia = true
-                } else {
-                    if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
-                        var picker = UIImagePickerController()
-                        picker.delegate = self;
-                        picker.sourceType = .PhotoLibrary
-                        picker.mediaTypes = [kUTTypeImage]
-                        picker.allowsEditing = false
+        
+        if NetworkAvailable.networkConnection() == true {
+            let query = PFUser.query()
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                if error == nil {
+                    if (object!.valueForKey("blocked") as! Bool) {
+                        PFUser.logOut()
+                        Digits.sharedInstance().logOut()
+                        self.performSegueWithIdentifier("logOutBlocked", sender: self)
+                    } else {
+                        self.fullScreen = false
+                        self.posted = true
+                        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+                            println("Button capture")
+                            
+                            //primary delegate for the picker
+                            self.picker.delegate = self
+                            self.picker.sourceType = .Camera
+                            self.picker.mediaTypes = [kUTTypeImage]
+                            self.picker.allowsEditing = false
+                            self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+                            self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+                            // resize
+                            if (self.zoomImage.camera) {
+                                var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
+                                var cameraAspectRatio: CGFloat = 4.0/3.0
+                                var cameraViewHeight = screenBounds.width * cameraAspectRatio
+                                var scale = screenBounds.height / cameraViewHeight
+                                self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
+                                self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, scale, scale)
+                                self.zoomImage.camera = false
+                            }
+                            
+                            // custom camera overlayview
+                            self.picker.showsCameraControls = false
+                            NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
+                            self.overlayView!.frame = self.picker.cameraOverlayView!.frame
+                            self.picker.cameraOverlayView = self.overlayView
+                            self.overlayView = nil
+                            
+                            self.presentViewController(self.picker, animated:true, completion:{})
+                            self.setLastPhoto()
+                            self.updateThumbnail()
+                            self.newMedia = true
+                        } else {
+                            if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
+                                var picker = UIImagePickerController()
+                                picker.delegate = self;
+                                picker.sourceType = .PhotoLibrary
+                                picker.mediaTypes = [kUTTypeImage]
+                                picker.allowsEditing = false
+                                
+                                self.presentViewController(picker, animated:true, completion:{})
+                                
+                                self.newMedia = false
+                                self.setLastPhoto()
+                                self.updateThumbnail()
+                            }
+                        }
                         
-                        self.presentViewController(picker, animated:true, completion:{})
+                        self.testCalled()
                         
-                        self.newMedia = false
                         self.setLastPhoto()
                         self.updateThumbnail()
-                    }
-                }
-                
-                self.testCalled()
-                
-                self.setLastPhoto()
-                self.updateThumbnail()
-                
+                        
 
-            }
-        })
+                    }
+                } else {
+                    
+                    println(error)
+                }
+            })
+        } else {
+            displayNoInternetAlert()
+        }
     }
     
     func imageFixOrientation(img:UIImage) -> UIImage {
@@ -869,7 +957,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
-       
+
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -1067,6 +1155,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
 
     @IBAction func cancelCamera(sender: AnyObject) {
+        
+        println("hereon cancel")
         picker.dismissViewControllerAnimated(true, completion: nil)
 
     }
