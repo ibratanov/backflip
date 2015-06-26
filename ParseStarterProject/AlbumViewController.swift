@@ -751,7 +751,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     } else {
                         
                         moveVC.tempArray = myObjectId
-                        moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                        //moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
                         moveVC.selectedIndex = selectedCellIndex!.row
                        
                     }

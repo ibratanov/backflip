@@ -70,7 +70,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
         Digits.sharedInstance().logOut()
         
         //added
-        PFUser.logOut()
+        //PFUser.logOut()
 
         termsTextView.editable = false
         termsTextView.userInteractionEnabled = false
