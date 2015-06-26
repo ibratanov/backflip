@@ -54,6 +54,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     var flashOff = UIImage(named:"flash-icon-large") as UIImage!
     var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
+    
+    // Arrays of image files full size
+    var timesImages = [UIImage]()
+    var likeImages = [UIImage]()
+    var myImages = [UIImage]()
 
     
     // Tuple for sorting
@@ -708,6 +713,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
         if NetworkAvailable.networkConnection() == true {
             if segue.identifier == "toFull" {
                 
@@ -722,8 +728,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     if self.objectIdTime.count == 0 || self.datesTime.count == 0 {
                         displayNoInternetAlert()
                     } else {
-                        moveVC.objectIdTemp = objectIdTime[selectedCellIndex!.row]
+                        moveVC.tempArray = objectIdTime
                         moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
+                        moveVC.selectedIndex = selectedCellIndex!.row
                     }
                     
                 } else if self.sortedByLikes == true && self.myPhotoSelected == false {
@@ -732,8 +739,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         displayNoInternetAlert()
                     } else {
                         
-                        moveVC.objectIdTemp = objectIdLikes[selectedCellIndex!.row]
+                        moveVC.tempArray = objectIdLikes
                         moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                        moveVC.selectedIndex = selectedCellIndex!.row
                         
                     }
                 } else {
@@ -742,7 +750,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         displayNoInternetAlert()
                     } else {
                         
-                        moveVC.objectIdTemp = myObjectId[selectedCellIndex!.row]
+                        moveVC.tempArray = myObjectId
+                        //moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                        moveVC.selectedIndex = selectedCellIndex!.row
                        
                     }
                 }
