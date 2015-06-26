@@ -25,9 +25,15 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     @IBOutlet var likeButtonLabel: UIButton!
     
     var tempDate: NSDate?
+
+    // Scroll view
+    @IBOutlet weak var scroller: UIScrollView!
     
     var cellImage : UIImage!
     var likeActive = false
+    var tempArray :[String]?
+    var selectedIndex : Int?
+
     
     // Icon image variables
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
@@ -50,6 +56,50 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             likeToggle(self)
             
         }
+    }
+    //selected index 0,1,2
+    //array 0,1,2
+    func handleSwipe (gesture: UISwipeGestureRecognizer) {
+        
+        if let swipeGesture: UISwipeGestureRecognizer = gesture as UISwipeGestureRecognizer! {
+            
+            switch swipeGesture.direction {
+                
+            case UISwipeGestureRecognizerDirection.Right:
+                
+                if selectedIndex! != 0 {
+                    
+                    selectedIndex! = selectedIndex! - 1
+                    viewDidLoad()
+                    
+                } else  {
+                    
+                    break
+                }
+                
+            case UISwipeGestureRecognizerDirection.Left:
+                
+                if tempArray?.count != selectedIndex! + 1 {
+                    
+                    selectedIndex! = selectedIndex! + 1
+                    viewDidLoad()
+
+                    
+                } else {
+                    
+                    break
+                    
+                }
+                
+                
+            default :
+                
+                break
+
+            }
+ 
+        }
+        
     }
     
     func displayNoInternetAlert() {
@@ -91,15 +141,15 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     // Like button fills 4 arays in database with IDs and thumbnails. Four arrays are in Event Attendance class
     @IBAction func likeButton(sender: AnyObject) {
+
         if NetworkAvailable.networkConnection() == true {
             if likeActive == false {
-                
-                
+
                 //----------- Query for Adjusting DB in the case of liking a photo ----------
                 var likeQuery = PFQuery(className: "Event")
                 
                 likeQuery.whereKey("objectId", equalTo: eventId!)
-                
+
                 var likeEventList = likeQuery.findObjects()
                 if (likeEventList != nil && likeEventList!.count != 0) {
                     var likeEvents = likeEventList!.first as! PFObject
@@ -111,7 +161,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     var thumbnail : PFFile
                     
                     // Finds associated photo object in relation
-                    var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
+                    var retrieveLikes = likeRelation.query()?.getObjectWithId(tempArray![selectedIndex!])
                     
                     if retrieveLikes != nil {
                         // Add user to like list, add 1 to the upvote count
@@ -128,7 +178,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             self.likeCount.text = String(counter) + " likes"
                             
                         } else {
-                            
+
                             self.likeCount.text = String(counter) + " likes"
                         }
                             
@@ -143,11 +193,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 
                                 object?.addObject(thumbnail, forKey: "photosLiked")
                                         
-                                object?.addUniqueObject(self.objectIdTemp, forKey:"photosLikedID")
+                                object?.addUniqueObject(self.tempArray![self.selectedIndex!], forKey:"photosLikedID")
                                         
                                 object!.saveInBackground()
                                         
-                                        
+                                
                             } else {
                                         
                                 println("Error: \(error!) \(error!.userInfo!)")
@@ -155,6 +205,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         }
                     
                         retrieveLikes!.saveInBackground()
+
                     } else {
                         
                         displayNoInternetAlert()
@@ -167,12 +218,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 //----------- Query for Adjusting DB in the case of an unlike----------
                 var likeQuery = PFQuery(className: "Event")
                 likeQuery.whereKey("objectId", equalTo: eventId!)
+
                 
                 var likedEventList = likeQuery.findObjects()
                 if (likedEventList != nil && likedEventList!.count != 0) {
                     var likeEvents = likedEventList!.first as! PFObject
-                    
-                    
+
                     var likeRelation = likeEvents["photos"] as! PFRelation
                     
                     // User like list that will be filled
@@ -181,7 +232,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     var thumbnail : PFFile
                     
                     // Finds associated photo object in relation
-                    var retrieveLikes = likeRelation.query()?.getObjectWithId(objectIdTemp)
+                    var retrieveLikes = likeRelation.query()?.getObjectWithId(tempArray![selectedIndex!])
                     
                     if retrieveLikes != nil {
                         // Add user to like list, add 1 to the upvote count
@@ -203,7 +254,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             
                             self.likeCount.text = String(counter) + " likes"
                         }
-                        
+
                         // Add both photo object and id to arrays in user class
                         var query2 = PFQuery(className: "EventAttendance")
                         query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
@@ -215,7 +266,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                                 
                                 object?.removeObject(thumbnail, forKey: "photosLiked")
                                 
-                                object?.removeObject(self.objectIdTemp, forKey:"photosLikedID")
+                                object?.removeObject(self.tempArray![self.selectedIndex!], forKey:"photosLikedID")
                                 
                                 object!.saveInBackground()
                                 
@@ -416,6 +467,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         getRelatedEvent.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
+
         var relatedEvents = getRelatedEvent.findObjects()
         
         if (relatedEvents == nil || relatedEvents!.count == 0) {
@@ -425,7 +477,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             var photos = object["photos"] as! PFRelation
             
             // Finds associated photo object in relation
-            var photoObj = photos.query()?.getObjectWithId(objectIdTemp)
+            var photoObj = photos.query()?.getObjectWithId(tempArray![selectedIndex!])
             
             if photoObj != nil {
             
@@ -478,9 +530,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.navigationController?.popViewControllerAnimated(true)
         
     }
+    
 
     override func viewDidLoad() {
        
+        println(tempArray![selectedIndex!])
         super.viewDidLoad()
         
         //--------------- Draw UI ---------------
@@ -519,105 +573,136 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 
         
         if NetworkAvailable.networkConnection() == true {
+            
+            // Updating queries
+            
             //----------- Query for image display----------
             var getRelatedEvents = PFQuery(className: "Event")
             getRelatedEvents.limit = 1
             getRelatedEvents.whereKey("objectId", equalTo: eventId!)
             
             // Retrieval from corresponding photos from relation to event
-            var relatedEvents = getRelatedEvents.findObjects()
-            if (relatedEvents == nil || relatedEvents!.count == 0) {
-                displayNoInternetAlert()
-            } else {
-                var event = relatedEvents!.first as! PFObject
+
+            var object = getRelatedEvents.findObjects()?.first as! PFObject
+            
+            var photos = object["photos"] as! PFRelation
+            var tempImage: PFFile?
+            // Finds associated photo object in relation
+            var photoList = photos.query()?.getObjectWithId(tempArray![selectedIndex!])
+            self.tempDate = photoList?.createdAt
+            
+            // Once retrieved from relation, set the UIImage view for fullscreen view
+            tempImage = photoList!.objectForKey("image") as? PFFile
+            
+            tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
                 
-                var photos = event["photos"] as! PFRelation
-                var tempImage: PFFile?
-                
-                // Finds associated photo object in relation
-                var photoObj = photos.query()?.getObjectWithId(objectIdTemp)
-                if (photoObj == nil) {
-                    displayNoInternetAlert()
+                if error == nil {
+                    
+                    self.fullScreenImage.image = UIImage(data: imageData!)
+                    
                 } else {
-                    self.tempDate = photoObj?.createdAt
                     
-                    // Once retrieved from relation, set the UIImage view for fullscreen view
-                    tempImage = photoObj!.objectForKey("image") as? PFFile
-                    
-                    tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
-                        
-                        if error == nil {
-                            
-                            self.fullScreenImage.image = UIImage(data: imageData!)
-                            
-                        } else {
-                            println(error)
-                        }
-                    }
-                    
-//                    //----------- Query for Like Image label----------
-//                    var query5 = PFQuery(className: "Event")
-//                    
-//                    query5.whereKey("objectId", equalTo: eventId!)
-//                    
-//                    var eventObject = query5.findObjects()?.first as! PFObject
-//                    var relation = eventObject["photos"] as! PFRelation
-//                    
-                    // User like list that will be filled
-                    var likeList : [String]
-//
-//                    // Finds associated photo object in relation
-//                    var likeRetrieve = relation.query()?.getObjectWithId(objectIdTemp)
-                    
-                    // Fill the like list with the user liked list array from photo relation
-                    likeList = (photoObj!.objectForKey("usersLiked") as? [String])!
-                    
-                    // Iterate through the like list to check if user has liked it
-                    for users in likeList {
-                        
-                        if users == PFUser.currentUser()?.username {
-                            
-                            self.likeActive = true
-                            self.likeButtonLabel.setImage(self.liked, forState: .Normal)
-                            
-                        } else {
-                            
-                            self.likeActive = false
-                            self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
-                            
-                        }
-                        
-                    }
-                    let count = likeList.count
-                    
-                    if (count == 1) {
-                        self.likeCount.text = String(count) + " like"
-                    } else {
-                        self.likeCount.text = String(count) + " likes"
-                    }
-                    
-                    if tempDate != nil {
-                        
-                        //formatting to display date how we want it
-                        let formatter = NSDateFormatter()
-                        formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                        formatter.timeStyle = .ShortStyle
-                        let dateStamp = formatter.stringFromDate(tempDate!)
-                        
-                        eventInfo.text = "Photo taken on \(dateStamp)"
-                        
-                    }
-                    
-                    // gesture implementation
-                    var gesture = UITapGestureRecognizer(target: self, action: "handleTap:")
-                    gesture.numberOfTapsRequired = 2
-                    
-                    fullScreenImage.userInteractionEnabled = true
-                    fullScreenImage.addGestureRecognizer(gesture)
-                    
-                    self.view.bringSubviewToFront(likeCount)
+                    println(error)
                 }
             }
+            
+            
+            
+            //----------- Query for Like Image label----------
+            var query5 = PFQuery(className: "Event")
+            println("here")
+            query5.whereKey("objectId", equalTo: eventId!)
+            
+            var eventObject = query5.findObjects()?.first as! PFObject
+            var relation = eventObject["photos"] as! PFRelation
+            
+            // User like list that will be filled
+            var likeList : [String]
+            
+            // Finds associated photo object in relation
+            var likeRetrieve = relation.query()?.getObjectWithId(tempArray![selectedIndex!])
+            
+            // Fill the like list with the user liked list array from photo relation
+            likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
+            println("BEFORE FOR LOOP")
+            dump(likeList)
+            var contained = contains(likeList, PFUser.currentUser()!.username!)
+            
+            if contained == true {
+                
+                println("liked")
+                self.likeActive = true
+                self.likeButtonLabel.setImage(self.liked, forState: .Normal)
+                
+            } else {
+                
+                println("unliked")
+                self.likeActive = false
+                self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
+                
+            }
+            
+            // Iterate through the like list to check if user has liked it
+            /*for users in likeList {
+            
+            println("IN FOR LOOP")
+            if users == PFUser.currentUser()!.username! {
+            
+            println("liked")
+            self.likeActive = true
+            self.likeButtonLabel.setImage(self.liked, forState: .Normal)
+            
+            } else {
+            
+            println("unliked")
+            self.likeActive = false
+            self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
+            
+            }
+            
+            }*/
+            
+            println("AFTER FOR LOOP")
+            let count = likeList.count
+            
+            if (count == 1) {
+                self.likeCount.text = String(count) + " like"
+            } else {
+                self.likeCount.text = String(count) + " likes"
+            }
+            
+            if tempDate != nil {
+                
+                //formatting to display date how we want it
+                let formatter = NSDateFormatter()
+                formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                formatter.timeStyle = .ShortStyle
+                let dateStamp = formatter.stringFromDate(tempDate!)
+                
+                eventInfo.text = "Photo taken on \(dateStamp)"
+                
+            }
+            
+            // gesture implementation
+            var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+            gesture.numberOfTapsRequired = 2
+            
+            fullScreenImage.userInteractionEnabled = true
+            self.view.addGestureRecognizer(gesture)
+            
+            println("gestures")
+            self.view.bringSubviewToFront(likeCount)
+            
+            let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+            swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+            
+            
+            var swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+            swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+            
+            self.view.addGestureRecognizer(swipeLeft)
+            self.view.addGestureRecognizer(swipeRight)
+            
         } else {
             displayNoInternetAlert()
         }
