@@ -729,8 +729,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         displayNoInternetAlert()
                     } else {
                         moveVC.tempArray = objectIdTime
-                        moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
+                        moveVC.tempDate = datesTime
                         moveVC.selectedIndex = selectedCellIndex!.row
+                        moveVC.imageArray = imageFilesTime
                     }
                     
                 } else if self.sortedByLikes == true && self.myPhotoSelected == false {
@@ -740,8 +741,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     } else {
                         
                         moveVC.tempArray = objectIdLikes
-                        moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                        moveVC.tempDate = datesLikes
                         moveVC.selectedIndex = selectedCellIndex!.row
+                        moveVC.imageArray = imageFilesLikes
                         
                     }
                 } else {
@@ -751,8 +753,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     } else {
                         
                         moveVC.tempArray = myObjectId
-                        //moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                        moveVC.tempDate = myDate
                         moveVC.selectedIndex = selectedCellIndex!.row
+                        moveVC.imageArray = myPhotos
                        
                     }
                 }
