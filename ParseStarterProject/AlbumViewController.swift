@@ -530,64 +530,172 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
-        var eventArray = getUploadedImages.findObjects()
-        
-        if (eventArray == nil || eventArray!.count == 0) {
-            
-            println("no photos")
-            
-        } else {
-            
-            var object = eventArray!.first as! PFObject
-            var photos = object["photos"] as! PFRelation
-            
-            var photoList = photos.query()!.findObjects()
-            
-            if (photoList == nil || photoList!.count == 0) {
+        //var eventArray = getUploadedImages.findObjects()
+        var eventArray: Void = getUploadedImages.findObjectsInBackgroundWithBlock { (eventArObjs:[AnyObject]?, error:NSError?) -> Void in
+           
+            if (eventArObjs == nil || eventArObjs!.count == 0) {
                 
                 println("no photos")
                 
             } else {
                 
-                for photo in photoList! {
+                var object = eventArObjs!.first as! PFObject
+                var photos = object["photos"] as! PFRelation
+                
+                //var photoList = photos.query()!.findObjects()
+                var photoList: Void = photos.query()!.findObjectsInBackgroundWithBlock({ (photoObjs:[AnyObject]?, error:NSError?) -> Void in
                     
-                    // Ensure the image wasn't flagged or blocked
-                    if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
-                        // Fill our array of tuples for sorting
-                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
+                    if (photoObjs == nil || photoObjs!.count == 0) {
                         
-                        self.imageFilesTemp.append(tup)
+                        println("no photos")
+                        
+                    } else {
+                        
+                        for photo in photoObjs! {
+                            
+                            // Ensure the image wasn't flagged or blocked
+                            if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
+                                // Fill our array of tuples for sorting
+                                let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
+                                
+                                self.imageFilesTemp.append(tup)
+                            }
+                            
+                        }
+                        self.collectionView?.reloadData()
+                        
+                        
+                        // Sort tuple of images by likes, and fill new array with photos in order of likes
+                        self.imageFilesTemp.sort{ $0.likes > $1.likes}
+                        
+                        for (image, likes, id, date) in self.imageFilesTemp {
+                            
+                            self.imageFilesLikes.append(image)
+                            self.objectIdLikes.append(id)
+                            self.datesLikes.append(date)
+                            
+                        }
+                        
+                        // Sort tuple of images, fill the array with photos in order of time
+                        self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
+                        
+                        for (image, likes, id, date) in self.imageFilesTemp {
+                            
+                            self.imageFilesTime.append(image)
+                            self.objectIdTime.append(id)
+                            self.datesTime.append(date)
+                            
+                        }
+                        
                     }
-                    
-                }
-                self.collectionView?.reloadData()
-                
-                
-                // Sort tuple of images by likes, and fill new array with photos in order of likes
-                self.imageFilesTemp.sort{ $0.likes > $1.likes}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
-                    
-                    self.imageFilesLikes.append(image)
-                    self.objectIdLikes.append(id)
-                    self.datesLikes.append(date)
-                    
-                }
-                
-                // Sort tuple of images, fill the array with photos in order of time
-                self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
-                    
-                    self.imageFilesTime.append(image)
-                    self.objectIdTime.append(id)
-                    self.datesTime.append(date)
-                    
-                }
+                })
+                 //-------------- Threading Issue TO-DO: Remove current portion -------------------------
+//                
+//                if (photoList == nil || photoList!.count == 0) {
+//                    
+//                    println("no photos")
+//                    
+//                } else {
+//                    
+//                    for photo in photoList! {
+//                        
+//                        // Ensure the image wasn't flagged or blocked
+//                        if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
+//                            // Fill our array of tuples for sorting
+//                            let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
+//                            
+//                            self.imageFilesTemp.append(tup)
+//                        }
+//                        
+//                    }
+//                    self.collectionView?.reloadData()
+//                    
+//                    
+//                    // Sort tuple of images by likes, and fill new array with photos in order of likes
+//                    self.imageFilesTemp.sort{ $0.likes > $1.likes}
+//                    
+//                    for (image, likes, id, date) in self.imageFilesTemp {
+//                        
+//                        self.imageFilesLikes.append(image)
+//                        self.objectIdLikes.append(id)
+//                        self.datesLikes.append(date)
+//                        
+//                    }
+//                    
+//                    // Sort tuple of images, fill the array with photos in order of time
+//                    self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
+//                    
+//                    for (image, likes, id, date) in self.imageFilesTemp {
+//                        
+//                        self.imageFilesTime.append(image)
+//                        self.objectIdTime.append(id)
+//                        self.datesTime.append(date)
+//                        
+//                    }
+//                    
+//                }
+                 //-------------- Threading Issue TO-DO: Remove current portion -------------------------
                 
             }
-            
         }
+ //-------------- Threading Issue TO-DO: Remove current portion -------------------------
+        //        if (eventArray == nil || eventArray!.count == 0) {
+//            
+//            println("no photos")
+//            
+//        } else {
+//            
+//            var object = eventArray!.first as! PFObject
+//            var photos = object["photos"] as! PFRelation
+//            
+//            var photoList = photos.query()!.findObjects()
+//            
+//            if (photoList == nil || photoList!.count == 0) {
+//                
+//                println("no photos")
+//                
+//            } else {
+//                
+//                for photo in photoList! {
+//                    
+//                    // Ensure the image wasn't flagged or blocked
+//                    if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
+//                        // Fill our array of tuples for sorting
+//                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
+//                        
+//                        self.imageFilesTemp.append(tup)
+//                    }
+//                    
+//                }
+//                self.collectionView?.reloadData()
+//                
+//                
+//                // Sort tuple of images by likes, and fill new array with photos in order of likes
+//                self.imageFilesTemp.sort{ $0.likes > $1.likes}
+//                
+//                for (image, likes, id, date) in self.imageFilesTemp {
+//                    
+//                    self.imageFilesLikes.append(image)
+//                    self.objectIdLikes.append(id)
+//                    self.datesLikes.append(date)
+//                    
+//                }
+//                
+//                // Sort tuple of images, fill the array with photos in order of time
+//                self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
+//                
+//                for (image, likes, id, date) in self.imageFilesTemp {
+//                    
+//                    self.imageFilesTime.append(image)
+//                    self.objectIdTime.append(id)
+//                    self.datesTime.append(date)
+//                    
+//                }
+//                
+//            }
+//            
+//        }
+ //-------------- Threading Issue TO-DO: Remove current portion -------------------------
     }
     
 
