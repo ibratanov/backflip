@@ -123,6 +123,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         super.viewDidLayoutSubviews()
     }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
     
     @IBAction func cropButtonPressed(sender: AnyObject) {
         let cropDimension = cropOpeningView.bounds.size.minDimension()

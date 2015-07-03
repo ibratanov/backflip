@@ -698,7 +698,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
  //-------------- Threading Issue TO-DO: Remove current portion -------------------------
     }
     
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         self.images.removeAll(keepCapacity: true)
@@ -890,6 +889,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                             
                             //primary delegate for the picker
                             self.picker.delegate = self
+                            
+                            self.picker.modalPresentationStyle = UIModalPresentationStyle.FullScreen
                             self.picker.sourceType = .Camera
                             self.picker.mediaTypes = [kUTTypeImage]
                             self.picker.allowsEditing = false
@@ -1036,8 +1037,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
     {
-        image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        self.imageViewContent = image
+        //image stored in local variable to contain lifespan in method
+        var imageShortLife:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        self.imageViewContent = imageShortLife
         picker.dismissViewControllerAnimated(true, completion: nil)
 
         //Retake and crop options------------------------------------------------------------------------
