@@ -873,6 +873,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     //initialize camera
     func takePhoto(sender: UIButton) {
         
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeUpButtonDownNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
         if NetworkAvailable.networkConnection() == true {
             let query = PFUser.query()
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
