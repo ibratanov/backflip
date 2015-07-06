@@ -349,6 +349,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let components2 = NSDateComponents()
         components2.hour = 24
         var eventQuery = PFQuery(className: "Event")
+            
+        eventQuery.selectKeys(["endTime"])
         
         eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
             if error == nil {
@@ -433,6 +435,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Load information from parse db -- purely for flag checking
         var getUploadedImages = PFQuery(className: "Event")
         getUploadedImages.limit = 1
+        getUploadedImages.selectKeys(["photos"])
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
@@ -460,6 +463,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 var query = PFQuery(className: "EventAttendance")
                 query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
                 query.whereKey("eventID", equalTo: eventId!)
+                query.selectKeys(["photosLiked","photosLikedID","flagged","blocked"])
                 
                 var queryResult = query.findObjects()
                 
@@ -528,6 +532,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         var getUploadedImages = PFQuery(className: "Event")
         getUploadedImages.limit = 1
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
+        getUploadedImages.selectKeys(["photos"])
         
         // Retrieval from corresponding photos from relation to event
         var eventArray = getUploadedImages.findObjects()
@@ -768,6 +773,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         if NetworkAvailable.networkConnection() == true {
             let query = PFUser.query()
+            query?.selectKeys(["blocked"])
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                 if error == nil {
                     if (object!.valueForKey("blocked") as! Bool) {

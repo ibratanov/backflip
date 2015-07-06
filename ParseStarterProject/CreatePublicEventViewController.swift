@@ -185,6 +185,7 @@ class CreatePublicEventViewController: UIViewController {
                         
                         if error != nil {
                             println(error)
+
                         }
                         else
                         {
@@ -211,6 +212,7 @@ class CreatePublicEventViewController: UIViewController {
                             //Check if event already exists
                             let query = PFQuery(className: "Event")
                             query.whereKey("eventName", equalTo: eventName)
+                            query.selectKeys(["eventName","startTime","venue","isLive","attendees"])
                             let scoreArray = query.findObjects()
                             
                             if (scoreArray != nil) {
