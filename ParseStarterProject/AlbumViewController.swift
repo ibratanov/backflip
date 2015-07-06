@@ -354,7 +354,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             if error == nil {
                 
                 if let endTime: AnyObject = objects?.objectForKey("endTime") {
-                    //endDate has been set and is valide
+                    //endDate has been set and is valid
                     
                     //TODO: determine how this can be set automatically
                     let endTime = objects?.objectForKey("endTime") as! NSDate
@@ -436,7 +436,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
-        var eventNames = getUploadedImages.findObjects() //as! PFObject
+        var eventNames = getUploadedImages.findObjects()
 
         if (eventNames == nil || eventNames!.count == 0) {
             
@@ -446,8 +446,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
 
             var object = eventNames!.first as! PFObject
-            var photos = object["photos"] as! PFRelation
-            var photoList = photos.query()!.findObjects()
+            var photos = object["photos"] as! PFRelation            
+            var photoListQuery = photos.query()!
+            photoListQuery.limit = 300
+            var photoList = photoListQuery.findObjects()
 
             if (photoList == nil || photoList!.count == 0) {
 
@@ -492,17 +494,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                             }
                             index++
                         }
-
                     }
                 }
-                
             }
- 
         }
-        
     }
-    
-    
     
     // TODO: Smart loading of photos - only reload photos which are new/were modified
     func updatePhotos() {
@@ -541,7 +537,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             var object = eventArray!.first as! PFObject
             var photos = object["photos"] as! PFRelation
             
-            var photoList = photos.query()!.findObjects()
+            var photoListQuery = photos.query()!
+            photoListQuery.limit = 300
+            var photoList = photoListQuery.findObjects()
             
             if (photoList == nil || photoList!.count == 0) {
                 

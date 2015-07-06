@@ -225,13 +225,13 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
         var imageHeight:CGFloat = image.size.height
         var imageWidth:CGFloat = image.size.width
-        var maxHeight:CGFloat = 1136.0 * shrinkRatio
-        var maxWidth:CGFloat = 640.0 * shrinkRatio
+        var maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
+        var maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
         var imageRatio:CGFloat = imageWidth/imageHeight
         var scalingRatio:CGFloat = maxWidth/maxHeight
         
         //lowest quality rating with acceptable encoding
-        var quality:CGFloat = 0.5
+        var quality:CGFloat = 0.4
         
         if (imageHeight > maxHeight || imageWidth > maxWidth){
             if(imageRatio < scalingRatio){
