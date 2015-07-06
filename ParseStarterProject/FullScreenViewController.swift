@@ -68,16 +68,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     func imageConvert () {
 
-        println("FUNCTION CALLED")
+
         for image in imageArray! {
             
-            println("IN FOR LOOP")
             
             let img = UIImage (data: image.getData()!)
-            println(img)
             self.finalImages.append(img!)
-            println("ARRY BELOW")
-            println(finalImages)
+
 
             
         }
@@ -131,6 +128,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 var likeQuery = PFQuery(className: "Event")
                 
                 likeQuery.whereKey("objectId", equalTo: eventId!)
+                likeQuery.selectKeys(["photos"])
 
                 var likeEventList = likeQuery.findObjects()
                 if (likeEventList != nil && likeEventList!.count != 0) {
@@ -200,6 +198,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 //----------- Query for Adjusting DB in the case of an unlike----------
                 var likeQuery = PFQuery(className: "Event")
                 likeQuery.whereKey("objectId", equalTo: eventId!)
+                likeQuery.selectKeys(["photos"])
 
                 
                 var likedEventList = likeQuery.findObjects()
@@ -517,12 +516,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     override func viewDidLoad() {
         
      
-        println(tempArray![selectedIndex!])
         super.viewDidLoad()
         
         imageConvert()
-        println(imageArray)
-        println(finalImages)
         
         //--------------- Draw UI ---------------
 
@@ -721,14 +717,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // 50 is arbitrary drag distance to determine when action occurs
         if imageView.center.x < 50 {
-            
-            println("next photo")
-            
+
             if tempArray?.count != selectedIndex! + 1 {
 
                 if gesture.state == UIGestureRecognizerState.Ended {
                     
-                    println("in left")
                     fullScreenImage.center = CGPointMake(160,286)
                     selectedIndex! = selectedIndex! + 1
                     imageUpdate()
@@ -741,15 +734,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
         } else if imageView.center.x > self.view.bounds.width - 50 {
             
-            println("previous photo")
-
             if selectedIndex! != 0 {
                 
                 if gesture.state == UIGestureRecognizerState.Ended {
                     
                     fullScreenImage.center = CGPointMake(160,286)
                     selectedIndex! = selectedIndex! - 1
-                    println("HERE")
                     imageUpdate()
                     likeUpdate()
                     timeUpdate()
