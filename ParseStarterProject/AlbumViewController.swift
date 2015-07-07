@@ -1064,7 +1064,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
 
         if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-            previewViewController.imageToCrop = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
+            previewViewController.imageToCrop = imageViewContent
+            //UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
+            //UIImage(CGImage: initialImage.CGImage, scale: 1, orientation: initialImage.imageOrientation)!
         }
         else{
             previewViewController.imageToCrop = imageViewContent
