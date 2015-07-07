@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -689,14 +689,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bm6-d7-lPH">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bm6-d7-lPH" customClass="PFImageView">
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <outlet property="imageView" destination="bm6-d7-lPH" id="4r6-QX-Tdg"/>
+                                    <outlet property="imageView" destination="bm6-d7-lPH" id="XLW-lm-T3V"/>
                                     <segue destination="OvI-dv-VgA" kind="show" identifier="toFull" id="Ax8-uE-80J"/>
                                 </connections>
                             </collectionViewCell>
@@ -903,10 +903,10 @@
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="fy9-Lq-hzG"/>
         <segue reference="bXg-ML-DEH"/>
         <segue reference="ofY-SC-By2"/>
         <segue reference="hKp-Y7-lrD"/>
-        <segue reference="Akq-ph-AFX"/>
         <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>

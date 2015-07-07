@@ -43,6 +43,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // Keeps track of photo source and only downloads newly taken images
     var downloadToCameraRoll = true
     
+    var spinner : UIActivityIndicatorView = UIActivityIndicatorView()
     
     // Variable for storing PFFile as image, pass through segue
     var images = [UIImage]()
@@ -143,18 +144,26 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
     }
     
+    // Occurs for when a user adds a photo, we want the photo to show up instantly
     override func viewDidAppear(animated: Bool) {
-    }
-    
-    override func viewWillAppear(animated: Bool) {
+        
         if NetworkAvailable.networkConnection() == true {
             // fullscreen is false, posted is true
-            if fullScreen == false || posted == true {
+            if posted == true {
                 
+                //let qos = (Int(QOS_CLASS_BACKGROUND.value))
+        
                 if myPhotoSelected == false {
-                    updatePhotos()
+                    //dispatch_async(dispatch_get_global_queue(qos, 0)) {
+                        self.updatePhotos()
+                    //}
+                   
                 } else {
-                    displayMyPhotos()
+                    //dispatch_async(dispatch_get_global_queue(qos,0)) {
+                        self.displayMyPhotos()
+                    //}
+           
+                    
                 }
                 
                 self.collectionView?.reloadData()
@@ -164,15 +173,19 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
-
+            
         }
+
     }
-    
+
+    // Segway back to event history page
     func seg() {
         
         self.navigationController?.popViewControllerAnimated(true)
         
     }
+    
+    
     
     func smsShare() {
         
@@ -203,7 +216,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+       
         // Pull down to refresh
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -211,10 +224,49 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.collectionView!.addSubview(refresher)
         self.collectionView?.alwaysBounceVertical = true
         
-        
+        spinner.frame = CGRectMake(0.0, 0.0, 50.0, 50.0)
+        spinner.center = self.view.center
+        self.view.addSubview(spinner)
+        self.view.bringSubviewToFront(spinner)
 
+        // Initial load of images
+        if NetworkAvailable.networkConnection() == true {
+            // fullscreen is false, posted is true
+            if fullScreen == false || posted == true {
+                
+                //let qos = (Int(QOS_CLASS_BACKGROUND.value))
+                
+                if myPhotoSelected == false {
+                    //dispatch_async(dispatch_get_global_queue(qos, 0)) {
+                        self.updatePhotos()
+                    //}
+                    //dispatch_async(dispatch_get_main_queue()) {
+                   
+                    //}
+                } else {
+                    //dispatch_async(dispatch_get_global_queue(qos,0)) {
+                        self.displayMyPhotos()
+                    //}
+                    //dispatch_async(dispatch_get_main_queue()) {
+               
+                    //}
+                    
+                }
+                
+                self.collectionView?.reloadData()
+            }
+        } else {
+            
+            var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+            
+        }
+        
+        // Booleans for determining if view needs to be reloaded
         self.fullScreen = false
         self.posted = false
+        
         //--------------- LIKE/TIME/MY PHOTOS ---------------
         
         // Initialize segmented control button
@@ -507,6 +559,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // TODO: Smart loading of photos - only reload photos which are new/were modified
     func updatePhotos() {
         
+        let qos = (Int(QOS_CLASS_BACKGROUND.value))
+        
         // Clean all our arrays for use again
         self.imageFilesTemp.removeAll(keepCapacity: true)
         
@@ -625,7 +679,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
-
+        
+        // Image view is of type PFImageView, allows parse to do the loading of the files in the cells
         
         if sortedByLikes == false && myPhotoSelected == false {
             
@@ -634,23 +689,13 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 println("no photos")
                 
             } else {
-                // Default, fill the cells with photos sorted by time
-                imageFilesTime[indexPath.row].getDataInBackgroundWithBlock { (imageData, error) -> Void in
-                    
-                    if error == nil {
-                        
-                        let image = UIImage (data: imageData!)
-                        self.images.append(image!)
-                        
-                        albumCell.imageView.image = image
-                        
-                    } else {
-                        
-                        println(error)
-                        
-                    }
-                    
-                }
+
+                // Temp image until actual image loads
+                albumCell.imageView.image = UIImage(named: "backfliplogo80.png")
+                
+                albumCell.imageView.file = imageFilesTime[indexPath.row]
+                albumCell.imageView.loadInBackground()
+
 
             }
             
@@ -661,23 +706,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 println("no photos")
                 
             } else {
-                // Fill the cells with the sorted photos by likes
-                imageFilesLikes[indexPath.row].getDataInBackgroundWithBlock { (imageD,error) -> Void in
-                    
-                    if error == nil {
-                        
-                        let image = UIImage (data: imageD!)
-                        self.images.append(image!)
-                        
-                        albumCell.imageView.image = image
-                        
-                    } else {
-                        
-                        println(error)
-                        
-                    }
-                    
-                }
+                
+
+                     // Temp image until actual image loads
+                    albumCell.imageView.image = UIImage(named: "backfliplogo80.png")
+                
+                    albumCell.imageView.file = imageFilesLikes[indexPath.row]
+                    albumCell.imageView.loadInBackground()
+                
+                
+
             }
     
         } else if myPhotoSelected == true {
@@ -688,29 +726,20 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
             } else {
                 
-                myPhotos[indexPath.row].getDataInBackgroundWithBlock { (imgDat, error) -> Void in
-                    
-                    if error == nil {
-                        
-                        let image = UIImage(data: imgDat!)
-                        self.images.append(image!)
-                        
-                        albumCell.imageView.image = image
-                        
-                        
-                    } else {
-                        
-                        println(error)
-                    }
-                }
-
+                 // Temp image until actual image loads
+                albumCell.imageView.image = UIImage(named: "backfliplogo80.png")
+                
+                albumCell.imageView.file = myPhotos[indexPath.row]
+                albumCell.imageView.loadInBackground()
+                
             }
 
         }
         albumCell.layer.shouldRasterize = true
-        albumCell.layer.rasterizationScale = UIScreen.mainScreen().scale    
+        albumCell.layer.rasterizationScale = UIScreen.mainScreen().scale
         return albumCell
     }
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
