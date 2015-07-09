@@ -204,10 +204,11 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                             
                             //photo.save()
                             photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
-                                if valid{
+                                if valid {
                                     relation.addObject(photo)
                                     photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")}
+                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+                                }
                                 //issue
                                 eventObject.saveInBackground()
                                 

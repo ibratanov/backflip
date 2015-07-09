@@ -175,8 +175,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     func smsShare() {
-        
-        var params = [ "referringUsername": "friend", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+
+        var user = "filler"
+        if (PFUser.currentUser() != nil) {
+            user = PFUser.currentUser()!.objectId!
+        }
+        var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
         
         Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
             if (error == nil) {

@@ -381,7 +381,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             // SMS sharing feature
             alert.addAction(UIAlertAction(title: "Invite friends to album (SMS)", style: .Default, handler: { action in
                 
-                var params = [ "referringUsername": "friend", "referringOut": "FSVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+                var user = "filler"
+                if (PFUser.currentUser() != nil) {
+                    user = PFUser.currentUser()!.objectId!
+                }
+                var params = [ "referringUsername": "\(user)", "referringOut": "FSVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
                 
                 // This is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
                 
@@ -711,6 +715,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        // Attempt at solving a memory issue (Error: Message from debugger: Terminated due to Memory Pressure)
+        // http://stackoverflow.com/questions/19253365/how-to-debug-ios-crash-due-to-memory-pressure
+        if (self.isViewLoaded() && self.view.window == nil) {
+            self.view = nil
+        }
     }
 
 }
