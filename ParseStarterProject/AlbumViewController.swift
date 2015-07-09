@@ -117,18 +117,18 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 case 0 :    sortedByLikes = true
                             myPhotoSelected = false
                             updatePhotos()
-                            self.collectionView?.reloadData()
+                            //self.collectionView?.reloadData()
                 
                 // Time
                 case 1:     sortedByLikes = false
                             myPhotoSelected = false
                             updatePhotos()
-                            self.collectionView?.reloadData()
+                            //self.collectionView?.reloadData()
                 
                 // My Photos
                 case 2 :    myPhotoSelected = true
                             displayMyPhotos()
-                            self.collectionView?.reloadData()
+                            //self.collectionView?.reloadData()
                 
                 
                 default:
@@ -146,6 +146,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     // Occurs for when a user adds a photo, we want the photo to show up instantly
     override func viewDidAppear(animated: Bool) {
+        
         
         if NetworkAvailable.networkConnection() == true {
             // fullscreen is false, posted is true
@@ -166,7 +167,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                 }
                 
-                self.collectionView?.reloadData()
+                //self.collectionView?.reloadData()
             }
         } else {
             
@@ -226,9 +227,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         spinner.frame = CGRectMake(0.0, 0.0, 50.0, 50.0)
         spinner.center = self.view.center
+        spinner.hidden = false
         self.view.addSubview(spinner)
         self.view.bringSubviewToFront(spinner)
-
+        
+        spinner.startAnimating()
+        
+        
+        
         // Initial load of images
         if NetworkAvailable.networkConnection() == true {
             // fullscreen is false, posted is true
@@ -238,11 +244,15 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
                 if myPhotoSelected == false {
                     //dispatch_async(dispatch_get_global_queue(qos, 0)) {
+                 
+                    dispatch_async(dispatch_get_main_queue()) {
+                        
+                    
+                    }
                         self.updatePhotos()
+                    
                     //}
-                    //dispatch_async(dispatch_get_main_queue()) {
-                   
-                    //}
+                 
                 } else {
                     //dispatch_async(dispatch_get_global_queue(qos,0)) {
                         self.displayMyPhotos()
@@ -253,7 +263,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                 }
                 
-                self.collectionView?.reloadData()
+                //self.collectionView?.reloadData()
             }
         } else {
             
@@ -446,7 +456,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             if myPhotoSelected == false {
                 
                 updatePhotos()
-                self.collectionView?.reloadData()
+                //self.collectionView?.reloadData()
                 self.refresher.endRefreshing()
                 
             } else {
@@ -481,75 +491,87 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.datesTime.removeAll(keepCapacity: true)
         
         self.images.removeAll(keepCapacity: true)
+
         
-        // Load information from parse db -- purely for flag checking
-        var getUploadedImages = PFQuery(className: "Event")
-        getUploadedImages.limit = 1
-        getUploadedImages.whereKey("objectId", equalTo: eventId!)
-        
-        // Retrieval from corresponding photos from relation to event
-        var eventNames = getUploadedImages.findObjects() //as! PFObject
+        let qos = (Int(QOS_CLASS_BACKGROUND.value))
+        //dispatch_async(dispatch_get_global_queue(qos, 0)) {
 
-        if (eventNames == nil || eventNames!.count == 0) {
+
             
-            println("error")
-
-        } else {
+            // Load information from parse db -- purely for flag checking
+            var getUploadedImages = PFQuery(className: "Event")
+            getUploadedImages.limit = 1
+            getUploadedImages.whereKey("objectId", equalTo: self.eventId!)
             
+            // Retrieval from corresponding photos from relation to event
+            var eventNames = getUploadedImages.findObjects() //as! PFObject
 
-            var object = eventNames!.first as! PFObject
-            var photos = object["photos"] as! PFRelation
-            var photoList = photos.query()!.findObjects()
-
-            if (photoList == nil || photoList!.count == 0) {
-
-               println("no photos")
+            if (eventNames == nil || eventNames!.count == 0) {
                 
+                println("error")
+
             } else {
+                
 
-                // End flag checking load
-                
-                var query = PFQuery(className: "EventAttendance")
-                query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-                query.whereKey("eventID", equalTo: eventId!)
-                
-                var queryResult = query.findObjects()
-                
-                if (queryResult == nil || queryResult!.count == 0) {
-                    
-                    println("no photos")
+                var object = eventNames!.first as! PFObject
+                var photos = object["photos"] as! PFRelation
+                var photoList = photos.query()!.findObjects()
+
+                if (photoList == nil || photoList!.count == 0) {
+
+                   println("no photos")
                     
                 } else {
+
+                    // End flag checking load
                     
-                    //TODO: Check if this is an actual issue when events & users are properly linked up
-                    if (queryResult!.count != 0) {
-                        var eventAttendance = queryResult!.first as! PFObject
+                    var query = PFQuery(className: "EventAttendance")
+                    query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+                    query.whereKey("eventID", equalTo: self.eventId!)
+                    
+                    var queryResult = query.findObjects()
+                    //dispatch_async(dispatch_get_main_queue()) {
+                    if (queryResult == nil || queryResult!.count == 0) {
                         
-                        var pList = eventAttendance["photosLiked"] as! [PFFile]
-                        var ids = eventAttendance["photosLikedID"] as! [String]
+                        println("no photos")
                         
-                        var index = 0
-                        for photo in pList {
-                            // Ensure the image wasn't flagged or blocked
-                            var id = ids[index]
-                            var hidden = false
-                            for p in photoList! {
-                                if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
-                                    hidden = true
+                    } else {
+                        
+                       
+                        //TODO: Check if this is an actual issue when events & users are properly linked up
+                        if (queryResult!.count != 0) {
+                            var eventAttendance = queryResult!.first as! PFObject
+                            
+                            var pList = eventAttendance["photosLiked"] as! [PFFile]
+                            var ids = eventAttendance["photosLikedID"] as! [String]
+                        
+                                var index = 0
+                                for photo in pList {
+                                    // Ensure the image wasn't flagged or blocked
+                                    var id = ids[index]
+                                    var hidden = false
+                                    for p in photoList! {
+                                        if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
+                                            hidden = true
+                                        }
+                                    }
+                                   
+                                        if (!hidden) {
+                                            
+                                            self.myPhotos.append(photo)
+                                            self.myObjectId.append(ids[index])
+                                        }
+                                    
+                                    index++
                                 }
                             }
-                            if (!hidden) {
-                                self.myPhotos.append(photo)
-                                self.myObjectId.append(ids[index])
-                            }
-                            index++
-                        }
 
-                    }
+                        //}
+                    //}
+                    
                 }
-                
+     
             }
- 
         }
         
     }
@@ -559,14 +581,13 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // TODO: Smart loading of photos - only reload photos which are new/were modified
     func updatePhotos() {
         
-        let qos = (Int(QOS_CLASS_BACKGROUND.value))
-        
+
         // Clean all our arrays for use again
         self.imageFilesTemp.removeAll(keepCapacity: true)
         
         self.myPhotos.removeAll(keepCapacity: true)
         self.myObjectId.removeAll(keepCapacity: true)
-
+        
         
         self.imageFilesLikes.removeAll(keepCapacity: true)
         self.objectIdLikes.removeAll(keepCapacity: true)
@@ -578,70 +599,80 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         self.images.removeAll(keepCapacity: true)
         
-        // Load information from parse db
-        var getUploadedImages = PFQuery(className: "Event")
-        getUploadedImages.limit = 1
-        getUploadedImages.whereKey("objectId", equalTo: eventId!)
-        
-        // Retrieval from corresponding photos from relation to event
-        var eventArray = getUploadedImages.findObjects()
-        
-        if (eventArray == nil || eventArray!.count == 0) {
+        let qos = (Int(QOS_CLASS_USER_INITIATED.value))
+        dispatch_async(dispatch_get_global_queue(qos, 0)) {
+
+            // Load information from parse db
+            var getUploadedImages = PFQuery(className: "Event")
+            getUploadedImages.limit = 1
+            getUploadedImages.whereKey("objectId", equalTo: self.eventId!)
             
-            println("no photos")
+            // Retrieval from corresponding photos from relation to event
+            var eventArray = getUploadedImages.findObjects()
             
-        } else {
-            
-            var object = eventArray!.first as! PFObject
-            var photos = object["photos"] as! PFRelation
-            
-            var photoList = photos.query()!.findObjects()
-            
-            if (photoList == nil || photoList!.count == 0) {
+            if (eventArray == nil || eventArray!.count == 0) {
                 
                 println("no photos")
                 
             } else {
                 
-                for photo in photoList! {
+                var object = eventArray!.first as! PFObject
+                var photos = object["photos"] as! PFRelation
+                
+                var photoList = photos.query()!.findObjects()
+                
+                if (photoList == nil || photoList!.count == 0) {
                     
-                    // Ensure the image wasn't flagged or blocked
-                    if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
-                        // Fill our array of tuples for sorting
-                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
+                    println("no photos")
+                
+                    
+                } else {
+                    
+                    for photo in photoList! {
                         
-                        self.imageFilesTemp.append(tup)
+                        // Ensure the image wasn't flagged or blocked
+                        if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
+                            // Fill our array of tuples for sorting
+                            let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
+                            
+                            self.imageFilesTemp.append(tup)
+                        }
+                        
                     }
                     
-                }
-                self.collectionView?.reloadData()
-                
-                
-                // Sort tuple of images by likes, and fill new array with photos in order of likes
-                self.imageFilesTemp.sort{ $0.likes > $1.likes}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
+                    dispatch_async(dispatch_get_main_queue()) {
+                    self.collectionView?.reloadData()
                     
-                    self.imageFilesLikes.append(image)
-                    self.objectIdLikes.append(id)
-                    self.datesLikes.append(date)
                     
-                }
-                
-                // Sort tuple of images, fill the array with photos in order of time
-                self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
+                    // Sort tuple of images by likes, and fill new array with photos in order of likes
+                    self.imageFilesTemp.sort{ $0.likes > $1.likes}
                     
-                    self.imageFilesTime.append(image)
-                    self.objectIdTime.append(id)
-                    self.datesTime.append(date)
+                    for (image, likes, id, date) in self.imageFilesTemp {
+                        
+                        self.imageFilesLikes.append(image)
+                        self.objectIdLikes.append(id)
+                        self.datesLikes.append(date)
+                        
+                    }
                     
+                    // Sort tuple of images, fill the array with photos in order of time
+                    self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
+                    
+                    for (image, likes, id, date) in self.imageFilesTemp {
+                        
+                        self.imageFilesTime.append(image)
+                        self.objectIdTime.append(id)
+                        self.datesTime.append(date)
+                        
+                    }
+                    
+                    }
                 }
                 
             }
             
         }
+        spinner.stopAnimating()
     }
     
 
@@ -686,15 +717,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             if imageFilesTime.count == 0 {
                 
-                println("no photos")
+                println("No Photos")
                 
             } else {
 
-                // Temp image until actual image loads
-                albumCell.imageView.image = UIImage(named: "backfliplogo80.png")
-                
+                // Temp image until actual image loads CAUSES MEMORY WARNING ON MANY REFRESH
+                //albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
+
+
                 albumCell.imageView.file = imageFilesTime[indexPath.row]
                 albumCell.imageView.loadInBackground()
+
 
 
             }
@@ -703,13 +736,13 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             if imageFilesLikes.count == 0 {
                 
-                println("no photos")
+                println("No Photos")
                 
             } else {
                 
 
                      // Temp image until actual image loads
-                    albumCell.imageView.image = UIImage(named: "backfliplogo80.png")
+                    //albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
                 
                     albumCell.imageView.file = imageFilesLikes[indexPath.row]
                     albumCell.imageView.loadInBackground()
@@ -727,7 +760,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             } else {
                 
                  // Temp image until actual image loads
-                albumCell.imageView.image = UIImage(named: "backfliplogo80.png")
+                //albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
                 
                 albumCell.imageView.file = myPhotos[indexPath.row]
                 albumCell.imageView.loadInBackground()
