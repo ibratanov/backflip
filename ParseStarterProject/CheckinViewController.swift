@@ -139,53 +139,58 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     }
                     else
                     {
+                        dispatch_async(dispatch_get_global_queue(self.qos,0)) {
                         
-                        //Check if event exists
-                        let query = PFQuery(className: "Event")
-                        
-                        query.whereKey("eventName", equalTo: "Welcome to Backflip")
-                        
-                        let scoreArray = query.findObjects()
-                        
-                        if (scoreArray != nil && scoreArray!.count != 0)
-                        {
-                            var event = scoreArray?[0] as! PFObject
-                        
-                            // Store the relation
-                            let relation = event.relationForKey("attendees")
-                            relation.addObject(object!)
-                            
-                            event.save()
-                            
-                            
-                            // Add the event to the User object
-                            object?.addUniqueObject(event, forKey:"savedEvents")
-                            object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
-                            
-                            object!.saveInBackground()
-                            
-                            
-                            // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                            var attendance = PFObject(className:"EventAttendance")
-                            attendance["eventID"] = event.objectId
-                            attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                            attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                            attendance.setObject(event, forKey: "event")
-                            attendance["photosLikedID"] = []
-                            attendance["photosLiked"] = []
-                            attendance["photosUploaded"] = []
-                            attendance["photosUploadedID"] = []
-                            
-                            
-                            attendance.saveInBackground()
-                            
-                            PFUser.currentUser()?.setObject(false, forKey: "firstUse")
-                        }
-                        else
-                        {
-                            println("Welcome to backflip event not there")
+                                //Check if event exists
+                                let query = PFQuery(className: "Event")
+                                
+                                query.whereKey("eventName", equalTo: "Welcome to Backflip")
+                                
+                                let scoreArray = query.findObjects()
+                                
+                                if (scoreArray != nil && scoreArray!.count != 0)
+                                {
+                                    var event = scoreArray?[0] as! PFObject
+                                
+                                    // Store the relation
+                                    let relation = event.relationForKey("attendees")
+                                    relation.addObject(object!)
+                                    
+                                    event.save()
+                                    
+                                    
+                                    // Add the event to the User object
+                                    object?.addUniqueObject(event, forKey:"savedEvents")
+                                    object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
+                                    
+                                    object!.saveInBackground()
+                                    
+                                    
+                                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                                    var attendance = PFObject(className:"EventAttendance")
+                                    attendance["eventID"] = event.objectId
+                                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                                    attendance.setObject(event, forKey: "event")
+                                    attendance["photosLikedID"] = []
+                                    attendance["photosLiked"] = []
+                                    attendance["photosUploaded"] = []
+                                    attendance["photosUploadedID"] = []
+                                    
+                                    
+                                    attendance.saveInBackground()
+                                    
+                                    PFUser.currentUser()?.setObject(false, forKey: "firstUse")
+                                }
+                                else
+                                {
+                                    println("Welcome to backflip event not there")
 
+                                }
+                            
+                            
                         }
+                            
                     }
                 }
             })
@@ -201,58 +206,69 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     func calcNearByEvents() {
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
             if error == nil {
-                print(geoPoint)
-                self.userGeoPoint = geoPoint!
-                print("successfully retrieved User GeoPoint")
                 
-                // Set default event radius
-                var eventRadius = 5.0
-                var distQuery = PFQuery(className: "Options")
+                dispatch_async(dispatch_get_global_queue(self.qos,0)) {
                 
-                var distance = distQuery.findObjects()
-                
-                if (distance != nil && distance!.count != 0) {
-                    var result = distance?.first as! PFObject
-                    eventRadius = result["value"] as! Double
+                    print(geoPoint)
+                    self.userGeoPoint = geoPoint!
+                    print("Successfully retrieved User GeoPoint")
                     
-                    // Queries events table for locations that are close to user
-                    // Return top 5 closest events
-                    var query = PFQuery(className: "Event")
-                    //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
-                    query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
-                    query.limit = 10
+                    // Set default event radius
+                    var eventRadius = 5.0
+                    var distQuery = PFQuery(className: "Options")
+                    
+                    var distance = distQuery.findObjects()
+                    
+                    if (distance != nil && distance!.count != 0) {
+                        var result = distance?.first as! PFObject
+                        eventRadius = result["value"] as! Double
+                        
+                        // Queries events table for locations that are close to user
+                        // Return top 5 closest events
+                        var query = PFQuery(className: "Event")
+                        //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
+                        query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
+                        query.limit = 10
 
-                    var usr = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
-                    var savedEvents: [String] = usr!.objectForKey("savedEventNames") as! [String]
-                    
-                    var objects = query.findObjects()
-                    
-                    if (objects != nil) {
-                            for object in objects as! [PFObject] {
-                                var eventName = object.objectForKey("eventName") as! String
-                                var active = object.objectForKey("isLive") as! Bool
-                                
-                                // TODO: Check
-                                if active && self.cellContent.count < query.limit && !contains(savedEvents, eventName) {
-                                    self.cellContent.addObject(eventName)
+                        var usr = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
+                        var savedEvents: [String] = usr!.objectForKey("savedEventNames") as! [String]
+                        
+                        var objects = query.findObjects()
+                        
+                        if (objects != nil) {
+                                for object in objects as! [PFObject] {
+                                    var eventName = object.objectForKey("eventName") as! String
+                                    var active = object.objectForKey("isLive") as! Bool
+                                    
+                                    // TODO: Check
+                                    if active && self.cellContent.count < query.limit && !contains(savedEvents, eventName) {
+                                        self.cellContent.addObject(eventName)
+                                    }
+                                    
                                 }
-                                
+
+                            dispatch_async(dispatch_get_main_queue()) {
+                                    if self.cellContent.count == 0 {
+                                        self.pickerInfo.hidden = true
+                                        self.noEventLabel.text = "No Events Nearby"
+                                    }
+                                    else {
+                                        self.pickerInfo.hidden = false
+                                        self.pickerInfo.reloadAllComponents()
+                                    }
                             }
-                            
-                            if self.cellContent.count == 0 {
-                                self.pickerInfo.hidden = true
-                                self.noEventLabel.text = "No Events Nearby"
-                            }
-                            else {
-                                self.pickerInfo.hidden = false
-                                self.pickerInfo.reloadAllComponents()
-                            }
+
+                        } else {
+                            self.displayNoInternetAlert()
+                        }
                     } else {
                         self.displayNoInternetAlert()
                     }
-                } else {
-                    self.displayNoInternetAlert()
                 }
+                
+                
+                
+                
             }
             else {
                 print("Error with User Geopoint")
@@ -309,66 +325,72 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 else
                 {
                     
-                    //Check if event exists
-                    let query = PFQuery(className: "Event")
-                    query.whereKey("eventName", equalTo: self.eventSelected)
-                    let scoreArray = query.findObjects()
-                    
-                    if scoreArray != nil {
-                        if self.locationDisabled == true {
-                            self.displayAlert("No Nearby Events", error: "Please enable location access in the iOS settings for Backflip.")
-                        } else if scoreArray!.count == 0 {
-                            self.displayAlert("No Nearby Events", error: "Create a new event!")
-                        } else {
-                            var event = scoreArray?[0] as! PFObject
-
-                            // Subscribe user to the channel of the event for push notifications
-                            let currentInstallation = PFInstallation.currentInstallation()
-                            currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
-                            currentInstallation.saveInBackground()
-                            
-                            // Store the relation
-                            let relation = event.relationForKey("attendees")
-                            relation.addObject(object!)
-                            
-                            event.save()
-                            
-                            var listEvents = object!.objectForKey("savedEventNames") as! [String]
-                            if contains(listEvents, self.eventSelected)
-                            {
-                                print("Event already in list")
-                                self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
-                            }
-                            else
-                            {
-                                // Add the event to the User object
-                                object?.addUniqueObject(event, forKey:"savedEvents")
-                                object?.addUniqueObject(self.eventSelected, forKey:"savedEventNames")
-                                
-                                object!.saveInBackground()
-                                
-                                
-                                // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                var attendance = PFObject(className:"EventAttendance")
-                                attendance["eventID"] = event.objectId
-                                attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                                attendance["photosLikedID"] = []
-                                attendance["photosLiked"] = []
-                                attendance["photosUploadedID"] = []
-                                attendance["photosUploaded"] = []
-                                attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                                attendance.setObject(event, forKey: "event")
-                                
-                                attendance.saveInBackground()
-                                
-                                println("Saved")
-                                self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
-                            }
-                        }
-                    } else {
+                    dispatch_async(dispatch_get_global_queue(self.qos,0)) {
+                        //Check if event exists
+                        let query = PFQuery(className: "Event")
+                        query.whereKey("eventName", equalTo: self.eventSelected)
+                        let scoreArray = query.findObjects()
                         
-                        println("objects not found")
+                        if scoreArray != nil {
+                            if self.locationDisabled == true {
+                                self.displayAlert("No Nearby Events", error: "Please enable location access in the iOS settings for Backflip.")
+                            } else if scoreArray!.count == 0 {
+                                self.displayAlert("No Nearby Events", error: "Create a new event!")
+                            } else {
+                                var event = scoreArray?[0] as! PFObject
+
+                                // Subscribe user to the channel of the event for push notifications
+                                let currentInstallation = PFInstallation.currentInstallation()
+                                currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
+                                currentInstallation.saveInBackground()
+                                
+                                // Store the relation
+                                let relation = event.relationForKey("attendees")
+                                relation.addObject(object!)
+                                
+                                event.save()
+                                
+                                var listEvents = object!.objectForKey("savedEventNames") as! [String]
+                                if contains(listEvents, self.eventSelected)
+                                {
+                                    print("Event already in list")
+                                    self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                                }
+                                else
+                                {
+                                    // Add the event to the User object
+                                    object?.addUniqueObject(event, forKey:"savedEvents")
+                                    object?.addUniqueObject(self.eventSelected, forKey:"savedEventNames")
+                                    
+                                    object!.save()
+                                    
+                                    
+                                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                                    var attendance = PFObject(className:"EventAttendance")
+                                    attendance["eventID"] = event.objectId
+                                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                                    attendance["photosLikedID"] = []
+                                    attendance["photosLiked"] = []
+                                    attendance["photosUploadedID"] = []
+                                    attendance["photosUploaded"] = []
+                                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                                    attendance.setObject(event, forKey: "event")
+                                    
+                                    attendance.save()
+                                    
+                                    println("Saved")
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                                    }
+                                }
+                            }
+                        } else {
+                            
+                            println("objects not found")
+                        }
+                    
                     }
+                    
                 }
             })
         } else {
