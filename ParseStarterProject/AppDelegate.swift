@@ -226,9 +226,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                         println("Object not found")
                         let alert = UIAlertView()
-                        alert.title = "Event Invitation Invalid"
-                        alert.message = "Please login before being added to event"
-                        alert.addButtonWithTitle("Done")
+                        alert.title = "Event Invite Failed"
+                        alert.message = "Please log in and click the invite link again."
+                        alert.addButtonWithTitle("Ok")
                         
                         alert.delegate = self
                         alert.show()

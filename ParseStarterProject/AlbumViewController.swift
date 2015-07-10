@@ -343,53 +343,50 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.automaticallyAdjustsScrollViewInsets = false
  
 
-
         if NetworkAvailable.networkConnection() == true {
-        // Initialize date comparison components
-        let currentTime = NSDate()
-        let cal = NSCalendar.currentCalendar()
-        let components = NSDateComponents()
-        components.hour = 48
-        let components2 = NSDateComponents()
-        components2.hour = 24
-        var eventQuery = PFQuery(className: "Event")
-        
-        eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
-            if error == nil {
-                
-                if let endTime: AnyObject = objects?.objectForKey("endTime") {
-                    //endDate has been set and is valide
+            // Initialize date comparison components
+            let currentTime = NSDate()
+            let cal = NSCalendar.currentCalendar()
+            let components = NSDateComponents()
+            components.hour = 48
+            let components2 = NSDateComponents()
+            components2.hour = 24
+            var eventQuery = PFQuery(className: "Event")
+            
+            eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
+                if error == nil {
                     
-                    //TODO: determine how this can be set automatically
-                    let endTime = objects?.objectForKey("endTime") as! NSDate
-                    
-                    //date is the end time of event plus 48hours
-                    let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
-                    
-                    // Event is still active (currentTime < expiry time)
-                    if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
+                    if let endTime: AnyObject = objects?.objectForKey("endTime") {
+                        //endDate has been set and is valide
                         
-                    // Event is no longer active (currentTime > expiry time)
-                    } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
+                        //TODO: determine how this can be set automatically
+                        let endTime = objects?.objectForKey("endTime") as! NSDate
                         
+                        //date is the end time of event plus 48hours
+                        let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
+                        
+                        // Event is still active (currentTime < expiry time)
+                        if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
+                            
+                        // Event is no longer active (currentTime > expiry time)
+                        } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
+                            
+                        }
+                        
+                    } else {
+                        //endDate has not been set or was invalid
                     }
+
                     
                 } else {
-                    //endDate has not been set or was invalid
+                    
+                    println(error)
+                    
                 }
-
-                
-            } else {
-                
-                println(error)
-                
             }
-            
-        }
         } else {
             displayNoInternetAlert()
         }
-
     }
     
     func refresh(sender: AnyObject) {
@@ -507,7 +504,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     
-    
     // TODO: Smart loading of photos - only reload photos which are new/were modified
     func updatePhotos() {
         
@@ -590,116 +586,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                             self.datesTime.append(date)
                             
                         }
-                        
                     }
                 })
-                 //-------------- Threading Issue TO-DO: Remove current portion -------------------------
-//                
-//                if (photoList == nil || photoList!.count == 0) {
-//                    
-//                    println("no photos")
-//                    
-//                } else {
-//                    
-//                    for photo in photoList! {
-//                        
-//                        // Ensure the image wasn't flagged or blocked
-//                        if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
-//                            // Fill our array of tuples for sorting
-//                            let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
-//                            
-//                            self.imageFilesTemp.append(tup)
-//                        }
-//                        
-//                    }
-//                    self.collectionView?.reloadData()
-//                    
-//                    
-//                    // Sort tuple of images by likes, and fill new array with photos in order of likes
-//                    self.imageFilesTemp.sort{ $0.likes > $1.likes}
-//                    
-//                    for (image, likes, id, date) in self.imageFilesTemp {
-//                        
-//                        self.imageFilesLikes.append(image)
-//                        self.objectIdLikes.append(id)
-//                        self.datesLikes.append(date)
-//                        
-//                    }
-//                    
-//                    // Sort tuple of images, fill the array with photos in order of time
-//                    self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
-//                    
-//                    for (image, likes, id, date) in self.imageFilesTemp {
-//                        
-//                        self.imageFilesTime.append(image)
-//                        self.objectIdTime.append(id)
-//                        self.datesTime.append(date)
-//                        
-//                    }
-//                    
-//                }
-                 //-------------- Threading Issue TO-DO: Remove current portion -------------------------
-                
             }
         }
- //-------------- Threading Issue TO-DO: Remove current portion -------------------------
-        //        if (eventArray == nil || eventArray!.count == 0) {
-//            
-//            println("no photos")
-//            
-//        } else {
-//            
-//            var object = eventArray!.first as! PFObject
-//            var photos = object["photos"] as! PFRelation
-//            
-//            var photoList = photos.query()!.findObjects()
-//            
-//            if (photoList == nil || photoList!.count == 0) {
-//                
-//                println("no photos")
-//                
-//            } else {
-//                
-//                for photo in photoList! {
-//                    
-//                    // Ensure the image wasn't flagged or blocked
-//                    if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
-//                        // Fill our array of tuples for sorting
-//                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
-//                        
-//                        self.imageFilesTemp.append(tup)
-//                    }
-//                    
-//                }
-//                self.collectionView?.reloadData()
-//                
-//                
-//                // Sort tuple of images by likes, and fill new array with photos in order of likes
-//                self.imageFilesTemp.sort{ $0.likes > $1.likes}
-//                
-//                for (image, likes, id, date) in self.imageFilesTemp {
-//                    
-//                    self.imageFilesLikes.append(image)
-//                    self.objectIdLikes.append(id)
-//                    self.datesLikes.append(date)
-//                    
-//                }
-//                
-//                // Sort tuple of images, fill the array with photos in order of time
-//                self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
-//                
-//                for (image, likes, id, date) in self.imageFilesTemp {
-//                    
-//                    self.imageFilesTime.append(image)
-//                    self.objectIdTime.append(id)
-//                    self.datesTime.append(date)
-//                    
-//                }
-//                
-//            }
-//            
-//        }
- //-------------- Threading Issue TO-DO: Remove current portion -------------------------
     }
     
     override func didReceiveMemoryWarning() {
@@ -810,13 +700,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         
                         
                     } else {
-                        
                         println(error)
                     }
                 }
-
             }
-
         }
         albumCell.layer.shouldRasterize = true
         albumCell.layer.rasterizationScale = UIScreen.mainScreen().scale    

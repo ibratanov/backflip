@@ -228,38 +228,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                             self.displayNoInternetAlert()
                         }
                     })
-                    //-------------- Threading Issue TO-DO: Remove current portion -------------------------
-//                    
-//                    if (objects != nil && objects!.count != 0) {
-//                        var eventObject = objects!.first as! PFObject
-//                        
-//                        let relation = eventObject.relationForKey("photos")
-//                        
-//                        //photo.save()
-//                        photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
-//                            if valid{
-//                                relation.addObject(photo)
-//                                photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-//                                photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")}
-//                            //issue
-//                            eventObject.saveInBackground()
-//                            
-//                            //issue
-//                            photoObject.saveInBackground()
-//                        })
-//                        //                    relation.addObject(photo)
-//                        //                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-//                        //                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-//                        //
-//                        //                    //issue
-//                        //                    eventObject.saveInBackground()
-//                        //
-//                        //                    //issue
-//                        //                    photoObject.saveInBackground()
-//                    } else {
-//                        self.displayNoInternetAlert()
-//                    }
-                    //-------------- Threading Issue TO-DO: Remove current portion -------------------------
                 }
                 else {
                     self.displayNoInternetAlert()
@@ -267,54 +235,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
             })
-            
-
-            //-------------- Threading Issue TO-DO: Remove current portion -------------------------
-//            if (photoObjectList != nil && photoObjectList!.count != 0) {
-//                var photoObject = photoObjectList!.first as! PFObject
-//                
-//                photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-//                photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
-//                
-//                var queryEvent = PFQuery(className: "Event")
-//                queryEvent.whereKey("objectId", equalTo: self.eventId!)
-//                var objects = queryEvent.findObjects()
-//                
-//                if (objects != nil && objects!.count != 0) {
-//                    var eventObject = objects!.first as! PFObject
-//                    
-//                    let relation = eventObject.relationForKey("photos")
-//                    
-//                    //photo.save()
-//                    photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
-//                        if valid{
-//                            relation.addObject(photo)
-//                            photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-//                            photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")}
-//                        //issue
-//                        eventObject.saveInBackground()
-//                        
-//                        //issue
-//                        photoObject.saveInBackground()
-//                    })
-//                    //                    relation.addObject(photo)
-//                    //                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-//                    //                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-//                    //
-//                    //                    //issue
-//                    //                    eventObject.saveInBackground()
-//                    //
-//                    //                    //issue
-//                    //                    photoObject.saveInBackground()
-//                } else {
-//                    displayNoInternetAlert()
-//                }
-//            }
-//            else {
-//                displayNoInternetAlert()
-//                println("Object Issue")
-//            }
-            //-----------------------------------------------------------------------------------------
             
         } else {
             displayNoInternetAlert()
