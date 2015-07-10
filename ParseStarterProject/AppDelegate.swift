@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /* DEV */
         Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV",
             clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
-        //*/
+        
         
         Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
@@ -144,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     var queryEvent = PFQuery(className: "Event")
                     queryEvent.limit = 1
                     queryEvent.whereKey("objectId", equalTo: eventIIden!)
-        
+
                     var qArray = queryEvent.findObjects()
                     
                     if (qArray != nil && qArray!.count != 0) {
@@ -153,7 +153,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                         let query = PFUser.query()
                         
-                        println(PFUser.currentUser()!.objectId!)
+                        //println(PFUser.currentUser()!.objectId!)
+                        //issue
                         query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                             
                             if error != nil {
@@ -208,7 +209,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     let alert = UIAlertView()
                                     alert.title = "Event Invitation"
                                     alert.message = "You have been added to \(eventTitle!)"
-                                    alert.addButtonWithTitle("Done")
+                                    alert.addButtonWithTitle("Ok")
                                     
                                     alert.delegate = self
                                     alert.show()
