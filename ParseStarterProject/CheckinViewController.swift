@@ -37,6 +37,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     
     var cellContent:NSMutableArray = []
     
+    let qos = (Int(QOS_CLASS_BACKGROUND.value))
+
     func displayAlert(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
@@ -140,6 +142,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         
                         //Check if event exists
                         let query = PFQuery(className: "Event")
+                        
                         query.whereKey("eventName", equalTo: "Welcome to Backflip")
                         
                         let scoreArray = query.findObjects()
@@ -207,7 +210,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 var distQuery = PFQuery(className: "Options")
                 
                 var distance = distQuery.findObjects()
-                //var distance = distQuery.findObjectsInBackground()
                 
                 if (distance != nil && distance!.count != 0) {
                     var result = distance?.first as! PFObject
