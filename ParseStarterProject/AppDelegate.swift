@@ -120,6 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Used to add the device to the Parse push notification settings.
         PFInstallation.currentInstallation().saveInBackground()
+        
         //------------------------------------------------------------------------
 
         Fabric.with([Digits()])
@@ -224,6 +225,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     } else {
                         
                         println("Object not found")
+                        let alert = UIAlertView()
+                        alert.title = "Event Invite Failed"
+                        alert.message = "Please log in and click the invite link again."
+                        alert.addButtonWithTitle("Ok")
+                        
+                        alert.delegate = self
+                        alert.show()
                         
                     }
                     
