@@ -177,7 +177,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         let counter = upVote
                         if counter == 1 {
                             
-                            self.likeCount.text = String(counter) + " likes"
+                            self.likeCount.text = String(counter) + " like"
                             
                         } else {
 
@@ -251,7 +251,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         let counter = upVote
                         if counter == 1 {
                             
-                            self.likeCount.text = String(counter) + " likes"
+                            self.likeCount.text = String(counter) + " like"
                             
                         } else {
                             
