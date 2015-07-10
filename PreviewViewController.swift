@@ -123,6 +123,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         super.viewDidLayoutSubviews()
     }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
     
     @IBAction func cropButtonPressed(sender: AnyObject) {
         let cropDimension = cropOpeningView.bounds.size.minDimension()
@@ -180,42 +184,57 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
             query2.whereKey("eventID", equalTo: eventId!)
             
-            var photoObjectList = query2.findObjects()
-            
-            if (photoObjectList != nil && photoObjectList!.count != 0) {
-                var photoObject = photoObjectList!.first as! PFObject
-                
-                photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-                photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
-                
-                var queryEvent = PFQuery(className: "Event")
-                queryEvent.whereKey("objectId", equalTo: self.eventId!)
-                var objects = queryEvent.findObjects()
-                
-                if (objects != nil && objects!.count != 0) {
-                    var eventObject = objects!.first as! PFObject
+            //var photoObjectList = query2.findObjects()
+            var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
+                if (objs != nil && objs!.count != 0) {
+                    var photoObject = objs!.first as! PFObject
                     
-                    let relation = eventObject.relationForKey("photos")
+                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
                     
-                    photo.save()
-                    
-                    relation.addObject(photo)
-                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-                    
-                    //issue
-                    eventObject.save()
-                    
-                    //issue
-                    photoObject.save()
-                } else {
-                    displayNoInternetAlert()
+                    var queryEvent = PFQuery(className: "Event")
+                    queryEvent.whereKey("objectId", equalTo: self.eventId!)
+                    //var objects = queryEvent.findObjects()
+                    var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
+                        
+                        if (sobjs != nil && sobjs!.count != 0) {
+                            var eventObject = sobjs!.first as! PFObject
+                            
+                            let relation = eventObject.relationForKey("photos")
+                            
+                            //photo.save()
+                            photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
+                                if valid {
+                                    relation.addObject(photo)
+                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+                                }
+                                //issue
+                                eventObject.saveInBackground()
+                                
+                                //issue
+                                photoObject.saveInBackground()
+                            })
+                            //                    relation.addObject(photo)
+                            //                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+                            //                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+                            //
+                            //                    //issue
+                            //                    eventObject.saveInBackground()
+                            //
+                            //                    //issue
+                            //                    photoObject.saveInBackground()
+                        } else {
+                            self.displayNoInternetAlert()
+                        }
+                    })
                 }
-            }
-            else {
-                displayNoInternetAlert()
-                println("Object Issue")
-            }
+                else {
+                    self.displayNoInternetAlert()
+                    println("Object Issue")
+                }
+                
+            })
             
         } else {
             displayNoInternetAlert()

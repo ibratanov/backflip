@@ -175,8 +175,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     func smsShare() {
-        
-        var params = [ "referringUsername": "friend", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+
+        var user = "filler"
+        if (PFUser.currentUser() != nil) {
+            user = PFUser.currentUser()!.objectId!
+        }
+        var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
         
         Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
             if (error == nil) {
@@ -339,53 +343,49 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.automaticallyAdjustsScrollViewInsets = false
  
 
-
         if NetworkAvailable.networkConnection() == true {
-        // Initialize date comparison components
-        let currentTime = NSDate()
-        let cal = NSCalendar.currentCalendar()
-        let components = NSDateComponents()
-        components.hour = 48
-        let components2 = NSDateComponents()
-        components2.hour = 24
-        var eventQuery = PFQuery(className: "Event")
-        
-        eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
-            if error == nil {
-                
-                if let endTime: AnyObject = objects?.objectForKey("endTime") {
-                    //endDate has been set and is valid
-                    
-                    //TODO: determine how this can be set automatically
-                    let endTime = objects?.objectForKey("endTime") as! NSDate
-                    
-                    //date is the end time of event plus 48hours
-                    let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
-                    
-                    // Event is still active (currentTime < expiry time)
-                    if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
+            // Initialize date comparison components
+            let currentTime = NSDate()
+            let cal = NSCalendar.currentCalendar()
+            let components = NSDateComponents()
+            components.hour = 48
+            let components2 = NSDateComponents()
+            components2.hour = 24
+            var eventQuery = PFQuery(className: "Event")
+            
+            eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
+                if error == nil {
+                    if let endTime: AnyObject = objects?.objectForKey("endTime") {
+                        //endDate has been set and is valid
                         
-                    // Event is no longer active (currentTime > expiry time)
-                    } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
+                        //TODO: determine how this can be set automatically
+                        let endTime = objects?.objectForKey("endTime") as! NSDate
                         
+                        //date is the end time of event plus 48hours
+                        let date = cal.dateByAddingComponents(components, toDate: endTime, options: NSCalendarOptions.allZeros)
+                        
+                        // Event is still active (currentTime < expiry time)
+                        if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
+                            
+                        // Event is no longer active (currentTime > expiry time)
+                        } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
+                            
+                        }
+                        
+                    } else {
+                        //endDate has not been set or was invalid
                     }
+
                     
                 } else {
-                    //endDate has not been set or was invalid
+                    
+                    println(error)
+                    
                 }
-
-                
-            } else {
-                
-                println(error)
-                
             }
-            
-        }
         } else {
             displayNoInternetAlert()
         }
-
     }
     
     func refresh(sender: AnyObject) {
@@ -526,69 +526,71 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         getUploadedImages.whereKey("objectId", equalTo: eventId!)
         
         // Retrieval from corresponding photos from relation to event
-        var eventArray = getUploadedImages.findObjects()
-        
-        if (eventArray == nil || eventArray!.count == 0) {
-            
-            println("no photos")
-            
-        } else {
-            
-            var object = eventArray!.first as! PFObject
-            var photos = object["photos"] as! PFRelation
-            
-            var photoListQuery = photos.query()!
-            photoListQuery.limit = 300
-            var photoList = photoListQuery.findObjects()
-            
-            if (photoList == nil || photoList!.count == 0) {
+        //var eventArray = getUploadedImages.findObjects()
+        var eventArray: Void = getUploadedImages.findObjectsInBackgroundWithBlock { (eventArObjs:[AnyObject]?, error:NSError?) -> Void in
+           
+            if (eventArObjs == nil || eventArObjs!.count == 0) {
                 
                 println("no photos")
                 
             } else {
                 
-                for photo in photoList! {
+                var object = eventArObjs!.first as! PFObject
+                var photos = object["photos"] as! PFRelation
+                
+                var photoListQuery = photos.query()!
+                photoListQuery.limit = 300
+                
+                //var photoList = photos.query()!.findObjects()
+                var photoList: Void = photoListQuery.findObjectsInBackgroundWithBlock({ (photoObjs:[AnyObject]?, error:NSError?) -> Void in
                     
-                    // Ensure the image wasn't flagged or blocked
-                    if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
-                        // Fill our array of tuples for sorting
-                        let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
+                    if (photoObjs == nil || photoObjs!.count == 0) {
                         
-                        self.imageFilesTemp.append(tup)
+                        println("no photos")
+                        
+                    } else {
+                        
+                        for photo in photoObjs! {
+                            
+                            // Ensure the image wasn't flagged or blocked
+                            if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
+                                // Fill our array of tuples for sorting
+                                let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
+                                
+                                self.imageFilesTemp.append(tup)
+                            }
+                            
+                        }
+                        self.collectionView?.reloadData()
+                        
+                        
+                        // Sort tuple of images by likes, and fill new array with photos in order of likes
+                        self.imageFilesTemp.sort{ $0.likes > $1.likes}
+                        
+                        for (image, likes, id, date) in self.imageFilesTemp {
+                            
+                            self.imageFilesLikes.append(image)
+                            self.objectIdLikes.append(id)
+                            self.datesLikes.append(date)
+                            
+                        }
+                        
+                        // Sort tuple of images, fill the array with photos in order of time
+                        self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
+                        
+                        for (image, likes, id, date) in self.imageFilesTemp {
+                            
+                            self.imageFilesTime.append(image)
+                            self.objectIdTime.append(id)
+                            self.datesTime.append(date)
+                            
+                        }
                     }
-                    
-                }
-                self.collectionView?.reloadData()
-                
-                
-                // Sort tuple of images by likes, and fill new array with photos in order of likes
-                self.imageFilesTemp.sort{ $0.likes > $1.likes}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
-                    
-                    self.imageFilesLikes.append(image)
-                    self.objectIdLikes.append(id)
-                    self.datesLikes.append(date)
-                    
-                }
-                
-                // Sort tuple of images, fill the array with photos in order of time
-                self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
-                
-                for (image, likes, id, date) in self.imageFilesTemp {
-                    
-                    self.imageFilesTime.append(image)
-                    self.objectIdTime.append(id)
-                    self.datesTime.append(date)
-                    
-                }
-                
+                })
             }
-            
         }
     }
     
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         self.images.removeAll(keepCapacity: true)
@@ -697,13 +699,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         
                         
                     } else {
-                        
                         println(error)
                     }
                 }
-
             }
-
         }
         albumCell.layer.shouldRasterize = true
         albumCell.layer.rasterizationScale = UIScreen.mainScreen().scale    
@@ -764,6 +763,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     //initialize camera
     func takePhoto(sender: UIButton) {
         
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeUpButtonDownNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
         if NetworkAvailable.networkConnection() == true {
             let query = PFUser.query()
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
@@ -780,6 +782,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                             
                             //primary delegate for the picker
                             self.picker.delegate = self
+                            
+                            self.picker.modalPresentationStyle = UIModalPresentationStyle.FullScreen
                             self.picker.sourceType = .Camera
                             self.picker.mediaTypes = [kUTTypeImage]
                             self.picker.allowsEditing = false
@@ -926,8 +930,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
     {
-        image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        self.imageViewContent = image
+        //image stored in local variable to contain lifespan in method
+        var imageShortLife:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        self.imageViewContent = imageShortLife
         picker.dismissViewControllerAnimated(true, completion: nil)
 
         //Retake and crop options------------------------------------------------------------------------
@@ -949,7 +954,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
 
         if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-            previewViewController.imageToCrop = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
+            previewViewController.imageToCrop = imageViewContent
+            //UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
+            //UIImage(CGImage: initialImage.CGImage, scale: 1, orientation: initialImage.imageOrientation)!
         }
         else{
             previewViewController.imageToCrop = imageViewContent

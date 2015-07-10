@@ -207,6 +207,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 var distQuery = PFQuery(className: "Options")
                 
                 var distance = distQuery.findObjects()
+                //var distance = distQuery.findObjectsInBackground()
                 
                 if (distance != nil && distance!.count != 0) {
                     var result = distance?.first as! PFObject

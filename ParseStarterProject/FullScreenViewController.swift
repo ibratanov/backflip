@@ -168,14 +168,16 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
                         retrieveLikes?.incrementKey("upvoteCount", byAmount: 1)
                         
+                        
                         // Grab specific element fromobject
                         likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
                         thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
+                        upVote = (retrieveLikes!.objectForKey("upvoteCount")) as! Int
                         
-                        let counter = likeList.count
+                        let counter = upVote
                         if counter == 1 {
                             
-                            self.likeCount.text = String(counter) + " likes"
+                            self.likeCount.text = String(counter) + " like"
                             
                         } else {
 
@@ -243,12 +245,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         // Grab specific element from object.
                         likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
                         thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
+                        upVote = (retrieveLikes!.objectForKey("upvoteCount")) as! Int
                         
                         //Set appropriate labal on the view
-                        let counter = likeList.count
+                        let counter = upVote
                         if counter == 1 {
                             
-                            self.likeCount.text = String(counter) + " likes"
+                            self.likeCount.text = String(counter) + " like"
                             
                         } else {
                             
@@ -381,7 +384,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             // SMS sharing feature
             alert.addAction(UIAlertAction(title: "Invite friends to album (SMS)", style: .Default, handler: { action in
                 
-                var params = [ "referringUsername": "friend", "referringOut": "FSVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+                var user = "filler"
+                if (PFUser.currentUser() != nil) {
+                    user = PFUser.currentUser()!.objectId!
+                }
+                var params = [ "referringUsername": "\(user)", "referringOut": "FSVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
                 
                 // This is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
                 
@@ -618,12 +625,14 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             // User like list that will be filled
             var likeList : [String]
+            var upVote : Int
             
             // Finds associated photo object in relation
             var likeRetrieve = relation.query()?.getObjectWithId(tempArray![selectedIndex!])
             
             // Fill the like list with the user liked list array from photo relation
             likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
+            upVote = (likeRetrieve!.objectForKey("upvoteCount")) as! Int
             println("BEFORE FOR LOOP")
             dump(likeList)
             var contained = contains(likeList, PFUser.currentUser()!.username!)
@@ -663,7 +672,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             }*/
             
             println("AFTER FOR LOOP")
-            let count = likeList.count
+            let count = upVote
             
             if (count == 1) {
                 self.likeCount.text = String(count) + " like"
@@ -711,6 +720,11 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        // Attempt at solving a memory issue (Error: Message from debugger: Terminated due to Memory Pressure)
+        // http://stackoverflow.com/questions/19253365/how-to-debug-ios-crash-due-to-memory-pressure
+        if (self.isViewLoaded() && self.view.window == nil) {
+            self.view = nil
+        }
     }
 
 }
