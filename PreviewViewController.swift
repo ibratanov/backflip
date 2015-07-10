@@ -250,7 +250,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         var scalingRatio:CGFloat = maxWidth/maxHeight
         
         //lowest quality rating with acceptable encoding
-        var quality:CGFloat = 0.4
+        var quality:CGFloat = 0.3
         
         if (imageHeight > maxHeight || imageWidth > maxWidth){
             if(imageRatio < scalingRatio){
