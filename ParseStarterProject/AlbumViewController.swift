@@ -66,17 +66,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var imageFilesTemp : [(image: PFFile , likes: Int , id: String,date: NSDate)] = []
     
     // Arrays for like sort selected
-    var imageFilesLikes = [PFFile]()
+    var imageFilesLikes : [PFFile?] = []
     var objectIdLikes = [String]()
     var datesLikes = [NSDate]()
     
     // Arrays for time sort selected
-    var imageFilesTime = [PFFile]()
+    var imageFilesTime : [PFFile?] = []
     var objectIdTime = [String]()
     var datesTime = [NSDate]()
     
     //Arrays for when my photos is selected
-    var myPhotos = [PFFile]()
+    var myPhotos : [PFFile?] = []
     var myObjectId = [String]()
     var myDate = [NSDate]()
     
@@ -809,6 +809,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         moveVC.tempArray = objectIdTime
                         moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
                         moveVC.selectedIndex = selectedCellIndex!.row
+                        moveVC.imageFiles = imageFilesTime
                     }
                     
                 } else if self.sortedByLikes == true && self.myPhotoSelected == false {
@@ -820,6 +821,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         moveVC.tempArray = objectIdLikes
                         moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
                         moveVC.selectedIndex = selectedCellIndex!.row
+                        moveVC.imageFiles = imageFilesLikes
                         
                     }
                 } else {
@@ -831,6 +833,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         moveVC.tempArray = myObjectId
                         //moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
                         moveVC.selectedIndex = selectedCellIndex!.row
+                        moveVC.imageFiles = myPhotos
                        
                     }
                 }

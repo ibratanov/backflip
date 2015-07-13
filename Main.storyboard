@@ -813,6 +813,12 @@
                                     <action selector="flagPhoto:" destination="OvI-dv-VgA" eventType="touchUpInside" id="del-Ok-FWe"/>
                                 </connections>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fNX-er-QTB">
+                                <rect key="frame" x="0.0" y="126" width="320" height="322"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="I3f-cr-GRx">
+                                <rect key="frame" x="0.0" y="523" width="320" height="37"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -865,6 +871,8 @@
                         <outlet property="fullScreenImage" destination="uoI-tj-emU" id="oNX-YR-p5u"/>
                         <outlet property="likeButtonLabel" destination="Cld-aL-GAw" id="Ky5-ON-eq8"/>
                         <outlet property="likeCount" destination="uv5-ir-czh" id="ClW-j3-qnO"/>
+                        <outlet property="pageControl" destination="I3f-cr-GRx" id="A03-YO-4HR"/>
+                        <outlet property="scrollView" destination="fNX-er-QTB" id="Bjz-Gy-wvG"/>
                         <outlet property="spinner" destination="UJg-Xx-CgL" id="RTo-ln-tem"/>
                     </connections>
                 </viewController>
@@ -903,10 +911,10 @@
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fy9-Lq-hzG"/>
-        <segue reference="bXg-ML-DEH"/>
         <segue reference="ofY-SC-By2"/>
-        <segue reference="hKp-Y7-lrD"/>
+        <segue reference="62M-ib-0xv"/>
+        <segue reference="fy9-Lq-hzG"/>
+        <segue reference="VCX-vA-6qG"/>
         <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>
