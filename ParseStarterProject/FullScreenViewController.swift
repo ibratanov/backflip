@@ -33,17 +33,16 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     
     var likeActive = false
-    var newScroll : Bool?
     
     // Index of cell selected, and index/page scrollView is currently on
     var selectedIndex : Int?
     var pageIndex : Int = 0
     
     // Icon image variables
-    var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
-    var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
-    var back = UIImage(named: "back.pdf") as UIImage!
-    var share = UIImage(named: "share-icon.pdf") as UIImage!
+    let liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
+    let unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
+    let back = UIImage(named: "back.pdf") as UIImage!
+    let share = UIImage(named: "share-icon.pdf") as UIImage!
     
     // Title passed from previous VC
     var eventId : String?
@@ -56,6 +55,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     // Scroll View variables
     var pageViews : [UIImageView?] = []
     var imageFiles : [PFFile?] = []
+    var prevPage : Int?
     
     // Function to handle double tap on an image to like
     func handleTap (sender: UITapGestureRecognizer) {
@@ -64,36 +64,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             likeToggle(self)
         }
     }
-
-//    func handleSwipe (gesture: UISwipeGestureRecognizer) {
-//        
-//        if let swipeGesture: UISwipeGestureRecognizer = gesture as UISwipeGestureRecognizer! {
-//            
-//            switch swipeGesture.direction {
-//                
-//            case UISwipeGestureRecognizerDirection.Right:
-//                
-//                if selectedIndex! != 0 {
-//                    selectedIndex! = selectedIndex! - 1
-//                    displayUpdate()
-//                } else  {
-//                    break
-//                }
-//                
-//            case UISwipeGestureRecognizerDirection.Left:
-//                
-//                if tempArray?.count != selectedIndex! + 1 {
-//                    selectedIndex! = selectedIndex! + 1
-//                    displayUpdate()
-//                } else {
-//                    break
-//                }
-//                
-//            default :
-//                break
-//            }
-//        }
-//    }
     
     func displayNoInternetAlert() {
         var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to access content.")
@@ -537,11 +507,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Put querying operations in a background thread
         let qos = (Int(QOS_CLASS_BACKGROUND.value))
+        prevPage = pageControl.currentPage
         dispatch_async(dispatch_get_global_queue(qos,0)) {
             
             if NetworkAvailable.networkConnection() == true {
                 
-        //----------- Query for Like Image label--------------
+                //----------- Query for Like Image label--------------
                 var query5 = PFQuery(className: "Event")
                 query5.whereKey("objectId", equalTo: self.eventId!)
                 
@@ -569,30 +540,29 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
                     }
                     
-                // Set the like and number labels
-                let count = likeList.count
+                    // Set the like and number labels
+                    let count = likeList.count
+                    
+                    if (count == 1) {
+                        self.likeCount.text = String(count) + " like"
+                    } else {
+                        self.likeCount.text = String(count) + " likes"
+                    }
+                    
                 
-                if (count == 1) {
-                    self.likeCount.text = String(count) + " like"
-                } else {
-                    self.likeCount.text = String(count) + " likes"
+                    //----------- Format and display photo date -------------
+                    if self.tempDate.count != 0 {
+                        
+                        // Formatting to display date how we want it
+                        let formatter = NSDateFormatter()
+                        formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                        formatter.timeStyle = .ShortStyle
+                        let dateStamp = formatter.stringFromDate(self.tempDate[self.pageIndex]!)
+                        
+                        self.eventInfo.text = "Photo taken on \(dateStamp)"
+                        
+                    }
                 }
-                
-                
-        //----------- Format and display photo date -------------
-                if self.tempDate.count != 0 {
-                    
-                    // Formatting to display date how we want it
-                    let formatter = NSDateFormatter()
-                    formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                    formatter.timeStyle = .ShortStyle
-                    let dateStamp = formatter.stringFromDate(self.tempDate[self.pageIndex]!)
-                    
-                    self.eventInfo.text = "Photo taken on \(dateStamp)"
-                    
-                }
-            }
-
                 
             } else {
                 self.displayNoInternetAlert()
@@ -602,6 +572,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     //---------Scroll view functions------------
     
+    // We are only loading the page before and after the current photo; more efficient in case user does not browse all photos (3 pages)
     func loadVisiblePages () {
 
         let pageWidth = scrollView.frame.size.width
@@ -612,14 +583,17 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         let firstPage = page - 1
         let lastPage = page + 1
         
+        // Clean all pages less than the 3 page range
         for var index = 0; index < firstPage; ++index {
             cleanPage(index)
         }
         
+        // Load all pages within the three page range
         for index in firstPage ... lastPage {
             loadPage(index)
         }
         
+        // Clean all photos greater than 3 page range
         for var index = lastPage + 1; index < imageFiles.count; ++index {
             cleanPage(index)
         }
@@ -640,8 +614,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             frame.origin.y = 0.0
             
             // Sets the distance between images in scroll
-            frame = CGRectInset(frame, 10.0, 0.0)
+            frame = CGRectInset(frame, 1.0, 0.0)
             
+            // Creates PFImageView instances in scrollView
             let newPageView = PFImageView()
             newPageView.contentMode = .ScaleAspectFit
             newPageView.frame = frame
@@ -663,12 +638,16 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             pageViews[page] = nil
         }
     }
-
+    
     // When a user stops on a photo, load the appropriate information
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        
         pageIndex = pageControl.currentPage
-
-        displayUpdate()
+        
+        // Check if user actually switched photos. If not, dont reload display
+        if pageIndex != prevPage {
+            displayUpdate()
+        }
     }
     
     // Recognizes when a scroll occurs, and loads the corresponding pages (before and after the image)
@@ -683,16 +662,18 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         super.viewDidLoad()
 
         //---------Scroll view Set up------------
+        
         scrollView.delegate = self
         pageControl.hidden = true
         scrollView.showsHorizontalScrollIndicator = false
+        
         // Keep full screen image view in background to load to when sharing or downloading a photo. only loads when necessary
         fullScreenImage.hidden = true
 
         let pageCount = imageFiles.count
         pageControl.numberOfPages = pageCount
         
-        // Sets up our pageViews array to hold the views
+        // Cleans the pageViews, filling the array with nil
         for _ in 0..<pageCount {
             pageViews.append(nil)
         }
@@ -712,7 +693,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         loadVisiblePages()
 
         //--------------- Draw UI -----------------
-
+        
         // Hide UI controller item
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
@@ -747,13 +728,15 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         
         //-------------Gesture implementation----------
+        
         var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
         gesture.numberOfTapsRequired = 2
-        
         scrollView.userInteractionEnabled = true
         self.scrollView.addGestureRecognizer(gesture)
         
-        // Load information from the database
+        //------------------------------------------
+        
+        // Load information from the database for the UI
         displayUpdate()
 
     }
