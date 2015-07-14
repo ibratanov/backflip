@@ -292,6 +292,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
                     var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
                     
+                    self.fullScreenImage.file = self.imageFiles[self.pageIndex]
+                    self.fullScreenImage.loadInBackground()
                     facebookSheet.addImage(self.fullScreenImage.image!)
                     
                     self.presentViewController(facebookSheet, animated: true, completion: nil)
@@ -333,6 +335,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                     var twitterSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
                     
+                    self.fullScreenImage.file = self.imageFiles[self.pageIndex]
+                    self.fullScreenImage.loadInBackground()
                     twitterSheet.addImage(self.fullScreenImage.image)
                     
                     self.presentViewController(twitterSheet, animated: true, completion: nil)
@@ -413,9 +417,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
 
             self.presentViewController(alert, animated: true, completion: nil)
-
-        
-        
     }
     
     // Alert pop up with Twitter, Facebook and SMS options
@@ -438,8 +439,10 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     @IBAction func downloadImage(sender: AnyObject) {
         
         
-        if fullScreenImage.image != nil {
+        if imageFiles.count != 0 {
             
+            fullScreenImage.file = imageFiles[pageIndex]
+            self.fullScreenImage.loadInBackground()
             UIImageWriteToSavedPhotosAlbum(fullScreenImage.image, nil, nil, nil)
             
             saveImageAlert("Image saved to camera roll", error: "")
@@ -537,30 +540,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         dispatch_async(dispatch_get_global_queue(qos,0)) {
             
             if NetworkAvailable.networkConnection() == true {
-
-        //----------- Query for image display---------------
-                /*var getRelatedEvents = PFQuery(className: "Event")
-                getRelatedEvents.limit = 1
-                getRelatedEvents.whereKey("objectId", equalTo: self.eventId!)
-                
-                // Retrieval from corresponding photos from relation to event
-                
-                var object = getRelatedEvents.findObjects()?.first as! PFObject
-                
-                var photos = object["photos"] as! PFRelation
-                var tempImage: PFFile?
-                // Finds associated photo object in relation
-                var photoList = photos.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
-                self.tempDate = photoList?.createdAt
-                
-                // UI updates on the main queue
-                dispatch_async(dispatch_get_main_queue()) {
-                    // Once retrieved from relation, set the UIImage view for fullscreen view
-                    tempImage = photoList!.objectForKey("image") as? PFFile
-                    
-                    self.fullScreenImage.file = tempImage
-                    self.fullScreenImage.loadInBackground()
-                }*/
                 
         //----------- Query for Like Image label--------------
                 var query5 = PFQuery(className: "Event")
@@ -673,12 +652,16 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         }
     }
     
+    // Updates scroll view to indicate this page no longer exists. Helps for memory
     func cleanPage (page: Int) {
         if page < 0 || page >= imageFiles.count {
-            
             return
         }
         
+        if let pageView = pageViews[page] {
+            pageView.removeFromSuperview()
+            pageViews[page] = nil
+        }
     }
 
     // When a user stops on a photo, load the appropriate information
@@ -686,7 +669,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         pageIndex = pageControl.currentPage
 
         displayUpdate()
-        
     }
     
     // Recognizes when a scroll occurs, and loads the corresponding pages (before and after the image)
@@ -700,16 +682,14 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
        
         super.viewDidLoad()
 
-        
         //---------Scroll view Set up------------
         scrollView.delegate = self
-        //pageControl.hidden = true
-        fullScreenImage.hidden = true
+        pageControl.hidden = true
         scrollView.showsHorizontalScrollIndicator = false
+        // Keep full screen image view in background to load to when sharing or downloading a photo. only loads when necessary
+        fullScreenImage.hidden = true
 
-        
         let pageCount = imageFiles.count
-        //pageControl.currentPage = self.selectedIndex!
         pageControl.numberOfPages = pageCount
         
         // Sets up our pageViews array to hold the views
@@ -720,6 +700,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         // Sets the overall content size of our scroll view
         let pageScrollViewSize = scrollView.frame.size
         scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * CGFloat(imageFiles.count), pageScrollViewSize.height)
+        
+        // Start at the appropriate photo based on cell selected from album view
+        var frame : CGRect = scrollView.frame
+        frame.origin.x = frame.size.width * CGFloat(selectedIndex!)
+        frame.origin.y = 0
+        scrollView.scrollRectToVisible(frame, animated: true)
+        pageIndex = selectedIndex!
         
         // Loading of the pages that are visible on screen
         loadVisiblePages()
@@ -759,24 +746,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.view.addSubview(navBar)
         
         
-//        //-------------Gesture implementation----------
-//        var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
-//        gesture.numberOfTapsRequired = 2
-//        
-//        fullScreenImage.userInteractionEnabled = true
-//        self.view.addGestureRecognizer(gesture)
-//        
-//        self.view.bringSubviewToFront(likeCount)
-//        
-//        let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-//        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-//        
-//        
-//        var swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-//        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-//        
-//        self.view.addGestureRecognizer(swipeLeft)
-//        self.view.addGestureRecognizer(swipeRight)
+        //-------------Gesture implementation----------
+        var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+        gesture.numberOfTapsRequired = 2
+        
+        scrollView.userInteractionEnabled = true
+        self.scrollView.addGestureRecognizer(gesture)
         
         // Load information from the database
         displayUpdate()
