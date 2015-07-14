@@ -68,17 +68,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // Arrays for like sort selected
     var imageFilesLikes : [PFFile?] = []
     var objectIdLikes = [String]()
-    var datesLikes = [NSDate]()
+    var datesLikes : [NSDate?] = []
     
     // Arrays for time sort selected
     var imageFilesTime : [PFFile?] = []
     var objectIdTime = [String]()
-    var datesTime = [NSDate]()
+    var datesTime : [NSDate?] = []
     
     //Arrays for when my photos is selected
     var myPhotos : [PFFile?] = []
     var myObjectId = [String]()
-    var myDate = [NSDate]()
+    var myDate : [NSDate?] = []
     
     // Checker for sort button. Sort in chronological order by default.
     var sortedByLikes = true
@@ -807,7 +807,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         displayNoInternetAlert()
                     } else {
                         moveVC.tempArray = objectIdTime
-                        moveVC.tempDate = self.datesTime[selectedCellIndex!.row]
+                        moveVC.tempDate = datesTime
                         moveVC.selectedIndex = selectedCellIndex!.row
                         moveVC.imageFiles = imageFilesTime
                     }
@@ -819,7 +819,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     } else {
                         
                         moveVC.tempArray = objectIdLikes
-                        moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                        moveVC.tempDate = datesLikes
                         moveVC.selectedIndex = selectedCellIndex!.row
                         moveVC.imageFiles = imageFilesLikes
                         
@@ -831,7 +831,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     } else {
                         
                         moveVC.tempArray = myObjectId
-                        //moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
+                        moveVC.tempDate = datesLikes
                         moveVC.selectedIndex = selectedCellIndex!.row
                         moveVC.imageFiles = myPhotos
                        

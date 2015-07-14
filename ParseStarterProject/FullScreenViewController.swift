@@ -25,37 +25,39 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     @IBOutlet var likeButtonLabel: UIButton!
     
-    
-    var tempDate: NSDate?
-    var cellImage : UIImage!
-    var likeActive = false
-    var tempArray :[String]?
-    var selectedIndex : Int?
 
+    @IBOutlet var scrollView: UIScrollView!
+    
+    @IBOutlet var pageControl: UIPageControl!
+    
+    
+    
+    var likeActive = false
+    var newScroll : Bool?
+    
+    // Index of cell selected, and index/page scrollView is currently on
+    var selectedIndex : Int?
+    var pageIndex : Int = 0
     
     // Icon image variables
     var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
     var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
     var back = UIImage(named: "back.pdf") as UIImage!
     var share = UIImage(named: "share-icon.pdf") as UIImage!
-
     
     // Title passed from previous VC
     var eventId : String?
     var eventTitle : String?
-    var objectIdTemp : String = ""
     
+    // Arrays of objectIds, and dates
+    var tempDate: [NSDate?] = []
+    var tempArray :[String]?
     
     // Scroll View variables
     var pageViews : [UIImageView?] = []
     var imageFiles : [PFFile?] = []
     
-    @IBOutlet var scrollView: UIScrollView!
-    
-    @IBOutlet var pageControl: UIPageControl!
-    
-    
-    // Function to handle double tap on an image
+    // Function to handle double tap on an image to like
     func handleTap (sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
             likeButton(self)
@@ -63,35 +65,35 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         }
     }
 
-    func handleSwipe (gesture: UISwipeGestureRecognizer) {
-        
-        if let swipeGesture: UISwipeGestureRecognizer = gesture as UISwipeGestureRecognizer! {
-            
-            switch swipeGesture.direction {
-                
-            case UISwipeGestureRecognizerDirection.Right:
-                
-                if selectedIndex! != 0 {
-                    selectedIndex! = selectedIndex! - 1
-                    displayUpdate()
-                } else  {
-                    break
-                }
-                
-            case UISwipeGestureRecognizerDirection.Left:
-                
-                if tempArray?.count != selectedIndex! + 1 {
-                    selectedIndex! = selectedIndex! + 1
-                    displayUpdate()
-                } else {
-                    break
-                }
-                
-            default :
-                break
-            }
-        }
-    }
+//    func handleSwipe (gesture: UISwipeGestureRecognizer) {
+//        
+//        if let swipeGesture: UISwipeGestureRecognizer = gesture as UISwipeGestureRecognizer! {
+//            
+//            switch swipeGesture.direction {
+//                
+//            case UISwipeGestureRecognizerDirection.Right:
+//                
+//                if selectedIndex! != 0 {
+//                    selectedIndex! = selectedIndex! - 1
+//                    displayUpdate()
+//                } else  {
+//                    break
+//                }
+//                
+//            case UISwipeGestureRecognizerDirection.Left:
+//                
+//                if tempArray?.count != selectedIndex! + 1 {
+//                    selectedIndex! = selectedIndex! + 1
+//                    displayUpdate()
+//                } else {
+//                    break
+//                }
+//                
+//            default :
+//                break
+//            }
+//        }
+//    }
     
     func displayNoInternetAlert() {
         var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to access content.")
@@ -149,7 +151,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         var thumbnail : PFFile
                         
                         // Finds associated photo object in relation
-                        var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
+                        var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.pageIndex])
                         
                         if retrieveLikes != nil {
                             
@@ -186,7 +188,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 
                                     object?.addObject(thumbnail, forKey: "photosLiked")
                                             
-                                    object?.addUniqueObject(self.tempArray![self.selectedIndex!], forKey:"photosLikedID")
+                                    object?.addUniqueObject(self.tempArray![self.pageIndex], forKey:"photosLikedID")
                                             
                                     object!.saveInBackground()
                                             
@@ -227,7 +229,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         var thumbnail : PFFile
                         
                         // Finds associated photo object in relation
-                        var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
+                        var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.pageIndex])
                     
                         if retrieveLikes != nil {
                             
@@ -257,7 +259,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                                 
                                 if error == nil {
                                     object?.removeObject(thumbnail, forKey: "photosLiked")
-                                    object?.removeObject(self.tempArray![self.selectedIndex!], forKey:"photosLikedID")
+                                    object?.removeObject(self.tempArray![self.pageIndex], forKey:"photosLikedID")
                                     object!.saveInBackground()
                                 } else {
                                     println("Error: \(error!) \(error!.userInfo!)")
@@ -471,7 +473,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 var photos = object["photos"] as! PFRelation
                 
                 // Finds associated photo object in relation
-                var photoObj = photos.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
+                var photoObj = photos.query()?.getObjectWithId(self.tempArray![self.pageIndex])
                 
                 if photoObj != nil {
                     // UI Alert on main queue
@@ -571,7 +573,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 var likeList : [String]
                 
                 // Finds associated photo object in relation
-                var likeRetrieve = relation.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
+                var likeRetrieve = relation.query()?.getObjectWithId(self.tempArray![self.pageIndex])
                 
                 // Fill the like list with the user liked list array from photo relation
                 likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
@@ -599,13 +601,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 
                 
         //----------- Format and display photo date -------------
-                if self.tempDate != nil {
+                if self.tempDate.count != 0 {
                     
                     // Formatting to display date how we want it
                     let formatter = NSDateFormatter()
                     formatter.dateStyle = NSDateFormatterStyle.LongStyle
                     formatter.timeStyle = .ShortStyle
-                    let dateStamp = formatter.stringFromDate(self.tempDate!)
+                    let dateStamp = formatter.stringFromDate(self.tempDate[self.pageIndex]!)
                     
                     self.eventInfo.text = "Photo taken on \(dateStamp)"
                     
@@ -622,8 +624,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     //---------Scroll view functions------------
     
     func loadVisiblePages () {
-        
-        println(pageControl.currentPage)
+
         let pageWidth = scrollView.frame.size.width
         let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
         
@@ -666,7 +667,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             newPageView.contentMode = .ScaleAspectFit
             newPageView.frame = frame
             newPageView.file = imageFiles[page]
-            println(imageFiles[page])
             newPageView.loadInBackground()
             scrollView.addSubview(newPageView)
             pageViews[page] = newPageView
@@ -678,6 +678,14 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             
             return
         }
+        
+    }
+
+    // When a user stops on a photo, load the appropriate information
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        pageIndex = pageControl.currentPage
+
+        displayUpdate()
         
     }
     
@@ -695,13 +703,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         //---------Scroll view Set up------------
         scrollView.delegate = self
-        pageControl.hidden = true
+        //pageControl.hidden = true
         fullScreenImage.hidden = true
         scrollView.showsHorizontalScrollIndicator = false
 
         
         let pageCount = imageFiles.count
-        pageControl.currentPage = self.selectedIndex!
+        //pageControl.currentPage = self.selectedIndex!
         pageControl.numberOfPages = pageCount
         
         // Sets up our pageViews array to hold the views
@@ -751,24 +759,24 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.view.addSubview(navBar)
         
         
-        //-------------Gesture implementation----------
-        var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
-        gesture.numberOfTapsRequired = 2
-        
-        fullScreenImage.userInteractionEnabled = true
-        self.view.addGestureRecognizer(gesture)
-        
-        self.view.bringSubviewToFront(likeCount)
-        
-        let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        
-        
-        var swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        
-        self.view.addGestureRecognizer(swipeLeft)
-        self.view.addGestureRecognizer(swipeRight)
+//        //-------------Gesture implementation----------
+//        var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+//        gesture.numberOfTapsRequired = 2
+//        
+//        fullScreenImage.userInteractionEnabled = true
+//        self.view.addGestureRecognizer(gesture)
+//        
+//        self.view.bringSubviewToFront(likeCount)
+//        
+//        let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+//        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+//        
+//        
+//        var swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+//        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+//        
+//        self.view.addGestureRecognizer(swipeLeft)
+//        self.view.addGestureRecognizer(swipeRight)
         
         // Load information from the database
         displayUpdate()
