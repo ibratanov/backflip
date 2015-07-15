@@ -151,20 +151,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         if NetworkAvailable.networkConnection() == true {
             // fullscreen is false, posted is true
             if posted == true {
-                
-                //let qos = (Int(QOS_CLASS_BACKGROUND.value))
-        
+
                 if myPhotoSelected == false {
-                    //dispatch_async(dispatch_get_global_queue(qos, 0)) {
                         self.updatePhotos()
-                    //}
-                   
+
                 } else {
-                    //dispatch_async(dispatch_get_global_queue(qos,0)) {
                         self.displayMyPhotos()
-                    //}
-           
-                    
                 }
                 
                 //self.collectionView?.reloadData()
@@ -225,45 +217,30 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.collectionView!.addSubview(refresher)
         self.collectionView?.alwaysBounceVertical = true
         
+        // Spinner initialization and characteristics
         spinner.frame = CGRectMake(0.0, 0.0, 50.0, 50.0)
         spinner.center = self.view.center
         spinner.hidden = false
+        spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        spinner.color = UIColor.blackColor()
         self.view.addSubview(spinner)
         self.view.bringSubviewToFront(spinner)
-        
-        spinner.startAnimating()
-        
-        
-        
+
         // Initial load of images
         if NetworkAvailable.networkConnection() == true {
             // fullscreen is false, posted is true
             if fullScreen == false || posted == true {
-                
-                //let qos = (Int(QOS_CLASS_BACKGROUND.value))
-                
+
                 if myPhotoSelected == false {
-                    //dispatch_async(dispatch_get_global_queue(qos, 0)) {
-                 
-                    //dispatch_async(dispatch_get_main_queue()) {
-                        
-                    
-                    //}
+
                         self.updatePhotos()
-                    
-                    //}
-                 
+
                 } else {
-                    //dispatch_async(dispatch_get_global_queue(qos,0)) {
+
                         self.displayMyPhotos()
-                    //}
-                    //dispatch_async(dispatch_get_main_queue()) {
-               
-                    //}
-                    
+
                 }
-                
-                //self.collectionView?.reloadData()
+
             }
         } else {
             
@@ -474,6 +451,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     func displayMyPhotos() {
         
+        spinner.startAnimating()
         
         // Clean the arrays for use again
         self.imageFilesTemp.removeAll(keepCapacity: true)
@@ -548,6 +526,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                             if pList.count == 0 {
                                 
                                 self.collectionView?.reloadData()
+                                self.spinner.stopAnimating()
                                 self.myPhotos = []
                                 self.myObjectId = []
                             }
@@ -566,6 +545,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                                     if (!hidden) {
             
                                         self.collectionView?.reloadData()
+                                        self.spinner.stopAnimating()
                                         self.myPhotos.append(photo)
                                         self.myObjectId.append(ids[index])
 
@@ -589,7 +569,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     // TODO: Smart loading of photos - only reload photos which are new/were modified
     func updatePhotos() {
-        
+        self.spinner.startAnimating()
+
 
         // Clean all our arrays for use again
         self.imageFilesTemp.removeAll(keepCapacity: true)
@@ -651,6 +632,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     
                     dispatch_async(dispatch_get_main_queue()) {
                     self.collectionView?.reloadData()
+                    self.spinner.stopAnimating()
                     
                     
                     // Sort tuple of images by likes, and fill new array with photos in order of likes
@@ -675,13 +657,13 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         
                     }
                     
+                        
                     }
                 }
                 
             }
             
         }
-        spinner.stopAnimating()
     }
     
 
