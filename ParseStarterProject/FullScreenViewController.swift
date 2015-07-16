@@ -118,7 +118,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         // User like list that will be filled
                         var likeList : [String]
                         var upVote : Int
-                        var thumbnail : PFFile
+                        var hqImage : PFFile
                         
                         // Finds associated photo object in relation
                         var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.pageIndex])
@@ -132,7 +132,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             
                             // Grab specific element fromobject
                             likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
-                            thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
+                            hqImage = (retrieveLikes!.objectForKey("image") as? PFFile)!
                             
                             dispatch_async(dispatch_get_main_queue()) {
                                 let counter = likeList.count
@@ -156,7 +156,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                                             
                                 if error == nil {
 
-                                    object?.addObject(thumbnail, forKey: "photosLiked")
+                                    object?.addObject(hqImage, forKey: "photosLiked")
                                             
                                     object?.addUniqueObject(self.tempArray![self.pageIndex], forKey:"photosLikedID")
                                             
@@ -196,7 +196,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         // User like list that will be filled
                         var likeList : [String]
                         var upVote : Int
-                        var thumbnail : PFFile
+                        var hqImage : PFFile
                         
                         // Finds associated photo object in relation
                         var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.pageIndex])
@@ -209,7 +209,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             
                             // Grab specific element from object.
                             likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
-                            thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
+                            hqImage = (retrieveLikes!.objectForKey("image") as? PFFile)!
                             
                             dispatch_async(dispatch_get_main_queue()) {
                                 //Set appropriate labal on the view
@@ -228,7 +228,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
                                 
                                 if error == nil {
-                                    object?.removeObject(thumbnail, forKey: "photosLiked")
+                                    object?.removeObject(hqImage, forKey: "photosLiked")
                                     object?.removeObject(self.tempArray![self.pageIndex], forKey:"photosLikedID")
                                     object!.saveInBackground()
                                 } else {

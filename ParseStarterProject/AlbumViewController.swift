@@ -63,22 +63,25 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
     
     // Tuple for sorting
-    var imageFilesTemp : [(image: PFFile , likes: Int , id: String,date: NSDate)] = []
+    var imageFilesTemp : [(image: PFFile , likes: Int , id: String,date: NSDate, hqImage: PFFile)] = []
     
     // Arrays for like sort selected
     var imageFilesLikes : [PFFile?] = []
     var objectIdLikes = [String]()
     var datesLikes : [NSDate?] = []
+    var hqLikes : [PFFile?] = []
     
     // Arrays for time sort selected
     var imageFilesTime : [PFFile?] = []
     var objectIdTime = [String]()
     var datesTime : [NSDate?] = []
+    var hqTime : [PFFile?] = []
     
     //Arrays for when my photos is selected
     var myPhotos : [PFFile?] = []
     var myObjectId = [String]()
     var myDate : [NSDate?] = []
+    var hqMyPhotos : [PFFile?] = []
     
     // Checker for sort button. Sort in chronological order by default.
     var sortedByLikes = true
@@ -509,6 +512,10 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     if (queryResult == nil || queryResult!.count == 0) {
                         
                         println("no photos")
+                        self.collectionView?.reloadData()
+                        self.myPhotos = []
+                        self.myObjectId = []
+                        self.spinner.stopAnimating()
                         
                     } else {
                         
@@ -522,7 +529,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                             var ids = eventAttendance["photosLikedID"] as! [String]
                             
                             
-                            // STRANGE BEHAVIOUR : Keep this in mind, when myPhotos was 0, would not enter the for loop until a photo was liked
+                            // Check for the list count being 0
                             if pList.count == 0 {
                                 
                                 self.collectionView?.reloadData()
@@ -623,7 +630,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         // Ensure the image wasn't flagged or blocked
                         if ((photo["flagged"] as! Bool) == false && (photo["blocked"] as! Bool) == false) {
                             // Fill our array of tuples for sorting
-                            let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate)
+                            let tup = (image: photo["thumbnail"] as! PFFile, likes: photo["upvoteCount"] as! Int, id: photo.objectId!! as String,date: photo.createdAt!! as NSDate, hqImage: photo["image"] as! PFFile)
                             
                             self.imageFilesTemp.append(tup)
                         }
@@ -638,22 +645,24 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     // Sort tuple of images by likes, and fill new array with photos in order of likes
                     self.imageFilesTemp.sort{ $0.likes > $1.likes}
                     
-                    for (image, likes, id, date) in self.imageFilesTemp {
+                    for (image, likes, id, date, hqImage) in self.imageFilesTemp {
                         
                         self.imageFilesLikes.append(image)
                         self.objectIdLikes.append(id)
                         self.datesLikes.append(date)
+                        self.hqLikes.append(hqImage)
                         
                     }
                     
                     // Sort tuple of images, fill the array with photos in order of time
                     self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
                     
-                    for (image, likes, id, date) in self.imageFilesTemp {
+                    for (image, likes, id, date, hqImage) in self.imageFilesTemp {
                         
                         self.imageFilesTime.append(image)
                         self.objectIdTime.append(id)
                         self.datesTime.append(date)
+                        self.hqTime.append(hqImage)
                         
                     }
                     
