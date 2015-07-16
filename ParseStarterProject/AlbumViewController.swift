@@ -19,7 +19,7 @@ import DigitsKit
 let reuseIdentifier = "albumCell"
 
 class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
+    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate,BFCImagePickerControllerDelegate {
     
     var refresher: UIRefreshControl!
     
@@ -1109,15 +1109,28 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     @IBAction func showCameraRoll(sender: UIButton) {
         picker.dismissViewControllerAnimated(true, completion: nil)
         
-        downloadToCameraRoll = false
+//        downloadToCameraRoll = false
+//        
+//        var controller = UIImagePickerController()
+//        controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+//        controller.mediaTypes = [kUTTypeImage]
+//        controller.delegate = self
+//        self.presentViewController(controller, animated:true, completion:nil)
         
-        var controller = UIImagePickerController()
-        controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
-        controller.mediaTypes = [kUTTypeImage]
-        controller.delegate = self
-        self.presentViewController(controller, animated:true, completion:nil)
-        
+        let pickerController = BFCImagePickerController()
+        pickerController.pickerDelegate = self
+        self.presentViewController(pickerController, animated: true) {}
     }
+    //********call back functions for ^^^^**********
+    func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
+        //Send assets to parse
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    func imagePickerControllerCancelled() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     
     @IBAction func capture(sender: UIButton) {
         picker.takePicture()
@@ -1171,7 +1184,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
     @IBAction func cancelCamera(sender: AnyObject) {
         
-        println("hereon cancel")
+        println("here on cancel")
         picker.dismissViewControllerAnimated(true, completion: nil)
 
     }
