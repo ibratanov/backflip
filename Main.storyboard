@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -146,16 +146,16 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eU8-hV-GVO">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eU8-hV-GVO" customClass="PFImageView">
                                             <rect key="frame" x="0.0" y="69" width="81" height="77"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WVe-Uu-0fF">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WVe-Uu-0fF" customClass="PFImageView">
                                             <rect key="frame" x="79" y="69" width="81" height="77"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hGc-Bp-3Nv">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hGc-Bp-3Nv" customClass="PFImageView">
                                             <rect key="frame" x="158" y="69" width="81" height="77"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C87-XB-ydm">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C87-XB-ydm" customClass="PFImageView">
                                             <rect key="frame" x="239" y="69" width="81" height="77"/>
                                         </imageView>
                                     </subviews>
@@ -689,14 +689,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bm6-d7-lPH">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bm6-d7-lPH" customClass="PFImageView">
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <outlet property="imageView" destination="bm6-d7-lPH" id="4r6-QX-Tdg"/>
+                                    <outlet property="imageView" destination="bm6-d7-lPH" id="XLW-lm-T3V"/>
                                     <segue destination="OvI-dv-VgA" kind="show" identifier="toFull" id="Ax8-uE-80J"/>
                                 </connections>
                             </collectionViewCell>
@@ -741,7 +741,7 @@
                                     <constraint firstAttribute="width" constant="10" id="NqB-GP-OI1"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uoI-tj-emU">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uoI-tj-emU" customClass="PFImageView">
                                 <rect key="frame" x="0.0" y="126" width="320" height="320"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uoI-tj-emU" secondAttribute="height" multiplier="1:1" id="KeX-h1-jgh"/>
@@ -904,9 +904,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bXg-ML-DEH"/>
-        <segue reference="ofY-SC-By2"/>
+        <segue reference="Fno-vP-GvK"/>
         <segue reference="hKp-Y7-lrD"/>
-        <segue reference="Akq-ph-AFX"/>
+        <segue reference="gz0-ak-oAk"/>
         <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
 </document>

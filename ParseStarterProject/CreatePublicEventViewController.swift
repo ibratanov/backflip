@@ -188,9 +188,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                         
                         if error != nil {
                             println(error)
-                        }
-                        else
-                        {
+
+                        } else {
                             
                             var event = PFObject(className: "Event")
                             
@@ -262,10 +261,9 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                             self.albumview?.eventId = self.eventID
                                             self.performSegueWithIdentifier("eventsPage", sender: self)
                                         }
-                                        
+
                                     } else {
                                         self.displayAlert("This event already exists", error: "Join an existing event below")
-                                        
                                     }
                                 } else {
                                     self.displayNoInternetAlert()
@@ -275,8 +273,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                             
                         }
                     })
-                }
-                else {
+                } else {
                     displayNoInternetAlert()
                 }
             }
