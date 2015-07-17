@@ -185,8 +185,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             if (photoObjectList != nil && photoObjectList!.count != 0) {
                 var photoObject = photoObjectList!.first as! PFObject
                 
-                photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-                photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+                photoObject.addUniqueObject(imageFile, forKey:"photosUploaded")
+                photoObject.addUniqueObject(imageFile, forKey: "photosLiked")
                 
                 var queryEvent = PFQuery(className: "Event")
                 queryEvent.whereKey("objectId", equalTo: self.eventId!)

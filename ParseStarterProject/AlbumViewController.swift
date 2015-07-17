@@ -481,12 +481,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             getUploadedImages.limit = 1
             getUploadedImages.whereKey("objectId", equalTo: self.eventId!)
             
+            println("FIRST QUERY")
+            
             // Retrieval from corresponding photos from relation to event
             var eventNames = getUploadedImages.findObjects() //as! PFObject
 
             if (eventNames == nil || eventNames!.count == 0) {
                 
                 println("error")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.spinner.stopAnimating()
+                }
 
             } else {
                 
@@ -498,6 +503,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 if (photoList == nil || photoList!.count == 0) {
 
                    println("no photos")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.spinner.stopAnimating()
+                    }
                     
                 } else {
 
@@ -550,11 +558,18 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                                 }
                                
                                     if (!hidden) {
-            
-                                        self.collectionView?.reloadData()
+                                        
+                                        println("IN APPEND LOOP")
+ 
+                                        println("LOADED")
                                         self.spinner.stopAnimating()
                                         self.myPhotos.append(photo)
+                                        println("APPEND")
                                         self.myObjectId.append(ids[index])
+                                        println("APPEND AGAIN")
+                                        
+                                        self.collectionView?.reloadData()
+                                        dump(self.myPhotos)
 
                                     }
                                 
@@ -589,10 +604,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.imageFilesLikes.removeAll(keepCapacity: true)
         self.objectIdLikes.removeAll(keepCapacity: true)
         self.datesLikes.removeAll(keepCapacity: true)
+        self.hqLikes.removeAll(keepCapacity: true)
         
         self.imageFilesTime.removeAll(keepCapacity: true)
         self.objectIdTime.removeAll(keepCapacity: true)
         self.datesTime.removeAll(keepCapacity: true)
+        self.hqTime.removeAll(keepCapacity: true)
         
         self.images.removeAll(keepCapacity: true)
         
@@ -610,6 +627,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             if (eventArray == nil || eventArray!.count == 0) {
                 
                 println("No Photos/No Updates")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.spinner.stopAnimating()
+                }
                 
             } else {
                 
@@ -621,6 +641,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 if (photoList == nil || photoList!.count == 0) {
                     
                     println("No Photos/No Updates")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.spinner.stopAnimating()
+                    }
                 
                     
                 } else {
@@ -800,7 +823,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         moveVC.tempArray = objectIdTime
                         moveVC.tempDate = datesTime
                         moveVC.selectedIndex = selectedCellIndex!.row
-                        moveVC.imageFiles = imageFilesTime
+                        moveVC.imageFiles = hqTime
+                        dump(hqTime)
                     }
                     
                 } else if self.sortedByLikes == true && self.myPhotoSelected == false {
@@ -812,7 +836,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         moveVC.tempArray = objectIdLikes
                         moveVC.tempDate = datesLikes
                         moveVC.selectedIndex = selectedCellIndex!.row
-                        moveVC.imageFiles = imageFilesLikes
+                        moveVC.imageFiles = hqLikes
+                        dump(hqLikes)
                         
                     }
                 } else {
@@ -825,6 +850,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         moveVC.tempDate = datesLikes
                         moveVC.selectedIndex = selectedCellIndex!.row
                         moveVC.imageFiles = myPhotos
+              
                        
                     }
                 }
