@@ -415,8 +415,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
 
             self.presentViewController(alert, animated: true, completion: nil)
-
-        
         
     }
     
@@ -555,69 +553,58 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 var photoList = photos.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
                 
                 if (photoList != nil) {
-                self.tempDate = photoList?.createdAt
-                
-                // UI updates on the main queue
-                dispatch_async(dispatch_get_main_queue()) {
-                    // Once retrieved from relation, set the UIImage view for fullscreen view
-                    tempImage = photoList!.objectForKey("image") as? PFFile
+                    self.tempDate = photoList?.createdAt
                     
-                    self.fullScreenImage.file = tempImage
-                    self.fullScreenImage.loadInBackground()
-                }
+                    // UI updates on the main queue
+                    dispatch_async(dispatch_get_main_queue()) {
+                        // Once retrieved from relation, set the UIImage view for fullscreen view
+                        tempImage = photoList!.objectForKey("image") as? PFFile
+                        
+                        self.fullScreenImage.file = tempImage
+                        self.fullScreenImage.loadInBackground()
+                    }
 
-                
-                //----------- Query for Like Image label--------------
-                var query5 = PFQuery(className: "Event")
-                query5.whereKey("objectId", equalTo: self.eventId!)
-                
-                var eventObject = query5.findObjects()?.first as! PFObject
-                var relation = eventObject["photos"] as! PFRelation
-                
-                // User like list that will be filled
-                var likeList : [String]
-                
-                // Finds associated photo object in relation
-                var likeRetrieve = relation.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
-                
-                // Fill the like list with the user liked list array from photo relation
-                likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
+                    
+                    //----------- Query for Like Image label--------------
+                    // Fill the like list with the user liked list array from photo relation
+                    var likeList = (photoList!.objectForKey("usersLiked") as? [String])!
+                    var upVote = (photoList!.objectForKey("upvoteCount")) as! Int
 
-                // UI Updates on the main queue
-                dispatch_async(dispatch_get_main_queue()) {
-                    var contained = contains(likeList, PFUser.currentUser()!.username!)
-                    
-                    if contained == true {
-                        self.likeActive = true
-                        self.likeButtonLabel.setImage(self.liked, forState: .Normal)
-                    } else {
-                        self.likeActive = false
-                        self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
-                    }
-                    
-                    // Set the like and number labels
-                    let count = likeList.count
-                    
-                    if (count == 1) {
-                        self.likeCount.text = String(count) + " like"
-                    } else {
-                        self.likeCount.text = String(count) + " likes"
-                    }
-                    
-                    
-                    //----------- Format and display photo date -------------
-                    if self.tempDate != nil {
+
+                    // UI Updates on the main queue
+                    dispatch_async(dispatch_get_main_queue()) {
+                        var contained = contains(likeList, PFUser.currentUser()!.username!)
                         
-                        // Formatting to display date how we want it
-                        let formatter = NSDateFormatter()
-                        formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                        formatter.timeStyle = .ShortStyle
-                        let dateStamp = formatter.stringFromDate(self.tempDate!)
+                        if contained == true {
+                            self.likeActive = true
+                            self.likeButtonLabel.setImage(self.liked, forState: .Normal)
+                        } else {
+                            self.likeActive = false
+                            self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
+                        }
                         
-                        self.eventInfo.text = "Photo taken on \(dateStamp)"
+                        // Set the like and number labels
+                        let count = upVote
+                        if (count == 1) {
+                            self.likeCount.text = String(count) + " like"
+                        } else {
+                            self.likeCount.text = String(count) + " likes"
+                        }
                         
+                        
+                        //----------- Format and display photo date -------------
+                        if self.tempDate != nil {
+                            
+                            // Formatting to display date how we want it
+                            let formatter = NSDateFormatter()
+                            formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                            formatter.timeStyle = .ShortStyle
+                            let dateStamp = formatter.stringFromDate(self.tempDate!)
+                            
+                            self.eventInfo.text = "Photo taken on \(dateStamp)"
+                            
+                        }
                     }
-                }
                 } else {
                     println("ISSUE WITH PHOTO SWIPE LOAD-----------------")
                 }
