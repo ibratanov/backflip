@@ -227,6 +227,7 @@ class EventTableViewController: UITableViewController {
         
         if listPhotos.count == 2 {
             var imageData1 = listPhotos[0].getData()
+            
             tableCell.imageOne!.image = UIImage (data: imageData1!)
             
             var imageData2 = listPhotos[1].getData()
