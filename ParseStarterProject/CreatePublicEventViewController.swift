@@ -12,7 +12,7 @@ import Parse
 import DigitsKit
 
 
-class CreatePublicEventViewController: UIViewController {
+class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func settingButton(sender: AnyObject) {
@@ -185,6 +185,7 @@ class CreatePublicEventViewController: UIViewController {
                         
                         if error != nil {
                             println(error)
+
                         }
                         else
                         {
@@ -211,6 +212,7 @@ class CreatePublicEventViewController: UIViewController {
                             //Check if event already exists
                             let query = PFQuery(className: "Event")
                             query.whereKey("eventName", equalTo: eventName)
+                            query.selectKeys(["eventName","startTime","venue","isLive","attendees"])
                             let scoreArray = query.findObjects()
                             
                             if (scoreArray != nil) {
@@ -334,6 +336,9 @@ class CreatePublicEventViewController: UIViewController {
         
         self.view.addSubview(navBar)
         
+        //add delegate
+        eventName.delegate = self
+        
         if NetworkAvailable.networkConnection() == true {
             PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
                 if error == nil {
@@ -348,6 +353,7 @@ class CreatePublicEventViewController: UIViewController {
         } else {
             displayNoInternetAlert()
         }
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -363,9 +369,13 @@ class CreatePublicEventViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    override func disablesAutomaticKeyboardDismissal() -> Bool {
+        return false
+    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        
-        textField.resignFirstResponder()
+        eventName.resignFirstResponder()
+        eventName.endEditing(true)
         
         return true
     }

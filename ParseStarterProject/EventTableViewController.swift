@@ -137,13 +137,11 @@ class EventTableViewController: UITableViewController {
                     println(error)
                 }
             })
-        
         } else {
             self.displayNoInternetAlert()
-        }
         
+        }
     }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
