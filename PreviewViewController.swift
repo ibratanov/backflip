@@ -189,8 +189,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 if (objs != nil && objs!.count != 0) {
                     var photoObject = objs!.first as! PFObject
                     
-                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+//TODO: Investigate issue with multi-flagged photos
+//                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+//                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
                     
                     var queryEvent = PFQuery(className: "Event")
                     queryEvent.whereKey("objectId", equalTo: self.eventId!)
@@ -206,6 +207,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                             photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
                                 if valid {
                                     relation.addObject(photo)
+                                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+                                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+                                    
                                     photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
                                     photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
                                 }
@@ -244,13 +248,13 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
         var imageHeight:CGFloat = image.size.height
         var imageWidth:CGFloat = image.size.width
-        var maxHeight:CGFloat = 1136.0 * shrinkRatio
-        var maxWidth:CGFloat = 640.0 * shrinkRatio
+        var maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
+        var maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
         var imageRatio:CGFloat = imageWidth/imageHeight
         var scalingRatio:CGFloat = maxWidth/maxHeight
         
         //lowest quality rating with acceptable encoding
-        var quality:CGFloat = 0.5
+        var quality:CGFloat = 0.3
         
         if (imageHeight > maxHeight || imageWidth > maxWidth){
             if(imageRatio < scalingRatio){

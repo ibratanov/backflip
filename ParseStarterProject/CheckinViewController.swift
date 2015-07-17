@@ -216,6 +216,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     // Set default event radius
                     var eventRadius = 5.0
                     var distQuery = PFQuery(className: "Options")
+                    distQuery.selectKeys(["value"])
                     
                     var distance = distQuery.findObjects()
                     
@@ -224,11 +225,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         eventRadius = result["value"] as! Double
                         
                         // Queries events table for locations that are close to user
-                        // Return top 5 closest events
+                        // Return top 10 closest events
                         var query = PFQuery(className: "Event")
                         //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
                         query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
                         query.limit = 10
+                        query.selectKeys(["eventName", "isLive"])
 
                         var usr = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
                         var savedEvents: [String] = usr!.objectForKey("savedEventNames") as! [String]
