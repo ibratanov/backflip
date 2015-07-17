@@ -554,23 +554,29 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                                     self.myObjectId = []
                                 }
                                 
+                                println("COUNT BITCHES")
+                                println(pList.count)
+                                
                                 var index = 0
                                 for photo in pList {
                                     // Ensure the image wasn't flagged or blocked
-                                    var id = ids[index]
-                                    var hidden = false
-                                    for p in photoList! {
-                                        if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
-                                            hidden = true
+                                    // TODO: Look into this temp fix for array out of bounds issue with flagged photos
+                                    if (index < ids.count) {
+                                        var id = ids[index]
+                                        var hidden = false
+                                        for p in photoList! {
+                                            if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
+                                                hidden = true
+                                            }
                                         }
-                                    }
-                                    
-                                    if (!hidden) {
                                         
-                                        self.collectionView?.reloadData()
-                                        self.myPhotos.append(photo)
-                                        self.myObjectId.append(ids[index])
-                                        
+                                        if (!hidden) {
+                                            
+                                            self.collectionView?.reloadData()
+                                            self.myPhotos.append(photo)
+                                            self.myObjectId.append(ids[index])
+                                            
+                                        }
                                     }
                                     
                                     index++

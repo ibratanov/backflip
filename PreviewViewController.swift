@@ -189,8 +189,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 if (objs != nil && objs!.count != 0) {
                     var photoObject = objs!.first as! PFObject
                     
-                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+//TODO: Investigate issue with multi-flagged photos
+//                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+//                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
                     
                     var queryEvent = PFQuery(className: "Event")
                     queryEvent.whereKey("objectId", equalTo: self.eventId!)
@@ -206,6 +207,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                             photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
                                 if valid {
                                     relation.addObject(photo)
+                                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+                                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+                                    
                                     photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
                                     photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
                                 }
