@@ -25,6 +25,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
 
     //------------------Camera Att.-----------------
+    var loopAllImagesBool = false
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var flashButton: UIButton!
     var testCamera = UIImagePickerController()
@@ -971,6 +972,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         updateThumbnail()
         
     }
+    
+    
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
 
         picker.dismissViewControllerAnimated(true, completion: nil)
@@ -1121,9 +1124,15 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         pickerController.pickerDelegate = self
         self.presentViewController(pickerController, animated: true) {}
     }
+    
     //********call back functions for ^^^^**********
     func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
         //Send assets to parse
+        for (index, asset) in enumerate(assets) {
+            let imageView = UIImageView(image: asset.fullScreenImage)
+            imageView.contentMode = UIViewContentMode.ScaleAspectFit
+            uploadImages(imageView.image!)
+        }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -1147,7 +1156,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
     }
     @IBAction func toggleTorch(sender: UIButton) {
-        //TO-DO: add indication of toggle (image change)
         if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
 
@@ -1201,4 +1209,139 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.presentViewController(testCamera, animated: true, completion: nil)
         }
     }
+    
+    func uploadImages(uImage: UIImage){
+        if NetworkAvailable.networkConnection() == true {
+            
+            var capturedImage = uImage as UIImage!
+            
+            var imageData = compressImage(uImage, shrinkRatio: 1.0)
+            var imageFile = PFFile(name: "image.png", data: imageData)
+            
+            var thumbnailData = compressImage(uImage, shrinkRatio: 0.5)
+            var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+            
+            
+            //Upload photos to database
+            var photo = PFObject(className: "Photo")
+            photo["caption"] = "Camera roll upload"
+            photo["image"] = imageFile
+            photo["thumbnail"] = thumbnailFile
+            photo["upvoteCount"] = 1
+            photo["usersLiked"] = [PFUser.currentUser()!.username!]
+            photo["uploader"] = PFUser.currentUser()!
+            photo["uploaderName"] = PFUser.currentUser()!.username!
+            photo["flagged"] = false
+            photo["reviewed"] = false
+            photo["blocked"] = false
+            photo["reporter"] = ""
+            photo["reportMessage"] = ""
+            
+            var photoACL = PFACL(user: PFUser.currentUser()!)
+            photoACL.setPublicWriteAccess(true)
+            photoACL.setPublicReadAccess(true)
+            photo.ACL = photoACL
+            
+            
+            var query2 = PFQuery(className: "EventAttendance")
+            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+            query2.whereKey("eventID", equalTo: eventId!)
+            
+            //var photoObjectList = query2.findObjects()
+            var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
+                if (objs != nil && objs!.count != 0) {
+                    var photoObject = objs!.first as! PFObject
+                    
+                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+                    
+                    var queryEvent = PFQuery(className: "Event")
+                    queryEvent.whereKey("objectId", equalTo: self.eventId!)
+                    //var objects = queryEvent.findObjects()
+                    var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
+                        
+                        if (sobjs != nil && sobjs!.count != 0) {
+                            var eventObject = sobjs!.first as! PFObject
+                            
+                            let relation = eventObject.relationForKey("photos")
+                            
+                            //photo.save()
+                            photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
+                                if valid {
+                                    relation.addObject(photo)
+                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+                                }
+                                //issue
+                                eventObject.saveInBackground()
+                                
+                                //issue
+                                photoObject.saveInBackground()
+                            })
+       
+                        } else {
+                            self.displayNoInternetAlert()
+                        }
+                    })
+                }
+                else {
+                    self.displayNoInternetAlert()
+                    println("Object Issue")
+                }
+                
+            })
+            
+        } else {
+            displayNoInternetAlert()
+        }
+
+    }
+    
+    func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
+        var imageHeight:CGFloat = image.size.height
+        var imageWidth:CGFloat = image.size.width
+        var maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
+        var maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
+        var imageRatio:CGFloat = imageWidth/imageHeight
+        var scalingRatio:CGFloat = maxWidth/maxHeight
+        
+        //lowest quality rating with acceptable encoding
+        var quality:CGFloat = 0.3
+        
+        if (imageHeight > maxHeight || imageWidth > maxWidth){
+            if(imageRatio < scalingRatio){
+                /* To ensure aspect ratio is maintained adjust
+                witdth of image in relation to scaling height */
+                imageRatio = maxHeight / imageHeight;
+                imageWidth = imageRatio * imageWidth;
+                imageHeight = maxHeight;
+            }
+            else if(imageRatio > scalingRatio){
+                /* To ensure aspect ratio is maintained adjust
+                height of image in relation to scaling width */
+                imageRatio = maxWidth / imageWidth;
+                imageHeight = imageRatio * imageHeight;
+                imageWidth = maxWidth;
+            }
+            else{
+                /* If image is equivalent to scaling ratio
+                image should not be compressed any further
+                scaled down to max resolution*/
+                imageHeight = maxHeight;
+                imageWidth = maxWidth;
+                quality = 1;
+            }
+        }
+        
+        var rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
+        //bit-map based graphic context and set the boundaries of still image
+        UIGraphicsBeginImageContext(rect.size);
+        image.drawInRect(rect)
+        var imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
+        let imageData = UIImageJPEGRepresentation(imageCompressed, quality);
+        UIGraphicsEndImageContext();
+        
+        return imageData;
+    }
+
 }

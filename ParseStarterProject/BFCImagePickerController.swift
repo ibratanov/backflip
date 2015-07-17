@@ -160,7 +160,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
             
             imageView.frame = self.bounds
             checkView.frame.origin = CGPoint(x: self.contentView.bounds.width - checkView.bounds.width,
-                y: 0)
+                y: self.contentView.bounds.height - checkView.bounds.height)
         }
     }
     
@@ -232,7 +232,7 @@ class BFCImagePickerController: UINavigationController {
     
     /// The height of the bottom of the preview
     var previewHeight: CGFloat = 80
-    var rightButtonTitle: String = "Select"
+    var rightButtonTitle: String = "Upload"
     /// Displayed when denied access
     var noAccessView: UIView = {
         let label = UILabel()
@@ -328,9 +328,7 @@ class BFCImagePickerController: UINavigationController {
         }
         
         override func viewDidLoad() {
-            super.viewDidLoad()
-            
-            self.view.backgroundColor = UIColor.redColor()
+            super.viewDidLoad()            
             self.view.addSubview(contentViewController.view)
             contentViewController.view.frame = view.bounds
         }
@@ -338,12 +336,6 @@ class BFCImagePickerController: UINavigationController {
     
     internal var selectedAssets: [BFCAsset]!
     internal  weak var pickerDelegate: BFCImagePickerControllerDelegate?
-    lazy internal  var imagesPreviewView: BFCPreviewView = {
-        let preview = BFCPreviewView()
-        preview.hidden = true
-        preview.backgroundColor = UIColor(red: 0.0, green: 0.58823529411764708, blue: 0.53333333333333333, alpha: 1.0)
-        return preview
-        }()
     lazy internal var doneButton: UIButton =  {
         let button = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         button.setTitle("", forState: UIControlState.Normal)
@@ -365,7 +357,6 @@ class BFCImagePickerController: UINavigationController {
         var libraryController = BFCAssetsLibraryController()
         var wrapperVC = BFCContentWrapperViewController(libraryController)
         self.init(rootViewController: wrapperVC)
-        wrapperVC.bottomBarHeight = previewHeight
         selectedAssets = [BFCAsset]()
     }
     
@@ -380,12 +371,6 @@ class BFCImagePickerController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imagesPreviewView.frame = CGRect(x: 0, y: view.bounds.height - previewHeight,
-            width: view.bounds.width, height: previewHeight)
-        imagesPreviewView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleTopMargin
-        
-        view.addSubview(imagesPreviewView)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "selectedImage:",
             name: BFCImageSelectedNotification,
             object: nil)
@@ -396,9 +381,6 @@ class BFCImagePickerController: UINavigationController {
     
     override func pushViewController(viewController: UIViewController, animated: Bool) {
         var wrapperVC = BFCContentWrapperViewController(viewController)
-        wrapperVC.bottomBarHeight = previewHeight
-        wrapperVC.showBottomBar = !imagesPreviewView.hidden
-        
         super.pushViewController(wrapperVC, animated: animated)
         
         self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.doneButton)
@@ -426,10 +408,6 @@ class BFCImagePickerController: UINavigationController {
         //set affordance for image selected
         if let asset = notification.object as? BFCAsset {
             selectedAssets.append(asset)
-            imagesPreviewView.insertAsset(asset)
-            imagesPreviewView.hidden = false
-            
-            (self.viewControllers as! [BFCContentWrapperViewController]).map {$0.showBottomBar = !self.imagesPreviewView.hidden}
             self.doneButton.setTitle(rightButtonTitle + "(\(selectedAssets.count))", forState: UIControlState.Normal)
             self.doneButton.sizeToFit()
         }
@@ -440,16 +418,11 @@ class BFCImagePickerController: UINavigationController {
         
         if let asset = notification.object as? BFCAsset {
             selectedAssets.removeAtIndex(find(selectedAssets, asset)!)
-            
-            imagesPreviewView.removeAsset(asset)
-            
             self.doneButton.setTitle(rightButtonTitle + "(\(selectedAssets.count))", forState: UIControlState.Normal)
             self.doneButton.sizeToFit()
             
             if selectedAssets.count <= 0 {
-                imagesPreviewView.hidden = true
-                
-                (self.viewControllers as! [BFCContentWrapperViewController]).map {$0.showBottomBar = !self.imagesPreviewView.hidden}
+
                 self.doneButton.setTitle("", forState: UIControlState.Normal)
             }
         }
