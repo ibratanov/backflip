@@ -19,16 +19,16 @@ import DigitsKit
 let reuseIdentifier = "albumCell"
 
 class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
+UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     var refresher: UIRefreshControl!
     
-
+    
     //------------------Camera Att.-----------------
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var flashButton: UIButton!
     var testCamera = UIImagePickerController()
-
+    
     var imageViewContent = UIImage()
     var overlayView: UIView?
     var image = UIImage()
@@ -60,7 +60,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var timesImages = [UIImage]()
     var likeImages = [UIImage]()
     var myImages = [UIImage]()
-
+    
     
     // Tuple for sorting
     var imageFilesTemp : [(image: PFFile , likes: Int , id: String,date: NSDate)] = []
@@ -107,32 +107,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
     func viewChanger (sender: UISegmentedControl) {
         
         if NetworkAvailable.networkConnection() == true {
             switch sender.selectedSegmentIndex {
                 
                 // Rating Sort
-                case 0 :    sortedByLikes = true
-                            myPhotoSelected = false
-                            updatePhotos()
+            case 0 :    sortedByLikes = true
+            myPhotoSelected = false
+            updatePhotos()
                 
                 // Time Sort
-                case 1:     sortedByLikes = false
-                            myPhotoSelected = false
-                            updatePhotos()
-
-
+            case 1:     sortedByLikes = false
+            myPhotoSelected = false
+            updatePhotos()
+                
+                
                 
                 // My Photos
-                case 2 :    myPhotoSelected = true
-                            displayMyPhotos()
-
+            case 2 :    myPhotoSelected = true
+            displayMyPhotos()
                 
                 
-                default:
-                    println("default")
+                
+            default:
+                println("default")
                 
             }
         } else {
@@ -153,17 +153,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             if posted == true {
                 
                 //let qos = (Int(QOS_CLASS_BACKGROUND.value))
-        
+                
                 if myPhotoSelected == false {
                     //dispatch_async(dispatch_get_global_queue(qos, 0)) {
-                        self.updatePhotos()
+                    self.updatePhotos()
                     //}
-                   
+                    
                 } else {
                     //dispatch_async(dispatch_get_global_queue(qos,0)) {
-                        self.displayMyPhotos()
+                    self.displayMyPhotos()
                     //}
-           
+                    
                     
                 }
                 
@@ -176,9 +176,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             println("no internet")
             
         }
-
+        
     }
-
+    
     // Segway back to event history page
     func seg() {
         
@@ -189,7 +189,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     
     func smsShare() {
-
+        
         var user = "filler"
         if (PFUser.currentUser() != nil) {
             user = PFUser.currentUser()!.objectId!
@@ -217,11 +217,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             }
         })
     }
-
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-       
+        
         // Pull down to refresh
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -248,21 +248,21 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
                 if myPhotoSelected == false {
                     //dispatch_async(dispatch_get_global_queue(qos, 0)) {
-                 
+                    
                     //dispatch_async(dispatch_get_main_queue()) {
-                        
+                    
                     
                     //}
-                        self.updatePhotos()
+                    self.updatePhotos()
                     
                     //}
-                 
+                    
                 } else {
                     //dispatch_async(dispatch_get_global_queue(qos,0)) {
-                        self.displayMyPhotos()
+                    self.displayMyPhotos()
                     //}
                     //dispatch_async(dispatch_get_main_queue()) {
-               
+                    
                     //}
                     
                 }
@@ -403,8 +403,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         // Pushes collection view down, higher value pushes collection view downwards, and push from bottom of screen (3rd number)
         collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,80.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
- 
-
+        
+        
         if NetworkAvailable.networkConnection() == true {
             // Initialize date comparison components
             let currentTime = NSDate()
@@ -414,6 +414,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             let components2 = NSDateComponents()
             components2.hour = 24
             var eventQuery = PFQuery(className: "Event")
+            
+            eventQuery.selectKeys(["endTime"])
             
             eventQuery.getObjectInBackgroundWithId(eventId!){ (objects, error) -> Void in
                 if error == nil {
@@ -429,7 +431,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         // Event is still active (currentTime < expiry time)
                         if currentTime.compare(date!) == NSComparisonResult.OrderedAscending {
                             
-                        // Event is no longer active (currentTime > expiry time)
+                            // Event is no longer active (currentTime > expiry time)
                         } else if currentTime.compare(date!) == NSComparisonResult.OrderedDescending {
                             
                         }
@@ -437,7 +439,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     } else {
                         //endDate has not been set or was invalid
                     }
-
+                    
                     
                 } else {
                     
@@ -497,32 +499,34 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             // Load information from parse db -- purely for flag checking
             var getUploadedImages = PFQuery(className: "Event")
             getUploadedImages.limit = 1
+            getUploadedImages.selectKeys(["photos"])
             getUploadedImages.whereKey("objectId", equalTo: self.eventId!)
             
             // Retrieval from corresponding photos from relation to event
             var eventNames = getUploadedImages.findObjects() //as! PFObject
-
+            
             if (eventNames == nil || eventNames!.count == 0) {
                 
                 println("error")
-
+                
             } else {
-
+                
                 var object = eventNames!.first as! PFObject
                 var photos = object["photos"] as! PFRelation
                 var photoList = photos.query()!.findObjects()
-
+                
                 if (photoList == nil || photoList!.count == 0) {
-
-                   println("no photos")
+                    
+                    println("no photos")
                     
                 } else {
-
+                    
                     // End flag checking load
-
+                    
                     var query = PFQuery(className: "EventAttendance")
                     query.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
                     query.whereKey("eventID", equalTo: self.eventId!)
+                    query.selectKeys(["photosLiked", "photosLikedID", "flagged", "blocked"])
                     
                     var queryResult = query.findObjects()
                     dispatch_async(dispatch_get_main_queue()) {
@@ -532,7 +536,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                             
                         } else {
                             
-                           
+                            
                             //TODO: Check if this is an actual issue when events & users are properly linked up
                             if (queryResult!.count != 0) {
                                 println(queryResult!.count)
@@ -549,25 +553,31 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                                     self.myPhotos = []
                                     self.myObjectId = []
                                 }
-                        
+                                
+                                println("COUNT BITCHES")
+                                println(pList.count)
+                                
                                 var index = 0
                                 for photo in pList {
                                     // Ensure the image wasn't flagged or blocked
-                                    var id = ids[index]
-                                    var hidden = false
-                                    for p in photoList! {
-                                        if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
-                                            hidden = true
+                                    // TODO: Look into this temp fix for array out of bounds issue with flagged photos
+                                    if (index < ids.count) {
+                                        var id = ids[index]
+                                        var hidden = false
+                                        for p in photoList! {
+                                            if (p.objectId == ids[index] && ((p["flagged"] as! Bool) == true || (p["blocked"] as! Bool) == true)) {
+                                                hidden = true
+                                            }
                                         }
-                                    }
-                                   
+                                        
                                         if (!hidden) {
-                
+                                            
                                             self.collectionView?.reloadData()
                                             self.myPhotos.append(photo)
                                             self.myObjectId.append(ids[index])
-
+                                            
                                         }
+                                    }
                                     
                                     index++
                                 }
@@ -582,7 +592,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // TODO: Smart loading of photos - only reload photos which are new/were modified
     func updatePhotos() {
         
-
+        
         // Clean all our arrays for use again
         self.imageFilesTemp.removeAll(keepCapacity: true)
         
@@ -602,16 +612,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         let qos = (Int(QOS_CLASS_USER_INITIATED.value))
         dispatch_async(dispatch_get_global_queue(qos, 0)) {
-
+            
             // Load information from parse db
             var getUploadedImages = PFQuery(className: "Event")
             getUploadedImages.limit = 1
+            getUploadedImages.selectKeys(["photos"])
             getUploadedImages.whereKey("objectId", equalTo: self.eventId!)
             
             // Retrieval from corresponding photos from relation to event
             //var eventArray = getUploadedImages.findObjects()
             var eventArray: Void = getUploadedImages.findObjectsInBackgroundWithBlock { (eventArObjs:[AnyObject]?, error:NSError?) -> Void in
-               
+                
                 if (eventArObjs == nil || eventArObjs!.count == 0) {
                     
                     println("No Photos/No Updates")
@@ -680,16 +691,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         self.images.removeAll(keepCapacity: true)
-
+        
         self.collectionView?.reloadData()
     }
-
+    
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
-
-
+    
+    
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         
@@ -708,7 +719,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
         
     }
-
+    
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
         
@@ -721,18 +732,13 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 println("No Photos/No Update")
                 
             } else {
-
+                
                 // Temp image until actual image loads CAUSES MEMORY WARNING ON MANY REFRESH
                 albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
-
-
+                
                 albumCell.imageView.file = imageFilesTime[indexPath.row]
                 albumCell.imageView.loadInBackground()
                 
-                
-
-
-
             }
             
         } else if sortedByLikes == true && myPhotoSelected == false {
@@ -743,17 +749,17 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 
             } else {
                 
-
-                     // Temp image until actual image loads
-                    albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
                 
-                    albumCell.imageView.file = imageFilesLikes[indexPath.row]
-                    albumCell.imageView.loadInBackground()
+                // Temp image until actual image loads
+                albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
+                
+                albumCell.imageView.file = imageFilesLikes[indexPath.row]
+                albumCell.imageView.loadInBackground()
                 
                 
-
+                
             }
-    
+            
         } else if myPhotoSelected == true {
             
             if myPhotos.count == 0 {
@@ -761,11 +767,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 println("No Photos/No Update")
                 // TODO: Check if necessary
                 // albumCell.imageView.image = nil
-
+                
                 
             } else {
                 
-                 // Temp image until actual image loads
+                // Temp image until actual image loads
                 albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
                 
                 albumCell.imageView.file = myPhotos[indexPath.row]
@@ -779,7 +785,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        
         if NetworkAvailable.networkConnection() == true {
             if segue.identifier == "toFull" {
                 
@@ -800,7 +806,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     }
                     
                 } else if self.sortedByLikes == true && self.myPhotoSelected == false {
-                // Sorted by like count
+                    // Sorted by like count
                     if self.objectIdLikes.count == 0 || self.datesLikes.count == 0 {
                         displayNoInternetAlert()
                     } else {
@@ -819,7 +825,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         moveVC.tempArray = myObjectId
                         //moveVC.tempDate = self.datesLikes[selectedCellIndex!.row]
                         moveVC.selectedIndex = selectedCellIndex!.row
-                       
                     }
                 }
             }
@@ -837,6 +842,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
         if NetworkAvailable.networkConnection() == true {
             let query = PFUser.query()
+            query?.selectKeys(["blocked"])
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                 if error == nil {
                     if (object!.valueForKey("blocked") as! Bool) {
@@ -901,7 +907,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                         self.setLastPhoto()
                         self.updateThumbnail()
                         
-
+                        
                     }
                 } else {
                     
@@ -918,7 +924,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         if (img.imageOrientation == UIImageOrientation.Up) {
             return img;
         }
-
+        
         var transform:CGAffineTransform = CGAffineTransformIdentity
         
         if (img.imageOrientation == UIImageOrientation.Down
@@ -955,7 +961,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                 transform = CGAffineTransformTranslate(transform, img.size.height, 0);
                 transform = CGAffineTransformScale(transform, -1, 1);
         }
-
+        
         var ctx:CGContextRef = CGBitmapContextCreate(nil, Int(img.size.width), Int(img.size.height), CGImageGetBitsPerComponent(img.CGImage), 0, CGImageGetColorSpace(img.CGImage), CGImageGetBitmapInfo(img.CGImage))
         
         CGContextConcatCTM(ctx, transform)
@@ -993,9 +999,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             UIImagePickerControllerSourceType.SavedPhotosAlbum
         picker.delegate = self
         self.presentViewController(picker, animated: true, completion: nil)
-
+        
     }
-
+    
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
     {
@@ -1003,7 +1009,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         var imageShortLife:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         self.imageViewContent = imageShortLife
         picker.dismissViewControllerAnimated(true, completion: nil)
-
+        
         //Retake and crop options------------------------------------------------------------------------
         let previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
         previewViewController.cropCompletionHandler = {
@@ -1021,7 +1027,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             self.updateThumbnail()
             
         }
-
+        
         if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
             previewViewController.imageToCrop = imageViewContent
             //UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
@@ -1041,7 +1047,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
-
+        
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -1140,37 +1146,37 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     @IBAction func reverseCamera(sender: UIButton) {
         //TO-DO: add transition when reversed
         if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-
-                var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
-                var cameraAspectRatio: CGFloat = 4.0/3.0
-                var cameraViewHeight = screenBounds.width * cameraAspectRatio
-                var scale = screenBounds.height / cameraViewHeight
-                picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
-                picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
-                self.zoomImage.camera = false
+            
+            var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
+            var cameraAspectRatio: CGFloat = 4.0/3.0
+            var cameraViewHeight = screenBounds.width * cameraAspectRatio
+            var scale = screenBounds.height / cameraViewHeight
+            picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
+            picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
+            self.zoomImage.camera = false
             
             
             UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
                 self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
                 }, completion: nil)
-
+            
             self.flashButton.hidden = false
         }else{
             
             //----------------------------------------------------------------------------
             self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, -5.0)
             self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
-
+            
             // resize
             if (zoomImage.camera) {
                 self.zoomImage.camera = false
             }
             //----------------------------------------------------------------------------
-
+            
             UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromRight , animations: { () -> Void in
                 self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
                 }, completion: nil)
-
+            
             self.flashButton.hidden = true
         }
     }
@@ -1206,9 +1212,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         //TO-DO: add indication of toggle (image change)
         if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
-
+            
             self.flashButton.setImage(flashOff, forState: .Normal)
-
+            
         }else{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.On
             self.flashButton.setImage(flashOn, forState: .Normal)
@@ -1237,14 +1243,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
         }
     }
-
+    
     @IBAction func cancelCamera(sender: AnyObject) {
         
         println("hereon cancel")
         picker.dismissViewControllerAnimated(true, completion: nil)
-
+        
     }
-
+    
     func captureTest(sender : UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             println("Button capture")

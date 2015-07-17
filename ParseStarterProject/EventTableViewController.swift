@@ -135,6 +135,7 @@ class EventTableViewController: UITableViewController {
         
         if NetworkAvailable.networkConnection() == true {
             var query = PFQuery(className: "Event")
+            query.selectKeys(["photos"])
             query.whereKey("objectId", equalTo: objectId)
             
             var objects = query.findObjects()
