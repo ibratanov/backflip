@@ -554,7 +554,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                                     self.myObjectId = []
                                 }
                                 
-                                println("COUNT BITCHES")
+                                println("COUNT")
                                 println(pList.count)
                                 
                                 var index = 0
