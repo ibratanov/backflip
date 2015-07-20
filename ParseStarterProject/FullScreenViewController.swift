@@ -49,7 +49,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     var eventTitle : String?
     
     // Arrays of objectIds, and dates
-    var tempDate: [NSDate?] = []
     var tempArray :[String]?
     
     // Scroll View variables
@@ -129,11 +128,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
                             retrieveLikes?.incrementKey("upvoteCount", byAmount: 1)
                             
-                            // Grab specific element from object
+                            // Grab specific elements from object
                             likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
                             hqImage = (retrieveLikes!.objectForKey("image") as? PFFile)!
-
-                            //thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
                             upVote = (retrieveLikes!.objectForKey("upvoteCount")) as! Int
                             
                             dispatch_async(dispatch_get_main_queue()) {
@@ -205,13 +202,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             retrieveLikes?.removeObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
                             retrieveLikes?.incrementKey("upvoteCount", byAmount: -1)
                             
-                            // Grab specific element from object.
+                            // Grab specific elements from object.
                             likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
                             hqImage = (retrieveLikes!.objectForKey("image") as? PFFile)!
-                            //thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
                             upVote = (retrieveLikes!.objectForKey("upvoteCount")) as! Int
 
-                            
+                            // UI label set on the main thread
                             dispatch_async(dispatch_get_main_queue()) {
                                 // Set appropriate label on the view
                                 let counter = upVote
@@ -243,7 +239,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         }
                         
                     } else {
-                    self.displayNoInternetAlert()
+                        self.displayNoInternetAlert()
                     }
                 }
             }
@@ -484,10 +480,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 } else {
                     self.displayNoInternetAlert()
                 }
-
             }
         }
-
     }
     
     // Alert displayed when an image is successfully saved to camera roll
@@ -524,7 +518,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     var eventObject = query5.findObjects()?.first as! PFObject
                     var relation = eventObject["photos"] as! PFRelation
 
-                    
                     // Finds associated photo object in relation
                     var likeRetrieve = relation.query()?.getObjectWithId(self.tempArray![self.pageIndex])
                     
@@ -532,9 +525,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     var likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
                     var upVote = (likeRetrieve!.objectForKey("upvoteCount") as? Int)
                     var time = (likeRetrieve!.createdAt! as NSDate)
-                    //println(time)
-                
-
 
                     // UI Updates on the main queue
                     dispatch_async(dispatch_get_main_queue()) {

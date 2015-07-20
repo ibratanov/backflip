@@ -125,8 +125,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
             case 1:     sortedByLikes = false
             myPhotoSelected = false
             updatePhotos()
-                
-                
+
                 
                 // My Photos
             case 2 :    myPhotoSelected = true
@@ -150,21 +149,25 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     // Occurs for when a user adds a photo, we want the photo to show up instantly
     override func viewDidAppear(animated: Bool) {
         
-        
         if NetworkAvailable.networkConnection() == true {
             // fullscreen is false, posted is true
-            if posted == true {
+            if posted == true && fullScreen == false {
 
                 if myPhotoSelected == false {
-                        updatePhotos()
+                    updatePhotos()
+
+                    
 
                 } else {
-                        displayMyPhotos()
+                    displayMyPhotos()
+
 
                 }
                 
-                //self.collectionView?.reloadData()
+                //self.collectionView?.reloadSections(NSIndexSet(index: 0))
+                
             }
+            fullScreen = false
         } else {
             
             var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
@@ -177,6 +180,8 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     // Segway back to event history page
     func seg() {
+        
+        PFQuery.clearAllCachedResults()
         
         self.navigationController?.popViewControllerAnimated(true)
         
@@ -258,8 +263,8 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         }
         
         // Booleans for determining if view needs to be reloaded
-        self.fullScreen = false
-        self.posted = false
+//self.fullScreen = false
+        //self.posted = false
         
         //--------------- LIKE/TIME/MY PHOTOS ---------------
         
@@ -475,7 +480,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         
         self.images.removeAll(keepCapacity: true)
         
-        let qos = (Int(QOS_CLASS_USER_INITIATED.value))
+        let qos = (Int(QOS_CLASS_BACKGROUND.value))
         dispatch_async(dispatch_get_global_queue(qos, 0)) {
             
             // Load information from parse db -- purely for flag checking
@@ -484,7 +489,6 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
             getUploadedImages.selectKeys(["photos"])
             getUploadedImages.whereKey("objectId", equalTo: self.eventId!)
             
-            println("FIRST QUERY")
             
             // Retrieval from corresponding photos from relation to event
             var eventNames = getUploadedImages.findObjects() //as! PFObject
@@ -520,21 +524,22 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                     query.selectKeys(["photosLiked", "photosLikedID", "flagged", "blocked"])
                     
                     var queryResult = query.findObjects()
-                    dispatch_async(dispatch_get_main_queue()) {
+  
                         if (queryResult == nil || queryResult!.count == 0) {
                             
                             println("no photos")
-                            self.collectionView?.reloadData()
                             self.myPhotos = []
                             self.myObjectId = []
-                            self.spinner.stopAnimating()
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.spinner.stopAnimating()
+                            }
+
                             
                         } else {
                             
                            
                             //TODO: Check if this is an actual issue when events & users are properly linked up
                             if (queryResult!.count != 0) {
-                                println(queryResult!.count)
                                 var eventAttendance = queryResult!.first as! PFObject
                                 var pList = eventAttendance["photosLiked"] as! [PFFile]
                                 var ids = eventAttendance["photosLikedID"] as! [String]
@@ -543,8 +548,10 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                                 // Check for the list count being 0
                                 if pList.count == 0 {
                                     
-                                    self.collectionView?.reloadData()
-                                    self.spinner.stopAnimating()
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        self.spinner.stopAnimating()
+                                    }
+
                                     self.myPhotos = []
                                     self.myObjectId = []
                                 }
@@ -564,11 +571,10 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                                    
                                         if (!hidden) {
 
-                                            self.spinner.stopAnimating()
                                             self.myPhotos.append(photo)
                                             self.myObjectId.append(ids[index])
                                             
-                                            self.collectionView?.reloadData()
+                           
 
                                         }
                                         
@@ -577,6 +583,9 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                                 }
                             }
                         }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.collectionView?.reloadSections(NSIndexSet(index: 0))
+                        self.spinner.stopAnimating()
                     }
                 }
             }
@@ -608,7 +617,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         
         self.images.removeAll(keepCapacity: true)
         
-        let qos = (Int(QOS_CLASS_USER_INITIATED.value))
+        let qos = (Int(QOS_CLASS_BACKGROUND.value))
         dispatch_async(dispatch_get_global_queue(qos, 0)) {
             
             // Load information from parse db
@@ -659,34 +668,33 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                         }
                         
                     }
+
+                    // Sort tuple of images by likes, and fill new array with photos in order of likes
+                    self.imageFilesTemp.sort{ $0.likes > $1.likes}
                     
-                    dispatch_async(dispatch_get_main_queue()) {
-                     
+                    for (image, likes, id, date, hqImage) in self.imageFilesTemp {
                         
-                        // Sort tuple of images by likes, and fill new array with photos in order of likes
-                        self.imageFilesTemp.sort{ $0.likes > $1.likes}
+                        self.imageFilesLikes.append(image)
+                        self.objectIdLikes.append(id)
+                        self.datesLikes.append(date)
+                        self.hqLikes.append(hqImage)
                         
-                        for (image, likes, id, date, hqImage) in self.imageFilesTemp {
-                            
-                            self.imageFilesLikes.append(image)
-                            self.objectIdLikes.append(id)
-                            self.datesLikes.append(date)
-                            self.hqLikes.append(hqImage)
-                            
-                        }
+                    }
+                    
+                    // Sort tuple of images, fill the array with photos in order of time
+                    self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
+                    
+                    for (image, likes, id, date, hqImage) in self.imageFilesTemp {
                         
-                        // Sort tuple of images, fill the array with photos in order of time
-                        self.imageFilesTemp.sort{ $0.date.compare($1.date) == NSComparisonResult.OrderedDescending}
+                        self.imageFilesTime.append(image)
+                        self.objectIdTime.append(id)
+                        self.datesTime.append(date)
+                        self.hqTime.append(hqImage)
                         
-                        for (image, likes, id, date, hqImage) in self.imageFilesTemp {
-                            
-                            self.imageFilesTime.append(image)
-                            self.objectIdTime.append(id)
-                            self.datesTime.append(date)
-                            self.hqTime.append(hqImage)
-                            
-                        }
-                        self.collectionView?.reloadData()
+                    }
+                    
+                     dispatch_async(dispatch_get_main_queue()) {
+                        self.collectionView?.reloadSections(NSIndexSet(index: 0))
                         self.spinner.stopAnimating()
                         
                     }
@@ -700,7 +708,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         super.didReceiveMemoryWarning()
         //self.images.removeAll(keepCapacity: true)
         
-        //self.collectionView?.reloadData()
+        self.collectionView?.reloadData()
     }
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -759,7 +767,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                 
                 
                 // Temp image until actual image loads
-                //albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
+                albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
                 
                 albumCell.imageView.file = imageFilesLikes[indexPath.row]
                 albumCell.imageView.loadInBackground()
@@ -780,7 +788,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
             } else {
                 
                 // Temp image until actual image loads
-                //albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
+                albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
                 
                 albumCell.imageView.file = myPhotos[indexPath.row]
                 albumCell.imageView.loadInBackground()
@@ -809,7 +817,6 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                         displayNoInternetAlert()
                     } else {
                         moveVC.tempArray = objectIdTime
-                        moveVC.tempDate = datesTime
                         moveVC.selectedIndex = selectedCellIndex!.row
                         moveVC.imageFiles = hqTime
                         dump(hqTime)
@@ -822,7 +829,6 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                     } else {
                         
                         moveVC.tempArray = objectIdLikes
-                        moveVC.tempDate = datesLikes
                         moveVC.selectedIndex = selectedCellIndex!.row
                         moveVC.imageFiles = hqLikes
                         dump(hqLikes)
@@ -835,7 +841,6 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
                     } else {
                         
                         moveVC.tempArray = myObjectId
-                        moveVC.tempDate = myDate
                         moveVC.selectedIndex = selectedCellIndex!.row
                         moveVC.imageFiles = myPhotos
 
@@ -1068,6 +1073,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     func cropToSquare(image originalImage: UIImage) -> UIImage {
         // Create a copy of the image without the imageOrientation property so it is in its native orientation (landscape)
+      
         let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage)!
         
         // Get the size of the contextImage

@@ -152,6 +152,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
             }
             
+            
             var imageData = compressImage(capturedImage, shrinkRatio: 1.0)
             var imageFile = PFFile(name: "image.png", data: imageData)
             
