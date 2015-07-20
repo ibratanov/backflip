@@ -23,6 +23,9 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     var userGeoPoint = PFGeoPoint()
     
+    // Quality of service variable for threading
+    let qos = (Int(QOS_CLASS_BACKGROUND.value))
+    
     
     @IBOutlet var addressText: UIImageView!
     
@@ -185,9 +188,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                         
                         if error != nil {
                             println(error)
-                        }
-                        else
-                        {
+
+                        } else {
                             
                             var event = PFObject(className: "Event")
                             
@@ -206,73 +208,72 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                 }
                             })
                             
-                            event["geoLocation"] = self.userGeoPoint
-                            
-                            //Check if event already exists
-                            let query = PFQuery(className: "Event")
-                            query.whereKey("eventName", equalTo: eventName)
-                            let scoreArray = query.findObjects()
-                            
-                            if (scoreArray != nil) {
-                                if (scoreArray!.count == 0) {
-                                    event["eventName"] = eventName
-                                    event["venue"] = address
-                                    event["startTime"] = NSDate()
-                                    event["isLive"] = true
-                                    var eventACL = PFACL(user: PFUser.currentUser()!)
-                                    eventACL.setPublicWriteAccess(true)
-                                    eventACL.setPublicReadAccess(true)
-                                    event.ACL = eventACL
-                                    
-                                    // Store the relation
-                                    let relation = event.relationForKey("attendees")
-                                    relation.addObject(PFUser.currentUser()!)
-                                    
-                                    self.eventID = event.objectId
-                                    event.save()
-                                    /*event.saveInBackgroundWithBlock({ (success, error) -> Void in
-                                    if (success) {
-                                    println("Objects has been successfully saved")
+                            // Put querying into a background thread
+                            dispatch_async(dispatch_get_global_queue(self.qos,0)) {
+                                event["geoLocation"] = self.userGeoPoint
+                                
+                                //Check if event already exists
+                                let query = PFQuery(className: "Event")
+                                query.whereKey("eventName", equalTo: eventName)
+                                let scoreArray = query.findObjects()
+                                
+                                if (scoreArray != nil) {
+                                    if (scoreArray!.count == 0) {
+                                        event["eventName"] = eventName
+                                        event["venue"] = address
+                                        event["startTime"] = NSDate()
+                                        event["isLive"] = true
+                                        var eventACL = PFACL(user: PFUser.currentUser()!)
+                                        eventACL.setPublicWriteAccess(true)
+                                        eventACL.setPublicReadAccess(true)
+                                        event.ACL = eventACL
+                                        
+                                        // Store the relation
+                                        let relation = event.relationForKey("attendees")
+                                        relation.addObject(PFUser.currentUser()!)
+                                        
+                                        self.eventID = event.objectId
+                                        event.save()
+                                        
+                                        object?.addUniqueObject(event, forKey:"savedEvents")
+                                        object?.addUniqueObject(eventName, forKey:"savedEventNames")
+                                        
+                                        object!.save()
+                                        
+                                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                                        var attendance = PFObject(className:"EventAttendance")
+                                        attendance["eventID"] = event.objectId
+                                        //let temp = PFUser.currentUser()?.objectId// as String
+                                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                                        attendance.setObject(event, forKey: "event")
+                                        attendance["photosLikedID"] = []
+                                        attendance["photosLiked"] = []
+                                        attendance["photosUploadedID"] = []
+                                        attendance["photosUploaded"] = []
+                                        
+                                        attendance.save()
+                                        
+                                        // When successful, segue to events page
+                                        dispatch_async(dispatch_get_main_queue()) {
+                                        
+                                            println("Saved")
+                                            self.albumview?.eventId = self.eventID
+                                            self.performSegueWithIdentifier("eventsPage", sender: self)
+                                        }
+
                                     } else {
-                                    // There was a problem, check error.description
-                                    println(error)
+                                        self.displayAlert("This event already exists", error: "Join an existing event below")
                                     }
-                                    })*/
-                                    
-                                    object?.addUniqueObject(event, forKey:"savedEvents")
-                                    object?.addUniqueObject(eventName, forKey:"savedEventNames")
-                                    
-                                    object!.save()
-                                    
-                                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                    var attendance = PFObject(className:"EventAttendance")
-                                    attendance["eventID"] = event.objectId
-                                    //let temp = PFUser.currentUser()?.objectId// as String
-                                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                                    attendance.setObject(event, forKey: "event")
-                                    attendance["photosLikedID"] = []
-                                    attendance["photosLiked"] = []
-                                    attendance["photosUploadedID"] = []
-                                    attendance["photosUploaded"] = []
-                                    
-                                    attendance.save()
-                                    
-                                    println("Saved")
-                                    self.albumview?.eventId = self.eventID
-                                    self.performSegueWithIdentifier("eventsPage", sender: self)
-                                    
                                 } else {
-                                    self.displayAlert("This event already exists", error: "Join an existing event below")
-                                    
+                                    self.displayNoInternetAlert()
                                 }
-                            } else {
-                                self.displayNoInternetAlert()
+                            
                             }
+                            
                         }
                     })
-                }
-                else {
+                } else {
                     displayNoInternetAlert()
                 }
             }

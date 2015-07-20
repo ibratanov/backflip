@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import ParseUI
 
 class AlbumViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
 
-    @IBOutlet var imageView: UIImageView!
+    //@IBOutlet var imageView: PFImageView?
     
+    @IBOutlet weak var imageView: PFImageView!
+
 }
