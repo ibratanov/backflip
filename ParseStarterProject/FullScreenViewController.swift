@@ -531,6 +531,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     // Fill the like list with the user liked list array from photo relation
                     var likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
                     var upVote = (likeRetrieve!.objectForKey("upvoteCount") as? Int)
+                    var time = (likeRetrieve!.createdAt! as NSDate)
+                    //println(time)
+                
 
 
                     // UI Updates on the main queue
@@ -555,13 +558,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                 
                     //----------- Format and display photo date -------------
-                    if self.tempDate.count != 0 {
+                    if time != 0 {
                         
                         // Formatting to display date how we want it
                         let formatter = NSDateFormatter()
                         formatter.dateStyle = NSDateFormatterStyle.LongStyle
                         formatter.timeStyle = .ShortStyle
-                        let dateStamp = formatter.stringFromDate(self.tempDate[self.pageIndex]!)
+                        let dateStamp = formatter.stringFromDate(time)
                         
                         self.eventInfo.text = "Photo taken on \(dateStamp)"
                         
