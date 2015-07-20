@@ -155,6 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                         //println(PFUser.currentUser()!.objectId!)
                         //issue
+                        //fatal error: unexpectedly found nil while unwrapping an Optional value
                         query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                             
                             if error != nil {
