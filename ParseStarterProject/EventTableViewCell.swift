@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import ParseUI
 
 class EventTableViewCell: UITableViewCell,UIGestureRecognizerDelegate {
     
-    @IBOutlet var imageOne: UIImageView!
+    @IBOutlet var imageOne: PFImageView!
     
-    @IBOutlet var imageTwo: UIImageView!
+    @IBOutlet var imageTwo: PFImageView!
     
-    @IBOutlet var imageThree: UIImageView!
+    @IBOutlet var imageThree: PFImageView!
     
-    @IBOutlet var imageFour: UIImageView!
+    @IBOutlet var imageFour: PFImageView!
     
     @IBOutlet var eventName: UILabel!
     

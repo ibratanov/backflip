@@ -120,6 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Used to add the device to the Parse push notification settings.
         PFInstallation.currentInstallation().saveInBackground()
+        
         //------------------------------------------------------------------------
 
         Fabric.with([Digits()])
@@ -143,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     var queryEvent = PFQuery(className: "Event")
                     queryEvent.limit = 1
                     queryEvent.whereKey("objectId", equalTo: eventIIden!)
-        
+
                     var qArray = queryEvent.findObjects()
                     
                     if (qArray != nil && qArray!.count != 0) {
@@ -152,7 +153,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                         let query = PFUser.query()
                         
-                        println(PFUser.currentUser()!.objectId!)
+                        //println(PFUser.currentUser()!.objectId!)
+                        //issue
                         query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                             
                             if error != nil {
@@ -207,7 +209,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     let alert = UIAlertView()
                                     alert.title = "Event Invitation"
                                     alert.message = "You have been added to \(eventTitle!)"
-                                    alert.addButtonWithTitle("Done")
+                                    alert.addButtonWithTitle("Ok")
                                     
                                     alert.delegate = self
                                     alert.show()
@@ -224,6 +226,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     } else {
                         
                         println("Object not found")
+                        let alert = UIAlertView()
+                        alert.title = "Event Invite Failed"
+                        alert.message = "Please log in and click the invite link again."
+                        alert.addButtonWithTitle("Ok")
+                        
+                        alert.delegate = self
+                        alert.show()
                         
                     }
                     

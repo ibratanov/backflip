@@ -35,6 +35,8 @@ class EventTableViewController: UITableViewController {
     var eventId: [String] = []
     var venues: [String] = []
     
+    let qos = (Int(QOS_CLASS_BACKGROUND.value))
+    
 //    Enable UI Navigation Item
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -82,6 +84,7 @@ class EventTableViewController: UITableViewController {
     }
     
     func updateEvents(){
+     
         if NetworkAvailable.networkConnection() == true {
             let query = PFUser.query()
             query?.includeKey("savedEvents")
@@ -92,74 +95,52 @@ class EventTableViewController: UITableViewController {
                     
                     self.eventObjs = sorted(self.eventObjs, { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending })
                     
-                    for event in self.eventObjs {
-                        let relation = event.relationForKey("photos")
-                        let query = relation.query()
-                        query!.whereKey("flagged", equalTo: false)
-                        query!.whereKey("blocked", equalTo: false)
-                        query!.limit = 4
-                        
-                        var photos = query!.findObjects()
-                        
-                        if (photos != nil && photos!.count != 0) {
-                            var thumbnails: [PFFile] = []
+                    // Dispatch queries to background queue
+                    dispatch_async(dispatch_get_global_queue(self.qos, 0)) {
+                        for event in self.eventObjs {
+                            let relation = event.relationForKey("photos")
+                            let query = relation.query()
+                            query!.whereKey("flagged", equalTo: false)
+                            query!.whereKey("blocked", equalTo: false)
+                            query!.limit = 4
                             
-                            for photo in photos! {
-                                thumbnails.append(photo["thumbnail"] as! PFFile)
+                            var photos = query!.findObjects()
+                            
+                            // Return to main queue for UI updates
+                            dispatch_async(dispatch_get_main_queue()) {
+                                if (photos != nil && photos!.count != 0) {
+                                    var thumbnails: [PFFile] = []
+                                 
+                              
+                                    for photo in photos! {
+                                        thumbnails.append(photo["thumbnail"] as! PFFile)
+                                    }
+                            
+                                        self.eventWithPhotos[event.objectId!] = thumbnails
+                                        self.eventWithIds[event.objectId!] = thumbnails
+                                        self.tableView.reloadData()
+                                    }
+                                
+                                else {
+                                  
+                                        var thumbnails: [PFFile] = []
+                                        self.eventWithPhotos[event.objectId!] = thumbnails
+                                        self.eventWithIds[event.objectId!] = thumbnails
+                                        self.tableView.reloadData()
+                                    
+                                }
                             }
-                            self.eventWithPhotos[event.objectId!] = thumbnails
-                            self.eventWithIds[event.objectId!] = thumbnails
-                        }
-                        else {
-                            var thumbnails: [PFFile] = []
-                            self.eventWithPhotos[event.objectId!] = thumbnails
-                            self.eventWithIds[event.objectId!] = thumbnails
                         }
                     }
-                    
-                    self.tableView.reloadData()
                 }
                 else {
                     println(error)
                 }
             })
-        }
-        else {
-            displayNoInternetAlert()
-        }
+        } else {
+            self.displayNoInternetAlert()
         
-    }
-    
-    func updatePhotosForEvent(objectId: String) -> [PFFile] {
-        var photoListForEvent: [PFFile] = []
-        
-        if NetworkAvailable.networkConnection() == true {
-            var query = PFQuery(className: "Event")
-            query.whereKey("objectId", equalTo: objectId)
-            
-            var objects = query.findObjects()
-            
-            if (objects != nil && objects!.count != 0) {
-                var object = objects!.first as! PFObject
-                
-                var photos = object["photos"] as! PFRelation
-                
-                var photoList = photos.query()?.findObjects()
-                
-                if (photoList != nil && photoList!.count != 0) {
-                    for photo in photoList! {
-                        var image = photo["image"] as! PFFile
-                        photoListForEvent.append(image)
-                    }
-                    
-                    return photoListForEvent
-                }
-            }
         }
-        else {
-            displayNoInternetAlert()
-        }
-        return photoListForEvent
     }
 
     override func didReceiveMemoryWarning() {
@@ -209,8 +190,8 @@ class EventTableViewController: UITableViewController {
         }
         
         if listPhotos.count == 1 {
-            var imageData1 = listPhotos[0].getData()
-            tableCell.imageOne!.image = UIImage (data: imageData1!)
+            var imageData1 = listPhotos[0]
+            tableCell.imageOne!.file = imageData1
             
             tableCell.imageTwo!.image = UIImage ()
             tableCell.imageTwo.backgroundColor = underlineColor
@@ -221,15 +202,17 @@ class EventTableViewController: UITableViewController {
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
             
+            tableCell.imageOne.loadInBackground()
+
             return tableCell
         }
         
         if listPhotos.count == 2 {
-            var imageData1 = listPhotos[0].getData()
-            tableCell.imageOne!.image = UIImage (data: imageData1!)
+            var imageData1 = listPhotos[0]
+            tableCell.imageOne!.file = imageData1
             
-            var imageData2 = listPhotos[1].getData()
-            tableCell.imageTwo!.image = UIImage (data: imageData2!)
+            var imageData2 = listPhotos[1]
+            tableCell.imageTwo!.file = imageData2
             
             tableCell.imageThree!.image = UIImage ()
             tableCell.imageThree.backgroundColor = underlineColor
@@ -237,37 +220,51 @@ class EventTableViewController: UITableViewController {
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
             
+            tableCell.imageOne.loadInBackground()
+            tableCell.imageTwo.loadInBackground()
+
+            
             return tableCell
         }
         
         if listPhotos.count == 3 {
-            var imageData1 = listPhotos[0].getData()
-            tableCell.imageOne!.image = UIImage (data: imageData1!)
+            var imageData1 = listPhotos[0]
+            tableCell.imageOne!.file = imageData1
             
-            var imageData2 = listPhotos[1].getData()
-            tableCell.imageTwo!.image = UIImage (data: imageData2!)
+            var imageData2 = listPhotos[1]
+            tableCell.imageTwo!.file = imageData2
             
-            var imageData3 = listPhotos[2].getData()
-            tableCell.imageThree!.image = UIImage (data: imageData3!)
+            var imageData3 = listPhotos[2]
+            tableCell.imageThree!.file = imageData3
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
+            
+            tableCell.imageOne.loadInBackground()
+            tableCell.imageTwo.loadInBackground()
+            tableCell.imageThree.loadInBackground()
+
             
             return tableCell
         }
         
         if listPhotos.count >= 4 {
-            var imageData1 = listPhotos[0].getData()
-            tableCell.imageOne!.image = UIImage (data: imageData1!)
+            var imageData1 = listPhotos[0]
+            tableCell.imageOne!.file = imageData1
             
-            var imageData2 = listPhotos[1].getData()
-            tableCell.imageTwo!.image = UIImage (data: imageData2!)
+            var imageData2 = listPhotos[1]
+            tableCell.imageTwo!.file = imageData2
             
-            var imageData3 = listPhotos[2].getData()
-            tableCell.imageThree!.image = UIImage (data: imageData3!)
+            var imageData3 = listPhotos[2]
+            tableCell.imageThree!.file = imageData3
             
-            var imageData4 = listPhotos[3].getData()
-            tableCell.imageFour!.image = UIImage (data: imageData4!)
+            var imageData4 = listPhotos[3]
+            tableCell.imageFour!.file = imageData4
+            
+            tableCell.imageOne.loadInBackground()
+            tableCell.imageTwo.loadInBackground()
+            tableCell.imageThree.loadInBackground()
+            tableCell.imageFour.loadInBackground()
 
             return tableCell
         }
