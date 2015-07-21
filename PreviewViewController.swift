@@ -152,6 +152,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
             }
             
+            
             var imageData = compressImage(capturedImage, shrinkRatio: 1.0)
             var imageFile = PFFile(name: "image.png", data: imageData)
             
@@ -183,7 +184,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             var query2 = PFQuery(className: "EventAttendance")
             query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
             query2.whereKey("eventID", equalTo: eventId!)
-            
+
             //var photoObjectList = query2.findObjects()
             var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
                 if (objs != nil && objs!.count != 0) {
@@ -207,8 +208,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                             photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
                                 if valid {
                                     relation.addObject(photo)
-                                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-                                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+                                    photoObject.addUniqueObject(imageFile, forKey:"photosUploaded")
+                                    photoObject.addUniqueObject(imageFile, forKey: "photosLiked")
                                     
                                     photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
                                     photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")

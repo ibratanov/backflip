@@ -107,8 +107,8 @@ class FeedViewController: UITableViewController {
             //get the selected row number
             var selectedRowIndex = self.tableView.indexPathForSelectedRow()
 
-            moveVC.cellImage = images[selectedRowIndex!.row]
-            moveVC.objectIdTemp = objectIDs[selectedRowIndex!.row]
+            //moveVC.cellImage = images[selectedRowIndex!.row]
+            //moveVC.objectIdTemp = objectIDs[selectedRowIndex!.row]
        
         }
     }
