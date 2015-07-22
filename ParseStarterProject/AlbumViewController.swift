@@ -149,6 +149,8 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     // Occurs for when a user adds a photo, we want the photo to show up instantly
     override func viewDidAppear(animated: Bool) {
         
+        self.tabBarController?.tabBar.hidden = true
+        
         if NetworkAvailable.networkConnection() == true {
             // fullscreen is false, posted is true
             if posted == true && fullScreen == false {
@@ -183,7 +185,11 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         
         PFQuery.clearAllCachedResults()
         
-        self.navigationController?.popViewControllerAnimated(true)
+        //self.dismissViewControllerAnimated(true, completion: nil)
+        
+        //self.navigationController?.popViewControllerAnimated(true)
+        
+        //self.performSegueWithIdentifier("backToEvent", sender: self)
         
     }
     
@@ -223,6 +229,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         
         super.viewDidLoad()
         
+        self.tabBarController?.tabBar.hidden = true
         // Pull down to refresh
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
