@@ -33,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //--------------------------------------
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        //-------New Relic
+        NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
         //-------Branch
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setImageViewNotification:", name: "MySetImageViewNotification", object: nil)
         // Enable storing and querying data from Local Datastore.

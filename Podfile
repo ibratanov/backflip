@@ -6,6 +6,10 @@ xcodeproj 'Backflip.xcodeproj/'
 target 'Backflip' do
 
 pod 'Mixpanel'
+pod 'ViewDeck'
+pod 'AFNetworking'
+pod 'SVProgressHUD'
+pod 'NewRelicAgent'
 
 end
 

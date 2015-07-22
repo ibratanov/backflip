@@ -1,7 +1,7 @@
+FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/NewRelicAgent/NewRelic_iOS_Agent_5.1.2"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Mixpanel"
-LIBRARY_SEARCH_PATHS = "$(PODS_ROOT)/Mixpanel/Mixpanel"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Mixpanel"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"MPCategoryHelpers" -l"Pods-Backflip-Mixpanel" -l"icucore" -framework "Accelerate" -framework "CoreGraphics" -framework "CoreTelephony" -framework "Foundation" -framework "QuartzCore" -framework "SystemConfiguration" -framework "UIKit"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/Mixpanel" "${PODS_ROOT}/Headers/Public/NewRelicAgent" "${PODS_ROOT}/Headers/Public/SVProgressHUD" "${PODS_ROOT}/Headers/Public/ViewDeck"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/Mixpanel" -isystem "${PODS_ROOT}/Headers/Public/NewRelicAgent" -isystem "${PODS_ROOT}/Headers/Public/SVProgressHUD" -isystem "${PODS_ROOT}/Headers/Public/ViewDeck"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"Pods-Backflip-AFNetworking" -l"Pods-Backflip-Mixpanel" -l"Pods-Backflip-SVProgressHUD" -l"Pods-Backflip-ViewDeck" -l"c++" -l"icucore" -l"z" -framework "Accelerate" -framework "CoreGraphics" -framework "CoreTelephony" -framework "Foundation" -framework "MobileCoreServices" -framework "NewRelicAgent" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "UIKit"
 OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
 PODS_ROOT = ${SRCROOT}/Pods
