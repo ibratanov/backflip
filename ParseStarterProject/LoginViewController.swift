@@ -200,6 +200,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
 
     override func viewDidAppear(animated: Bool) {
+        self.hidesBottomBarWhenPushed = true
         if NetworkAvailable.networkConnection() == true {
         // Check if the user is already logged in
             if PFUser.currentUser() != nil {

@@ -47,10 +47,7 @@ class TabBarNavController: UITabBarController, UITabBarControllerDelegate {
         first.selectedImage = secondImage
         second.selectedImage = thirdImage
         third.selectedImage = firstImage
-        
-        
 
-        
         
     }
     
