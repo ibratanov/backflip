@@ -67,6 +67,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
             PFUser.logOut()
             Digits.sharedInstance().logOut()
+            self.hidesBottomBarWhenPushed = true
             self.performSegueWithIdentifier("logoutCreatePublic", sender: self)
             
             

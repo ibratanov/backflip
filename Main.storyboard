@@ -187,7 +187,7 @@
                         <barButtonItem key="rightBarButtonItem" image="add-icon" id="FEB-Tt-XaJ">
                             <color key="tintColor" red="0.0" green="0.58823529409999997" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="jaA-7R-ZG2" kind="show" id="Fno-vP-GvK"/>
+                                <action selector="addEvent:" destination="KbJ-H0-F5d" id="SzE-x4-LjD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -937,8 +937,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bXg-ML-DEH"/>
-        <segue reference="Fno-vP-GvK"/>
-        <segue reference="Akq-ph-AFX"/>
+        <segue reference="gz0-ak-oAk"/>
         <segue reference="62M-ib-0xv"/>
         <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>

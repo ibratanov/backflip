@@ -13,12 +13,18 @@ import DigitsKit
 class EventTableViewController: UITableViewController {
     
     @IBAction func logoutButton(sender: AnyObject) {
+        self.hidesBottomBarWhenPushed = true
         displayAlertLogout("Would you like to log out?", error: "")
     }
     
-    func addEvent(sender: AnyObject) {
-        performSegueWithIdentifier("addEventSegue", sender: nil)
+
+    @IBAction func addEvent(sender: AnyObject) {
+        self.tabBarController?.selectedIndex = 1
     }
+//    func addEvent(sender: AnyObject) {
+//        //performSegueWithIdentifier("addEventSegue", sender: nil)
+//        
+//    }
     
     var imageList: [PFFile] = []
     var events: [String] = []
