@@ -216,7 +216,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     // Set default event radius
                     var eventRadius = 5.0
                     var distQuery = PFQuery(className: "Options")
-                    distQuery.selectKeys(["value"])
+                    distQuery.selectKeys(["value", "numEvents"])
                     
                     var distance = distQuery.findObjects()
                     
@@ -229,7 +229,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         var query = PFQuery(className: "Event")
                         //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
                         query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
-                        query.limit = 10
+                        query.limit = result["numEvents"] as! NSInteger
                         query.selectKeys(["eventName", "isLive"])
 
                         var usr = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
@@ -267,10 +267,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         self.displayNoInternetAlert()
                     }
                 }
-                
-                
-                
-                
             }
             else {
                 print("Error with User Geopoint")
