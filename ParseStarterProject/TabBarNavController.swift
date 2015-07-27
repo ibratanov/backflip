@@ -32,10 +32,6 @@ class TabBarNavController: UITabBarController, UITabBarControllerDelegate {
         UITabBar.appearance().selectionIndicatorImage = UIImage(named: "tabBar-selectionIndicatorImage.pdf")
         
         // Choose and set the images for the tab bar icons
-//        let firstImage = UIImage(named: "heart-icon-empty.pdf")
-//        let secondImage = UIImage(named: "back.pdf")
-//        let thirdImage = UIImage(named: "heart-icon-filled.pdf")
-
         first.image = UIImage(named: "tabBar-locator.pdf")
         second.image = UIImage(named: "tabBar-currentEvent.pdf")
         third.image = UIImage(named: "tabBar-eventHistory.pdf")
