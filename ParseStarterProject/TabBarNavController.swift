@@ -21,32 +21,35 @@ class TabBarNavController: UITabBarController, UITabBarControllerDelegate {
         var third = self.tabBar.items?[2] as! UITabBarItem
         
         // Change the tab bar background color
-        let barTint = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+        let barTint = UIColor(red: 41/255, green: 41/255, blue: 41/255, alpha: 1)
         UITabBar.appearance().barTintColor = barTint
         
         // Set the color of the image and text when the tab is selected
-        let selectedColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1)
+        let selectedColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         UITabBar.appearance().tintColor = selectedColor
         
+        // Set background selected image
+        UITabBar.appearance().selectionIndicatorImage = UIImage(named: "tabBar-selectionIndicatorImage.pdf")
+        
         // Choose and set the images for the tab bar icons
-        let firstImage = UIImage(named: "heart-icon-empty.pdf")
-        let secondImage = UIImage(named: "back.pdf")
-        let thirdImage = UIImage(named: "heart-icon-filled.pdf")
+//        let firstImage = UIImage(named: "heart-icon-empty.pdf")
+//        let secondImage = UIImage(named: "back.pdf")
+//        let thirdImage = UIImage(named: "heart-icon-filled.pdf")
 
-        first.image = firstImage
-        second.image = secondImage
-        third.image = thirdImage
+        first.image = UIImage(named: "tabBar-locator.pdf")
+        second.image = UIImage(named: "tabBar-currentEvent.pdf")
+        third.image = UIImage(named: "tabBar-eventHistory.pdf")
         
         
         // Set the titles underneath the tab bar icons
         first.title = "Check In"
-        second.title = "Create Event"
-        third.title = "Past Events"
+        second.title = "Current Event"
+        third.title = "Event History"
         
         // When selected, change the image icon to something else
-        first.selectedImage = secondImage
-        second.selectedImage = thirdImage
-        third.selectedImage = firstImage
+        first.selectedImage = UIImage(named: "tabBar-locator-filled.pdf")
+        second.selectedImage = UIImage(named: "tabBar-currentEvent-filled.pdf")
+        third.selectedImage = UIImage(named: "tabBar-eventHistory-filled.pdf")
 
         
     }
