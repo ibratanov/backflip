@@ -261,6 +261,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                     self.fullScreenImage.file = self.imageFiles[self.pageIndex]
                     self.fullScreenImage.loadInBackground()
+                    //var result = facebookSheet.setInitialText("test")
                     facebookSheet.addImage(self.fullScreenImage.image!)
                     
                     self.presentViewController(facebookSheet, animated: true, completion: nil)
@@ -305,6 +306,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     self.fullScreenImage.file = self.imageFiles[self.pageIndex]
                     self.fullScreenImage.loadInBackground()
                     twitterSheet.addImage(self.fullScreenImage.image)
+                    twitterSheet.setInitialText("@getbackflip")
                     
                     self.presentViewController(twitterSheet, animated: true, completion: nil)
 
