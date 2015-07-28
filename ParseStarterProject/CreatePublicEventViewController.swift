@@ -23,6 +23,10 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     var userGeoPoint = PFGeoPoint()
     
+    @IBAction func joinEvent(sender: AnyObject) {
+        
+        tabBarController?.selectedIndex = 0
+    }
     // Quality of service variable for threading
     let qos = (Int(QOS_CLASS_BACKGROUND.value))
     
@@ -63,6 +67,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
             PFUser.logOut()
             Digits.sharedInstance().logOut()
+            self.hidesBottomBarWhenPushed = true
             self.performSegueWithIdentifier("logoutCreatePublic", sender: self)
             
             
@@ -104,34 +109,34 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                     // Location name
                     var streetNumber = ""
                     if let locationName = placeMark.addressDictionary["Name"] as? NSString {
-                        //println(locationName)
+                        println(locationName)
                         streetNumber = locationName as String
                     }
                     
                     var streetAddress = ""
                     // Street address
                     if let street = placeMark.addressDictionary["Thoroughfare"] as? NSString {
-                        //println(street)
+                        println(street)
                         streetAddress = street as String
                     }
                     
                     var cityName = ""
                     // City
                     if let city = placeMark.addressDictionary["City"] as? NSString {
-                        //println(city)
+                        println(city)
                         cityName = city as String
                         
                     }
                     
                     // Zip code
                     if let zip = placeMark.addressDictionary["ZIP"] as? NSString {
-                        //println(zip)
+                        println(zip)
                     }
                     
                     // Country
                     var countryName = ""
                     if let country = placeMark.addressDictionary["Country"] as? NSString {
-                        //println(country)
+                        println(country)
                         countryName = country as String
                     }
                     
@@ -259,7 +264,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                         
                                             println("Saved")
                                             self.albumview?.eventId = self.eventID
-                                            self.performSegueWithIdentifier("eventsPage", sender: self)
+                                            //self.performSegueWithIdentifier("eventsPage", sender: self)
+                                            self.tabBarController?.selectedIndex = 2
                                         }
 
                                     } else {
@@ -303,13 +309,14 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
 */
     
     @IBAction func pastEventsButton(sender: AnyObject) {
-        self.performSegueWithIdentifier("eventsPage", sender: self)
+        //self.performSegueWithIdentifier("eventsPage", sender: self)
+        tabBarController?.selectedIndex = 2
     }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+        getUserAddress()
         //--------------- Draw UI ---------------
         
         // Hide UI controller item
@@ -339,6 +346,9 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         eventName.delegate = self
         
         if NetworkAvailable.networkConnection() == true {
+            
+            //getUserAddress()
+            
             PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
                 if error == nil {
                     print(geoPoint)
@@ -358,6 +368,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         if NetworkAvailable.networkConnection() == true {
             getUserAddress()
+
         } else {
             displayNoInternetAlert()
         }
