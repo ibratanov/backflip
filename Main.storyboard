@@ -327,12 +327,12 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="h1Z-4D-LVT"/>
+                                <exclude reference="6WI-4L-vr3"/>
                                 <exclude reference="2M0-Fs-CYG"/>
                                 <exclude reference="3Uk-fm-Opl"/>
                                 <exclude reference="Ac9-5n-upk"/>
                                 <exclude reference="nty-7S-TwL"/>
                                 <exclude reference="tqv-RJ-vKo"/>
-                                <exclude reference="6WI-4L-vr3"/>
                             </mask>
                         </variation>
                     </view>
@@ -886,9 +886,10 @@
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="62M-ib-0xv"/>
+        <segue reference="zvX-Xv-dPj"/>
         <segue reference="Akq-ph-AFX"/>
-        <segue reference="VCX-vA-6qG"/>
+        <segue reference="9Um-Vw-RLS"/>
         <segue reference="Ax8-uE-80J"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
 </document>

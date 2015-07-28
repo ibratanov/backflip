@@ -15,6 +15,9 @@ class TabBarNavController: UITabBarController, UITabBarControllerDelegate {
         
         //----------------- Tab Bar UI -----------------------
         
+        // Make sure Tab Bar is opaque
+        UITabBar.appearance().translucent = false
+
         // Corresponding items in the tab bar
         var first = self.tabBar.items?[0] as! UITabBarItem
         var second = self.tabBar.items?[1] as! UITabBarItem
