@@ -7,6 +7,8 @@
 
 import UIKit
 import AssetsLibrary
+import AVFoundation
+
 
 protocol BFCImagePickerControllerDelegate : NSObjectProtocol {
     func imagePickerControllerDidSelectedAssets(images: [BFCAsset]!)
@@ -67,9 +69,38 @@ class BFCAssetsLibraryController: UICollectionViewController {
         return ALAssetsLibrary()
         }()
     
-    private var noAccessView: UIView!
+    //private var noAccessView: UIView!
+    var noAccessView: UIView = {
+        let label = UILabel()
+        label.text = "ACCESS DENIED!!!"
+        label.textAlignment = NSTextAlignment.Center
+        label.textColor = UIColor.lightGrayColor()
+        return label
+        }()
     
     override func viewDidLoad() {
+        
+        ///Check if user can access image
+        
+        var status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+        if (status == AVAuthorizationStatus.Authorized) {
+            println("authorized")
+        } else if(status == AVAuthorizationStatus.Denied){
+            var alert:UIAlertView = UIAlertView()
+            alert.title = "Images Disabled"
+            alert.message = " "
+            alert.delegate = self
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        } else if(status == AVAuthorizationStatus.Restricted){
+            var alert:UIAlertView = UIAlertView()
+            alert.title = "Images Disabled"
+            alert.message = " "
+            alert.delegate = self
+            alert.addButtonWithTitle("Ok")
+            alert.show()
+        }
+        
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.blackColor()
