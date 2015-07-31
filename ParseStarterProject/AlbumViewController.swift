@@ -1204,11 +1204,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
         //Send assets to parse
         for (index, asset) in enumerate(assets) {
-            let imageView = UIImageView(image: asset.fullScreenImage)
-            //on screen view
-            let imageView2 = UIImageView(image: asset.thumbnailImage)
-            imageView.contentMode = UIViewContentMode.ScaleAspectFit
-            uploadImages(imageView.image!, thImage: imageView2.image!)
+            let imageView = UIImageView(image: asset.fullResolutionImage)
+            //----->imageView.contentMode = UIViewContentMode.ScaleAspectFit
+            uploadImages(imageView.image!)
         }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -1287,7 +1285,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
     }
     
-    func uploadImages(uImage: UIImage, thImage:UIImage){
+    func uploadImages(uImage: UIImage){
         if NetworkAvailable.networkConnection() == true {
             
             var capturedImage = uImage as UIImage!
@@ -1295,7 +1293,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             var imageData = compressImage(uImage, shrinkRatio: 1.0)
             var imageFile = PFFile(name: "image.png", data: imageData)
             
-            var thumbnailData = compressImage(thImage, shrinkRatio: 1.0)
+            var thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
             var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
             
             
