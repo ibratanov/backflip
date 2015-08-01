@@ -920,70 +920,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
     }
     
-    func imageFixOrientation(img:UIImage) -> UIImage {
-        
-        if (img.imageOrientation == UIImageOrientation.Up) {
-            return img;
-        }
-        
-        var transform:CGAffineTransform = CGAffineTransformIdentity
-        
-        if (img.imageOrientation == UIImageOrientation.Down
-            || img.imageOrientation == UIImageOrientation.DownMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, img.size.width, img.size.height)
-                transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
-        }
-        
-        if (img.imageOrientation == UIImageOrientation.Left
-            || img.imageOrientation == UIImageOrientation.LeftMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, img.size.width, 0)
-                transform = CGAffineTransformRotate(transform, CGFloat(M_PI_2))
-        }
-        
-        if (img.imageOrientation == UIImageOrientation.Right
-            || img.imageOrientation == UIImageOrientation.RightMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, 0, img.size.height);
-                transform = CGAffineTransformRotate(transform,  CGFloat(-M_PI_2));
-        }
-        
-        if (img.imageOrientation == UIImageOrientation.UpMirrored
-            || img.imageOrientation == UIImageOrientation.DownMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, img.size.width, 0)
-                transform = CGAffineTransformScale(transform, -1, 1)
-        }
-        
-        if (img.imageOrientation == UIImageOrientation.LeftMirrored
-            || img.imageOrientation == UIImageOrientation.RightMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, img.size.height, 0);
-                transform = CGAffineTransformScale(transform, -1, 1);
-        }
-        
-        var ctx:CGContextRef = CGBitmapContextCreate(nil, Int(img.size.width), Int(img.size.height), CGImageGetBitsPerComponent(img.CGImage), 0, CGImageGetColorSpace(img.CGImage), CGImageGetBitmapInfo(img.CGImage))
-        
-        CGContextConcatCTM(ctx, transform)
-        
-        if (img.imageOrientation == UIImageOrientation.Left
-            || img.imageOrientation == UIImageOrientation.LeftMirrored
-            || img.imageOrientation == UIImageOrientation.Right
-            || img.imageOrientation == UIImageOrientation.RightMirrored
-            ) {
-                
-                CGContextDrawImage(ctx, CGRectMake(0,0,img.size.height,img.size.width), img.CGImage)
-        } else {
-            CGContextDrawImage(ctx, CGRectMake(0,0,img.size.width,img.size.height), img.CGImage)
-        }
-        
-        var cgimg:CGImageRef = CGBitmapContextCreateImage(ctx)
-        var imgEnd:UIImage = UIImage(CGImage: cgimg)!
-        
-        return imgEnd
-    }
-    
     func saveImageAlert()
     {
         var alert:UIAlertView = UIAlertView()
@@ -1056,18 +992,15 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     
     func cropToSquare(image originalImage: UIImage) -> UIImage {
-        // Create a copy of the image without the imageOrientation property so it is in its native orientation (landscape)
+        // Get image and measurements
         let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage)!
-        
-        // Get the size of the contextImage
         let contextSize: CGSize = contextImage.size
-        
         let posX: CGFloat
         let posY: CGFloat
         let width: CGFloat
         let height: CGFloat
         
-        // Check to see which length is the longest and create the offset based on that length, then set the width and height of our rect
+        //Calibrate image for optimal crop
         if contextSize.width > contextSize.height {
             posX = ((contextSize.width - contextSize.height) / 2)
             posY = 0
@@ -1081,11 +1014,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
         
         let rect: CGRect = CGRectMake(posX, posY, width, height)
-        
-        // Create bitmap image from context using the rect
         let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)
         
-        // Create a new image based on the imageRef and rotate back to the original orientation
+        //Define original orientation
         let image: UIImage = UIImage(CGImage: imageRef, scale: originalImage.scale, orientation: originalImage.imageOrientation)!
         
         return image
@@ -1204,7 +1135,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
         //Send assets to parse
         for (index, asset) in enumerate(assets) {
-            let imageView = UIImageView(image: asset.fullResolutionImage)
+            let imageView = UIImageView(image: asset.fullScreenImage)
             //----->imageView.contentMode = UIViewContentMode.ScaleAspectFit
             uploadImages(imageView.image!)
         }
@@ -1292,6 +1223,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             var imageData = compressImage(uImage, shrinkRatio: 1.0)
             var imageFile = PFFile(name: "image.png", data: imageData)
+            
+            
             
             var thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
             var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
