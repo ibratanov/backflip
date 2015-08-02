@@ -303,7 +303,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     // Function displaying alert when creating an event that has no content in it
     func noNameAlert() {
-        var alert = UIAlertController(title: "Please enter an event name", message: "Event Name:", preferredStyle: UIAlertControllerStyle.Alert)
+        var alert = UIAlertController(title: "Please enter an event name.", message: "Event name:", preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Create", style: UIAlertActionStyle.Default, handler: { (action) in
             
