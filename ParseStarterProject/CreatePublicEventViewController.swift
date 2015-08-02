@@ -26,7 +26,6 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Quality of service variable for threading
     let qos = (Int(QOS_CLASS_BACKGROUND.value))
     
-    
     @IBOutlet var addressText: UIImageView!
     
     @IBOutlet weak var albumview: AlbumViewController?
@@ -148,11 +147,6 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func checkMaxLength(textField: UITextField!, maxLength: Int) {
-        if (count(textField.text!) > maxLength) {
-            textField.deleteBackward()
-        }
-    }
 
     // Add event to event class
     @IBAction func createEvent(sender: AnyObject) {
@@ -161,146 +155,269 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         
         var address = self.addressField.text
         
-        //Limit number of characters in event name
+        //Limit number of characters in event name (Make sure not 0 characters)
         var myStr = self.eventName.text as NSString
-        if (count(self.eventName.text) > 25){
-            displayAlert("Couldn't Create Event", error: "The name of your event is too long. Please keep it under 25 characters.")
+        var eventName = myStr as String
+        
+        if (locationDisabled == true) {
+            error = "Please enable location access in the iOS settings for Backflip."
+        } else if (eventName == "" || address == "") {
+            error = "Please enter an event name."
+        } else if (count(eventName) < 2) {
+            error = "Please enter a valid event name."
+        }
+        
+            
+        if error == "Please enter an event name." {
+            
+            noNameAlert()
+            
+        } else if (error != "") {
+            
+            displayAlert("Couldn't Create Event", error: error)
+            
         } else {
-            var eventName = myStr as String
-            
-            if (locationDisabled == true) {
-                error = "Please enable location access in the iOS settings for Backflip."
-            } else if (eventName == "" || address == "") {
-                error = "Please enter an event name."
-            } else if (count(eventName) < 2) {
-                error = "Please enter a valid event name."
-            }
-            
-            if (error != "") {
-                displayAlert("Couldn't Create Event", error: error)
-            } else {
-                if NetworkAvailable.networkConnection() == true {
-                    let query = PFUser.query()
-                    query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-                        
-                        //                var result = self.getUserLocationFromAddress()
-                        
-                        
-                        if error != nil {
-                            println(error)
+            if NetworkAvailable.networkConnection() == true {
+                let query = PFUser.query()
+                query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                    if error != nil {
+                        println(error)
 
-                        } else {
+                    } else {
+                        
+                        var event = PFObject(className: "Event")
+                        
+                        var geocoder = CLGeocoder()
+                        geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+                            //print(placemarks?[0])
                             
-                            var event = PFObject(className: "Event")
-                            
-                            var geocoder = CLGeocoder()
-                            geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-                                //print(placemarks?[0])
+                            if let placemark = placemarks?[0] as? CLPlacemark {
+                                var location = placemark.location as CLLocation
+                                var eventLatitude = location.coordinate.latitude
+                                var eventLongitude = location.coordinate.longitude
                                 
-                                if let placemark = placemarks?[0] as? CLPlacemark {
-                                    var location = placemark.location as CLLocation
-                                    var eventLatitude = location.coordinate.latitude
-                                    var eventLongitude = location.coordinate.longitude
+                                let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
+                                
+                                self.userGeoPoint = userGeoPoint
+                            }
+                        })
+                        
+                        // Put querying into a background thread
+                        dispatch_async(dispatch_get_global_queue(self.qos,0)) {
+                            event["geoLocation"] = self.userGeoPoint
+                            
+                            //Check if event already exists
+                            let query = PFQuery(className: "Event")
+                            query.whereKey("eventName", equalTo: eventName)
+                            let scoreArray = query.findObjects()
+                            
+                            if (scoreArray != nil) {
+                                if (scoreArray!.count == 0) {
+                                    event["eventName"] = eventName
+                                    event["venue"] = address
+                                    event["startTime"] = NSDate()
+                                    event["isLive"] = true
+                                    var eventACL = PFACL(user: PFUser.currentUser()!)
+                                    eventACL.setPublicWriteAccess(true)
+                                    eventACL.setPublicReadAccess(true)
+                                    event.ACL = eventACL
                                     
-                                    let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
+                                    // Store the relation
+                                    let relation = event.relationForKey("attendees")
+                                    relation.addObject(PFUser.currentUser()!)
                                     
-                                    self.userGeoPoint = userGeoPoint
+                                    self.eventID = event.objectId
+                                    event.save()
+                                    
+                                    object?.addUniqueObject(event, forKey:"savedEvents")
+                                    object?.addUniqueObject(eventName, forKey:"savedEventNames")
+                                    
+                                    object!.save()
+                                    
+                                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                                    var attendance = PFObject(className:"EventAttendance")
+                                    attendance["eventID"] = event.objectId
+                                    //let temp = PFUser.currentUser()?.objectId// as String
+                                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                                    attendance.setObject(event, forKey: "event")
+                                    attendance["photosLikedID"] = []
+                                    attendance["photosLiked"] = []
+                                    attendance["photosUploadedID"] = []
+                                    attendance["photosUploaded"] = []
+                                    
+                                    attendance.save()
+                                    
+                                    // When successful, segue to events page
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                    
+                                        println("Saved")
+                                        self.albumview?.eventId = self.eventID
+                                        self.performSegueWithIdentifier("eventsPage", sender: self)
+                                    }
+
+                                } else {
+                                    self.displayAlert("This event already exists", error: "Join an existing event below")
                                 }
-                            })
-                            
-                            // Put querying into a background thread
-                            dispatch_async(dispatch_get_global_queue(self.qos,0)) {
-                                event["geoLocation"] = self.userGeoPoint
-                                
-                                //Check if event already exists
-                                let query = PFQuery(className: "Event")
-                                query.whereKey("eventName", equalTo: eventName)
-                                let scoreArray = query.findObjects()
-                                
-                                if (scoreArray != nil) {
-                                    if (scoreArray!.count == 0) {
-                                        event["eventName"] = eventName
-                                        event["venue"] = address
-                                        event["startTime"] = NSDate()
-                                        event["isLive"] = true
-                                        var eventACL = PFACL(user: PFUser.currentUser()!)
-                                        eventACL.setPublicWriteAccess(true)
-                                        eventACL.setPublicReadAccess(true)
-                                        event.ACL = eventACL
-                                        
-                                        // Store the relation
-                                        let relation = event.relationForKey("attendees")
-                                        relation.addObject(PFUser.currentUser()!)
-                                        
-                                        self.eventID = event.objectId
-                                        event.save()
-                                        
-                                        object?.addUniqueObject(event, forKey:"savedEvents")
-                                        object?.addUniqueObject(eventName, forKey:"savedEventNames")
-                                        
-                                        object!.save()
-                                        
-                                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                        var attendance = PFObject(className:"EventAttendance")
-                                        attendance["eventID"] = event.objectId
-                                        //let temp = PFUser.currentUser()?.objectId// as String
-                                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                                        attendance.setObject(event, forKey: "event")
-                                        attendance["photosLikedID"] = []
-                                        attendance["photosLiked"] = []
-                                        attendance["photosUploadedID"] = []
-                                        attendance["photosUploaded"] = []
-                                        
-                                        attendance.save()
-                                        
-                                        // When successful, segue to events page
-                                        dispatch_async(dispatch_get_main_queue()) {
-                                        
-                                            println("Saved")
-                                            self.albumview?.eventId = self.eventID
-                                            self.performSegueWithIdentifier("eventsPage", sender: self)
-                                        }
+                            } else {
+                                self.displayNoInternetAlert()
+                            }
+                        
+                        }
+                        
+                    }
+                })
+            } else {
+                displayNoInternetAlert()
+            }
+        }
 
-                                    } else {
-                                        self.displayAlert("This event already exists", error: "Join an existing event below")
+        
+        
+    }
+    
+    // Function to grey out create event button unless more than 2 characters are entered
+    func textCheck (sender: AnyObject) {
+        
+        let textField = sender as! UITextField
+        var resp : UIResponder = textField
+        while !(resp is UIAlertController) { resp = resp.nextResponder()!}
+        let alert = resp as! UIAlertController
+        (alert.actions.first as! UIAlertAction).enabled = (count(textField.text) > 1)
+        
+    }
+    
+    // Delegate method to prevent typing in text over 25 characters in alertview
+    // http://stackoverflow.com/questions/433337/set-the-maximum-character-length-of-a-uitextfield
+    // Information on how this delegate method works
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        if (range.length + range.location > count(textField.text) )
+        {
+            return false;
+        }
+        
+        let newLength = count(textField.text) + count(string) - range.length
+        return newLength <= 25
+    }
+    
+    // Function displaying alert when creating an event that has no content in it
+    func noNameAlert() {
+        var alert = UIAlertController(title: "Please enter an event name.", message: "Event name:", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "Create", style: UIAlertActionStyle.Default, handler: { (action) in
+            
+                // Content that is in textfield when create is pressed
+                var eventTitle = alert.textFields?.first as! UITextField
+                
+                var address = self.addressField.text
+                
+                var eventName = eventTitle.text
+                println(eventName)
+                
+                let query = PFUser.query()
+                query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                    
+                    if error != nil {
+                        println(error)
+                    } else {
+                        
+                        var event = PFObject(className: "Event")
+                        var geocoder = CLGeocoder()
+                        
+                        geocoder.geocodeAddressString(address, completionHandler: {( placemarks: [AnyObject]!, error: NSError!) -> Void in
+                            if let placemark = placemarks?[0] as? CLPlacemark {
+                                
+                                var location = placemark.location as CLLocation
+                                var eventLatitude = location.coordinate.latitude
+                                var eventLongitude = location.coordinate.longitude
+                                
+                                let userGeoPoint = PFGeoPoint(latitude: eventLatitude, longitude: eventLongitude)
+                                
+                                self.userGeoPoint = userGeoPoint
+                            }
+                        })
+                        
+                        
+                        dispatch_async(dispatch_get_global_queue(self.qos, 0)) {
+                            
+                            event["geoLocation"] = self.userGeoPoint
+                            
+                            // Query for event names
+                            let queryEvent = PFQuery(className: "Event")
+                            queryEvent.whereKey("eventName", equalTo: eventName)
+                            let scoreArray = queryEvent.findObjects()
+                            
+                            // Nil means no connection established, count of 0 means no other events exist of the same name
+                            if (scoreArray != nil) {
+                                if (scoreArray!.count == 0) {
+                                    
+                                    event["eventName"] = eventName
+                                    event["venue"] = address
+                                    event["startTime"] = NSDate()
+                                    event["isLive"] = true
+                                    
+                                    // Set access rules for events
+                                    var eventACL = PFACL(user: PFUser.currentUser()!)
+                                    eventACL.setPublicReadAccess(true)
+                                    eventACL.setPublicWriteAccess(true)
+                                    event.ACL = eventACL
+                                    
+                                    // Store the relation into the Parse Database
+                                    let relation = event.relationForKey("attendees")
+                                    relation.addObject(PFUser.currentUser()!)
+                                    
+                                    self.eventID = event.objectId
+                                    event.save()
+                                    
+                                    // Add the event name and object to the Users profile
+                                    object?.addUniqueObject(event, forKey: "savedEvents")
+                                    object?.addUniqueObject(eventName, forKey: "savedEventNames")
+                                    object!.save()
+                                    
+                                    // Add relationship in the EventAttendance join table
+                                    var attendance = PFObject(className: "EventAttendance")
+                                    attendance["eventID"] = event.objectId
+                                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                                    attendance.setObject(event, forKey: "event")
+                                    attendance["photosLikedID"] = []
+                                    attendance["photosLiked"] = []
+                                    attendance["photosUploadedID"] = []
+                                    attendance["photosUploaded"] = []
+                                    
+                                    attendance.save()
+                                    
+                                    // Upon successful add to DB, segue to the events page
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        
+                                        println("Saved")
+                                        self.albumview?.eventId = self.eventID
+                                        self.performSegueWithIdentifier("eventsPage", sender: self)
                                     }
                                 } else {
-                                    self.displayNoInternetAlert()
+                                    self.displayAlert("This event already exists", error: "Please try again")
                                 }
-                            
+                            } else {
+                                self.displayNoInternetAlert()
                             }
-                            
                         }
-                    })
-                } else {
-                    displayNoInternetAlert()
-                }
-            }
+                    }
+                })
+        }))
+        
+        // Add target to function that checks the text input
+        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            textField.addTarget(self, action: "textCheck:", forControlEvents: .EditingChanged)
+            textField.delegate = self
 
         }
         
+        // Add the cancel button, as well as disable interaction with create button until 2 or more characters present in textfield
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        (alert.actions.first as! UIAlertAction).enabled = false
+        self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-
-    /*
-    func getUserLocationFromAddress() -> NSString {
-        var address = "1 Infinite Loop, CA, USA"
-        var geocoder = CLGeocoder()
-        
-        geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-            println(error)
-            if let placemark = placemarks?[0] as? CLPlacemark {
-                println(placemark.location)
-                println(placemark.location.coordinate.latitude)
-                println(placemark.location.coordinate.longitude)
-            }
-        })
-        
-        return ""
-    
-    }
-*/
     
     @IBAction func pastEventsButton(sender: AnyObject) {
         self.performSegueWithIdentifier("eventsPage", sender: self)
@@ -309,6 +426,10 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        
+        // Makes the keyboard pop up as soon as the view appears
+        eventName.becomeFirstResponder()
         
         //--------------- Draw UI ---------------
         
@@ -335,7 +456,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         
         self.view.addSubview(navBar)
         
-        //add delegate
+        //Add delegate, this prevents users from typing text over 25 characters
         eventName.delegate = self
         
         if NetworkAvailable.networkConnection() == true {
