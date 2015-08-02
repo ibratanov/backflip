@@ -72,11 +72,11 @@ class BFCAssetsLibraryController: UICollectionViewController {
     //private var noAccessView: UIView!
     var noAccessView: UIView = {
         let label = UILabel()
-        label.text = "ACCESS DENIED!!!"
+        label.text = "Please Enable Photo Access"
         label.textAlignment = NSTextAlignment.Center
         label.textColor = UIColor.lightGrayColor()
         return label
-        }()
+    }()
     
     override func viewDidLoad() {
         
@@ -87,15 +87,15 @@ class BFCAssetsLibraryController: UICollectionViewController {
             println("authorized")
         } else if(status == AVAuthorizationStatus.Denied){
             var alert:UIAlertView = UIAlertView()
-            alert.title = "Images Disabled"
-            alert.message = " "
+            alert.title = "Photo Access Disabled"
+            alert.message = "Please enable photo access in the iOS settings for Backflip to upload from camera roll."
             alert.delegate = self
             alert.addButtonWithTitle("Ok")
             alert.show()
         } else if(status == AVAuthorizationStatus.Restricted){
             var alert:UIAlertView = UIAlertView()
-            alert.title = "Images Disabled"
-            alert.message = " "
+            alert.title = "Photo Access Disabled"
+            alert.message = "Please enable photo access in the iOS settings for Backflip to upload from camera roll."
             alert.delegate = self
             alert.addButtonWithTitle("Ok")
             alert.show()
@@ -267,7 +267,7 @@ class BFCImagePickerController: UINavigationController {
     /// Displayed when denied access
     var noAccessView: UIView = {
         let label = UILabel()
-        label.text = "ACCESS DENIED!!!"
+        label.text = "Please Enable Photo Access"
         label.textAlignment = NSTextAlignment.Center
         label.textColor = UIColor.lightGrayColor()
         return label
