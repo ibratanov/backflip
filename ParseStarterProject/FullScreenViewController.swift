@@ -13,7 +13,7 @@ import MessageUI
 import ParseUI
 
 
-class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate  {
+class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate, UIScrollViewDelegate  {
     
     let mixpanel = Mixpanel.sharedInstance()
     
@@ -25,67 +25,42 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     @IBOutlet var likeButtonLabel: UIButton!
     
-    var tempDate: NSDate?
 
-    // Scroll view
-    @IBOutlet weak var scroller: UIScrollView!
+    @IBOutlet var scrollView: UIScrollView!
     
-    var cellImage : UIImage!
+    @IBOutlet var pageControl: UIPageControl!
+    
+    
+    
     var likeActive = false
-    var tempArray :[String]?
+    
+    // Index of cell selected, and index/page scrollView is currently on
     var selectedIndex : Int?
-
+    var pageIndex : Int = 0
     
     // Icon image variables
-    var liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
-    var unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
-    var back = UIImage(named: "back.pdf") as UIImage!
-    var share = UIImage(named: "share-icon.pdf") as UIImage!
-
+    let liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
+    let unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
+    let back = UIImage(named: "back.pdf") as UIImage!
+    let share = UIImage(named: "share-icon.pdf") as UIImage!
     
     // Title passed from previous VC
     var eventId : String?
     var eventTitle : String?
-    var objectIdTemp : String = ""
     
-    // Function to handle double tap on image
+    // Arrays of objectIds, and dates
+    var tempArray :[String]?
+    
+    // Scroll View variables
+    var pageViews : [UIImageView?] = []
+    var imageFiles : [PFFile?] = []
+    var prevPage : Int?
+    
+    // Function to handle double tap on an image to like
     func handleTap (sender: UITapGestureRecognizer) {
-        
         if sender.state == .Ended {
-    
             likeButton(self)
             likeToggle(self)
-            
-        }
-    }
-
-    func handleSwipe (gesture: UISwipeGestureRecognizer) {
-        
-        if let swipeGesture: UISwipeGestureRecognizer = gesture as UISwipeGestureRecognizer! {
-            
-            switch swipeGesture.direction {
-                
-            case UISwipeGestureRecognizerDirection.Right:
-                
-                if selectedIndex! != 0 {
-                    selectedIndex! = selectedIndex! - 1
-                    displayUpdate()
-                } else  {
-                    break
-                }
-                
-            case UISwipeGestureRecognizerDirection.Left:
-                
-                if tempArray?.count != selectedIndex! + 1 {
-                    selectedIndex! = selectedIndex! + 1
-                    displayUpdate()
-                } else {
-                    break
-                }
-                
-            default :
-                break
-            }
         }
     }
     
@@ -105,20 +80,13 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     @IBAction func likeToggle(sender: AnyObject) {
       
         if NetworkAvailable.networkConnection() == true {
-            // adjust heart image
+            // Adjust heart image
             if likeActive == false {
-            
                 likeActive = true
-
                 likeButtonLabel.setImage(liked, forState: .Normal)
-
-            
             } else {
-            
                 likeActive = false
-                
                 likeButtonLabel.setImage(unliked, forState:.Normal)
-            
             }
         } else {
             displayNoInternetAlert()
@@ -149,10 +117,10 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         // User like list that will be filled
                         var likeList : [String]
                         var upVote : Int
-                        var thumbnail : PFFile
+                        var hqImage : PFFile
                         
                         // Finds associated photo object in relation
-                        var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
+                        var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.pageIndex])
                         
                         if retrieveLikes != nil {
                             
@@ -160,9 +128,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             retrieveLikes?.addUniqueObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
                             retrieveLikes?.incrementKey("upvoteCount", byAmount: 1)
                             
-                            // Grab specific element from object
+                            // Grab specific elements from object
                             likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
-                            thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
+                            hqImage = (retrieveLikes!.objectForKey("image") as? PFFile)!
                             upVote = (retrieveLikes!.objectForKey("upvoteCount")) as! Int
                             
                             dispatch_async(dispatch_get_main_queue()) {
@@ -183,9 +151,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                                             
                                 if error == nil {
 
-                                    object?.addObject(thumbnail, forKey: "photosLiked")
+                                    object?.addObject(hqImage, forKey: "photosLiked")
                                             
-                                    object?.addUniqueObject(self.tempArray![self.selectedIndex!], forKey:"photosLikedID")
+                                    object?.addUniqueObject(self.tempArray![self.pageIndex], forKey:"photosLikedID")
                                             
                                     object!.saveInBackground()
                                             
@@ -223,10 +191,10 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         // User like list that will be filled
                         var likeList : [String]
                         var upVote : Int
-                        var thumbnail : PFFile
+                        var hqImage : PFFile
                         
                         // Finds associated photo object in relation
-                        var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
+                        var retrieveLikes = likeRelation.query()?.getObjectWithId(self.tempArray![self.pageIndex])
                     
                         if retrieveLikes != nil {
                             
@@ -234,11 +202,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             retrieveLikes?.removeObject(PFUser.currentUser()!.username!, forKey: "usersLiked")
                             retrieveLikes?.incrementKey("upvoteCount", byAmount: -1)
                             
-                            // Grab specific element from object.
+                            // Grab specific elements from object.
                             likeList = (retrieveLikes!.objectForKey("usersLiked") as? [String])!
-                            thumbnail = (retrieveLikes!.objectForKey("thumbnail") as? PFFile)!
+                            hqImage = (retrieveLikes!.objectForKey("image") as? PFFile)!
                             upVote = (retrieveLikes!.objectForKey("upvoteCount")) as! Int
-                            
+
+                            // UI label set on the main thread
                             dispatch_async(dispatch_get_main_queue()) {
                                 // Set appropriate label on the view
                                 let counter = upVote
@@ -256,8 +225,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             query2.getFirstObjectInBackgroundWithBlock { (object, error) -> Void in
                                 
                                 if error == nil {
-                                    object?.removeObject(thumbnail, forKey: "photosLiked")
-                                    object?.removeObject(self.tempArray![self.selectedIndex!], forKey:"photosLikedID")
+                                    object?.removeObject(hqImage, forKey: "photosLiked")
+                                    object?.removeObject(self.tempArray![self.pageIndex], forKey:"photosLikedID")
                                     object!.saveInBackground()
                                 } else {
                                     println("Error: \(error!) \(error!.userInfo!)")
@@ -270,7 +239,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         }
                         
                     } else {
-                    self.displayNoInternetAlert()
+                        self.displayNoInternetAlert()
                     }
                 }
             }
@@ -290,6 +259,9 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
                     var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
                     
+                    self.fullScreenImage.file = self.imageFiles[self.pageIndex]
+                    self.fullScreenImage.loadInBackground()
+                    //var result = facebookSheet.setInitialText("test")
                     facebookSheet.addImage(self.fullScreenImage.image!)
                     
                     self.presentViewController(facebookSheet, animated: true, completion: nil)
@@ -331,7 +303,10 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     
                     var twitterSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
                     
+                    self.fullScreenImage.file = self.imageFiles[self.pageIndex]
+                    self.fullScreenImage.loadInBackground()
                     twitterSheet.addImage(self.fullScreenImage.image)
+                    twitterSheet.setInitialText("@getbackflip")
                     
                     self.presentViewController(twitterSheet, animated: true, completion: nil)
 
@@ -415,7 +390,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
 
             self.presentViewController(alert, animated: true, completion: nil)
-        
     }
     
     // Alert pop up with Twitter, Facebook and SMS options
@@ -438,8 +412,10 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     @IBAction func downloadImage(sender: AnyObject) {
         
         
-        if fullScreenImage.image != nil {
+        if imageFiles.count != 0 {
             
+            fullScreenImage.file = imageFiles[pageIndex]
+            self.fullScreenImage.loadInBackground()
             UIImageWriteToSavedPhotosAlbum(fullScreenImage.image, nil, nil, nil)
             
             saveImageAlert("Image saved to camera roll", error: "")
@@ -473,7 +449,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 var photos = object["photos"] as! PFRelation
                 
                 // Finds associated photo object in relation
-                var photoObj = photos.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
+                var photoObj = photos.query()?.getObjectWithId(self.tempArray![self.pageIndex])
                 
                 if photoObj != nil {
                     // UI Alert on main queue
@@ -506,10 +482,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                 } else {
                     self.displayNoInternetAlert()
                 }
-
             }
         }
-
     }
     
     // Alert displayed when an image is successfully saved to camera roll
@@ -534,42 +508,25 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         
         // Put querying operations in a background thread
         let qos = (Int(QOS_CLASS_BACKGROUND.value))
+        prevPage = pageControl.currentPage
         dispatch_async(dispatch_get_global_queue(qos,0)) {
             
             if NetworkAvailable.networkConnection() == true {
-
-                //----------- Query for image display---------------
-                var getRelatedEvents = PFQuery(className: "Event")
-                getRelatedEvents.limit = 1
-                getRelatedEvents.whereKey("objectId", equalTo: self.eventId!)
                 
-                // Retrieval from corresponding photos from relation to event
-                
-                var event = getRelatedEvents.findObjects()?.first as! PFObject
-                
-                var photos = event["photos"] as! PFRelation
-                var tempImage: PFFile?
-                // Finds associated photo object in relation
-                var photoList = photos.query()?.getObjectWithId(self.tempArray![self.selectedIndex!])
-                
-                if (photoList != nil) {
-                    self.tempDate = photoList?.createdAt
-                    
-                    // UI updates on the main queue
-                    dispatch_async(dispatch_get_main_queue()) {
-                        // Once retrieved from relation, set the UIImage view for fullscreen view
-                        tempImage = photoList!.objectForKey("image") as? PFFile
-                        
-                        self.fullScreenImage.file = tempImage
-                        self.fullScreenImage.loadInBackground()
-                    }
-
-                    
                     //----------- Query for Like Image label--------------
-                    // Fill the like list with the user liked list array from photo relation
-                    var likeList = (photoList!.objectForKey("usersLiked") as? [String])!
-                    var upVote = (photoList!.objectForKey("upvoteCount")) as! Int
+                    var query5 = PFQuery(className: "Event")
+                    query5.whereKey("objectId", equalTo: self.eventId!)
+                    
+                    var eventObject = query5.findObjects()?.first as! PFObject
+                    var relation = eventObject["photos"] as! PFRelation
 
+                    // Finds associated photo object in relation
+                    var likeRetrieve = relation.query()?.getObjectWithId(self.tempArray![self.pageIndex])
+                    
+                    // Fill the like list with the user liked list array from photo relation
+                    var likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
+                    var upVote = (likeRetrieve!.objectForKey("upvoteCount") as? Int)
+                    var time = (likeRetrieve!.createdAt! as NSDate)
 
                     // UI Updates on the main queue
                     dispatch_async(dispatch_get_main_queue()) {
@@ -586,40 +543,155 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                         // Set the like and number labels
                         let count = upVote
                         if (count == 1) {
-                            self.likeCount.text = String(count) + " like"
+                            self.likeCount.text = String(count!) + " like"
                         } else {
-                            self.likeCount.text = String(count) + " likes"
+                            self.likeCount.text = String(count!) + " likes"
                         }
+                    
+                
+                    //----------- Format and display photo date -------------
+                    if time != 0 {
                         
+                        // Formatting to display date how we want it
+                        let formatter = NSDateFormatter()
+                        formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                        formatter.timeStyle = .ShortStyle
+                        let dateStamp = formatter.stringFromDate(time)
                         
-                        //----------- Format and display photo date -------------
-                        if self.tempDate != nil {
-                            
-                            // Formatting to display date how we want it
-                            let formatter = NSDateFormatter()
-                            formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                            formatter.timeStyle = .ShortStyle
-                            let dateStamp = formatter.stringFromDate(self.tempDate!)
-                            
-                            self.eventInfo.text = "Photo taken on \(dateStamp)"
-                            
-                        }
+                        self.eventInfo.text = "Photo taken on \(dateStamp)"
+                        
                     }
-                } else {
-                    println("ISSUE WITH PHOTO SWIPE LOAD-----------------")
                 }
             } else {
                 self.displayNoInternetAlert()
             }
         }
     }
+    
+    //---------Scroll view functions------------
+    
+    // We are only loading the page before and after the current photo; more efficient in case user does not browse all photos (3 pages)
+    func loadVisiblePages () {
 
+        let pageWidth = scrollView.frame.size.width
+        let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+        
+        pageControl.currentPage = page
+        
+        let firstPage = page - 1
+        let lastPage = page + 1
+        
+        // Clean all pages less than the 3 page range
+        for var index = 0; index < firstPage; ++index {
+            cleanPage(index)
+        }
+        
+        // Load all pages within the three page range
+        for index in firstPage ... lastPage {
+            loadPage(index)
+        }
+        
+        // Clean all photos greater than 3 page range
+        for var index = lastPage + 1; index < imageFiles.count; ++index {
+            cleanPage(index)
+        }
+    }
+    
+    func loadPage ( page: Int) {
+        
+        if page < 0 || page >= imageFiles.count {
+        // Check if outside range of what will be displayed.
+            return
+        }
+        
+        if let pageView = pageViews[page] {
+        // Do nothing, view loaded already
+        } else {
+            var frame = scrollView.bounds
+            frame.origin.x = frame.size.width * CGFloat(page)
+            frame.origin.y = 0.0
+            
+            // Sets the distance between images in scroll
+            frame = CGRectInset(frame, 1.0, 0.0)
+            
+            // Creates PFImageView instances in scrollView
+            let newPageView = PFImageView()
+            newPageView.contentMode = .ScaleAspectFit
+            newPageView.frame = frame
+            newPageView.file = imageFiles[page]
+            newPageView.loadInBackground()
+            scrollView.addSubview(newPageView)
+            pageViews[page] = newPageView
+        }
+    }
+    
+    // Updates scroll view to indicate this page no longer exists. Helps for memory
+    func cleanPage (page: Int) {
+        if page < 0 || page >= imageFiles.count {
+            return
+        }
+        
+        if let pageView = pageViews[page] {
+            pageView.removeFromSuperview()
+            pageViews[page] = nil
+        }
+    }
+    
+    // When a user stops on a photo, load the appropriate information
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        
+        pageIndex = pageControl.currentPage
+        
+        // Check if user actually switched photos. If not, dont reload display
+        if pageIndex != prevPage {
+            displayUpdate()
+        }
+    }
+    
+    // Recognizes when a scroll occurs, and loads the corresponding pages (before and after the image)
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        loadVisiblePages()
+    }
+
+    //------------------------------------------
+    
     override func viewDidLoad() {
        
         super.viewDidLoad()
-        
-        //--------------- Draw UI ---------------
 
+        //---------Scroll view Set up------------
+        
+        scrollView.delegate = self
+        pageControl.hidden = true
+        scrollView.showsHorizontalScrollIndicator = false
+        
+        // Keep full screen image view in background to load to when sharing or downloading a photo. only loads when necessary
+        fullScreenImage.hidden = true
+
+        let pageCount = imageFiles.count
+        pageControl.numberOfPages = pageCount
+        
+        // Cleans the pageViews, filling the array with nil
+        for _ in 0..<pageCount {
+            pageViews.append(nil)
+        }
+        
+        // Sets the overall content size of our scroll view
+        let pageScrollViewSize = scrollView.frame.size
+        scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * CGFloat(imageFiles.count), pageScrollViewSize.height)
+        
+        // Start at the appropriate photo based on cell selected from album view
+        var frame : CGRect = scrollView.frame
+        frame.origin.x = frame.size.width * CGFloat(selectedIndex!)
+        frame.origin.y = 0
+        scrollView.scrollRectToVisible(frame, animated: true)
+        pageIndex = selectedIndex!
+        
+        // Loading of the pages that are visible on screen
+        loadVisiblePages()
+
+        //--------------- Draw UI -----------------
+        
         // Hide UI controller item
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
@@ -653,161 +725,18 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         self.view.addSubview(navBar)
         
         
-        // Gesture implementation
+        //-------------Gesture implementation----------
+        
         var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
         gesture.numberOfTapsRequired = 2
+        scrollView.userInteractionEnabled = true
+        self.scrollView.addGestureRecognizer(gesture)
         
-        fullScreenImage.userInteractionEnabled = true
-        self.view.addGestureRecognizer(gesture)
+        //------------------------------------------
         
-        self.view.bringSubviewToFront(likeCount)
-        
-        let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        
-        
-        var swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        
-        self.view.addGestureRecognizer(swipeLeft)
-        self.view.addGestureRecognizer(swipeRight)
-        
+        // Load information from the database for the UI
         displayUpdate()
 
-        if NetworkAvailable.networkConnection() == true {
-        
-            // Updating queries
-            
-            //----------- Query for image display----------
-            var getRelatedEvents = PFQuery(className: "Event")
-            getRelatedEvents.limit = 1
-            getRelatedEvents.whereKey("objectId", equalTo: eventId!)
-            
-            var object = getRelatedEvents.findObjects()?.first as! PFObject
-            
-            var photos = object["photos"] as! PFRelation
-            var tempImage: PFFile?
-            // Finds associated photo object in relation
-            var photoList = photos.query()?.getObjectWithId(tempArray![selectedIndex!])
-            self.tempDate = photoList?.createdAt
-            
-            // Once retrieved from relation, set the UIImage view for fullscreen view
-            tempImage = photoList!.objectForKey("image") as? PFFile
-            
-            tempImage!.getDataInBackgroundWithBlock{ (imageData, error) -> Void in
-                
-                if error == nil {
-                    
-                    self.fullScreenImage.image = UIImage(data: imageData!)
-                    
-                } else {
-                    
-                    println(error)
-                }
-            }
-            
-            
-            
-            //----------- Query for Like Image label----------
-            var query5 = PFQuery(className: "Event")
-            println("here")
-            query5.whereKey("objectId", equalTo: eventId!)
-            
-            var eventObject = query5.findObjects()?.first as! PFObject
-            var relation = eventObject["photos"] as! PFRelation
-            
-            // User like list that will be filled
-            var likeList : [String]
-            var upVote : Int
-            
-            // Finds associated photo object in relation
-            var likeRetrieve = relation.query()?.getObjectWithId(tempArray![selectedIndex!])
-            
-            // Fill the like list with the user liked list array from photo relation
-            likeList = (likeRetrieve!.objectForKey("usersLiked") as? [String])!
-            upVote = (likeRetrieve!.objectForKey("upvoteCount")) as! Int
-            println("BEFORE FOR LOOP")
-            dump(likeList)
-            var contained = contains(likeList, PFUser.currentUser()!.username!)
-            
-            if contained == true {
-                
-                println("liked")
-                self.likeActive = true
-                self.likeButtonLabel.setImage(self.liked, forState: .Normal)
-                
-            } else {
-                
-                println("unliked")
-                self.likeActive = false
-                self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
-                
-            }
-            
-            // Iterate through the like list to check if user has liked it
-            /*for users in likeList {
-            
-            println("IN FOR LOOP")
-            if users == PFUser.currentUser()!.username! {
-            
-            println("liked")
-            self.likeActive = true
-            self.likeButtonLabel.setImage(self.liked, forState: .Normal)
-            
-            } else {
-            
-            println("unliked")
-            self.likeActive = false
-            self.likeButtonLabel.setImage(self.unliked, forState: .Normal)
-            
-            }
-            
-            }*/
-            
-            println("AFTER FOR LOOP")
-            let count = upVote
-            
-            if (count == 1) {
-                self.likeCount.text = String(count) + " like"
-            } else {
-                self.likeCount.text = String(count) + " likes"
-            }
-            
-            if tempDate != nil {
-                
-                //formatting to display date how we want it
-                let formatter = NSDateFormatter()
-                formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                formatter.timeStyle = .ShortStyle
-                let dateStamp = formatter.stringFromDate(tempDate!)
-                
-                eventInfo.text = "Photo taken on \(dateStamp)"
-                
-            }
-            
-            // gesture implementation
-            var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
-            gesture.numberOfTapsRequired = 2
-            
-            fullScreenImage.userInteractionEnabled = true
-            self.view.addGestureRecognizer(gesture)
-            
-            println("gestures")
-            self.view.bringSubviewToFront(likeCount)
-            
-            let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-            swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-            
-            
-            var swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
-            swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-            
-            self.view.addGestureRecognizer(swipeLeft)
-            self.view.addGestureRecognizer(swipeRight)
-            
-        } else {
-            displayNoInternetAlert()
-        }
     }
     
     override func didReceiveMemoryWarning() {

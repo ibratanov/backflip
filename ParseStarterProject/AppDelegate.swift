@@ -153,96 +153,96 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                         let query = PFUser.query()
                         
-                        //println(PFUser.currentUser()!.objectId!)
-                        //issue
-                        //fatal error: unexpectedly found nil while unwrapping an Optional value
-                        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-                            
-                            if error != nil {
-                                println(error)
-                            }
-                            else
-                            {
+                        if (PFUser.currentUser() != nil) {
+                            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                                 
-                                // Subscribe user to the channel of the event for push notifications
-                                let currentInstallation = PFInstallation.currentInstallation()
-                                currentInstallation.addUniqueObject(("a" + objectE.objectId!) , forKey: "channels")
-                                //currentInstallation.saveInBackground()
-                                currentInstallation.save()
-                                
-                                // Store the relation
-                                let relation = objectE.relationForKey("attendees")
-                                relation.addObject(object!)
-                                
-                                objectE.save()
-                                
-                                // TODO: Check for existing event_list for eventName
-                                var listEvents = object!.objectForKey("savedEventNames") as! [String]
-                                if contains(listEvents, objectE["eventName"] as! String)
-                                {
-                                    print("Event already in list")
+                                if error != nil {
+                                    println(error)
                                 }
                                 else
                                 {
-                                    // Add the event to the User object
-                                    object?.addUniqueObject(objectE, forKey:"savedEvents")
-                                    object?.addUniqueObject(objectE["eventName"] as! String, forKey:"savedEventNames")
                                     
-                                    //object!.saveInBackground()
-                                    object!.save()
+                                    // Subscribe user to the channel of the event for push notifications
+                                    let currentInstallation = PFInstallation.currentInstallation()
+                                    currentInstallation.addUniqueObject(("a" + objectE.objectId!) , forKey: "channels")
+                                    //currentInstallation.saveInBackground()
+                                    currentInstallation.save()
                                     
+                                    // Store the relation
+                                    let relation = objectE.relationForKey("attendees")
+                                    relation.addObject(object!)
                                     
-                                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                    var attendance = PFObject(className:"EventAttendance")
-                                    attendance["eventID"] = objectE.objectId
-                                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                                    attendance["photosLikedID"] = []
-                                    attendance["photosLiked"] = []
-                                    attendance["photosUploadedID"] = []
-                                    attendance["photosUploaded"] = []
-                                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                                    attendance.setObject(objectE, forKey: "event")
+                                    objectE.save()
                                     
-                                    //attendance.saveInBackground()
-                                    attendance.save()
-                                    
-                                    println("Saved")
-                                    let alert = UIAlertView()
-                                    alert.title = "Event Invitation"
-                                    alert.message = "You have been added to \(eventTitle!)"
-                                    alert.addButtonWithTitle("Ok")
-                                    
-                                    alert.delegate = self
-                                    alert.show()
+                                    // TODO: Check for existing event_list for eventName
+                                    var listEvents = object!.objectForKey("savedEventNames") as! [String]
+                                    if contains(listEvents, objectE["eventName"] as! String)
+                                    {
+                                        print("Event already in list")
+                                    }
+                                    else
+                                    {
+                                        // Add the event to the User object
+                                        object?.addUniqueObject(objectE, forKey:"savedEvents")
+                                        object?.addUniqueObject(objectE["eventName"] as! String, forKey:"savedEventNames")
+                                        
+                                        //object!.saveInBackground()
+                                        object!.save()
+                                        
+                                        
+                                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
+                                        var attendance = PFObject(className:"EventAttendance")
+                                        attendance["eventID"] = objectE.objectId
+                                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
+                                        attendance["photosLikedID"] = []
+                                        attendance["photosLiked"] = []
+                                        attendance["photosUploadedID"] = []
+                                        attendance["photosUploaded"] = []
+                                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+                                        attendance.setObject(objectE, forKey: "event")
+                                        
+                                        //attendance.saveInBackground()
+                                        attendance.save()
+                                        
+                                        println("Saved")
+                                        let alert = UIAlertView()
+                                        alert.title = "Event Invitation"
+                                        alert.message = "You have been added to \(eventTitle!)"
+                                        alert.addButtonWithTitle("Ok")
+                                        
+                                        alert.delegate = self
+                                        alert.show()
+                                    }
                                 }
-                            }
-                        })
-                    //                    var topView = UIApplication.sharedApplication().keyWindow?.rootViewController
+                            })
+                        } else {
+                            self.displayUnsuccessfulInvite()
+                        }
+// Part of SMS Invite functionality - temporarily disabled
+//                    var topView = UIApplication.sharedApplication().keyWindow?.rootViewController
 //                    while (topView?.presentedViewController != nil){
 //                        topView = topView!.presentedViewController
 //                    }
-//                    
-//                    
+//
 //                    topView?.presentViewController(self.inviteViewController, animated: true, completion: nil)
                     } else {
-                        
-                        println("Object not found")
-                        let alert = UIAlertView()
-                        alert.title = "Event Invite Failed"
-                        alert.message = "Please log in and click the invite link again."
-                        alert.addButtonWithTitle("Ok")
-                        
-                        alert.delegate = self
-                        alert.show()
-                        
+                        println("Event \(eventIIden!) not found in database")
                     }
-                    
                 }
             }
-            
         })
-        
         return true
+    }
+    
+    func displayUnsuccessfulInvite() {
+        println("Object not found")
+        let alert = UIAlertView()
+        alert.title = "Event Invite Unsuccessful"
+        alert.message = "Please log in and click the invite link again."
+        alert.addButtonWithTitle("Ok")
+        
+        alert.delegate = self
+        alert.show()
     }
     
     func checkinToEvent(event: PFObject) {
@@ -313,7 +313,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         })
-
     }
     
     func setImageViewNotification(note: NSNotification){
@@ -323,6 +322,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         imageView?.image = self.inviteImage
         self.inviteViewController.imageView.image = self.inviteImage
     }
+    
     //--------------------------------------
     // MARK: Push Notifications
     //--------------------------------------
@@ -360,7 +360,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         println(url)
         println(url.host as String!)
         if(url.host == "events"){
-            //SMSInviteMwars://events---id
             window?.rootViewController?.performSegueWithIdentifier("gotoEventScene", sender: nil)
         }
         // pass the url to the handle deep link call
@@ -369,15 +368,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
             println(url)
             println(url.host as String!)
-            
         }
-        
         return true
     }
     
-    
-    
-
 
     ///////////////////////////////////////////////////////////
     // Uncomment this method if you want to use Push Notifications with Background App Refresh
