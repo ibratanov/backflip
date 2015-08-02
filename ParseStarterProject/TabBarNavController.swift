@@ -43,7 +43,7 @@ class TabBarNavController: UITabBarController, UITabBarControllerDelegate {
         // Set the titles underneath the tab bar icons
         first.title = "Check In"
         second.title = "Current Event"
-        third.title = "Event History"
+        third.title = "Event Albums"
         
         // When selected, change the image icon to something else
         first.selectedImage = UIImage(named: "tabBar-locator-filled.pdf")
