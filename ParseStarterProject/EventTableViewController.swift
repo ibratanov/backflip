@@ -13,12 +13,18 @@ import DigitsKit
 class EventTableViewController: UITableViewController {
     
     @IBAction func logoutButton(sender: AnyObject) {
+        self.hidesBottomBarWhenPushed = true
         displayAlertLogout("Would you like to log out?", error: "")
     }
     
-    func addEvent(sender: AnyObject) {
-        performSegueWithIdentifier("addEventSegue", sender: nil)
+
+    @IBAction func addEvent(sender: AnyObject) {
+        self.tabBarController?.selectedIndex = 1
     }
+//    func addEvent(sender: AnyObject) {
+//        //performSegueWithIdentifier("addEventSegue", sender: nil)
+//        
+//    }
     
     var imageList: [PFFile] = []
     var events: [String] = []
@@ -39,6 +45,8 @@ class EventTableViewController: UITableViewController {
     
 //    Enable UI Navigation Item
     override func viewWillAppear(animated: Bool) {
+        // Ensure nav bar and tab bar are showing when previous view is popped
+        self.tabBarController?.tabBar.hidden = false
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Medium",size: 18)!]
         self.tableView.reloadData()
@@ -53,6 +61,8 @@ class EventTableViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        
+        
         
     }
     
@@ -278,6 +288,7 @@ class EventTableViewController: UITableViewController {
             
             let moveVC = segue.destinationViewController as! AlbumViewController
             
+
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                 var event = eventObjs[selectedPath.row]
                 moveVC.eventId = event.objectId

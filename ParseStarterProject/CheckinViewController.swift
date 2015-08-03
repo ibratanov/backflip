@@ -18,6 +18,10 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     @IBAction func logoutButton(sender: AnyObject) {
         displayAlertLogout("Would you like to log out?", error: "")
     }
+    @IBAction func createNew(sender: AnyObject) {
+        
+        tabBarController?.selectedIndex = 1
+    }
     
     var logoutButton = UIImage(named: "settings-icon") as UIImage!
 
@@ -97,6 +101,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         //--------------- Draw UI ---------------
         
+        // Ensured event button was not underneath the tab bar
+        self.edgesForExtendedLayout = UIRectEdge()
+
         // Hide picker until events are found
         self.pickerInfo.hidden = true
         
@@ -283,6 +290,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     override func viewDidAppear(animated: Bool) {
         //self.pickerInfo.reloadAllComponents()
         //locationManager.stopUpdatingLocation()
+        
+        
 
         if NetworkAvailable.networkConnection() == true {
             if (self.cellContent.count > 0) {
@@ -352,7 +361,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                                 if contains(listEvents, self.eventSelected)
                                 {
                                     print("Event already in list")
-                                    self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                                    //self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                                    self.tabBarController?.selectedIndex = 2
                                 }
                                 else
                                 {
@@ -378,7 +388,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                                     
                                     println("Saved")
                                     dispatch_async(dispatch_get_main_queue()) {
-                                        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                                        //self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                                        tabBarController?.selectedIndex = 2
                                     }
                                 }
                             }
@@ -398,7 +409,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     }
     
     @IBAction func pastEventsButton(sender: AnyObject) {
-        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+        //self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+        tabBarController?.selectedIndex = 2
     }
     
     // Two functions to allow off keyboard touch to close keyboard

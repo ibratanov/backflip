@@ -109,7 +109,9 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                 if user != nil {
                                     
                                     println("Log in successful")
-                                    self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                    //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                    self.performSegueWithIdentifier("toTabBar", sender: self)
+
                                     
                                 } else {
                                     
@@ -130,7 +132,9 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                         if error == nil {
 
                                             println("Signed Up")
-                                            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                            //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                            self.performSegueWithIdentifier("toTabBar", sender: self)
+
                                             
                                         } else {
                                             println(error)
@@ -147,7 +151,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                         if user != nil {
                                             
                                             println("Log in successful")
-                                            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                           // self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                            self.performSegueWithIdentifier("toTabBar", sender: self)
                                             
                                         } else {
                                             
@@ -168,7 +173,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                 if error == nil {
                                                     
                                                     println("Signed Up")
-                                                    self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                                    //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                                    self.performSegueWithIdentifier("toTabBar", sender: self)
                                                     
                                                 } else {
                                                     
@@ -194,6 +200,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
 
     override func viewDidAppear(animated: Bool) {
+        self.hidesBottomBarWhenPushed = true
         if NetworkAvailable.networkConnection() == true {
         // Check if the user is already logged in
             if PFUser.currentUser() != nil {
@@ -204,7 +211,9 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         if blocked == false {
                             // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
                             println(Digits.sharedInstance().session())
-                            self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                            //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                            self.performSegueWithIdentifier("toTabBar", sender: self)
+
                         }
                         else {
                             println("User is Blocked")

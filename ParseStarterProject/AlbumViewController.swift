@@ -150,6 +150,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // Occurs for when a user adds a photo, we want the photo to show up instantly
     override func viewDidAppear(animated: Bool) {
         
+        
+        
         if NetworkAvailable.networkConnection() == true {
             // fullscreen is false, posted is true
             if posted == true && fullScreen == false {
@@ -184,9 +186,15 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         PFQuery.clearAllCachedResults()
         
-        self.navigationController?.popViewControllerAnimated(true)
+
+        self.navigationController?.hidesBottomBarWhenPushed = false
+        self.navigationController?.popToRootViewControllerAnimated(true)
+        
+        //self.performSegueWithIdentifier("backToEvent", sender: self)
         
     }
+    
+
     
     
     
@@ -223,7 +231,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+
+        //self.tabBarController?.tabBar.hidden = true
         // Pull down to refresh
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -340,6 +349,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         //--------------- Draw UI ---------------
         
+        self.tabBarController?.tabBar.hidden = true
         // Hide UI controller item
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
