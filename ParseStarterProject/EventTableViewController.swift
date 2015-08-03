@@ -118,38 +118,26 @@ class EventTableViewController: UITableViewController {
                             
                             // Return to main queue for UI updates
                             dispatch_async(dispatch_get_main_queue()) {
+                                var thumbnails: [PFFile] = []
+                                
                                 if (photos != nil && photos!.count != 0) {
-                                    var thumbnails: [PFFile] = []
-                                 
-                              
                                     for photo in photos! {
                                         thumbnails.append(photo["thumbnail"] as! PFFile)
                                     }
-                            
-                                        self.eventWithPhotos[event.objectId!] = thumbnails
-                                        self.eventWithIds[event.objectId!] = thumbnails
-                                        self.tableView.reloadData()
-                                    }
-                                
-                                else {
-                                  
-                                        var thumbnails: [PFFile] = []
-                                        self.eventWithPhotos[event.objectId!] = thumbnails
-                                        self.eventWithIds[event.objectId!] = thumbnails
-                                        self.tableView.reloadData()
-                                    
                                 }
+                                
+                                self.eventWithPhotos[event.objectId!] = thumbnails
+                                self.eventWithIds[event.objectId!] = thumbnails
+                                self.tableView.reloadData()
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     println(error)
                 }
             })
         } else {
             self.displayNoInternetAlert()
-        
         }
     }
 
