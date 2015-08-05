@@ -189,36 +189,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
     
-    
-    func smsShare() {
-        
-        var user = "filler"
-        if (PFUser.currentUser() != nil) {
-            user = PFUser.currentUser()!.objectId!
-        }
-        var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
-        
-        Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
-            if (error == nil) {
-                if MFMessageComposeViewController.canSendText() {
-                    
-                    let messageComposer = MFMessageComposeViewController()
-                    
-                    messageComposer.body = String(format: "Check out these photos on Backflip! %@", url)
-                    
-                    messageComposer.messageComposeDelegate = self
-                    
-                    self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
-                    })
-                } else {
-                    
-                    var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-        })
-    }
+	
+	func shareAlbum()
+	{
+		var user = "filter";
+		if (PFUser.currentUser() != nil) {
+			user  = PFUser.currentUser()!.objectId!
+		}
+		
+		var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
+			if (error != nil) {
+				NSLog("Branch short URL generation failed, %@", error);
+			} else {
+				
+				
+				let album = Album(text: String(format:"Check out '%@' photos on ", self.eventTitle!), url: url);
+				
+				// Now we share.
+				let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [album, url], applicationActivities: nil)
+				activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]
+				self.presentViewController(activityViewController, animated: true, completion: nil)
+				
+			}
+			
+		})
+	}
     
     override func viewDidLoad() {
         
@@ -369,7 +365,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         shareAlbum.setImage(share, forState: .Normal)
         shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
         shareAlbum.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
-        shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
+        shareAlbum.addTarget(self, action: "shareAlbum", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
         
         navBar.addSubview(segC)

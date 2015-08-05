@@ -248,6 +248,27 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         }
     }
 
+	
+	func sharePhoto()
+	{
+		
+		self.fullScreenImage.file = self.imageFiles[self.pageIndex]
+		self.fullScreenImage.loadInBackground()
+		
+		// Twitter
+		let twitter = "";
+		
+		// Facebook
+		let facebook = "";
+		
+		let imageData : UIImage = self.fullScreenImage.image!;
+		let image = Image(text: "Check out this image!");
+		
+		let vc = UIActivityViewController(activityItems: [image, imageData], applicationActivities: nil)
+		self.presentViewController(vc, animated: true, completion: nil)
+	}
+	
+	
     // Alerts for sharing to Facebook and Twitter
     func displayAlert(title:String,error: String) {
         
@@ -394,7 +415,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     
     // Alert pop up with Twitter, Facebook and SMS options
     @IBAction func share(sender: AnyObject) {
-         displayAlert("Share", error: "How do you want to share this photo?")
+		sharePhoto();
+		// displayAlert("Share", error: "How do you want to share this photo?")
     }
     
     
