@@ -24,7 +24,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zMx-lw-XVp">
                                 <rect key="frame" x="35" y="217" width="250" height="200"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Log in to see the best photos from the events happening around you." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7Ar-mR-kdH" userLabel="Welcome Message">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Welcome to Backflip!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qgv-GE-Bfo" userLabel="Welcome to Backflip">
+                                        <rect key="frame" x="0.0" y="10" width="250" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="4eC-C8-sWA"/>
+                                            <constraint firstAttribute="width" constant="250" id="FZj-p8-AUB"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Log in to see the best photos from the events happening around you." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7Ar-mR-kdH" userLabel="Welcome Message">
                                         <rect key="frame" x="0.0" y="50" width="250" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="HaA-CY-hWo"/>
@@ -37,27 +47,20 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="qgv-GE-Bfo" secondAttribute="centerX" id="5ds-D0-rVY"/>
+                                    <constraint firstItem="qgv-GE-Bfo" firstAttribute="top" secondItem="zMx-lw-XVp" secondAttribute="top" constant="10" id="Irh-Ko-BrI"/>
                                     <constraint firstAttribute="centerX" secondItem="7Ar-mR-kdH" secondAttribute="centerX" id="OMD-kK-xqT"/>
+                                    <constraint firstItem="7Ar-mR-kdH" firstAttribute="top" secondItem="qgv-GE-Bfo" secondAttribute="bottom" id="ROo-5Q-pCM"/>
                                     <constraint firstAttribute="height" constant="200" id="Zfi-k7-mAG"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Welcome to Backflip!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qgv-GE-Bfo" userLabel="Welcome to Backflip">
-                                <rect key="frame" x="35" y="227" width="250" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="4eC-C8-sWA"/>
-                                    <constraint firstAttribute="width" constant="250" id="FZj-p8-AUB"/>
-                                </constraints>
-                                <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDq-by-SdQ">
                                 <rect key="frame" x="10" y="493" width="300" height="75"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DQu-BE-CoJ">
                                         <rect key="frame" x="0.0" y="13" width="300" height="50"/>
                                         <string key="text">By logging in you agree to the                                and you acknowledge that you have read the                        .</string>
-                                        <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="11"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -123,7 +126,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="Tnu-MW-ReO" secondAttribute="bottom" constant="75" id="288-fq-yB6"/>
                             <constraint firstItem="zMx-lw-XVp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="35" id="2Tw-b4-Jkl"/>
                             <constraint firstAttribute="trailing" secondItem="Tnu-MW-ReO" secondAttribute="trailing" constant="60" id="4un-Be-X6b"/>
                             <constraint firstAttribute="trailing" secondItem="zMx-lw-XVp" secondAttribute="trailing" constant="35" id="680-mA-M9a"/>
@@ -138,19 +140,9 @@
                             <constraint firstAttribute="centerX" secondItem="QDq-by-SdQ" secondAttribute="centerX" id="VSP-Oi-cGY"/>
                             <constraint firstItem="Tnu-MW-ReO" firstAttribute="bottom" secondItem="zMx-lw-XVp" secondAttribute="bottom" constant="-20" id="VSr-er-72u"/>
                             <constraint firstAttribute="bottom" secondItem="QPQ-iP-tUU" secondAttribute="bottom" id="aYD-cv-pTc"/>
-                            <constraint firstItem="7Ar-mR-kdH" firstAttribute="top" secondItem="qgv-GE-Bfo" secondAttribute="bottom" id="oee-bp-qhv"/>
                             <constraint firstItem="QPQ-iP-tUU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="rOd-YD-ZIr"/>
                             <constraint firstItem="Ksv-sK-XCe" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="60" id="tl0-QA-9Rv"/>
-                            <constraint firstAttribute="centerX" secondItem="qgv-GE-Bfo" secondAttribute="centerX" id="wkh-YY-5Vy"/>
-                            <constraint firstItem="QDq-by-SdQ" firstAttribute="bottom" secondItem="Tnu-MW-ReO" secondAttribute="bottom" constant="75" id="xqW-Ft-4V8"/>
-                            <constraint firstItem="zMx-lw-XVp" firstAttribute="top" secondItem="qgv-GE-Bfo" secondAttribute="top" constant="-10" id="y1n-dX-Xvl"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="288-fq-yB6"/>
-                                <exclude reference="xqW-Ft-4V8"/>
-                            </mask>
-                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
