@@ -408,11 +408,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         }
     }
     
-    @IBAction func pastEventsButton(sender: AnyObject) {
-        //self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
-        tabBarController?.selectedIndex = 2
-    }
-    
     // Two functions to allow off keyboard touch to close keyboard
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true)

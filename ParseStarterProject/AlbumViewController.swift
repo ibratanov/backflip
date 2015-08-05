@@ -349,7 +349,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         //--------------- Draw UI ---------------
         
-        self.tabBarController?.tabBar.hidden = true
+        //self.tabBarController?.tabBar.hidden = true
         // Hide UI controller item
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
