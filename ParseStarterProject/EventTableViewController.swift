@@ -171,7 +171,7 @@ class EventTableViewController: UITableViewController {
         tableCell.eventName.text = evName
         tableCell.eventLocation.text = evVenue
         
-        if listPhotos.count == 0 {
+        if listPhotos == nil || listPhotos.count == 0 {
             tableCell.imageOne!.image = UIImage ()
             tableCell.imageOne.backgroundColor = underlineColor
             

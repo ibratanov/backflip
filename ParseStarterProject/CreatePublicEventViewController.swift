@@ -171,7 +171,6 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         } else if (count(eventName) < 2) {
             error = "Please enter a valid event name."
         }
-        
             
         if error == "Please enter an event name." {
             
@@ -432,8 +431,6 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         // Makes the keyboard pop up as soon as the view appears
         eventName.becomeFirstResponder()
         
-        getUserAddress()
-        
         //--------------- Draw UI ---------------
         
         // Hide UI controller item
@@ -485,7 +482,6 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         if NetworkAvailable.networkConnection() == true {
             getUserAddress()
-
         } else {
             displayNoInternetAlert()
         }
