@@ -862,7 +862,7 @@
                                 <animations/>
                             </pageControl>
                             <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcr-SV-QKe" userLabel="Download BUtton">
-                                <rect key="frame" x="282" y="464" width="30" height="10"/>
+                                <rect key="frame" x="282" y="464" width="29" height="8"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="29" id="Ysb-MW-COD"/>
