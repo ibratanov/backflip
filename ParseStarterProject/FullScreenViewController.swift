@@ -337,7 +337,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                     dispatch_async(dispatch_get_main_queue()) {
                         var alert = UIAlertController(title: "Flag inappropriate content", message: "What is wrong with this photo?", preferredStyle: UIAlertControllerStyle.Alert)
                         alert.addTextFieldWithConfigurationHandler { (textField) -> Void in }
-                        
+						
+						alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
                         alert.addAction(UIAlertAction(title: "Flag", style: UIAlertActionStyle.Default, handler: { (action) in
                                 var flagEntry = alert.textFields?.first as! UITextField
                                 
@@ -355,9 +356,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
                             
                                 println(flagEntry.text)
                             }))
-
-                        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-                    
+						
                         self.presentViewController(alert, animated: true, completion: nil)
                     }
                 } else {
