@@ -75,18 +75,16 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     func displayAlertLogout(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        // Facebook share feature
-        alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { action in
             
             PFUser.logOut()
             Digits.sharedInstance().logOut()
             self.performSegueWithIdentifier("logoutCheckIn", sender: self)
             
         }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-        
+		
         self.presentViewController(alert, animated: true, completion: nil)
         
     }

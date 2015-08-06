@@ -59,8 +59,9 @@ class EventTableViewController: UITableViewController {
     func displayAlertLogout(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { action in
             self.navigationController?.setNavigationBarHidden(true, animated: false)
             
             
@@ -70,9 +71,7 @@ class EventTableViewController: UITableViewController {
             self.performSegueWithIdentifier("logoutEventView", sender: self)
             
         }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-        
+		
         self.presentViewController(alert, animated: true, completion: nil)
         
     }
