@@ -7,5 +7,7 @@ target 'Backflip' do
 
 pod 'Mixpanel'
 
+pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+
 end
 
