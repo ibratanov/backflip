@@ -895,7 +895,7 @@
                                 <rect key="frame" x="0.0" y="523" width="320" height="37"/>
                                 <animations/>
                             </pageControl>
-                            <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcr-SV-QKe" userLabel="Download BUtton">
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcr-SV-QKe" userLabel="Download BUtton">
                                 <rect key="frame" x="282" y="464" width="29" height="8"/>
                                 <animations/>
                                 <constraints>
@@ -928,11 +928,11 @@
                             <constraint firstAttribute="trailing" secondItem="pu8-Va-BEQ" secondAttribute="trailing" constant="40" id="bL7-yP-p68"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="centerX" secondItem="UJg-Xx-CgL" secondAttribute="centerX" id="c5b-7o-lHI"/>
                             <constraint firstItem="avA-h5-Fas" firstAttribute="top" secondItem="pwg-gk-2Bt" secondAttribute="bottom" constant="82" id="dgB-y2-WF7"/>
-                            <constraint firstAttribute="trailing" secondItem="Vcr-SV-QKe" secondAttribute="trailing" constant="15" id="inT-iv-C3f"/>
+                            <constraint firstAttribute="trailing" secondItem="Vcr-SV-QKe" secondAttribute="trailing" constant="9" id="inT-iv-C3f"/>
                             <constraint firstItem="uv5-ir-czh" firstAttribute="leading" secondItem="Cld-aL-GAw" secondAttribute="trailing" constant="15" id="k2b-sz-AvD"/>
                             <constraint firstAttribute="centerX" secondItem="UJg-Xx-CgL" secondAttribute="centerX" id="mEM-dg-mLK"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="centerY" secondItem="NDd-9j-8Ao" secondAttribute="centerY" constant="-30" id="nCA-4S-BG2"/>
-                            <constraint firstItem="Vcr-SV-QKe" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="15" id="phk-1m-2hn"/>
+                            <constraint firstItem="Vcr-SV-QKe" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="18" id="phk-1m-2hn"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="top" secondItem="pu8-Va-BEQ" secondAttribute="bottom" constant="10" id="s5S-rr-2Jo"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="leading" secondItem="TGj-Tl-8TS" secondAttribute="leading" id="tmV-Md-Atd"/>
                             <constraint firstAttribute="trailing" secondItem="avA-h5-Fas" secondAttribute="trailing" constant="35" id="uhk-3f-rJe"/>
