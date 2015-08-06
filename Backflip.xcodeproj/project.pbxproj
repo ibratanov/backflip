@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		049222A91B725D2A00FFB08A /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222A81B725D2A00FFB08A /* Image.swift */; };
+		049222AB1B72653900FFB08A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AA1B72653900FFB08A /* Album.swift */; };
 		13E400E079040B0B3DF3E94B /* libPods-Backflip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D10CE913B7A5D3E47B797F /* libPods-Backflip.a */; };
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
 		3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */; };
@@ -66,6 +68,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		049222A81B725D2A00FFB08A /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		049222AA1B72653900FFB08A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
 		3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
@@ -164,6 +168,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		049222A71B725CAA00FFB08A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				049222A81B725D2A00FFB08A /* Image.swift */,
+				049222AA1B72653900FFB08A /* Album.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		81BA813C1A49DA1800E65899 = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +198,7 @@
 		81BA81471A49DA1800E65899 /* Backflip */ = {
 			isa = PBXGroup;
 			children = (
+				049222A71B725CAA00FFB08A /* Models */,
 				503BB1A51B2B62EF0042B16F /* Main.storyboard */,
 				67A795D71B2CE9F8006E489D /* OverlayView.xib */,
 				B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */,
@@ -327,6 +341,7 @@
 		81BA813D1A49DA1800E65899 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Parse;
 				TargetAttributes = {
@@ -465,10 +480,12 @@
 				67B88BCF1B32D33A00BCE7C6 /* InviteViewController.swift in Sources */,
 				3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */,
 				67BB6A851B5745B600FB7EB3 /* BFCImagePickerController.swift in Sources */,
+				049222AB1B72653900FFB08A /* Album.swift in Sources */,
 				67A796061B2EE49A006E489D /* CGSize+Extensions.swift in Sources */,
 				50CE7E7A1B03DB2F00F4B6B1 /* FeedViewController.swift in Sources */,
 				504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */,
 				50CE7E7C1B03DBC100F4B6B1 /* FeedViewCell.swift in Sources */,
+				049222A91B725D2A00FFB08A /* Image.swift in Sources */,
 				B61801331B0BCBF8000CF25E /* CheckinViewController.swift in Sources */,
 				504D96DF1B1CA38B00A1B95B /* AlbumViewCell.swift in Sources */,
 				50CE7E761B03999D00F4B6B1 /* PostViewController.swift in Sources */,
