@@ -122,7 +122,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                     var user = PFUser()
                                     user.username = session.phoneNumber
                                     user.password = session.phoneNumber
-                                    user["photosLiked"] = []
                                     user["nearbyEvents"] = []
                                     user["phone"] = session.phoneNumber
                                     user["savedEvents"] = []
@@ -165,7 +164,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                             var user = PFUser()
                                             user.username = session.phoneNumber
                                             user.password = session.phoneNumber
-                                            user["photosLiked"] = []
                                             user["nearbyEvents"] = []
                                             user["phone"] = session.phoneNumber
                                             user["savedEvents"] = []
