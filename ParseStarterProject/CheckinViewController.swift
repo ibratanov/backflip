@@ -75,18 +75,16 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     func displayAlertLogout(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        // Facebook share feature
-        alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { action in
             
             PFUser.logOut()
             Digits.sharedInstance().logOut()
             self.performSegueWithIdentifier("logoutCheckIn", sender: self)
             
         }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-        
+		
         self.presentViewController(alert, animated: true, completion: nil)
         
     }
@@ -216,7 +214,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                     // Set default event radius
                     var eventRadius = 5.0
                     var distQuery = PFQuery(className: "Options")
-                    distQuery.selectKeys(["value"])
+                    distQuery.selectKeys(["value", "numEvents"])
                     
                     var distance = distQuery.findObjects()
                     
@@ -229,7 +227,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         var query = PFQuery(className: "Event")
                         //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
                         query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
-                        query.limit = 10
+                        query.limit = result["numEvents"] as! NSInteger
                         query.selectKeys(["eventName", "isLive"])
 
                         var usr = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
@@ -267,10 +265,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                         self.displayNoInternetAlert()
                     }
                 }
-                
-                
-                
-                
             }
             else {
                 print("Error with User Geopoint")

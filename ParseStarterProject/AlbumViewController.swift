@@ -19,12 +19,13 @@ import DigitsKit
 let reuseIdentifier = "albumCell"
 
 class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
-UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
+    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate,BFCImagePickerControllerDelegate {
     
     var refresher: UIRefreshControl!
     
     
     //------------------Camera Att.-----------------
+    var loopAllImagesBool = false
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var flashButton: UIButton!
     var testCamera = UIImagePickerController()
@@ -49,7 +50,6 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     var images = [UIImage]()
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "back") as UIImage!
-    var share = UIImage(named: "share-icon") as UIImage!
     var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
     
@@ -187,37 +187,32 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         
     }
     
-    
-    
-    func smsShare() {
-        
-        var user = "filler"
-        if (PFUser.currentUser() != nil) {
-            user = PFUser.currentUser()!.objectId!
-        }
-        var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
-        
-        Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
-            if (error == nil) {
-                if MFMessageComposeViewController.canSendText() {
-                    
-                    let messageComposer = MFMessageComposeViewController()
-                    
-                    messageComposer.body = String(format: "Check out these photos on Backflip! %@", url)
-                    
-                    messageComposer.messageComposeDelegate = self
-                    
-                    self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
-                    })
-                } else {
-                    
-                    var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-        })
-    }
+
+	
+	func shareAlbum()
+	{
+		var user = "filler";
+		if (PFUser.currentUser() != nil) {
+			user  = PFUser.currentUser()!.objectId!
+		}
+		
+		var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
+			if (error != nil) {
+				NSLog("Branch short URL generation failed, %@", error);
+			} else {
+				
+				let album = Album(text: String(format:"Check out the photos from %@ on ", self.eventTitle!), url: url);
+				
+				// Now we share.
+				let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [album, url], applicationActivities: nil)
+				activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]
+				self.presentViewController(activityViewController, animated: true, completion: nil)
+				
+			}
+			
+		})
+	}
     
     override func viewDidLoad() {
         
@@ -263,7 +258,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         }
         
         // Booleans for determining if view needs to be reloaded
-//self.fullScreen = false
+        //self.fullScreen = false
         //self.posted = false
         
         //--------------- LIKE/TIME/MY PHOTOS ---------------
@@ -365,10 +360,10 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         
         // Right nav bar button item
         let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
-        shareAlbum.setImage(share, forState: .Normal)
-        shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+		shareAlbum.setTitle("Invite", forState: .Normal)
+		shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
         shareAlbum.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
-        shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
+        shareAlbum.addTarget(self, action: "shareAlbum", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
         
         navBar.addSubview(segC)
@@ -938,70 +933,6 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         }
     }
     
-    func imageFixOrientation(img:UIImage) -> UIImage {
-        
-        if (img.imageOrientation == UIImageOrientation.Up) {
-            return img;
-        }
-        
-        var transform:CGAffineTransform = CGAffineTransformIdentity
-        
-        if (img.imageOrientation == UIImageOrientation.Down
-            || img.imageOrientation == UIImageOrientation.DownMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, img.size.width, img.size.height)
-                transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
-        }
-        
-        if (img.imageOrientation == UIImageOrientation.Left
-            || img.imageOrientation == UIImageOrientation.LeftMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, img.size.width, 0)
-                transform = CGAffineTransformRotate(transform, CGFloat(M_PI_2))
-        }
-        
-        if (img.imageOrientation == UIImageOrientation.Right
-            || img.imageOrientation == UIImageOrientation.RightMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, 0, img.size.height);
-                transform = CGAffineTransformRotate(transform,  CGFloat(-M_PI_2));
-        }
-        
-        if (img.imageOrientation == UIImageOrientation.UpMirrored
-            || img.imageOrientation == UIImageOrientation.DownMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, img.size.width, 0)
-                transform = CGAffineTransformScale(transform, -1, 1)
-        }
-        
-        if (img.imageOrientation == UIImageOrientation.LeftMirrored
-            || img.imageOrientation == UIImageOrientation.RightMirrored) {
-                
-                transform = CGAffineTransformTranslate(transform, img.size.height, 0);
-                transform = CGAffineTransformScale(transform, -1, 1);
-        }
-        
-        var ctx:CGContextRef = CGBitmapContextCreate(nil, Int(img.size.width), Int(img.size.height), CGImageGetBitsPerComponent(img.CGImage), 0, CGImageGetColorSpace(img.CGImage), CGImageGetBitmapInfo(img.CGImage))
-        
-        CGContextConcatCTM(ctx, transform)
-        
-        if (img.imageOrientation == UIImageOrientation.Left
-            || img.imageOrientation == UIImageOrientation.LeftMirrored
-            || img.imageOrientation == UIImageOrientation.Right
-            || img.imageOrientation == UIImageOrientation.RightMirrored
-            ) {
-                
-                CGContextDrawImage(ctx, CGRectMake(0,0,img.size.height,img.size.width), img.CGImage)
-        } else {
-            CGContextDrawImage(ctx, CGRectMake(0,0,img.size.width,img.size.height), img.CGImage)
-        }
-        
-        var cgimg:CGImageRef = CGBitmapContextCreateImage(ctx)
-        var imgEnd:UIImage = UIImage(CGImage: cgimg)!
-        
-        return imgEnd
-    }
-    
     func saveImageAlert()
     {
         var alert:UIAlertView = UIAlertView()
@@ -1065,6 +996,8 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         updateThumbnail()
         
     }
+    
+    
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
         
         picker.dismissViewControllerAnimated(true, completion: nil)
@@ -1072,19 +1005,15 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     
     func cropToSquare(image originalImage: UIImage) -> UIImage {
-        // Create a copy of the image without the imageOrientation property so it is in its native orientation (landscape)
-      
+        // Get image and measurements
         let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage)!
-        
-        // Get the size of the contextImage
         let contextSize: CGSize = contextImage.size
-        
         let posX: CGFloat
         let posY: CGFloat
         let width: CGFloat
         let height: CGFloat
         
-        // Check to see which length is the longest and create the offset based on that length, then set the width and height of our rect
+        //Calibrate image for optimal crop
         if contextSize.width > contextSize.height {
             posX = ((contextSize.width - contextSize.height) / 2)
             posY = 0
@@ -1098,11 +1027,9 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         }
         
         let rect: CGRect = CGRectMake(posX, posY, width, height)
-        
-        // Create bitmap image from context using the rect
         let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)
         
-        // Create a new image based on the imageRef and rotate back to the original orientation
+        //Define original orientation
         let image: UIImage = UIImage(CGImage: imageRef, scale: originalImage.scale, orientation: originalImage.imageOrientation)!
         
         return image
@@ -1204,15 +1131,34 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     @IBAction func showCameraRoll(sender: UIButton) {
         picker.dismissViewControllerAnimated(true, completion: nil)
         
-        downloadToCameraRoll = false
+//        downloadToCameraRoll = false
+//        
+//        var controller = UIImagePickerController()
+//        controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+//        controller.mediaTypes = [kUTTypeImage]
+//        controller.delegate = self
+//        self.presentViewController(controller, animated:true, completion:nil)
         
-        var controller = UIImagePickerController()
-        controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
-        controller.mediaTypes = [kUTTypeImage]
-        controller.delegate = self
-        self.presentViewController(controller, animated:true, completion:nil)
-        
+        let pickerController = BFCImagePickerController()
+        pickerController.pickerDelegate = self
+        self.presentViewController(pickerController, animated: true) {}
     }
+    
+    //********call back functions for ^^^^**********
+    func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
+        //Send assets to parse
+        for (index, asset) in enumerate(assets) {
+            let imageView = UIImageView(image: asset.fullScreenImage)
+            //----->imageView.contentMode = UIViewContentMode.ScaleAspectFit
+            uploadImages(imageView.image!)
+        }
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    func imagePickerControllerCancelled() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     
     @IBAction func capture(sender: UIButton) {
         picker.takePicture()
@@ -1229,7 +1175,6 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
         
     }
     @IBAction func toggleTorch(sender: UIButton) {
-        //TO-DO: add indication of toggle (image change)
         if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
             self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
             
@@ -1266,7 +1211,7 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     @IBAction func cancelCamera(sender: AnyObject) {
         
-        println("hereon cancel")
+        println("here on cancel")
         picker.dismissViewControllerAnimated(true, completion: nil)
         
     }
@@ -1283,4 +1228,141 @@ UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate {
             self.presentViewController(testCamera, animated: true, completion: nil)
         }
     }
+    
+    func uploadImages(uImage: UIImage){
+        if NetworkAvailable.networkConnection() == true {
+            
+            var capturedImage = uImage as UIImage!
+            
+            var imageData = compressImage(uImage, shrinkRatio: 1.0)
+            var imageFile = PFFile(name: "image.png", data: imageData)
+            
+            
+            
+            var thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
+            var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+            
+            
+            //Upload photos to database
+            var photo = PFObject(className: "Photo")
+            photo["caption"] = "Camera roll upload"
+            photo["image"] = imageFile
+            photo["thumbnail"] = thumbnailFile
+            photo["upvoteCount"] = 1
+            photo["usersLiked"] = [PFUser.currentUser()!.username!]
+            photo["uploader"] = PFUser.currentUser()!
+            photo["uploaderName"] = PFUser.currentUser()!.username!
+            photo["flagged"] = false
+            photo["reviewed"] = false
+            photo["blocked"] = false
+            photo["reporter"] = ""
+            photo["reportMessage"] = ""
+            
+            var photoACL = PFACL(user: PFUser.currentUser()!)
+            photoACL.setPublicWriteAccess(true)
+            photoACL.setPublicReadAccess(true)
+            photo.ACL = photoACL
+            
+            
+            var query2 = PFQuery(className: "EventAttendance")
+            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+            query2.whereKey("eventID", equalTo: eventId!)
+            
+            //var photoObjectList = query2.findObjects()
+            var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
+                if (objs != nil && objs!.count != 0) {
+                    var photoObject = objs!.first as! PFObject
+                    
+                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+                    
+                    var queryEvent = PFQuery(className: "Event")
+                    queryEvent.whereKey("objectId", equalTo: self.eventId!)
+                    //var objects = queryEvent.findObjects()
+                    var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
+                        
+                        if (sobjs != nil && sobjs!.count != 0) {
+                            var eventObject = sobjs!.first as! PFObject
+                            
+                            let relation = eventObject.relationForKey("photos")
+                            
+                            //photo.save()
+                            photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
+                                if valid {
+                                    relation.addObject(photo)
+                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+                                }
+                                //issue
+                                eventObject.saveInBackground()
+                                
+                                //issue
+                                photoObject.saveInBackground()
+                            })
+       
+                        } else {
+                            self.displayNoInternetAlert()
+                        }
+                    })
+                }
+                else {
+                    self.displayNoInternetAlert()
+                    println("Object Issue")
+                }
+                
+            })
+            
+        } else {
+            displayNoInternetAlert()
+        }
+
+    }
+    
+    func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
+        var imageHeight:CGFloat = image.size.height
+        var imageWidth:CGFloat = image.size.width
+        var maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
+        var maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
+        var imageRatio:CGFloat = imageWidth/imageHeight
+        var scalingRatio:CGFloat = maxWidth/maxHeight
+        
+        //lowest quality rating with acceptable encoding
+        var quality:CGFloat = 0.3
+        
+        if (imageHeight > maxHeight || imageWidth > maxWidth){
+            if(imageRatio < scalingRatio){
+                /* To ensure aspect ratio is maintained adjust
+                witdth of image in relation to scaling height */
+                imageRatio = maxHeight / imageHeight;
+                imageWidth = imageRatio * imageWidth;
+                imageHeight = maxHeight;
+            }
+            else if(imageRatio > scalingRatio){
+                /* To ensure aspect ratio is maintained adjust
+                height of image in relation to scaling width */
+                imageRatio = maxWidth / imageWidth;
+                imageHeight = imageRatio * imageHeight;
+                imageWidth = maxWidth;
+            }
+            else{
+                /* If image is equivalent to scaling ratio
+                image should not be compressed any further
+                scaled down to max resolution*/
+                imageHeight = maxHeight;
+                imageWidth = maxWidth;
+                quality = 1;
+            }
+        }
+        
+        var rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
+        //bit-map based graphic context and set the boundaries of still image
+        UIGraphicsBeginImageContext(rect.size);
+        image.drawInRect(rect)
+        var imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
+        let imageData = UIImageJPEGRepresentation(imageCompressed, quality);
+        UIGraphicsEndImageContext();
+        
+        return imageData;
+    }
+
 }
