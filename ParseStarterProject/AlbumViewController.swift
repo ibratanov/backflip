@@ -186,10 +186,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         PFQuery.clearAllCachedResults()
         
-
-        self.navigationController?.hidesBottomBarWhenPushed = false
-        self.navigationController?.popToRootViewControllerAnimated(true)
-        
+		
         //self.performSegueWithIdentifier("backToEvent", sender: self)
         
     }
@@ -198,7 +195,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     
     
-    func smsShare() {
+	@IBAction func smsShare(sender: AnyObject) {
         
         var user = "filler"
         if (PFUser.currentUser() != nil) {
@@ -305,7 +302,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let frame: CGRect = UIScreen.mainScreen().bounds
         let screenWidth = frame.width
         let screenHeight = frame.height
-        var superCenter = CGPointMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds))
+		var superCenter = view.center
         segC.frame = CGRectMake(CGRectGetMinX(frame),64,screenWidth,30)
         
         // Set characteristics of segmented controller
@@ -349,42 +346,41 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         //--------------- Draw UI ---------------
         
-        //self.tabBarController?.tabBar.hidden = true
-        // Hide UI controller item
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 94))
-        navBar.backgroundColor =  UIColor.whiteColor()
-        
-        // Set the Nav bar properties
-        let navBarItem = UINavigationItem()
-        
-        navBarItem.title = eventTitle
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-        let verticalOffset: CGFloat = -30
-        navBar.setTitleVerticalPositionAdjustment(verticalOffset, forBarMetrics: .Default)
-        navBar.items = [navBarItem]
-        
-        // Left nav bar button item
-        let back = UIButton.buttonWithType(.System) as! UIButton
-        back.setImage(goBack, forState: .Normal)
-        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        back.frame = CGRectMake(-10, 20, 72, 44)
-        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
-        navBar.addSubview(back)
-        
-        // Right nav bar button item
-        let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
-        shareAlbum.setImage(share, forState: .Normal)
-        shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        shareAlbum.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
-        shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
-        navBar.addSubview(shareAlbum)
-        
-        navBar.addSubview(segC)
-        self.view.addSubview(navBar)
-        
+		self.title = self.eventTitle;
+		
+		
+//        // Nav Bar positioning
+//        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 94))
+//        navBar.backgroundColor =  UIColor.whiteColor()
+//        
+//        // Set the Nav bar properties
+//        let navBarItem = UINavigationItem()
+//        
+//        navBarItem.title = eventTitle
+//        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+//        let verticalOffset: CGFloat = -30
+//        navBar.setTitleVerticalPositionAdjustment(verticalOffset, forBarMetrics: .Default)
+//        navBar.items = [navBarItem]
+//        
+//        // Left nav bar button item
+//        let back = UIButton.buttonWithType(.System) as! UIButton
+//        back.setImage(goBack, forState: .Normal)
+//        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+//        back.frame = CGRectMake(-10, 20, 72, 44)
+//        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
+//        navBar.addSubview(back)
+//        
+//        // Right nav bar button item
+//        let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
+//        shareAlbum.setImage(share, forState: .Normal)
+//        shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+//        shareAlbum.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
+//        shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
+//        navBar.addSubview(shareAlbum)
+//        
+//        navBar.addSubview(segC)
+//        self.view.addSubview(navBar)
+		
         // Post photo button new
         let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         postPhoto.setImage(cam, forState: .Normal)
@@ -397,11 +393,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.collectionView!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         
         // Pushes collection view down, higher value pushes collection view downwards, and push from bottom of screen (3rd number)
-        collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,80.0,0.0)
+        // collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,80.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
-        
-        
-        if NetworkAvailable.networkConnection() == true {
+		
+		if (eventId == nil) {
+			return ;
+		}
+		
+        if NetworkAvailable.networkConnection() == true  {
             // Initialize date comparison components
             let currentTime = NSDate()
             let cal = NSCalendar.currentCalendar()
@@ -627,7 +626,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.hqTime.removeAll(keepCapacity: true)
         
         self.images.removeAll(keepCapacity: true)
-        
+		
+		if (self.eventId == nil) {
+			NSLog("eventID == nil, NOP'in out..");
+			return ;
+		}
+		
         let qos = (Int(QOS_CLASS_BACKGROUND.value))
         dispatch_async(dispatch_get_global_queue(qos, 0)) {
             
@@ -814,7 +818,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if NetworkAvailable.networkConnection() == true {
-            if segue.identifier == "toFull" {
+            if segue.identifier == "display-event-image" {
                 
                 var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
                 var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)

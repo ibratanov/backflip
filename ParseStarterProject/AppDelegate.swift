@@ -46,19 +46,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Uncomment and fill in with your Parse credentials:
         
 //        /* PROD */
-//        Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX",
-//            clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
+        Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX",
+            clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
 
         
         /* DEV */
-        Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV",
-            clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
+        // Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV",
+        //     clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 
         
         Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
         mixpanel.track("App launched")
-        
+		
+		
+		// Pretty colours!!!1!!
+		setupApperance()
+		
         //
         // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
         // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
@@ -373,6 +377,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
+	//--------------------------------------
+	// MARK: Apperance
+	//--------------------------------------
+	func setupApperance()
+	{
+		var navigationBarAppearance = UINavigationBar.appearance()
+		navigationBarAppearance.tintColor = UIColor.whiteColor()
+		navigationBarAppearance.barTintColor = UIColor(red:0,  green:0.588,  blue:0.533, alpha:1)
+		navigationBarAppearance.translucent = false;
+		navigationBarAppearance.titleTextAttributes = [
+			NSFontAttributeName: UIFont(name: "Avenir-Medium", size: 18)!,
+			NSForegroundColorAttributeName: UIColor.whiteColor()
+		]
+		
+		var tabBarAppearance = UITabBar.appearance()
+		tabBarAppearance.tintColor = UIColor.whiteColor()
+		tabBarAppearance.barTintColor = UIColor.blackColor()
+		tabBarAppearance.translucent = true;
+		
+	}
+	
+//	[[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.898 green:0.302 blue:0.259 alpha:1]];
+//	[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+//	[[UINavigationBar appearance] setTranslucent:NO];
+//	[[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+	
     ///////////////////////////////////////////////////////////
     // Uncomment this method if you want to use Push Notifications with Background App Refresh
     ///////////////////////////////////////////////////////////

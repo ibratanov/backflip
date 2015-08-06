@@ -693,37 +693,38 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         //--------------- Draw UI -----------------
         
         // Hide UI controller item
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-
-        // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64 ))
-        navBar.backgroundColor =  UIColor.whiteColor()
-        
-        // Set the Nav bar properties
-        let navBarItem = UINavigationItem()
-        navBarItem.title = eventTitle
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-        navBar.items = [navBarItem]
-        
-        // Left nav bar button item
-        let back = UIButton.buttonWithType(.Custom) as! UIButton
-        back.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        back.setImage(self.back, forState: .Normal)
-        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        back.frame = CGRectMake(-10, 20, 72, 44)
-        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
-        navBar.addSubview(back)
-        
-        // Right nav bar button item
-        let shareImage = UIButton.buttonWithType(.Custom) as! UIButton
-        shareImage.setImage(self.share, forState:.Normal)
-        shareImage.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        shareImage.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
-        shareImage.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
-        navBar.addSubview(shareImage)
-        
-        self.view.addSubview(navBar)
-        
+		self.title = eventTitle;
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//
+//        // Nav Bar positioning
+//        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64 ))
+//        navBar.backgroundColor =  UIColor.whiteColor()
+//        
+//        // Set the Nav bar properties
+//        let navBarItem = UINavigationItem()
+//        navBarItem.title = eventTitle
+//        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+//        navBar.items = [navBarItem]
+//        
+//        // Left nav bar button item
+//        let back = UIButton.buttonWithType(.Custom) as! UIButton
+//        back.setTitleColor(UIColor.blackColor(), forState: .Normal)
+//        back.setImage(self.back, forState: .Normal)
+//        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+//        back.frame = CGRectMake(-10, 20, 72, 44)
+//        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
+//        navBar.addSubview(back)
+//        
+//        // Right nav bar button item
+//        let shareImage = UIButton.buttonWithType(.Custom) as! UIButton
+//        shareImage.setImage(self.share, forState:.Normal)
+//        shareImage.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+//        shareImage.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
+//        shareImage.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
+//        navBar.addSubview(shareImage)
+//        
+//        self.view.addSubview(navBar)
+		
         
         //-------------Gesture implementation----------
         

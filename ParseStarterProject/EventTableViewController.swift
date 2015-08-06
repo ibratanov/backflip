@@ -46,9 +46,9 @@ class EventTableViewController: UITableViewController {
 //    Enable UI Navigation Item
     override func viewWillAppear(animated: Bool) {
         // Ensure nav bar and tab bar are showing when previous view is popped
-        self.tabBarController?.tabBar.hidden = false
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Medium",size: 18)!]
+//        self.tabBarController?.tabBar.hidden = false
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Medium",size: 18)!]
         self.tableView.reloadData()
         
         if NetworkAvailable.networkConnection() == true {
@@ -112,7 +112,7 @@ class EventTableViewController: UITableViewController {
                             let query = relation.query()
                             query!.whereKey("flagged", equalTo: false)
                             query!.whereKey("blocked", equalTo: false)
-                            query!.limit = 4
+                            query!.limit = 5
                             
                             var photos = query!.findObjects()
                             
@@ -184,6 +184,9 @@ class EventTableViewController: UITableViewController {
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
 
+			tableCell.imageFive!.image = UIImage ()
+			tableCell.imageFive.backgroundColor = underlineColor
+			
             return tableCell
         }
         
@@ -199,7 +202,10 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-            
+			
+			tableCell.imageFive!.image = UIImage ()
+			tableCell.imageFive.backgroundColor = underlineColor
+			
             tableCell.imageOne.loadInBackground()
 
             return tableCell
@@ -217,7 +223,10 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-            
+			
+			tableCell.imageFive!.image = UIImage ()
+			tableCell.imageFive.backgroundColor = underlineColor
+			
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
 
@@ -237,7 +246,10 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-            
+			
+			tableCell.imageFive!.image = UIImage ()
+			tableCell.imageFive.backgroundColor = underlineColor
+			
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
@@ -258,11 +270,15 @@ class EventTableViewController: UITableViewController {
             
             var imageData4 = listPhotos[3]
             tableCell.imageFour!.file = imageData4
+			
+			var imageData5 = listPhotos[4]
+			tableCell.imageFive!.file = imageData5
             
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
             tableCell.imageFour.loadInBackground()
+			tableCell.imageFive.loadInBackground()
 
             return tableCell
         }
@@ -272,7 +288,7 @@ class EventTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "toAlbum" {
+        if segue.identifier == "display-event-album" {
             
             let moveVC = segue.destinationViewController as! AlbumViewController
             

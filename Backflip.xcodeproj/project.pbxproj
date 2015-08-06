@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04CF88531B730771000E83B4 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CF88521B730771000E83B4 /* Reveal.framework */; };
 		13E400E079040B0B3DF3E94B /* libPods-Backflip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D10CE913B7A5D3E47B797F /* libPods-Backflip.a */; };
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
 		3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04CF88521B730771000E83B4 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
 		3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				506F8BCE1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				502348F91B34F5FF00614FE6 /* FBSDKMessengerShareKit.framework in Frameworks */,
+				04CF88531B730771000E83B4 /* Reveal.framework in Frameworks */,
 				50BED87E1B21E05100CBB715 /* DigitsKit.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				502348F81B34F5FF00614FE6 /* FBSDKLoginKit.framework in Frameworks */,
@@ -233,6 +236,7 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04CF88521B730771000E83B4 /* Reveal.framework */,
 				502348F31B34F5FF00614FE6 /* FBSDKCoreKit.framework */,
 				502348F41B34F5FF00614FE6 /* FBSDKLoginKit.framework */,
 				502348F51B34F5FF00614FE6 /* FBSDKMessengerShareKit.framework */,
@@ -314,6 +318,7 @@
 				50BED8481B21DC7900CBB715 /* ShellScript */,
 				3AC579361B28808700EB9252 /* ShellScript */,
 				C2B858C844659F296BA17901 /* Copy Pods Resources */,
+				049222AF1B72A9BE00FFB08A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -386,6 +391,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		049222AF1B72A9BE00FFB08A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
 		3AC579361B28808700EB9252 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -583,6 +601,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -605,6 +624,9 @@
 					"-framework",
 					"\"UIKit\"",
 					"-ObjC",
+					"-lz",
+					"-framework",
+					Reveal,
 				);
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";
@@ -624,6 +646,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -646,6 +669,9 @@
 					"-framework",
 					"\"UIKit\"",
 					"-ObjC",
+					"-lz",
+					"-framework",
+					Reveal,
 				);
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";
