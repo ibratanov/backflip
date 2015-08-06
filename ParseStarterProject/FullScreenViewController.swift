@@ -261,7 +261,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 		let facebook = "";
 		
 		let imageData : UIImage = self.fullScreenImage.image!;
-		let image = Image(text: "Check out this image!");
+		let image = Image(text: "Check out this photo!");
 		
 		let reportImage = ReportImageActivity();
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
@@ -270,6 +270,39 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 		let vc = UIActivityViewController(activityItems: [image, imageData], applicationActivities:[reportImage])
 		vc.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypePrint]
 		self.presentViewController(vc, animated: true, completion: nil)
+
+        vc.completionWithItemsHandler = { activity, success, items, error in
+            
+            if (success && error == nil) {
+                
+                var message = ""
+                switch (activity) {
+                case UIActivityTypePostToFacebook:
+                    self.mixpanel.track("Photo Facebook Share")
+                    message = "Not appearing on Facebook? Check the iOS settings for Facebook and make sure you're logged in."
+                case UIActivityTypePostToTwitter:
+                    self.mixpanel.track("Photo Twitter Share")
+                    message = "Successfully posted to Twitter."
+                case UIActivityTypeMail:
+                    self.mixpanel.track("Photo Email Share")
+                case UIActivityTypeMessage:
+                    self.mixpanel.track("Photo SMS Share")
+                case UIActivityTypeSaveToCameraRoll:
+                    self.mixpanel.track("Save To Camera Roll")
+                default:
+                    self.mixpanel.track("Photo Other Action")
+                }
+                
+                if (message != "") {
+                    self.displaySuccess("Posted!", error: message)
+                }
+            } else if (error == nil) {
+                println("cancelled")
+            } else {
+                self.displaySuccess("Failed to post!", error: "Check internet connectivity and try again.")
+                println(error)
+            }
+        }
 	}
     
     // Alert pop up with Twitter, Facebook and SMS options
