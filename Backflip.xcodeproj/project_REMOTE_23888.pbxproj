@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0434BCD51B73BDCF00EF57EC /* Image.swift */; };
+		049222A91B725D2A00FFB08A /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222A81B725D2A00FFB08A /* Image.swift */; };
 		049222AB1B72653900FFB08A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AA1B72653900FFB08A /* Album.swift */; };
 		049222AE1B72767500FFB08A /* ReportImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AD1B72767500FFB08A /* ReportImage.swift */; };
 		13E400E079040B0B3DF3E94B /* libPods-Backflip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D10CE913B7A5D3E47B797F /* libPods-Backflip.a */; };
@@ -26,7 +26,6 @@
 		504D96DF1B1CA38B00A1B95B /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */; };
 		504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */; };
 		505A465A1B0A55A600B9BB4F /* FullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */; };
-		506DF2A31B5FFC4D00227AB7 /* TabBarNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506DF2A21B5FFC4D00227AB7 /* TabBarNavController.swift */; };
 		506F8BCE1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506F8BCD1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework */; };
 		50BED87D1B21E05100CBB715 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED8791B21E05100CBB715 /* Fabric.framework */; };
 		50BED87E1B21E05100CBB715 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED87A1B21E05100CBB715 /* DigitsKit.framework */; };
@@ -70,10 +69,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0434BCD51B73BDCF00EF57EC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		049222A81B725D2A00FFB08A /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		049222AA1B72653900FFB08A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		049222AD1B72767500FFB08A /* ReportImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportImage.swift; sourceTree = "<group>"; };
-		04CF88521B730771000E83B4 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
 		3AAA7B741B2B25F20045EE76 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
@@ -90,7 +88,6 @@
 		504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
 		504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenViewController.swift; sourceTree = "<group>"; };
-		506DF2A21B5FFC4D00227AB7 /* TabBarNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarNavController.swift; sourceTree = "<group>"; };
 		506F8BCD1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		50BED8791B21E05100CBB715 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		50BED87A1B21E05100CBB715 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
@@ -176,7 +173,7 @@
 		049222A71B725CAA00FFB08A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0434BCD51B73BDCF00EF57EC /* Image.swift */,
+				049222A81B725D2A00FFB08A /* Image.swift */,
 				049222AA1B72653900FFB08A /* Album.swift */,
 			);
 			name = Models;
@@ -219,7 +216,6 @@
 				67A796071B2EE4C5006E489D /* PreviewViewController.xib */,
 				67B88BCC1B32D33A00BCE7C6 /* InviteViewController.xib */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				506DF2A21B5FFC4D00227AB7 /* TabBarNavController.swift */,
 				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
 				B61801321B0BCBF8000CF25E /* CheckinViewController.swift */,
 				50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */,
@@ -259,7 +255,6 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				04CF88521B730771000E83B4 /* Reveal.framework */,
 				502348F31B34F5FF00614FE6 /* FBSDKCoreKit.framework */,
 				502348F41B34F5FF00614FE6 /* FBSDKLoginKit.framework */,
 				502348F51B34F5FF00614FE6 /* FBSDKMessengerShareKit.framework */,
@@ -341,7 +336,6 @@
 				50BED8481B21DC7900CBB715 /* ShellScript */,
 				3AC579361B28808700EB9252 /* ShellScript */,
 				C2B858C844659F296BA17901 /* Copy Pods Resources */,
-				049222AF1B72A9BE00FFB08A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -415,19 +409,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		049222AF1B72A9BE00FFB08A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
-		};
 		3AC579361B28808700EB9252 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -507,7 +488,6 @@
 			files = (
 				50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */,
 				505A465A1B0A55A600B9BB4F /* FullScreenViewController.swift in Sources */,
-				0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */,
 				67B88BCF1B32D33A00BCE7C6 /* InviteViewController.swift in Sources */,
 				3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */,
 				67BB6A851B5745B600FB7EB3 /* BFCImagePickerController.swift in Sources */,
@@ -516,7 +496,7 @@
 				50CE7E7A1B03DB2F00F4B6B1 /* FeedViewController.swift in Sources */,
 				504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */,
 				50CE7E7C1B03DBC100F4B6B1 /* FeedViewCell.swift in Sources */,
-				506DF2A31B5FFC4D00227AB7 /* TabBarNavController.swift in Sources */,
+				049222A91B725D2A00FFB08A /* Image.swift in Sources */,
 				B61801331B0BCBF8000CF25E /* CheckinViewController.swift in Sources */,
 				504D96DF1B1CA38B00A1B95B /* AlbumViewCell.swift in Sources */,
 				50CE7E761B03999D00F4B6B1 /* PostViewController.swift in Sources */,
@@ -628,7 +608,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -651,9 +630,6 @@
 					"-framework",
 					"\"UIKit\"",
 					"-ObjC",
-					"-lz",
-					"-framework",
-					Reveal,
 				);
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";
@@ -673,7 +649,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 				);
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -696,9 +671,6 @@
 					"-framework",
 					"\"UIKit\"",
 					"-ObjC",
-					"-lz",
-					"-framework",
-					Reveal,
 				);
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";

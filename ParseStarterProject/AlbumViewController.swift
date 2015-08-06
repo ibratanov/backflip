@@ -50,7 +50,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var images = [UIImage]()
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "back") as UIImage!
-    var share = UIImage(named: "share-icon") as UIImage!
     var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
     
@@ -175,7 +174,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
+            print("no internet")
             
         }
         
@@ -192,38 +191,33 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
     
 
+	
     
     
-    
-	@IBAction func smsShare(sender: AnyObject) {
-        
-        var user = "filler"
-        if (PFUser.currentUser() != nil) {
-            user = PFUser.currentUser()!.objectId!
-        }
-        var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
-        
-        Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
-            if (error == nil) {
-                if MFMessageComposeViewController.canSendText() {
-                    
-                    let messageComposer = MFMessageComposeViewController()
-                    
-                    messageComposer.body = String(format: "Check out these photos on Backflip! %@", url)
-                    
-                    messageComposer.messageComposeDelegate = self
-                    
-                    self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
-                    })
-                } else {
-                    
-                    var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-        })
-    }
+	@IBAction func smsShare(sender: AnyObject)
+	{
+		var user = "filler";
+		if (PFUser.currentUser() != nil) {
+			user  = PFUser.currentUser()!.objectId!
+		}
+		
+		var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
+			if (error != nil) {
+				NSLog("Branch short URL generation failed, %@", error);
+			} else {
+				
+				let album = Album(text: String(format:"Check out the photos from %@ on ", self.eventTitle!), url: url);
+				
+				// Now we share.
+				let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [album, url], applicationActivities: nil)
+				activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]
+				self.presentViewController(activityViewController, animated: true, completion: nil)
+				
+			}
+			
+		})
+	}
     
     override func viewDidLoad() {
         
@@ -270,7 +264,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
         
         // Booleans for determining if view needs to be reloaded
-//self.fullScreen = false
+        //self.fullScreen = false
         //self.posted = false
         
         //--------------- LIKE/TIME/MY PHOTOS ---------------
@@ -345,41 +339,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
         
         //--------------- Draw UI ---------------
-        
 		self.title = self.eventTitle;
-		
-		
-//        // Nav Bar positioning
-//        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 94))
-//        navBar.backgroundColor =  UIColor.whiteColor()
-//        
-//        // Set the Nav bar properties
-//        let navBarItem = UINavigationItem()
-//        
-//        navBarItem.title = eventTitle
-//        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-//        let verticalOffset: CGFloat = -30
-//        navBar.setTitleVerticalPositionAdjustment(verticalOffset, forBarMetrics: .Default)
-//        navBar.items = [navBarItem]
-//        
-//        // Left nav bar button item
-//        let back = UIButton.buttonWithType(.System) as! UIButton
-//        back.setImage(goBack, forState: .Normal)
-//        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-//        back.frame = CGRectMake(-10, 20, 72, 44)
-//        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
-//        navBar.addSubview(back)
-//        
-//        // Right nav bar button item
-//        let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
-//        shareAlbum.setImage(share, forState: .Normal)
-//        shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-//        shareAlbum.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
-//        shareAlbum.addTarget(self, action: "smsShare", forControlEvents: .TouchUpInside)
-//        navBar.addSubview(shareAlbum)
-//        
-//        navBar.addSubview(segC)
-//        self.view.addSubview(navBar)
 		
         // Post photo button new
         let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton

@@ -62,8 +62,9 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     func displayAlertLogout(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { action in
             PFUser.logOut()
             Digits.sharedInstance().logOut()
             self.hidesBottomBarWhenPushed = true
@@ -71,9 +72,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
             
             
         }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-        
+		
         self.presentViewController(alert, animated: true, completion: nil)
         
     }
@@ -304,7 +303,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Function displaying alert when creating an event that has no content in it
     func noNameAlert() {
         var alert = UIAlertController(title: "Please enter an event name.", message: "Event name:", preferredStyle: UIAlertControllerStyle.Alert)
-        
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Create", style: UIAlertActionStyle.Default, handler: { (action) in
             
                 // Content that is in textfield when create is pressed
@@ -414,7 +414,6 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         }
         
         // Add the cancel button, as well as disable interaction with create button until 2 or more characters present in textfield
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
         (alert.actions.first as! UIAlertAction).enabled = false
         self.presentViewController(alert, animated: true, completion: nil)
     }

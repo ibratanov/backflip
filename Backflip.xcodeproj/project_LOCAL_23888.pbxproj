@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0434BCD51B73BDCF00EF57EC /* Image.swift */; };
-		049222AB1B72653900FFB08A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AA1B72653900FFB08A /* Album.swift */; };
-		049222AE1B72767500FFB08A /* ReportImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AD1B72767500FFB08A /* ReportImage.swift */; };
+		04CF88531B730771000E83B4 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CF88521B730771000E83B4 /* Reveal.framework */; };
 		13E400E079040B0B3DF3E94B /* libPods-Backflip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D10CE913B7A5D3E47B797F /* libPods-Backflip.a */; };
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
 		3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */; };
@@ -70,9 +68,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0434BCD51B73BDCF00EF57EC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		049222AA1B72653900FFB08A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
-		049222AD1B72767500FFB08A /* ReportImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportImage.swift; sourceTree = "<group>"; };
 		04CF88521B730771000E83B4 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +150,7 @@
 				506F8BCE1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				502348F91B34F5FF00614FE6 /* FBSDKMessengerShareKit.framework in Frameworks */,
+				04CF88531B730771000E83B4 /* Reveal.framework in Frameworks */,
 				50BED87E1B21E05100CBB715 /* DigitsKit.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				502348F81B34F5FF00614FE6 /* FBSDKLoginKit.framework in Frameworks */,
@@ -173,23 +169,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		049222A71B725CAA00FFB08A /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				0434BCD51B73BDCF00EF57EC /* Image.swift */,
-				049222AA1B72653900FFB08A /* Album.swift */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		049222AC1B72766700FFB08A /* Activity Items */ = {
-			isa = PBXGroup;
-			children = (
-				049222AD1B72767500FFB08A /* ReportImage.swift */,
-			);
-			name = "Activity Items";
-			sourceTree = "<group>";
-		};
 		81BA813C1A49DA1800E65899 = {
 			isa = PBXGroup;
 			children = (
@@ -211,8 +190,6 @@
 		81BA81471A49DA1800E65899 /* Backflip */ = {
 			isa = PBXGroup;
 			children = (
-				049222AC1B72766700FFB08A /* Activity Items */,
-				049222A71B725CAA00FFB08A /* Models */,
 				503BB1A51B2B62EF0042B16F /* Main.storyboard */,
 				67A795D71B2CE9F8006E489D /* OverlayView.xib */,
 				B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */,
@@ -358,7 +335,6 @@
 		81BA813D1A49DA1800E65899 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Parse;
 				TargetAttributes = {
@@ -507,11 +483,9 @@
 			files = (
 				50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */,
 				505A465A1B0A55A600B9BB4F /* FullScreenViewController.swift in Sources */,
-				0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */,
 				67B88BCF1B32D33A00BCE7C6 /* InviteViewController.swift in Sources */,
 				3A7D03131B29E4DF00B446C5 /* CreatePublicEventViewController.swift in Sources */,
 				67BB6A851B5745B600FB7EB3 /* BFCImagePickerController.swift in Sources */,
-				049222AB1B72653900FFB08A /* Album.swift in Sources */,
 				67A796061B2EE49A006E489D /* CGSize+Extensions.swift in Sources */,
 				50CE7E7A1B03DB2F00F4B6B1 /* FeedViewController.swift in Sources */,
 				504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */,
@@ -525,7 +499,6 @@
 				50CE7E741B027C9000F4B6B1 /* EventTableViewController.swift in Sources */,
 				67A796041B2EE49A006E489D /* CGRect+Extensions.swift in Sources */,
 				67A796051B2EE49A006E489D /* UIImage+Extensions.swift in Sources */,
-				049222AE1B72767500FFB08A /* ReportImage.swift in Sources */,
 				67A795FE1B2EE41B006E489D /* PreviewViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 			);

@@ -44,35 +44,33 @@ class EventTableViewController: UITableViewController {
     let qos = (Int(QOS_CLASS_BACKGROUND.value))
     
 //    Enable UI Navigation Item
-    override func viewWillAppear(animated: Bool) {
-        // Ensure nav bar and tab bar are showing when previous view is popped
-//        self.tabBarController?.tabBar.hidden = false
-//        self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Medium",size: 18)!]
+    override func viewWillAppear(animated: Bool)
+	{
         self.tableView.reloadData()
-        
         if NetworkAvailable.networkConnection() == true {
-            
             updateEvents()
-            
         } else {
             displayNoInternetAlert()
         }
     }
     
     override func viewDidLoad() {
-        
-        
-        
+		
+		super.viewDidLoad()
+		
+		if (PFUser.currentUser() == nil) {
+			self.performSegueWithIdentifier("display-login-popover", sender: self)
+			return
+		}
+		
     }
     
     func displayAlertLogout(title:String, error: String) {
         
         var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        alert.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { action in
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-            
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { action in
             
             PFUser.logOut()
             Digits.sharedInstance().logOut()
@@ -80,9 +78,7 @@ class EventTableViewController: UITableViewController {
             self.performSegueWithIdentifier("logoutEventView", sender: self)
             
         }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-        
+		
         self.presentViewController(alert, animated: true, completion: nil)
         
     }

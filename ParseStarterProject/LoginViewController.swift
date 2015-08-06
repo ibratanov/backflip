@@ -110,8 +110,11 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                     
                                     println("Log in successful")
                                     //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                    self.performSegueWithIdentifier("toTabBar", sender: self)
-
+									
+									
+									self.navigationController?.dismissViewControllerAnimated(true, completion: nil);
+									self.dismissViewControllerAnimated(true, completion: nil);
+                                    //self.performSegueWithIdentifier("toTabBar", sender: self)
                                     
                                 } else {
                                     
@@ -132,8 +135,9 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                         if error == nil {
 
                                             println("Signed Up")
+											self.dismissViewControllerAnimated(true, completion: nil);
                                             //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                            self.performSegueWithIdentifier("toTabBar", sender: self)
+                                            //self.performSegueWithIdentifier("toTabBar", sender: self)
 
                                             
                                         } else {
@@ -151,8 +155,9 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                         if user != nil {
                                             
                                             println("Log in successful")
+											self.dismissViewControllerAnimated(true, completion: nil);
                                            // self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                            self.performSegueWithIdentifier("toTabBar", sender: self)
+                                            // self.performSegueWithIdentifier("toTabBar", sender: self)
                                             
                                         } else {
                                             
@@ -173,8 +178,9 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                 if error == nil {
                                                     
                                                     println("Signed Up")
+													self.dismissViewControllerAnimated(true, completion: nil);
                                                     //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                                    self.performSegueWithIdentifier("toTabBar", sender: self)
+                                                    //self.performSegueWithIdentifier("toTabBar", sender: self)
                                                     
                                                 } else {
                                                     
