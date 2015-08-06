@@ -1,14 +1,15 @@
 PODS:
-  - Mixpanel (2.8.1):
-    - Mixpanel/Mixpanel (= 2.8.1)
-  - Mixpanel/Mixpanel (2.8.1):
-    - Mixpanel/MPCategoryHelpers
-  - Mixpanel/MPCategoryHelpers (2.8.1)
+  - Mixpanel (2.8.2):
+    - Mixpanel/Mixpanel (= 2.8.2)
+  - Mixpanel/Mixpanel (2.8.2)
+  - Reveal-iOS-SDK (1.5.1)
 
 DEPENDENCIES:
   - Mixpanel
+  - Reveal-iOS-SDK
 
 SPEC CHECKSUMS:
-  Mixpanel: 93c4825025e6380ced273ed7178496282e385077
+  Mixpanel: f4d71ac2a306e7cda6ad03d4a2be249a0fd7a967
+  Reveal-iOS-SDK: c9c55cad2729c85f6ced415f1b21857c9a2d8ef9
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.37.2

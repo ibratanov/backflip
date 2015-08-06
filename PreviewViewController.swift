@@ -220,15 +220,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                                 //issue
                                 photoObject.saveInBackground()
                             })
-                            //                    relation.addObject(photo)
-                            //                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-                            //                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-                            //
-                            //                    //issue
-                            //                    eventObject.saveInBackground()
-                            //
-                            //                    //issue
-                            //                    photoObject.saveInBackground()
                         } else {
                             self.displayNoInternetAlert()
                         }
