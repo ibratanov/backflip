@@ -616,7 +616,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NBi-xB-G5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1787" y="750"/>
+            <point key="canvasLocation" x="1835" y="770"/>
         </scene>
         <!--[Event Name]-->
         <scene sceneID="fge-kj-K8y">
@@ -887,34 +887,6 @@
                                     <action selector="likeToggle:" destination="OvI-dv-VgA" eventType="touchUpInside" id="7ez-Ih-yXz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcr-SV-QKe" userLabel="Download BUtton">
-                                <rect key="frame" x="280" y="456" width="25" height="25"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="Ysb-MW-COD"/>
-                                    <constraint firstAttribute="height" constant="25" id="zcm-3m-bRh"/>
-                                </constraints>
-                                <state key="normal" image="download-icon">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="downloadImage:" destination="OvI-dv-VgA" eventType="touchUpInside" id="MrD-dZ-r4f"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CRs-Jb-Ca0" userLabel="Report Button">
-                                <rect key="frame" x="236" y="456" width="29" height="25"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="29" id="cNY-NJ-CP2"/>
-                                    <constraint firstAttribute="height" constant="25" id="ph3-mh-mmk"/>
-                                </constraints>
-                                <state key="normal" image="report-icon">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="flagPhoto:" destination="OvI-dv-VgA" eventType="touchUpInside" id="del-Ok-FWe"/>
-                                </connections>
-                            </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fNX-er-QTB">
                                 <rect key="frame" x="0.0" y="126" width="320" height="322"/>
                                 <animations/>
@@ -923,6 +895,20 @@
                                 <rect key="frame" x="0.0" y="523" width="320" height="37"/>
                                 <animations/>
                             </pageControl>
+                            <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcr-SV-QKe" userLabel="Download BUtton">
+                                <rect key="frame" x="282" y="464" width="29" height="8"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="29" id="Ysb-MW-COD"/>
+                                    <constraint firstAttribute="height" constant="8" id="zcm-3m-bRh"/>
+                                </constraints>
+                                <state key="normal" image="more-icon">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="share:" destination="OvI-dv-VgA" eventType="touchUpInside" id="a8Y-by-y6g"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -939,16 +925,14 @@
                             <constraint firstItem="uv5-ir-czh" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="10" id="TSe-TD-Ws5"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="top" secondItem="TGj-Tl-8TS" secondAttribute="top" constant="130" id="WEP-1k-wZu"/>
                             <constraint firstAttribute="centerX" secondItem="NDd-9j-8Ao" secondAttribute="centerX" id="WST-us-8hH"/>
-                            <constraint firstItem="CRs-Jb-Ca0" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="10" id="XcJ-Mg-uUy"/>
                             <constraint firstAttribute="trailing" secondItem="pu8-Va-BEQ" secondAttribute="trailing" constant="40" id="bL7-yP-p68"/>
-                            <constraint firstItem="Vcr-SV-QKe" firstAttribute="leading" secondItem="CRs-Jb-Ca0" secondAttribute="trailing" constant="15" id="bfc-0i-tMP"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="centerX" secondItem="UJg-Xx-CgL" secondAttribute="centerX" id="c5b-7o-lHI"/>
                             <constraint firstItem="avA-h5-Fas" firstAttribute="top" secondItem="pwg-gk-2Bt" secondAttribute="bottom" constant="82" id="dgB-y2-WF7"/>
                             <constraint firstAttribute="trailing" secondItem="Vcr-SV-QKe" secondAttribute="trailing" constant="15" id="inT-iv-C3f"/>
                             <constraint firstItem="uv5-ir-czh" firstAttribute="leading" secondItem="Cld-aL-GAw" secondAttribute="trailing" constant="15" id="k2b-sz-AvD"/>
                             <constraint firstAttribute="centerX" secondItem="UJg-Xx-CgL" secondAttribute="centerX" id="mEM-dg-mLK"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="centerY" secondItem="NDd-9j-8Ao" secondAttribute="centerY" constant="-30" id="nCA-4S-BG2"/>
-                            <constraint firstItem="Vcr-SV-QKe" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="10" id="phk-1m-2hn"/>
+                            <constraint firstItem="Vcr-SV-QKe" firstAttribute="top" secondItem="uoI-tj-emU" secondAttribute="bottom" constant="15" id="phk-1m-2hn"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="top" secondItem="pu8-Va-BEQ" secondAttribute="bottom" constant="10" id="s5S-rr-2Jo"/>
                             <constraint firstItem="uoI-tj-emU" firstAttribute="leading" secondItem="TGj-Tl-8TS" secondAttribute="leading" id="tmV-Md-Atd"/>
                             <constraint firstAttribute="trailing" secondItem="avA-h5-Fas" secondAttribute="trailing" constant="35" id="uhk-3f-rJe"/>
@@ -1007,13 +991,12 @@
     </scenes>
     <resources>
         <image name="add-icon" width="22" height="22"/>
-        <image name="download-icon" width="29" height="25"/>
         <image name="heart-icon-empty" width="29" height="25"/>
         <image name="home-background" width="375" height="667"/>
         <image name="home-logo" width="250" height="127"/>
         <image name="input-outline" width="375" height="76"/>
         <image name="location-icon" width="21" height="30"/>
-        <image name="report-icon" width="29" height="25"/>
+        <image name="more-icon" width="57" height="16"/>
         <image name="settings-icon" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>

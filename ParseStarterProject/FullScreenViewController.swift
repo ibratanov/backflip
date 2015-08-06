@@ -42,8 +42,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     let liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
     let unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
     let back = UIImage(named: "back.pdf") as UIImage!
-    let share = UIImage(named: "share-icon.pdf") as UIImage!
-    
+	
     // Title passed from previous VC
     var eventId : String?
     var eventTitle : String?
@@ -264,7 +263,12 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 		let imageData : UIImage = self.fullScreenImage.image!;
 		let image = Image(text: "Check out this photo!");
 		
-		let vc = UIActivityViewController(activityItems: [image, imageData], applicationActivities: nil)
+		let reportImage = ReportImageActivity();
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
+		
+		
+		let vc = UIActivityViewController(activityItems: [image, imageData], applicationActivities:[reportImage])
+		vc.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypePrint]
 		self.presentViewController(vc, animated: true, completion: nil)
 
         vc.completionWithItemsHandler = { activity, success, items, error in
@@ -304,7 +308,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     // Alert pop up with Twitter, Facebook and SMS options
     @IBAction func share(sender: AnyObject) {
 		sharePhoto();
-		// displayAlert("Share", error: "How do you want to share this photo?")
     }
     
     
@@ -336,7 +339,8 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             saveImageAlert("Oops!", error: "Image failed to save. Please try again.")
         }
     }
-    
+	
+	
     @IBAction func flagPhoto(sender: AnyObject) {
         
         let qos = (Int(QOS_CLASS_BACKGROUND.value))
@@ -623,14 +627,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
         back.frame = CGRectMake(-10, 20, 72, 44)
         back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
         navBar.addSubview(back)
-        
-        // Right nav bar button item
-        let shareImage = UIButton.buttonWithType(.Custom) as! UIButton
-        shareImage.setImage(self.share, forState:.Normal)
-        shareImage.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        shareImage.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
-        shareImage.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
-        navBar.addSubview(shareImage)
         
         self.view.addSubview(navBar)
         

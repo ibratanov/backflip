@@ -50,7 +50,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var images = [UIImage]()
     var postLogo = UIImage(named: "liked.png") as UIImage!
     var goBack = UIImage(named: "back") as UIImage!
-    var share = UIImage(named: "share-icon") as UIImage!
     var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
     
@@ -361,8 +360,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         // Right nav bar button item
         let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
-        shareAlbum.setImage(share, forState: .Normal)
-        shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+		shareAlbum.setTitle("Invite", forState: .Normal)
+		shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
         shareAlbum.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
         shareAlbum.addTarget(self, action: "shareAlbum", forControlEvents: .TouchUpInside)
         navBar.addSubview(shareAlbum)
