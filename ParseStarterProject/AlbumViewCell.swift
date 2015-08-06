@@ -9,7 +9,7 @@
 import UIKit
 import ParseUI
 
-class AlbumViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
+class AlbumViewCell: UICollectionViewCell {
 
     //@IBOutlet var imageView: PFImageView?
     

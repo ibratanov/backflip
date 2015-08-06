@@ -19,7 +19,7 @@ import DigitsKit
 let reuseIdentifier = "albumCell"
 
 class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate,BFCImagePickerControllerDelegate {
+    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate,BFCImagePickerControllerDelegate, MWPhotoBrowserDelegate {
     
     var refresher: UIRefreshControl!
     
@@ -40,7 +40,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // Title and ID of event passed from previous VC, based on selected row
     var eventId : String?
     var eventTitle: String?
-    
+	
+	
+	// Photo browser
+	var browser : MWPhotoBrowser!
+	
     // Keeps track of photo source and only downloads newly taken images
     var downloadToCameraRoll = true
     
@@ -218,10 +222,32 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 			
 		})
 	}
-    
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated);
+		
+		self.collectionView!.registerClass(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
+	}
+	
+	override func viewDidLayoutSubviews()
+	{
+		super.viewDidLayoutSubviews()
+
+		let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
+		
+		flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 60);
+		flow.itemSize = CGSizeMake((self.view.frame.size.width/3)-1, (self.view.frame.size.width/3)-1);
+		flow.minimumInteritemSpacing = 1;
+		flow.minimumLineSpacing = 1;
+	}
+	
+	
     override func viewDidLoad() {
         
         super.viewDidLoad()
+		
+		
 
         //self.tabBarController?.tabBar.hidden = true
         // Pull down to refresh
@@ -353,7 +379,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.collectionView!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         
         // Pushes collection view down, higher value pushes collection view downwards, and push from bottom of screen (3rd number)
-        // collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,80.0,0.0)
+        collectionView?.contentInset = UIEdgeInsetsMake(0.0,0.0,88.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
 		
 		if (eventId == nil) {
@@ -669,7 +695,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     }
                     
                      dispatch_async(dispatch_get_main_queue()) {
-                        self.collectionView?.reloadSections(NSIndexSet(index: 0))
+						self.collectionView?.reloadData()
+                        // self.collectionView?.reloadSections(NSIndexSet(index: 0))
                         self.spinner.stopAnimating()
                         
                     }
@@ -690,8 +717,115 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
-    
-    
+	
+
+	override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+		var v : UICollectionReusableView! = nil
+		if kind == UICollectionElementKindSectionHeader {
+			v = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier:"Header", forIndexPath:indexPath) as! UICollectionReusableView
+			if v.subviews.count == 0 {
+				let segItems = ["Sort By Time", "Sort By Likes", "My Photos"];
+
+				v.addSubview(UISegmentedControl(items: segItems))
+				v.frame = CGRectMake(0,0,375.0,88.0)
+			}
+			
+			let seg = v.subviews[0] as! UISegmentedControl
+			
+		}
+		return v
+	}
+	
+	
+	func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser!) -> UInt
+	{
+		if sortedByLikes == true && myPhotoSelected == false {
+			
+			return UInt(imageFilesTime.count)
+			
+		} else if sortedByLikes == false && myPhotoSelected == false{
+			
+			return UInt(imageFilesLikes.count)
+			
+		} else {
+			
+			// Returns the count of cells, which may be less or more, depending on myphotos array
+			return UInt(myPhotos.count)
+		}
+	}
+	
+	
+	func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhotoProtocol!
+	{
+		var photo : MWPhoto = MWPhoto(URL: NSURL(string: "https://www.petfinder.com/wp-content/uploads/2012/11/dog-how-to-select-your-new-best-friend-thinkstock99062463.jpg"))
+		if sortedByLikes == true && myPhotoSelected == false {
+			let file:PFFile = imageFilesTime[Int(index)]!
+			photo = MWPhoto(URL: NSURL(string: file.url!))
+		} else if sortedByLikes == false && myPhotoSelected == false {
+			let file:PFFile = imageFilesLikes[Int(index)]!
+			photo = MWPhoto(URL: NSURL(string: file.url!))
+		} else {
+			let file:PFFile = myPhotos[Int(index)]!
+			photo = MWPhoto(URL: NSURL(string: file.url!))
+		}
+		
+		return photo
+	}
+	
+	
+	func photoBrowser(photoBrowser: MWPhotoBrowser!, actionButtonPressedForPhotoAtIndex index: UInt)
+	{
+		// NSLog("photoBrowser select action button index = %@", index);
+	}
+	
+	func sharePhoto()
+	{
+		// let photo = self.photoBrowser(browser, photoAtIndex: browser?.currentIndex)
+		
+		//let imageData : UIImage = self.fullScreenImage.image!;
+		let image = Image(text: "Check out this photo!");
+		
+		let reportImage = ReportImageActivity();
+		// NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
+		
+		
+		let vc = UIActivityViewController(activityItems: [image], applicationActivities:[reportImage])
+		vc.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypePrint]
+		self.presentViewController(vc, animated: true, completion: nil)
+		
+		NSLog("Will share photo now.. photo index = %i", browser.currentIndex)
+		print(browser?.currentIndex)
+	}
+	
+	
+	override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+	{
+		// Create browser (must be done each time photo browser is
+		// displayed. Photo browser objects cannot be re-used)
+		
+		browser = MWPhotoBrowser(delegate: self)
+		
+		let shareBarButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "sharePhoto")
+		browser?.navigationItem.rightBarButtonItem = shareBarButton
+			
+		// Set options
+		browser?.displayActionButton = true // Show action button to allow sharing, copying, etc (defaults to YES)
+		browser?.displayNavArrows = false // Whether to display left and right nav arrows on toolbar (defaults to NO)
+		browser?.displaySelectionButtons = false // Whether selection buttons are shown on each image (defaults to NO)
+		browser?.zoomPhotosToFill = true // Images that almost fill the screen will be initially zoomed to fill (defaults to YES)
+		browser?.alwaysShowControls = true // Allows to control whether the bars and controls are always visible or whether they fade away to show the photo full (defaults to NO)
+		browser?.enableGrid = false // Whether to allow the viewing of all the photo thumbnails on a grid (defaults to YES)
+		browser?.startOnGrid = false // Whether to start on the grid of thumbnails instead of the first photo (defaults to NO)
+		
+		// Optionally set the current visible photo before displaying
+		NSLog("-[ collectionView:didSelectItemAtIndexPath:] %@", indexPath)
+		browser?.setCurrentPhotoIndex(UInt(indexPath.row))
+		
+		self.navigationController?.pushViewController(browser!, animated: true)
+	}
+	
+	
+	
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         
@@ -713,7 +847,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
-        
+		
         // Image view is of type PFImageView, allows parse to do the loading of the files in the cells
         
         if sortedByLikes == false && myPhotoSelected == false {
@@ -1345,4 +1479,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         return imageData;
     }
 
+}
+
+
+
+extension AlbumViewController : UICollectionViewDelegateFlowLayout
+{
+	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+	{
+		return CGSizeMake((self.view.frame.size.width/3) - 1, (self.view.frame.size.width/3) - 1)
+	}
 }
