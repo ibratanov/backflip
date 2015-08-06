@@ -13,7 +13,7 @@ import MessageUI
 import ParseUI
 
 
-class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate, UIScrollViewDelegate  {
+class FullScreenViewController: MWPhotoBrowser, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate, UIScrollViewDelegate, MWPhotoBrowserDelegate  {
     
     let mixpanel = Mixpanel.sharedInstance()
     
@@ -29,7 +29,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     @IBOutlet var scrollView: UIScrollView!
     
     @IBOutlet var pageControl: UIPageControl!
-    
     
     
     var likeActive = false
@@ -63,7 +62,38 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             likeToggle(self)
         }
     }
-    
+	
+	
+	
+	
+	//----------------------------------------------
+	// MARK: MWPhotoBrowserDelegate
+	//----------------------------------------------
+	
+	func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser!) -> UInt
+	{
+		return 1
+	}
+	
+	func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhotoProtocol!
+	{
+//		var image = self.images[Int(index)]
+//		var imageUrl = self.imageUrls[Int(index)]
+//		// var mwPhoto:MWPhoto = MWPhoto(image: image)
+		var mwPhoto:MWPhoto = MWPhoto(URL: NSURL(string: "https://www.petfinder.com/wp-content/uploads/2012/11/dog-how-to-select-your-new-best-friend-thinkstock99062463.jpg"))
+		//        println(imageUrls)
+		
+		return mwPhoto
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
     func displayNoInternetAlert() {
         var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to access content.")
         self.presentViewController(alert, animated: true, completion: nil)
@@ -552,7 +582,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     }
     
     // When a user stops on a photo, load the appropriate information
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
         pageIndex = pageControl.currentPage
         
@@ -563,7 +593,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     }
     
     // Recognizes when a scroll occurs, and loads the corresponding pages (before and after the image)
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
         loadVisiblePages()
     }
 
