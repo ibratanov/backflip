@@ -188,11 +188,11 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
     }
     
-    
+
 	
 	func shareAlbum()
 	{
-		var user = "filter";
+		var user = "filler";
 		if (PFUser.currentUser() != nil) {
 			user  = PFUser.currentUser()!.objectId!
 		}
@@ -203,8 +203,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 				NSLog("Branch short URL generation failed, %@", error);
 			} else {
 				
-				
-				let album = Album(text: String(format:"Check out '%@' photos on ", self.eventTitle!), url: url);
+				let album = Album(text: String(format:"Check out the photos from %@ on ", self.eventTitle!), url: url);
 				
 				// Now we share.
 				let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [album, url], applicationActivities: nil)
@@ -260,7 +259,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
         
         // Booleans for determining if view needs to be reloaded
-//self.fullScreen = false
+        //self.fullScreen = false
         //self.posted = false
         
         //--------------- LIKE/TIME/MY PHOTOS ---------------

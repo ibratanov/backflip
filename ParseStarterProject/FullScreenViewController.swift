@@ -262,156 +262,44 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 		let facebook = "";
 		
 		let imageData : UIImage = self.fullScreenImage.image!;
-		let image = Image(text: "Check out this image!");
+		let image = Image(text: "Check out this photo!");
 		
 		let vc = UIActivityViewController(activityItems: [image, imageData], applicationActivities: nil)
 		self.presentViewController(vc, animated: true, completion: nil)
-	}
-	
-	
-    // Alerts for sharing to Facebook and Twitter
-    func displayAlert(title:String,error: String) {
-        
-            var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        
-            // Facebook share feature
-            alert.addAction(UIAlertAction(title: "Facebook", style: .Default, handler: { action in
-                
-                if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
-                    var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-                    
-                    self.fullScreenImage.file = self.imageFiles[self.pageIndex]
-                    self.fullScreenImage.loadInBackground()
-                    //var result = facebookSheet.setInitialText("test")
-                    facebookSheet.addImage(self.fullScreenImage.image!)
-                    
-                    self.presentViewController(facebookSheet, animated: true, completion: nil)
-                    
-                    facebookSheet.completionHandler = { (result: SLComposeViewControllerResult) -> Void in
-                        switch(result) {
-                            
-                        case SLComposeViewControllerResult.Cancelled:
-                            
-                            println("cancelled")
-                            
-                        case SLComposeViewControllerResult.Done:
-                            
-                            if NetworkAvailable.networkConnection() == true {
-                                self.mixpanel.track("Facebook Share")
-                                self.dismissViewControllerAnimated(false, completion: nil)
-                                self.displaySuccess("Posted!", error: "Not appearing on Facebook? Check the iOS settings for Facebook and make sure you're logged in.")
-                            }
-                            else {
-                                self.displayNoInternetAlert()
-                            }
 
-                        }
-                        
-                    }
-               
-                } else {
-                    var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
+        vc.completionWithItemsHandler = { activity, success, items, error in
+            
+            if (success && error == nil) {
+                
+                var message = ""
+                switch (activity) {
+                case UIActivityTypePostToFacebook:
+                    self.mixpanel.track("Photo Facebook Share")
+                    message = "Not appearing on Facebook? Check the iOS settings for Facebook and make sure you're logged in."
+                case UIActivityTypePostToTwitter:
+                    self.mixpanel.track("Photo Twitter Share")
+                    message = "Successfully posted to Twitter."
+                case UIActivityTypeMail:
+                    self.mixpanel.track("Photo Email Share")
+                case UIActivityTypeMessage:
+                    self.mixpanel.track("Photo SMS Share")
+                case UIActivityTypeSaveToCameraRoll:
+                    self.mixpanel.track("Save To Camera Roll")
+                default:
+                    self.mixpanel.track("Photo Other Action")
                 }
-            }))
-
-        
-            // Twitter share feature
-            alert.addAction(UIAlertAction(title: "Twitter", style: .Default, handler: { action in
                 
-                if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
-                    
-                    var twitterSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-                    
-                    self.fullScreenImage.file = self.imageFiles[self.pageIndex]
-                    self.fullScreenImage.loadInBackground()
-                    twitterSheet.addImage(self.fullScreenImage.image)
-                    twitterSheet.setInitialText("@getbackflip")
-                    
-                    self.presentViewController(twitterSheet, animated: true, completion: nil)
-
-                    twitterSheet.completionHandler = { (result: SLComposeViewControllerResult) -> Void in
-                        switch(result) {
-                            
-                        case SLComposeViewControllerResult.Cancelled:
-                            
-                            println("cancelled")
-                            
-                        case SLComposeViewControllerResult.Done:
-
-                            if NetworkAvailable.networkConnection() == true {
-                                self.mixpanel.track("Twitter Share")
-                                self.dismissViewControllerAnimated(false, completion: nil)
-                                self.displaySuccess("Posted!", error: "Successfully posted to Twitter.")
-                            }
-                            else {
-                                self.displayNoInternetAlert()
-                            }
-                        }
-                    }
-                    
-                
-                } else {
-                    
-                    var alert = UIAlertController(title: "Accounts", message: "Please login to a Twitter account to share.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    
+                if (message != "") {
+                    self.displaySuccess("Posted!", error: message)
                 }
-                }))
-        
-        if NetworkAvailable.networkConnection() == true {
-            // SMS sharing feature
-            alert.addAction(UIAlertAction(title: "Invite friends to album (SMS)", style: .Default, handler: { action in
-                
-                var user = "filler"
-                if (PFUser.currentUser() != nil) {
-                    user = PFUser.currentUser()!.objectId!
-                }
-                var params = [ "referringUsername": "\(user)", "referringOut": "FSVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
-                
-                // This is making an asynchronous call to Branch's servers to generate the link and attach the information provided in the params dictionary --> so inserted spinner code to notify user program is running
-                
-                self.spinner.startAnimating()
-                //disable button
-                
-                Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
-                    if (error == nil) {
-                        if MFMessageComposeViewController.canSendText() {
-                                if NetworkAvailable.networkConnection() == true {
-                                    let messageComposer = MFMessageComposeViewController()
-                                    
-                                    messageComposer.body = String(format: "Check out these photos on Backflip! %@", url)
-                                    
-                                    messageComposer.messageComposeDelegate = self
-                                    
-                                    self.presentViewController(messageComposer, animated: true, completion:{(Bool) in
-                                        // stop spinner on main thread
-                                        self.spinner.stopAnimating()
-                                
-                                    })
-                                }
-                                else {
-                                    self.displayNoInternetAlert()
-                                }
-                        } else {
-                            
-                            self.spinner.stopAnimating()
-                            
-                            var alert = UIAlertController(title: "Error", message: "Your device does not allow sending SMS or iMessages.", preferredStyle: UIAlertControllerStyle.Alert)
-                            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-                            self.presentViewController(alert, animated: true, completion: nil)
-                        }
-                    }
-                })
-            }))
+            } else if (error == nil) {
+                println("cancelled")
+            } else {
+                self.displaySuccess("Failed to post!", error: "Check internet connectivity and try again.")
+                println(error)
+            }
         }
-
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-
-            self.presentViewController(alert, animated: true, completion: nil)
-    }
+	}
     
     // Alert pop up with Twitter, Facebook and SMS options
     @IBAction func share(sender: AnyObject) {

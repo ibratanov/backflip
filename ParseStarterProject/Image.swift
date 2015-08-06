@@ -33,7 +33,7 @@ class Image: NSObject, UIActivityItemSource
 		if (activityType == UIActivityTypeMail) {
 			return "<html><body>"+text+" <br />Sent via <a href=\"http://getbackflip.com/\">Backflip</a>"+"</body></html>";
 		} else if (activityType == UIActivityTypePostToTwitter) {
-			return text+" via @Backflip";
+			return text+" via @getbackflip";
 		}
 		
 		return text;
@@ -44,9 +44,9 @@ class Image: NSObject, UIActivityItemSource
 	{
 		
 		if (activityType == UIActivityTypeMail) {
-			return "Check this out!";
+			return "Photo on Backflip";
 		} else if (activityType == UIActivityTypePostToTwitter) {
-			return text+" via @Backflip";
+			return text+" via @getbackflip";
 		}
 		
 		return text;
