@@ -288,6 +288,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             displayNoInternetAlert()
         }
     }
+	
+	override func preferredStatusBarStyle() -> UIStatusBarStyle
+	{
+		return .LightContent
+	}
+	
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -377,9 +383,9 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                                     dispatch_async(dispatch_get_main_queue()) {
 										
 										let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-										let albumViewController = storyboard.instantiateViewControllerWithIdentifier("AlbumViewController") as! AlbumViewController
+										let albumViewController = storyboard.instantiateViewControllerWithIdentifier("EventAlbumViewController") as! EventAlbumViewController
 										albumViewController.eventId = self.eventSelectedObjectId;
-										albumViewController.eventTitle = self.eventSelected;
+										// albumViewController.eventTitle = self.eventSelected;
 										self.navigationController?.pushViewController(albumViewController, animated: true)
 										
 										// self.navigationController?.performSegueWithIdentifier("displayEventAlbum", sender: self)

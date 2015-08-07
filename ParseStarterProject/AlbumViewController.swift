@@ -70,6 +70,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var imageFilesTemp : [(image: PFFile , likes: Int , id: String,date: NSDate, hqImage: PFFile)] = []
     
     // Arrays for like sort selected
+	var collectionContent : [PFFile?] = []
+
+	
     var imageFilesLikes : [PFFile?] = []
     var objectIdLikes = [String]()
     var datesLikes : [NSDate?] = []
@@ -236,7 +239,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 
 		let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
 		
-		flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 60);
+		flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
 		flow.itemSize = CGSizeMake((self.view.frame.size.width/3)-1, (self.view.frame.size.width/3)-1);
 		flow.minimumInteritemSpacing = 1;
 		flow.minimumLineSpacing = 1;
@@ -719,22 +722,34 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     }
 	
 
-	override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-		var v : UICollectionReusableView! = nil
+	override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
+	{
+		var supplementaryView : AnyObject! = nil
 		if kind == UICollectionElementKindSectionHeader {
-			v = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier:"Header", forIndexPath:indexPath) as! UICollectionReusableView
-			if v.subviews.count == 0 {
-				let segItems = ["Sort By Time", "Sort By Likes", "My Photos"];
-
-				v.addSubview(UISegmentedControl(items: segItems))
-				v.frame = CGRectMake(0,0,375.0,88.0)
-			}
-			
-			let seg = v.subviews[0] as! UISegmentedControl
-			
+			supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "header-view", forIndexPath: indexPath)
+		} else if kind == UICollectionElementKindSectionFooter {
+			supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionFooter, withReuseIdentifier: "footer-view", forIndexPath: indexPath)
 		}
-		return v
+		
+		return supplementaryView as! UICollectionReusableView
 	}
+	
+//	override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+//		var v : UICollectionReusableView! = nil
+//		if kind == UICollectionElementKindSectionHeader {
+//			v = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier:"Header", forIndexPath:indexPath) as! UICollectionReusableView
+//			if v.subviews.count == 0 {
+//				let segItems = ["Sort By Time", "Sort By Likes", "My Photos"];
+//
+//				v.addSubview(UISegmentedControl(items: segItems))
+//				v.frame = CGRectMake(0,0,375.0,88.0)
+//			}
+//			
+//			let seg = v.subviews[0] as! UISegmentedControl
+//			
+//		}
+//		return v
+//	}
 	
 	
 	func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser!) -> UInt
@@ -963,7 +978,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     //--------------- Camera ---------------
     //initialize camera
-    func takePhoto(sender: UIButton) {
+    @IBAction func takePhoto(sender: UIButton) {
         
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeUpButtonDownNotification", object: nil)

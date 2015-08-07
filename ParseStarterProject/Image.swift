@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import Parse
 import Foundation
 
 class Image: NSObject, UIActivityItemSource
 {
 	var text : String = "";
-	
+	var thumbnail : PFFile = PFFile.new()
+	var likes : Int = 0
+	var objectId : String?
+	var createdAt : NSDate? = NSDate.new()
+	var image : PFFile = PFFile.new()
 	
 	// Constructor
 	init(text: String) {

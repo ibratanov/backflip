@@ -124,10 +124,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Used to add the device to the Parse push notification settings.
         PFInstallation.currentInstallation().saveInBackground()
-        
+		
+		
+		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+		
         //------------------------------------------------------------------------
 
-        Fabric.with([Digits()])
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+			Fabric.with([Digits()])
+		});
         
         //--------------------------BRANCH.IO------------------------------------
         

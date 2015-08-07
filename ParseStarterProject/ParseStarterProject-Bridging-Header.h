@@ -15,5 +15,6 @@
 #import <UIKit/UIKit.h>
 #import <Mixpanel/Mixpanel.h>
 #import "MWPhotoBrowser.h"
+#import "MWPhotoBrowserPrivate.h"
 
 #endif

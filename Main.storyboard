@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A178w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rap-jL-BIw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A178w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rap-jL-BIw">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -201,6 +200,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="termsTextView" destination="9tl-Sf-M8U" id="yf0-P6-4Hy"/>
@@ -215,8 +215,8 @@
             <objects>
                 <navigationController title="Event Albums" id="Oc7-Mf-MXx" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Event Cloud" image="tabBar-eventHistory" id="Fho-OT-gwv"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="eJx-br-LaQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -349,6 +349,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="checkInButton" destination="YcA-hr-4UR" id="nL9-oJ-2pe"/>
                         <outlet property="noEventLabel" destination="LwM-pe-38h" id="oMm-tf-6KR"/>
@@ -423,7 +424,7 @@
                                     <outlet property="imageOne" destination="oBQ-MH-boF" id="epg-Ni-MqX"/>
                                     <outlet property="imageThree" destination="4JF-XT-HBZ" id="PeL-U2-QwX"/>
                                     <outlet property="imageTwo" destination="KXP-d0-CTN" id="4Ah-vj-Zqc"/>
-                                    <segue destination="mWS-U0-Zf5" kind="show" identifier="display-event-album" id="rLk-h5-U43"/>
+                                    <segue destination="XjT-mA-gxf" kind="show" identifier="display-event-album" id="kSd-hV-V4Q"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -436,34 +437,36 @@
                         <barButtonItem title="Item" id="901-ZQ-YzX"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Event Cloud" id="AlS-vE-J4m"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVz-3T-M7e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1628.5" y="-3830.5"/>
         </scene>
-        <!--Album View Controller-->
-        <scene sceneID="dgT-RU-JIi">
+        <!--Event Album View Controller-->
+        <scene sceneID="Lqx-4V-58o">
             <objects>
-                <viewController storyboardIdentifier="AlbumViewController" id="mWS-U0-Zf5" customClass="AlbumViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="SRZ-V9-j4W">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <collectionViewController storyboardIdentifier="EventAlbumViewController" id="XjT-mA-gxf" customClass="EventAlbumViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="8qJ-bL-LVp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="sTu-yW-iSp">
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fOJ-Iy-wDU">
                             <size key="itemSize" width="125" height="125"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="headerReferenceSize" width="50" height="44"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="albumCell" id="JlL-Qi-kpt" customClass="AlbumViewCell" customModule="Backflip" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="album-cell" id="Lma-EI-nOW" customClass="AlbumViewCell" customModule="Backflip" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PeA-6i-neP" customClass="PFImageView">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HHM-Lc-oGr" customClass="PFImageView">
                                             <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
                                             <animations/>
                                         </imageView>
@@ -472,46 +475,59 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <animations/>
-                                <constraints>
-                                    <constraint firstItem="PeA-6i-neP" firstAttribute="top" secondItem="JlL-Qi-kpt" secondAttribute="topMargin" constant="-8" id="Gpn-xT-2hs"/>
-                                    <constraint firstItem="PeA-6i-neP" firstAttribute="leading" secondItem="JlL-Qi-kpt" secondAttribute="leadingMargin" constant="-8" id="UWV-ol-rtz"/>
-                                    <constraint firstAttribute="centerX" secondItem="PeA-6i-neP" secondAttribute="centerX" id="Ws5-XL-TVb"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="PeA-6i-neP" secondAttribute="trailing" constant="-8" id="XnI-A9-M67"/>
-                                    <constraint firstAttribute="centerY" secondItem="PeA-6i-neP" secondAttribute="centerY" id="Z7r-i6-uRt"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="PeA-6i-neP" secondAttribute="bottom" constant="-8" id="ZaO-K4-Cr6"/>
-                                </constraints>
                                 <connections>
-                                    <outlet property="imageView" destination="PeA-6i-neP" id="9pg-vS-AvM"/>
+                                    <outlet property="imageView" destination="HHM-Lc-oGr" id="Z78-tB-pHJ"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="header-view" id="9Jr-DJ-Mbz">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bE1-kd-Hll">
+                                    <rect key="frame" x="8" y="8" width="359" height="29"/>
+                                    <animations/>
+                                    <segments>
+                                        <segment title="Sorted By Time"/>
+                                        <segment title="Sorted By Likes"/>
+                                        <segment title="Favorites"/>
+                                    </segments>
+                                    <color key="tintColor" red="0.066666666669999999" green="0.52156862749999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="segementedControlValueChanged:" destination="XjT-mA-gxf" eventType="valueChanged" id="Wdd-hb-V3d"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                            <animations/>
+                        </collectionReusableView>
                         <connections>
-                            <outlet property="dataSource" destination="mWS-U0-Zf5" id="Ail-yE-2e9"/>
-                            <outlet property="delegate" destination="mWS-U0-Zf5" id="BRo-Me-gPo"/>
+                            <outlet property="dataSource" destination="XjT-mA-gxf" id="nja-Vo-uee"/>
+                            <outlet property="delegate" destination="XjT-mA-gxf" id="gRZ-NQ-Cum"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="s92-BH-gmT">
-                        <barButtonItem key="rightBarButtonItem" title="Invite" id="cth-va-9lz">
+                    <navigationItem key="navigationItem" id="TDl-cV-m57">
+                        <barButtonItem key="rightBarButtonItem" title="Invite" id="X6v-o4-hPl">
                             <connections>
-                                <action selector="smsShare:" destination="mWS-U0-Zf5" id="bSu-g7-xEj"/>
+                                <action selector="shareAlbum" destination="XjT-mA-gxf" id="G5M-Os-dap"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
-                        <outlet property="view" destination="SRZ-V9-j4W" id="zse-e1-rAx"/>
+                        <outlet property="collectionView" destination="8qJ-bL-LVp" id="cgu-mQ-xaO"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PPm-ti-T9U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Hu-s4-Z9H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2350.5" y="-3008.5"/>
+            <point key="canvasLocation" x="2380.5" y="-3008.5"/>
         </scene>
         <!--Current Event-->
         <scene sceneID="dIp-dR-pyX">
             <objects>
                 <navigationController title="Current Event" id="O7c-aj-Qx3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Current Event" image="tabBar-locator" id="65X-vP-VEc"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Yes-NS-3F9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -524,7 +540,7 @@
                     </toolbar>
                     <connections>
                         <segue destination="0pn-ur-yjM" kind="relationship" relationship="rootViewController" id="m53-1r-yA0"/>
-                        <segue destination="mWS-U0-Zf5" kind="show" identifier="displayEventAlbum" id="q9J-HF-dwb"/>
+                        <segue destination="XjT-mA-gxf" kind="show" identifier="display-event-album" id="KAo-hs-QnX"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HJi-dg-QH4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -540,7 +556,7 @@
         <image name="tabBar-locator" width="17" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="q9J-HF-dwb"/>
+        <segue reference="kSd-hV-V4Q"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
 </document>

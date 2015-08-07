@@ -286,7 +286,7 @@ class EventTableViewController: UITableViewController {
         
         if segue.identifier == "display-event-album" {
             
-            let moveVC = segue.destinationViewController as! AlbumViewController
+            let moveVC = segue.destinationViewController as! EventAlbumViewController
             
 
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
