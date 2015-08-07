@@ -4,6 +4,7 @@
 //  Copyright 2011-present Parse Inc. All rights reserved.
 //
 #import <Branch/Branch.h>
+
 //#import </Users/jonathanarlauskas/Documents/Work:Finances/Tribal/6tribe/Pods/Mixpanel/Mixpanel/Mixpanel.h>
 #ifndef ParseStarterProject_Bridging_Header_h
 #define ParseStarterProject_Bridging_Header_h
@@ -13,5 +14,6 @@
 
 
 #import <Mixpanel/Mixpanel.h>
+#import "NewRelicAgent/NewRelic.h"
 
 #endif

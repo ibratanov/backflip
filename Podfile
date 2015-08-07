@@ -6,6 +6,11 @@ xcodeproj 'Backflip.xcodeproj/'
 target 'Backflip' do
 
 pod 'Mixpanel'
+# ViewDeck (NewRelic) caused warnings
+#pod 'ViewDeck', '2.2.11'
+pod 'AFNetworking'
+pod 'SVProgressHUD'
+pod 'NewRelicAgent'
 
 end
 
