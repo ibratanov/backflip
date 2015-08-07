@@ -25,20 +25,17 @@ PODS:
   - Mixpanel/Mixpanel (2.8.2)
   - NewRelicAgent (5.2.0)
   - SVProgressHUD (1.1.3)
-  - ViewDeck (2.2.11)
 
 DEPENDENCIES:
   - AFNetworking
   - Mixpanel
   - NewRelicAgent
   - SVProgressHUD
-  - ViewDeck (= 2.2.11)
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   Mixpanel: f4d71ac2a306e7cda6ad03d4a2be249a0fd7a967
   NewRelicAgent: 04c306364d4c95d6463287ab037276d56e5b1ca8
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
-  ViewDeck: ce795f929d00d1e0fd63f61d79cc92a9ea050ec9
 
 COCOAPODS: 0.38.2
