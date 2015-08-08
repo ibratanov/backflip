@@ -1148,9 +1148,15 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
         //Send assets to parse
         for (index, asset) in enumerate(assets) {
-            let imageView = UIImageView(image: asset.fullScreenImage)
+            if(asset.originalAsset.defaultRepresentation().fullScreenImage() == nil){
+                               //error
+                           }else{
+                           
+                let imageView = UIImageView(image: asset.fullScreenImage)
+
             //----->imageView.contentMode = UIViewContentMode.ScaleAspectFit
             uploadImages(imageView.image!)
+            }
         }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
