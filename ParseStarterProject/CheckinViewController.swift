@@ -64,14 +64,25 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-		return self.cellContent.count
+		if (self.cellContent.count < 1) {
+			return 1
+		} else {
+			return self.cellContent.count
+		}
     }
 
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-		return self.cellContent[row] as! String
+		if (self.cellContent.count < 1) {
+			return "No events avaliable"
+		} else {
+			return self.cellContent[row] as! String
+		}
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+		if (self.cellContent.count < 1) {
+			return
+		}
         print(self.cellContent[row])
         eventSelected = self.cellContent[row] as! String
     }
@@ -91,7 +102,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         }))
 		
         self.presentViewController(alert, animated: true, completion: nil)
-        
     }
     
     override func viewDidLoad() {

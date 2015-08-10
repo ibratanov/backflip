@@ -22,7 +22,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	var eventId : String?
 	var eventTitle : String?
 	let CELL_REUSE_IDENTIFIER = "album-cell"
+	
+	var orginalContent : [Image] = []
 	var collectionContent : [Image] = []
+	
 	var photoBrowser : MWPhotoBrowser?
 	var cameraButton : UIButton?
 	
@@ -205,19 +208,27 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	@IBAction func segementedControlValueChanged(sender: AnyObject)
 	{
 		let segementedControl = sender as! UISegmentedControl
-		var content = self.collectionContent
+		var content = self.orginalContent
 		
 		self.collectionContent.removeAll(keepCapacity: true)
 		self.collectionView?.reloadData()
 		
 		if segementedControl.selectedSegmentIndex == 0 {
 			content.sort{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
-			self.collectionView?.reloadData()
 		} else if segementedControl.selectedSegmentIndex == 1 {
 			content.sort{ $0.likes > $1.likes }
-			self.collectionView?.reloadData()
 		} else if segementedControl.selectedSegmentIndex == 2 {
 			println("Sorting by 'My Photos'..")
+			
+			content.removeAll(keepCapacity: true)
+			for (var i = 0; i < self.orginalContent.count; i++) {
+				let image = self.orginalContent[i]
+				let liked = contains(image.likedBy, PFUser.currentUser()!.username!)
+				if (liked) {
+					content.append(image)
+				}
+			}
+			
 		}
 		
 		self.collectionContent = content
@@ -419,6 +430,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 						
 						self.collectionContent.append(image)
 					}
+					self.orginalContent = self.collectionContent
 					
 					self.segementedControlValueChanged(self.segmentedControl)
 					
