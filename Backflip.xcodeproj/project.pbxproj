@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040B27CE1B794D75004B4FB2 /* CheckinViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27CD1B794D75004B4FB2 /* CheckinViewControllerNew.swift */; };
+		040B27D21B794E9B004B4FB2 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event.swift */; };
 		0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0434BCD51B73BDCF00EF57EC /* Image.swift */; };
 		049222AB1B72653900FFB08A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AA1B72653900FFB08A /* Album.swift */; };
 		049222AE1B72767500FFB08A /* ReportImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AD1B72767500FFB08A /* ReportImage.swift */; };
@@ -133,6 +135,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040B27CD1B794D75004B4FB2 /* CheckinViewControllerNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewControllerNew.swift; sourceTree = "<group>"; };
+		040B27D11B794E9B004B4FB2 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		0434BCD51B73BDCF00EF57EC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		049222AA1B72653900FFB08A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		049222AD1B72767500FFB08A /* ReportImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportImage.swift; sourceTree = "<group>"; };
@@ -337,6 +341,7 @@
 			children = (
 				0434BCD51B73BDCF00EF57EC /* Image.swift */,
 				049222AA1B72653900FFB08A /* Album.swift */,
+				040B27D11B794E9B004B4FB2 /* Event.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -508,6 +513,7 @@
 				04F41BF41B754B20001AB8DA /* Layouts */,
 				504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */,
 				04F41BF21B7507BB001AB8DA /* EventAlbumViewController.swift */,
+				040B27CD1B794D75004B4FB2 /* CheckinViewControllerNew.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -865,6 +871,7 @@
 				04F41BF31B7507BB001AB8DA /* EventAlbumViewController.swift in Sources */,
 				049AA6E21B73DB84003888CE /* UIButton+WebCache.m in Sources */,
 				049222AB1B72653900FFB08A /* Album.swift in Sources */,
+				040B27D21B794E9B004B4FB2 /* Event.swift in Sources */,
 				67A796061B2EE49A006E489D /* CGSize+Extensions.swift in Sources */,
 				049AA6E01B73DB84003888CE /* SDWebImageManager.m in Sources */,
 				50CE7E7A1B03DB2F00F4B6B1 /* FeedViewController.swift in Sources */,
@@ -891,6 +898,7 @@
 				04F41BF61B754B2E001AB8DA /* BFCollectionViewFlowLayout.swift in Sources */,
 				3AAA7B751B2B25F20045EE76 /* EventTableViewCell.swift in Sources */,
 				049AA6E81B73DB84003888CE /* UIView+WebCacheOperation.m in Sources */,
+				040B27CE1B794D75004B4FB2 /* CheckinViewControllerNew.swift in Sources */,
 				50CE7E741B027C9000F4B6B1 /* EventTableViewController.swift in Sources */,
 				67A796041B2EE49A006E489D /* CGRect+Extensions.swift in Sources */,
 				049AA6B61B73DB72003888CE /* MBProgressHUD.m in Sources */,

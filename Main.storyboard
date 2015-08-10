@@ -59,7 +59,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="home-background" translatesAutoresizingMaskIntoConstraints="NO" id="3Qu-VX-bP6">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home-background" translatesAutoresizingMaskIntoConstraints="NO" id="3Qu-VX-bP6">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
                             </imageView>
@@ -234,7 +234,11 @@
         <scene sceneID="0XN-eA-FQT">
             <objects>
                 <navigationController title="Event Albums" id="Oc7-Mf-MXx" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Event Cloud" image="tabBar-eventHistory" id="Fho-OT-gwv"/>
+                    <tabBarItem key="tabBarItem" title="Event Cloud" image="tabBar-eventHistory" selectedImage="tabBar-eventHistory-filled" id="Fho-OT-gwv">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="tabBar-eventHistory-filled"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="eJx-br-LaQ">
@@ -546,7 +550,11 @@
         <scene sceneID="dIp-dR-pyX">
             <objects>
                 <navigationController title="Current Event" id="O7c-aj-Qx3" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Current Event" image="tabBar-locator" id="65X-vP-VEc"/>
+                    <tabBarItem key="tabBarItem" title="Current Event" image="tabBar-locator" id="65X-vP-VEc">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="tabBar-locator-filled"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Yes-NS-3F9">
@@ -582,7 +590,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Camera" image="goto-camera" id="GSs-m3-0Vc"/>
+                    <tabBarItem key="tabBarItem" title="Camera" image="tabBar-camera-filled" id="GSs-m3-0Vc"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcv-pB-unz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -590,15 +598,17 @@
         </scene>
     </scenes>
     <resources>
-        <image name="goto-camera" width="45" height="33"/>
         <image name="home-background" width="375" height="667"/>
         <image name="home-logo" width="250" height="127"/>
         <image name="settings-icon" width="21" height="21"/>
+        <image name="tabBar-camera-filled" width="35" height="25"/>
         <image name="tabBar-eventHistory" width="28" height="25"/>
-        <image name="tabBar-locator" width="17" height="25"/>
+        <image name="tabBar-eventHistory-filled" width="28" height="25"/>
+        <image name="tabBar-locator" width="30" height="24"/>
+        <image name="tabBar-locator-filled" width="29" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="A7s-cH-xqV"/>
+        <segue reference="4t2-vT-GZe"/>
         <segue reference="KAo-hs-QnX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
