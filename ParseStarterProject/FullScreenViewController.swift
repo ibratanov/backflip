@@ -309,7 +309,7 @@ class FullScreenViewController: MWPhotoBrowser, UIGestureRecognizerDelegate,MFMe
 		let facebook = "";
 		
 		let imageData : UIImage = self.fullScreenImage.image!;
-		let image = Image(text: "Check out this photo!");
+		let image = Image(text: "Photo");
 		
 		let reportImage = ReportImageActivity();
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)

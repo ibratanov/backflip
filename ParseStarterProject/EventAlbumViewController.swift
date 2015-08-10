@@ -3,7 +3,7 @@
 //  Backflip
 //
 //  Created by Jack Perry on 2015-08-07.
-//  Copyright (c) 2015 Parse. All rights reserved.
+//  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
 
@@ -26,6 +26,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	var photoBrowser : MWPhotoBrowser?
 	var cameraButton : UIButton?
 	
+	var likeButton : UIBarButtonItem?
+	var likeLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 100, 21))
+	
+	
 	@IBOutlet weak var segmentedControl : UISegmentedControl!
 	let spinner : UIActivityIndicatorView = UIActivityIndicatorView()
 	let refreshControl : UIRefreshControl = UIRefreshControl.new()
@@ -35,26 +39,9 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	// MARK: View Delegate
 	//-------------------------------------
 	
-	override func viewDidLayoutSubviews()
+	override func viewDidAppear(animated: Bool)
 	{
-		super.viewDidLayoutSubviews()
-		
-		let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
-		
-		flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
-		flow.itemSize = CGSizeMake((self.view.frame.size.width/3)-1, (self.view.frame.size.width/3)-1);
-		flow.minimumInteritemSpacing = 1;
-		flow.minimumLineSpacing = 1;
-		
-		
-		cameraButton = UIButton.buttonWithType(.Custom) as? UIButton
-		cameraButton?.setImage(UIImage(named: "goto-camera"), forState: .Normal)
-		cameraButton?.backgroundColor = UIColor(red:0.063,  green:0.518,  blue:0.459, alpha:1)
-		cameraButton?.frame = CGRectMake(0, (self.view.frame.size.height-(75+44)), self.view.frame.size.width, 75)
-		cameraButton?.imageView?.sizeToFit()
-		self.view?.addSubview(cameraButton!)
-		self.view?.bringSubviewToFront(cameraButton!)
-		
+		super.viewDidAppear(animated)
 	}
 	
 	override func viewDidLoad()
@@ -65,12 +52,35 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		self.title = self.eventTitle
 		
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
+		
 		refreshControl.tintColor = UIColor(red:0,  green:0.588,  blue:0.533, alpha:1)
 		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
 		refreshControl.addTarget(self, action: "updateData", forControlEvents: .ValueChanged)
 		self.collectionView!.addSubview(refreshControl)
 		
 		self.collectionView?.contentInset = UIEdgeInsetsMake(0.0,0.0,72.0,0.0)
+		
+		cameraButton = UIButton.buttonWithType(.Custom) as? UIButton
+		cameraButton?.setImage(UIImage(named: "goto-camera"), forState: .Normal)
+		cameraButton?.backgroundColor = UIColor(red:0.063,  green:0.518,  blue:0.459, alpha:1)
+		cameraButton?.frame = CGRectMake(0, (self.view.frame.size.height-(75+44)), self.view.frame.size.width, 75)
+		cameraButton?.imageView?.sizeToFit()
+		self.view?.addSubview(cameraButton!)
+		self.view?.bringSubviewToFront(cameraButton!)
+		
+		
+		// Layout -  Only run on the main thread
+		dispatch_async(dispatch_get_main_queue()) {
+			let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
+			
+			flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
+			flow.itemSize = CGSizeMake((self.view.frame.size.width/3)-1, (self.view.frame.size.width/3)-1);
+			flow.minimumInteritemSpacing = 1;
+			flow.minimumLineSpacing = 1;
+			
+			self.cameraButton?.frame = CGRectMake(0, (self.view.frame.size.height-(75+44)), self.view.frame.size.width, 75)
+		}
 	}
 	
 	override func preferredStatusBarStyle() -> UIStatusBarStyle
@@ -100,6 +110,18 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		return photo
 	}
 	
+	func photoBrowser(photoBrowser: MWPhotoBrowser!, didDisplayPhotoAtIndex index: UInt)
+	{
+		let image = self.collectionContent[Int(index)]
+		likeLabel.text = NSString(format: "%i likes", image.likes) as String
+		
+		let liked = contains(image.likedBy, PFUser.currentUser()!.username!)
+		if (liked) {
+			likeButton?.image = UIImage(named: "heart-icon-filled")
+		} else {
+			likeButton?.image = UIImage(named: "heart-icon-empty")
+		}
+	}
 	
 	
 	//-------------------------------------
@@ -133,10 +155,28 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		photoBrowser = MWPhotoBrowser(delegate: self)
 		photoBrowser?.alwaysShowControls = true
+		photoBrowser?.displayActionButton = false
 		
 		// Our own custom share button
-		let shareBarButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "sharePhoto")
-		photoBrowser?.navigationItem.rightBarButtonItem = shareBarButton
+		let shareBarButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: "sharePhoto")
+		shareBarButton.image = UIImage(named: "more-icon")
+		
+		
+		// Toolbar items
+		let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+		let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: self, action: nil)
+		fixedSpace.width = 8
+		
+		likeButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: "likePhoto")
+		likeButton?.image = UIImage(named: "heart-icon-empty")
+		
+		likeLabel.font = UIFont(name: "Avenir-Medium", size: 16)
+		likeLabel.textColor = UIColor.whiteColor()
+		likeLabel.backgroundColor = UIColor.clearColor()
+		
+		var likeLabelButton = UIBarButtonItem(customView: likeLabel)
+		
+		photoBrowser?.toolbar?.items = [fixedSpace, likeButton!, fixedSpace, likeLabelButton, flexSpace, shareBarButton]
 		
 		photoBrowser?.setCurrentPhotoIndex(UInt(indexPath.row))
 		
@@ -237,6 +277,88 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 	}
 	
+	@IBAction func likePhoto()
+	{
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+		
+			let selectedIndex = self.photoBrowser?.currentIndex
+			let image = self.collectionContent[Int(selectedIndex!)]
+			let liked = contains(image.likedBy, PFUser.currentUser()!.username!)
+			if (liked) {
+				let index = find(image.likedBy, PFUser.currentUser()!.username!)
+				image.likedBy.removeAtIndex(index!)
+				image.likes -= 1
+			} else {
+				image.likedBy.append(PFUser.currentUser()!.username!)
+				image.likes += 1
+			}
+			
+			var photo = PFObject(className: "Photo")
+			photo.objectId = image.objectId
+			photo["upvoteCount"] = image.likes
+			photo["usersLiked"] = image.likedBy
+			
+			photo.saveInBackground()
+			
+			dispatch_async(dispatch_get_main_queue(), {
+				
+				self.likeLabel.text = NSString(format: "%i likes", image.likes) as String
+				
+				let liked = contains(image.likedBy, PFUser.currentUser()!.username!)
+				if (liked) {
+					self.likeButton?.image = UIImage(named: "heart-icon-filled")
+				} else {
+					self.likeButton?.image = UIImage(named: "heart-icon-empty")
+				}
+			})
+			
+		})
+	}
+	
+	func flagPhoto(sender: AnyObject)
+	{
+		dispatch_async(dispatch_get_main_queue(), {
+			var alertController = UIAlertController(title: "Flag inappropriate content", message: "What's wrong with this photo?", preferredStyle: .Alert)
+			alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in }
+			alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+			alertController.addAction(UIAlertAction(title: "Flag", style: .Default, handler: { (UIAlertAction) -> Void in
+				
+				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+					
+					let selectedIndex = self.photoBrowser?.currentIndex
+					let image = self.collectionContent[Int(selectedIndex!)]
+					
+					
+					let textField = alertController.textFields?.first as! UITextField
+					var photo = PFObject(className: "Photo")
+					photo.objectId = image.objectId
+					photo["flagged"] = true
+					photo["reviewed"] = false
+					photo["blocked"] = false
+					photo["reporter"] = PFUser.currentUser()!.objectId
+					photo["reportMessage"] = textField.text
+					
+					photo.saveInBackground()
+					
+					
+					let imageIndex = find(self.collectionContent, image)
+					self.collectionContent.removeAtIndex(imageIndex!)
+					
+					dispatch_async(dispatch_get_main_queue(), {
+						self.photoBrowser?.reloadData()
+						self.collectionView?.reloadData()
+					})
+					
+				})
+				
+			}))
+			self.presentViewController(alertController, animated: true, completion: nil)
+		})
+		
+	}
+
+	
+	
 	
 	
 	//-------------------------------------
@@ -293,6 +415,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 						image.image = photo["image"] as! PFFile
 						image.thumbnail = photo["thumbnail"] as! PFFile
 						image.createdAt = photo.createdAt
+						image.likedBy = photo["usersLiked"] as! [String]
 						
 						self.collectionContent.append(image)
 					}

@@ -18,6 +18,7 @@ class Image: NSObject, UIActivityItemSource
 	var objectId : String?
 	var createdAt : NSDate? = NSDate.new()
 	var image : PFFile = PFFile.new()
+	var likedBy : [String] = []
 	
 	// Constructor
 	init(text: String) {
