@@ -20,20 +20,11 @@ class EventTableViewController: UITableViewController {
         performSegueWithIdentifier("addEventSegue", sender: nil)
     }
     
-    var imageList: [PFFile] = []
-    var events: [String] = []
-    
     var eventWithPhotos = [String:[PFFile]]()
-    var eventWithIds = [String:[PFFile]]()
-    
     var eventObjs: [PFObject] = []
-    
+
     var logoutButton = UIImage(named: "settings-icon") as UIImage!
     var addButton = UIImage(named: "add-icon") as UIImage!
-
-    
-    var eventId: [String] = []
-    var venues: [String] = []
     
     let qos = (Int(QOS_CLASS_BACKGROUND.value))
     
@@ -53,6 +44,9 @@ class EventTableViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        
+        updateEvents()
+
         
     }
     
@@ -116,7 +110,6 @@ class EventTableViewController: UITableViewController {
                                     }
                             
                                         self.eventWithPhotos[event.objectId!] = thumbnails
-                                        self.eventWithIds[event.objectId!] = thumbnails
                                         self.tableView.reloadData()
                                     }
                                 
@@ -124,7 +117,6 @@ class EventTableViewController: UITableViewController {
                                   
                                         var thumbnails: [PFFile] = []
                                         self.eventWithPhotos[event.objectId!] = thumbnails
-                                        self.eventWithIds[event.objectId!] = thumbnails
                                         self.tableView.reloadData()
                                     
                                 }
@@ -145,7 +137,11 @@ class EventTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
+        
     }
+
+    // Table View delegate methods
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     
@@ -153,7 +149,8 @@ class EventTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Array(self.eventWithPhotos.keys).count
+        println(self.eventWithPhotos.count)
+        return self.eventWithPhotos.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -269,6 +266,57 @@ class EventTableViewController: UITableViewController {
         }
         
         return tableCell
+    }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            self.tableView.beginUpdates()
+            let current = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
+            dump(eventObjs)
+            let eventObject = eventObjs[indexPath.row]
+            self.eventWithPhotos.removeValueForKey(eventObject.objectId!)
+            eventDelete(eventObject)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+            updateEvents()
+            self.tableView.endUpdates()
+  
+        }
+    }
+    
+    
+    func eventDelete (event : PFObject ) {
+        
+        let eventTitle = event["eventName"] as! String
+        let eventID = event.objectId! as String
+        
+        if NetworkAvailable.networkConnection() == true {
+            // Delete event info from the users DB entry
+            let query = PFUser.query()
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                object!.removeObject(event, forKey:"savedEvents")
+                object!.removeObject(eventTitle, forKey: "savedEventNames")
+                object!.saveInBackground()
+            })
+            
+            // Delete event attendence row in Event Attendance class
+            let attendanceQuery = PFQuery(className: "EventAttendance")
+            attendanceQuery.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+            attendanceQuery.whereKey("eventID", equalTo: eventID)
+            attendanceQuery.selectKeys(["photosLiked", "photosLikedID", "flagged", "blocked"])
+            attendanceQuery.limit = 1
+            attendanceQuery.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                objects?.first?.deleteInBackground()
+            }
+        } else {
+            displayNoInternetAlert()
+        }
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
