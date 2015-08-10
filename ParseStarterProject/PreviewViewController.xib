@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreviewViewController" customModule="Backflip" customModuleProvider="target">
             <connections>
                 <outlet property="cropOpeningView" destination="R6s-Gn-XjS" id="Qio-2i-K3H"/>
+                <outlet property="imageLoad" destination="Hm8-KL-gkI" id="7cz-lP-xTh"/>
                 <outlet property="imageView" destination="MYo-N8-JBd" id="cQC-Wt-whp"/>
                 <outlet property="referenceView" destination="ys9-ZT-loK" id="dwb-T8-gat"/>
                 <outlet property="scrollView" destination="Qr6-XV-dtf" id="uW7-Yc-jqW"/>
@@ -23,6 +24,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Hm8-KL-gkI">
+                    <rect key="frame" x="177" y="324" width="20" height="20"/>
+                </activityIndicatorView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="500" placeholderIntrinsicHeight="500" translatesAutoresizingMaskIntoConstraints="NO" id="Qr6-XV-dtf">
                     <rect key="frame" x="-257" y="0.0" width="889" height="667"/>
                     <subviews>
@@ -109,23 +113,38 @@
                         <constraint firstAttribute="width" secondItem="R6s-Gn-XjS" secondAttribute="height" multiplier="1:1" id="5yH-Qu-g3b"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CQH-Wd-mah">
+                    <rect key="frame" x="167" y="41" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="bct-hP-9PF"/>
+                    </constraints>
+                    <state key="normal" image="swipe">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="UPf-Gi-Swq" firstAttribute="leading" secondItem="CQH-Wd-mah" secondAttribute="trailing" constant="-207" id="017-Qs-LGz"/>
                 <constraint firstAttribute="trailing" secondItem="INT-Kr-uVX" secondAttribute="trailing" id="8Hf-yV-Ksw"/>
+                <constraint firstItem="UPf-Gi-Swq" firstAttribute="leading" secondItem="CQH-Wd-mah" secondAttribute="trailing" constant="-207" id="Eac-tI-DCa"/>
                 <constraint firstAttribute="right" secondItem="UPf-Gi-Swq" secondAttribute="right" id="Fu2-eg-mwm"/>
                 <constraint firstItem="Qr6-XV-dtf" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="Gmu-Xm-vEJ"/>
                 <constraint firstAttribute="bottom" secondItem="INT-Kr-uVX" secondAttribute="bottom" id="Gv2-5m-Lrb"/>
                 <constraint firstAttribute="trailing" secondItem="BBL-aR-gtQ" secondAttribute="trailing" id="IWV-Xt-4Oi"/>
                 <constraint firstItem="R6s-Gn-XjS" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="N1d-oS-snV"/>
                 <constraint firstAttribute="bottom" secondItem="ys9-ZT-loK" secondAttribute="bottom" id="O6V-5t-m8Q"/>
+                <constraint firstItem="CQH-Wd-mah" firstAttribute="centerX" secondItem="UPf-Gi-Swq" secondAttribute="centerX" id="Opi-OX-itc"/>
+                <constraint firstItem="Hm8-KL-gkI" firstAttribute="centerX" secondItem="BBL-aR-gtQ" secondAttribute="centerX" id="RA5-tq-8Fq"/>
                 <constraint firstAttribute="centerX" secondItem="Qr6-XV-dtf" secondAttribute="centerX" id="Sma-42-UI0"/>
                 <constraint firstItem="BBL-aR-gtQ" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="TMV-c4-CBU"/>
                 <constraint firstItem="BBL-aR-gtQ" firstAttribute="top" secondItem="R6s-Gn-XjS" secondAttribute="bottom" id="TQN-Yv-9G7"/>
+                <constraint firstItem="BBL-aR-gtQ" firstAttribute="top" secondItem="Hm8-KL-gkI" secondAttribute="bottom" constant="91" id="Tfn-xG-wzf"/>
                 <constraint firstItem="ys9-ZT-loK" firstAttribute="left" secondItem="GLu-AF-z8l" secondAttribute="left" id="YPq-oI-x8j"/>
                 <constraint firstItem="INT-Kr-uVX" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="avS-rY-xTU"/>
                 <constraint firstAttribute="bottom" secondItem="Qr6-XV-dtf" secondAttribute="bottom" id="ilZ-3H-GxU"/>
                 <constraint firstAttribute="trailing" secondItem="R6s-Gn-XjS" secondAttribute="trailing" id="jtN-Tl-YP7"/>
+                <constraint firstItem="CQH-Wd-mah" firstAttribute="top" secondItem="UPf-Gi-Swq" secondAttribute="bottom" constant="-80" id="tiP-Rh-Qwz"/>
                 <constraint firstAttribute="right" secondItem="ys9-ZT-loK" secondAttribute="right" id="uwS-dO-CG0"/>
                 <constraint firstItem="UPf-Gi-Swq" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="w7Q-Aw-3LH"/>
                 <constraint firstItem="ys9-ZT-loK" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="wb8-vO-aQU"/>
@@ -134,11 +153,13 @@
                 <constraint firstItem="INT-Kr-uVX" firstAttribute="top" secondItem="BBL-aR-gtQ" secondAttribute="bottom" id="ztJ-JM-dKN"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="137.5" y="343.5"/>
         </view>
     </objects>
     <resources>
         <image name="close-icon-large" width="28" height="27"/>
         <image name="next-icon-large" width="15" height="26"/>
+        <image name="swipe" width="192" height="192"/>
         <image name="unable-phone@3x.png" width="333" height="531"/>
     </resources>
 </document>

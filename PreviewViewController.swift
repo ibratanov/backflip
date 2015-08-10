@@ -23,6 +23,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     var filter: CIFilter!
     
+    @IBOutlet weak var imageLoad: UIActivityIndicatorView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var referenceView: UIView!
@@ -67,10 +68,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
-        
-        imageView.image = resizeImage(imageToCrop!, newHeight: 2134, newWidth: 2134) //imageToCrop!
+        imageLoad.hidden=false
+
         
         var leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
         var rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
@@ -80,6 +79,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         view.addGestureRecognizer(leftSwipe)
         view.addGestureRecognizer(rightSwipe)
+
+//        scrollView.addGestureRecognizer(leftSwipe)
+//        scrollView.addGestureRecognizer(rightSwipe)
     }
     
      func resizeImage(image: UIImage, newHeight: CGFloat, newWidth: CGFloat) -> UIImage {
@@ -137,6 +139,17 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         self.view.layoutIfNeeded()
         
         super.viewDidLayoutSubviews()
+        
+             }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
+        
+        imageView.image = resizeImage(imageToCrop!, newHeight: 2134, newWidth: 2134) //imageToCrop!
+        
+        imageLoad.hidden=true
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
