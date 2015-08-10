@@ -10,13 +10,20 @@ import UIKit
 import Parse
 
 class PreviewViewController: UIViewController, UIScrollViewDelegate {
-    
+    var filterCount = 0;
     // Title passed from previous VC
     var eventId : String?
     var eventTitle : String?
     var eventLocation: PFGeoPoint?
     var downloadToCameraRoll: Bool?
+    //---------Filters
+    lazy var context: CIContext = {
+        return CIContext(options: nil)
+        }()
     
+    var filter: CIFilter!
+    
+    @IBOutlet weak var imageLoad: UIActivityIndicatorView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var referenceView: UIView!
@@ -61,10 +68,20 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageLoad.hidden=false
+
         
-        assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
+        var leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
+        var rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
         
-        imageView.image = resizeImage(imageToCrop!, newHeight: 2134, newWidth: 2134) //imageToCrop!
+        leftSwipe.direction = .Left
+        rightSwipe.direction = .Right
+        
+        view.addGestureRecognizer(leftSwipe)
+        view.addGestureRecognizer(rightSwipe)
+
+//        scrollView.addGestureRecognizer(leftSwipe)
+//        scrollView.addGestureRecognizer(rightSwipe)
     }
     
      func resizeImage(image: UIImage, newHeight: CGFloat, newWidth: CGFloat) -> UIImage {
@@ -122,6 +139,17 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         self.view.layoutIfNeeded()
         
         super.viewDidLayoutSubviews()
+        
+             }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
+        
+        imageView.image = resizeImage(imageToCrop!, newHeight: 2134, newWidth: 2134) //imageToCrop!
+        
+        imageLoad.hidden=true
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -293,4 +321,68 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         return imageView
     }
     
+    //----------Filters
+    
+    func showOriginalImage() {
+        self.imageView.image = imageToCrop
+    }
+    
+    func outputImage() {
+        
+        let inputImage = CIImage(image: imageToCrop)
+        
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        
+        var outputImage =  filter.outputImage
+        var t: CGAffineTransform!
+
+        let orientation = UIDevice.currentDevice().orientation
+        if orientation == UIDeviceOrientation.Portrait {
+            t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
+        } else if orientation == UIDeviceOrientation.PortraitUpsideDown {
+            t = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
+        } else if (orientation == UIDeviceOrientation.LandscapeRight) {
+            t = CGAffineTransformMakeRotation(CGFloat(M_PI))
+        } else {
+            t = CGAffineTransformMakeRotation(0)
+        }
+        outputImage = outputImage.imageByApplyingTransform(t)
+        
+        let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent())
+        //ciImage = outputImage
+        
+        self.imageView.image = UIImage(CGImage: cgImage)
+
+
+    }
+    lazy var filterNames: [String] = {
+        return ["CIPhotoEffectNoir","CIPhotoEffectChrome","CIColorInvert","CIPhotoEffectMono","CIPhotoEffectInstant","CIPhotoEffectTransfer","CIPhotoEffectFade","CIPhotoEffectTonal","CIPhotoEffectTransfer","CIPhotoEffectProcess"]
+        }()
+
+    
+    func handleSwipes(sender:UISwipeGestureRecognizer) {
+        if (sender.direction == .Left) {
+            println("Left \(filterCount)")
+            if(filterCount>0){
+                filterCount -= 1
+            var filterName = filterNames[filterCount]
+            filter = CIFilter(name: filterName)
+                outputImage()
+            }else{
+                showOriginalImage()
+            }
+            
+        }
+        
+        if (sender.direction == .Right) {
+            if(filterCount<filterNames.count-1){
+            println("Right \(filterCount)")
+                filterCount += 1
+            var filterName = filterNames[filterCount]
+            filter = CIFilter(name: filterName)
+                outputImage()
+            }
+        }
+    }
+
 }
