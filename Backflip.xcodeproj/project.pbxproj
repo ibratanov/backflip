@@ -107,6 +107,7 @@
 		67A796051B2EE49A006E489D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A796021B2EE49A006E489D /* UIImage+Extensions.swift */; };
 		67A796061B2EE49A006E489D /* CGSize+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A796031B2EE49A006E489D /* CGSize+Extensions.swift */; };
 		67A796081B2EE4C5006E489D /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67A796071B2EE4C5006E489D /* PreviewViewController.xib */; };
+		67AD8BDB1B793A1F009F0963 /* CustomCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AD8BDA1B793A1E009F0963 /* CustomCamera.swift */; };
 		67B88BCE1B32D33A00BCE7C6 /* InviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67B88BCC1B32D33A00BCE7C6 /* InviteViewController.xib */; };
 		67B88BCF1B32D33A00BCE7C6 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B88BCD1B32D33A00BCE7C6 /* InviteViewController.swift */; };
 		67BB6A851B5745B600FB7EB3 /* BFCImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BB6A841B5745B600FB7EB3 /* BFCImagePickerController.swift */; };
@@ -268,6 +269,7 @@
 		67A796021B2EE49A006E489D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		67A796031B2EE49A006E489D /* CGSize+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize+Extensions.swift"; sourceTree = "<group>"; };
 		67A796071B2EE4C5006E489D /* PreviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewViewController.xib; sourceTree = "<group>"; };
+		67AD8BDA1B793A1E009F0963 /* CustomCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCamera.swift; sourceTree = "<group>"; };
 		67B88BCC1B32D33A00BCE7C6 /* InviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InviteViewController.xib; sourceTree = "<group>"; };
 		67B88BCD1B32D33A00BCE7C6 /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		67BB6A841B5745B600FB7EB3 /* BFCImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFCImagePickerController.swift; sourceTree = "<group>"; };
@@ -550,6 +552,7 @@
 				B6E180061B2E9ACE00D6EA12 /* Launch Screen.xib */,
 				67A796071B2EE4C5006E489D /* PreviewViewController.xib */,
 				67B88BCC1B32D33A00BCE7C6 /* InviteViewController.xib */,
+				67AD8BDA1B793A1E009F0963 /* CustomCamera.swift */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				506DF2A21B5FFC4D00227AB7 /* TabBarNavController.swift */,
 				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
@@ -901,6 +904,7 @@
 				67A796051B2EE49A006E489D /* UIImage+Extensions.swift in Sources */,
 				049AA6A41B73DA01003888CE /* MWGridCell.m in Sources */,
 				049AA6DE1B73DB84003888CE /* SDWebImageDownloader.m in Sources */,
+				67AD8BDB1B793A1F009F0963 /* CustomCamera.swift in Sources */,
 				049AA6B11B73DB2E003888CE /* DACircularProgressView.m in Sources */,
 				049AA6E31B73DB84003888CE /* UIImage+GIF.m in Sources */,
 				049AA6A91B73DA01003888CE /* MWTapDetectingView.m in Sources */,
