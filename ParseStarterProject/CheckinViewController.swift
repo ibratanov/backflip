@@ -11,7 +11,8 @@ import Parse
 import CoreLocation
 import DigitsKit
 
-class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITabBarControllerDelegate
+{
     
     @IBOutlet var noEventLabel: UILabel!
     
@@ -57,7 +58,50 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         self.presentViewController(alert, animated: true, completion: nil)
         println("no internet")
     }
-    
+	
+	
+	
+	
+	//-------------------------------------
+	// MARK: Tabbar Delegate
+	//-------------------------------------
+	
+	
+	func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
+	{
+		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
+		if (selectedIndex == 1) {
+			
+			let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
+			dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+				self.performSegueWithIdentifier("display-camera", sender: self)
+			})
+			
+			return false
+		}
+		
+		return true
+	}
+	
+	
+	
+	//-------------------------------------
+	// MARK: View Delegate
+	//-------------------------------------
+	
+	override func loadView()
+	{
+		super.loadView()
+	
+		self.navigationController?.tabBarController?.delegate = self
+	}
+	
+	
+	
+	
+	
+	
+	
     //Scroll wheel table view
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
@@ -431,13 +475,32 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         
         return true
     }
+
+}
+
+
+
+
+extension Array {
+	func contains<U: Equatable>(object:U) -> Bool {
+		return (self.indexOf(object) != nil);
+	}
 	
+	func indexOf<U: Equatable>(object: U) -> Int? {
+		for (idx, objectToCompare) in enumerate(self) {
+			if let to = objectToCompare as? U {
+				if object == to {
+					return idx
+				}
+			}
+		}
+		return nil
+	}
 	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		
-		if segue.identifier == "display-event-album" {
-			
+	mutating func removeObject<U: Equatable>(object: U) {
+		let index = self.indexOf(object)
+		if(index != nil) {
+			self.removeAtIndex(index!)
 		}
 	}
-
 }

@@ -218,8 +218,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		} else if segementedControl.selectedSegmentIndex == 1 {
 			content.sort{ $0.likes > $1.likes }
 		} else if segementedControl.selectedSegmentIndex == 2 {
-			println("Sorting by 'My Photos'..")
-			
 			content.removeAll(keepCapacity: true)
 			for (var i = 0; i < self.orginalContent.count; i++) {
 				let image = self.orginalContent[i]

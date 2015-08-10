@@ -90,7 +90,6 @@
 		504D96DF1B1CA38B00A1B95B /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */; };
 		504D96E11B1CA3A400A1B95B /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */; };
 		505A465A1B0A55A600B9BB4F /* FullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */; };
-		506DF2A31B5FFC4D00227AB7 /* TabBarNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506DF2A21B5FFC4D00227AB7 /* TabBarNavController.swift */; };
 		506F8BCE1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506F8BCD1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework */; };
 		50BED87D1B21E05100CBB715 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED8791B21E05100CBB715 /* Fabric.framework */; };
 		50BED87E1B21E05100CBB715 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BED87A1B21E05100CBB715 /* DigitsKit.framework */; };
@@ -250,7 +249,6 @@
 		504D96DE1B1CA38B00A1B95B /* AlbumViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
 		504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		505A46591B0A55A600B9BB4F /* FullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenViewController.swift; sourceTree = "<group>"; };
-		506DF2A21B5FFC4D00227AB7 /* TabBarNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarNavController.swift; sourceTree = "<group>"; };
 		506F8BCD1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		50BED8791B21E05100CBB715 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		50BED87A1B21E05100CBB715 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
@@ -551,7 +549,6 @@
 				67A796071B2EE4C5006E489D /* PreviewViewController.xib */,
 				67B88BCC1B32D33A00BCE7C6 /* InviteViewController.xib */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				506DF2A21B5FFC4D00227AB7 /* TabBarNavController.swift */,
 				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
 				B61801321B0BCBF8000CF25E /* CheckinViewController.swift */,
 				50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */,
@@ -876,7 +873,6 @@
 				049AA6DD1B73DB84003888CE /* SDWebImageDecoder.m in Sources */,
 				049AA6A51B73DA01003888CE /* MWGridViewController.m in Sources */,
 				50CE7E7C1B03DBC100F4B6B1 /* FeedViewCell.swift in Sources */,
-				506DF2A31B5FFC4D00227AB7 /* TabBarNavController.swift in Sources */,
 				049AA6A71B73DA01003888CE /* MWPhotoBrowser.m in Sources */,
 				049AA6E51B73DB84003888CE /* UIImage+WebP.m in Sources */,
 				B61801331B0BCBF8000CF25E /* CheckinViewController.swift in Sources */,
