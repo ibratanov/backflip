@@ -164,6 +164,11 @@ class EventTableViewController: UITableViewController {
         
         let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
         tableCell.selectionStyle = UITableViewCellSelectionStyle.None
+        tableCell.clipsToBounds = true
+        tableCell.layer.masksToBounds = true
+        
+        var bounds = UIScreen.mainScreen().bounds
+        var width = bounds.size.width
         
         var ev : PFObject = eventObjs[indexPath.row]
         var evName : String = ev["eventName"] as! String
@@ -187,9 +192,17 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
+            
+            if width > 400 {
+                tableCell.imageFive!.image = UIImage ()
+                tableCell.imageFive.backgroundColor = underlineColor
+                tableCell.imageFive.clipsToBounds = true
+            } else {
+                
+                tableCell.imageFive.removeFromSuperview()
+                
+            }
 
-			tableCell.imageFive!.image = UIImage ()
-			tableCell.imageFive.backgroundColor = underlineColor
 			
             return tableCell
         }
@@ -206,10 +219,16 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-			
+            if width > 400 {
 			tableCell.imageFive!.image = UIImage ()
 			tableCell.imageFive.backgroundColor = underlineColor
-			
+            tableCell.imageFive.clipsToBounds = true
+            } else {
+                
+                tableCell.imageFive.removeFromSuperview()
+                
+            }
+
             tableCell.imageOne.loadInBackground()
 
             return tableCell
@@ -227,10 +246,16 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-			
+            if width > 400 {
 			tableCell.imageFive!.image = UIImage ()
 			tableCell.imageFive.backgroundColor = underlineColor
-			
+            tableCell.imageFive.clipsToBounds = true
+            } else {
+                
+                tableCell.imageFive.removeFromSuperview()
+                
+            }
+
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
 
@@ -250,10 +275,15 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-			
+            if width > 400 {
 			tableCell.imageFive!.image = UIImage ()
 			tableCell.imageFive.backgroundColor = underlineColor
-			
+            tableCell.imageFive.clipsToBounds = true
+            }      else {
+            
+            tableCell.imageFive.removeFromSuperview()
+            
+            }
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
@@ -274,21 +304,42 @@ class EventTableViewController: UITableViewController {
             
             var imageData4 = listPhotos[3]
             tableCell.imageFour!.file = imageData4
-			
+            
+            if width > 400 {
 			var imageData5 = listPhotos[4]
 			tableCell.imageFive!.file = imageData5
+            tableCell.imageFive.clipsToBounds = true
+            tableCell.imageFive.loadInBackground()
+            } else {
+                
+                tableCell.imageFive.removeFromSuperview()
+                
+            }
+            
             
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
             tableCell.imageFour.loadInBackground()
-			tableCell.imageFive.loadInBackground()
+
 
             return tableCell
         }
         
         return tableCell
     }
+    
+   // override func viewDidLayoutSubviews()
+//    {
+//        super.viewDidLayoutSubviews()
+//        
+//        let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
+//        
+//        flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
+//        flow.itemSize = CGSizeMake((self.view.frame.size.width/3)-1, (self.view.frame.size.width/3)-1);
+//        flow.minimumInteritemSpacing = 1;
+//        flow.minimumLineSpacing = 1;
+//    }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
@@ -297,21 +348,24 @@ class EventTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            
-            self.tableView.beginUpdates()
-            
-            // Remove from Parse DB
-            let current = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
-            let eventObject = eventObjs[indexPath.row]
-            eventDelete(eventObject)
-            
-            // Remove elements from datasource, remove row, reload tableview
-            self.eventObjs.removeAtIndex(indexPath.row)
-            self.eventWithPhotos.removeValueForKey(eventObject.objectId!)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-            self.tableView.reloadData()
-            
-            self.tableView.endUpdates()
+            if NetworkAvailable.networkConnection() == true {
+                self.tableView.beginUpdates()
+                
+                // Remove from Parse DB
+                let current = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
+                let eventObject = eventObjs[indexPath.row]
+                eventDelete(eventObject)
+                
+                // Remove elements from datasource, remove row, reload tableview
+                self.eventObjs.removeAtIndex(indexPath.row)
+                self.eventWithPhotos.removeValueForKey(eventObject.objectId!)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                self.tableView.reloadData()
+                
+                self.tableView.endUpdates()
+            } else {
+                displayNoInternetAlert()
+            }
         }
 
     }
