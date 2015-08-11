@@ -282,15 +282,20 @@ class EventTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            //self.tableView.beginUpdates()
+            
+            self.tableView.beginUpdates()
+            
+            // Remove from Parse DB
             let current = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
-            dump(eventObjs)
             let eventObject = eventObjs[indexPath.row]
             eventDelete(eventObject)
+            
+            // Remove elements from datasource, remove row, reload tableview
             self.eventObjs.removeAtIndex(indexPath.row)
             self.eventWithPhotos.removeValueForKey(eventObject.objectId!)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
             self.tableView.reloadData()
+            
             self.tableView.endUpdates()
         }
 
