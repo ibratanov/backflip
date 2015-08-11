@@ -45,7 +45,7 @@ class EventTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         
-        updateEvents()
+        //updateEvents()
 
         
     }
@@ -77,19 +77,21 @@ class EventTableViewController: UITableViewController {
     }
     
     func updateEvents(){
-     
+
         if NetworkAvailable.networkConnection() == true {
             let query = PFUser.query()
             query?.includeKey("savedEvents")
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                 if (error == nil) {
                     self.eventObjs.removeAll(keepCapacity: true)
+
                     self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
                     
                     self.eventObjs = sorted(self.eventObjs, { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending })
                     
                     // Dispatch queries to background queue
                     dispatch_async(dispatch_get_global_queue(self.qos, 0)) {
+                        println("HERE")
                         for event in self.eventObjs {
                             let relation = event.relationForKey("photos")
                             let query = relation.query()
@@ -100,7 +102,7 @@ class EventTableViewController: UITableViewController {
                             var photos = query!.findObjects()
                             
                             // Return to main queue for UI updates
-                            dispatch_async(dispatch_get_main_queue()) {
+                            
                                 if (photos != nil && photos!.count != 0) {
                                     var thumbnails: [PFFile] = []
                                  
@@ -108,18 +110,24 @@ class EventTableViewController: UITableViewController {
                                     for photo in photos! {
                                         thumbnails.append(photo["thumbnail"] as! PFFile)
                                     }
-                            
+                                        //self.eventWithPhotos.removeAll(keepCapacity: true)
                                         self.eventWithPhotos[event.objectId!] = thumbnails
-                                        self.tableView.reloadData()
+
                                     }
                                 
                                 else {
                                   
+                                        //self.eventWithPhotos.removeAll(keepCapacity: true)
                                         var thumbnails: [PFFile] = []
                                         self.eventWithPhotos[event.objectId!] = thumbnails
-                                        self.tableView.reloadData()
                                     
                                 }
+                            dispatch_async(dispatch_get_main_queue()) {
+                                println("PHOTOS COUNT")
+                                println(self.eventWithPhotos.count)
+                                println("OBJS COUNT")
+                                println(self.eventObjs.count)
+                                self.tableView.reloadData()
                             }
                         }
                     }
@@ -149,7 +157,7 @@ class EventTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println(self.eventWithPhotos.count)
+        //return self.eventObjs.count
         return self.eventWithPhotos.count
     }
 
@@ -157,7 +165,6 @@ class EventTableViewController: UITableViewController {
         
         let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
         tableCell.selectionStyle = UITableViewCellSelectionStyle.None
-        var key : String = Array(self.eventWithPhotos.keys)[indexPath.row]
         
         var ev : PFObject = eventObjs[indexPath.row]
         var evName : String = ev["eventName"] as! String
@@ -275,17 +282,18 @@ class EventTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            self.tableView.beginUpdates()
+            //self.tableView.beginUpdates()
             let current = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
             dump(eventObjs)
             let eventObject = eventObjs[indexPath.row]
-            self.eventWithPhotos.removeValueForKey(eventObject.objectId!)
             eventDelete(eventObject)
+            self.eventObjs.removeAtIndex(indexPath.row)
+            self.eventWithPhotos.removeValueForKey(eventObject.objectId!)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-            updateEvents()
+            self.tableView.reloadData()
             self.tableView.endUpdates()
-  
         }
+
     }
     
     
