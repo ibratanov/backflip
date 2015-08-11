@@ -19,7 +19,7 @@ import DigitsKit
 let reuseIdentifier = "albumCell"
 
 class AlbumViewController: UICollectionViewController,
-    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate, MWPhotoBrowserDelegate {
+    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,  MWPhotoBrowserDelegate {
     
     var refresher: UIRefreshControl!
 	
@@ -962,12 +962,12 @@ class AlbumViewController: UICollectionViewController,
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             println("Button capture")
             
-            //testCamera.delegate = self
+            testCamera.delegate = self
             testCamera.sourceType = UIImagePickerControllerSourceType.Camera;
             testCamera.mediaTypes = [kUTTypeImage]
             testCamera.allowsEditing = false
             
-            self.presentViewController(testCamera, animated: true, completion: nil)
+           // self.presentViewController(testCamera, animated: true, completion: nil)
         }
     }
 
