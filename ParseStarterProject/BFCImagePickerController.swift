@@ -27,16 +27,15 @@ class BFCAssetGroup : NSObject {
 }
 
 class BFCAsset: NSObject {
+     var originalAsset: ALAsset!
+
     var thumbnailImage: UIImage?
-    lazy var fullScreenImage: UIImage? = {
-        return UIImage(CGImage: self.originalAsset.defaultRepresentation().fullScreenImage().takeUnretainedValue())
-        }()
+    lazy var fullScreenImage: UIImage? = {return UIImage(CGImage: self.originalAsset.defaultRepresentation().fullScreenImage().takeUnretainedValue())}()
     lazy var fullResolutionImage: UIImage? = {
         return UIImage(CGImage: self.originalAsset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())
         }()
     var url: NSURL?
     
-    private var originalAsset: ALAsset!
     
     override func isEqual(object: AnyObject?) -> Bool {
         let other = object as! BFCAsset!

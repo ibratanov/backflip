@@ -12,5 +12,7 @@ pod 'AFNetworking'
 pod 'SVProgressHUD'
 pod 'NewRelicAgent'
 
+pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+
 end
 

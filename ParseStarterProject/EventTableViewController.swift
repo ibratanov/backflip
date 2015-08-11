@@ -13,12 +13,18 @@ import DigitsKit
 class EventTableViewController: UITableViewController {
     
     @IBAction func logoutButton(sender: AnyObject) {
+        self.hidesBottomBarWhenPushed = true
         displayAlertLogout("Would you like to log out?", error: "")
     }
     
-    func addEvent(sender: AnyObject) {
-        performSegueWithIdentifier("addEventSegue", sender: nil)
+
+    @IBAction func addEvent(sender: AnyObject) {
+        self.tabBarController?.selectedIndex = 1
     }
+//    func addEvent(sender: AnyObject) {
+//        //performSegueWithIdentifier("addEventSegue", sender: nil)
+//        
+//    }
     
     var eventWithPhotos = [String:[PFFile]]()
     var eventObjs: [PFObject] = []
@@ -29,25 +35,24 @@ class EventTableViewController: UITableViewController {
     let qos = (Int(QOS_CLASS_BACKGROUND.value))
     
 //    Enable UI Navigation Item
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Avenir-Medium",size: 18)!]
+    override func viewWillAppear(animated: Bool)
+	{
         self.tableView.reloadData()
-        
         if NetworkAvailable.networkConnection() == true {
-            
             updateEvents()
-            
         } else {
             displayNoInternetAlert()
         }
     }
     
     override func viewDidLoad() {
-        
-        //updateEvents()
-
-        
+		
+		super.viewDidLoad()
+		
+		if (PFUser.currentUser() == nil) {
+			self.performSegueWithIdentifier("display-login-popover", sender: self)
+			return
+		}
     }
     
     func displayAlertLogout(title:String, error: String) {
@@ -56,8 +61,6 @@ class EventTableViewController: UITableViewController {
 		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { action in
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-            
             
             PFUser.logOut()
             Digits.sharedInstance().logOut()
@@ -97,16 +100,13 @@ class EventTableViewController: UITableViewController {
                             let query = relation.query()
                             query!.whereKey("flagged", equalTo: false)
                             query!.whereKey("blocked", equalTo: false)
-                            query!.limit = 4
+                            query!.limit = 5
                             
                             var photos = query!.findObjects()
+                            var thumbnails: [PFFile] = []
                             
                             // Return to main queue for UI updates
-                            
                                 if (photos != nil && photos!.count != 0) {
-                                    var thumbnails: [PFFile] = []
-                                 
-                              
                                     for photo in photos! {
                                         thumbnails.append(photo["thumbnail"] as! PFFile)
                                     }
@@ -127,18 +127,17 @@ class EventTableViewController: UITableViewController {
                                 println(self.eventWithPhotos.count)
                                 println("OBJS COUNT")
                                 println(self.eventObjs.count)
+
                                 self.tableView.reloadData()
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     println(error)
                 }
             })
         } else {
             self.displayNoInternetAlert()
-        
         }
     }
 
@@ -176,7 +175,7 @@ class EventTableViewController: UITableViewController {
         tableCell.eventName.text = evName
         tableCell.eventLocation.text = evVenue
         
-        if listPhotos.count == 0 {
+        if listPhotos == nil || listPhotos.count == 0 {
             tableCell.imageOne!.image = UIImage ()
             tableCell.imageOne.backgroundColor = underlineColor
             
@@ -189,6 +188,9 @@ class EventTableViewController: UITableViewController {
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
 
+			tableCell.imageFive!.image = UIImage ()
+			tableCell.imageFive.backgroundColor = underlineColor
+			
             return tableCell
         }
         
@@ -204,7 +206,10 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-            
+			
+			tableCell.imageFive!.image = UIImage ()
+			tableCell.imageFive.backgroundColor = underlineColor
+			
             tableCell.imageOne.loadInBackground()
 
             return tableCell
@@ -222,7 +227,10 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-            
+			
+			tableCell.imageFive!.image = UIImage ()
+			tableCell.imageFive.backgroundColor = underlineColor
+			
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
 
@@ -242,7 +250,10 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-            
+			
+			tableCell.imageFive!.image = UIImage ()
+			tableCell.imageFive.backgroundColor = underlineColor
+			
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
@@ -263,11 +274,15 @@ class EventTableViewController: UITableViewController {
             
             var imageData4 = listPhotos[3]
             tableCell.imageFour!.file = imageData4
+			
+			var imageData5 = listPhotos[4]
+			tableCell.imageFive!.file = imageData5
             
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
             tableCell.imageFour.loadInBackground()
+			tableCell.imageFive.loadInBackground()
 
             return tableCell
         }
@@ -334,10 +349,11 @@ class EventTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "toAlbum" {
+        if segue.identifier == "display-event-album" {
             
-            let moveVC = segue.destinationViewController as! AlbumViewController
+            let moveVC = segue.destinationViewController as! EventAlbumViewController
             
+
             if let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                 var event = eventObjs[selectedPath.row]
                 moveVC.eventId = event.objectId

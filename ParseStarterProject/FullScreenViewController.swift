@@ -13,7 +13,7 @@ import MessageUI
 import ParseUI
 
 
-class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate, UIScrollViewDelegate  {
+class FullScreenViewController: MWPhotoBrowser, UIGestureRecognizerDelegate,MFMessageComposeViewControllerDelegate, UIScrollViewDelegate, MWPhotoBrowserDelegate  {
     
     let mixpanel = Mixpanel.sharedInstance()
     
@@ -31,7 +31,6 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     @IBOutlet var pageControl: UIPageControl!
     
     
-    
     var likeActive = false
     
     // Index of cell selected, and index/page scrollView is currently on
@@ -42,6 +41,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     let liked = UIImage(named: "heart-icon-filled.pdf") as UIImage!
     let unliked = UIImage(named: "heart-icon-empty.pdf") as UIImage!
     let back = UIImage(named: "back.pdf") as UIImage!
+    let share = UIImage(named: "share-icon.pdf") as UIImage!
 	
     // Title passed from previous VC
     var eventId : String?
@@ -62,7 +62,55 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
             likeToggle(self)
         }
     }
-    
+	
+	
+	
+	
+	//----------------------------------------------
+	// MARK: MWPhotoBrowserDelegate
+	//----------------------------------------------
+	
+	func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser!) -> UInt
+	{
+		return 10
+	}
+	
+	func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhotoProtocol!
+	{
+//		var image = self.images[Int(index)]
+//		var imageUrl = self.imageUrls[Int(index)]
+//		// var mwPhoto:MWPhoto = MWPhoto(image: image)
+		var mwPhoto:MWPhoto = MWPhoto(URL: NSURL(string: "http://placehold.it/350x150"))
+		// print(imageUrls)
+		
+		return mwPhoto
+	}
+	
+	@IBOutlet weak var imageView: UIImageView!
+	
+	override func viewDidLoad()
+	{
+		super.viewDidLoad()
+		
+		enableGrid = false
+		displayActionButton = true;
+		displayNavArrows = true;
+		displaySelectionButtons = false;
+		alwaysShowControls = false;
+		zoomPhotosToFill = true;
+		startOnGrid = false;
+		enableSwipeToDismiss = false;
+		autoPlayOnAppear = false;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
     func displayNoInternetAlert() {
         var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to access content.")
         self.presentViewController(alert, animated: true, completion: nil)
@@ -261,7 +309,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
 		let facebook = "";
 		
 		let imageData : UIImage = self.fullScreenImage.image!;
-		let image = Image(text: "Check out this photo!");
+		let image = Image(text: "Photo");
 		
 		let reportImage = ReportImageActivity();
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
@@ -551,7 +599,7 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     }
     
     // When a user stops on a photo, load the appropriate information
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
         pageIndex = pageControl.currentPage
         
@@ -562,88 +610,97 @@ class FullScreenViewController: UIViewController, UIGestureRecognizerDelegate,MF
     }
     
     // Recognizes when a scroll occurs, and loads the corresponding pages (before and after the image)
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
         loadVisiblePages()
     }
 
     //------------------------------------------
     
-    override func viewDidLoad() {
-       
-        super.viewDidLoad()
-
-        //---------Scroll view Set up------------
-        
-        scrollView.delegate = self
-        pageControl.hidden = true
-        scrollView.showsHorizontalScrollIndicator = false
-        
-        // Keep full screen image view in background to load to when sharing or downloading a photo. only loads when necessary
-        fullScreenImage.hidden = true
-
-        let pageCount = imageFiles.count
-        pageControl.numberOfPages = pageCount
-        
-        // Cleans the pageViews, filling the array with nil
-        for _ in 0..<pageCount {
-            pageViews.append(nil)
-        }
-        
-        // Sets the overall content size of our scroll view
-        let pageScrollViewSize = scrollView.frame.size
-        scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * CGFloat(imageFiles.count), pageScrollViewSize.height)
-        
-        // Start at the appropriate photo based on cell selected from album view
-        var frame : CGRect = scrollView.frame
-        frame.origin.x = frame.size.width * CGFloat(selectedIndex!)
-        frame.origin.y = 0
-        scrollView.scrollRectToVisible(frame, animated: true)
-        pageIndex = selectedIndex!
-        
-        // Loading of the pages that are visible on screen
-        loadVisiblePages()
-
-        //--------------- Draw UI -----------------
-        
-        // Hide UI controller item
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-
-        // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64 ))
-        navBar.backgroundColor =  UIColor.whiteColor()
-        
-        // Set the Nav bar properties
-        let navBarItem = UINavigationItem()
-        navBarItem.title = eventTitle
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-        navBar.items = [navBarItem]
-        
-        // Left nav bar button item
-        let back = UIButton.buttonWithType(.Custom) as! UIButton
-        back.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        back.setImage(self.back, forState: .Normal)
-        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        back.frame = CGRectMake(-10, 20, 72, 44)
-        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
-        navBar.addSubview(back)
-        
-        self.view.addSubview(navBar)
-        
-        
-        //-------------Gesture implementation----------
-        
-        var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
-        gesture.numberOfTapsRequired = 2
-        scrollView.userInteractionEnabled = true
-        self.scrollView.addGestureRecognizer(gesture)
-        
-        //------------------------------------------
-        
-        // Load information from the database for the UI
-        displayUpdate()
-
-    }
-    
+//    override func viewDidLoad() {
+//       
+//        super.viewDidLoad()
+//
+//        //---------Scroll view Set up------------
+//        
+//        //scrollView.delegate = self
+//        //pageControl.hidden = true
+//        //scrollView.showsHorizontalScrollIndicator = false
+//        
+//        // Keep full screen image view in background to load to when sharing or downloading a photo. only loads when necessary
+//        //fullScreenImage.hidden = true
+//
+//        let pageCount = imageFiles.count
+//        // pageControl.numberOfPages = pageCount
+//        
+//        // Cleans the pageViews, filling the array with nil
+//        for _ in 0..<pageCount {
+//            pageViews.append(nil)
+//        }
+//        
+//        // Sets the overall content size of our scroll view
+//        // let pageScrollViewSize = scrollView.frame.size
+//        // scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * CGFloat(imageFiles.count), pageScrollViewSize.height)
+//        
+//        // Start at the appropriate photo based on cell selected from album view
+////        var frame : CGRect = scrollView.frame
+////        frame.origin.x = frame.size.width * CGFloat(selectedIndex!)
+////        frame.origin.y = 0
+//        // scrollView.scrollRectToVisible(frame, animated: true)
+//        // pageIndex = selectedIndex!
+//        
+//        // Loading of the pages that are visible on screen
+//        // loadVisiblePages()
+//
+//        //--------------- Draw UI -----------------
+//        
+//        // Hide UI controller item
+//		self.title = eventTitle;
+////        self.navigationController?.setNavigationBarHidden(true, animated: false)
+////
+////        // Nav Bar positioning
+////        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64 ))
+////        navBar.backgroundColor =  UIColor.whiteColor()
+////        
+////        // Set the Nav bar properties
+////        let navBarItem = UINavigationItem()
+////        navBarItem.title = eventTitle
+////        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+////        navBar.items = [navBarItem]
+////        
+////        // Left nav bar button item
+////        let back = UIButton.buttonWithType(.Custom) as! UIButton
+////        back.setTitleColor(UIColor.blackColor(), forState: .Normal)
+////        back.setImage(self.back, forState: .Normal)
+////        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+////        back.frame = CGRectMake(-10, 20, 72, 44)
+////        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
+////        navBar.addSubview(back)
+////        
+////        // Right nav bar button item
+////        let shareImage = UIButton.buttonWithType(.Custom) as! UIButton
+////        shareImage.setImage(self.share, forState:.Normal)
+////        shareImage.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+////        shareImage.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
+////        shareImage.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
+////        navBar.addSubview(shareImage)
+////        
+////        self.view.addSubview(navBar)
+//		
+//        
+//        //-------------Gesture implementation----------
+//        
+//        var gesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+//        gesture.numberOfTapsRequired = 2
+//        //scrollView.userInteractionEnabled = true
+//        //self.scrollView.addGestureRecognizer(gesture)
+//        
+//        //------------------------------------------
+//        
+//        // Load information from the database for the UI
+//        // displayUpdate()
+//
+//    }
+	
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

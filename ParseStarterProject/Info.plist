@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string></string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -36,7 +38,7 @@
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
-		<string>ef7a1ebf7fc603f162c02e071c9bec17cfc2117e</string>
+		<string>2536c21aa9a9edce636bfa2b489d140c6f93b6cb</string>
 		<key>Kits</key>
 		<array>
 			<dict>
@@ -52,6 +54,8 @@
 			</dict>
 		</array>
 	</dict>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -67,7 +71,7 @@
 	<key>UIStatusBarHidden</key>
 	<false/>
 	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleDefault</string>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -11,12 +11,17 @@ import Parse
 import CoreLocation
 import DigitsKit
 
-class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITabBarControllerDelegate
+{
     
     @IBOutlet var noEventLabel: UILabel!
     
     @IBAction func logoutButton(sender: AnyObject) {
         displayAlertLogout("Would you like to log out?", error: "")
+    }
+    @IBAction func createNew(sender: AnyObject) {
+        
+        tabBarController?.selectedIndex = 1
     }
     
     var logoutButton = UIImage(named: "settings-icon") as UIImage!
@@ -24,6 +29,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     var userGeoPoint = PFGeoPoint()
     
     var eventSelected = ""
+	var eventSelectedObjectId = ""
     
     var userLocation:PFGeoPoint = PFGeoPoint()
     
@@ -52,21 +58,75 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         self.presentViewController(alert, animated: true, completion: nil)
         println("no internet")
     }
-    
+	
+	
+	
+	
+	//-------------------------------------
+	// MARK: Tabbar Delegate
+	//-------------------------------------
+	
+	
+	func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
+	{
+		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
+		if (selectedIndex == 1) {
+			
+			let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
+			dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+				self.performSegueWithIdentifier("display-camera", sender: self)
+			})
+			
+			return false
+		}
+		
+		return true
+	}
+	
+	
+	
+	//-------------------------------------
+	// MARK: View Delegate
+	//-------------------------------------
+	
+	override func loadView()
+	{
+		super.loadView()
+	
+		self.navigationController?.tabBarController?.delegate = self
+	}
+	
+	
+	
+	
+	
+	
+	
     //Scroll wheel table view
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.cellContent.count
+		if (self.cellContent.count < 1) {
+			return 1
+		} else {
+			return self.cellContent.count
+		}
     }
 
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        return self.cellContent[row] as! String
+		if (self.cellContent.count < 1) {
+			return "No events avaliable"
+		} else {
+			return self.cellContent[row] as! String
+		}
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+		if (self.cellContent.count < 1) {
+			return
+		}
         print(self.cellContent[row])
         eventSelected = self.cellContent[row] as! String
     }
@@ -81,47 +141,33 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             
             PFUser.logOut()
             Digits.sharedInstance().logOut()
-            self.performSegueWithIdentifier("logoutCheckIn", sender: self)
+            self.performSegueWithIdentifier("display-login-popover", sender: self)
             
         }))
 		
         self.presentViewController(alert, animated: true, completion: nil)
-        
     }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+		
+		if (PFUser.currentUser() == nil) {
+			self.performSegueWithIdentifier("display-login-popover", sender: self)
+			return
+		}
+		
         
         //--------------- Draw UI ---------------
         
+        // Ensured event button was not underneath the tab bar
+        self.edgesForExtendedLayout = UIRectEdge()
+
         // Hide picker until events are found
         self.pickerInfo.hidden = true
-        
-        // Hide UI controller item
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
-        navBar.backgroundColor =  UIColor.whiteColor()
-        
-        // Set the Nav bar properties
-        let navBarItem = UINavigationItem()
-        navBarItem.title = "Nearby Events"
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-        navBar.items = [navBarItem]
-        
-        // Left nav bar button item
-        let logout = UIButton.buttonWithType(.System) as! UIButton
-            logout.setImage(logoutButton, forState: .Normal)
-            logout.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-            logout.frame = CGRectMake(-10, 20, 72, 44)
-            logout.addTarget(self, action: "logoutButton:", forControlEvents: .TouchUpInside)
-        navBar.addSubview(logout)
-
-        self.view.addSubview(navBar)
-        
-        if NetworkAvailable.networkConnection() == true {
+		self.checkInButton.enabled = false
+		
+        if NetworkAvailable.networkConnection() == true && PFUser.currentUser() != nil {
             
             let query = PFUser.query()
             var userObjectId = PFUser.currentUser()?.objectId!
@@ -131,7 +177,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 
                 if (firstTime == true) {
 
-                    
+					
                     if error != nil {
                         println(error)
                     }
@@ -175,7 +221,6 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                                     attendance["photosUploaded"] = []
                                     attendance["photosUploadedID"] = []
                                     
-                                    
                                     attendance.saveInBackground()
                                     
                                     PFUser.currentUser()?.setObject(false, forKey: "firstUse")
@@ -196,7 +241,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             self.calcNearByEvents()
         } else {
             self.pickerInfo.hidden = true
-            self.noEventLabel.text = "No Events Nearby"
+			self.noEventLabel.hidden = false
+			self.checkInButton.enabled = false
             displayNoInternetAlert()
         }
     }
@@ -205,7 +251,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
             if error == nil {
                 
-                dispatch_async(dispatch_get_global_queue(self.qos,0)) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND,0)) {
                 
                     print(geoPoint)
                     self.userGeoPoint = geoPoint!
@@ -250,10 +296,11 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                             dispatch_async(dispatch_get_main_queue()) {
                                     if self.cellContent.count == 0 {
                                         self.pickerInfo.hidden = true
-                                        self.noEventLabel.text = "No Events Nearby"
-                                    }
-                                    else {
+										self.checkInButton.enabled = false
+										self.noEventLabel.hidden = false;
+                                    } else {
                                         self.pickerInfo.hidden = false
+										self.checkInButton.enabled = true
                                         self.pickerInfo.reloadAllComponents()
                                     }
                             }
@@ -272,7 +319,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                 
                 self.locationDisabled = true
                 self.pickerInfo.hidden = true
-                self.noEventLabel.text = "No Events Nearby"
+				self.checkInButton.enabled = false
+				self.noEventLabel.hidden = false;
             }
         }
     }
@@ -281,6 +329,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
     override func viewDidAppear(animated: Bool) {
         //self.pickerInfo.reloadAllComponents()
         //locationManager.stopUpdatingLocation()
+        
+        
 
         if NetworkAvailable.networkConnection() == true {
             if (self.cellContent.count > 0) {
@@ -288,9 +338,16 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             }
         } else {
             self.pickerInfo.hidden = true
+			self.checkInButton.enabled = false
             displayNoInternetAlert()
         }
     }
+	
+	override func preferredStatusBarStyle() -> UIStatusBarStyle
+	{
+		return .LightContent
+	}
+	
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -312,7 +369,7 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             println("\n\nchecking in to " + self.eventSelected)
             
             let query = PFUser.query()
-            
+             
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                 
                 if error != nil {
@@ -334,7 +391,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                                 self.displayAlert("No Nearby Events", error: "Create a new event!")
                             } else {
                                 var event = scoreArray?[0] as! PFObject
-
+								self.eventSelectedObjectId = event.objectId!;
+								
                                 // Subscribe user to the channel of the event for push notifications
                                 let currentInstallation = PFInstallation.currentInstallation()
                                 currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
@@ -350,7 +408,8 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                                 if contains(listEvents, self.eventSelected)
                                 {
                                     print("Event already in list")
-                                    self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                                    //self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+                                    self.tabBarController?.selectedIndex = 2
                                 }
                                 else
                                 {
@@ -376,7 +435,15 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
                                     
                                     println("Saved")
                                     dispatch_async(dispatch_get_main_queue()) {
-                                        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
+										
+										let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+										let albumViewController = storyboard.instantiateViewControllerWithIdentifier("EventAlbumViewController") as! EventAlbumViewController
+										albumViewController.eventId = self.eventSelectedObjectId;
+										// albumViewController.eventTitle = self.eventSelected;
+										self.navigationController?.pushViewController(albumViewController, animated: true)
+										
+										// self.navigationController?.performSegueWithIdentifier("displayEventAlbum", sender: self)
+										//self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
                                     }
                                 }
                             }
@@ -391,12 +458,10 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
             })
         } else {
             self.pickerInfo.hidden = true
+			self.checkInButton.enabled = false
+			self.noEventLabel.hidden = false
             displayNoInternetAlert()
         }
-    }
-    
-    @IBAction func pastEventsButton(sender: AnyObject) {
-        self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
     }
     
     // Two functions to allow off keyboard touch to close keyboard
@@ -411,4 +476,31 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
         return true
     }
 
+}
+
+
+
+
+extension Array {
+	func contains<U: Equatable>(object:U) -> Bool {
+		return (self.indexOf(object) != nil);
+	}
+	
+	func indexOf<U: Equatable>(object: U) -> Int? {
+		for (idx, objectToCompare) in enumerate(self) {
+			if let to = objectToCompare as? U {
+				if object == to {
+					return idx
+				}
+			}
+		}
+		return nil
+	}
+	
+	mutating func removeObject<U: Equatable>(object: U) {
+		let index = self.indexOf(object)
+		if(index != nil) {
+			self.removeAtIndex(index!)
+		}
+	}
 }
