@@ -17,7 +17,7 @@ import MessageUI
 import AVFoundation
 import DigitsKit
 
-class CustomCamera : UIImagePickerController, BFCImagePickerControllerDelegate {
+class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UINavigationControllerDelegate ,BFCImagePickerControllerDelegate {
     
 //------------------Camera Att.-----------------
     var flashOff = UIImage(named:"flash-icon-large") as UIImage!
@@ -68,7 +68,7 @@ class CustomCamera : UIImagePickerController, BFCImagePickerControllerDelegate {
                         println("Button capture")
                         
                         //primary delegate for the picker
-                        //self.picker.delegate = self
+                        self.picker.delegate = self
                         
                         self.picker.modalPresentationStyle = UIModalPresentationStyle.FullScreen
                         self.picker.sourceType = .Camera
@@ -101,7 +101,7 @@ class CustomCamera : UIImagePickerController, BFCImagePickerControllerDelegate {
                     } else {
                         if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
                             var picker = UIImagePickerController()
-                            //picker.delegate = self;
+                            picker.delegate = self;
                             picker.sourceType = .PhotoLibrary
                             picker.mediaTypes = [kUTTypeImage]
                             picker.allowsEditing = false
@@ -147,7 +147,7 @@ func saveImageAlert()
 @IBAction func loadFromLibrary(sender: AnyObject) {
     var picker = UIImagePickerController()
     picker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
-    //picker.delegate = self
+    picker.delegate = self
     self.presentViewController(picker, animated: true, completion: nil)
     
 }
