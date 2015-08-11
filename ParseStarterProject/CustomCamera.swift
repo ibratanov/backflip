@@ -58,7 +58,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
                     Digits.sharedInstance().logOut()
                     self.performSegueWithIdentifier("logOutBlocked", sender: self)
                 } else {
-                    self.fullScreen = true
+                    self.fullScreen = false
                     self.posted = true
                     if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
                         println("Button capture")
