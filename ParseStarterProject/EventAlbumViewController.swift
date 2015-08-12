@@ -186,8 +186,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		if (indexPath.row == 0) {
 			
-			let tabBarViewControllers : [UIViewController] = self.tabBarController?.viewControllers as! [UIViewController]
-			BFTabBarControllerDelegate.sharedDelegate.tabBarController(self.tabBarController!, shouldSelectViewController: tabBarViewControllers[1])
+			var event = Event()
+			let tabBarDelegate = BFTabBarControllerDelegate.sharedDelegate
+			event.objectId = self.eventId
+			tabBarDelegate.displayCamera(event)
 			
 		} else {
 		

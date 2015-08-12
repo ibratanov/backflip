@@ -30,6 +30,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		super.loadView()
 		
+		// backflip-logo-white
+		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
+		
+		
+//		viewController.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yourimage.png"]];
+//		UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yourimage2.jpg"]]];
+//		viewController.navigationItem.rightBarButtonItem = item;
+		
 		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
 	}
 	

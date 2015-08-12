@@ -200,11 +200,14 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                 let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
                                 
                                 self.userGeoPoint = userGeoPoint
+								
                             }
                         })
-                        
+						
+						
+						
                         // Put querying into a background thread
-                        dispatch_async(dispatch_get_global_queue(self.qos,0)) {
+						dispatch_async(dispatch_get_global_queue(self.qos,0), { () -> Void in
                             event["geoLocation"] = self.userGeoPoint
                             
                             //Check if event already exists
@@ -255,7 +258,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                         println("Saved")
                                         self.albumview?.eventId = self.eventID
                                         //self.performSegueWithIdentifier("eventsPage", sender: self)
-                                        self.tabBarController?.selectedIndex = 2
+                                        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
                                     }
                                     
                                 } else {
@@ -264,7 +267,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                             } else {
                                 self.displayNoInternetAlert()
                             }
-                        }
+                        })
                     }
                 })
             } else {
@@ -395,7 +398,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                         
                                         println("Saved")
                                         self.albumview?.eventId = self.eventID
-                                        self.tabBarController?.selectedIndex = 2
+                                        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
                                     }
                                 } else {
                                     self.displayAlert("This event already exists", error: "Please try again")
@@ -422,9 +425,15 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func pastEventsButton(sender: AnyObject) {
         //self.performSegueWithIdentifier("eventsPage", sender: self)
-        tabBarController?.selectedIndex = 2
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+	
+	
+	@IBAction func cancelButton()
+	{
+		self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+	}
+	
     override func viewDidLoad() {
         
         super.viewDidLoad()
