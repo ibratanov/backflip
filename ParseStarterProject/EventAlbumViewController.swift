@@ -186,7 +186,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		if (indexPath.row == 0) {
 			
-			println("---------------------\nShould allow image picking here\n---------------------")
+			let tabBarViewControllers : [UIViewController] = self.tabBarController?.viewControllers as! [UIViewController]
+			BFTabBarControllerDelegate.sharedDelegate.tabBarController(self.tabBarController!, shouldSelectViewController: tabBarViewControllers[1])
 			
 		} else {
 		
