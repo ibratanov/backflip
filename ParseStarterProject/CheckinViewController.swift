@@ -78,9 +78,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func viewWillAppear(animated: Bool)
 	{
 		super.viewWillAppear(animated)
-		
+	
 		// Data!!1!!!
-		fetchData()
+		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
+			fetchData()
+		}
 	}
 	
 	
