@@ -358,6 +358,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 						event.photos?.append(image)
 					}
 					
+					self.pickerView(self.pickerView!, didSelectRow: self.pickerView!.selectedRowInComponent(0), inComponent: 0)
 					self.collectionView?.reloadData()
 				})
 				
