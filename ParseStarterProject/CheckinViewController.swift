@@ -12,7 +12,7 @@ import Foundation
 
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITabBarControllerDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
 	var events : [Event] = []
 	
@@ -30,7 +30,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		super.loadView()
 		
-		self.navigationController?.tabBarController?.delegate = self
+		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
 	}
 	
 	override func viewDidLoad()
@@ -60,6 +60,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		if (expiryTime != nil && NSDate().isGreaterThanDate(expiryTime!)) {
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_name")
 		} else if (checkinTime != nil) {
 			self.performSegueWithIdentifier("display-event-album", sender: self)
 			return

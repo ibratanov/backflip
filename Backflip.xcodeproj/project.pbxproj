@@ -74,6 +74,7 @@
 		049AA6E71B73DB84003888CE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6D61B73DB84003888CE /* UIImageView+WebCache.m */; };
 		049AA6E81B73DB84003888CE /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6D81B73DB84003888CE /* UIView+WebCacheOperation.m */; };
 		049AA6EA1B73DBB2003888CE /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */; };
+		04BAF8441B7BE0DC00973468 /* BFTabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAF8431B7BE0DC00973468 /* BFTabBarControllerDelegate.swift */; };
 		04F41BF31B7507BB001AB8DA /* EventAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F41BF21B7507BB001AB8DA /* EventAlbumViewController.swift */; };
 		04F41BF61B754B2E001AB8DA /* BFCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F41BF51B754B2E001AB8DA /* BFCollectionViewFlowLayout.swift */; };
 		13E400E079040B0B3DF3E94B /* libPods-Backflip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D10CE913B7A5D3E47B797F /* libPods-Backflip.a */; };
@@ -235,6 +236,7 @@
 		049AA6D71B73DB84003888CE /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		049AA6D81B73DB84003888CE /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		04BAF8431B7BE0DC00973468 /* BFTabBarControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFTabBarControllerDelegate.swift; sourceTree = "<group>"; };
 		04CF88521B730771000E83B4 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		04F41BF21B7507BB001AB8DA /* EventAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAlbumViewController.swift; sourceTree = "<group>"; };
 		04F41BF51B754B2E001AB8DA /* BFCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 				504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */,
 				04F41BF21B7507BB001AB8DA /* EventAlbumViewController.swift */,
 				040B27CD1B794D75004B4FB2 /* CheckinViewController.swift */,
+				04BAF8431B7BE0DC00973468 /* BFTabBarControllerDelegate.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -908,6 +911,7 @@
 				67A796051B2EE49A006E489D /* UIImage+Extensions.swift in Sources */,
 				049AA6A41B73DA01003888CE /* MWGridCell.m in Sources */,
 				049AA6DE1B73DB84003888CE /* SDWebImageDownloader.m in Sources */,
+				04BAF8441B7BE0DC00973468 /* BFTabBarControllerDelegate.swift in Sources */,
 				67AD8BDB1B793A1F009F0963 /* CustomCamera.swift in Sources */,
 				049AA6B11B73DB2E003888CE /* DACircularProgressView.m in Sources */,
 				049AA6E31B73DB84003888CE /* UIImage+GIF.m in Sources */,
