@@ -83,6 +83,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>branch_key</key>
 	<string>key_live_mkkw8ynhD7ZoI6bSN63nMenmyFc6TMYk</string>
 </dict>

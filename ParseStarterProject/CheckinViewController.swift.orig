@@ -10,9 +10,26 @@ import Parse
 import DigitsKit
 import Foundation
 
+<<<<<<< HEAD
+=======
+class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITabBarControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+{
+    
+    @IBOutlet var noEventLabel: UILabel!
+    
+    @IBAction func logoutButton(sender: AnyObject) {
+        displayAlertLogout("Would you like to log out?", error: "")
+    }
+    @IBAction func createNew(sender: AnyObject) {
+        
+        tabBarController?.selectedIndex = 1
+    }
+    
+    var logoutButton = UIImage(named: "settings-icon") as UIImage!
+>>>>>>> 40535dfac97811ddd223c0e213506ef78333cd63
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITabBarControllerDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITabBarControllerDelegate, UICollectionViewDataSource
 {
 	var events : [Event] = []
 	
@@ -35,14 +52,42 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	override func viewDidLoad()
 	{
-		super.viewDidLoad()
-		
+<<<<<<< HEAD
 		// Login validation
 		if (PFUser.currentUser() == nil) {
 			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
 			self.performSegueWithIdentifier("display-login-popover", sender: self)
 			return
+=======
+		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
+		if (selectedIndex == 1) {
+			
+			let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
+			dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+				
+                var testCamera = CustomCamera()
+                
+                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){                    
+                    testCamera.delegate = self
+                    testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+                    testCamera.sourceType = .Camera
+                    testCamera.allowsEditing = false
+                    testCamera.showsCameraControls = false
+                    testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+                    testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+                    
+                    self.presentViewController(testCamera, animated: true, completion: nil)
+                }
+                //self.performSegueWithIdentifier("display-camera", sender: self)
+			})
+			
+			return false
+>>>>>>> 40535dfac97811ddd223c0e213506ef78333cd63
 		}
+		
+		
+		// Fetch data
+		fetchData()
 		
 		
 		// check for current event
@@ -63,10 +108,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
 		} else if (checkinTime != nil) {
 			self.performSegueWithIdentifier("display-event-album", sender: self)
-			return
 		}
-		
-		fetchData()
+	
 	}
 	
 	
@@ -162,33 +205,15 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
 		if (selectedIndex == 1) {
 			
-			let currentEvent: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
-			if (currentEvent == nil) {
-				var alertController = UIAlertController(title: "Take Photo", message: "Please checkin or create an event before upload photos", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: { (alertAction) -> Void in
-					println("Should switch back to 'current event' tab")
-				}))
-				
-				self.presentViewController(alertController, animated: true, completion: nil)
-				
-				return false
-			}
-			
 			let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
 			dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+//				self.performSegueWithIdentifier("display-camera", sender: self)
+				
 				var testCamera = CustomCamera()
 				
 				if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
 					println("Button capture")
-
-					testCamera.delegate = self
-					testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-					testCamera.sourceType = .Camera
-					testCamera.allowsEditing = false
-					testCamera.showsCameraControls = false
-					testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-					testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+					
 					self.presentViewController(testCamera, animated: true, completion: nil)
 				}
 				

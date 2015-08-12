@@ -197,23 +197,37 @@
                         <constraints>
                             <constraint firstItem="3Qu-VX-bP6" firstAttribute="top" secondItem="KbI-lh-Xpe" secondAttribute="bottom" constant="8" symbolic="YES" id="0ns-37-AX4"/>
                             <constraint firstItem="cgy-Bb-Ibi" firstAttribute="top" secondItem="VgN-Uh-Laa" secondAttribute="bottom" constant="30" id="4Kr-Oc-5Sf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3Qu-VX-bP6" secondAttribute="trailing" constant="-16" id="AkR-kk-gEo"/>
                             <constraint firstItem="3Qu-VX-bP6" firstAttribute="bottom" secondItem="M2o-Zz-INS" secondAttribute="top" id="BDH-Ab-XRA"/>
                             <constraint firstItem="M2o-Zz-INS" firstAttribute="top" secondItem="DjH-GX-fo3" secondAttribute="bottom" constant="8" id="Beo-Tm-nXq"/>
+                            <constraint firstItem="M2o-Zz-INS" firstAttribute="top" secondItem="3Qu-VX-bP6" secondAttribute="bottom" id="Gj9-i7-4bx"/>
                             <constraint firstAttribute="centerX" secondItem="3Qu-VX-bP6" secondAttribute="centerX" id="TQq-zU-Zd0"/>
+                            <constraint firstItem="3Qu-VX-bP6" firstAttribute="leading" secondItem="Kxg-jD-ohq" secondAttribute="leadingMargin" constant="-16" id="TbI-vv-Lbn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3Qu-VX-bP6" secondAttribute="trailing" constant="-16" id="WDI-3O-Quo"/>
+                            <constraint firstAttribute="centerY" secondItem="3Qu-VX-bP6" secondAttribute="centerY" id="WEA-HC-rpP"/>
                             <constraint firstItem="3Qu-VX-bP6" firstAttribute="centerX" secondItem="VgN-Uh-Laa" secondAttribute="centerX" id="WFF-mR-A23"/>
+                            <constraint firstItem="M2o-Zz-INS" firstAttribute="top" secondItem="3Qu-VX-bP6" secondAttribute="bottom" id="WmD-mm-vip"/>
+                            <constraint firstAttribute="centerX" secondItem="3Qu-VX-bP6" secondAttribute="centerX" id="Ynh-dq-VIe"/>
                             <constraint firstItem="3Qu-VX-bP6" firstAttribute="top" secondItem="KbI-lh-Xpe" secondAttribute="bottom" constant="8" id="bJs-Ol-gbq"/>
                             <constraint firstAttribute="centerY" secondItem="cgy-Bb-Ibi" secondAttribute="centerY" id="cEj-Z9-yKq"/>
                             <constraint firstAttribute="centerX" secondItem="cgy-Bb-Ibi" secondAttribute="centerX" id="dh8-sk-FnJ"/>
+                            <constraint firstItem="3Qu-VX-bP6" firstAttribute="top" secondItem="Kxg-jD-ohq" secondAttribute="topMargin" id="fxC-nz-sjl"/>
                             <constraint firstItem="3Qu-VX-bP6" firstAttribute="leading" secondItem="Kxg-jD-ohq" secondAttribute="leadingMargin" constant="-16" id="jJv-vq-jxj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3Qu-VX-bP6" secondAttribute="trailing" constant="-16" id="mXG-Wa-knK"/>
                             <constraint firstAttribute="centerX" secondItem="DjH-GX-fo3" secondAttribute="centerX" id="ozf-mW-u6i"/>
+                            <constraint firstItem="3Qu-VX-bP6" firstAttribute="top" secondItem="Kxg-jD-ohq" secondAttribute="topMargin" id="sp9-pR-WWj"/>
+                            <constraint firstItem="3Qu-VX-bP6" firstAttribute="leading" secondItem="Kxg-jD-ohq" secondAttribute="leadingMargin" constant="-16" id="tcT-wk-mbe"/>
                             <constraint firstItem="M2o-Zz-INS" firstAttribute="top" secondItem="3Qu-VX-bP6" secondAttribute="bottom" id="wB9-sM-FRj"/>
                             <constraint firstAttribute="centerY" secondItem="3Qu-VX-bP6" secondAttribute="centerY" id="zjY-35-ZDO"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="0ns-37-AX4"/>
+                                <exclude reference="TbI-vv-Lbn"/>
+                                <exclude reference="Ynh-dq-VIe"/>
                                 <exclude reference="bJs-Ol-gbq"/>
+                                <exclude reference="jJv-vq-jxj"/>
+                                <exclude reference="mXG-Wa-knK"/>
                                 <exclude reference="zjY-35-ZDO"/>
                                 <exclude reference="wB9-sM-FRj"/>
                             </mask>
@@ -366,7 +380,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Nearby Events" id="qKa-0P-jZP">
-                        <barButtonItem key="leftBarButtonItem" image="settings-icon" id="VNx-b2-gfF">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="VNx-b2-gfF">
                             <connections>
                                 <action selector="logout" destination="0pn-ur-yjM" id="Fao-lv-i1j"/>
                             </connections>
@@ -600,9 +614,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4yP-3p-UeE">
+                            <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4yP-3p-UeE">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="ii4-U0-EQf">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ii4-U0-EQf">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <animations/>
@@ -613,9 +627,9 @@
                                 </constraints>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HtL-ZK-6YX">
+                            <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HtL-ZK-6YX">
                                 <rect key="frame" x="0.0" y="435" width="375" height="232"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="O1F-Iq-Mop">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="O1F-Iq-Mop">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="232"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <animations/>
@@ -623,18 +637,18 @@
                                 <animations/>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <view alpha="0.0" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="idl-rp-4da" userLabel="Square">
-                                <rect key="frame" x="0.0" y="60" width="375" height="435"/>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idl-rp-4da" userLabel="Square">
+                                <rect key="frame" x="0.0" y="60" width="375" height="375"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="idl-rp-4da" secondAttribute="height" multiplier="1:1" id="3gV-Dn-ece"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lJr-hQ-1b2" userLabel="Top">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJr-hQ-1b2" userLabel="Top">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Gp-Yy-iLY">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Gp-Yy-iLY">
                                         <rect key="frame" x="10" y="5" width="69" height="50"/>
                                         <animations/>
                                         <constraints>
@@ -643,8 +657,11 @@
                                         <state key="normal" image="flash-icon-large">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="toggleTorch:" destination="95d-MB-aa7" eventType="touchUpInside" id="rxs-J4-xoF"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgw-jV-Tqv" userLabel="Switch Camera Button">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgw-jV-Tqv" userLabel="Switch Camera Button">
                                         <rect key="frame" x="330" y="5" width="35" height="50"/>
                                         <animations/>
                                         <constraints>
@@ -655,8 +672,11 @@
                                         <variation key="widthClass=compact" fixedFrame="YES">
                                             <rect key="frame" x="275" y="0.0" width="56" height="48"/>
                                         </variation>
+                                        <connections>
+                                            <action selector="reverseCamera:" destination="95d-MB-aa7" eventType="touchUpInside" id="q1C-92-BEN"/>
+                                        </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l38-Yb-qcK">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l38-Yb-qcK">
                                         <rect key="frame" x="187" y="30" width="0.0" height="0.0"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
@@ -687,10 +707,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="400" height="48"/>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2jB-2M-bzK" userLabel="Bottom">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2jB-2M-bzK" userLabel="Bottom">
                                 <rect key="frame" x="0.0" y="495" width="375" height="172"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTG-Rn-EuF">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTG-Rn-EuF">
                                         <rect key="frame" x="10" y="61" width="50" height="50"/>
                                         <animations/>
                                         <constraints>
@@ -700,8 +720,11 @@
                                         <state key="normal" image="close-icon-large">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="cancelCamera:" destination="95d-MB-aa7" eventType="touchUpInside" id="eUt-sZ-rk3"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xr1-LS-43L">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xr1-LS-43L">
                                         <rect key="frame" x="148" y="46" width="80" height="80"/>
                                         <animations/>
                                         <constraints>
@@ -714,8 +737,11 @@
                                         <variation key="widthClass=compact" fixedFrame="YES">
                                             <rect key="frame" x="172" y="23" width="56" height="63"/>
                                         </variation>
+                                        <connections>
+                                            <action selector="capture:" destination="95d-MB-aa7" eventType="touchUpInside" id="3zv-Nn-fFy"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dl2-sq-hq1">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dl2-sq-hq1">
                                         <rect key="frame" x="315" y="61" width="50" height="50"/>
                                         <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -726,6 +752,9 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="showCameraRoll:" destination="95d-MB-aa7" eventType="touchUpInside" id="kn0-Du-UyW"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <animations/>
@@ -747,7 +776,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N0x-4A-xrw">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N0x-4A-xrw">
                                 <rect key="frame" x="0.0" y="435" width="375" height="60"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
@@ -762,17 +791,35 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="trailing" secondItem="lJr-hQ-1b2" secondAttribute="trailing" id="3f4-xF-jll"/>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="leading" secondItem="idl-rp-4da" secondAttribute="leading" id="4hq-wa-GMD"/>
                             <constraint firstItem="2jB-2M-bzK" firstAttribute="top" secondItem="N0x-4A-xrw" secondAttribute="bottom" id="5dl-kX-lac"/>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="leading" secondItem="zL6-T5-1cw" secondAttribute="leading" id="5tI-JY-Ia9"/>
                             <constraint firstItem="idl-rp-4da" firstAttribute="width" secondItem="idl-rp-4da" secondAttribute="height" multiplier="1:1" id="6HW-7M-9rz"/>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="leading" secondItem="4yP-3p-UeE" secondAttribute="leading" id="9hv-rS-Fwb"/>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="trailing" secondItem="2jB-2M-bzK" secondAttribute="trailing" id="L2f-gn-bH5"/>
+                            <constraint firstAttribute="bottom" secondItem="N0x-4A-xrw" secondAttribute="bottom" constant="172" id="LOB-Fa-ivG"/>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="trailing" secondItem="HtL-ZK-6YX" secondAttribute="trailing" id="M4r-AG-zrZ"/>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="leading" secondItem="2jB-2M-bzK" secondAttribute="leading" id="UJN-Mc-Rg8"/>
                             <constraint firstItem="idl-rp-4da" firstAttribute="top" secondItem="lJr-hQ-1b2" secondAttribute="bottom" id="Wuu-Fd-jlJ"/>
                             <constraint firstItem="4yP-3p-UeE" firstAttribute="top" secondItem="lJr-hQ-1b2" secondAttribute="top" id="Y3p-j4-1Ez"/>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="trailing" secondItem="4yP-3p-UeE" secondAttribute="trailing" id="YBI-qz-WHk"/>
                             <constraint firstItem="HtL-ZK-6YX" firstAttribute="top" secondItem="N0x-4A-xrw" secondAttribute="top" id="YU0-Qs-nJ0"/>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="leading" secondItem="HtL-ZK-6YX" secondAttribute="leading" id="ZMk-KR-zli"/>
+                            <constraint firstAttribute="trailing" secondItem="N0x-4A-xrw" secondAttribute="trailing" id="bla-Ye-S8O"/>
+                            <constraint firstItem="HtL-ZK-6YX" firstAttribute="bottom" secondItem="2jB-2M-bzK" secondAttribute="bottom" id="ew3-3d-thi"/>
                             <constraint firstItem="2jB-2M-bzK" firstAttribute="leading" secondItem="lJr-hQ-1b2" secondAttribute="leading" id="h1q-pf-LFJ"/>
+                            <constraint firstItem="HtL-ZK-6YX" firstAttribute="bottom" secondItem="dLx-YI-DNf" secondAttribute="top" id="tmw-aA-6a2"/>
                             <constraint firstItem="N0x-4A-xrw" firstAttribute="top" secondItem="idl-rp-4da" secondAttribute="bottom" id="uvc-LD-0zE"/>
+                            <constraint firstItem="N0x-4A-xrw" firstAttribute="trailing" secondItem="idl-rp-4da" secondAttribute="trailing" id="xwE-bo-hsp"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Camera" image="tabBar-camera-filled" id="GSs-m3-0Vc"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="flashButton" destination="1Gp-Yy-iLY" id="uPT-jF-ngq"/>
+                        <outlet property="thumbnailButton" destination="dl2-sq-hq1" id="afp-O1-fGe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcv-pB-unz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -786,7 +833,6 @@
         <image name="home-background" width="375" height="667"/>
         <image name="home-logo" width="250" height="127"/>
         <image name="reverse-camera-icon-large" width="35" height="26"/>
-        <image name="settings-icon" width="21" height="21"/>
         <image name="tabBar-camera-filled" width="35" height="25"/>
         <image name="tabBar-eventHistory" width="28" height="25"/>
         <image name="tabBar-eventHistory-filled" width="28" height="25"/>

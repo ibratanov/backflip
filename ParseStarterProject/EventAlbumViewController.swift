@@ -53,10 +53,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		super.viewDidLoad()
 		
-		updateData()
-		
 		self.title = self.eventTitle
-		
 		
 		// Hide the "leave" button when pushed from event history
 		let currentEventId = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id") as? String
@@ -66,6 +63,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			self.navigationItem.leftBarButtonItem = nil
 		}
 		
+		updateData()
 		
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
@@ -75,11 +73,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		refreshControl.addTarget(self, action: "updateData", forControlEvents: .ValueChanged)
 		self.collectionView!.addSubview(refreshControl)
 		
-		self.collectionView?.contentInset = UIEdgeInsetsMake(0.0,0.0,72.0,0.0)
-		
-		
 		// Layout -  Only run on the main thread
-		dispatch_async(dispatch_get_main_queue(), {
+		dispatch_async(dispatch_get_main_queue(), { () -> Void in
+			self.collectionView?.contentInset = UIEdgeInsetsMake(0.0,0.0,72.0,0.0)
+			
 			let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
 			flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
 			flow.itemSize = CGSizeMake((self.view.frame.size.width/3)-1, (self.view.frame.size.width/3)-1);
@@ -163,15 +160,21 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
-		return Int(collectionContent.count)
+		return (1 + Int(collectionContent.count))
 	}
 	
 	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
 	{
 		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
 		
-		cell.imageView.file = collectionContent[Int(indexPath.row)].thumbnail
-		cell.imageView.loadInBackground()
+		if (indexPath.row == 0) {
+			cell.imageView.image = UIImage(named: "album-add-photo")
+			cell.imageView.image!.imageWithRenderingMode(.AlwaysTemplate)
+			cell.imageView.tintColor = UIColor.grayColor()
+		} else if (self.collectionContent.count >= indexPath.row) {
+			cell.imageView.file = collectionContent[Int(indexPath.row)-1].thumbnail
+			cell.imageView.loadInBackground()
+		}
 		
 		cell.layer.shouldRasterize = true
 		cell.layer.rasterizationScale = UIScreen.mainScreen().scale
@@ -181,34 +184,41 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 	{
-		photoBrowser = MWPhotoBrowser(delegate: self)
-		photoBrowser?.alwaysShowControls = true
-		photoBrowser?.displayActionButton = false
+		if (indexPath.row == 0) {
+			
+			println("---------------------\nShould allow image picking here\n---------------------")
+			
+		} else {
 		
-		// Our own custom share button
-		let shareBarButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: "sharePhoto")
-		shareBarButton.image = UIImage(named: "more-icon")
+			photoBrowser = MWPhotoBrowser(delegate: self)
+			photoBrowser?.alwaysShowControls = true
+			photoBrowser?.displayActionButton = false
+		
+			// Our own custom share button
+			let shareBarButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: "sharePhoto")
+			shareBarButton.image = UIImage(named: "more-icon")
 		
 		
-		// Toolbar items
-		let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-		let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: self, action: nil)
-		fixedSpace.width = 8
+			// Toolbar items
+			let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+			let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: self, action: nil)
+			fixedSpace.width = 8
 		
-		likeButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: "likePhoto")
-		likeButton?.image = UIImage(named: "heart-icon-empty")
+			likeButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: "likePhoto")
+			likeButton?.image = UIImage(named: "heart-icon-empty")
 		
-		likeLabel.font = UIFont(name: "Avenir-Medium", size: 16)
-		likeLabel.textColor = UIColor.whiteColor()
-		likeLabel.backgroundColor = UIColor.clearColor()
+			likeLabel.font = UIFont(name: "Avenir-Medium", size: 16)
+			likeLabel.textColor = UIColor.whiteColor()
+			likeLabel.backgroundColor = UIColor.clearColor()
 		
-		var likeLabelButton = UIBarButtonItem(customView: likeLabel)
+			var likeLabelButton = UIBarButtonItem(customView: likeLabel)
 		
-		photoBrowser?.toolbar?.items = [fixedSpace, likeButton!, fixedSpace, likeLabelButton, flexSpace, shareBarButton]
+			photoBrowser?.toolbar?.items = [fixedSpace, likeButton!, fixedSpace, likeLabelButton, flexSpace, shareBarButton]
 		
-		photoBrowser?.setCurrentPhotoIndex(UInt(indexPath.row))
+			photoBrowser?.setCurrentPhotoIndex(UInt(indexPath.row)-1)
 		
-		self.navigationController?.pushViewController(photoBrowser!, animated: true)
+			self.navigationController?.pushViewController(photoBrowser!, animated: true)
+		}
 	}
 	
 	override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
@@ -232,6 +242,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	@IBAction func segementedControlValueChanged(sender: AnyObject)
 	{
+		if (self.orginalContent.count < 1) {
+			return
+		}
+		
 		let segementedControl = sender as! UISegmentedControl
 		var content = self.orginalContent
 		
@@ -411,7 +425,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			
 			var imagesQuery = PFQuery(className: "Event")
 			imagesQuery.limit = 1
-			imagesQuery.selectKeys(["photos"])
+			// imagesQuery.selectKeys(["name","photos"])
 			imagesQuery.whereKey("objectId", equalTo: self.eventId!)
 			let uploadedImages = imagesQuery.findObjects()
 			
@@ -458,6 +472,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 						self.collectionContent.append(image)
 					}
 					self.orginalContent = self.collectionContent
+					
 					
 					self.segementedControlValueChanged(self.segmentedControl)
 					

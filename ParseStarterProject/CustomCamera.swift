@@ -23,12 +23,12 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
     var flashOff = UIImage(named:"flash-icon-large") as UIImage!
     var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
     var loopAllImagesBool = false
+    let frame: CGRect = UIScreen.mainScreen().bounds
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var flashButton: UIButton!
     var imageViewContent = UIImage()
     var overlayView: UIView?
     var image = UIImage()
-    var picker = UIImagePickerController()
     var zoomImage = (camera: true, display: true)
     var newMedia: Bool = true
 
@@ -45,13 +45,11 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
     var downloadToCameraRoll = true
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-    
+
     
     //NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeUpButtonDownNotification", object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
+   
     if NetworkAvailable.networkConnection() == true {
         let query = PFUser.query()
         query?.selectKeys(["blocked"])
@@ -64,37 +62,38 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
                 } else {
                     self.fullScreen = false
                     self.posted = true
+
                     if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
                         println("Button capture")
-                        
+                       // self.delegate = self
+
                         //primary delegate for the picker
-                        self.picker.delegate = self
-                        
-                        self.picker.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-                        self.picker.sourceType = .Camera
-                        self.picker.mediaTypes = [kUTTypeImage]
-                        self.picker.allowsEditing = false
-                        self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-                        self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+                        self.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+                        self.sourceType = .Camera
+                        self.mediaTypes = [kUTTypeImage]
+                        self.allowsEditing = false
+                        self.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+                        self.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
                         // resize
                         if (self.zoomImage.camera) {
                             var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
                             var cameraAspectRatio: CGFloat = 4.0/3.0
                             var cameraViewHeight = screenBounds.width * cameraAspectRatio
                             var scale = screenBounds.height / cameraViewHeight
-                            self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
-                            self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, scale, scale)
+                            self.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
+                            self.cameraViewTransform = CGAffineTransformScale(self.cameraViewTransform, scale, scale)
                             self.zoomImage.camera = false
                         }
                         
                         // custom camera overlayview
-                        self.picker.showsCameraControls = false
+                        self.showsCameraControls = false
                         NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
-                        self.overlayView!.frame = self.picker.cameraOverlayView!.frame
-                        self.picker.cameraOverlayView = self.overlayView
+                       self.overlayView!.frame = self.frame
+
+                        self.cameraOverlayView = self.overlayView
+
                         self.overlayView = nil
-                        
-                        self.presentViewController(self.picker, animated:true, completion:{})
+                        //self.presentViewController(self, animated:true, completion:{})
                         self.setLastPhoto()
                         self.updateThumbnail()
                         self.newMedia = true
@@ -128,7 +127,9 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
         })
     } else {
         displayNoInternetAlert() }
-     
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeUpButtonDownNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
+
     }
     
 //--------------- Camera ---------------
@@ -178,7 +179,7 @@ func imagePickerController(picker: UIImagePickerController, didFinishPickingMedi
         
     }
     
-    if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
+    if self.cameraDevice == UIImagePickerControllerCameraDevice.Front{
         previewViewController.imageToCrop = imageViewContent
         //UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
         //UIImage(CGImage: initialImage.CGImage, scale: 1, orientation: initialImage.imageOrientation)!
@@ -292,27 +293,27 @@ func testCalled()
 
 @IBAction func reverseCamera(sender: UIButton) {
     //TO-DO: add transition when reversed
-    if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
+    if self.cameraDevice == UIImagePickerControllerCameraDevice.Front{
         
         var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
         var cameraAspectRatio: CGFloat = 4.0/3.0
         var cameraViewHeight = screenBounds.width * cameraAspectRatio
         var scale = screenBounds.height / cameraViewHeight
-        picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
-        picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
+        self.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
+        self.cameraViewTransform = CGAffineTransformScale(self.cameraViewTransform, scale, scale)
         self.zoomImage.camera = false
         
         
-        UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
-            self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
+        UIView.transitionWithView(self.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
+            self.cameraDevice = UIImagePickerControllerCameraDevice.Rear
             }, completion: nil)
         
         self.flashButton.hidden = false
     }else{
         
         //----------------------------------------------------------------------------
-        self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, -5.0)
-        self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
+        self.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, -5.0)
+        self.cameraViewTransform = CGAffineTransformScale(self.cameraViewTransform, 1.0, 1.0)
         
         // resize
         if (zoomImage.camera) {
@@ -320,8 +321,8 @@ func testCalled()
         }
         //----------------------------------------------------------------------------
         
-        UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromRight , animations: { () -> Void in
-            self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
+        UIView.transitionWithView(self.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromRight , animations: { () -> Void in
+            self.cameraDevice = UIImagePickerControllerCameraDevice.Front
             }, completion: nil)
         
         self.flashButton.hidden = true
@@ -329,7 +330,7 @@ func testCalled()
 }
 
 @IBAction func showCameraRoll(sender: UIButton) {
-    picker.dismissViewControllerAnimated(true, completion: nil)
+    self.dismissViewControllerAnimated(true, completion: nil)
     
     //        downloadToCameraRoll = false
     //
@@ -361,7 +362,7 @@ func imagePickerControllerCancelled() {
 
 
 @IBAction func capture(sender: UIButton) {
-    picker.takePicture()
+    self.takePicture()
     
     downloadToCameraRoll = true
     
@@ -375,13 +376,13 @@ func updateThumbnail(){
     
 }
 @IBAction func toggleTorch(sender: UIButton) {
-    if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
-        self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
+    if self.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
+        self.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
         
         self.flashButton.setImage(flashOff, forState: .Normal)
         
     }else{
-        self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.On
+        self.cameraFlashMode = UIImagePickerControllerCameraFlashMode.On
         self.flashButton.setImage(flashOn, forState: .Normal)
     }
 }
@@ -412,7 +413,7 @@ func setLastPhoto(){
 @IBAction func cancelCamera(sender: AnyObject) {
     
     println("here on cancel")
-    picker.dismissViewControllerAnimated(true, completion: nil)
+    self.dismissViewControllerAnimated(true, completion: nil)
     
 }
 
