@@ -170,6 +170,11 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		previewViewController.cropCompletionHandler = {
 			self.imageViewContent = $0!
 			previewViewController.dismissViewControllerAnimated(true, completion: nil)
+
+			
+			let imageView = UIImageView(image: self.imageViewContent)
+			imageView.contentMode = UIViewContentMode.ScaleAspectFit
+			self.uploadImages(imageView.image!)
 			
 			picker.dismissViewControllerAnimated(true, completion: nil)
 			
@@ -195,8 +200,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 			previewViewController.imageToCrop = imageViewContent
 		}
 		
-		previewViewController.eventId = self.eventId
-		previewViewController.eventTitle = self.eventTitle
+		previewViewController.eventId = self.event!.objectId!
+		// previewViewController.eventTitle = self.event!.name!
 		previewViewController.downloadToCameraRoll = downloadToCameraRoll
 		
 		self.presentViewController(previewViewController, animated: true, completion: nil);
@@ -357,10 +362,12 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		//Send assets to parse
 		for (index, asset) in enumerate(assets) {
 			let imageView = UIImageView(image: asset.fullScreenImage)
-			//----->imageView.contentMode = UIViewContentMode.ScaleAspectFit
+			imageView.contentMode = UIViewContentMode.ScaleAspectFit
 			uploadImages(imageView.image!)
 		}
+		
 		self.dismissViewControllerAnimated(true, completion: nil)
+		cancelCamera(self)
 	}
 	
 	func imagePickerControllerCancelled() {
@@ -425,94 +432,100 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	}
 	
 	
-	func uploadImages(uImage: UIImage){
-		//------------------UPLOAD CANVAS----------------------------------------
+	func uploadImages(uImage: UIImage)
+	{
+		println("------------------\nUPLOAD CANVAS\n----------------------------------------\n")
 		
-		//    if NetworkAvailable.networkConnection() == true {
-		//
-		//        var capturedImage = uImage as UIImage!
-		//
-		//        var imageData = compressImage(uImage, shrinkRatio: 1.0)
-		//        var imageFile = PFFile(name: "image.png", data: imageData)
-		//
-		//
-		//
-		//        var thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
-		//        var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
-		//
-		//
-		//        //Upload photos to database
-		//        var photo = PFObject(className: "Photo")
-		//        photo["caption"] = "Camera roll upload"
-		//        photo["image"] = imageFile
-		//        photo["thumbnail"] = thumbnailFile
-		//        photo["upvoteCount"] = 1
-		//        photo["usersLiked"] = [PFUser.currentUser()!.username!]
-		//        photo["uploader"] = PFUser.currentUser()!
-		//        photo["uploaderName"] = PFUser.currentUser()!.username!
-		//        photo["flagged"] = false
-		//        photo["reviewed"] = false
-		//        photo["blocked"] = false
-		//        photo["reporter"] = ""
-		//        photo["reportMessage"] = ""
-		//
-		//        var photoACL = PFACL(user: PFUser.currentUser()!)
-		//        photoACL.setPublicWriteAccess(true)
-		//        photoACL.setPublicReadAccess(true)
-		//        photo.ACL = photoACL
-		//
-		//
-		//        var query2 = PFQuery(className: "EventAttendance")
-		//        query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-		//        query2.whereKey("eventID", equalTo: eventId!)
-		//
-		//        //var photoObjectList = query2.findObjects()
-		//        var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
-		//            if (objs != nil && objs!.count != 0) {
-		//                var photoObject = objs!.first as! PFObject
-		//
-		//                photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-		//                photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
-		//
-		//                var queryEvent = PFQuery(className: "Event")
-		//                queryEvent.whereKey("objectId", equalTo: self.eventId!)
-		//                //var objects = queryEvent.findObjects()
-		//                var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
-		//
-		//                    if (sobjs != nil && sobjs!.count != 0) {
-		//                        var eventObject = sobjs!.first as! PFObject
-		//
-		//                        let relation = eventObject.relationForKey("photos")
-		//
-		//                        //photo.save()
-		//                        photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
-		//                            if valid {
-		//                                relation.addObject(photo)
-		//                                photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-		//                                photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-		//                            }
-		//                            //issue
-		//                            eventObject.saveInBackground()
-		//
-		//                            //issue
-		//                            photoObject.saveInBackground()
-		//                        })
-		//
-		//                    } else {
-		//                        self.displayNoInternetAlert()
-		//                    }
-		//                })
-		//            }
-		//            else {
-		//                self.displayNoInternetAlert()
-		//                println("Object Issue")
-		//            }
-		//
-		//        })
-		//
-		//    } else {
-		//        displayNoInternetAlert()
-		//    }
+		    if NetworkAvailable.networkConnection() == true {
+		
+		        var capturedImage = uImage as UIImage!
+		
+		        var imageData = compressImage(uImage, shrinkRatio: 1.0)
+		        var imageFile = PFFile(name: "image.png", data: imageData)
+		
+		
+		
+		        var thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
+		        var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+		
+		
+		        //Upload photos to database
+		        var photo = PFObject(className: "Photo")
+		        photo["caption"] = "Camera roll upload"
+		        photo["image"] = imageFile
+		        photo["thumbnail"] = thumbnailFile
+		        photo["upvoteCount"] = 1
+		        photo["usersLiked"] = [PFUser.currentUser()!.username!]
+		        photo["uploader"] = PFUser.currentUser()!
+		        photo["uploaderName"] = PFUser.currentUser()!.username!
+		        photo["flagged"] = false
+		        photo["reviewed"] = false
+		        photo["blocked"] = false
+		        photo["reporter"] = ""
+		        photo["reportMessage"] = ""
+		
+		        var photoACL = PFACL(user: PFUser.currentUser()!)
+		        photoACL.setPublicWriteAccess(true)
+		        photoACL.setPublicReadAccess(true)
+		        photo.ACL = photoACL
+		
+		
+		        var query2 = PFQuery(className: "EventAttendance")
+		        query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+		        query2.whereKey("eventID", equalTo: event!.objectId!)
+		
+		        //var photoObjectList = query2.findObjects()
+		        var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
+		            if (objs != nil && objs!.count != 0) {
+		                var photoObject = objs!.first as! PFObject
+		
+		                photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+		                photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+		
+		                var queryEvent = PFQuery(className: "Event")
+		                queryEvent.whereKey("objectId", equalTo: self.event!.objectId!)
+		                //var objects = queryEvent.findObjects()
+		                var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
+		
+		                    if (sobjs != nil && sobjs!.count != 0) {
+		                        var eventObject = sobjs!.first as! PFObject
+		
+		                        let relation = eventObject.relationForKey("photos")
+		
+		                        //photo.save()
+		                        photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
+		                            if valid {
+		                                relation.addObject(photo)
+		                                photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+		                                photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+		                            }
+		                            //issue
+		                            eventObject.saveInBackground()
+		
+		                            //issue
+		                            photoObject.saveInBackground()
+		                        })
+		
+		                    } else {
+		                        self.displayNoInternetAlert()
+		                    }
+		                })
+		            }
+		            else {
+		                self.displayNoInternetAlert()
+		                println("Object Issue")
+		            }
+		
+		        })
+		
+				
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					self.cancelCamera(self)
+				})
+				
+		    } else {
+		        displayNoInternetAlert()
+		    }
 		
 	}
 	
