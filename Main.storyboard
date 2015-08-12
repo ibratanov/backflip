@@ -634,6 +634,9 @@
                                         <state key="normal" image="flash-icon-large">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="toggleTorch:" destination="95d-MB-aa7" eventType="touchUpInside" id="Jep-Cg-2HN"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgw-jV-Tqv" userLabel="Switch Camera Button">
                                         <rect key="frame" x="330" y="5" width="35" height="50"/>
@@ -646,6 +649,9 @@
                                         <variation key="widthClass=compact" fixedFrame="YES">
                                             <rect key="frame" x="275" y="0.0" width="56" height="48"/>
                                         </variation>
+                                        <connections>
+                                            <action selector="reverseCamera:" destination="95d-MB-aa7" eventType="touchUpInside" id="bDA-nk-VbF"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l38-Yb-qcK">
                                         <rect key="frame" x="187" y="30" width="0.0" height="0.0"/>
@@ -691,6 +697,9 @@
                                         <state key="normal" image="close-icon-large">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="cancelCamera:" destination="95d-MB-aa7" eventType="touchUpInside" id="6Uu-mx-hSc"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xr1-LS-43L">
                                         <rect key="frame" x="148" y="46" width="80" height="80"/>
@@ -705,6 +714,9 @@
                                         <variation key="widthClass=compact" fixedFrame="YES">
                                             <rect key="frame" x="172" y="23" width="56" height="63"/>
                                         </variation>
+                                        <connections>
+                                            <action selector="capture:" destination="95d-MB-aa7" eventType="touchUpInside" id="3zv-Nn-fFy"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dl2-sq-hq1">
                                         <rect key="frame" x="315" y="61" width="50" height="50"/>
@@ -717,6 +729,9 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="showCameraRoll:" destination="95d-MB-aa7" eventType="touchUpInside" id="kn0-Du-UyW"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <animations/>
@@ -764,6 +779,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Camera" image="tabBar-camera-filled" id="GSs-m3-0Vc"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="flashButton" destination="1Gp-Yy-iLY" id="uPT-jF-ngq"/>
+                        <outlet property="thumbnailButton" destination="dl2-sq-hq1" id="afp-O1-fGe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcv-pB-unz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

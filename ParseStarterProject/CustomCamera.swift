@@ -23,10 +23,11 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
     var flashOff = UIImage(named:"flash-icon-large") as UIImage!
     var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
     var loopAllImagesBool = false
+    let frame: CGRect = UIScreen.mainScreen().bounds
     @IBOutlet weak var thumbnailButton: UIButton!
     @IBOutlet weak var flashButton: UIButton!
     var imageViewContent = UIImage()
-    var overlayView: UIView? = UIView()
+    var overlayView: UIView?
     var image = UIImage()
     var zoomImage = (camera: true, display: true)
     var newMedia: Bool = true
@@ -44,10 +45,11 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
     var downloadToCameraRoll = true
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+
     
     //NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeUpButtonDownNotification", object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
+   
     if NetworkAvailable.networkConnection() == true {
         let query = PFUser.query()
         query?.selectKeys(["blocked"])
@@ -60,9 +62,11 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
                 } else {
                     self.fullScreen = false
                     self.posted = true
+
                     if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
                         println("Button capture")
-                        
+                       // self.delegate = self
+
                         //primary delegate for the picker
                         self.modalPresentationStyle = UIModalPresentationStyle.FullScreen
                         self.sourceType = .Camera
@@ -84,8 +88,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
                         // custom camera overlayview
                         self.showsCameraControls = false
                         NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
-                        print(self.cameraOverlayView?.frame)
-                        //self.overlayView!.frame = self.cameraOverlayView!.frame
+                       self.overlayView!.frame = self.frame
 
                         self.cameraOverlayView = self.overlayView
 
@@ -124,8 +127,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
         })
     } else {
         displayNoInternetAlert() }
-     
-        super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeUpButtonDownNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
 
     }
     

@@ -11,7 +11,7 @@ import Parse
 import CoreLocation
 import DigitsKit
 
-class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITabBarControllerDelegate
+class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITabBarControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
     
     @IBOutlet var noEventLabel: UILabel!
@@ -74,7 +74,22 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
 			
 			let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
 			dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-				self.performSegueWithIdentifier("display-camera", sender: self)
+				
+                var testCamera = CustomCamera()
+                
+                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+                    println("Button capture")
+                    
+                    testCamera.delegate = self
+                    testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+                    testCamera.sourceType = .Camera
+                    testCamera.allowsEditing = false
+                    testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+                    testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+                    
+                    self.presentViewController(testCamera, animated: true, completion: nil)
+                }
+                //self.performSegueWithIdentifier("display-camera", sender: self)
 			})
 			
 			return false
