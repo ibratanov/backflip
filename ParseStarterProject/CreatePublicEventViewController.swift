@@ -35,7 +35,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var albumview: AlbumViewController?
     // Disable navigation
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     var address2:String = ""
     
@@ -282,7 +282,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         var resp : UIResponder = textField
         while !(resp is UIAlertController) { resp = resp.nextResponder()!}
         let alert = resp as! UIAlertController
-        (alert.actions.first as! UIAlertAction).enabled = (count(textField.text) > 1)
+        (alert.actions[1] as! UIAlertAction).enabled = (count(textField.text) > 1)
         
     }
     
@@ -393,7 +393,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                         
                                         println("Saved")
                                         self.albumview?.eventId = self.eventID
-                                        self.performSegueWithIdentifier("eventsPage", sender: self)
+                                        self.tabBarController?.selectedIndex = 2
                                     }
                                 } else {
                                     self.displayAlert("This event already exists", error: "Please try again")
@@ -414,7 +414,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         }
         
         // Add the cancel button, as well as disable interaction with create button until 2 or more characters present in textfield
-        (alert.actions.first as! UIAlertAction).enabled = false
+        (alert.actions[1] as! UIAlertAction).enabled = false
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
@@ -432,28 +432,28 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         
         //--------------- Draw UI ---------------
         
-        // Hide UI controller item
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
-        navBar.backgroundColor =  UIColor.whiteColor()
-        
-        // Set the Nav bar properties
-        let navBarItem = UINavigationItem()
-        navBarItem.title = "Create An Event"
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-        navBar.items = [navBarItem]
-        
-        // Left nav bar button item
-        let logout = UIButton.buttonWithType(.System) as! UIButton
-        logout.setImage(logoutButton, forState: .Normal)
-        logout.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        logout.frame = CGRectMake(-10, 20, 72, 44)
-        logout.addTarget(self, action: "settingButton:", forControlEvents: .TouchUpInside)
-        navBar.addSubview(logout)
-        
-        self.view.addSubview(navBar)
+//        // Hide UI controller item
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//        
+//        // Nav Bar positioning
+//        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
+//        navBar.backgroundColor =  UIColor.whiteColor()
+//        
+//        // Set the Nav bar properties
+//        let navBarItem = UINavigationItem()
+//        navBarItem.title = "Create An Event"
+//        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+//        navBar.items = [navBarItem]
+//        
+//        // Left nav bar button item
+//        let logout = UIButton.buttonWithType(.System) as! UIButton
+//        logout.setImage(logoutButton, forState: .Normal)
+//        logout.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+//        logout.frame = CGRectMake(-10, 20, 72, 44)
+//        logout.addTarget(self, action: "settingButton:", forControlEvents: .TouchUpInside)
+//        navBar.addSubview(logout)
+//        
+//        self.view.addSubview(navBar)
         
         //Add delegate, this prevents users from typing text over 25 characters
         eventName.delegate = self
