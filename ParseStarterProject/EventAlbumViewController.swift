@@ -19,15 +19,17 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	//-------------------------------------
 	// MARK: Global Variables
 	//-------------------------------------
+	
 	var eventId : String?
 	var eventTitle : String?
+	var event : Event?
+	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
 	
 	var orginalContent : [Image] = []
 	var collectionContent : [Image] = []
 	
 	var photoBrowser : MWPhotoBrowser?
-	var cameraButton : UIButton?
 	
 	var likeButton : UIBarButtonItem?
 	var likeLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 100, 21))
@@ -55,6 +57,17 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		self.title = self.eventTitle
 		
+		
+		// Hide the "leave" button when pushed from event history
+		let currentEventId = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id") as? String
+		if (currentEventId == self.eventId) {
+			self.navigationController?.setViewControllers([self], animated: false)
+		} else {
+			self.navigationItem.leftBarButtonItem = nil
+		}
+		
+		
+		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
 		
 		refreshControl.tintColor = UIColor(red:0,  green:0.588,  blue:0.533, alpha:1)
@@ -64,31 +77,43 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		self.collectionView?.contentInset = UIEdgeInsetsMake(0.0,0.0,72.0,0.0)
 		
-		cameraButton = UIButton.buttonWithType(.Custom) as? UIButton
-		cameraButton?.setImage(UIImage(named: "goto-camera"), forState: .Normal)
-		cameraButton?.backgroundColor = UIColor(red:0.063,  green:0.518,  blue:0.459, alpha:1)
-		cameraButton?.frame = CGRectMake(0, (self.view.frame.size.height-(75+44)), self.view.frame.size.width, 75)
-		cameraButton?.imageView?.sizeToFit()
-		self.view?.addSubview(cameraButton!)
-		self.view?.bringSubviewToFront(cameraButton!)
-		
 		
 		// Layout -  Only run on the main thread
-		dispatch_async(dispatch_get_main_queue()) {
+		dispatch_async(dispatch_get_main_queue(), {
 			let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
-			
 			flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
 			flow.itemSize = CGSizeMake((self.view.frame.size.width/3)-1, (self.view.frame.size.width/3)-1);
 			flow.minimumInteritemSpacing = 1;
 			flow.minimumLineSpacing = 1;
-			
-			self.cameraButton?.frame = CGRectMake(0, (self.view.frame.size.height-(75+44)), self.view.frame.size.width, 75)
-		}
+		})
 	}
 	
 	override func preferredStatusBarStyle() -> UIStatusBarStyle
 	{
 		return .LightContent
+	}
+	
+	
+	//-------------------------------------
+	// MARK: Actions
+	//-------------------------------------
+	
+	
+	@IBAction func leaveEvent()
+	{
+		var alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave?", preferredStyle: .Alert)
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+		alertController.addAction(UIAlertAction(title: "Leave", style: .Destructive, handler: { (alertAction) -> Void in
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+			
+			
+			let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+			let checkinViewController = storyboard.instantiateViewControllerWithIdentifier("CheckinViewController") as! CheckinViewController
+			self.navigationController?.setViewControllers([checkinViewController], animated: false)
+
+		}))
+		self.presentViewController(alertController, animated: true, completion: nil)
 	}
 	
 	
@@ -397,9 +422,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 					self.refreshControl.endRefreshing()
 				}
 			} else {
-				
 				let _object = uploadedImages!.first as! PFObject
 				let _photos = _object["photos"] as! PFRelation
+				
+				if (_object["name"] != nil) {
+					self.navigationItem.title = _object["name"] as? String
+					self.eventTitle = _object["name"] as? String
+				}
 				
 				let photosQuery = _photos.query()!
 				photosQuery.limit = 300

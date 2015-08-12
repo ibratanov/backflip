@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		040B27CE1B794D75004B4FB2 /* CheckinViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27CD1B794D75004B4FB2 /* CheckinViewControllerNew.swift */; };
+		040B27CE1B794D75004B4FB2 /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27CD1B794D75004B4FB2 /* CheckinViewController.swift */; };
 		040B27D21B794E9B004B4FB2 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event.swift */; };
 		0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0434BCD51B73BDCF00EF57EC /* Image.swift */; };
 		049222AB1B72653900FFB08A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AA1B72653900FFB08A /* Album.swift */; };
@@ -128,7 +128,7 @@
 		92EF7C121B28280D007DE812 /* backfliplogo80.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C0F1B28280D007DE812 /* backfliplogo80.png */; };
 		92EF7C131B28280D007DE812 /* backfliplogo120.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C101B28280D007DE812 /* backfliplogo120.png */; };
 		92EF7C141B28280D007DE812 /* backfliplogo180.png in Resources */ = {isa = PBXBuildFile; fileRef = 92EF7C111B28280D007DE812 /* backfliplogo180.png */; };
-		B61801331B0BCBF8000CF25E /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61801321B0BCBF8000CF25E /* CheckinViewController.swift */; };
+		B61801331B0BCBF8000CF25E /* CheckinViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61801321B0BCBF8000CF25E /* CheckinViewControllerOld.swift */; };
 		B68CDED61B2E1FBC00374158 /* heart-icon-empty.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */; };
 		B68CDED71B2E1FBC00374158 /* heart-icon-filled.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */; };
 		B68CDED91B2E336300374158 /* back.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B68CDED81B2E336300374158 /* back.pdf */; };
@@ -136,7 +136,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		040B27CD1B794D75004B4FB2 /* CheckinViewControllerNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewControllerNew.swift; sourceTree = "<group>"; };
+		040B27CD1B794D75004B4FB2 /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 		040B27D11B794E9B004B4FB2 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		0434BCD51B73BDCF00EF57EC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		049222AA1B72653900FFB08A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
@@ -294,7 +294,7 @@
 		92EF7C0F1B28280D007DE812 /* backfliplogo80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo80.png; sourceTree = "<group>"; };
 		92EF7C101B28280D007DE812 /* backfliplogo120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo120.png; sourceTree = "<group>"; };
 		92EF7C111B28280D007DE812 /* backfliplogo180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backfliplogo180.png; sourceTree = "<group>"; };
-		B61801321B0BCBF8000CF25E /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
+		B61801321B0BCBF8000CF25E /* CheckinViewControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewControllerOld.swift; sourceTree = "<group>"; };
 		B68CDED41B2E1FBC00374158 /* heart-icon-empty.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-empty.pdf"; sourceTree = "<group>"; };
 		B68CDED51B2E1FBC00374158 /* heart-icon-filled.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "heart-icon-filled.pdf"; sourceTree = "<group>"; };
 		B68CDED81B2E336300374158 /* back.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = back.pdf; sourceTree = "<group>"; };
@@ -515,7 +515,7 @@
 				04F41BF41B754B20001AB8DA /* Layouts */,
 				504D96E01B1CA3A400A1B95B /* AlbumViewController.swift */,
 				04F41BF21B7507BB001AB8DA /* EventAlbumViewController.swift */,
-				040B27CD1B794D75004B4FB2 /* CheckinViewControllerNew.swift */,
+				040B27CD1B794D75004B4FB2 /* CheckinViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -559,7 +559,7 @@
 				67AD8BDA1B793A1E009F0963 /* CustomCamera.swift */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				81BA814C1A49DA1800E65899 /* LoginViewController.swift */,
-				B61801321B0BCBF8000CF25E /* CheckinViewController.swift */,
+				B61801321B0BCBF8000CF25E /* CheckinViewControllerOld.swift */,
 				50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */,
 				3A7D03121B29E4DF00B446C5 /* CreatePublicEventViewController.swift */,
 				50CE7E731B027C9000F4B6B1 /* EventTableViewController.swift */,
@@ -885,7 +885,7 @@
 				50CE7E7C1B03DBC100F4B6B1 /* FeedViewCell.swift in Sources */,
 				049AA6A71B73DA01003888CE /* MWPhotoBrowser.m in Sources */,
 				049AA6E51B73DB84003888CE /* UIImage+WebP.m in Sources */,
-				B61801331B0BCBF8000CF25E /* CheckinViewController.swift in Sources */,
+				B61801331B0BCBF8000CF25E /* CheckinViewControllerOld.swift in Sources */,
 				049AA6DF1B73DB84003888CE /* SDWebImageDownloaderOperation.m in Sources */,
 				504D96DF1B1CA38B00A1B95B /* AlbumViewCell.swift in Sources */,
 				049AA6D91B73DB84003888CE /* MKAnnotationView+WebCache.m in Sources */,
@@ -901,7 +901,7 @@
 				04F41BF61B754B2E001AB8DA /* BFCollectionViewFlowLayout.swift in Sources */,
 				3AAA7B751B2B25F20045EE76 /* EventTableViewCell.swift in Sources */,
 				049AA6E81B73DB84003888CE /* UIView+WebCacheOperation.m in Sources */,
-				040B27CE1B794D75004B4FB2 /* CheckinViewControllerNew.swift in Sources */,
+				040B27CE1B794D75004B4FB2 /* CheckinViewController.swift in Sources */,
 				50CE7E741B027C9000F4B6B1 /* EventTableViewController.swift in Sources */,
 				67A796041B2EE49A006E489D /* CGRect+Extensions.swift in Sources */,
 				049AA6B61B73DB72003888CE /* MBProgressHUD.m in Sources */,
@@ -1022,6 +1022,10 @@
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 					"$(PROJECT_DIR)/Vendor",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -1057,6 +1061,7 @@
 					"-framework",
 					Reveal,
 				);
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
@@ -1113,6 +1118,7 @@
 					"-framework",
 					Reveal,
 				);
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
