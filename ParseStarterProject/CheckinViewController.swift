@@ -77,13 +77,12 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
 				
                 var testCamera = CustomCamera()
                 
-                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-                    println("Button capture")
-                    
+                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){                    
                     testCamera.delegate = self
                     testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
                     testCamera.sourceType = .Camera
                     testCamera.allowsEditing = false
+                    testCamera.showsCameraControls = false
                     testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
                     testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
                     
