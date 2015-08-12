@@ -172,97 +172,98 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 
             }
         })
+    //------------------UPLOAD CANVAS----------------------------------------
         
-        if NetworkAvailable.networkConnection() == true {
-
-        var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
-            if (downloadToCameraRoll!) {
-                UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
-            }
-            
-            
-            var imageData = compressImage(capturedImage, shrinkRatio: 1.0)
-            var imageFile = PFFile(name: "image.png", data: imageData)
-            
-            var thumbnailData = compressImage(capturedImage, shrinkRatio: 0.5)
-            var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
-            
-            
-            //Upload photos to database
-            var photo = PFObject(className: "Photo")
-            photo["caption"] = "Camera roll upload"
-            photo["image"] = imageFile
-            photo["thumbnail"] = thumbnailFile
-            photo["upvoteCount"] = 1
-            photo["usersLiked"] = [PFUser.currentUser()!.username!]
-            photo["uploader"] = PFUser.currentUser()!
-            photo["uploaderName"] = PFUser.currentUser()!.username!
-            photo["flagged"] = false
-            photo["reviewed"] = false
-            photo["blocked"] = false
-            photo["reporter"] = ""
-            photo["reportMessage"] = ""
-            
-            var photoACL = PFACL(user: PFUser.currentUser()!)
-            photoACL.setPublicWriteAccess(true)
-            photoACL.setPublicReadAccess(true)
-            photo.ACL = photoACL
-            
-            
-            var query2 = PFQuery(className: "EventAttendance")
-            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-            query2.whereKey("eventID", equalTo: eventId!)
-
-            //var photoObjectList = query2.findObjects()
-            var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
-                if (objs != nil && objs!.count != 0) {
-                    var photoObject = objs!.first as! PFObject
-                    
-//TODO: Investigate issue with multi-flagged photos
-//                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-//                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
-                    
-                    var queryEvent = PFQuery(className: "Event")
-                    queryEvent.whereKey("objectId", equalTo: self.eventId!)
-                    //var objects = queryEvent.findObjects()
-                    var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
-                        
-                        if (sobjs != nil && sobjs!.count != 0) {
-                            var eventObject = sobjs!.first as! PFObject
-                            
-                            let relation = eventObject.relationForKey("photos")
-                            
-                            //photo.save()
-                            photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
-                                if valid {
-                                    relation.addObject(photo)
-                                    photoObject.addUniqueObject(imageFile, forKey:"photosUploaded")
-                                    photoObject.addUniqueObject(imageFile, forKey: "photosLiked")
-                                    
-                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-                                }
-                                //issue
-                                eventObject.saveInBackground()
-                                
-                                //issue
-                                photoObject.saveInBackground()
-                            })
-                        } else {
-                            self.displayNoInternetAlert()
-                        }
-                    })
-                }
-                else {
-                    self.displayNoInternetAlert()
-                    println("Object Issue")
-                }
-                
-            })
-            
-        } else {
-            displayNoInternetAlert()
-        }
+//        if NetworkAvailable.networkConnection() == true {
+//
+//        var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
+//            if (downloadToCameraRoll!) {
+//                UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
+//            }
+//            
+//            
+//            var imageData = compressImage(capturedImage, shrinkRatio: 1.0)
+//            var imageFile = PFFile(name: "image.png", data: imageData)
+//            
+//            var thumbnailData = compressImage(capturedImage, shrinkRatio: 0.5)
+//            var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+//            
+//            
+//            //Upload photos to database
+//            var photo = PFObject(className: "Photo")
+//            photo["caption"] = "Camera roll upload"
+//            photo["image"] = imageFile
+//            photo["thumbnail"] = thumbnailFile
+//            photo["upvoteCount"] = 1
+//            photo["usersLiked"] = [PFUser.currentUser()!.username!]
+//            photo["uploader"] = PFUser.currentUser()!
+//            photo["uploaderName"] = PFUser.currentUser()!.username!
+//            photo["flagged"] = false
+//            photo["reviewed"] = false
+//            photo["blocked"] = false
+//            photo["reporter"] = ""
+//            photo["reportMessage"] = ""
+//            
+//            var photoACL = PFACL(user: PFUser.currentUser()!)
+//            photoACL.setPublicWriteAccess(true)
+//            photoACL.setPublicReadAccess(true)
+//            photo.ACL = photoACL
+//            
+//            
+//            var query2 = PFQuery(className: "EventAttendance")
+//            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+//            query2.whereKey("eventID", equalTo: eventId!)
+//
+//            //var photoObjectList = query2.findObjects()
+//            var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
+//                if (objs != nil && objs!.count != 0) {
+//                    var photoObject = objs!.first as! PFObject
+//                    
+////TODO: Investigate issue with multi-flagged photos
+////                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+////                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+//                    
+//                    var queryEvent = PFQuery(className: "Event")
+//                    queryEvent.whereKey("objectId", equalTo: self.eventId!)
+//                    //var objects = queryEvent.findObjects()
+//                    var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
+//                        
+//                        if (sobjs != nil && sobjs!.count != 0) {
+//                            var eventObject = sobjs!.first as! PFObject
+//                            
+//                            let relation = eventObject.relationForKey("photos")
+//                            
+//                            //photo.save()
+//                            photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
+//                                if valid {
+//                                    relation.addObject(photo)
+//                                    photoObject.addUniqueObject(imageFile, forKey:"photosUploaded")
+//                                    photoObject.addUniqueObject(imageFile, forKey: "photosLiked")
+//                                    
+//                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+//                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+//                                }
+//                                //issue
+//                                eventObject.saveInBackground()
+//                                
+//                                //issue
+//                                photoObject.saveInBackground()
+//                            })
+//                        } else {
+//                            self.displayNoInternetAlert()
+//                        }
+//                    })
+//                }
+//                else {
+//                    self.displayNoInternetAlert()
+//                    println("Object Issue")
+//                }
+//                
+//            })
+//            
+//        } else {
+//            displayNoInternetAlert()
+//        }
     }
     
     func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {

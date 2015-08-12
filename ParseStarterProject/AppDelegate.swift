@@ -28,8 +28,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     // MARK: - UIApplicationDelegate
     //--------------------------------------
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        //-------New Relic
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+	{
+		application.statusBarStyle = .LightContent
+		application.setStatusBarStyle(.LightContent, animated: true)
+		UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+		
+		//-------New Relic
         NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
         //-------Branch
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setImageViewNotification:", name: "MySetImageViewNotification", object: nil)

@@ -21,5 +21,6 @@ class AlbumViewCell: UICollectionViewCell {
 		super.prepareForReuse()
 		
 		self.imageView.image = nil
+		self.imageView.tintColor = nil
 	}
 }

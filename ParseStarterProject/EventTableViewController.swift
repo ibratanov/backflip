@@ -98,7 +98,17 @@ class EventTableViewController: UITableViewController {
                 if (error == nil) {
                     self.eventObjs.removeAll(keepCapacity: true)
                     self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
-                    
+					
+					let currentEventId = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id") as? String
+					if (currentEventId != nil) {
+						for event in self.eventObjs {
+							if (event.objectId == currentEventId) {
+								self.eventObjs.removeObject(event)
+							}
+						}
+					}
+					
+					
                     self.eventObjs = sorted(self.eventObjs, { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending })
                     
                     // Dispatch queries to background queue
