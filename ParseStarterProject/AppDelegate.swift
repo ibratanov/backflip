@@ -12,14 +12,10 @@ import Fabric
 import DigitsKit
 
 
-// If you want to use any of the UI components, uncomment this line
-// import ParseUI
-
-// If you want to use Crash Reporting - uncomment this line
-// import ParseCrashReporting
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate : UIResponder, UIApplicationDelegate
+{
 
     var window: UIWindow?
     
@@ -37,40 +33,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
         //-------Branch
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setImageViewNotification:", name: "MySetImageViewNotification", object: nil)
-        // Enable storing and querying data from Local Datastore.
-        // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
-        Parse.enableLocalDatastore()
+		
 
-        // ****************************************************************************
-        // Uncomment this line if you want to enable Crash Reporting
-        // ParseCrashReporting.enable()
-        //
-        // Uncomment and fill in with your Parse credentials:
-        
-//        /* PROD */
-        // Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
-
-        
-        /* DEV */
-		Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
-
+		
+		//--------------------------------------
+		// Setup Parse & Application appearance
+		//--------------------------------------
+		setupParse()
+		setupApperance()
+		
         
         Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
         mixpanel.track("App launched")
 		
-		
-		// Pretty colours!!!1!!
-		setupApperance()
-		
-        //
-        // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
-        // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
-        // Uncomment the line inside ParseStartProject-Bridging-Header and the following line here:
-        // PFFacebookUtils.initializeFacebook()
-        // ****************************************************************************
-
-        //PFUser.enableAutomaticUser()
 
         let defaultACL = PFACL();
         
@@ -385,11 +361,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	//--------------------------------------
 	// MARK: Apperance
 	//--------------------------------------
+	
 	func setupApperance()
 	{
+		UIApplication.sharedApplication().statusBarStyle = .LightContent
+		
+		let config = PFConfig.currentConfig()
+		
 		var navigationBarAppearance = UINavigationBar.appearance()
 		navigationBarAppearance.tintColor = UIColor.whiteColor()
-		navigationBarAppearance.barTintColor = UIColor(red:0,  green:0.588,  blue:0.533, alpha:1)
+		
+		var bartintColor = "#108475"
+		if (config["appearance_navigation_tint"] != nil) {
+			bartintColor = config["appearance_navigation_tint"] as! String
+		}
+		
+		navigationBarAppearance.barTintColor = UIColor(rgba: bartintColor)
+		
+		
 		navigationBarAppearance.translucent = false;
 		navigationBarAppearance.titleTextAttributes = [
 			NSFontAttributeName: UIFont(name: "Avenir-Medium", size: 18)!,
@@ -397,34 +386,135 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		]
 		
 		var tabBarAppearance = UITabBar.appearance()
-		tabBarAppearance.tintColor = UIColor.whiteColor()
-		tabBarAppearance.barTintColor = UIColor.blackColor()
+		tabBarAppearance.tintColor = (config["appearance_tabbar_tint"] != nil) ? UIColor(rgba:config["appearance_tabbar_tint"] as! String) :  UIColor.whiteColor()
+		tabBarAppearance.barTintColor = (config["appearance_tabbar_bartint"] != nil) ? UIColor(rgba:config["appearance_tabbar_bartint"] as! String) :  UIColor.blackColor()
 		tabBarAppearance.translucent = true;
 		
 	}
 	
-//	[[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.898 green:0.302 blue:0.259 alpha:1]];
-//	[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-//	[[UINavigationBar appearance] setTranslucent:NO];
-//	[[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 	
-    ///////////////////////////////////////////////////////////
-    // Uncomment this method if you want to use Push Notifications with Background App Refresh
-    ///////////////////////////////////////////////////////////
-    // func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-    //     if application.applicationState == UIApplicationState.Inactive {
-    //         PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
-    //     }
-    // }
+	//--------------------------------------
+	// MARK: Parse
+	//--------------------------------------
+	
+	func setupParse()
+	{
+		// Local caching of query results
+		Parse.enableLocalDatastore()
+		
+		#if DEBUG
+			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
+		#else
+			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
+		#endif
+		
+		PFConfig.getConfigInBackgroundWithBlock { (config, error) -> Void in
+			self.setupApperance()
+		}
+	}
+	
+}
 
-    //--------------------------------------
-    // MARK: Facebook SDK Integration
-    //--------------------------------------
 
-    ///////////////////////////////////////////////////////////
-    // Uncomment this method if you are using Facebook
-    ///////////////////////////////////////////////////////////
-    // func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-    //     return FBAppCall.handleOpenURL(url, sourceApplication:sourceApplication, session:PFFacebookUtils.session())
-    // }
+
+
+extension UIColor {
+	public convenience init(rgba: String) {
+		var red:   CGFloat = 0.0
+		var green: CGFloat = 0.0
+		var blue:  CGFloat = 0.0
+		var alpha: CGFloat = 1.0
+		
+		if rgba.hasPrefix("#") {
+			let index   = advance(rgba.startIndex, 1)
+			let hex     = rgba.substringFromIndex(index)
+			let scanner = NSScanner(string: hex)
+			var hexValue: CUnsignedLongLong = 0
+			if scanner.scanHexLongLong(&hexValue) {
+				switch (count(hex)) {
+				case 3:
+					red   = CGFloat((hexValue & 0xF00) >> 8)       / 15.0
+					green = CGFloat((hexValue & 0x0F0) >> 4)       / 15.0
+					blue  = CGFloat(hexValue & 0x00F)              / 15.0
+				case 4:
+					red   = CGFloat((hexValue & 0xF000) >> 12)     / 15.0
+					green = CGFloat((hexValue & 0x0F00) >> 8)      / 15.0
+					blue  = CGFloat((hexValue & 0x00F0) >> 4)      / 15.0
+					alpha = CGFloat(hexValue & 0x000F)             / 15.0
+				case 6:
+					red   = CGFloat((hexValue & 0xFF0000) >> 16)   / 255.0
+					green = CGFloat((hexValue & 0x00FF00) >> 8)    / 255.0
+					blue  = CGFloat(hexValue & 0x0000FF)           / 255.0
+				case 8:
+					red   = CGFloat((hexValue & 0xFF000000) >> 24) / 255.0
+					green = CGFloat((hexValue & 0x00FF0000) >> 16) / 255.0
+					blue  = CGFloat((hexValue & 0x0000FF00) >> 8)  / 255.0
+					alpha = CGFloat(hexValue & 0x000000FF)         / 255.0
+				default:
+					print("Invalid RGB string, number of characters after '#' should be either 3, 4, 6 or 8")
+				}
+			} else {
+				println("Scan hex error")
+			}
+		} else {
+			print("Invalid RGB string, missing '#' as prefix")
+		}
+		self.init(red:red, green:green, blue:blue, alpha:alpha)
+	}
+}
+
+
+extension NSDate
+{
+	func isGreaterThanDate(dateToCompare : NSDate) -> Bool
+	{
+		//Declare Variables
+		var isGreater = false
+		
+		//Compare Values
+		if self.compare(dateToCompare) == NSComparisonResult.OrderedDescending
+		{
+			isGreater = true
+		}
+		
+		//Return Result
+		return isGreater
+	}
+	
+	
+	func isLessThanDate(dateToCompare : NSDate) -> Bool
+	{
+		//Declare Variables
+		var isLess = false
+		
+		//Compare Values
+		if self.compare(dateToCompare) == NSComparisonResult.OrderedAscending
+		{
+			isLess = true
+		}
+		
+		//Return Result
+		return isLess
+	}
+	
+	
+	
+	func addDays(daysToAdd : Int) -> NSDate
+	{
+		var secondsInDays : NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
+		var dateWithDaysAdded : NSDate = self.dateByAddingTimeInterval(secondsInDays)
+		
+		//Return Result
+		return dateWithDaysAdded
+	}
+	
+	
+	func addHours(hoursToAdd : Int) -> NSDate
+	{
+		var secondsInHours : NSTimeInterval = Double(hoursToAdd) * 60 * 60
+		var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
+		
+		//Return Result
+		return dateWithHoursAdded
+	}
 }

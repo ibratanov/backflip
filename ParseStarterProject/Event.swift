@@ -6,9 +6,17 @@
 //  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
+import Parse
 import Foundation
 
 class Event : NSObject
 {
+	var objectId : String?
 	var name : String?
+	var geoLocation : PFGeoPoint?
+	var isLive : Boolean?
+	var startTime : NSDate?
+	var venue : String?
+	var photos : [Image]?
+	
 }

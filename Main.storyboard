@@ -13,10 +13,6 @@
             <string>Avenir-Medium</string>
             <string>Avenir-Light</string>
             <string>Avenir-Book</string>
-            <string>Avenir-Book</string>
-            <string>Avenir-Book</string>
-            <string>Avenir-Book</string>
-            <string>Avenir-Book</string>
             <string>Avenir-Medium</string>
             <string>Avenir-Light</string>
             <string>Avenir-Medium</string>
@@ -267,7 +263,7 @@
         <!--Nearby Events-->
         <scene sceneID="Epq-Ib-xP0">
             <objects>
-                <viewController id="0pn-ur-yjM" customClass="CheckinViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CheckinViewController" id="0pn-ur-yjM" customClass="CheckinViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eWN-zu-fdK"/>
                         <viewControllerLayoutGuide type="bottom" id="gmX-KS-lez"/>
@@ -276,27 +272,61 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="WHERE ARE YOU?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="271" translatesAutoresizingMaskIntoConstraints="NO" id="A8c-sh-PPM">
-                                <rect key="frame" x="69" y="97" width="237" height="39"/>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YcA-hr-4UR">
+                                <rect key="frame" x="0.0" y="494" width="375" height="60"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="28"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a nearby event or create a new event." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="278" translatesAutoresizingMaskIntoConstraints="NO" id="OmY-Kb-9Vl">
-                                <rect key="frame" x="48" y="131" width="278" height="20"/>
+                                <color key="backgroundColor" red="0.0" green="0.58823529409999997" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="rnm-V6-tIh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="CHECK IN">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkIn" destination="0pn-ur-yjM" eventType="touchUpInside" id="wY3-Ka-MIb"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gAn-y3-J5G">
+                                <rect key="frame" x="0.0" y="43" width="375" height="125"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
-                                <color key="textColor" red="0.44705882349999998" green="0.44705882349999998" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Events Nearby" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="271" translatesAutoresizingMaskIntoConstraints="NO" id="LwM-pe-38h">
-                                <rect key="frame" x="0.0" y="290" width="375" height="24"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="125" id="5wD-A7-fXn"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="WSR-y4-NBc">
+                                    <size key="itemSize" width="125" height="125"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="album-cell" id="iXX-sl-kOP" customClass="AlbumViewCell" customModule="Backflip" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p1j-8C-orJ" customClass="PFImageView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                                    <animations/>
+                                                </imageView>
+                                            </subviews>
+                                            <animations/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="imageView" destination="p1j-8C-orJ" id="tVe-Ab-8Fo"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="0pn-ur-yjM" id="SCu-UC-30v"/>
+                                </connections>
+                            </collectionView>
                             <pickerView contentMode="scaleToFill" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHd-XW-fNZ">
                                 <rect key="frame" x="27" y="221" width="320" height="162"/>
                                 <animations/>
@@ -314,56 +344,27 @@
                                     <outlet property="delegate" destination="0pn-ur-yjM" id="HBu-Vy-Cfq"/>
                                 </connections>
                             </pickerView>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YcA-hr-4UR">
-                                <rect key="frame" x="0.0" y="494" width="375" height="60"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.0" green="0.58823529409999997" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="rnm-V6-tIh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="CHECK IN">
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="checkInClicked:" destination="0pn-ur-yjM" eventType="touchUpInside" id="g5f-LR-CDy"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0Q-8i-xa9">
-                                <rect key="frame" x="0.0" y="452" width="375" height="34"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
-                                <color key="tintColor" red="0.050980392159999999" green="0.47843137250000001" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Create a new event">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="A8c-sh-PPM" firstAttribute="top" secondItem="eWN-zu-fdK" secondAttribute="bottom" constant="97" id="4aJ-Sq-vS4"/>
+                            <constraint firstItem="YcA-hr-4UR" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" constant="-16" id="1cO-PC-Tq1"/>
+                            <constraint firstItem="gAn-y3-J5G" firstAttribute="top" secondItem="eWN-zu-fdK" secondAttribute="bottom" constant="43" id="8UK-GV-nUA"/>
                             <constraint firstAttribute="centerY" secondItem="SHd-XW-fNZ" secondAttribute="centerY" id="A8b-EI-u3M"/>
                             <constraint firstAttribute="centerY" secondItem="SHd-XW-fNZ" secondAttribute="centerY" id="AlF-WZ-XnJ"/>
-                            <constraint firstItem="YcA-hr-4UR" firstAttribute="top" secondItem="c0Q-8i-xa9" secondAttribute="bottom" constant="8" id="Crg-at-7pj"/>
+                            <constraint firstAttribute="centerX" secondItem="gAn-y3-J5G" secondAttribute="centerX" id="D3d-ov-MtV"/>
                             <constraint firstAttribute="centerX" secondItem="SHd-XW-fNZ" secondAttribute="centerX" id="EE0-Ni-VKP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YcA-hr-4UR" secondAttribute="trailing" constant="-16" id="ESS-4A-X6F"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="c0Q-8i-xa9" secondAttribute="trailing" constant="-16" id="TYr-qb-PSN"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="LwM-pe-38h" secondAttribute="trailing" constant="-16" id="U0t-cM-KVn"/>
-                            <constraint firstItem="OmY-Kb-9Vl" firstAttribute="top" secondItem="eWN-zu-fdK" secondAttribute="bottom" constant="131" id="Ujg-oV-6Qd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gAn-y3-J5G" secondAttribute="trailing" constant="-16" id="KW9-NW-7wF"/>
+                            <constraint firstItem="gmX-KS-lez" firstAttribute="top" secondItem="YcA-hr-4UR" secondAttribute="bottom" id="S2T-E2-Vbz"/>
                             <constraint firstItem="gmX-KS-lez" firstAttribute="top" secondItem="YcA-hr-4UR" secondAttribute="bottom" id="Vha-6e-GA8"/>
-                            <constraint firstAttribute="centerX" secondItem="A8c-sh-PPM" secondAttribute="centerX" id="W8d-eF-yq3"/>
-                            <constraint firstAttribute="centerX" secondItem="c0Q-8i-xa9" secondAttribute="centerX" id="Wo7-xe-2w9"/>
-                            <constraint firstAttribute="centerX" secondItem="LwM-pe-38h" secondAttribute="centerX" id="eS5-hg-NXZ"/>
-                            <constraint firstAttribute="centerX" secondItem="OmY-Kb-9Vl" secondAttribute="centerX" id="hhW-mT-O7p"/>
-                            <constraint firstItem="LwM-pe-38h" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" constant="-16" id="lxr-Nz-51s"/>
+                            <constraint firstItem="gAn-y3-J5G" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" constant="-16" id="WiI-Oh-0op"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YcA-hr-4UR" secondAttribute="trailing" constant="-16" id="eMf-9Z-GWI"/>
                             <constraint firstAttribute="centerX" secondItem="YcA-hr-4UR" secondAttribute="centerX" id="nKx-MZ-4WX"/>
                             <constraint firstAttribute="centerX" secondItem="SHd-XW-fNZ" secondAttribute="centerX" id="nO6-vE-vFl"/>
-                            <constraint firstAttribute="centerY" secondItem="LwM-pe-38h" secondAttribute="centerY" id="q5M-wD-pnX"/>
                             <constraint firstAttribute="bottomMargin" secondItem="YcA-hr-4UR" secondAttribute="bottom" id="u1x-6b-COn"/>
                             <constraint firstItem="YcA-hr-4UR" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" constant="-16" id="ug9-dU-PEf"/>
-                            <constraint firstItem="c0Q-8i-xa9" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" constant="-16" id="ygz-3I-gZn"/>
+                            <constraint firstAttribute="centerX" secondItem="YcA-hr-4UR" secondAttribute="centerX" id="z2m-Em-jHj"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -374,22 +375,18 @@
                     <navigationItem key="navigationItem" title="Nearby Events" id="qKa-0P-jZP">
                         <barButtonItem key="leftBarButtonItem" image="settings-icon" id="VNx-b2-gfF">
                             <connections>
-                                <action selector="logoutButton:" destination="0pn-ur-yjM" id="wuq-ph-Eol"/>
+                                <action selector="logout" destination="0pn-ur-yjM" id="Fao-lv-i1j"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="axG-Fn-fQa">
-                            <connections>
-                                <action selector="createNew:" destination="0pn-ur-yjM" id="01W-kb-9b9"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="New Event" id="axG-Fn-fQa"/>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
-                        <outlet property="checkInButton" destination="YcA-hr-4UR" id="nL9-oJ-2pe"/>
-                        <outlet property="noEventLabel" destination="LwM-pe-38h" id="oMm-tf-6KR"/>
-                        <outlet property="pickerInfo" destination="SHd-XW-fNZ" id="f93-sy-VQ0"/>
+                        <outlet property="collectionView" destination="gAn-y3-J5G" id="OLx-Ii-ouD"/>
+                        <outlet property="pickerView" destination="SHd-XW-fNZ" id="Pqb-v1-jeV"/>
                         <segue destination="2nM-hW-Tui" kind="presentation" identifier="display-login-popover" modalPresentationStyle="fullScreen" id="jdc-gb-I5S"/>
                         <segue destination="95d-MB-aa7" kind="presentation" identifier="display-camera" modalPresentationStyle="fullScreen" id="A7s-cH-xqV"/>
+                        <segue destination="XjT-mA-gxf" kind="show" identifier="display-event-album" id="7DF-eU-AoJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFp-oe-wHb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -519,7 +516,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bE1-kd-Hll">
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bE1-kd-Hll">
                                     <rect key="frame" x="8" y="8" width="359" height="29"/>
                                     <animations/>
                                     <segments>
@@ -534,6 +531,14 @@
                                 </segmentedControl>
                             </subviews>
                             <animations/>
+                            <constraints>
+                                <constraint firstItem="bE1-kd-Hll" firstAttribute="top" secondItem="9Jr-DJ-Mbz" secondAttribute="topMargin" id="2TJ-1O-W8g"/>
+                                <constraint firstAttribute="centerX" secondItem="bE1-kd-Hll" secondAttribute="centerX" id="5X6-Xr-BPA"/>
+                                <constraint firstItem="bE1-kd-Hll" firstAttribute="trailing" secondItem="9Jr-DJ-Mbz" secondAttribute="trailingMargin" id="6KS-rX-U16"/>
+                                <constraint firstAttribute="centerY" secondItem="bE1-kd-Hll" secondAttribute="centerY" id="7EH-Zj-A7f"/>
+                                <constraint firstItem="bE1-kd-Hll" firstAttribute="bottom" secondItem="9Jr-DJ-Mbz" secondAttribute="bottomMargin" id="MZg-tc-1gZ"/>
+                                <constraint firstItem="bE1-kd-Hll" firstAttribute="leading" secondItem="9Jr-DJ-Mbz" secondAttribute="leadingMargin" id="fdr-k5-BvQ"/>
+                            </constraints>
                         </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="XjT-mA-gxf" id="nja-Vo-uee"/>
@@ -541,6 +546,11 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="TDl-cV-m57">
+                        <barButtonItem key="leftBarButtonItem" title="Leave" id="8eV-b8-08H">
+                            <connections>
+                                <action selector="leaveEvent" destination="XjT-mA-gxf" id="BGg-k5-Ldx"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Invite" id="X6v-o4-hPl">
                             <connections>
                                 <action selector="shareAlbum" destination="XjT-mA-gxf" id="G5M-Os-dap"/>
@@ -579,7 +589,6 @@
                     </toolbar>
                     <connections>
                         <segue destination="0pn-ur-yjM" kind="relationship" relationship="rootViewController" id="m53-1r-yA0"/>
-                        <segue destination="XjT-mA-gxf" kind="show" identifier="display-event-album" id="KAo-hs-QnX"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HJi-dg-QH4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -964,7 +973,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="A7s-cH-xqV"/>
-        <segue reference="KAo-hs-QnX"/>
+        <segue reference="7DF-eU-AoJ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
 </document>

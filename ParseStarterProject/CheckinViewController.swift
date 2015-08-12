@@ -1,65 +1,155 @@
 //
-//  EventViewController.swift
-//  ParseStarterProject
+//  CheckinViewControllerNew.swift
+//  Backflip
 //
-//  Created by Zachary Lefevre on 2015-05-19.
-//  Copyright (c) 2015 Parse. All rights reserved.
+//  Created by Jack Perry on 2015-08-10.
+//  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
-import UIKit
 import Parse
-import CoreLocation
 import DigitsKit
+import Foundation
 
-class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITabBarControllerDelegate
+
+
+class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITabBarControllerDelegate, UICollectionViewDataSource
 {
-    
-    @IBOutlet var noEventLabel: UILabel!
-    
-    @IBAction func logoutButton(sender: AnyObject) {
-        displayAlertLogout("Would you like to log out?", error: "")
-    }
-    @IBAction func createNew(sender: AnyObject) {
-        
-        tabBarController?.selectedIndex = 1
-    }
-    
-    var logoutButton = UIImage(named: "settings-icon") as UIImage!
-
-    var userGeoPoint = PFGeoPoint()
-    
-    var eventSelected = ""
-	var eventSelectedObjectId = ""
-    
-    var userLocation:PFGeoPoint = PFGeoPoint()
-    
-    var locationDisabled = false
-    
-    @IBOutlet var pickerInfo: UIPickerView!
-    
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    
-    var locationManager = CLLocationManager()
-    
-    var cellContent:NSMutableArray = []
-    
-    let qos = (Int(QOS_CLASS_BACKGROUND.value))
-
-    func displayAlert(title:String, error: String) {
-        
-        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    func displayNoInternetAlert() {
-        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
-        self.presentViewController(alert, animated: true, completion: nil)
-        println("no internet")
-    }
+	var events : [Event] = []
+	
+	let CELL_REUSE_IDENTIFIER = "album-cell"
+	
+	@IBOutlet var pickerView : UIPickerView?
+	@IBOutlet var collectionView : UICollectionView?
 	
 	
+	//-------------------------------------
+	// MARK: View Delegate
+	//-------------------------------------
+	
+	override func loadView()
+	{
+		super.loadView()
+		
+		self.navigationController?.tabBarController?.delegate = self
+	}
+	
+	override func viewDidLoad()
+	{
+		// Login validation
+		if (PFUser.currentUser() == nil) {
+			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
+			self.performSegueWithIdentifier("display-login-popover", sender: self)
+			return
+		}
+		
+		
+		// Fetch data
+		fetchData()
+		
+		
+		// check for current event
+		let config = PFConfig.currentConfig()
+		var checkoutDelay = 8
+		if (config["checkout_timeout"] != nil) {
+			checkoutDelay = Int(config["checkout_timeout"] as! NSNumber)
+		}
+		
+		var checkinTime = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_time") as? NSDate
+		if (checkinTime == nil) {
+			return
+		}
+		
+		var expiryTime = checkinTime?.addHours(Int(checkoutDelay))
+		if (expiryTime != nil && NSDate().isGreaterThanDate(expiryTime!)) {
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+		} else if (checkinTime != nil) {
+			self.performSegueWithIdentifier("display-event-album", sender: self)
+		}
+	
+	}
+	
+	
+	//-------------------------------------
+	// MARK: UICollectioViewDataSource
+	//-------------------------------------
+	
+	func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
+	{
+		return 1
+	}
+	
+	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+	{
+		let index = self.pickerView?.selectedRowInComponent(0)
+		if (index == 0 || self.events.count < index) {
+			return 0
+		}
+		
+		let event = self.events[Int(index!)]
+		if (event.photos?.count > 0) {
+			return event.photos!.count
+		}
+		
+		return 0
+	}
+	
+	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
+	{
+		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
+		
+		let index = self.pickerView?.selectedRowInComponent(0)
+		let event = self.events[Int(index!)]
+		
+		if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
+			let photo = event.photos![indexPath.row]
+			cell.imageView.file = photo.thumbnail
+			cell.imageView.loadInBackground()
+		}
+		
+		cell.layer.shouldRasterize = true
+		cell.layer.rasterizationScale = UIScreen.mainScreen().scale
+		
+		return cell
+	}
+	
+	
+	
+	//-------------------------------------
+	// MARK: UIPickerViewDelegate
+	//-------------------------------------
+	
+	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
+	{
+		return 1
+	}
+	
+	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+	{
+		if (self.events.count < 1) {
+			return 1
+		} else {
+			return self.events.count
+		}
+	}
+	
+	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!
+	{
+		if (self.events.count < 1) {
+			return "No nearby events avaliable"
+		} else {
+			return self.events[row].name!
+		}
+	}
+	
+	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+	{
+		if (self.events.count < row) {
+			return
+		}
+		
+		self.collectionView?.reloadData()
+	}
 	
 	
 	//-------------------------------------
@@ -74,7 +164,16 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
 			
 			let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
 			dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-				self.performSegueWithIdentifier("display-camera", sender: self)
+//				self.performSegueWithIdentifier("display-camera", sender: self)
+				
+				var testCamera = CustomCamera()
+				
+				if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+					println("Button capture")
+					
+					self.presentViewController(testCamera, animated: true, completion: nil)
+				}
+				
 			})
 			
 			return false
@@ -84,423 +183,157 @@ class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPick
 	}
 	
 	
-	
 	//-------------------------------------
-	// MARK: View Delegate
+	// MARK: Actions
 	//-------------------------------------
 	
-	override func loadView()
+	@IBAction func logout()
 	{
-		super.loadView()
-	
-		self.navigationController?.tabBarController?.delegate = self
-	}
-	
-	
-	
-	
-	
-	
-	
-    //Scroll wheel table view
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-		if (self.cellContent.count < 1) {
-			return 1
-		} else {
-			return self.cellContent.count
-		}
-    }
-
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-		if (self.cellContent.count < 1) {
-			return "No events avaliable"
-		} else {
-			return self.cellContent[row] as! String
-		}
-    }
-    
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-		if (self.cellContent.count < 1) {
-			return
-		}
-        print(self.cellContent[row])
-        eventSelected = self.cellContent[row] as! String
-    }
-    
-    
-    func displayAlertLogout(title:String, error: String) {
-        
-        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-		
-		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { action in
-            
-            PFUser.logOut()
-            Digits.sharedInstance().logOut()
-            self.performSegueWithIdentifier("display-login-popover", sender: self)
-            
-        }))
-		
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-		
-		if (PFUser.currentUser() == nil) {
+		var alertController = UIAlertController(title: "Are you sure you want to logout?", message:"", preferredStyle: .Alert)
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+		alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (alertAction) -> Void in
+			PFUser.logOut()
+			Digits.sharedInstance().logOut()
 			self.performSegueWithIdentifier("display-login-popover", sender: self)
+		}))
+		
+		self.presentViewController(alertController, animated: true, completion: nil)
+	}
+	
+	@IBAction func checkIn()
+	{
+		if (self.events.count < 1) {
 			return
 		}
 		
-        
-        //--------------- Draw UI ---------------
-        
-        // Ensured event button was not underneath the tab bar
-        self.edgesForExtendedLayout = UIRectEdge()
-
-        // Hide picker until events are found
-        self.pickerInfo.hidden = true
-		self.checkInButton.enabled = false
+		let index = self.pickerView?.selectedRowInComponent(0)
+		let event = self.events[Int(index!)]
 		
-        if NetworkAvailable.networkConnection() == true && PFUser.currentUser() != nil {
-            
-            let query = PFUser.query()
-            var userObjectId = PFUser.currentUser()?.objectId!
-            query!.getObjectInBackgroundWithId(userObjectId!, block: { (object, error) -> Void in
-
-                var firstTime = PFUser.currentUser()?.objectForKey("firstUse") as! Bool
-                
-                if (firstTime == true) {
-
-					
-                    if error != nil {
-                        println(error)
-                    }
-                    else
-                    {
-                        dispatch_async(dispatch_get_global_queue(self.qos,0)) {
-                        
-                                //Check if event exists
-                                let query = PFQuery(className: "Event")
-                                
-                                query.whereKey("eventName", equalTo: "Welcome to Backflip")
-                                
-                                let scoreArray = query.findObjects()
-                                
-                                if (scoreArray != nil && scoreArray!.count != 0)
-                                {
-                                    var event = scoreArray?[0] as! PFObject
-                                
-                                    // Store the relation
-                                    let relation = event.relationForKey("attendees")
-                                    relation.addObject(object!)
-                                    
-                                    event.save()
-                                    
-                                    
-                                    // Add the event to the User object
-                                    object?.addUniqueObject(event, forKey:"savedEvents")
-                                    object?.addUniqueObject("Welcome to BackFlip", forKey:"savedEventNames")
-                                    
-                                    object!.saveInBackground()
-                                    
-                                    
-                                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                    var attendance = PFObject(className:"EventAttendance")
-                                    attendance["eventID"] = event.objectId
-                                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                                    attendance.setObject(event, forKey: "event")
-                                    attendance["photosLikedID"] = []
-                                    attendance["photosLiked"] = []
-                                    attendance["photosUploaded"] = []
-                                    attendance["photosUploadedID"] = []
-                                    
-                                    attendance.saveInBackground()
-                                    
-                                    PFUser.currentUser()?.setObject(false, forKey: "firstUse")
-                                }
-                                else
-                                {
-                                    println("Welcome to backflip event not there")
-
-                                }
-                            
-                            
-                        }
-                            
-                    }
-                }
-            })
-                
-            self.calcNearByEvents()
-        } else {
-            self.pickerInfo.hidden = true
-			self.noEventLabel.hidden = false
-			self.checkInButton.enabled = false
-            displayNoInternetAlert()
-        }
-    }
-    
-    func calcNearByEvents() {
-        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
-            if error == nil {
-                
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND,0)) {
-                
-                    print(geoPoint)
-                    self.userGeoPoint = geoPoint!
-                    print("Successfully retrieved User GeoPoint")
-                    
-                    // Set default event radius
-                    var eventRadius = 5.0
-                    var distQuery = PFQuery(className: "Options")
-                    distQuery.selectKeys(["value", "numEvents"])
-                    
-                    var distance = distQuery.findObjects()
-                    
-                    if (distance != nil && distance!.count != 0) {
-                        var result = distance?.first as! PFObject
-                        eventRadius = result["value"] as! Double
-                        
-                        // Queries events table for locations that are close to user
-                        // Return top 10 closest events
-                        var query = PFQuery(className: "Event")
-                        //query.whereKey("geoLocation", nearGeoPoint:userGeoPoint)
-                        query.whereKey("geoLocation", nearGeoPoint: self.userGeoPoint, withinKilometers: eventRadius)
-                        query.limit = result["numEvents"] as! NSInteger
-                        query.selectKeys(["eventName", "isLive"])
-
-                        var usr = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
-                        var savedEvents: [String] = usr!.objectForKey("savedEventNames") as! [String]
-                        
-                        var objects = query.findObjects()
-                        
-                        if (objects != nil) {
-                                for object in objects as! [PFObject] {
-                                    var eventName = object.objectForKey("eventName") as! String
-                                    var active = object.objectForKey("isLive") as! Bool
-                                    
-                                    // TODO: Check
-                                    if active && self.cellContent.count < query.limit && !contains(savedEvents, eventName) {
-                                        self.cellContent.addObject(eventName)
-                                    }
-                                    
-                                }
-
-                            dispatch_async(dispatch_get_main_queue()) {
-                                    if self.cellContent.count == 0 {
-                                        self.pickerInfo.hidden = true
-										self.checkInButton.enabled = false
-										self.noEventLabel.hidden = false;
-                                    } else {
-                                        self.pickerInfo.hidden = false
-										self.checkInButton.enabled = true
-                                        self.pickerInfo.reloadAllComponents()
-                                    }
-                            }
-
-                        } else {
-                            self.displayNoInternetAlert()
-                        }
-                    } else {
-                        self.displayNoInternetAlert()
-                    }
-                }
-            }
-            else {
-                print("Error with User Geopoint")
-                println(error)
-                
-                self.locationDisabled = true
-                self.pickerInfo.hidden = true
-				self.checkInButton.enabled = false
-				self.noEventLabel.hidden = false;
-            }
-        }
-    }
-
-    
-    override func viewDidAppear(animated: Bool) {
-        //self.pickerInfo.reloadAllComponents()
-        //locationManager.stopUpdatingLocation()
-        
-        
-
-        if NetworkAvailable.networkConnection() == true {
-            if (self.cellContent.count > 0) {
-                self.eventSelected = self.cellContent[0] as! String
-            }
-        } else {
-            self.pickerInfo.hidden = true
-			self.checkInButton.enabled = false
-            displayNoInternetAlert()
-        }
-    }
+		// subscribe to event push notifications
+		let currentInstallation = PFInstallation.currentInstallation()
+		currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
+		currentInstallation.saveInBackground()
+		
+		// Create & save attendance object
+		var attendance = PFObject(className:"EventAttendance")
+		attendance["eventID"] = event.objectId
+		attendance["attendeeID"] = PFUser.currentUser()?.objectId
+		attendance["photosLikedID"] = []
+		attendance["photosLiked"] = []
+		attendance["photosUploadedID"] = []
+		attendance["photosUploaded"] = []
+		attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
+		
+		attendance.saveInBackground()
+		
+		
+		var account = PFUser.currentUser()
+		account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
+		account?.addUniqueObject(event.name!, forKey: "savedEventNames")
+		account?.saveInBackground()
+		
+		
+		// Store event details in user defaults
+		NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+		NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+		NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
+		
+		
+		self.performSegueWithIdentifier("display-event-album", sender: self)
+	}
 	
-	override func preferredStatusBarStyle() -> UIStatusBarStyle
+	
+	//-------------------------------------
+	// MARK: Segues
+	//-------------------------------------
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
 	{
-		return .LightContent
-	}
-	
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @IBOutlet weak var checkInButton: UIButton!
-    
-    @IBAction func checkInClicked(sender: AnyObject) {
-        
-        if NetworkAvailable.networkConnection() == true {
-            if (self.eventSelected == "" && self.cellContent.count > 0) {
-                self.eventSelected = self.cellContent[0] as! String
-            }
-            
-            // Add user to this event
-            var eventName = self.eventSelected
-
-            println("\n\nchecking in to " + self.eventSelected)
-            
-            let query = PFUser.query()
-             
-            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-                
-                if error != nil {
-                    println(error)
-                }
-                else
-                {
-                    
-                    dispatch_async(dispatch_get_global_queue(self.qos,0)) {
-                        //Check if event exists
-                        let query = PFQuery(className: "Event")
-                        query.whereKey("eventName", equalTo: self.eventSelected)
-                        let scoreArray = query.findObjects()
-                        
-                        if scoreArray != nil {
-                            if self.locationDisabled == true {
-                                self.displayAlert("No Nearby Events", error: "Please enable location access in the iOS settings for Backflip.")
-                            } else if scoreArray!.count == 0 {
-                                self.displayAlert("No Nearby Events", error: "Create a new event!")
-                            } else {
-                                var event = scoreArray?[0] as! PFObject
-								self.eventSelectedObjectId = event.objectId!;
-								
-                                // Subscribe user to the channel of the event for push notifications
-                                let currentInstallation = PFInstallation.currentInstallation()
-                                currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
-                                currentInstallation.saveInBackground()
-                                
-                                // Store the relation
-                                let relation = event.relationForKey("attendees")
-                                relation.addObject(object!)
-                                
-                                event.save()
-                                
-                                var listEvents = object!.objectForKey("savedEventNames") as! [String]
-                                if contains(listEvents, self.eventSelected)
-                                {
-                                    print("Event already in list")
-                                    //self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
-                                    self.tabBarController?.selectedIndex = 2
-                                }
-                                else
-                                {
-                                    // Add the event to the User object
-                                    object?.addUniqueObject(event, forKey:"savedEvents")
-                                    object?.addUniqueObject(self.eventSelected, forKey:"savedEventNames")
-                                    
-                                    object!.save()
-                                    
-                                    
-                                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                    var attendance = PFObject(className:"EventAttendance")
-                                    attendance["eventID"] = event.objectId
-                                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                                    attendance["photosLikedID"] = []
-                                    attendance["photosLiked"] = []
-                                    attendance["photosUploadedID"] = []
-                                    attendance["photosUploaded"] = []
-                                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                                    attendance.setObject(event, forKey: "event")
-                                    
-                                    attendance.save()
-                                    
-                                    println("Saved")
-                                    dispatch_async(dispatch_get_main_queue()) {
-										
-										let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-										let albumViewController = storyboard.instantiateViewControllerWithIdentifier("EventAlbumViewController") as! EventAlbumViewController
-										albumViewController.eventId = self.eventSelectedObjectId;
-										// albumViewController.eventTitle = self.eventSelected;
-										self.navigationController?.pushViewController(albumViewController, animated: true)
-										
-										// self.navigationController?.performSegueWithIdentifier("displayEventAlbum", sender: self)
-										//self.performSegueWithIdentifier("whereAreYouToEvents", sender: self)
-                                    }
-                                }
-                            }
-                        } else {
-                            
-                            println("objects not found")
-                        }
-                    
-                    }
-                    
-                }
-            })
-        } else {
-            self.pickerInfo.hidden = true
-			self.checkInButton.enabled = false
-			self.noEventLabel.hidden = false
-            displayNoInternetAlert()
-        }
-    }
-    
-    // Two functions to allow off keyboard touch to close keyboard
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        self.view.endEditing(true)
-    }
-
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        
-        textField.resignFirstResponder()
-        
-        return true
-    }
-
-}
-
-
-
-
-extension Array {
-	func contains<U: Equatable>(object:U) -> Bool {
-		return (self.indexOf(object) != nil);
-	}
-	
-	func indexOf<U: Equatable>(object: U) -> Int? {
-		for (idx, objectToCompare) in enumerate(self) {
-			if let to = objectToCompare as? U {
-				if object == to {
-					return idx
-				}
+		if (segue.identifier == "display-event-album") {
+			let albumViewController : EventAlbumViewController = segue.destinationViewController as! EventAlbumViewController
+			let currentEventId: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
+			if (currentEventId != nil) {
+				albumViewController.eventId = currentEventId as? String
+				albumViewController.eventTitle =  NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_name") as? String
+			} else {
+				let index = self.pickerView?.selectedRowInComponent(0)
+				let event = self.events[Int(index!)]
+				albumViewController.eventId = event.objectId
+				albumViewController.eventTitle = event.name
 			}
 		}
-		return nil
+		
 	}
 	
-	mutating func removeObject<U: Equatable>(object: U) {
-		let index = self.indexOf(object)
-		if(index != nil) {
-			self.removeAtIndex(index!)
-		}
+	
+	//-------------------------------------
+	// MARK: Data
+	//-------------------------------------
+	
+	func fetchData()
+	{
+		let config = PFConfig.currentConfig()
+		PFGeoPoint.geoPointForCurrentLocationInBackground({ (geopoint, error) -> Void in
+			
+			let query = PFQuery(className: "Event")
+			let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10 kms
+			query.whereKey("geoLocation", nearGeoPoint: geopoint!, withinKilometers:Double(radius))
+			query.limit = config["nearby_events_limit"] != nil ? Int(config["nearby_events_limit"]! as! NSNumber) : 60 // Default: 60 events
+			query.whereKey("isLive", equalTo:true)
+			var objects = query.findObjects()
+			if (objects == nil) {
+				return
+			}
+			
+			var account = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
+			var eventHistory: [String] = account!.objectForKey("savedEventNames") as! [String]
+			
+			
+			var content = [Event]()
+			for object in objects as! [PFObject] {
+				let pastEvent = contains(eventHistory, object["eventName"] as! String)
+				if (pastEvent) {
+					continue
+				}
+				
+				var event = Event()
+				event.objectId = object.objectId
+				event.name = object["eventName"] as? String
+				event.geoLocation = object["geoLocation"] as? PFGeoPoint
+				event.isLive = object["isLive"] as? Boolean
+				event.startTime = object["startTime"] as? NSDate
+				event.venue = object["venue"] as? String
+				event.photos = [Image]()
+				
+				let photoQuery : PFQuery = object.relationForKey("photos").query()!
+				photoQuery.findObjectsInBackgroundWithBlock({ (photos, error) -> Void in
+					
+					for photo in photos as! [PFObject] {
+						let image = Image(text: "Check out this photo!")
+						image.objectId = photo.objectId
+						image.likes = photo["upvoteCount"] as! Int
+						image.image = photo["image"] as! PFFile
+						image.thumbnail = photo["thumbnail"] as! PFFile
+						image.createdAt = photo.createdAt
+						image.likedBy = photo["usersLiked"] as! [String]
+						event.photos?.append(image)
+					}
+					
+					self.collectionView?.reloadData()
+				})
+				
+				content.append(event)
+			}
+			
+			
+			self.events = content
+			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				self.pickerView?.reloadAllComponents()
+				self.collectionView?.reloadData()
+			})
+			
+		})
 	}
+	
 }
