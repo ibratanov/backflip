@@ -38,13 +38,13 @@
                     </tabBar>
                     <connections>
                         <segue destination="O7c-aj-Qx3" kind="relationship" relationship="viewControllers" id="RvR-y4-eV5"/>
-                        <segue destination="95d-MB-aa7" kind="relationship" relationship="viewControllers" id="4t2-vT-GZe"/>
+                        <segue destination="7NG-9a-x5O" kind="relationship" relationship="viewControllers" id="tuT-sT-sNE"/>
                         <segue destination="Oc7-Mf-MXx" kind="relationship" relationship="viewControllers" id="lNk-6l-iuU"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2AN-7E-O5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-319.5" y="-3388.5"/>
+            <point key="canvasLocation" x="-319.5" y="-3398.5"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="cjb-Xn-roX">
@@ -247,7 +247,7 @@
         <scene sceneID="0XN-eA-FQT">
             <objects>
                 <navigationController title="Event Albums" id="Oc7-Mf-MXx" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Event Cloud" image="tabBar-eventHistory" selectedImage="tabBar-eventHistory-filled" id="Fho-OT-gwv">
+                    <tabBarItem key="tabBarItem" title="Event History" image="tabBar-eventHistory" selectedImage="tabBar-eventHistory-filled" id="Fho-OT-gwv">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="tabBar-eventHistory-filled"/>
                         </userDefinedRuntimeAttributes>
@@ -392,7 +392,6 @@
                         <outlet property="collectionView" destination="gAn-y3-J5G" id="OLx-Ii-ouD"/>
                         <outlet property="pickerView" destination="SHd-XW-fNZ" id="Pqb-v1-jeV"/>
                         <segue destination="2nM-hW-Tui" kind="presentation" identifier="display-login-popover" modalPresentationStyle="fullScreen" id="jdc-gb-I5S"/>
-                        <segue destination="95d-MB-aa7" kind="presentation" identifier="display-camera" modalPresentationStyle="fullScreen" id="A7s-cH-xqV"/>
                         <segue destination="XjT-mA-gxf" kind="show" identifier="display-event-album" id="7DF-eU-AoJ"/>
                     </connections>
                 </viewController>
@@ -475,7 +474,7 @@
                     <toolbarItems>
                         <barButtonItem title="Item" id="901-ZQ-YzX"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Event Cloud" id="AlS-vE-J4m"/>
+                    <navigationItem key="navigationItem" title="Event History" id="AlS-vE-J4m"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVz-3T-M7e" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -603,6 +602,26 @@
             <point key="canvasLocation" x="921" y="-3008"/>
         </scene>
         <!--Camera-->
+        <scene sceneID="eR4-MX-Ubs">
+            <objects>
+                <viewController id="7NG-9a-x5O" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TS8-rE-yTG"/>
+                        <viewControllerLayoutGuide type="bottom" id="o8B-Hg-ITb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Fx0-Ke-y8P">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Camera" image="tabBar-camera-filled" id="C4O-u4-HPY"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Vm-7t-Qkv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-179" y="-2476"/>
+        </scene>
+        <!--Camera-->
         <scene sceneID="Yc6-nq-uQY">
             <objects>
                 <viewController id="95d-MB-aa7" customClass="CustomCamera" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
@@ -611,13 +630,13 @@
                         <viewControllerLayoutGuide type="bottom" id="dLx-YI-DNf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="zL6-T5-1cw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4yP-3p-UeE">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="-292" width="600" height="60"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ii4-U0-EQf">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <animations/>
                                 </view>
@@ -628,9 +647,9 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HtL-ZK-6YX">
-                                <rect key="frame" x="0.0" y="435" width="375" height="232"/>
+                                <rect key="frame" x="0.0" y="368" width="600" height="232"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="O1F-Iq-Mop">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="232"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="232"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <animations/>
                                 </view>
@@ -638,7 +657,7 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idl-rp-4da" userLabel="Square">
-                                <rect key="frame" x="0.0" y="60" width="375" height="375"/>
+                                <rect key="frame" x="0.0" y="-232" width="600" height="600"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -646,7 +665,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJr-hQ-1b2" userLabel="Top">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="-292" width="600" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Gp-Yy-iLY">
                                         <rect key="frame" x="10" y="5" width="69" height="50"/>
@@ -662,7 +681,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgw-jV-Tqv" userLabel="Switch Camera Button">
-                                        <rect key="frame" x="330" y="5" width="35" height="50"/>
+                                        <rect key="frame" x="555" y="5" width="35" height="50"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="tBW-0H-HRN"/>
@@ -676,8 +695,8 @@
                                             <action selector="reverseCamera:" destination="95d-MB-aa7" eventType="touchUpInside" id="q1C-92-BEN"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l38-Yb-qcK">
-                                        <rect key="frame" x="187" y="30" width="0.0" height="0.0"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l38-Yb-qcK">
+                                        <rect key="frame" x="299" y="30" width="0.0" height="0.0"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -708,7 +727,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2jB-2M-bzK" userLabel="Bottom">
-                                <rect key="frame" x="0.0" y="495" width="375" height="172"/>
+                                <rect key="frame" x="0.0" y="428" width="600" height="172"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTG-Rn-EuF">
                                         <rect key="frame" x="10" y="61" width="50" height="50"/>
@@ -725,7 +744,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xr1-LS-43L">
-                                        <rect key="frame" x="148" y="46" width="80" height="80"/>
+                                        <rect key="frame" x="260" y="46" width="80" height="80"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="xr1-LS-43L" secondAttribute="height" multiplier="1:1" id="911-Zv-5ZE"/>
@@ -742,7 +761,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dl2-sq-hq1">
-                                        <rect key="frame" x="315" y="61" width="50" height="50"/>
+                                        <rect key="frame" x="540" y="61" width="50" height="50"/>
                                         <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -777,7 +796,7 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N0x-4A-xrw">
-                                <rect key="frame" x="0.0" y="435" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="368" width="600" height="60"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -823,7 +842,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcv-pB-unz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="920.5" y="-1994.5"/>
+            <point key="canvasLocation" x="654" y="-2039"/>
         </scene>
     </scenes>
     <resources>
@@ -840,8 +859,7 @@
         <image name="tabBar-locator-filled" width="29" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="A7s-cH-xqV"/>
-        <segue reference="7DF-eU-AoJ"/>
+        <segue reference="kSd-hV-V4Q"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
 </document>
