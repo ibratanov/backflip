@@ -52,11 +52,12 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     
     func displayAlert(title:String, error: String) {
-        
-        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
     }
     
     func displayAlertLogout(title:String, error: String) {
@@ -78,9 +79,11 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     }
     
     func displayNoInternetAlert() {
-        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
-        self.presentViewController(alert, animated: true, completion: nil)
-        println("no internet")
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+        })
     }
     
     func getUserAddress() {
@@ -144,7 +147,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     self.displayNoInternetAlert()
                     println("could not generate location - no internet")
-                    self.address2 = ""
+                    self.address2 = "No location found"
                     self.addressField.text = self.address2
                 }
             })
@@ -163,7 +166,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         
         if (locationDisabled == true) {
             error = "Please enable location access in the iOS settings for Backflip."
-        } else if (eventName == "" || address == "") {
+        } else if (eventName == "") {// || address == "") {
             error = "Please enter an event name."
         } else if (count(eventName) < 2) {
             error = "Please enter a valid event name."
@@ -259,7 +262,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     }
                                     
                                 } else {
-                                    self.displayAlert("This event already exists", error: "Join an existing event below")
+                                    self.displayAlert("This event already exists", error: "Join an existing event on the Nearby Events screen.")
                                 }
                             } else {
                                 self.displayNoInternetAlert()
