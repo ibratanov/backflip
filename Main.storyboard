@@ -21,7 +21,6 @@
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
-            <string>Avenir-Book</string>
         </mutableArray>
         <mutableArray key="HelveticaNeue.ttc">
             <string>HelveticaNeue</string>
@@ -857,21 +856,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="location-icon" translatesAutoresizingMaskIntoConstraints="NO" id="fgg-nI-XN8">
                                 <rect key="frame" x="275" y="257" width="20" height="30"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0CA-0l-LQ5">
-                                <rect key="frame" x="0.0" y="494" width="375" height="60"/>
-                                <color key="backgroundColor" red="0.72941176470000002" green="0.40784313729999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="A30-N7-dKd"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="CREATE EVENT">
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="createEvent:" destination="6q2-xA-QYe" eventType="touchUpInside" id="Ese-gK-taY"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -894,12 +878,9 @@
                             <constraint firstAttribute="trailing" secondItem="IGC-LQ-ADJ" secondAttribute="trailing" id="bbC-5H-Jj6"/>
                             <constraint firstItem="IGC-LQ-ADJ" firstAttribute="top" secondItem="Fv3-db-ACG" secondAttribute="top" id="diU-3M-Vw1"/>
                             <constraint firstAttribute="trailing" secondItem="IGC-LQ-ADJ" secondAttribute="trailing" id="e2g-hP-8gu"/>
-                            <constraint firstItem="0CA-0l-LQ5" firstAttribute="leading" secondItem="Fv3-db-ACG" secondAttribute="leading" id="h5O-xc-ZPm"/>
-                            <constraint firstAttribute="trailing" secondItem="0CA-0l-LQ5" secondAttribute="trailing" id="iJv-Qk-Blx"/>
                             <constraint firstItem="edQ-k9-lFP" firstAttribute="top" secondItem="IGC-LQ-ADJ" secondAttribute="bottom" constant="20" id="kZo-P0-Z55"/>
                             <constraint firstItem="IGC-LQ-ADJ" firstAttribute="leading" secondItem="Fv3-db-ACG" secondAttribute="leading" id="nEu-K9-S5z"/>
                             <constraint firstItem="ugz-BK-wRc" firstAttribute="top" secondItem="edQ-k9-lFP" secondAttribute="bottom" id="rYT-Sn-yNx"/>
-                            <constraint firstItem="ZbU-Ye-hpq" firstAttribute="top" secondItem="0CA-0l-LQ5" secondAttribute="bottom" id="sFO-BU-El4"/>
                             <constraint firstAttribute="trailing" secondItem="V5f-VN-KBb" secondAttribute="trailing" id="tzw-OR-yp2"/>
                             <constraint firstItem="UJY-Y7-RjG" firstAttribute="top" secondItem="ugz-BK-wRc" secondAttribute="bottom" constant="89" id="wTy-Ok-KiO"/>
                             <constraint firstAttribute="centerX" secondItem="edQ-k9-lFP" secondAttribute="centerX" id="zRQ-md-yGV"/>
@@ -920,7 +901,11 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="New Event" id="86M-qn-xbI">
-                        <barButtonItem key="rightBarButtonItem" title="Create" id="gVy-lM-J8v"/>
+                        <barButtonItem key="rightBarButtonItem" title="Create" id="gVy-lM-J8v">
+                            <connections>
+                                <action selector="createEvent:" destination="6q2-xA-QYe" id="yPW-5V-9aC"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addressField" destination="WQV-1r-GmN" id="a3h-C3-pwl"/>

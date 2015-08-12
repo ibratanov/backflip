@@ -151,8 +151,6 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-
-    // Add event to event class
     @IBAction func createEvent(sender: AnyObject) {
         
         var error = ""
@@ -170,7 +168,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         } else if (count(eventName) < 2) {
             error = "Please enter a valid event name."
         }
-            
+        
         if error == "Please enter an event name." {
             
             noNameAlert()
@@ -185,7 +183,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                 query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                     if error != nil {
                         println(error)
-
+                        
                     } else {
                         
                         var event = PFObject(className: "Event")
@@ -228,7 +226,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     // Store the relation
                                     let relation = event.relationForKey("attendees")
                                     relation.addObject(PFUser.currentUser()!)
-
+                                    
                                     self.eventID = event.objectId
                                     event.save()
                                     
@@ -253,13 +251,13 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     
                                     // When successful, segue to events page
                                     dispatch_async(dispatch_get_main_queue()) {
-                                    
+                                        
                                         println("Saved")
                                         self.albumview?.eventId = self.eventID
                                         //self.performSegueWithIdentifier("eventsPage", sender: self)
                                         self.tabBarController?.selectedIndex = 2
                                     }
-
+                                    
                                 } else {
                                     self.displayAlert("This event already exists", error: "Join an existing event below")
                                 }
@@ -274,6 +272,10 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+
+//    // Add event to event class
+//    @IBAction func createEvent(sender: AnyObject) {
+//            }
     
     // Function to grey out create event button unless more than 2 characters are entered
     func textCheck (sender: AnyObject) {
