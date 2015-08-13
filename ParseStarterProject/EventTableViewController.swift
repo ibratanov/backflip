@@ -180,6 +180,9 @@ class EventTableViewController: UITableViewController {
         tableCell.eventName.text = evName
         tableCell.eventLocation.text = evVenue
         
+
+        
+        
         if listPhotos == nil || listPhotos.count == 0 {
             tableCell.imageOne!.image = UIImage ()
             tableCell.imageOne.backgroundColor = underlineColor
@@ -193,7 +196,7 @@ class EventTableViewController: UITableViewController {
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
             
-            if width > 400 {
+            if width > 320 {
                 tableCell.imageFive!.image = UIImage ()
                 tableCell.imageFive.backgroundColor = underlineColor
                 tableCell.imageFive.clipsToBounds = true
@@ -219,7 +222,7 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-            if width > 400 {
+            if width > 320 {
 			tableCell.imageFive!.image = UIImage ()
 			tableCell.imageFive.backgroundColor = underlineColor
             tableCell.imageFive.clipsToBounds = true
@@ -246,7 +249,7 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-            if width > 400 {
+            if width > 320 {
 			tableCell.imageFive!.image = UIImage ()
 			tableCell.imageFive.backgroundColor = underlineColor
             tableCell.imageFive.clipsToBounds = true
@@ -275,7 +278,7 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour!.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-            if width > 400 {
+            if width > 320 {
 			tableCell.imageFive!.image = UIImage ()
 			tableCell.imageFive.backgroundColor = underlineColor
             tableCell.imageFive.clipsToBounds = true
@@ -305,7 +308,7 @@ class EventTableViewController: UITableViewController {
             var imageData4 = listPhotos[3]
             tableCell.imageFour!.file = imageData4
             
-            if width > 400 {
+            if width > 320 {
 			var imageData5 = listPhotos[4]
 			tableCell.imageFive!.file = imageData5
             tableCell.imageFive.clipsToBounds = true
