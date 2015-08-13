@@ -674,28 +674,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="input-outline" translatesAutoresizingMaskIntoConstraints="NO" id="V5f-VN-KBb">
-                                <rect key="frame" x="0.0" y="149" width="375" height="75"/>
+                                <rect key="frame" x="0.0" y="148" width="375" height="75"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="FhW-Ke-r2u"/>
                                 </constraints>
                             </imageView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="input-outline" translatesAutoresizingMaskIntoConstraints="NO" id="UJY-Y7-RjG">
-                                <rect key="frame" x="0.0" y="223" width="375" height="75"/>
+                                <rect key="frame" x="0.0" y="222" width="375" height="75"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="wHe-0A-pYW"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="WHERE ARE YOU?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="271" translatesAutoresizingMaskIntoConstraints="NO" id="edQ-k9-lFP">
-                                <rect key="frame" x="70" y="75" width="237" height="39"/>
+                                <rect key="frame" x="69" y="75" width="237" height="39"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="28"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Event Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m7x-bR-P6r">
-                                <rect key="frame" x="25" y="149" width="325" height="75"/>
+                                <rect key="frame" x="25" y="148" width="325" height="75"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="rbx-Sn-sTY"/>
@@ -724,14 +724,14 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="enter event name below" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="278" translatesAutoresizingMaskIntoConstraints="NO" id="ugz-BK-wRc">
-                                <rect key="frame" x="112" y="113" width="152" height="20"/>
+                                <rect key="frame" x="112" y="113" width="152" height="19.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                 <color key="textColor" red="0.44705882349999998" green="0.44705882349999998" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location-icon" translatesAutoresizingMaskIntoConstraints="NO" id="fgg-nI-XN8">
-                                <rect key="frame" x="339" y="246" width="20" height="30"/>
+                                <rect key="frame" x="339" y="245" width="20" height="30"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="6Eg-cY-4P5"/>
@@ -739,7 +739,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQV-1r-GmN">
-                                <rect key="frame" x="25" y="261" width="306" height="0.0"/>
+                                <rect key="frame" x="25" y="260" width="306" height="0.0"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -800,6 +800,7 @@
                                 <exclude reference="e2g-hP-8gu"/>
                                 <exclude reference="BNH-gr-mLf"/>
                                 <exclude reference="kZo-P0-Z55"/>
+                                <exclude reference="zRQ-md-yGV"/>
                                 <exclude reference="zRa-Y5-Sjy"/>
                                 <exclude reference="FWS-K2-0Wc"/>
                                 <exclude reference="4Md-za-GZR"/>
