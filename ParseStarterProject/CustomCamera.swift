@@ -26,9 +26,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	let frame: CGRect = UIScreen.mainScreen().bounds
 	@IBOutlet weak var thumbnailButton: UIButton!
 	@IBOutlet weak var flashButton: UIButton!
-	var imageViewContent = UIImage()
 	var overlayView: UIView?
-	var image = UIImage()
 	var zoomImage = (camera: true, display: true)
 	var newMedia: Bool = true
 	
@@ -160,19 +158,21 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
 	{
+        var imageViewContent = UIImage()
+
 		//image stored in local variable to contain lifespan in method
 		var imageShortLife:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-		self.imageViewContent = imageShortLife
+		imageViewContent = imageShortLife
 		//picker.dismissViewControllerAnimated(true, completion: nil)
 		
 		//Retake and crop options------------------------------------------------------------------------
 		let previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
 		previewViewController.cropCompletionHandler = {
-			self.imageViewContent = $0!
+			imageViewContent = $0!
 			previewViewController.dismissViewControllerAnimated(true, completion: nil)
 
 			
-			let imageView = UIImageView(image: self.imageViewContent)
+			let imageView = UIImageView(image: imageViewContent)
 			imageView.contentMode = UIViewContentMode.ScaleAspectFit
 			self.uploadImages(imageView.image!)
 			
@@ -384,6 +384,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	}
 	
 	func updateThumbnail(){
+        var image = UIImage()
+
 		thumbnailButton.setBackgroundImage(image, forState: .Normal)
 		thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
 		thumbnailButton.layer.borderWidth=1.0
@@ -576,6 +578,10 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		return imageData;
 		
 	}
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
 	
 	func displayNoInternetAlert() {
 		var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
