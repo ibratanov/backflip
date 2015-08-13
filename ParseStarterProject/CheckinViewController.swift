@@ -205,7 +205,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		let event = self.events[Int(row)]
 		if (event.photos?.count > 0) {
 			self.previewLabel.hidden = false
-			self.previewLabel.text = "Previewing '"+event.name!+"'.."
+			self.previewLabel.text = "Previewing '"+event.name!+"'"
 		} else {
 			self.previewLabel.hidden = true
 		}
