@@ -340,15 +340,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         var t: CGAffineTransform!
 
         let orientation = UIDevice.currentDevice().orientation
-        if orientation == UIDeviceOrientation.Portrait {
             t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
-        } else if orientation == UIDeviceOrientation.PortraitUpsideDown {
-            t = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
-        } else if (orientation == UIDeviceOrientation.LandscapeRight) {
-            t = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        } else {
-            t = CGAffineTransformMakeRotation(0)
-        }
+        
+        //t = CGAffineTransformMakeRotation(0)
+        
         outputImage = outputImage.imageByApplyingTransform(t)
         
         let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent())
