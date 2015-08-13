@@ -26,26 +26,22 @@ class EventTableViewController: UITableViewController {
 //        
 //    }
     
-    var imageList: [PFFile] = []
-    var events: [String] = []
-    
     var eventWithPhotos = [String:[PFFile]]()
-    var eventWithIds = [String:[PFFile]]()
-    
     var eventObjs: [PFObject] = []
-    
+
     var logoutButton = UIImage(named: "settings-icon") as UIImage!
     var addButton = UIImage(named: "add-icon") as UIImage!
-
-    
-    var eventId: [String] = []
-    var venues: [String] = []
+    let spinner: UIActivityIndicatorView = UIActivityIndicatorView()
     
     let qos = (Int(QOS_CLASS_BACKGROUND.value))
+    
+
+
     
 //    Enable UI Navigation Item
     override func viewWillAppear(animated: Bool)
 	{
+
         self.tableView.reloadData()
         if NetworkAvailable.networkConnection() == true {
             updateEvents()
@@ -58,11 +54,12 @@ class EventTableViewController: UITableViewController {
 		
 		super.viewDidLoad()
 		
+        self.tableView.userInteractionEnabled = true
+
 		if (PFUser.currentUser() == nil) {
 			self.performSegueWithIdentifier("display-login-popover", sender: self)
 			return
 		}
-		
     }
     
     func displayAlertLogout(title:String, error: String) {
@@ -90,13 +87,14 @@ class EventTableViewController: UITableViewController {
     }
     
     func updateEvents(){
-     
+
         if NetworkAvailable.networkConnection() == true {
             let query = PFUser.query()
             query?.includeKey("savedEvents")
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                 if (error == nil) {
                     self.eventObjs.removeAll(keepCapacity: true)
+
                     self.eventObjs = object!.objectForKey("savedEvents") as! [PFObject]
 					
 					let currentEventId = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id") as? String
@@ -113,6 +111,7 @@ class EventTableViewController: UITableViewController {
                     
                     // Dispatch queries to background queue
                     dispatch_async(dispatch_get_global_queue(self.qos, 0)) {
+                        println("HERE")
                         for event in self.eventObjs {
                             let relation = event.relationForKey("photos")
                             let query = relation.query()
@@ -121,19 +120,26 @@ class EventTableViewController: UITableViewController {
                             query!.limit = 5
                             
                             var photos = query!.findObjects()
+                            var thumbnails: [PFFile] = []
                             
                             // Return to main queue for UI updates
-                            dispatch_async(dispatch_get_main_queue()) {
-                                var thumbnails: [PFFile] = []
-                                
                                 if (photos != nil && photos!.count != 0) {
                                     for photo in photos! {
                                         thumbnails.append(photo["thumbnail"] as! PFFile)
                                     }
-                                }
+                                        //self.eventWithPhotos.removeAll(keepCapacity: true)
+                                        self.eventWithPhotos[event.objectId!] = thumbnails
+
+                                    }
                                 
-                                self.eventWithPhotos[event.objectId!] = thumbnails
-                                self.eventWithIds[event.objectId!] = thumbnails
+                                else {
+                                  
+                                        //self.eventWithPhotos.removeAll(keepCapacity: true)
+                                        var thumbnails: [PFFile] = []
+                                        self.eventWithPhotos[event.objectId!] = thumbnails
+                                    
+                                }
+                            dispatch_async(dispatch_get_main_queue()) {
                                 self.tableView.reloadData()
                             }
                         }
@@ -152,20 +158,24 @@ class EventTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // Table View delegate methods
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Array(self.eventWithPhotos.keys).count
+        return self.eventWithPhotos.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let tableCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! EventTableViewCell
         tableCell.selectionStyle = UITableViewCellSelectionStyle.None
-        var key : String = Array(self.eventWithPhotos.keys)[indexPath.row]
+        tableCell.clipsToBounds = true
+        tableCell.layer.masksToBounds = true
+        
+        var bounds = UIScreen.mainScreen().bounds
+        var width = bounds.size.width
         
         var ev : PFObject = eventObjs[indexPath.row]
         var evName : String = ev["eventName"] as! String
@@ -176,63 +186,79 @@ class EventTableViewController: UITableViewController {
         
         tableCell.eventName.text = evName
         tableCell.eventLocation.text = evVenue
-        
+
         if listPhotos == nil || listPhotos.count == 0 {
-            tableCell.imageOne!.image = UIImage ()
+            tableCell.imageOne.image = UIImage ()
             tableCell.imageOne.backgroundColor = underlineColor
             
-            tableCell.imageTwo!.image = UIImage ()
+            tableCell.imageTwo.image = UIImage ()
             tableCell.imageTwo.backgroundColor = underlineColor
             
-            tableCell.imageThree!.image = UIImage ()
+            tableCell.imageThree.image = UIImage ()
             tableCell.imageThree.backgroundColor = underlineColor
             
-            tableCell.imageFour!.image = UIImage ()
+            tableCell.imageFour.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
+            
+            // 320px size of iPhone 4 and 5, 6 on display zoom, thus only show 4 pictures if 320
+            if width > 320 {
+                tableCell.imageFive.image = UIImage ()
+                tableCell.imageFive.backgroundColor = underlineColor
+                tableCell.imageFive.clipsToBounds = true
+            } else {
+                tableCell.imageFive.removeFromSuperview()
+            }
 
-			tableCell.imageFive!.image = UIImage ()
-			tableCell.imageFive.backgroundColor = underlineColor
-			
             return tableCell
         }
         
         if listPhotos.count == 1 {
             var imageData1 = listPhotos[0]
-            tableCell.imageOne!.file = imageData1
+            tableCell.imageOne.file = imageData1
             
-            tableCell.imageTwo!.image = UIImage ()
+            tableCell.imageTwo.image = UIImage ()
             tableCell.imageTwo.backgroundColor = underlineColor
             
-            tableCell.imageThree!.image = UIImage ()
+            tableCell.imageThree.image = UIImage ()
             tableCell.imageThree.backgroundColor = underlineColor
             
-            tableCell.imageFour!.image = UIImage ()
+            tableCell.imageFour.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-			
-			tableCell.imageFive!.image = UIImage ()
-			tableCell.imageFive.backgroundColor = underlineColor
-			
+            
+            if width > 320 {
+                tableCell.imageFive.image = UIImage ()
+                tableCell.imageFive.backgroundColor = underlineColor
+                tableCell.imageFive.clipsToBounds = true
+            } else {
+                tableCell.imageFive.removeFromSuperview()
+            }
+            
             tableCell.imageOne.loadInBackground()
-
+            
             return tableCell
         }
         
         if listPhotos.count == 2 {
             var imageData1 = listPhotos[0]
-            tableCell.imageOne!.file = imageData1
+            tableCell.imageOne.file = imageData1
             
             var imageData2 = listPhotos[1]
-            tableCell.imageTwo!.file = imageData2
+            tableCell.imageTwo.file = imageData2
             
-            tableCell.imageThree!.image = UIImage ()
+            tableCell.imageThree.image = UIImage ()
             tableCell.imageThree.backgroundColor = underlineColor
             
-            tableCell.imageFour!.image = UIImage ()
+            tableCell.imageFour.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-			
-			tableCell.imageFive!.image = UIImage ()
-			tableCell.imageFive.backgroundColor = underlineColor
-			
+            
+            if width > 320 {
+                tableCell.imageFive.image = UIImage ()
+                tableCell.imageFive.backgroundColor = underlineColor
+                tableCell.imageFive.clipsToBounds = true
+            } else {
+                tableCell.imageFive.removeFromSuperview()
+            }
+
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
 
@@ -242,20 +268,24 @@ class EventTableViewController: UITableViewController {
         
         if listPhotos.count == 3 {
             var imageData1 = listPhotos[0]
-            tableCell.imageOne!.file = imageData1
+            tableCell.imageOne.file = imageData1
             
             var imageData2 = listPhotos[1]
-            tableCell.imageTwo!.file = imageData2
+            tableCell.imageTwo.file = imageData2
             
             var imageData3 = listPhotos[2]
-            tableCell.imageThree!.file = imageData3
+            tableCell.imageThree.file = imageData3
             
-            tableCell.imageFour!.image = UIImage ()
+            tableCell.imageFour.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
-			
-			tableCell.imageFive!.image = UIImage ()
-			tableCell.imageFive.backgroundColor = underlineColor
-			
+            if width > 320 {
+                tableCell.imageFive.image = UIImage ()
+                tableCell.imageFive.backgroundColor = underlineColor
+                tableCell.imageFive.clipsToBounds = true
+            } else {
+                tableCell.imageFive.removeFromSuperview()
+            }
+            
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
@@ -266,31 +296,121 @@ class EventTableViewController: UITableViewController {
         
         if listPhotos.count > 4 {
             var imageData1 = listPhotos[0]
-            tableCell.imageOne!.file = imageData1
+            tableCell.imageOne.file = imageData1
             
             var imageData2 = listPhotos[1]
-            tableCell.imageTwo!.file = imageData2
+            tableCell.imageTwo.file = imageData2
             
             var imageData3 = listPhotos[2]
-            tableCell.imageThree!.file = imageData3
+            tableCell.imageThree.file = imageData3
             
             var imageData4 = listPhotos[3]
-            tableCell.imageFour!.file = imageData4
-			
-			var imageData5 = listPhotos[4]
-			tableCell.imageFive!.file = imageData5
-			
+            tableCell.imageFour.file = imageData4
             
+            if width > 320 {
+                var imageData5 = listPhotos[4]
+                tableCell.imageFive.file = imageData5
+                tableCell.imageFive.clipsToBounds = true
+                tableCell.imageFive.loadInBackground()
+            } else {
+                tableCell.imageFive.removeFromSuperview()
+            }
+
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
             tableCell.imageFour.loadInBackground()
-			tableCell.imageFive.loadInBackground()
-
+            
             return tableCell
         }
-        
         return tableCell
+    }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            if NetworkAvailable.networkConnection() == true {
+                
+                self.tableView.beginUpdates()
+                // Remove from Parse DB
+                let current = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
+                let eventObject = eventObjs[indexPath.row]
+                eventDelete(eventObject)
+                
+                // Remove elements from datasource, remove row, reload tableview
+                self.eventObjs.removeAtIndex(indexPath.row)
+                self.eventWithPhotos.removeValueForKey(eventObject.objectId!)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                self.tableView.reloadData()
+                self.tableView.endUpdates()
+                
+            } else {
+                displayNoInternetAlert()
+            }
+        }
+        
+
+    }
+
+    
+    
+    func eventDelete (event : PFObject ) {
+        
+        let eventTitle = event["eventName"] as! String
+        let eventID = event.objectId! as String
+
+        if NetworkAvailable.networkConnection() == true {
+           
+            
+            // Set the spinner
+            dispatch_async(dispatch_get_main_queue()) {
+                println(self.view.bounds.width)
+                self.spinner.frame = CGRectMake(self.view.bounds.width/2 - 75, self.view.bounds.height/2 - 75, 150, 150)
+                //self.spinner.center = self.view.center
+                self.spinner.hidden = false
+                self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+                self.spinner.color = UIColor.blackColor()
+                self.view.addSubview(self.spinner)
+                self.view.bringSubviewToFront(self.spinner)
+                self.spinner.startAnimating()
+                self.tableView.userInteractionEnabled = false
+            }
+            
+
+            // Delete event info from the users DB entry
+            let query = PFUser.query()
+            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
+                object!.removeObject(event, forKey:"savedEvents")
+                object!.removeObject(eventTitle, forKey: "savedEventNames")
+                object!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+                    if (success) {
+                        
+                        // Re-enable interaction, stop the spinner once parse update is done
+                        self.spinner.stopAnimating()
+                        self.tableView.userInteractionEnabled = true
+                    }
+                }
+            })
+            
+            // Delete event attendence row in Event Attendance class
+            let attendanceQuery = PFQuery(className: "EventAttendance")
+            attendanceQuery.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+            attendanceQuery.whereKey("eventID", equalTo: eventID)
+            attendanceQuery.selectKeys(["photosLiked", "photosLikedID", "flagged", "blocked"])
+            attendanceQuery.limit = 1
+            attendanceQuery.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                objects?.first?.deleteInBackground()
+            }
+
+        } else {
+            displayNoInternetAlert()
+        }
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

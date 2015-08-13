@@ -472,38 +472,13 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oBQ-MH-boF" customClass="PFImageView">
-                                            <rect key="frame" x="0.0" y="69" width="81" height="77"/>
-                                            <animations/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KXP-d0-CTN" customClass="PFImageView">
-                                            <rect key="frame" x="79" y="69" width="81" height="77"/>
-                                            <animations/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4JF-XT-HBZ" customClass="PFImageView">
-                                            <rect key="frame" x="158" y="69" width="81" height="77"/>
-                                            <animations/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ty3-oT-RXU" customClass="PFImageView">
-                                            <rect key="frame" x="237" y="69" width="81" height="77"/>
-                                            <animations/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7no-7z-f26" customClass="PFImageView">
-                                            <rect key="frame" x="316" y="69" width="81" height="77"/>
-                                            <animations/>
-                                        </imageView>
                                     </subviews>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
                                     <outlet property="eventLocation" destination="yZd-rr-cD5" id="IP6-nh-lGa"/>
-                                    <outlet property="eventName" destination="Stv-eF-mP4" id="dFw-oq-6YN"/>
-                                    <outlet property="imageFive" destination="7no-7z-f26" id="5Yb-R5-3Lg"/>
-                                    <outlet property="imageFour" destination="Ty3-oT-RXU" id="s5j-gs-HKI"/>
-                                    <outlet property="imageOne" destination="oBQ-MH-boF" id="epg-Ni-MqX"/>
-                                    <outlet property="imageThree" destination="4JF-XT-HBZ" id="PeL-U2-QwX"/>
-                                    <outlet property="imageTwo" destination="KXP-d0-CTN" id="4Ah-vj-Zqc"/>
+                                    <outlet property="eventName" destination="Stv-eF-mP4" id="7mw-HT-puv"/>
                                     <segue destination="XjT-mA-gxf" kind="show" identifier="display-event-album" id="kSd-hV-V4Q"/>
                                 </connections>
                             </tableViewCell>
