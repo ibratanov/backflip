@@ -18,6 +18,8 @@
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
+            <string>Avenir-Book</string>
+            <string>Avenir-Medium</string>
         </mutableArray>
         <mutableArray key="HelveticaNeue.ttc">
             <string>HelveticaNeue</string>
@@ -268,7 +270,7 @@
             </objects>
             <point key="canvasLocation" x="920.5" y="-3830.5"/>
         </scene>
-        <!--Nearby Events-->
+        <!--Checkin View Controller-->
         <scene sceneID="Epq-Ib-xP0">
             <objects>
                 <viewController storyboardIdentifier="CheckinViewController" id="0pn-ur-yjM" customClass="CheckinViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
@@ -357,6 +359,20 @@
                                     <outlet property="delegate" destination="0pn-ur-yjM" id="HBu-Vy-Cfq"/>
                                 </connections>
                             </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearby Events" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CvR-kJ-0nI">
+                                <rect key="frame" x="16" y="207" width="343" height="29"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="21"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sakdjakl" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0R-2x-9cH">
+                                <rect key="frame" x="16" y="20" width="343" height="22"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -366,28 +382,37 @@
                             <constraint firstItem="gAn-y3-J5G" firstAttribute="top" secondItem="eWN-zu-fdK" secondAttribute="bottom" constant="43" id="8UK-GV-nUA"/>
                             <constraint firstAttribute="centerY" secondItem="SHd-XW-fNZ" secondAttribute="centerY" id="A8b-EI-u3M"/>
                             <constraint firstAttribute="centerY" secondItem="SHd-XW-fNZ" secondAttribute="centerY" id="AlF-WZ-XnJ"/>
+                            <constraint firstItem="CvR-kJ-0nI" firstAttribute="top" secondItem="gAn-y3-J5G" secondAttribute="bottom" constant="39" id="BAD-kT-b2T"/>
                             <constraint firstAttribute="centerX" secondItem="gAn-y3-J5G" secondAttribute="centerX" id="D3d-ov-MtV"/>
                             <constraint firstAttribute="centerX" secondItem="SHd-XW-fNZ" secondAttribute="centerX" id="EE0-Ni-VKP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YcA-hr-4UR" secondAttribute="trailing" constant="-16" id="ESS-4A-X6F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gAn-y3-J5G" secondAttribute="trailing" constant="-16" id="KW9-NW-7wF"/>
                             <constraint firstAttribute="centerY" secondItem="2cd-NU-S4J" secondAttribute="centerY" id="LGE-lB-vvA"/>
+                            <constraint firstItem="CvR-kJ-0nI" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" id="P87-5X-j6e"/>
                             <constraint firstItem="gmX-KS-lez" firstAttribute="top" secondItem="YcA-hr-4UR" secondAttribute="bottom" id="S2T-E2-Vbz"/>
                             <constraint firstItem="gmX-KS-lez" firstAttribute="top" secondItem="YcA-hr-4UR" secondAttribute="bottom" id="Vha-6e-GA8"/>
                             <constraint firstItem="gAn-y3-J5G" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" constant="-16" id="WiI-Oh-0op"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YcA-hr-4UR" secondAttribute="trailing" constant="-16" id="eMf-9Z-GWI"/>
+                            <constraint firstItem="X0R-2x-9cH" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" id="hEt-Mp-WQk"/>
+                            <constraint firstAttribute="centerX" secondItem="X0R-2x-9cH" secondAttribute="centerX" id="isO-7E-rPu"/>
+                            <constraint firstAttribute="centerX" secondItem="CvR-kJ-0nI" secondAttribute="centerX" id="lA0-I0-xFO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="X0R-2x-9cH" secondAttribute="trailing" constant="-16" id="n2G-QU-KUv"/>
                             <constraint firstAttribute="centerX" secondItem="YcA-hr-4UR" secondAttribute="centerX" id="nKx-MZ-4WX"/>
                             <constraint firstAttribute="centerX" secondItem="SHd-XW-fNZ" secondAttribute="centerX" id="nO6-vE-vFl"/>
+                            <constraint firstItem="X0R-2x-9cH" firstAttribute="top" secondItem="eWN-zu-fdK" secondAttribute="bottom" constant="20" id="oUB-q0-Iwd"/>
                             <constraint firstAttribute="bottomMargin" secondItem="YcA-hr-4UR" secondAttribute="bottom" id="u1x-6b-COn"/>
                             <constraint firstItem="YcA-hr-4UR" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" constant="-16" id="ug9-dU-PEf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CvR-kJ-0nI" secondAttribute="trailing" id="us3-V8-Drc"/>
                             <constraint firstAttribute="centerX" secondItem="YcA-hr-4UR" secondAttribute="centerX" id="z2m-Em-jHj"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="n2G-QU-KUv"/>
                                 <exclude reference="u1x-6b-COn"/>
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Nearby Events" id="qKa-0P-jZP">
+                    <navigationItem key="navigationItem" id="qKa-0P-jZP">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="VNx-b2-gfF">
                             <connections>
                                 <action selector="logout" destination="0pn-ur-yjM" id="Fao-lv-i1j"/>
@@ -405,6 +430,7 @@
                         <outlet property="checkinButton" destination="YcA-hr-4UR" id="8Ke-vv-suu"/>
                         <outlet property="collectionView" destination="gAn-y3-J5G" id="OLx-Ii-ouD"/>
                         <outlet property="pickerView" destination="SHd-XW-fNZ" id="Pqb-v1-jeV"/>
+                        <outlet property="previewLabel" destination="X0R-2x-9cH" id="qRo-bi-vgL"/>
                         <segue destination="2nM-hW-Tui" kind="presentation" identifier="display-login-popover" modalPresentationStyle="fullScreen" id="jdc-gb-I5S"/>
                         <segue destination="XjT-mA-gxf" kind="show" identifier="display-event-album" id="7DF-eU-AoJ"/>
                     </connections>

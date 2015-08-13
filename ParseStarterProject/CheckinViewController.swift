@@ -21,6 +21,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	@IBOutlet var pickerView : UIPickerView?
 	@IBOutlet var collectionView : UICollectionView?
 	
+	@IBOutlet weak var previewLabel : UILabel!
     @IBOutlet weak var checkinButton: UIButton!
 	@IBOutlet weak var activityIndicator : UIActivityIndicatorView!
 	
@@ -47,6 +48,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		super.viewDidLoad()
 
+		UIApplication.sharedApplication().statusBarHidden = false
+		
 		// Login validation
 		if (PFUser.currentUser() == nil) {
 			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
@@ -81,7 +84,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		super.viewWillAppear(animated)
 
-        // self.pickerView?.hidden = true
+        self.pickerView?.hidden = true
+		self.activityIndicator.startAnimating()
+		self.activityIndicator.hidden = false
 
         //TODO: refactor
         var checkinTime = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_time") as? NSDate
@@ -192,6 +197,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		}
 		
 		self.collectionView?.reloadData()
+		
+		let event = self.events[Int(row)]
+		if (event.photos?.count > 0) {
+			self.previewLabel.hidden = false
+			self.previewLabel.text = "Previewing '"+event.name!+"'.."
+		} else {
+			self.previewLabel.hidden = true
+		}
 	}
 	
 	
@@ -394,6 +407,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 			self.events = content
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				
+				self.activityIndicator.stopAnimating()
+				self.activityIndicator.hidden = true
+				
 				self.pickerView?.reloadAllComponents()
 				self.collectionView?.reloadData()
                 self.pickerView?.hidden = false

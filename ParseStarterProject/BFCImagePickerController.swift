@@ -397,7 +397,14 @@ class BFCImagePickerController: UINavigationController {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-    
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		
+		UIApplication.sharedApplication().statusBarHidden = false
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -412,8 +419,10 @@ class BFCImagePickerController: UINavigationController {
     override func pushViewController(viewController: UIViewController, animated: Bool) {
         var wrapperVC = BFCContentWrapperViewController(viewController)
         super.pushViewController(wrapperVC, animated: animated)
-        
-        self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.doneButton)
+		
+
+		self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "onDoneClicked")
+        // self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.doneButton)
         
         if self.viewControllers.count == 1 && self.topViewController?.navigationItem.leftBarButtonItem == nil {
             self.topViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel,
@@ -438,7 +447,7 @@ class BFCImagePickerController: UINavigationController {
         //set affordance for image selected
         if let asset = notification.object as? BFCAsset {
             selectedAssets.append(asset)
-            self.doneButton.setTitle(rightButtonTitle + "(\(selectedAssets.count))", forState: UIControlState.Normal)
+            self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
             self.doneButton.sizeToFit()
         }
     }
@@ -448,7 +457,7 @@ class BFCImagePickerController: UINavigationController {
         
         if let asset = notification.object as? BFCAsset {
             selectedAssets.removeAtIndex(find(selectedAssets, asset)!)
-            self.doneButton.setTitle(rightButtonTitle + "(\(selectedAssets.count))", forState: UIControlState.Normal)
+            self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
             self.doneButton.sizeToFit()
             
             if selectedAssets.count <= 0 {
