@@ -119,6 +119,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             }
     
     
+    
     override func viewDidLayoutSubviews() {
         
         let cropDimension = cropOpeningView.bounds.size.minDimension()
@@ -172,6 +173,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 
             }
         })
+    //------------------UPLOAD CANVAS----------------------------------------
         
         if NetworkAvailable.networkConnection() == true {
 

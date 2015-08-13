@@ -35,7 +35,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var albumview: AlbumViewController?
     // Disable navigation
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     var address2:String = ""
     
@@ -52,11 +52,12 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     
     func displayAlert(title:String, error: String) {
-        
-        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
     }
     
     func displayAlertLogout(title:String, error: String) {
@@ -78,9 +79,11 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     }
     
     func displayNoInternetAlert() {
-        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
-        self.presentViewController(alert, animated: true, completion: nil)
-        println("no internet")
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+            self.presentViewController(alert, animated: true, completion: nil)
+            println("no internet")
+        })
     }
     
     func getUserAddress() {
@@ -144,15 +147,13 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     self.displayNoInternetAlert()
                     println("could not generate location - no internet")
-                    self.address2 = ""
+                    self.address2 = "No location found"
                     self.addressField.text = self.address2
                 }
             })
         }
     }
     
-
-    // Add event to event class
     @IBAction func createEvent(sender: AnyObject) {
         
         var error = ""
@@ -165,12 +166,12 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         
         if (locationDisabled == true) {
             error = "Please enable location access in the iOS settings for Backflip."
-        } else if (eventName == "" || address == "") {
+        } else if (eventName == "") {// || address == "") {
             error = "Please enter an event name."
         } else if (count(eventName) < 2) {
             error = "Please enter a valid event name."
         }
-            
+        
         if error == "Please enter an event name." {
             
             noNameAlert()
@@ -185,7 +186,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                 query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                     if error != nil {
                         println(error)
-
+                        
                     } else {
                         
                         var event = PFObject(className: "Event")
@@ -202,11 +203,14 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                 let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
                                 
                                 self.userGeoPoint = userGeoPoint
+								
                             }
                         })
-                        
+						
+						
+						
                         // Put querying into a background thread
-                        dispatch_async(dispatch_get_global_queue(self.qos,0)) {
+						dispatch_async(dispatch_get_global_queue(self.qos,0), { () -> Void in
                             event["geoLocation"] = self.userGeoPoint
                             
                             //Check if event already exists
@@ -228,7 +232,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     // Store the relation
                                     let relation = event.relationForKey("attendees")
                                     relation.addObject(PFUser.currentUser()!)
-
+                                    
                                     self.eventID = event.objectId
                                     event.save()
                                     
@@ -253,20 +257,20 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     
                                     // When successful, segue to events page
                                     dispatch_async(dispatch_get_main_queue()) {
-                                    
+                                        
                                         println("Saved")
                                         self.albumview?.eventId = self.eventID
                                         //self.performSegueWithIdentifier("eventsPage", sender: self)
-                                        self.tabBarController?.selectedIndex = 2
+                                        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
                                     }
-
+                                    
                                 } else {
-                                    self.displayAlert("This event already exists", error: "Join an existing event below")
+                                    self.displayAlert("This event already exists", error: "Join an existing event on the Nearby Events screen.")
                                 }
                             } else {
                                 self.displayNoInternetAlert()
                             }
-                        }
+                        })
                     }
                 })
             } else {
@@ -274,6 +278,10 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+
+//    // Add event to event class
+//    @IBAction func createEvent(sender: AnyObject) {
+//            }
     
     // Function to grey out create event button unless more than 2 characters are entered
     func textCheck (sender: AnyObject) {
@@ -282,7 +290,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         var resp : UIResponder = textField
         while !(resp is UIAlertController) { resp = resp.nextResponder()!}
         let alert = resp as! UIAlertController
-        (alert.actions.first as! UIAlertAction).enabled = (count(textField.text) > 1)
+        (alert.actions[1] as! UIAlertAction).enabled = (count(textField.text) > 1)
         
     }
     
@@ -303,7 +311,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Function displaying alert when creating an event that has no content in it
     func noNameAlert() {
         var alert = UIAlertController(title: "Please enter an event name.", message: "Event name:", preferredStyle: UIAlertControllerStyle.Alert)
-
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Create", style: UIAlertActionStyle.Default, handler: { (action) in
             
                 // Content that is in textfield when create is pressed
@@ -392,7 +401,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                         
                                         println("Saved")
                                         self.albumview?.eventId = self.eventID
-                                        self.performSegueWithIdentifier("eventsPage", sender: self)
+                                        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
                                     }
                                 } else {
                                     self.displayAlert("This event already exists", error: "Please try again")
@@ -413,16 +422,21 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         }
         
         // Add the cancel button, as well as disable interaction with create button until 2 or more characters present in textfield
-        (alert.actions.first as! UIAlertAction).enabled = false
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        (alert.actions[1] as! UIAlertAction).enabled = false
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func pastEventsButton(sender: AnyObject) {
         //self.performSegueWithIdentifier("eventsPage", sender: self)
-        tabBarController?.selectedIndex = 2
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+	
+	
+	@IBAction func cancelButton()
+	{
+		self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+	}
+	
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -432,28 +446,28 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         
         //--------------- Draw UI ---------------
         
-        // Hide UI controller item
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
-        navBar.backgroundColor =  UIColor.whiteColor()
-        
-        // Set the Nav bar properties
-        let navBarItem = UINavigationItem()
-        navBarItem.title = "Create An Event"
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-        navBar.items = [navBarItem]
-        
-        // Left nav bar button item
-        let logout = UIButton.buttonWithType(.System) as! UIButton
-        logout.setImage(logoutButton, forState: .Normal)
-        logout.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        logout.frame = CGRectMake(-10, 20, 72, 44)
-        logout.addTarget(self, action: "settingButton:", forControlEvents: .TouchUpInside)
-        navBar.addSubview(logout)
-        
-        self.view.addSubview(navBar)
+//        // Hide UI controller item
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//        
+//        // Nav Bar positioning
+//        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 64))
+//        navBar.backgroundColor =  UIColor.whiteColor()
+//        
+//        // Set the Nav bar properties
+//        let navBarItem = UINavigationItem()
+//        navBarItem.title = "Create An Event"
+//        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
+//        navBar.items = [navBarItem]
+//        
+//        // Left nav bar button item
+//        let logout = UIButton.buttonWithType(.System) as! UIButton
+//        logout.setImage(logoutButton, forState: .Normal)
+//        logout.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+//        logout.frame = CGRectMake(-10, 20, 72, 44)
+//        logout.addTarget(self, action: "settingButton:", forControlEvents: .TouchUpInside)
+//        navBar.addSubview(logout)
+//        
+//        self.view.addSubview(navBar)
         
         //Add delegate, this prevents users from typing text over 25 characters
         eventName.delegate = self

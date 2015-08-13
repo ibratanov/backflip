@@ -10,9 +10,26 @@ import Parse
 import DigitsKit
 import Foundation
 
+<<<<<<< HEAD
+=======
+class CheckinViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITabBarControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+{
+    
+    @IBOutlet var noEventLabel: UILabel!
+    
+    @IBAction func logoutButton(sender: AnyObject) {
+        displayAlertLogout("Would you like to log out?", error: "")
+    }
+    @IBAction func createNew(sender: AnyObject) {
+        
+        tabBarController?.selectedIndex = 1
+    }
+    
+    var logoutButton = UIImage(named: "settings-icon") as UIImage!
+>>>>>>> 40535dfac97811ddd223c0e213506ef78333cd63
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITabBarControllerDelegate, UICollectionViewDataSource
 {
 	var events : [Event] = []
 	
@@ -21,7 +38,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	@IBOutlet var pickerView : UIPickerView?
 	@IBOutlet var collectionView : UICollectionView?
 	
-    @IBOutlet weak var checkinButton: UIButton!
 	
 	//-------------------------------------
 	// MARK: View Delegate
@@ -30,28 +46,49 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func loadView()
 	{
 		super.loadView()
-
-		// backflip-logo-white
-		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
 		
-		
-//		viewController.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yourimage.png"]];
-//		UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yourimage2.jpg"]]];
-//		viewController.navigationItem.rightBarButtonItem = item;
-		
-		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
+		self.navigationController?.tabBarController?.delegate = self
 	}
 	
 	override func viewDidLoad()
 	{
-		super.viewDidLoad()
-
+<<<<<<< HEAD
 		// Login validation
 		if (PFUser.currentUser() == nil) {
 			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
 			self.performSegueWithIdentifier("display-login-popover", sender: self)
 			return
+=======
+		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
+		if (selectedIndex == 1) {
+			
+			let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
+			dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+				
+                var testCamera = CustomCamera()
+                
+                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){                    
+                    testCamera.delegate = self
+                    testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+                    testCamera.sourceType = .Camera
+                    testCamera.allowsEditing = false
+                    testCamera.showsCameraControls = false
+                    testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+                    testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+                    
+                    self.presentViewController(testCamera, animated: true, completion: nil)
+                }
+                //self.performSegueWithIdentifier("display-camera", sender: self)
+			})
+			
+			return false
+>>>>>>> 40535dfac97811ddd223c0e213506ef78333cd63
 		}
+		
+		
+		// Fetch data
+		fetchData()
+		
 		
 		// check for current event
 		let config = PFConfig.currentConfig()
@@ -69,22 +106,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		if (expiryTime != nil && NSDate().isGreaterThanDate(expiryTime!)) {
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
-			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_name")
 		} else if (checkinTime != nil) {
 			self.performSegueWithIdentifier("display-event-album", sender: self)
-			return
 		}
+	
 	}
 	
-	override func viewWillAppear(animated: Bool)
-	{
-		super.viewWillAppear(animated)
-        self.pickerView?.hidden = true
-		// Data!!1!!!
-		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
-            fetchData()
-        }
-	}
 	
 	//-------------------------------------
 	// MARK: UICollectioViewDataSource
@@ -98,7 +125,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
 		let index = self.pickerView?.selectedRowInComponent(0)
-		if (self.events.count == 0 || self.events.count < index) {
+		if (index == 0 || self.events.count < index) {
 			return 0
 		}
 		
@@ -151,12 +178,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!
 	{
-        //self.pickerView?.selectRow(0, inComponent: 0, animated: true)
-        if (self.events.count < 1) {
-            checkinButton.enabled = false
-			return "No nearby events"
+		if (self.events.count < 1) {
+			return "No nearby events avaliable"
 		} else {
-            checkinButton.enabled = true
 			return self.events[row].name!
 		}
 	}
@@ -181,40 +205,19 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
 		if (selectedIndex == 1) {
 			
-			let currentEvent: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
-			if (currentEvent == nil) {
-				var alertController = UIAlertController(title: "Take Photo", message: "Please check in or create an event before uploading photos.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: { (alertAction) -> Void in
-					println("Should switch back to 'current event' tab")
-				}))
+			let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
+			dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+//				self.performSegueWithIdentifier("display-camera", sender: self)
 				
-				self.presentViewController(alertController, animated: true, completion: nil)
-			} else {
-			
-				//let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
-				//dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+				var testCamera = CustomCamera()
+				
+				if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+					println("Button capture")
 					
-					var testCamera = CustomCamera()
-					if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-						
-						let index = self.pickerView?.selectedRowInComponent(0)
-						let event = self.events[Int(index!)]
-						testCamera.event = event
-						
-						testCamera.delegate = self
-						testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-						testCamera.sourceType = .Camera
-						testCamera.allowsEditing = false
-						testCamera.showsCameraControls = false
-						testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-						testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-						
-						self.presentViewController(testCamera, animated: true, completion: nil)
-					}
+					self.presentViewController(testCamera, animated: true, completion: nil)
+				}
 				
-				//})
-			}
+			})
 			
 			return false
 		}
@@ -360,7 +363,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 						event.photos?.append(image)
 					}
 					
-					self.pickerView(self.pickerView!, didSelectRow: self.pickerView!.selectedRowInComponent(0), inComponent: 0)
 					self.collectionView?.reloadData()
 				})
 				
@@ -372,7 +374,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
 				self.pickerView?.reloadAllComponents()
 				self.collectionView?.reloadData()
-                self.pickerView?.hidden = false
 			})
 			
 		})
