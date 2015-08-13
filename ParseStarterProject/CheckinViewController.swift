@@ -79,7 +79,32 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func viewWillAppear(animated: Bool)
 	{
 		super.viewWillAppear(animated)
+
         self.pickerView?.hidden = true
+
+        //TODO: refactor
+        var checkinTime = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_time") as? NSDate
+        if (checkinTime == nil) {
+            return
+        }
+
+        // check for current event
+        let config = PFConfig.currentConfig()
+        var checkoutDelay = 8
+        if (config["checkout_timeout"] != nil) {
+            checkoutDelay = Int(config["checkout_timeout"] as! NSNumber)
+        }
+
+        var expiryTime = checkinTime?.addHours(Int(checkoutDelay))
+        if (expiryTime != nil && NSDate().isGreaterThanDate(expiryTime!)) {
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_name")
+        } else if (checkinTime != nil) {
+            self.performSegueWithIdentifier("display-event-album", sender: self)
+            return
+        }
+
 		// Data!!1!!!
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
             fetchData()
