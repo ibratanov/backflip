@@ -178,7 +178,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 			//self.uploadImages(imageView.image!)
 			
 			picker.dismissViewControllerAnimated(true, completion: nil)
-            
+            UIApplication.sharedApplication().statusBarHidden = false
+
             
 			
 		}
@@ -191,6 +192,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 			self.flashButton.hidden = false
 			self.setLastPhoto()
 			self.updateThumbnail()
+            UIApplication.sharedApplication().statusBarHidden = false
+
 			
 		}
 		
@@ -210,7 +213,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		self.presentViewController(previewViewController, animated: true, completion: nil);
 		setLastPhoto()
 		updateThumbnail()
-		
+        UIApplication.sharedApplication().statusBarHidden = false
+
 	}
 	
 	
