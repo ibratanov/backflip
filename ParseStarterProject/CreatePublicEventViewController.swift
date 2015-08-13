@@ -255,6 +255,11 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     
                                     attendance.save()
                                     
+                                    // Store event details in user defaults
+                                    NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+                                    NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+                                    NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
+
                                     // When successful, segue to events page
                                     dispatch_async(dispatch_get_main_queue()) {
                                         
@@ -396,6 +401,11 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     
                                     attendance.save()
                                     
+                                    // Store event details in user defaults
+                                    NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+                                    NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+                                    NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
+
                                     // Upon successful add to DB, segue to the events page
                                     dispatch_async(dispatch_get_main_queue()) {
                                         
