@@ -420,7 +420,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="New Event" id="axG-Fn-fQa">
                             <connections>
-                                <segue destination="nKw-HA-0z8" kind="presentation" modalPresentationStyle="fullScreen" id="RKT-Z5-PZR"/>
+                                <segue destination="nKw-HA-0z8" kind="presentation" identifier="create-event" modalPresentationStyle="fullScreen" id="RKT-Z5-PZR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

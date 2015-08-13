@@ -344,14 +344,36 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	}
 	
 	
+	override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool
+	{
+		if (identifier == "create-event" && NetworkAvailable.networkConnection() == false) {
+			
+			var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to create an event.")
+			self.presentViewController(alert, animated: true, completion: nil)
+			
+			return false
+		}
+		
+		return true
+	}
+	
+	
 	//-------------------------------------
 	// MARK: Data
 	//-------------------------------------
 	
 	func fetchData()
 	{
+		if (NetworkAvailable.networkConnection() == false) {
+			return
+		}
+		
 		let config = PFConfig.currentConfig()
 		PFGeoPoint.geoPointForCurrentLocationInBackground({ (geopoint, error) -> Void in
+			
+			if (NetworkAvailable.networkConnection() == false) {
+				return
+			}
 			
 			let query = PFQuery(className: "Event")
 			let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10 kms
