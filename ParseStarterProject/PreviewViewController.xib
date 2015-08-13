@@ -130,30 +130,24 @@
                         <constraint firstAttribute="width" secondItem="R6s-Gn-XjS" secondAttribute="height" multiplier="1:1" id="5yH-Qu-g3b"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CQH-Wd-mah">
-                    <rect key="frame" x="167" y="41" width="40" height="40"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SWIPE TO ADD FILTERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRy-H2-5PF">
+                    <rect key="frame" x="8" y="50" width="359" height="21"/>
                     <animations/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="bct-hP-9PF"/>
-                    </constraints>
-                    <state key="normal" image="swipe">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="UPf-Gi-Swq" firstAttribute="leading" secondItem="CQH-Wd-mah" secondAttribute="trailing" constant="-207" id="017-Qs-LGz"/>
                 <constraint firstAttribute="trailing" secondItem="INT-Kr-uVX" secondAttribute="trailing" id="8Hf-yV-Ksw"/>
-                <constraint firstItem="UPf-Gi-Swq" firstAttribute="leading" secondItem="CQH-Wd-mah" secondAttribute="trailing" constant="-207" id="Eac-tI-DCa"/>
                 <constraint firstAttribute="right" secondItem="UPf-Gi-Swq" secondAttribute="right" id="Fu2-eg-mwm"/>
                 <constraint firstItem="Qr6-XV-dtf" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="Gmu-Xm-vEJ"/>
                 <constraint firstAttribute="bottom" secondItem="INT-Kr-uVX" secondAttribute="bottom" id="Gv2-5m-Lrb"/>
                 <constraint firstAttribute="trailing" secondItem="BBL-aR-gtQ" secondAttribute="trailing" id="IWV-Xt-4Oi"/>
                 <constraint firstItem="R6s-Gn-XjS" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="N1d-oS-snV"/>
                 <constraint firstAttribute="bottom" secondItem="ys9-ZT-loK" secondAttribute="bottom" id="O6V-5t-m8Q"/>
-                <constraint firstItem="CQH-Wd-mah" firstAttribute="centerX" secondItem="UPf-Gi-Swq" secondAttribute="centerX" id="Opi-OX-itc"/>
                 <constraint firstItem="Hm8-KL-gkI" firstAttribute="centerX" secondItem="BBL-aR-gtQ" secondAttribute="centerX" id="RA5-tq-8Fq"/>
                 <constraint firstAttribute="centerX" secondItem="Qr6-XV-dtf" secondAttribute="centerX" id="Sma-42-UI0"/>
                 <constraint firstItem="BBL-aR-gtQ" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="TMV-c4-CBU"/>
@@ -165,7 +159,6 @@
                 <constraint firstAttribute="bottom" secondItem="Qr6-XV-dtf" secondAttribute="bottom" id="ilZ-3H-GxU"/>
                 <constraint firstAttribute="trailing" secondItem="R6s-Gn-XjS" secondAttribute="trailing" id="jtN-Tl-YP7"/>
                 <constraint firstAttribute="trailing" secondItem="R6s-Gn-XjS" secondAttribute="trailing" id="sNA-i5-oHh"/>
-                <constraint firstItem="CQH-Wd-mah" firstAttribute="top" secondItem="UPf-Gi-Swq" secondAttribute="bottom" constant="-80" id="tiP-Rh-Qwz"/>
                 <constraint firstAttribute="right" secondItem="ys9-ZT-loK" secondAttribute="right" id="uwS-dO-CG0"/>
                 <constraint firstItem="UPf-Gi-Swq" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="w7Q-Aw-3LH"/>
                 <constraint firstItem="ys9-ZT-loK" firstAttribute="top" secondItem="GLu-AF-z8l" secondAttribute="top" id="wb8-vO-aQU"/>
@@ -180,7 +173,6 @@
     <resources>
         <image name="close-icon-large" width="28" height="27"/>
         <image name="next-icon-large" width="15" height="26"/>
-        <image name="swipe" width="192" height="192"/>
         <image name="unable-phone@3x.png" width="333" height="531"/>
     </resources>
 </document>
