@@ -21,6 +21,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	@IBOutlet var pickerView : UIPickerView?
 	@IBOutlet var collectionView : UICollectionView?
 	
+    @IBOutlet weak var checkinButton: UIButton!
 	
 	//-------------------------------------
 	// MARK: View Delegate
@@ -29,7 +30,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func loadView()
 	{
 		super.loadView()
-		
+
 		// backflip-logo-white
 		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
 		
@@ -44,7 +45,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
-		
+
 		// Login validation
 		if (PFUser.currentUser() == nil) {
 			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
@@ -78,14 +79,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func viewWillAppear(animated: Bool)
 	{
 		super.viewWillAppear(animated)
-	
+        self.pickerView?.hidden = true
 		// Data!!1!!!
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
-			fetchData()
-		}
+            fetchData()
+        }
 	}
-	
-	
 	
 	//-------------------------------------
 	// MARK: UICollectioViewDataSource
@@ -99,7 +98,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
 		let index = self.pickerView?.selectedRowInComponent(0)
-		if (index == 0 || self.events.count < index) {
+		if (self.events.count == 0 || self.events.count < index) {
 			return 0
 		}
 		
@@ -152,9 +151,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!
 	{
-		if (self.events.count < 1) {
-			return "No nearby events avaliable"
+        //self.pickerView?.selectRow(0, inComponent: 0, animated: true)
+        if (self.events.count < 1) {
+            checkinButton.enabled = false
+			return "No nearby events"
 		} else {
+            checkinButton.enabled = true
 			return self.events[row].name!
 		}
 	}
@@ -370,6 +372,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
 				self.pickerView?.reloadAllComponents()
 				self.collectionView?.reloadData()
+                self.pickerView?.hidden = false
 			})
 			
 		})

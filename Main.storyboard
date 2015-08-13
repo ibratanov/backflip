@@ -394,6 +394,7 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="checkinButton" destination="YcA-hr-4UR" id="8Ke-vv-suu"/>
                         <outlet property="collectionView" destination="gAn-y3-J5G" id="OLx-Ii-ouD"/>
                         <outlet property="pickerView" destination="SHd-XW-fNZ" id="Pqb-v1-jeV"/>
                         <segue destination="2nM-hW-Tui" kind="presentation" identifier="display-login-popover" modalPresentationStyle="fullScreen" id="jdc-gb-I5S"/>
