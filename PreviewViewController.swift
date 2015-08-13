@@ -348,8 +348,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent())
         //ciImage = outputImage
-        
-        self.imageView.image = UIImage(CGImage: cgImage)
+        var ImageC = UIImage(CGImage: cgImage)
+
+        imageView.image = resizeImage(ImageC!, newHeight: 2134, newWidth: 2134) //imageToCrop!
 
 
     }
