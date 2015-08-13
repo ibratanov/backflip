@@ -154,6 +154,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        imageToCrop = nil
         
     }
     

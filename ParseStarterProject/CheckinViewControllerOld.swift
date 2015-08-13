@@ -96,9 +96,9 @@ class CheckinViewControllerOld: UIViewController, CLLocationManagerDelegate, UIP
 		self.navigationController?.tabBarController?.delegate = self
 	}
 	
-	
-	
-	
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
 	
 	
 	
@@ -151,6 +151,7 @@ class CheckinViewControllerOld: UIViewController, CLLocationManagerDelegate, UIP
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        UIApplication.sharedApplication().statusBarHidden = false
 		
 		if (PFUser.currentUser() == nil) {
 			self.performSegueWithIdentifier("display-login-popover", sender: self)
@@ -329,7 +330,8 @@ class CheckinViewControllerOld: UIViewController, CLLocationManagerDelegate, UIP
     override func viewDidAppear(animated: Bool) {
         //self.pickerInfo.reloadAllComponents()
         //locationManager.stopUpdatingLocation()
-        
+        UIApplication.sharedApplication().statusBarHidden = false
+
         
 
         if NetworkAvailable.networkConnection() == true {
