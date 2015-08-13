@@ -49,6 +49,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		UIApplication.sharedApplication().statusBarHidden = true
         
 		
 		//NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
