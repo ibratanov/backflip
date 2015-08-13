@@ -237,7 +237,6 @@
 		049AA6D81B73DB84003888CE /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		04BAF8431B7BE0DC00973468 /* BFTabBarControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFTabBarControllerDelegate.swift; sourceTree = "<group>"; };
-		04CF88521B730771000E83B4 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		04F41BF21B7507BB001AB8DA /* EventAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAlbumViewController.swift; sourceTree = "<group>"; };
 		04F41BF51B754B2E001AB8DA /* BFCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -602,7 +601,6 @@
 			children = (
 				049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */,
 				049AA6441B73D9E0003888CE /* Vendor */,
-				04CF88521B730771000E83B4 /* Reveal.framework */,
 				502348F31B34F5FF00614FE6 /* FBSDKCoreKit.framework */,
 				502348F41B34F5FF00614FE6 /* FBSDKLoginKit.framework */,
 				502348F51B34F5FF00614FE6 /* FBSDKMessengerShareKit.framework */,
@@ -1062,8 +1060,6 @@
 					"\"UIKit\"",
 					"-ObjC",
 					"-lz",
-					"-framework",
-					Reveal,
 				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = Backflip;
@@ -1119,8 +1115,6 @@
 					"\"UIKit\"",
 					"-ObjC",
 					"-lz",
-					"-framework",
-					Reveal,
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_NAME = Backflip;
