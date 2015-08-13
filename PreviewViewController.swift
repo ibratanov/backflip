@@ -92,14 +92,18 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         var screenWidth = UIScreen.mainScreen().bounds.width
         
-        let scale = screenWidth / image.size.width
-        let screenHeightI = image.size.height * scale
+        var scale = screenWidth / image.size.width
+        var screenHeightI = image.size.height * scale
         UIGraphicsBeginImageContext(CGSizeMake(screenWidth, screenHeightI))
+
         image.drawInRect(CGRectMake(0, 0, screenWidth, screenHeightI))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+
+        var newImage2 = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeightI));
+        newImage2.image=image
+            UIGraphicsEndImageContext()
         
-        return newImage
+        return newImage2.image!
         
 //        if(image.size.width > image.size.height){
 //            
