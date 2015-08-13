@@ -344,15 +344,23 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 
         let orientation = UIDevice.currentDevice().orientation
             t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
+<<<<<<< HEAD
         
         //t = CGAffineTransformMakeRotation(0)
         
+=======
+     
+>>>>>>> 83df997419115a0ad79787408a81f9fe2977e704
         outputImage = outputImage.imageByApplyingTransform(t)
         
         let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent())
         //ciImage = outputImage
         var ImageC = UIImage(CGImage: cgImage)
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 83df997419115a0ad79787408a81f9fe2977e704
         imageView.image = resizeImage(ImageC!, newHeight: 2134, newWidth: 2134) //imageToCrop!
 
 
