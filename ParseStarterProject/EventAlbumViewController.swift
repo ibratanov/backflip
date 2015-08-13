@@ -47,6 +47,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	override func viewDidAppear(animated: Bool)
 	{
 		super.viewDidAppear(animated)
+		
+		UIApplication.sharedApplication().statusBarHidden = false
 	}
 	
 	override func viewDidLoad()

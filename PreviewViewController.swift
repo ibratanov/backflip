@@ -146,7 +146,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
-        
+		
+		UIApplication.sharedApplication().statusBarHidden = false
         imageView.image = resizeImage(imageToCrop!, newHeight: 2134, newWidth: 2134) //imageToCrop!
         
         imageLoad.hidden=true

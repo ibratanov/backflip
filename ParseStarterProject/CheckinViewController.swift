@@ -48,6 +48,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		super.viewDidLoad()
 
+		UIApplication.sharedApplication().statusBarHidden = false
+		
 		// Login validation
 		if (PFUser.currentUser() == nil) {
 			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
