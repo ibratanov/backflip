@@ -31,7 +31,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		super.loadView()
 
-		// backflip-logo-white
+		// Backflip Logo
 		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
 		
 		
