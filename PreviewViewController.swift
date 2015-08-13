@@ -326,7 +326,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     //----------Filters
     
     func showOriginalImage() {
-        self.imageView.image = imageToCrop
+        self.imageView.image = resizeImage(imageToCrop!, newHeight: 2134, newWidth: 2134) //imageToCrop!
     }
     
     func outputImage() {
@@ -339,21 +339,15 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         var t: CGAffineTransform!
 
         let orientation = UIDevice.currentDevice().orientation
-        if orientation == UIDeviceOrientation.Portrait {
             t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
-        } else if orientation == UIDeviceOrientation.PortraitUpsideDown {
-            t = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
-        } else if (orientation == UIDeviceOrientation.LandscapeRight) {
-            t = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        } else {
-            t = CGAffineTransformMakeRotation(0)
-        }
+     
         outputImage = outputImage.imageByApplyingTransform(t)
         
         let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent())
         //ciImage = outputImage
-        
-        self.imageView.image = UIImage(CGImage: cgImage)
+        var ImageC = UIImage(CGImage: cgImage)
+    
+        imageView.image = resizeImage(ImageC!, newHeight: 2134, newWidth: 2134) //imageToCrop!
 
 
     }
