@@ -144,19 +144,14 @@ class EventTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        
-        
     }
 
     // Table View delegate methods
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return self.eventObjs.count
         return self.eventWithPhotos.count
     }
 
@@ -179,10 +174,7 @@ class EventTableViewController: UITableViewController {
         
         tableCell.eventName.text = evName
         tableCell.eventLocation.text = evVenue
-        
 
-        
-        
         if listPhotos == nil || listPhotos.count == 0 {
             tableCell.imageOne.image = UIImage ()
             tableCell.imageOne.backgroundColor = underlineColor
@@ -196,17 +188,15 @@ class EventTableViewController: UITableViewController {
             tableCell.imageFour.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
             
+            // 320px size of iPhone 4 and 5, 6 on display zoom, thus only show 4 pictures if 320
             if width > 320 {
                 tableCell.imageFive.image = UIImage ()
                 tableCell.imageFive.backgroundColor = underlineColor
                 tableCell.imageFive.clipsToBounds = true
             } else {
-                
                 tableCell.imageFive.removeFromSuperview()
-                
             }
 
-			
             return tableCell
         }
         
@@ -222,18 +212,17 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
+            
             if width > 320 {
-			tableCell.imageFive.image = UIImage ()
-			tableCell.imageFive.backgroundColor = underlineColor
-            tableCell.imageFive.clipsToBounds = true
+                tableCell.imageFive.image = UIImage ()
+                tableCell.imageFive.backgroundColor = underlineColor
+                tableCell.imageFive.clipsToBounds = true
             } else {
-                
                 tableCell.imageFive.removeFromSuperview()
-                
             }
-
+            
             tableCell.imageOne.loadInBackground()
-
+            
             return tableCell
         }
         
@@ -249,14 +238,13 @@ class EventTableViewController: UITableViewController {
             
             tableCell.imageFour.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
+            
             if width > 320 {
-			tableCell.imageFive.image = UIImage ()
-			tableCell.imageFive.backgroundColor = underlineColor
-            tableCell.imageFive.clipsToBounds = true
+                tableCell.imageFive.image = UIImage ()
+                tableCell.imageFive.backgroundColor = underlineColor
+                tableCell.imageFive.clipsToBounds = true
             } else {
-                
                 tableCell.imageFive.removeFromSuperview()
-                
             }
 
             tableCell.imageOne.loadInBackground()
@@ -279,14 +267,13 @@ class EventTableViewController: UITableViewController {
             tableCell.imageFour.image = UIImage ()
             tableCell.imageFour.backgroundColor = underlineColor
             if width > 320 {
-			tableCell.imageFive.image = UIImage ()
-			tableCell.imageFive.backgroundColor = underlineColor
-            tableCell.imageFive.clipsToBounds = true
-            }      else {
-            
-            tableCell.imageFive.removeFromSuperview()
-            
+                tableCell.imageFive.image = UIImage ()
+                tableCell.imageFive.backgroundColor = underlineColor
+                tableCell.imageFive.clipsToBounds = true
+            } else {
+                tableCell.imageFive.removeFromSuperview()
             }
+            
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
@@ -309,40 +296,23 @@ class EventTableViewController: UITableViewController {
             tableCell.imageFour.file = imageData4
             
             if width > 320 {
-			var imageData5 = listPhotos[4]
-			tableCell.imageFive.file = imageData5
-            tableCell.imageFive.clipsToBounds = true
-            tableCell.imageFive.loadInBackground()
+                var imageData5 = listPhotos[4]
+                tableCell.imageFive.file = imageData5
+                tableCell.imageFive.clipsToBounds = true
+                tableCell.imageFive.loadInBackground()
             } else {
-                
                 tableCell.imageFive.removeFromSuperview()
-                
             }
-            
-            
+
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
             tableCell.imageThree.loadInBackground()
             tableCell.imageFour.loadInBackground()
-
-
+            
             return tableCell
         }
-        
         return tableCell
     }
-    
-   // override func viewDidLayoutSubviews()
-//    {
-//        super.viewDidLayoutSubviews()
-//        
-//        let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
-//        
-//        flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
-//        flow.itemSize = CGSizeMake((self.view.frame.size.width/3)-1, (self.view.frame.size.width/3)-1);
-//        flow.minimumInteritemSpacing = 1;
-//        flow.minimumLineSpacing = 1;
-//    }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
