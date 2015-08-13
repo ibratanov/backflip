@@ -255,6 +255,11 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     
                                     attendance.save()
                                     
+                                    // Store event details in user defaults
+                                    NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+                                    NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+                                    NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
+
                                     // When successful, segue to events page
                                     dispatch_async(dispatch_get_main_queue()) {
                                         
@@ -311,8 +316,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Function displaying alert when creating an event that has no content in it
     func noNameAlert() {
         var alert = UIAlertController(title: "Please enter an event name.", message: "Event name:", preferredStyle: UIAlertControllerStyle.Alert)
-		
-		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Create", style: UIAlertActionStyle.Default, handler: { (action) in
             
                 // Content that is in textfield when create is pressed
@@ -396,6 +401,11 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     
                                     attendance.save()
                                     
+                                    // Store event details in user defaults
+                                    NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+                                    NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+                                    NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
+
                                     // Upon successful add to DB, segue to the events page
                                     dispatch_async(dispatch_get_main_queue()) {
                                         
@@ -435,6 +445,15 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
 	@IBAction func cancelButton()
 	{
 		self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+	}
+	
+	
+	override func loadView()
+	{
+		super.loadView()
+		
+		// Backflip Logo
+		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
 	}
 	
     override func viewDidLoad() {

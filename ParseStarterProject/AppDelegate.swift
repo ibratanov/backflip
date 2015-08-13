@@ -413,8 +413,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
 		#endif
 		
-		PFConfig.getConfigInBackgroundWithBlock { (config, error) -> Void in
-			self.setupApperance()
+		
+		if (NetworkAvailable.networkConnection()) {
+			PFConfig.getConfigInBackgroundWithBlock { (config, error) -> Void in
+				self.setupApperance()
+			}
 		}
 	}
 	

@@ -49,6 +49,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		UIApplication.sharedApplication().statusBarHidden = true
+        
 		
 		//NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
 		
@@ -166,17 +168,20 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		//picker.dismissViewControllerAnimated(true, completion: nil)
 		
 		//Retake and crop options------------------------------------------------------------------------
-		let previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
+		var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
 		previewViewController.cropCompletionHandler = {
 			imageViewContent = $0!
 			previewViewController.dismissViewControllerAnimated(true, completion: nil)
 
 			
-			let imageView = UIImageView(image: imageViewContent)
+			var imageView = UIImageView(image: imageViewContent)
 			imageView.contentMode = UIViewContentMode.ScaleAspectFit
-			self.uploadImages(imageView.image!)
+			//self.uploadImages(imageView.image!)
 			
 			picker.dismissViewControllerAnimated(true, completion: nil)
+            UIApplication.sharedApplication().statusBarHidden = false
+
+            
 			
 		}
 		previewViewController.cancelCompletionHandler = {
@@ -188,6 +193,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 			self.flashButton.hidden = false
 			self.setLastPhoto()
 			self.updateThumbnail()
+            UIApplication.sharedApplication().statusBarHidden = false
+
 			
 		}
 		
@@ -207,7 +214,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		self.presentViewController(previewViewController, animated: true, completion: nil);
 		setLastPhoto()
 		updateThumbnail()
-		
+        UIApplication.sharedApplication().statusBarHidden = false
+
 	}
 	
 	
@@ -215,7 +223,9 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		
 		picker.dismissViewControllerAnimated(true, completion: nil)
 	}
-	
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
 	
 	func cropToSquare(image originalImage: UIImage) -> UIImage {
 		// Get image and measurements
@@ -505,7 +515,9 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		                            eventObject.saveInBackground()
 		
 		                            //issue
-		                            photoObject.saveInBackground()
+		                            photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
+										NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
+									})
 		                        })
 		
 		                    } else {
@@ -540,7 +552,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		var scalingRatio:CGFloat = maxWidth/maxHeight
 		
 		//lowest quality rating with acceptable encoding
-		var quality:CGFloat = 0.3
+		var quality:CGFloat = 0.7
 		
 		if (imageHeight > maxHeight || imageWidth > maxWidth){
 			if(imageRatio < scalingRatio){

@@ -21,6 +21,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	@IBOutlet var pickerView : UIPickerView?
 	@IBOutlet var collectionView : UICollectionView?
 	
+	@IBOutlet weak var previewLabel : UILabel!
+    @IBOutlet weak var checkinButton: UIButton!
+	@IBOutlet weak var activityIndicator : UIActivityIndicatorView!
 	
 	//-------------------------------------
 	// MARK: View Delegate
@@ -29,8 +32,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func loadView()
 	{
 		super.loadView()
-		
-		// backflip-logo-white
+
+		// Backflip Logo
 		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
 		
 		
@@ -44,6 +47,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+
+		UIApplication.sharedApplication().statusBarHidden = false
 		
 		// Login validation
 		if (PFUser.currentUser() == nil) {
@@ -78,14 +83,37 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func viewWillAppear(animated: Bool)
 	{
 		super.viewWillAppear(animated)
-	
+
+        self.pickerView?.hidden = true
+		self.activityIndicator.startAnimating()
+		self.activityIndicator.hidden = false
+
+        //TODO: refactor
+        var checkinTime = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_time") as? NSDate
+        if (checkinTime != nil) {
+            // check for current event
+            let config = PFConfig.currentConfig()
+            var checkoutDelay = 8
+            if (config["checkout_timeout"] != nil) {
+                checkoutDelay = Int(config["checkout_timeout"] as! NSNumber)
+            }
+            
+            var expiryTime = checkinTime?.addHours(Int(checkoutDelay))
+            if (expiryTime != nil && NSDate().isGreaterThanDate(expiryTime!)) {
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_name")
+            } else if (checkinTime != nil) {
+                self.performSegueWithIdentifier("display-event-album", sender: self)
+                return
+            }
+        }
+
 		// Data!!1!!!
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
-			fetchData()
-		}
+            fetchData()
+        }
 	}
-	
-	
 	
 	//-------------------------------------
 	// MARK: UICollectioViewDataSource
@@ -99,13 +127,17 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
 		let index = self.pickerView?.selectedRowInComponent(0)
-		if (index == 0 || self.events.count < index) {
+		if (self.events.count == 0 || self.events.count < index) {
 			return 0
 		}
 		
 		let event = self.events[Int(index!)]
 		if (event.photos?.count > 0) {
-			return event.photos!.count
+			if (event.photos?.count > 10) {
+				return 10
+			} else {
+				return event.photos!.count
+			}
 		}
 		
 		return 0
@@ -152,9 +184,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!
 	{
-		if (self.events.count < 1) {
-			return "No nearby events avaliable"
+        //self.pickerView?.selectRow(0, inComponent: 0, animated: true)
+        if (self.events.count < 1) {
+            checkinButton.enabled = false
+			return "No nearby events"
 		} else {
+            checkinButton.enabled = true
 			return self.events[row].name!
 		}
 	}
@@ -166,6 +201,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		}
 		
 		self.collectionView?.reloadData()
+		
+//		let event = self.events[Int(row)]
+//		if (event.photos?.count > 0) {
+//			self.previewLabel.hidden = false
+//			self.previewLabel.text = "Previewing '"+event.name!+"'"
+//		} else {
+//			self.previewLabel.hidden = true
+//		}
 	}
 	
 	
@@ -181,7 +224,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 			let currentEvent: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
 			if (currentEvent == nil) {
-				var alertController = UIAlertController(title: "Take Photo", message: "Please checkin or create an event before upload photos", preferredStyle: .Alert)
+				var alertController = UIAlertController(title: "Take Photo", message: "Please check in or create an event before uploading photos.", preferredStyle: .Alert)
 				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: { (alertAction) -> Void in
 					println("Should switch back to 'current event' tab")
@@ -305,14 +348,36 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	}
 	
 	
+	override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool
+	{
+		if (identifier == "create-event" && NetworkAvailable.networkConnection() == false) {
+			
+			var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to create an event.")
+			self.presentViewController(alert, animated: true, completion: nil)
+			
+			return false
+		}
+		
+		return true
+	}
+	
+	
 	//-------------------------------------
 	// MARK: Data
 	//-------------------------------------
 	
 	func fetchData()
 	{
+		if (NetworkAvailable.networkConnection() == false) {
+			return
+		}
+		
 		let config = PFConfig.currentConfig()
 		PFGeoPoint.geoPointForCurrentLocationInBackground({ (geopoint, error) -> Void in
+			
+			if (NetworkAvailable.networkConnection() == false) {
+				return
+			}
 			
 			let query = PFQuery(className: "Event")
 			let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10 kms
@@ -368,8 +433,13 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 			self.events = content
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				
+				self.activityIndicator.stopAnimating()
+				self.activityIndicator.hidden = true
+				
 				self.pickerView?.reloadAllComponents()
 				self.collectionView?.reloadData()
+                self.pickerView?.hidden = false
 			})
 			
 		})

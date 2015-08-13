@@ -47,6 +47,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	override func viewDidAppear(animated: Bool)
 	{
 		super.viewDidAppear(animated)
+		
+		UIApplication.sharedApplication().statusBarHidden = false
 	}
 	
 	override func viewDidLoad()
@@ -65,7 +67,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		updateData()
 		
-		
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "photoUploaded", name: "camera-photo-uploaded", object: nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
 		
 		refreshControl.tintColor = UIColor(red:0,  green:0.588,  blue:0.533, alpha:1)
@@ -91,6 +93,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	}
 	
 	
+	
 	//-------------------------------------
 	// MARK: Actions
 	//-------------------------------------
@@ -111,6 +114,12 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 
 		}))
 		self.presentViewController(alertController, animated: true, completion: nil)
+	}
+	
+	
+	func photoUploaded()
+	{
+		self.updateData()
 	}
 	
 	
