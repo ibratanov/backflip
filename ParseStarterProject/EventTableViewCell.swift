@@ -18,6 +18,8 @@ class EventTableViewCell: UITableViewCell,UIGestureRecognizerDelegate {
     @IBOutlet var imageThree: PFImageView!
     
     @IBOutlet var imageFour: PFImageView!
+	
+	@IBOutlet var imageFive: PFImageView!
     
     @IBOutlet var eventName: UILabel!
     
