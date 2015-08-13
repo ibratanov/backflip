@@ -506,7 +506,9 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		                            eventObject.saveInBackground()
 		
 		                            //issue
-		                            photoObject.saveInBackground()
+		                            photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
+										NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
+									})
 		                        })
 		
 		                    } else {

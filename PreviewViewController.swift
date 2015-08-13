@@ -53,9 +53,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func prefersStatusBarHidden() -> Bool {
-        return true
+        return false
     }
-    
+	
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
     }
@@ -248,7 +248,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                                 eventObject.saveInBackground()
                                 
                                 //issue
-                                photoObject.saveInBackground()
+                                photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
+									NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
+								})
                             })
                         } else {
                             self.displayNoInternetAlert()

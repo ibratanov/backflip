@@ -264,7 +264,7 @@ class EventTableViewController: UITableViewController {
             return tableCell
         }
         
-        if listPhotos.count >= 4 {
+        if listPhotos.count > 4 {
             var imageData1 = listPhotos[0]
             tableCell.imageOne!.file = imageData1
             
@@ -279,6 +279,7 @@ class EventTableViewController: UITableViewController {
 			
 			var imageData5 = listPhotos[4]
 			tableCell.imageFive!.file = imageData5
+			
             
             tableCell.imageOne.loadInBackground()
             tableCell.imageTwo.loadInBackground()
