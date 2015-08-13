@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rap-jL-BIw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A178w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rap-jL-BIw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -335,6 +335,11 @@
                                     <outlet property="dataSource" destination="0pn-ur-yjM" id="SCu-UC-30v"/>
                                 </connections>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2cd-NU-S4J">
+                                <rect key="frame" x="169" y="283" width="37" height="37"/>
+                                <animations/>
+                                <color key="color" red="0.066666666669999999" green="0.52156862749999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                             <pickerView contentMode="scaleToFill" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHd-XW-fNZ">
                                 <rect key="frame" x="27" y="221" width="320" height="162"/>
                                 <animations/>
@@ -357,6 +362,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="YcA-hr-4UR" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" constant="-16" id="1cO-PC-Tq1"/>
+                            <constraint firstAttribute="centerX" secondItem="2cd-NU-S4J" secondAttribute="centerX" id="7Za-HP-Cb5"/>
                             <constraint firstItem="gAn-y3-J5G" firstAttribute="top" secondItem="eWN-zu-fdK" secondAttribute="bottom" constant="43" id="8UK-GV-nUA"/>
                             <constraint firstAttribute="centerY" secondItem="SHd-XW-fNZ" secondAttribute="centerY" id="A8b-EI-u3M"/>
                             <constraint firstAttribute="centerY" secondItem="SHd-XW-fNZ" secondAttribute="centerY" id="AlF-WZ-XnJ"/>
@@ -364,6 +370,7 @@
                             <constraint firstAttribute="centerX" secondItem="SHd-XW-fNZ" secondAttribute="centerX" id="EE0-Ni-VKP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YcA-hr-4UR" secondAttribute="trailing" constant="-16" id="ESS-4A-X6F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gAn-y3-J5G" secondAttribute="trailing" constant="-16" id="KW9-NW-7wF"/>
+                            <constraint firstAttribute="centerY" secondItem="2cd-NU-S4J" secondAttribute="centerY" id="LGE-lB-vvA"/>
                             <constraint firstItem="gmX-KS-lez" firstAttribute="top" secondItem="YcA-hr-4UR" secondAttribute="bottom" id="S2T-E2-Vbz"/>
                             <constraint firstItem="gmX-KS-lez" firstAttribute="top" secondItem="YcA-hr-4UR" secondAttribute="bottom" id="Vha-6e-GA8"/>
                             <constraint firstItem="gAn-y3-J5G" firstAttribute="leading" secondItem="khm-Ur-J0r" secondAttribute="leadingMargin" constant="-16" id="WiI-Oh-0op"/>
@@ -394,6 +401,7 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="2cd-NU-S4J" id="Cos-3O-spd"/>
                         <outlet property="checkinButton" destination="YcA-hr-4UR" id="8Ke-vv-suu"/>
                         <outlet property="collectionView" destination="gAn-y3-J5G" id="OLx-Ii-ouD"/>
                         <outlet property="pickerView" destination="SHd-XW-fNZ" id="Pqb-v1-jeV"/>

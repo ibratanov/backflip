@@ -22,6 +22,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	@IBOutlet var collectionView : UICollectionView?
 	
     @IBOutlet weak var checkinButton: UIButton!
+	@IBOutlet weak var activityIndicator : UIActivityIndicatorView!
 	
 	//-------------------------------------
 	// MARK: View Delegate
@@ -80,7 +81,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		super.viewWillAppear(animated)
 
-        self.pickerView?.hidden = true
+        // self.pickerView?.hidden = true
 
         //TODO: refactor
         var checkinTime = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_time") as? NSDate
