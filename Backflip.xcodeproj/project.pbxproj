@@ -1062,8 +1062,6 @@
 					"\"UIKit\"",
 					"-ObjC",
 					"-lz",
-					"-framework",
-					Reveal,
 				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = Backflip;
@@ -1119,8 +1117,6 @@
 					"\"UIKit\"",
 					"-ObjC",
 					"-lz",
-					"-framework",
-					Reveal,
 				);
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_NAME = Backflip;
