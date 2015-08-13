@@ -49,6 +49,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+        
 		
 		//NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
 		
