@@ -32,11 +32,16 @@ class EventTableViewController: UITableViewController {
     var logoutButton = UIImage(named: "settings-icon") as UIImage!
     var addButton = UIImage(named: "add-icon") as UIImage!
     
+    let spinner: UIActivityIndicatorView = UIActivityIndicatorView()
     let qos = (Int(QOS_CLASS_BACKGROUND.value))
+    
+
+
     
 //    Enable UI Navigation Item
     override func viewWillAppear(animated: Bool)
 	{
+
         self.tableView.reloadData()
         if NetworkAvailable.networkConnection() == true {
             updateEvents()
@@ -49,6 +54,8 @@ class EventTableViewController: UITableViewController {
 		
 		super.viewDidLoad()
 		
+        self.tableView.userInteractionEnabled = true
+
 		if (PFUser.currentUser() == nil) {
 			self.performSegueWithIdentifier("display-login-popover", sender: self)
 			return
@@ -133,11 +140,6 @@ class EventTableViewController: UITableViewController {
                                     
                                 }
                             dispatch_async(dispatch_get_main_queue()) {
-                                println("PHOTOS COUNT")
-                                println(self.eventWithPhotos.count)
-                                println("OBJS COUNT")
-                                println(self.eventObjs.count)
-
                                 self.tableView.reloadData()
                             }
                         }
@@ -332,8 +334,8 @@ class EventTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
             if NetworkAvailable.networkConnection() == true {
-                self.tableView.beginUpdates()
                 
+                self.tableView.beginUpdates()
                 // Remove from Parse DB
                 let current = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
                 let eventObject = eventObjs[indexPath.row]
@@ -344,28 +346,54 @@ class EventTableViewController: UITableViewController {
                 self.eventWithPhotos.removeValueForKey(eventObject.objectId!)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 self.tableView.reloadData()
-                
                 self.tableView.endUpdates()
+                
             } else {
                 displayNoInternetAlert()
             }
         }
+        
 
     }
+
     
     
     func eventDelete (event : PFObject ) {
         
         let eventTitle = event["eventName"] as! String
         let eventID = event.objectId! as String
-        
+
         if NetworkAvailable.networkConnection() == true {
+           
+            
+            // Set the spinner
+            dispatch_async(dispatch_get_main_queue()) {
+                println(self.view.bounds.width)
+                self.spinner.frame = CGRectMake(self.view.bounds.width/2 - 75, self.view.bounds.height/2 - 75, 150, 150)
+                //self.spinner.center = self.view.center
+                self.spinner.hidden = false
+                self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+                self.spinner.color = UIColor.blackColor()
+                self.view.addSubview(self.spinner)
+                self.view.bringSubviewToFront(self.spinner)
+                self.spinner.startAnimating()
+                self.tableView.userInteractionEnabled = false
+            }
+            
+
             // Delete event info from the users DB entry
             let query = PFUser.query()
             query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                 object!.removeObject(event, forKey:"savedEvents")
                 object!.removeObject(eventTitle, forKey: "savedEventNames")
-                object!.saveInBackground()
+                object!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+                    if (success) {
+                        
+                        // Re-enable interaction, stop the spinner once parse update is done
+                        self.spinner.stopAnimating()
+                        self.tableView.userInteractionEnabled = true
+                    }
+                }
             })
             
             // Delete event attendence row in Event Attendance class
@@ -378,6 +406,7 @@ class EventTableViewController: UITableViewController {
                 (objects: [AnyObject]?, error: NSError?) -> Void in
                 objects?.first?.deleteInBackground()
             }
+
         } else {
             displayNoInternetAlert()
         }
