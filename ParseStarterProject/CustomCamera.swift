@@ -167,15 +167,15 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		//picker.dismissViewControllerAnimated(true, completion: nil)
 		
 		//Retake and crop options------------------------------------------------------------------------
-		let previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
+		var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
 		previewViewController.cropCompletionHandler = {
 			imageViewContent = $0!
 			previewViewController.dismissViewControllerAnimated(true, completion: nil)
 
 			
-			let imageView = UIImageView(image: imageViewContent)
+			var imageView = UIImageView(image: imageViewContent)
 			imageView.contentMode = UIViewContentMode.ScaleAspectFit
-			self.uploadImages(imageView.image!)
+			//self.uploadImages(imageView.image!)
 			
 			picker.dismissViewControllerAnimated(true, completion: nil)
 			
