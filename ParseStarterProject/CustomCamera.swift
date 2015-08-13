@@ -178,6 +178,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 			//self.uploadImages(imageView.image!)
 			
 			picker.dismissViewControllerAnimated(true, completion: nil)
+            
+            
 			
 		}
 		previewViewController.cancelCompletionHandler = {
@@ -216,7 +218,9 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		
 		picker.dismissViewControllerAnimated(true, completion: nil)
 	}
-	
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
 	
 	func cropToSquare(image originalImage: UIImage) -> UIImage {
 		// Get image and measurements

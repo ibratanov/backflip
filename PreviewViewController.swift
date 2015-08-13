@@ -53,7 +53,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func prefersStatusBarHidden() -> Bool {
-        return true
+        return false
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -154,6 +154,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        imageToCrop = nil
         
     }
     

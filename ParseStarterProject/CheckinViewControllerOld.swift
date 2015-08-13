@@ -96,9 +96,9 @@ class CheckinViewControllerOld: UIViewController, CLLocationManagerDelegate, UIP
 		self.navigationController?.tabBarController?.delegate = self
 	}
 	
-	
-	
-	
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
 	
 	
 	
