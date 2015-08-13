@@ -133,7 +133,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		let event = self.events[Int(index!)]
 		if (event.photos?.count > 0) {
-			return event.photos!.count
+			if (event.photos?.count > 10) {
+				return 10
+			} else {
+				return event.photos!.count
+			}
 		}
 		
 		return 0
