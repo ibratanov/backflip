@@ -96,7 +96,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 							NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
 							self.overlayView!.frame = self.frame
 							
-							self.eventNameLabel?.text = self.event?.name
+							self.eventNameLabel?.text = "Uploading to: \(self.event!.name!)"
 							self.cameraOverlayView = self.overlayView
 							
 							self.overlayView = nil
