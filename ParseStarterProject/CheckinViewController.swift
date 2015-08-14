@@ -161,6 +161,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			cell.imageView.loadInBackground()
 		}
 		
+		// cell.addGestureRecognizer(self.doubleTapGesture!)
 		cell.layer.shouldRasterize = true
 		cell.layer.rasterizationScale = UIScreen.mainScreen().scale
 		
@@ -323,14 +324,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func processDoubleTap(sender: UITapGestureRecognizer)
 	{
-		if (sender.state == .Ended) {
+		//if (sender.state == .Ended) {
 			let touchPoint = sender.locationInView(self.collectionView)
-			let hitDetect = CGRectContainsPoint(self.collectionView!.frame, touchPoint)
+			let hitDetect = CGRectContainsPoint(self.collectionView!.bounds, touchPoint)
 			if (hitDetect == true) {
 				checkIn()
 			}
 			
-		}
+		//}
 	}
 	
 	

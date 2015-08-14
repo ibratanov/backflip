@@ -129,7 +129,15 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 					var event = Event()
 					event.objectId = params["eventId"] as? String
 					event.name = params["eventTitle"] as? String
-					self.checkIn(event)
+					
+					var alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
+					alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+					alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
+						self.checkIn(event)
+					}))
+					
+					let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+					window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
 				}
             }
         })
@@ -343,6 +351,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	
 	func checkIn(event: Event)
 	{
+		 // You have been invited to join <EVENT>, would you like to check in?
+		
 		// subscribe to event push notifications
 		let currentInstallation = PFInstallation.currentInstallation()
 		currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
