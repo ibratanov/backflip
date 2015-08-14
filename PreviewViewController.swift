@@ -86,58 +86,47 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 //        scrollView.addGestureRecognizer(rightSwipe)
     }
     
-     func resizeImage(image: UIImage) -> UIImage {
-        
-        var screenHeight = UIScreen.mainScreen().bounds.height
-        
-        var screenWidth = UIScreen.mainScreen().bounds.width
-        
-        var scale = screenWidth / image.size.width
-        var screenHeightI = image.size.height * scale
-        UIGraphicsBeginImageContext(CGSizeMake(screenWidth, screenHeightI))
 
-        image.drawInRect(CGRectMake(0, 0, screenWidth, screenHeightI))
-        var newImage = UIGraphicsGetImageFromCurrentImageContext()
-
-        var newImage2 = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeightI));
-        newImage2.image=image
+    //, newHeight: CGFloat, newWidth: CGFloat
+    func resizeImage(image: UIImage) -> UIImage {
+        let newHeight:CGFloat = 3264
+        //UIScreen.mainScreen().bounds.height
+        
+        let newWidth:CGFloat = 3264
+        //UIScreen.mainScreen().bounds.width
+        
+        if(image.size.width > image.size.height){
+            
+            let scale = newHeight / image.size.height
+            let newWidthI = image.size.width * scale
+            UIGraphicsBeginImageContext(CGSizeMake(newWidthI, newHeight))
+            image.drawInRect(CGRectMake(0, 0, newWidthI, newHeight))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-        
-        return newImage2.image!
-        
-//        if(image.size.width > image.size.height){
-//            
-//        let scale = screenHeight / image.size.height
-//        let screenWidthI = image.size.width * scale
-//        UIGraphicsBeginImageContext(CGSizeMake(screenWidthI, screenHeight))
-//        image.drawInRect(CGRectMake(0, 0, screenWidthI, screenHeight))
-//        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-//            UIGraphicsEndImageContext()
-//            return newImage
-//        } else if(image.size.height > image.size.width){
-//            
-//            let scale = screenWidth / image.size.width
-//            let screenHeightI = image.size.height * scale
-//            UIGraphicsBeginImageContext(CGSizeMake(screenWidth, screenHeightI))
-//            image.drawInRect(CGRectMake(0, 0, screenWidth, screenHeightI))
-//            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-//            UIGraphicsEndImageContext()
-//
-//            return newImage
-//            
-//        }else{
-//            
-//            let scale = screenHeight / image.size.height
-//            let screenWidthI = image.size.width * scale
-//            UIGraphicsBeginImageContext(CGSizeMake(screenWidthI, screenHeight))
-//            image.drawInRect(CGRectMake(0, 0, screenWidthI, screenHeight))
-//            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-//            UIGraphicsEndImageContext()
-//            return newImage
-//            
-//        }
-            }
-    
+            return newImage
+        } else if(image.size.height > image.size.width){
+            
+            let scale = newWidth / image.size.width
+            let newHeightI = image.size.height * scale
+            UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeightI))
+            image.drawInRect(CGRectMake(0, 0, newWidth, newHeightI))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            return newImage
+            
+        }else{
+            
+            let scale = newHeight / image.size.height
+            let newWidthI = image.size.width * scale
+            UIGraphicsBeginImageContext(CGSizeMake(newWidthI, newHeight))
+            image.drawInRect(CGRectMake(0, 0, newWidthI, newHeight))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage
+            
+        }
+    }
     
     
     override func viewDidLayoutSubviews() {
