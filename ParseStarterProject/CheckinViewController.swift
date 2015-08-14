@@ -202,13 +202,13 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		self.collectionView?.reloadData()
 		
-		let event = self.events[Int(row)]
-		if (event.photos?.count > 0) {
-			self.previewLabel.hidden = false
-			self.previewLabel.text = "Previewing '"+event.name!+"'"
-		} else {
-			self.previewLabel.hidden = true
-		}
+//		let event = self.events[Int(row)]
+//		if (event.photos?.count > 0) {
+//			self.previewLabel.hidden = false
+//			self.previewLabel.text = "Previewing '"+event.name!+"'"
+//		} else {
+//			self.previewLabel.hidden = true
+//		}
 	}
 	
 	
