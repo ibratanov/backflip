@@ -419,6 +419,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				event.photos = [Image]()
 				
 				let photoQuery : PFQuery = object.relationForKey("photos").query()!
+				photoQuery.whereKey("flagged", notEqualTo: true)
+				photoQuery.whereKey("blocked", notEqualTo: true)
 				photoQuery.findObjectsInBackgroundWithBlock({ (photos, error) -> Void in
 					
 					for photo in photos as! [PFObject] {

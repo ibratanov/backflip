@@ -23,4 +23,11 @@ class AlbumViewCell: UICollectionViewCell {
 		self.imageView.image = nil
 		self.imageView.tintColor = nil
 	}
+	
+	override func layoutSubviews()
+	{
+		super.layoutSubviews()
+		
+		self.imageView.frame = self.bounds
+	}
 }
