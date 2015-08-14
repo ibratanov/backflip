@@ -124,101 +124,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                 // This can now count as a referred session even if this isn't
                 // the first time a user has opened the app (aka an "Install").
                 //Custom logic goes here --> dependent on access to cloud services
-                if((params["referringOut"])  != nil){
-                    //image ID
-                    let eventIIden: AnyObject? = params["eventId"]
-                    //let albumIIden: AnyObject? = params["albumId"]
-                    let eventTitle: AnyObject? = params["eventTitle"]
-                    
-                    // Load information from parse db
-                    var queryEvent = PFQuery(className: "Event")
-                    queryEvent.limit = 1
-                    queryEvent.whereKey("objectId", equalTo: eventIIden!)
-
-                    var qArray = queryEvent.findObjects()
-                    
-                    if (qArray != nil && qArray!.count != 0) {
-                    //self.checkinToEvent(object)
-                        var objectE = qArray!.first as! PFObject
-                        
-                        let query = PFUser.query()
-                        
-                        if (PFUser.currentUser() != nil) {
-                            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-                                
-                                if error != nil {
-                                    println(error)
-                                }
-                                else
-                                {
-                                    
-                                    // Subscribe user to the channel of the event for push notifications
-                                    let currentInstallation = PFInstallation.currentInstallation()
-                                    currentInstallation.addUniqueObject(("a" + objectE.objectId!) , forKey: "channels")
-                                    //currentInstallation.saveInBackground()
-                                    currentInstallation.save()
-                                    
-                                    // Store the relation
-                                    let relation = objectE.relationForKey("attendees")
-                                    relation.addObject(object!)
-                                    
-                                    objectE.save()
-                                    
-                                    // TODO: Check for existing event_list for eventName
-                                    var listEvents = object!.objectForKey("savedEventNames") as! [String]
-                                    if contains(listEvents, objectE["eventName"] as! String)
-                                    {
-                                        print("Event already in list")
-                                    }
-                                    else
-                                    {
-                                        // Add the event to the User object
-                                        object?.addUniqueObject(objectE, forKey:"savedEvents")
-                                        object?.addUniqueObject(objectE["eventName"] as! String, forKey:"savedEventNames")
-                                        
-                                        //object!.saveInBackground()
-                                        object!.save()
-                                        
-                                        
-                                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                        var attendance = PFObject(className:"EventAttendance")
-                                        attendance["eventID"] = objectE.objectId
-                                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                                        attendance["photosLikedID"] = []
-                                        attendance["photosLiked"] = []
-                                        attendance["photosUploadedID"] = []
-                                        attendance["photosUploaded"] = []
-                                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                                        attendance.setObject(objectE, forKey: "event")
-                                        
-                                        //attendance.saveInBackground()
-                                        attendance.save()
-                                        
-                                        println("Saved")
-                                        let alert = UIAlertView()
-                                        alert.title = "Event Invitation"
-                                        alert.message = "You have been added to \(eventTitle!)"
-                                        alert.addButtonWithTitle("Ok")
-                                        
-                                        alert.delegate = self
-                                        alert.show()
-                                    }
-                                }
-                            })
-                        } else {
-                            self.displayUnsuccessfulInvite()
-                        }
-// Part of SMS Invite functionality - temporarily disabled
-//                    var topView = UIApplication.sharedApplication().keyWindow?.rootViewController
-//                    while (topView?.presentedViewController != nil){
-//                        topView = topView!.presentedViewController
-//                    }
-//
-//                    topView?.presentViewController(self.inviteViewController, animated: true, completion: nil)
-                    } else {
-                        println("Event \(eventIIden!) not found in database")
-                    }
-                }
+                if((params["referringOut"])  != nil) {
+					
+					var event = Event()
+					event.objectId = params["eventId"] as? String
+					event.name = params["eventTitle"] as? String
+					self.checkIn(event)
+				}
             }
         })
         return true
@@ -390,6 +302,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			NSForegroundColorAttributeName: UIColor.whiteColor()
 		]
 		
+		var barButtonAppearance = UIBarButtonItem.appearance()
+		barButtonAppearance.tintColor = UIColor.whiteColor()
+		
 		var tabBarAppearance = UITabBar.appearance()
 		tabBarAppearance.tintColor = (config["appearance_tabbar_tint"] != nil) ? UIColor(rgba:config["appearance_tabbar_tint"] as! String) :  UIColor.whiteColor()
 		tabBarAppearance.barTintColor = (config["appearance_tabbar_bartint"] != nil) ? UIColor(rgba:config["appearance_tabbar_bartint"] as! String) :  UIColor.blackColor()
@@ -419,6 +334,44 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 				self.setupApperance()
 			}
 		}
+	}
+	
+	
+	//--------------------------------------
+	// MARK: Parse
+	//--------------------------------------
+	
+	func checkIn(event: Event)
+	{
+		// subscribe to event push notifications
+		let currentInstallation = PFInstallation.currentInstallation()
+		currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
+		currentInstallation.saveInBackground()
+		
+		// Create & save attendance object
+		var attendance = PFObject(className:"EventAttendance")
+		attendance["eventID"] = event.objectId
+		attendance["attendeeID"] = PFUser.currentUser()?.objectId
+		attendance["photosLikedID"] = []
+		attendance["photosLiked"] = []
+		attendance["photosUploadedID"] = []
+		attendance["photosUploaded"] = []
+		attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
+		
+		attendance.saveInBackground()
+		
+		var account = PFUser.currentUser()
+		account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
+		account?.addUniqueObject(event.name!, forKey: "savedEventNames")
+		account?.saveInBackground()
+		
+		
+		// Store event details in user defaults
+		NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+		NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+		NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
+		
 	}
 	
 }

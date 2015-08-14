@@ -401,8 +401,11 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 					photo.saveInBackground()
 					
 					
-					let imageIndex = find(self.collectionContent, image)
+					var imageIndex = find(self.collectionContent, image)
 					self.collectionContent.removeAtIndex(imageIndex!)
+					
+					imageIndex = find(self.orginalContent, image)
+					self.orginalContent.removeAtIndex(imageIndex!)
 					
 					dispatch_async(dispatch_get_main_queue(), {
 						self.photoBrowser?.reloadData()
