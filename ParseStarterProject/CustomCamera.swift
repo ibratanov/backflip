@@ -199,8 +199,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		}
 		
 		if self.cameraDevice == UIImagePickerControllerCameraDevice.Front{
+            imageViewContent = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)!
 			previewViewController.imageToCrop = imageViewContent
-			//UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
 			//UIImage(CGImage: initialImage.CGImage, scale: 1, orientation: initialImage.imageOrientation)!
 		}
 		else{
