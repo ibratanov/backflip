@@ -49,6 +49,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+        
+        checkinButton.layer.cornerRadius = 5
 
 		UIApplication.sharedApplication().statusBarHidden = false
 		
