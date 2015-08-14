@@ -26,6 +26,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	let frame: CGRect = UIScreen.mainScreen().bounds
 	@IBOutlet weak var thumbnailButton: UIButton!
 	@IBOutlet weak var flashButton: UIButton!
+	@IBOutlet var eventNameLabel : UILabel?
 	var overlayView: UIView?
 	var zoomImage = (camera: true, display: true)
 	var newMedia: Bool = true
@@ -50,7 +51,8 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		super.viewDidLoad()
 		
 		UIApplication.sharedApplication().statusBarHidden = true
-        
+		
+		self.eventNameLabel?.text = self.eventTitle
 		
 		//NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
 		
@@ -94,6 +96,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 							NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
 							self.overlayView!.frame = self.frame
 							
+							self.eventNameLabel?.text = self.event?.name
 							self.cameraOverlayView = self.overlayView
 							
 							self.overlayView = nil
