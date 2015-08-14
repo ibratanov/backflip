@@ -15,8 +15,10 @@ import Foundation
 class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
 	var events : [Event] = []
+	var doubleTapGesture : UITapGestureRecognizer?
 	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
+
 	
 	@IBOutlet var pickerView : UIPickerView?
 	@IBOutlet var collectionView : UICollectionView?
@@ -36,10 +38,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		// Backflip Logo
 		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
 		
-		
-//		viewController.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yourimage.png"]];
-//		UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yourimage2.jpg"]]];
-//		viewController.navigationItem.rightBarButtonItem = item;
+		self.doubleTapGesture = UITapGestureRecognizer(target: self, action: "processDoubleTap:")
+		self.doubleTapGesture?.delaysTouchesBegan = true
+		self.doubleTapGesture?.numberOfTapsRequired = 2
+		self.view.addGestureRecognizer(self.doubleTapGesture!)
 		
 		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
 	}
@@ -133,10 +135,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		let event = self.events[Int(index!)]
 		if (event.photos?.count > 0) {
-			if (event.photos?.count > 10) {
-				return 10
+			if (event.photos?.count > 5) {
+				return 6
 			} else {
-				return event.photos!.count
+				return 1 + event.photos!.count
 			}
 		}
 		
@@ -150,7 +152,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		let index = self.pickerView?.selectedRowInComponent(0)
 		let event = self.events[Int(index!)]
 		
-		if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
+		if ((1 + indexPath.row) == self.collectionView(collectionView, numberOfItemsInSection: 0)) {
+			cell.imageView.image = UIImage(named: "check-in-screen-double-tap")
+			
+		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
 			let photo = event.photos![indexPath.row]
 			cell.imageView.file = photo.thumbnail
 			cell.imageView.loadInBackground()
@@ -201,14 +206,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		}
 		
 		self.collectionView?.reloadData()
-		
-//		let event = self.events[Int(row)]
-//		if (event.photos?.count > 0) {
-//			self.previewLabel.hidden = false
-//			self.previewLabel.text = "Previewing '"+event.name!+"'"
-//		} else {
-//			self.previewLabel.hidden = true
-//		}
 	}
 	
 	
@@ -322,6 +319,18 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		
 		self.performSegueWithIdentifier("display-event-album", sender: self)
+	}
+	
+	func processDoubleTap(sender: UITapGestureRecognizer)
+	{
+		if (sender.state == .Ended) {
+			let touchPoint = sender.locationInView(self.collectionView)
+			let hitDetect = CGRectContainsPoint(self.collectionView!.frame, touchPoint)
+			if (hitDetect == true) {
+				checkIn()
+			}
+			
+		}
 	}
 	
 	
