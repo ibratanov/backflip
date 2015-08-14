@@ -41,7 +41,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     //Image attributes
     var imageToCrop: UIImage? {
         didSet {
-            if imageView != nil {
+            if imageView != nil && imageToCrop != nil {
                 imageView.image = imageToCrop!
                 imageView.setNeedsUpdateConstraints()
             }

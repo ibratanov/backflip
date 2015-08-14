@@ -203,7 +203,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		} else {
 		
 			photoBrowser = MWPhotoBrowser(delegate: self)
-			photoBrowser?.alwaysShowControls = true
+			photoBrowser?.alwaysShowControls = false
 			photoBrowser?.displayActionButton = false
 		
 			// Our own custom share button
