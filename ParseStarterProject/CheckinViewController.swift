@@ -49,6 +49,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+        
+        checkinButton.layer.cornerRadius = 5
 
 		UIApplication.sharedApplication().statusBarHidden = false
 		
@@ -161,6 +163,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			cell.imageView.loadInBackground()
 		}
 		
+		// cell.addGestureRecognizer(self.doubleTapGesture!)
 		cell.layer.shouldRasterize = true
 		cell.layer.rasterizationScale = UIScreen.mainScreen().scale
 		
@@ -323,14 +326,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func processDoubleTap(sender: UITapGestureRecognizer)
 	{
-		if (sender.state == .Ended) {
+		//if (sender.state == .Ended) {
 			let touchPoint = sender.locationInView(self.collectionView)
-			let hitDetect = CGRectContainsPoint(self.collectionView!.frame, touchPoint)
+			let hitDetect = CGRectContainsPoint(self.collectionView!.bounds, touchPoint)
 			if (hitDetect == true) {
 				checkIn()
 			}
 			
-		}
+		//}
 	}
 	
 	
@@ -419,6 +422,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				event.photos = [Image]()
 				
 				let photoQuery : PFQuery = object.relationForKey("photos").query()!
+				photoQuery.whereKey("flagged", notEqualTo: true)
+				photoQuery.whereKey("blocked", notEqualTo: true)
 				photoQuery.findObjectsInBackgroundWithBlock({ (photos, error) -> Void in
 					
 					for photo in photos as! [PFObject] {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15A178w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment version="2048" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -14,6 +14,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomCamera" customModule="Backflip" customModuleProvider="target">
             <connections>
+                <outlet property="eventNameLabel" destination="6rf-AH-Lfq" id="xSO-C3-V5I"/>
                 <outlet property="flashButton" destination="xZg-RP-CaS" id="rBA-Fh-5db"/>
                 <outlet property="overlayView" destination="37" id="42"/>
                 <outlet property="thumbnailButton" destination="wbM-nH-FAU" id="CJ7-wI-K7l"/>

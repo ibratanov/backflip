@@ -101,7 +101,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	@IBAction func leaveEvent()
 	{
-		var alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave?", preferredStyle: .Alert)
+		var alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave? This event will be moved to your event history.", preferredStyle: .Alert)
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Leave", style: .Destructive, handler: { (alertAction) -> Void in
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
@@ -198,6 +198,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			var event = Event()
 			let tabBarDelegate = BFTabBarControllerDelegate.sharedDelegate
 			event.objectId = self.eventId
+			event.name = self.eventTitle
 			tabBarDelegate.displayCamera(event)
 			
 		} else {
@@ -401,8 +402,11 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 					photo.saveInBackground()
 					
 					
-					let imageIndex = find(self.collectionContent, image)
+					var imageIndex = find(self.collectionContent, image)
 					self.collectionContent.removeAtIndex(imageIndex!)
+					
+					imageIndex = find(self.orginalContent, image)
+					self.orginalContent.removeAtIndex(imageIndex!)
 					
 					dispatch_async(dispatch_get_main_queue(), {
 						self.photoBrowser?.reloadData()
