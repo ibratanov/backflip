@@ -89,11 +89,20 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 
     //, newHeight: CGFloat, newWidth: CGFloat
     func resizeImage(image: UIImage) -> UIImage {
-        let newHeight:CGFloat = 3264
-        //UIScreen.mainScreen().bounds.height
+        var screenH =         UIScreen.mainScreen().bounds.height
+
+        var screenW =         UIScreen.mainScreen().bounds.width
+
+        let newHeight:CGFloat = screenH * 3.757
+        //let newHeight:CGFloat = referenceView.bounds.height * 3.757
+
+        print("\(newHeight)+\(screenH)")
         
-        let newWidth:CGFloat = 3264
-        //UIScreen.mainScreen().bounds.width
+       // let newWidth:CGFloat = 2134
+        let newWidth:CGFloat = screenW * 6.796
+
+        //let newWidth:CGFloat = referenceView.bounds.width * 6.796
+        print("-------\(newWidth)+\(screenW)")
         
         if(image.size.width > image.size.height){
             
