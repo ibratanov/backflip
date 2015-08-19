@@ -317,12 +317,15 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         // Add user to Event objects relation
         let eventQuery = PFQuery(className: "Event")
         eventQuery.whereKey("eventName", equalTo: event.name!)
-        var eventObj : PFObject = eventQuery.findObjects()?.first as! PFObject
-
+        eventQuery.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+        var eventObj = objects!.first as! PFObject
         let relation = eventObj.relationForKey("attendees")
         relation.addObject(PFUser.currentUser()!)
-        
         eventObj.saveInBackground()
+            
+        }
 
 		// Store event details in user defaults
 		NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
