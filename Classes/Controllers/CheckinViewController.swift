@@ -424,11 +424,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 					var event = Event()
 					event.objectId = object.objectId
 					event.name = object["eventName"] as? String
-					event.geoLocation = object["geoLocation"] as? PFGeoPoint
-					event.isLive = object["isLive"] as? Boolean
+					// event.geoLocation = object["geoLocation"] as? PFGeoPoint
+					event.live = object["isLive"] as? Boolean
 					event.startTime = object["startTime"] as? NSDate
 					event.venue = object["venue"] as? String
-					event.photos = [Image]()
+					event.photos = [Photo]()
 					
 					let photoQuery : PFQuery = object.relationForKey("photos").query()!
 					photoQuery.whereKey("flagged", notEqualTo: true)
@@ -436,14 +436,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 					photoQuery.findObjectsInBackgroundWithBlock({ (photos, error) -> Void in
 						
 						for photo in photos as! [PFObject] {
-							let image = Image(text: "Check out this photo!")
+							let image = Photo()
 							image.objectId = photo.objectId
-							image.likes = photo["upvoteCount"] as! Int
+							// image.likes = photo["upvoteCount"] as! Int
 							image.image = photo["image"] as! PFFile
 							image.thumbnail = photo["thumbnail"] as! PFFile
 							image.createdAt = photo.createdAt
-							image.likedBy = photo["usersLiked"] as! [String]
-							event.photos?.append(image)
+							// image.likedBy = photo["usersLiked"] as! [String]
+							// event.photos?.append(image)
 						}
 						
 						self.pickerView(self.pickerView!, didSelectRow: self.pickerView!.selectedRowInComponent(0), inComponent: 0)

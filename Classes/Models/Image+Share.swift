@@ -1,5 +1,5 @@
 //
-//  Album.swift
+//  Image.swift
 //  Backflip
 //
 //  Created by Jack Perry on 2015-08-05.
@@ -7,17 +7,22 @@
 //
 
 import UIKit
+import Parse
 import Foundation
 
-class Album: NSObject, UIActivityItemSource
+class ImageShare: NSObject, UIActivityItemSource
 {
 	var text : String = "";
-	var url : String = "";
+	var thumbnail : PFFile = PFFile.new()
+	var likes : Int = 0
+	var objectId : String?
+	var createdAt : NSDate? = NSDate.new()
+	var image : PFFile = PFFile.new()
+	var likedBy : [String] = []
 	
 	// Constructor
-	init(text: String, url: String) {
+	init(text: String) {
 		self.text = text;
-		self.url = url;
 	}
 	
 	
@@ -32,12 +37,12 @@ class Album: NSObject, UIActivityItemSource
 	{
 		
 		if (activityType == UIActivityTypeMail) {
-			return "<html><body>"+text+"<a href=\"\(url)\">Backflip!</a>"+"</body></html>";
+			return "<html><body>"+text+" <br />Sent via <a href=\"http://getbackflip.com/\">Backflip</a>"+"</body></html>";
 		} else if (activityType == UIActivityTypePostToTwitter) {
-			return text+"@getbackflip!";
+			return text+" via @getbackflip";
 		}
 		
-		return text+"Backflip!";
+		return text;
 	}
 	
 	
@@ -47,10 +52,10 @@ class Album: NSObject, UIActivityItemSource
 		if (activityType == UIActivityTypeMail) {
 			return "Photo on Backflip";
 		} else if (activityType == UIActivityTypePostToTwitter) {
-			return text+"@getbackflip!";
+			return text+" via @getbackflip";
 		}
 		
-		return text+"Backflip!";
+		return text;
 	}
 	
 }

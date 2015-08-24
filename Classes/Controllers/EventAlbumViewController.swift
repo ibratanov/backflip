@@ -26,8 +26,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
 	
-	var orginalContent : [Image] = []
-	var collectionContent : [Image] = []
+	var orginalContent : [Photo] = []
+	var collectionContent : [Photo] = []
 	
 	var photoBrowser : MWPhotoBrowser?
 	
