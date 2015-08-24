@@ -398,75 +398,74 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		let config = PFConfig.currentConfig()
 		PFGeoPoint.geoPointForCurrentLocationInBackground({ (geopoint, error) -> Void in
 			
-			if (NetworkAvailable.networkConnection() == false) {
-				return
-			}
-			
-			let query = PFQuery(className: "Event")
-			let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10 kms
-			query.whereKey("geoLocation", nearGeoPoint: geopoint!, withinKilometers:Double(radius))
-			query.limit = config["nearby_events_limit"] != nil ? Int(config["nearby_events_limit"]! as! NSNumber) : 60 // Default: 60 events
-			query.whereKey("isLive", equalTo:true)
-			var objects = query.findObjects()
-			if (objects == nil) {
-				return
-			}
-			
-			var account = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
-			var eventHistory: [String] = account!.objectForKey("savedEventNames") as! [String]
-			
-			
-			var content = [Event]()
-			for object in objects as! [PFObject] {
-				let pastEvent = contains(eventHistory, object["eventName"] as! String)
-				if (pastEvent) {
-					continue
+			let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+			dispatch_async(dispatch_get_global_queue(priority, 0)) {
+				let query = PFQuery(className: "Event")
+				let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10 kms
+				query.whereKey("geoLocation", nearGeoPoint: geopoint!, withinKilometers:Double(radius))
+				query.limit = config["nearby_events_limit"] != nil ? Int(config["nearby_events_limit"]! as! NSNumber) : 60 // Default: 60 events
+				query.whereKey("isLive", equalTo:true)
+				var objects = query.findObjects()
+				if (objects == nil) {
+					return
 				}
 				
-				var event = Event()
-				event.objectId = object.objectId
-				event.name = object["eventName"] as? String
-				event.geoLocation = object["geoLocation"] as? PFGeoPoint
-				event.isLive = object["isLive"] as? Boolean
-				event.startTime = object["startTime"] as? NSDate
-				event.venue = object["venue"] as? String
-				event.photos = [Image]()
+				var account = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
+				var eventHistory: [String] = account!.objectForKey("savedEventNames") as! [String]
 				
-				let photoQuery : PFQuery = object.relationForKey("photos").query()!
-				photoQuery.whereKey("flagged", notEqualTo: true)
-				photoQuery.whereKey("blocked", notEqualTo: true)
-				photoQuery.findObjectsInBackgroundWithBlock({ (photos, error) -> Void in
-					
-					for photo in photos as! [PFObject] {
-						let image = Image(text: "Check out this photo!")
-						image.objectId = photo.objectId
-						image.likes = photo["upvoteCount"] as! Int
-						image.image = photo["image"] as! PFFile
-						image.thumbnail = photo["thumbnail"] as! PFFile
-						image.createdAt = photo.createdAt
-						image.likedBy = photo["usersLiked"] as! [String]
-						event.photos?.append(image)
+				
+				var content = [Event]()
+				for object in objects as! [PFObject] {
+					let pastEvent = contains(eventHistory, object["eventName"] as! String)
+					if (pastEvent) {
+						continue
 					}
 					
-					self.pickerView(self.pickerView!, didSelectRow: self.pickerView!.selectedRowInComponent(0), inComponent: 0)
+					var event = Event()
+					event.objectId = object.objectId
+					event.name = object["eventName"] as? String
+					event.geoLocation = object["geoLocation"] as? PFGeoPoint
+					event.isLive = object["isLive"] as? Boolean
+					event.startTime = object["startTime"] as? NSDate
+					event.venue = object["venue"] as? String
+					event.photos = [Image]()
+					
+					let photoQuery : PFQuery = object.relationForKey("photos").query()!
+					photoQuery.whereKey("flagged", notEqualTo: true)
+					photoQuery.whereKey("blocked", notEqualTo: true)
+					photoQuery.findObjectsInBackgroundWithBlock({ (photos, error) -> Void in
+						
+						for photo in photos as! [PFObject] {
+							let image = Image(text: "Check out this photo!")
+							image.objectId = photo.objectId
+							image.likes = photo["upvoteCount"] as! Int
+							image.image = photo["image"] as! PFFile
+							image.thumbnail = photo["thumbnail"] as! PFFile
+							image.createdAt = photo.createdAt
+							image.likedBy = photo["usersLiked"] as! [String]
+							event.photos?.append(image)
+						}
+						
+						self.pickerView(self.pickerView!, didSelectRow: self.pickerView!.selectedRowInComponent(0), inComponent: 0)
+						self.collectionView?.reloadData()
+					})
+					
+					content.append(event)
+				}
+				
+				
+				self.events = content
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					
+					self.activityIndicator.stopAnimating()
+					self.activityIndicator.hidden = true
+					
+					self.pickerView?.reloadAllComponents()
 					self.collectionView?.reloadData()
+					self.pickerView?.hidden = false
 				})
 				
-				content.append(event)
 			}
-			
-			
-			self.events = content
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				
-				self.activityIndicator.stopAnimating()
-				self.activityIndicator.hidden = true
-				
-				self.pickerView?.reloadAllComponents()
-				self.collectionView?.reloadData()
-                self.pickerView?.hidden = false
-			})
-			
 		})
 	}
 	

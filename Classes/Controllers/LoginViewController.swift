@@ -220,145 +220,148 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
             // Initiate digits session
             digits.authenticateWithDigitsAppearance(digitsAppearance, viewController: nil, title: "Sign in to Backflip") { (session, error) in
                 if session != nil {
-                    
-                    let query = PFUser.query()
-                    query!.whereKey("phone", equalTo: session.phoneNumber)
-                    query!.limit = 1
-                    var phoneResult = query!.findObjects()
-                    
-                    
-                    // Use the UUID to check if user has logged in before via Facebook method
-                    let deviceQuery = PFUser.query()
-                    deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor.UUIDString)
-                    deviceQuery?.limit = 1
-                    
-                    
-                    // Result will have content if user has signed up already, will be nil if there is no internet
-                    if (phoneResult == nil) {
-                        self.displayNoInternetAlert()
+					
+					let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                    dispatch_async(dispatch_get_global_queue(priority, 0)) {
+                        let query = PFUser.query()
+                        query!.whereKey("phone", equalTo: session.phoneNumber)
+                        query!.limit = 1
+                        var phoneResult = query!.findObjects()
                         
-                    } else {
                         
-                        if (phoneResult!.count == 0) {
-                            deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
-                                if error == nil{
-                                    if results!.count == 0 {
-                                        
-                                        // Results == 0 means user does not exist yet
-                                        // If user proceeds with phone authentication, login with phonenumber to parse database
-                                        if error == nil {
-                                            // Initialize whatever data necessary for every user being put in database
-                                            var user = PFUser()
-                                            user.username = session.phoneNumber
-                                            user.password = session.phoneNumber
-                                            user["photosLiked"] = []
-                                            user["nearbyEvents"] = []
-                                            user["phone"] = session.phoneNumber
-                                            user["savedEvents"] = []
-                                            user["savedEventNames"] = []
-                                            user["UUID"] = UIDevice.currentDevice().identifierForVendor.UUIDString
-                                            user["blocked"] = false
-                                            user["firstUse"] = true
-                                            
-                                            //Initialize the user in the database
-                                            user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
-                                                
-                                                if error == nil {
-                                                    
-                                                    println("Signed Up")
-                                                    //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                                    self.dismissViewControllerAnimated(true, completion: nil)
-
-                                                    
-                                                } else {
-                                                    println(error)
-                                                }
-                                            }
-                                        }
-                                        
-                                    } else {
-                                        
-                                        // User had logged in with facebook. Set the phonenumber in appropriate fields, login
-                                        var oldUser = results!.first! as! PFUser
-                                        
-                                        PFUser.logInWithUsernameInBackground(oldUser.username!, password: "Password") { (user, error) -> Void in
-                                            
-                                            user!.username = session.phoneNumber
-                                            user!.password = session.phoneNumber
-                                            user!["phone"] = session.phoneNumber
-                                            
-                                            user!.saveInBackground()
-                                            
-                                            //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                            self.dismissViewControllerAnimated(true, completion: nil)
-
-                                            
-                                        }
-                                    }
-                                } else {
-                                    println(error)
-                                }
-                                
-                            }
+                        // Use the UUID to check if user has logged in before via Facebook method
+                        let deviceQuery = PFUser.query()
+                        deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor.UUIDString)
+                        deviceQuery?.limit = 1
+                        
+                        
+                        // Result will have content if user has signed up already, will be nil if there is no internet
+                        if (phoneResult == nil) {
+                            self.displayNoInternetAlert()
                             
                         } else {
                             
-                            // User has logged in before with either facebook or digits
-                            deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
-                                //User has phone number, logged in wih Digits
-                                var user = phoneResult?.first as! PFUser
-                                
-                                // Check for blocked. User must have account to be blocked. If not blocked, log in with username
-                                if (user["blocked"] as! Bool == false) {
-                                    
-                                    // Logged in with digits before, account may or may not be linked to FB. Login normally
-                                    if user.username! == session.phoneNumber {
-                                        // If user proceeds with phone authentication, login with phonenumber to parse database
-                                        PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
+                            if (phoneResult!.count == 0) {
+                                deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
+                                    if error == nil{
+                                        if results!.count == 0 {
                                             
-                                            // If older user, with no UUID, set the UUID
-                                            var uuid = user?["UUID"] as? String
-                                            
-                                            if user != nil {
+                                            // Results == 0 means user does not exist yet
+                                            // If user proceeds with phone authentication, login with phonenumber to parse database
+                                            if error == nil {
+                                                // Initialize whatever data necessary for every user being put in database
+                                                var user = PFUser()
+                                                user.username = session.phoneNumber
+                                                user.password = session.phoneNumber
+                                                user["photosLiked"] = []
+                                                user["nearbyEvents"] = []
+                                                user["phone"] = session.phoneNumber
+                                                user["savedEvents"] = []
+                                                user["savedEventNames"] = []
+                                                user["UUID"] = UIDevice.currentDevice().identifierForVendor.UUIDString
+                                                user["blocked"] = false
+                                                user["firstUse"] = true
                                                 
-                                                if uuid == nil {
+                                                //Initialize the user in the database
+                                                user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
                                                     
-                                                    user!["UUID"] = UIDevice.currentDevice().identifierForVendor.UUIDString
-                                                    user?.saveInBackground()
-                                                    
+                                                    if error == nil {
+                                                        
+                                                        println("Signed Up")
+                                                        //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                                        self.dismissViewControllerAnimated(true, completion: nil)
+    
+                                                        
+                                                    } else {
+                                                        println(error)
+                                                    }
                                                 }
+                                            }
+                                            
+                                        } else {
+                                            
+                                            // User had logged in with facebook. Set the phonenumber in appropriate fields, login
+                                            var oldUser = results!.first! as! PFUser
+                                            
+                                            PFUser.logInWithUsernameInBackground(oldUser.username!, password: "Password") { (user, error) -> Void in
                                                 
-                                                println("Log in successful")
+                                                user!.username = session.phoneNumber
+                                                user!.password = session.phoneNumber
+                                                user!["phone"] = session.phoneNumber
+                                                
+                                                user!.saveInBackground()
+                                                
                                                 //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                                                 self.dismissViewControllerAnimated(true, completion: nil)
-
+    
                                                 
                                             }
                                         }
                                     } else {
-                                        
-                                        var oldUser = results!.first as! PFUser
-                                        
-                                        PFUser.logInWithUsernameInBackground(oldUser.username!, password: "Password") { (user, error) -> Void in
-                                            
-                                            user!.username = session.phoneNumber
-                                            user!.password = session.phoneNumber
-                                            user!["phone"] = session.phoneNumber
-                                            
-                                            user!.saveInBackground()
-                                            
-                                            //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                            self.dismissViewControllerAnimated(true, completion: nil)
-
-                                            
-                                        }
+                                        println(error)
                                     }
                                     
-                                } else {
-                                    Digits.sharedInstance().logOut()
-                                    PFUser.logOut()
-                                    println("User is Blocked")
-                                    self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
+                                }
+                                
+                            } else {
+                                
+                                // User has logged in before with either facebook or digits
+                                deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
+                                    //User has phone number, logged in wih Digits
+                                    var user = phoneResult?.first as! PFUser
+                                    
+                                    // Check for blocked. User must have account to be blocked. If not blocked, log in with username
+                                    if (user["blocked"] as! Bool == false) {
+                                        
+                                        // Logged in with digits before, account may or may not be linked to FB. Login normally
+                                        if user.username! == session.phoneNumber {
+                                            // If user proceeds with phone authentication, login with phonenumber to parse database
+                                            PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
+                                                
+                                                // If older user, with no UUID, set the UUID
+                                                var uuid = user?["UUID"] as? String
+                                                
+                                                if user != nil {
+                                                    
+                                                    if uuid == nil {
+                                                        
+                                                        user!["UUID"] = UIDevice.currentDevice().identifierForVendor.UUIDString
+                                                        user?.saveInBackground()
+                                                        
+                                                    }
+                                                    
+                                                    println("Log in successful")
+                                                    //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                                    self.dismissViewControllerAnimated(true, completion: nil)
+    
+                                                    
+                                                }
+                                            }
+                                        } else {
+                                            
+                                            var oldUser = results!.first as! PFUser
+                                            
+                                            PFUser.logInWithUsernameInBackground(oldUser.username!, password: "Password") { (user, error) -> Void in
+                                                
+                                                user!.username = session.phoneNumber
+                                                user!.password = session.phoneNumber
+                                                user!["phone"] = session.phoneNumber
+                                                
+                                                user!.saveInBackground()
+                                                
+                                                //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+                                                self.dismissViewControllerAnimated(true, completion: nil)
+    
+                                                
+                                            }
+                                        }
+                                        
+                                    } else {
+                                        Digits.sharedInstance().logOut()
+                                        PFUser.logOut()
+                                        println("User is Blocked")
+                                        self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
+                                    }
                                 }
                             }
                         }

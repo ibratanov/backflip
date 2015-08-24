@@ -503,7 +503,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="146" id="D4g-rg-eMf" customClass="EventTableViewCell" customModule="Backflip">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="146" id="D4g-rg-eMf" customClass="EventTableViewCell" customModule="Backflip" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="375" height="146"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D4g-rg-eMf" id="mlm-QQ-UZC">
@@ -693,7 +693,7 @@
         <!--CreateEvent-->
         <scene sceneID="gvL-ke-dOv">
             <objects>
-                <viewController storyboardIdentifier="CreateEvent" title="CreateEvent" id="6q2-xA-QYe" customClass="CreatePublicEventViewController" customModule="Backflip" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateEvent" title="CreateEvent" id="6q2-xA-QYe" customClass="CreatePublicEventViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1GT-mo-NMo"/>
                         <viewControllerLayoutGuide type="bottom" id="ZbU-Ye-hpq"/>
