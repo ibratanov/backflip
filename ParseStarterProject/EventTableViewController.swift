@@ -406,7 +406,19 @@ class EventTableViewController: UITableViewController {
                 (objects: [AnyObject]?, error: NSError?) -> Void in
                 objects?.first?.deleteInBackground()
             }
-
+            
+            // Delete user object from event - attendee relation
+            let eventQuery = PFQuery(className: "Event")
+            eventQuery.whereKey("eventName", equalTo: eventTitle)
+            eventQuery.selectKeys(["attendees"])
+            eventQuery.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                var eventObj = objects?.first as! PFObject
+                let relation = eventObj.relationForKey("attendees")
+                relation.removeObject(PFUser.currentUser()!)
+                eventObj.saveInBackground()
+                
+            }
         } else {
             displayNoInternetAlert()
         }

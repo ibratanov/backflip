@@ -10,6 +10,7 @@ import Bolts
 import Parse
 import Fabric
 import DigitsKit
+import FBSDKCoreKit
 
 
 
@@ -47,6 +48,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupParse()
 		setupApperance()
 		
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
         Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
@@ -279,8 +281,18 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             println(url)
             println(url.host as String!)
         }
-        return true
+
+        return FBSDKApplicationDelegate.sharedInstance().application(application,
+                    openURL: url,
+                    sourceApplication: sourceApplication,
+                    annotation: annotation)
+
     }
+    
+    func applicationDidBecomeActive(application: UIApplication) {
+        FBSDKAppEvents.activateApp()
+    }
+
     
 
 	//--------------------------------------
