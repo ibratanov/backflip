@@ -12,14 +12,10 @@ import Fabric
 import DigitsKit
 
 
-// If you want to use any of the UI components, uncomment this line
-// import ParseUI
-
-// If you want to use Crash Reporting - uncomment this line
-// import ParseCrashReporting
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate : UIResponder, UIApplicationDelegate
+{
 
     var window: UIWindow?
     
@@ -32,43 +28,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - UIApplicationDelegate
     //--------------------------------------
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        //-------New Relic
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+	{
+		application.statusBarStyle = .LightContent
+		application.setStatusBarStyle(.LightContent, animated: true)
+		UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+		
+		//-------New Relic
         NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
         //-------Branch
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setImageViewNotification:", name: "MySetImageViewNotification", object: nil)
-        // Enable storing and querying data from Local Datastore.
-        // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
-        Parse.enableLocalDatastore()
+		
 
-        // ****************************************************************************
-        // Uncomment this line if you want to enable Crash Reporting
-        // ParseCrashReporting.enable()
-        //
-        // Uncomment and fill in with your Parse credentials:
-        
-//        /* PROD */
-//        Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX",
-//            clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
-
-        
-        /* DEV */
-        Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV",
-            clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
-
+		
+		//--------------------------------------
+		// Setup Parse & Application appearance
+		//--------------------------------------
+		setupParse()
+		setupApperance()
+		
         
         Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
         mixpanel.track("App launched")
-        
-        //
-        // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
-        // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
-        // Uncomment the line inside ParseStartProject-Bridging-Header and the following line here:
-        // PFFacebookUtils.initializeFacebook()
-        // ****************************************************************************
-
-        //PFUser.enableAutomaticUser()
+		
 
         let defaultACL = PFACL();
         
@@ -122,10 +105,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Used to add the device to the Parse push notification settings.
         PFInstallation.currentInstallation().saveInBackground()
-        
+		
+		
+		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+		
         //------------------------------------------------------------------------
 
-        Fabric.with([Digits()])
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+			Fabric.with([Digits()])
+		});
         
         //--------------------------BRANCH.IO------------------------------------
         
@@ -136,101 +124,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // This can now count as a referred session even if this isn't
                 // the first time a user has opened the app (aka an "Install").
                 //Custom logic goes here --> dependent on access to cloud services
-                if((params["referringOut"])  != nil){
-                    //image ID
-                    let eventIIden: AnyObject? = params["eventId"]
-                    //let albumIIden: AnyObject? = params["albumId"]
-                    let eventTitle: AnyObject? = params["eventTitle"]
-                    
-                    // Load information from parse db
-                    var queryEvent = PFQuery(className: "Event")
-                    queryEvent.limit = 1
-                    queryEvent.whereKey("objectId", equalTo: eventIIden!)
-
-                    var qArray = queryEvent.findObjects()
-                    
-                    if (qArray != nil && qArray!.count != 0) {
-                    //self.checkinToEvent(object)
-                        var objectE = qArray!.first as! PFObject
-                        
-                        let query = PFUser.query()
-                        
-                        if (PFUser.currentUser() != nil) {
-                            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-                                
-                                if error != nil {
-                                    println(error)
-                                }
-                                else
-                                {
-                                    
-                                    // Subscribe user to the channel of the event for push notifications
-                                    let currentInstallation = PFInstallation.currentInstallation()
-                                    currentInstallation.addUniqueObject(("a" + objectE.objectId!) , forKey: "channels")
-                                    //currentInstallation.saveInBackground()
-                                    currentInstallation.save()
-                                    
-                                    // Store the relation
-                                    let relation = objectE.relationForKey("attendees")
-                                    relation.addObject(object!)
-                                    
-                                    objectE.save()
-                                    
-                                    // TODO: Check for existing event_list for eventName
-                                    var listEvents = object!.objectForKey("savedEventNames") as! [String]
-                                    if contains(listEvents, objectE["eventName"] as! String)
-                                    {
-                                        print("Event already in list")
-                                    }
-                                    else
-                                    {
-                                        // Add the event to the User object
-                                        object?.addUniqueObject(objectE, forKey:"savedEvents")
-                                        object?.addUniqueObject(objectE["eventName"] as! String, forKey:"savedEventNames")
-                                        
-                                        //object!.saveInBackground()
-                                        object!.save()
-                                        
-                                        
-                                        // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                        var attendance = PFObject(className:"EventAttendance")
-                                        attendance["eventID"] = objectE.objectId
-                                        attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                                        attendance["photosLikedID"] = []
-                                        attendance["photosLiked"] = []
-                                        attendance["photosUploadedID"] = []
-                                        attendance["photosUploaded"] = []
-                                        attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                                        attendance.setObject(objectE, forKey: "event")
-                                        
-                                        //attendance.saveInBackground()
-                                        attendance.save()
-                                        
-                                        println("Saved")
-                                        let alert = UIAlertView()
-                                        alert.title = "Event Invitation"
-                                        alert.message = "You have been added to \(eventTitle!)"
-                                        alert.addButtonWithTitle("Ok")
-                                        
-                                        alert.delegate = self
-                                        alert.show()
-                                    }
-                                }
-                            })
-                        } else {
-                            self.displayUnsuccessfulInvite()
-                        }
-// Part of SMS Invite functionality - temporarily disabled
-//                    var topView = UIApplication.sharedApplication().keyWindow?.rootViewController
-//                    while (topView?.presentedViewController != nil){
-//                        topView = topView!.presentedViewController
-//                    }
-//
-//                    topView?.presentViewController(self.inviteViewController, animated: true, completion: nil)
-                    } else {
-                        println("Event \(eventIIden!) not found in database")
-                    }
-                }
+                if((params["referringOut"])  != nil) {
+					
+					var event = Event()
+					event.objectId = params["eventId"] as? String
+					event.name = params["eventTitle"] as? String
+					
+					var alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
+					alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+					alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
+						self.checkIn(event)
+					}))
+					
+					let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+					window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+				}
             }
         })
         return true
@@ -375,23 +283,209 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
-    ///////////////////////////////////////////////////////////
-    // Uncomment this method if you want to use Push Notifications with Background App Refresh
-    ///////////////////////////////////////////////////////////
-    // func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-    //     if application.applicationState == UIApplicationState.Inactive {
-    //         PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
-    //     }
-    // }
+	//--------------------------------------
+	// MARK: Apperance
+	//--------------------------------------
+	
+	func setupApperance()
+	{
+		UIApplication.sharedApplication().statusBarStyle = .LightContent
+		
+		let config = PFConfig.currentConfig()
+		
+		var navigationBarAppearance = UINavigationBar.appearance()
+		navigationBarAppearance.tintColor = UIColor.whiteColor()
+		
+		var bartintColor = "#108475"
+		if (config["appearance_navigation_tint"] != nil) {
+			bartintColor = config["appearance_navigation_tint"] as! String
+		}
+		
+		navigationBarAppearance.barTintColor = UIColor(rgba: bartintColor)
+		
+		
+		navigationBarAppearance.translucent = false;
+		navigationBarAppearance.titleTextAttributes = [
+			NSFontAttributeName: UIFont(name: "Avenir-Medium", size: 18)!,
+			NSForegroundColorAttributeName: UIColor.whiteColor()
+		]
+		
+		var barButtonAppearance = UIBarButtonItem.appearance()
+		barButtonAppearance.tintColor = UIColor.whiteColor()
+		
+		var tabBarAppearance = UITabBar.appearance()
+		tabBarAppearance.tintColor = (config["appearance_tabbar_tint"] != nil) ? UIColor(rgba:config["appearance_tabbar_tint"] as! String) :  UIColor.whiteColor()
+		tabBarAppearance.barTintColor = (config["appearance_tabbar_bartint"] != nil) ? UIColor(rgba:config["appearance_tabbar_bartint"] as! String) :  UIColor.blackColor()
+		tabBarAppearance.translucent = true;
+		
+	}
+	
+	
+	//--------------------------------------
+	// MARK: Parse
+	//--------------------------------------
+	
+	func setupParse()
+	{
+		// Local caching of query results
+		Parse.enableLocalDatastore()
+		
+		#if DEBUG
+			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
+		#else
+			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
+		#endif
+		
+		
+		if (NetworkAvailable.networkConnection()) {
+			PFConfig.getConfigInBackgroundWithBlock { (config, error) -> Void in
+				self.setupApperance()
+			}
+		}
+	}
+	
+	
+	//--------------------------------------
+	// MARK: Parse
+	//--------------------------------------
+	
+	func checkIn(event: Event)
+	{
+		 // You have been invited to join <EVENT>, would you like to check in?
+		
+		// subscribe to event push notifications
+		let currentInstallation = PFInstallation.currentInstallation()
+		currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
+		currentInstallation.saveInBackground()
+		
+		// Create & save attendance object
+		var attendance = PFObject(className:"EventAttendance")
+		attendance["eventID"] = event.objectId
+		attendance["attendeeID"] = PFUser.currentUser()?.objectId
+		attendance["photosLikedID"] = []
+		attendance["photosLiked"] = []
+		attendance["photosUploadedID"] = []
+		attendance["photosUploaded"] = []
+		attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
+		
+		attendance.saveInBackground()
+		
+		var account = PFUser.currentUser()
+		account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
+		account?.addUniqueObject(event.name!, forKey: "savedEventNames")
+		account?.saveInBackground()
+		
+		
+		// Store event details in user defaults
+		NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+		NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+		NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
+		
+	}
+	
+}
 
-    //--------------------------------------
-    // MARK: Facebook SDK Integration
-    //--------------------------------------
 
-    ///////////////////////////////////////////////////////////
-    // Uncomment this method if you are using Facebook
-    ///////////////////////////////////////////////////////////
-    // func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-    //     return FBAppCall.handleOpenURL(url, sourceApplication:sourceApplication, session:PFFacebookUtils.session())
-    // }
+
+
+extension UIColor {
+	public convenience init(rgba: String) {
+		var red:   CGFloat = 0.0
+		var green: CGFloat = 0.0
+		var blue:  CGFloat = 0.0
+		var alpha: CGFloat = 1.0
+		
+		if rgba.hasPrefix("#") {
+			let index   = advance(rgba.startIndex, 1)
+			let hex     = rgba.substringFromIndex(index)
+			let scanner = NSScanner(string: hex)
+			var hexValue: CUnsignedLongLong = 0
+			if scanner.scanHexLongLong(&hexValue) {
+				switch (count(hex)) {
+				case 3:
+					red   = CGFloat((hexValue & 0xF00) >> 8)       / 15.0
+					green = CGFloat((hexValue & 0x0F0) >> 4)       / 15.0
+					blue  = CGFloat(hexValue & 0x00F)              / 15.0
+				case 4:
+					red   = CGFloat((hexValue & 0xF000) >> 12)     / 15.0
+					green = CGFloat((hexValue & 0x0F00) >> 8)      / 15.0
+					blue  = CGFloat((hexValue & 0x00F0) >> 4)      / 15.0
+					alpha = CGFloat(hexValue & 0x000F)             / 15.0
+				case 6:
+					red   = CGFloat((hexValue & 0xFF0000) >> 16)   / 255.0
+					green = CGFloat((hexValue & 0x00FF00) >> 8)    / 255.0
+					blue  = CGFloat(hexValue & 0x0000FF)           / 255.0
+				case 8:
+					red   = CGFloat((hexValue & 0xFF000000) >> 24) / 255.0
+					green = CGFloat((hexValue & 0x00FF0000) >> 16) / 255.0
+					blue  = CGFloat((hexValue & 0x0000FF00) >> 8)  / 255.0
+					alpha = CGFloat(hexValue & 0x000000FF)         / 255.0
+				default:
+					print("Invalid RGB string, number of characters after '#' should be either 3, 4, 6 or 8")
+				}
+			} else {
+				println("Scan hex error")
+			}
+		} else {
+			print("Invalid RGB string, missing '#' as prefix")
+		}
+		self.init(red:red, green:green, blue:blue, alpha:alpha)
+	}
+}
+
+
+extension NSDate
+{
+	func isGreaterThanDate(dateToCompare : NSDate) -> Bool
+	{
+		//Declare Variables
+		var isGreater = false
+		
+		//Compare Values
+		if self.compare(dateToCompare) == NSComparisonResult.OrderedDescending
+		{
+			isGreater = true
+		}
+		
+		//Return Result
+		return isGreater
+	}
+	
+	
+	func isLessThanDate(dateToCompare : NSDate) -> Bool
+	{
+		//Declare Variables
+		var isLess = false
+		
+		//Compare Values
+		if self.compare(dateToCompare) == NSComparisonResult.OrderedAscending
+		{
+			isLess = true
+		}
+		
+		//Return Result
+		return isLess
+	}
+	
+	
+	
+	func addDays(daysToAdd : Int) -> NSDate
+	{
+		var secondsInDays : NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
+		var dateWithDaysAdded : NSDate = self.dateByAddingTimeInterval(secondsInDays)
+		
+		//Return Result
+		return dateWithDaysAdded
+	}
+	
+	
+	func addHours(hoursToAdd : Int) -> NSDate
+	{
+		var secondsInHours : NSTimeInterval = Double(hoursToAdd) * 60 * 60
+		var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
+		
+		//Return Result
+		return dateWithHoursAdded
+	}
 }

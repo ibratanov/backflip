@@ -10,13 +10,22 @@ import UIKit
 import Parse
 
 class PreviewViewController: UIViewController, UIScrollViewDelegate {
-    
+    var filterCount = 0;
     // Title passed from previous VC
     var eventId : String?
     var eventTitle : String?
     var eventLocation: PFGeoPoint?
     var downloadToCameraRoll: Bool?
     
+    
+    //---------Filters
+    lazy var context: CIContext = {
+        return CIContext(options: nil)
+        }()
+    
+    var filter: CIFilter!
+    
+    @IBOutlet weak var imageLoad: UIActivityIndicatorView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var referenceView: UIView!
@@ -32,7 +41,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     //Image attributes
     var imageToCrop: UIImage? {
         didSet {
-            if imageView != nil {
+            if imageView != nil && imageToCrop != nil {
                 imageView.image = imageToCrop!
                 imageView.setNeedsUpdateConstraints()
             }
@@ -46,9 +55,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func prefersStatusBarHidden() -> Bool {
-        return true
+        return false
     }
-    
+	
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
     }
@@ -61,20 +70,47 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageLoad.hidden=false
+
         
-        assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
+        var leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
+        var rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
         
-        imageView.image = resizeImage(imageToCrop!, newHeight: 2134, newWidth: 2134) //imageToCrop!
+        leftSwipe.direction = .Left
+        rightSwipe.direction = .Right
+        
+        view.addGestureRecognizer(leftSwipe)
+        view.addGestureRecognizer(rightSwipe)
+
+//        scrollView.addGestureRecognizer(leftSwipe)
+//        scrollView.addGestureRecognizer(rightSwipe)
     }
     
-     func resizeImage(image: UIImage, newHeight: CGFloat, newWidth: CGFloat) -> UIImage {
+
+    //, newHeight: CGFloat, newWidth: CGFloat
+    func resizeImage(image: UIImage) -> UIImage {
+        var screenH =         UIScreen.mainScreen().bounds.height
+
+        var screenW =         UIScreen.mainScreen().bounds.width
+
+        let newHeight:CGFloat = screenH * 3.757
+        //let newHeight:CGFloat = referenceView.bounds.height * 3.757
+
+        print("\(newHeight)+\(screenH)")
+        
+       // let newWidth:CGFloat = 2134
+        let newWidth:CGFloat = screenW * 6.796
+
+        //let newWidth:CGFloat = referenceView.bounds.width * 6.796
+        print("-------\(newWidth)+\(screenW)")
+        
         if(image.size.width > image.size.height){
             
-        let scale = newHeight / image.size.height
-        let newWidthI = image.size.width * scale
-        UIGraphicsBeginImageContext(CGSizeMake(newWidthI, newHeight))
-        image.drawInRect(CGRectMake(0, 0, newWidthI, newHeight))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            let scale = newHeight / image.size.height
+            let newWidthI = image.size.width * scale
+            UIGraphicsBeginImageContext(CGSizeMake(newWidthI, newHeight))
+            image.drawInRect(CGRectMake(0, 0, newWidthI, newHeight))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return newImage
         } else if(image.size.height > image.size.width){
@@ -85,7 +121,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             image.drawInRect(CGRectMake(0, 0, newWidth, newHeightI))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-
+            
             return newImage
             
         }else{
@@ -99,7 +135,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             return newImage
             
         }
-            }
+    }
     
     
     override func viewDidLayoutSubviews() {
@@ -122,9 +158,21 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         self.view.layoutIfNeeded()
         
         super.viewDidLayoutSubviews()
+        
+             }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
+        
+        imageView.image = resizeImage(imageToCrop!) //imageToCrop!
+        
+        imageLoad.hidden=true
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        imageToCrop = nil
         
     }
     
@@ -144,6 +192,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 
             }
         })
+    //------------------UPLOAD CANVAS----------------------------------------
         
         if NetworkAvailable.networkConnection() == true {
 
@@ -218,7 +267,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                                 eventObject.saveInBackground()
                                 
                                 //issue
-                                photoObject.saveInBackground()
+                                photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
+									NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
+								})
                             })
                         } else {
                             self.displayNoInternetAlert()
@@ -246,7 +297,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         var scalingRatio:CGFloat = maxWidth/maxHeight
         
         //lowest quality rating with acceptable encoding
-        var quality:CGFloat = 0.3
+        var quality:CGFloat = 0.4
         
         if (imageHeight > maxHeight || imageWidth > maxWidth){
             if(imageRatio < scalingRatio){
@@ -293,4 +344,63 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         return imageView
     }
     
+    //----------Filters
+    
+    func showOriginalImage() {
+        self.imageView.image = resizeImage(imageToCrop!) //imageToCrop!
+    }
+    
+    func outputImage() {
+        
+        let inputImage = CIImage(image: imageToCrop)
+        
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        
+        var outputImage =  filter.outputImage
+        var t: CGAffineTransform!
+
+        let orientation = UIDevice.currentDevice().orientation
+            t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
+        
+        //t = CGAffineTransformMakeRotation(0)
+        
+        outputImage = outputImage.imageByApplyingTransform(t)
+        
+        let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent())
+        //ciImage = outputImage
+        var ImageC = UIImage(CGImage: cgImage)
+    
+        imageView.image = resizeImage(ImageC!) //imageToCrop!
+
+    }
+    lazy var filterNames: [String] = {
+        return ["CIPhotoEffectNoir","CIPhotoEffectChrome","CIColorInvert","CIPhotoEffectMono","CIPhotoEffectInstant","CIPhotoEffectTransfer","CIPhotoEffectFade","CIPhotoEffectTonal","CIPhotoEffectTransfer","CIPhotoEffectProcess"]
+        }()
+
+    
+    func handleSwipes(sender:UISwipeGestureRecognizer) {
+        if (sender.direction == .Left) {
+            println("Left \(filterCount)")
+            if(filterCount>0){
+                filterCount -= 1
+            var filterName = filterNames[filterCount]
+            filter = CIFilter(name: filterName)
+                outputImage()
+            }else{
+                showOriginalImage()
+            }
+            
+        }
+        
+        if (sender.direction == .Right) {
+            if(filterCount<filterNames.count-1){
+            println("Right \(filterCount)")
+                filterCount += 1
+            var filterName = filterNames[filterCount]
+            filter = CIFilter(name: filterName)
+                outputImage()
+            }
+        }
+    }
+
 }

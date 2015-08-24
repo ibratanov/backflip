@@ -18,31 +18,18 @@ import DigitsKit
 
 let reuseIdentifier = "albumCell"
 
-class AlbumViewController: UICollectionViewController,UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate,BFCImagePickerControllerDelegate {
+class AlbumViewController: UICollectionViewController,
+    UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,  MWPhotoBrowserDelegate {
     
     var refresher: UIRefreshControl!
-    
-    
-    //------------------Camera Att.-----------------
-    var loopAllImagesBool = false
-    @IBOutlet weak var thumbnailButton: UIButton!
-    @IBOutlet weak var flashButton: UIButton!
-    var testCamera = UIImagePickerController()
-    
-    var imageViewContent = UIImage()
-    var overlayView: UIView?
-    var image = UIImage()
-    var picker = UIImagePickerController()
-    var zoomImage = (camera: true, display: true)
-    var newMedia: Bool = true
-    
+	
     // Title and ID of event passed from previous VC, based on selected row
     var eventId : String?
     var eventTitle: String?
-    
-    // Keeps track of photo source and only downloads newly taken images
-    var downloadToCameraRoll = true
+	
+	// Photo browser
+	var browser : MWPhotoBrowser!
+	
     
     var spinner : UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -52,9 +39,6 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var goBack = UIImage(named: "back") as UIImage!
     var cam = UIImage(named:"goto-camera") as UIImage!
     var newCam = UIImage(named:"goto-camera-full") as UIImage!
-    
-    var flashOff = UIImage(named:"flash-icon-large") as UIImage!
-    var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
     
     // Arrays of image files full size
     var timesImages = [UIImage]()
@@ -66,6 +50,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     var imageFilesTemp : [(image: PFFile , likes: Int , id: String,date: NSDate, hqImage: PFFile)] = []
     
     // Arrays for like sort selected
+	var collectionContent : [PFFile?] = []
+
+	
     var imageFilesLikes : [PFFile?] = []
     var objectIdLikes = [String]()
     var datesLikes : [NSDate?] = []
@@ -149,6 +136,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     // Occurs for when a user adds a photo, we want the photo to show up instantly
     override func viewDidAppear(animated: Bool) {
         
+        
+        
         if NetworkAvailable.networkConnection() == true {
             // fullscreen is false, posted is true
             if posted == true && fullScreen == false {
@@ -172,7 +161,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             
             var alert = NetworkAvailable.networkAlert("Error", error: "Connect to internet to access content")
             self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
+            print("no internet")
             
         }
         
@@ -183,13 +172,16 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         
         PFQuery.clearAllCachedResults()
         
-        self.navigationController?.popViewControllerAnimated(true)
+		
+        //self.performSegueWithIdentifier("backToEvent", sender: self)
         
     }
     
 
 	
-	func shareAlbum()
+    
+    
+	@IBAction func smsShare(sender: AnyObject)
 	{
 		var user = "filler";
 		if (PFUser.currentUser() != nil) {
@@ -213,11 +205,34 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
 			
 		})
 	}
-    
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated);
+		
+		self.collectionView!.registerClass(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
+	}
+	
+	override func viewDidLayoutSubviews()
+	{
+		super.viewDidLayoutSubviews()
+
+		let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
+		
+		flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
+		flow.itemSize = CGSizeMake((self.view.frame.size.width/3)-1, (self.view.frame.size.width/3)-1);
+		flow.minimumInteritemSpacing = 1;
+		flow.minimumLineSpacing = 1;
+	}
+	
+	
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+		
+		
+
+        //self.tabBarController?.tabBar.hidden = true
         // Pull down to refresh
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -290,7 +305,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         let frame: CGRect = UIScreen.mainScreen().bounds
         let screenWidth = frame.width
         let screenHeight = frame.height
-        var superCenter = CGPointMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds))
+		var superCenter = view.center
         segC.frame = CGRectMake(CGRectGetMinX(frame),64,screenWidth,30)
         
         // Set characteristics of segmented controller
@@ -333,42 +348,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         segC.addTarget(self, action: "viewChanger:", forControlEvents: .ValueChanged)
         
         //--------------- Draw UI ---------------
-        
-        // Hide UI controller item
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        // Nav Bar positioning
-        let navBar = UINavigationBar(frame: CGRectMake(0,0,self.view.frame.size.width, 94))
-        navBar.backgroundColor =  UIColor.whiteColor()
-        
-        // Set the Nav bar properties
-        let navBarItem = UINavigationItem()
-        
-        navBarItem.title = eventTitle
-        navBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Avenir-Medium",size: 18)!]
-        let verticalOffset: CGFloat = -30
-        navBar.setTitleVerticalPositionAdjustment(verticalOffset, forBarMetrics: .Default)
-        navBar.items = [navBarItem]
-        
-        // Left nav bar button item
-        let back = UIButton.buttonWithType(.System) as! UIButton
-        back.setImage(goBack, forState: .Normal)
-        back.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        back.frame = CGRectMake(-10, 20, 72, 44)
-        back.addTarget(self, action: "seg", forControlEvents: .TouchUpInside)
-        navBar.addSubview(back)
-        
-        // Right nav bar button item
-        let shareAlbum = UIButton.buttonWithType(.System) as! UIButton
-		shareAlbum.setTitle("Invite", forState: .Normal)
-		shareAlbum.tintColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-        shareAlbum.frame = CGRectMake(self.view.frame.size.width-62, 20, 72, 44)
-        shareAlbum.addTarget(self, action: "shareAlbum", forControlEvents: .TouchUpInside)
-        navBar.addSubview(shareAlbum)
-        
-        navBar.addSubview(segC)
-        self.view.addSubview(navBar)
-        
+		self.title = self.eventTitle;
+		
         // Post photo button new
         let postPhoto = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         postPhoto.setImage(cam, forState: .Normal)
@@ -381,11 +362,14 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.collectionView!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         
         // Pushes collection view down, higher value pushes collection view downwards, and push from bottom of screen (3rd number)
-        collectionView?.contentInset = UIEdgeInsetsMake(94.0,0.0,80.0,0.0)
+        collectionView?.contentInset = UIEdgeInsetsMake(0.0,0.0,88.0,0.0)
         self.automaticallyAdjustsScrollViewInsets = false
-        
-        
-        if NetworkAvailable.networkConnection() == true {
+		
+		if (eventId == nil) {
+			return ;
+		}
+		
+        if NetworkAvailable.networkConnection() == true  {
             // Initialize date comparison components
             let currentTime = NSDate()
             let cal = NSCalendar.currentCalendar()
@@ -611,7 +595,12 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         self.hqTime.removeAll(keepCapacity: true)
         
         self.images.removeAll(keepCapacity: true)
-        
+		
+		if (self.eventId == nil) {
+			NSLog("eventID == nil, NOP'in out..");
+			return ;
+		}
+		
         let qos = (Int(QOS_CLASS_BACKGROUND.value))
         dispatch_async(dispatch_get_global_queue(qos, 0)) {
             
@@ -689,7 +678,8 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
                     }
                     
                      dispatch_async(dispatch_get_main_queue()) {
-                        self.collectionView?.reloadSections(NSIndexSet(index: 0))
+						self.collectionView?.reloadData()
+                        // self.collectionView?.reloadSections(NSIndexSet(index: 0))
                         self.spinner.stopAnimating()
                         
                     }
@@ -710,8 +700,127 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
-    
-    
+	
+
+	override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
+	{
+		var supplementaryView : AnyObject! = nil
+		if kind == UICollectionElementKindSectionHeader {
+			supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "header-view", forIndexPath: indexPath)
+		} else if kind == UICollectionElementKindSectionFooter {
+			supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionFooter, withReuseIdentifier: "footer-view", forIndexPath: indexPath)
+		}
+		
+		return supplementaryView as! UICollectionReusableView
+	}
+	
+//	override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+//		var v : UICollectionReusableView! = nil
+//		if kind == UICollectionElementKindSectionHeader {
+//			v = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier:"Header", forIndexPath:indexPath) as! UICollectionReusableView
+//			if v.subviews.count == 0 {
+//				let segItems = ["Sort By Time", "Sort By Likes", "My Photos"];
+//
+//				v.addSubview(UISegmentedControl(items: segItems))
+//				v.frame = CGRectMake(0,0,375.0,88.0)
+//			}
+//			
+//			let seg = v.subviews[0] as! UISegmentedControl
+//			
+//		}
+//		return v
+//	}
+	
+	
+	func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser!) -> UInt
+	{
+		if sortedByLikes == true && myPhotoSelected == false {
+			
+			return UInt(imageFilesTime.count)
+			
+		} else if sortedByLikes == false && myPhotoSelected == false{
+			
+			return UInt(imageFilesLikes.count)
+			
+		} else {
+			
+			// Returns the count of cells, which may be less or more, depending on myphotos array
+			return UInt(myPhotos.count)
+		}
+	}
+	
+	
+	func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhotoProtocol!
+	{
+		var photo : MWPhoto = MWPhoto(URL: NSURL(string: "https://www.petfinder.com/wp-content/uploads/2012/11/dog-how-to-select-your-new-best-friend-thinkstock99062463.jpg"))
+		if sortedByLikes == true && myPhotoSelected == false {
+			let file:PFFile = imageFilesTime[Int(index)]!
+			photo = MWPhoto(URL: NSURL(string: file.url!))
+		} else if sortedByLikes == false && myPhotoSelected == false {
+			let file:PFFile = imageFilesLikes[Int(index)]!
+			photo = MWPhoto(URL: NSURL(string: file.url!))
+		} else {
+			let file:PFFile = myPhotos[Int(index)]!
+			photo = MWPhoto(URL: NSURL(string: file.url!))
+		}
+		
+		return photo
+	}
+	
+	
+	func photoBrowser(photoBrowser: MWPhotoBrowser!, actionButtonPressedForPhotoAtIndex index: UInt)
+	{
+		// NSLog("photoBrowser select action button index = %@", index);
+	}
+	
+	func sharePhoto()
+	{
+		// let photo = self.photoBrowser(browser, photoAtIndex: browser?.currentIndex)
+		
+		//let imageData : UIImage = self.fullScreenImage.image!;
+		let image = Image(text: "Photo");
+		
+		let reportImage = ReportImageActivity();
+		// NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
+		
+		
+		let vc = UIActivityViewController(activityItems: [image], applicationActivities:[reportImage])
+		vc.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypePrint]
+		self.presentViewController(vc, animated: true, completion: nil)
+		
+		NSLog("Will share photo now.. photo index = %i", browser.currentIndex)
+		print(browser?.currentIndex)
+	}
+	
+	
+	override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+	{
+		// Create browser (must be done each time photo browser is
+		// displayed. Photo browser objects cannot be re-used)
+		
+		browser = MWPhotoBrowser(delegate: self)
+		
+		let shareBarButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "sharePhoto")
+		browser?.navigationItem.rightBarButtonItem = shareBarButton
+			
+		// Set options
+		browser?.displayActionButton = true // Show action button to allow sharing, copying, etc (defaults to YES)
+		browser?.displayNavArrows = false // Whether to display left and right nav arrows on toolbar (defaults to NO)
+		browser?.displaySelectionButtons = false // Whether selection buttons are shown on each image (defaults to NO)
+		browser?.zoomPhotosToFill = true // Images that almost fill the screen will be initially zoomed to fill (defaults to YES)
+		browser?.alwaysShowControls = true // Allows to control whether the bars and controls are always visible or whether they fade away to show the photo full (defaults to NO)
+		browser?.enableGrid = false // Whether to allow the viewing of all the photo thumbnails on a grid (defaults to YES)
+		browser?.startOnGrid = false // Whether to start on the grid of thumbnails instead of the first photo (defaults to NO)
+		
+		// Optionally set the current visible photo before displaying
+		NSLog("-[ collectionView:didSelectItemAtIndexPath:] %@", indexPath)
+		browser?.setCurrentPhotoIndex(UInt(indexPath.row))
+		
+		self.navigationController?.pushViewController(browser!, animated: true)
+	}
+	
+	
+	
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         
@@ -733,7 +842,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let albumCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AlbumViewCell
-        
+		
         // Image view is of type PFImageView, allows parse to do the loading of the files in the cells
         
         if sortedByLikes == false && myPhotoSelected == false {
@@ -798,7 +907,7 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if NetworkAvailable.networkConnection() == true {
-            if segue.identifier == "toFull" {
+            if segue.identifier == "display-event-image" {
                 
                 var moveVC: FullScreenViewController = segue.destinationViewController as! FullScreenViewController
                 var selectedCellIndex = self.collectionView?.indexPathForCell(sender as! UICollectionViewCell)
@@ -847,376 +956,9 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
         }
     }
     
-    //--------------- Camera ---------------
-    //initialize camera
-    func takePhoto(sender: UIButton) {
+@IBAction func takePhoto(sender: UIButton)  {
+        var testCamera = UIImagePickerController()
         
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeUpButtonDownNotification", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
-        if NetworkAvailable.networkConnection() == true {
-            let query = PFUser.query()
-            query?.selectKeys(["blocked"])
-            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-                if error == nil {
-                    if (object!.valueForKey("blocked") as! Bool) {
-                        PFUser.logOut()
-                        Digits.sharedInstance().logOut()
-                        self.performSegueWithIdentifier("logOutBlocked", sender: self)
-                    } else {
-                        self.fullScreen = false
-                        self.posted = true
-                        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-                            println("Button capture")
-                            
-                            //primary delegate for the picker
-                            self.picker.delegate = self
-                            
-                            self.picker.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-                            self.picker.sourceType = .Camera
-                            self.picker.mediaTypes = [kUTTypeImage]
-                            self.picker.allowsEditing = false
-                            self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-                            self.picker.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-                            // resize
-                            if (self.zoomImage.camera) {
-                                var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
-                                var cameraAspectRatio: CGFloat = 4.0/3.0
-                                var cameraViewHeight = screenBounds.width * cameraAspectRatio
-                                var scale = screenBounds.height / cameraViewHeight
-                                self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
-                                self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, scale, scale)
-                                self.zoomImage.camera = false
-                            }
-                            
-                            // custom camera overlayview
-                            self.picker.showsCameraControls = false
-                            NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
-                            self.overlayView!.frame = self.picker.cameraOverlayView!.frame
-                            self.picker.cameraOverlayView = self.overlayView
-                            self.overlayView = nil
-                            
-                            self.presentViewController(self.picker, animated:true, completion:{})
-                            self.setLastPhoto()
-                            self.updateThumbnail()
-                            self.newMedia = true
-                        } else {
-                            if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
-                                var picker = UIImagePickerController()
-                                picker.delegate = self;
-                                picker.sourceType = .PhotoLibrary
-                                picker.mediaTypes = [kUTTypeImage]
-                                picker.allowsEditing = false
-                                
-                                self.presentViewController(picker, animated:true, completion:{})
-                                
-                                self.newMedia = false
-                                self.setLastPhoto()
-                                self.updateThumbnail()
-                            }
-                        }
-                        
-                        self.testCalled()
-                        
-                        self.setLastPhoto()
-                        self.updateThumbnail()
-                        
-                        
-                    }
-                } else {
-                    
-                    println(error)
-                }
-            })
-        } else {
-            displayNoInternetAlert()
-        }
-    }
-    
-    func saveImageAlert()
-    {
-        var alert:UIAlertView = UIAlertView()
-        alert.title = "Saved!"
-        alert.message = "Saved to Camera Roll"
-        alert.delegate = self
-        alert.addButtonWithTitle("Ok")
-        alert.show()
-    }
-    
-    @IBAction func loadFromLibrary(sender: AnyObject) {
-        var picker = UIImagePickerController()
-        picker.sourceType =
-            UIImagePickerControllerSourceType.SavedPhotosAlbum
-        picker.delegate = self
-        self.presentViewController(picker, animated: true, completion: nil)
-        
-    }
-    
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
-    {
-        //image stored in local variable to contain lifespan in method
-        var imageShortLife:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        self.imageViewContent = imageShortLife
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        
-        //Retake and crop options------------------------------------------------------------------------
-        let previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
-        previewViewController.cropCompletionHandler = {
-            self.imageViewContent = $0!
-            previewViewController.dismissViewControllerAnimated(true, completion: nil)
-        }
-        previewViewController.cancelCompletionHandler = {
-            //retake image
-            
-            self.presentViewController(picker, animated:true, completion:{})
-            self.setLastPhoto()
-            self.updateThumbnail()
-            self.flashButton.hidden = false
-            self.setLastPhoto()
-            self.updateThumbnail()
-            
-        }
-        
-        if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-            previewViewController.imageToCrop = imageViewContent
-            //UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
-            //UIImage(CGImage: initialImage.CGImage, scale: 1, orientation: initialImage.imageOrientation)!
-        }
-        else{
-            previewViewController.imageToCrop = imageViewContent
-        }
-        
-        previewViewController.eventId = self.eventId
-        previewViewController.eventTitle = self.eventTitle
-        previewViewController.downloadToCameraRoll = downloadToCameraRoll
-        
-        self.presentViewController(previewViewController, animated: true, completion: nil);
-        setLastPhoto()
-        updateThumbnail()
-        
-    }
-    
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController){
-        
-        picker.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    
-    func cropToSquare(image originalImage: UIImage) -> UIImage {
-        // Get image and measurements
-        let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage)!
-        let contextSize: CGSize = contextImage.size
-        let posX: CGFloat
-        let posY: CGFloat
-        let width: CGFloat
-        let height: CGFloat
-        
-        //Calibrate image for optimal crop
-        if contextSize.width > contextSize.height {
-            posX = ((contextSize.width - contextSize.height) / 2)
-            posY = 0
-            width = contextSize.height
-            height = contextSize.height
-        } else {
-            posX = 0
-            posY = ((contextSize.height - contextSize.width) / 2)
-            width = contextSize.width
-            height = contextSize.width
-        }
-        
-        let rect: CGRect = CGRectMake(posX, posY, width, height)
-        let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)
-        
-        //Define original orientation
-        let image: UIImage = UIImage(CGImage: imageRef, scale: originalImage.scale, orientation: originalImage.imageOrientation)!
-        
-        return image
-    }
-    
-    func testCalled()
-    {
-        
-        let sourceType = UIImagePickerControllerSourceType.Camera
-        if (!UIImagePickerController.isSourceTypeAvailable(sourceType))
-        {
-            var alert:UIAlertView = UIAlertView()
-            alert.title = "Cannot access camera!"
-            alert.message = " "
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
-        }
-        
-        let frontCamera = UIImagePickerControllerCameraDevice.Front
-        let rearCamera = UIImagePickerControllerCameraDevice.Rear
-        if (!UIImagePickerController.isCameraDeviceAvailable(frontCamera))
-        {
-            var alert:UIAlertView = UIAlertView()
-            alert.title = "Cannot access front-facing camera!"
-            alert.message = " "
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
-        }
-        if (!UIImagePickerController.isCameraDeviceAvailable(rearCamera))
-        {
-            var alert:UIAlertView = UIAlertView()
-            alert.title = "Cannot access rear-facing camera!"
-            alert.message = " "
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
-        }
-        
-        var status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
-        if (status == AVAuthorizationStatus.Authorized) {
-            println("authorized")
-        } else if(status == AVAuthorizationStatus.Denied){
-            var alert:UIAlertView = UIAlertView()
-            alert.title = "Camera Disabled"
-            alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
-        } else if(status == AVAuthorizationStatus.Restricted){
-            var alert:UIAlertView = UIAlertView()
-            alert.title = "Camera Disabled"
-            alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
-        }
-    }
-    
-    @IBAction func reverseCamera(sender: UIButton) {
-        //TO-DO: add transition when reversed
-        if self.picker.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-            
-            var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
-            var cameraAspectRatio: CGFloat = 4.0/3.0
-            var cameraViewHeight = screenBounds.width * cameraAspectRatio
-            var scale = screenBounds.height / cameraViewHeight
-            picker.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
-            picker.cameraViewTransform = CGAffineTransformScale(picker.cameraViewTransform, scale, scale)
-            self.zoomImage.camera = false
-            
-            
-            UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
-                self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Rear
-                }, completion: nil)
-            
-            self.flashButton.hidden = false
-        }else{
-            
-            //----------------------------------------------------------------------------
-            self.picker.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, -5.0)
-            self.picker.cameraViewTransform = CGAffineTransformScale(self.picker.cameraViewTransform, 1.0, 1.0)
-            
-            // resize
-            if (zoomImage.camera) {
-                self.zoomImage.camera = false
-            }
-            //----------------------------------------------------------------------------
-            
-            UIView.transitionWithView(self.picker.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromRight , animations: { () -> Void in
-                self.picker.cameraDevice = UIImagePickerControllerCameraDevice.Front
-                }, completion: nil)
-            
-            self.flashButton.hidden = true
-        }
-    }
-    
-    @IBAction func showCameraRoll(sender: UIButton) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        
-//        downloadToCameraRoll = false
-//        
-//        var controller = UIImagePickerController()
-//        controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
-//        controller.mediaTypes = [kUTTypeImage]
-//        controller.delegate = self
-//        self.presentViewController(controller, animated:true, completion:nil)
-        
-        let pickerController = BFCImagePickerController()
-        pickerController.pickerDelegate = self
-        self.presentViewController(pickerController, animated: true) {}
-    }
-    
-    //********call back functions for ^^^^**********
-    func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
-        //Send assets to parse
-        for (index, asset) in enumerate(assets) {
-            let imageView = UIImageView(image: asset.fullScreenImage)
-            //----->imageView.contentMode = UIViewContentMode.ScaleAspectFit
-            uploadImages(imageView.image!)
-        }
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-
-    func imagePickerControllerCancelled() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    
-    @IBAction func capture(sender: UIButton) {
-        picker.takePicture()
-        
-        downloadToCameraRoll = true
-        
-        updateThumbnail()
-    }
-    
-    func updateThumbnail(){
-        thumbnailButton.setBackgroundImage(image, forState: .Normal)
-        thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
-        thumbnailButton.layer.borderWidth=1.0
-        
-    }
-    @IBAction func toggleTorch(sender: UIButton) {
-        if self.picker.cameraFlashMode == UIImagePickerControllerCameraFlashMode.On{
-            self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.Off
-            
-            self.flashButton.setImage(flashOff, forState: .Normal)
-            
-        }else{
-            self.picker.cameraFlashMode = UIImagePickerControllerCameraFlashMode.On
-            self.flashButton.setImage(flashOn, forState: .Normal)
-        }
-    }
-    
-    //TO-DO: restriction through geotagged image
-    func setLastPhoto(){
-        var fetchOptions: PHFetchOptions = PHFetchOptions()
-        
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-        
-        var fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
-        
-        if (fetchResult.lastObject != nil) {
-            
-            var lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
-            
-            var sizeIM = CGSizeMake(50,50)
-            PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: sizeIM , contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
-                self.thumbnailButton.setBackgroundImage(result, forState: .Normal)
-                self.thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
-                self.thumbnailButton.layer.borderWidth = 1.0
-                self.thumbnailButton.layer.cornerRadius = 5
-            }
-            
-        }
-    }
-    
-    @IBAction func cancelCamera(sender: AnyObject) {
-        
-        println("here on cancel")
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        
-    }
-    
-    func captureTest(sender : UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
             println("Button capture")
             
@@ -1225,144 +967,18 @@ class AlbumViewController: UICollectionViewController,UIImagePickerControllerDel
             testCamera.mediaTypes = [kUTTypeImage]
             testCamera.allowsEditing = false
             
-            self.presentViewController(testCamera, animated: true, completion: nil)
+           // self.presentViewController(testCamera, animated: true, completion: nil)
         }
-    }
-    
-    func uploadImages(uImage: UIImage){
-        if NetworkAvailable.networkConnection() == true {
-            
-            var capturedImage = uImage as UIImage!
-            
-            var imageData = compressImage(uImage, shrinkRatio: 1.0)
-            var imageFile = PFFile(name: "image.png", data: imageData)
-            
-            
-            
-            var thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
-            var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
-            
-            
-            //Upload photos to database
-            var photo = PFObject(className: "Photo")
-            photo["caption"] = "Camera roll upload"
-            photo["image"] = imageFile
-            photo["thumbnail"] = thumbnailFile
-            photo["upvoteCount"] = 1
-            photo["usersLiked"] = [PFUser.currentUser()!.username!]
-            photo["uploader"] = PFUser.currentUser()!
-            photo["uploaderName"] = PFUser.currentUser()!.username!
-            photo["flagged"] = false
-            photo["reviewed"] = false
-            photo["blocked"] = false
-            photo["reporter"] = ""
-            photo["reportMessage"] = ""
-            
-            var photoACL = PFACL(user: PFUser.currentUser()!)
-            photoACL.setPublicWriteAccess(true)
-            photoACL.setPublicReadAccess(true)
-            photo.ACL = photoACL
-            
-            
-            var query2 = PFQuery(className: "EventAttendance")
-            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-            query2.whereKey("eventID", equalTo: eventId!)
-            
-            //var photoObjectList = query2.findObjects()
-            var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
-                if (objs != nil && objs!.count != 0) {
-                    var photoObject = objs!.first as! PFObject
-                    
-                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
-                    
-                    var queryEvent = PFQuery(className: "Event")
-                    queryEvent.whereKey("objectId", equalTo: self.eventId!)
-                    //var objects = queryEvent.findObjects()
-                    var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
-                        
-                        if (sobjs != nil && sobjs!.count != 0) {
-                            var eventObject = sobjs!.first as! PFObject
-                            
-                            let relation = eventObject.relationForKey("photos")
-                            
-                            //photo.save()
-                            photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
-                                if valid {
-                                    relation.addObject(photo)
-                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-                                }
-                                //issue
-                                eventObject.saveInBackground()
-                                
-                                //issue
-                                photoObject.saveInBackground()
-                            })
-       
-                        } else {
-                            self.displayNoInternetAlert()
-                        }
-                    })
-                }
-                else {
-                    self.displayNoInternetAlert()
-                    println("Object Issue")
-                }
-                
-            })
-            
-        } else {
-            displayNoInternetAlert()
-        }
-
-    }
-    
-    func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
-        var imageHeight:CGFloat = image.size.height
-        var imageWidth:CGFloat = image.size.width
-        var maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
-        var maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
-        var imageRatio:CGFloat = imageWidth/imageHeight
-        var scalingRatio:CGFloat = maxWidth/maxHeight
-        
-        //lowest quality rating with acceptable encoding
-        var quality:CGFloat = 0.3
-        
-        if (imageHeight > maxHeight || imageWidth > maxWidth){
-            if(imageRatio < scalingRatio){
-                /* To ensure aspect ratio is maintained adjust
-                witdth of image in relation to scaling height */
-                imageRatio = maxHeight / imageHeight;
-                imageWidth = imageRatio * imageWidth;
-                imageHeight = maxHeight;
-            }
-            else if(imageRatio > scalingRatio){
-                /* To ensure aspect ratio is maintained adjust
-                height of image in relation to scaling width */
-                imageRatio = maxWidth / imageWidth;
-                imageHeight = imageRatio * imageHeight;
-                imageWidth = maxWidth;
-            }
-            else{
-                /* If image is equivalent to scaling ratio
-                image should not be compressed any further
-                scaled down to max resolution*/
-                imageHeight = maxHeight;
-                imageWidth = maxWidth;
-                quality = 1;
-            }
-        }
-        
-        var rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
-        //bit-map based graphic context and set the boundaries of still image
-        UIGraphicsBeginImageContext(rect.size);
-        image.drawInRect(rect)
-        var imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
-        let imageData = UIImageJPEGRepresentation(imageCompressed, quality);
-        UIGraphicsEndImageContext();
-        
-        return imageData;
     }
 
+}
+
+
+
+extension AlbumViewController : UICollectionViewDelegateFlowLayout
+{
+	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+	{
+		return CGSizeMake((self.view.frame.size.width/3) - 1, (self.view.frame.size.width/3) - 1)
+	}
 }

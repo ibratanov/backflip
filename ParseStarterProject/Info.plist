@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string></string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.5.0</string>
+	<string>2.0.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -32,11 +34,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.5.0</string>
+	<string>2.0.3</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
-		<string>ef7a1ebf7fc603f162c02e071c9bec17cfc2117e</string>
+		<string>2536c21aa9a9edce636bfa2b489d140c6f93b6cb</string>
 		<key>Kits</key>
 		<array>
 			<dict>
@@ -52,6 +54,8 @@
 			</dict>
 		</array>
 	</dict>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -65,9 +69,9 @@
 		<string>armv7</string>
 	</array>
 	<key>UIStatusBarHidden</key>
-	<false/>
+	<true/>
 	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleDefault</string>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -79,6 +83,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>branch_key</key>
 	<string>key_live_mkkw8ynhD7ZoI6bSN63nMenmyFc6TMYk</string>
 </dict>

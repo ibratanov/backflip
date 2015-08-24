@@ -27,16 +27,15 @@ class BFCAssetGroup : NSObject {
 }
 
 class BFCAsset: NSObject {
+     var originalAsset: ALAsset!
+
     var thumbnailImage: UIImage?
-    lazy var fullScreenImage: UIImage? = {
-        return UIImage(CGImage: self.originalAsset.defaultRepresentation().fullScreenImage().takeUnretainedValue())
-        }()
+    lazy var fullScreenImage: UIImage? = {return UIImage(CGImage: self.originalAsset.defaultRepresentation().fullScreenImage().takeUnretainedValue())}()
     lazy var fullResolutionImage: UIImage? = {
         return UIImage(CGImage: self.originalAsset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())
         }()
     var url: NSURL?
     
-    private var originalAsset: ALAsset!
     
     override func isEqual(object: AnyObject?) -> Bool {
         let other = object as! BFCAsset!
@@ -103,7 +102,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
         
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         
         library.enumerateGroupsWithTypes(ALAssetsGroupAll, usingBlock: {(group: ALAssetsGroup! , stop: UnsafeMutablePointer<ObjCBool>) in
             if group != nil {
@@ -398,7 +397,14 @@ class BFCImagePickerController: UINavigationController {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-    
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		
+		UIApplication.sharedApplication().statusBarHidden = false
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -413,8 +419,10 @@ class BFCImagePickerController: UINavigationController {
     override func pushViewController(viewController: UIViewController, animated: Bool) {
         var wrapperVC = BFCContentWrapperViewController(viewController)
         super.pushViewController(wrapperVC, animated: animated)
-        
-        self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.doneButton)
+		
+
+		self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "onDoneClicked")
+        // self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.doneButton)
         
         if self.viewControllers.count == 1 && self.topViewController?.navigationItem.leftBarButtonItem == nil {
             self.topViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel,
@@ -439,7 +447,7 @@ class BFCImagePickerController: UINavigationController {
         //set affordance for image selected
         if let asset = notification.object as? BFCAsset {
             selectedAssets.append(asset)
-            self.doneButton.setTitle(rightButtonTitle + "(\(selectedAssets.count))", forState: UIControlState.Normal)
+            self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
             self.doneButton.sizeToFit()
         }
     }
@@ -449,7 +457,7 @@ class BFCImagePickerController: UINavigationController {
         
         if let asset = notification.object as? BFCAsset {
             selectedAssets.removeAtIndex(find(selectedAssets, asset)!)
-            self.doneButton.setTitle(rightButtonTitle + "(\(selectedAssets.count))", forState: UIControlState.Normal)
+            self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
             self.doneButton.sizeToFit()
             
             if selectedAssets.count <= 0 {
