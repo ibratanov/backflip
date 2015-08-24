@@ -181,8 +181,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			cell.imageView.image!.imageWithRenderingMode(.AlwaysTemplate)
 			cell.imageView.tintColor = UIColor.grayColor()
 		} else if (self.collectionContent.count >= indexPath.row) {
-			cell.imageView.file = collectionContent[Int(indexPath.row)-1].thumbnail
-			cell.imageView.loadInBackground()
+			
+			var file : PFFile = collectionContent[Int(indexPath.row)-1].thumbnail
+			cell.imageView.setImageWithURL(NSURL(string: file.url!))
+			
 		}
 		
 		cell.layer.shouldRasterize = true

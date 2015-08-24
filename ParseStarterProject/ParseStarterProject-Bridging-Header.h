@@ -3,6 +3,7 @@
 //
 //  Copyright 2011-present Parse Inc. All rights reserved.
 //
+#import <UIKit/UIKit.h>
 #import <Branch/Branch.h>
 
 //#import </Users/jonathanarlauskas/Documents/Work:Finances/Tribal/6tribe/Pods/Mixpanel/Mixpanel/Mixpanel.h>
@@ -13,7 +14,12 @@
 //#import <ParseFacebookUtils/PFFacebookUtils.h>
 
 
-#import <UIKit/UIKit.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+
+#import "AFNetworking.h"
+#import "UIKit+AFNetworking.h"
+
 #import <Mixpanel/Mixpanel.h>
 #import "MWPhotoBrowser.h"
 #import "NewRelicAgent/NewRelic.h"

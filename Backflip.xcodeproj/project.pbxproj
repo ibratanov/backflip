@@ -10,6 +10,9 @@
 		040B27CE1B794D75004B4FB2 /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27CD1B794D75004B4FB2 /* CheckinViewController.swift */; };
 		040B27D21B794E9B004B4FB2 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event.swift */; };
 		0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0434BCD51B73BDCF00EF57EC /* Image.swift */; };
+		0439D3281B876EA9001850DD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3271B876EA9001850DD /* Security.framework */; };
+		0439D32A1B8773BD001850DD /* AFNetworking.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3291B8773BD001850DD /* AFNetworking.xcworkspace */; };
+		0439D32C1B8773C3001850DD /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D32B1B8773C3001850DD /* libAFNetworking.a */; };
 		049222AB1B72653900FFB08A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AA1B72653900FFB08A /* Album.swift */; };
 		049222AE1B72767500FFB08A /* ReportImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AD1B72767500FFB08A /* ReportImage.swift */; };
 		049AA6811B73DA01003888CE /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6481B73DA01003888CE /* ImageError.png */; };
@@ -140,6 +143,9 @@
 		040B27CD1B794D75004B4FB2 /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 		040B27D11B794E9B004B4FB2 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		0434BCD51B73BDCF00EF57EC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		0439D3271B876EA9001850DD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		0439D3291B8773BD001850DD /* AFNetworking.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = AFNetworking.xcworkspace; sourceTree = "<group>"; };
+		0439D32B1B8773C3001850DD /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "Pods/../build/Debug-iphoneos/libAFNetworking.a"; sourceTree = "<group>"; };
 		049222AA1B72653900FFB08A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		049222AD1B72767500FFB08A /* ReportImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportImage.swift; sourceTree = "<group>"; };
 		049AA6481B73DA01003888CE /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
@@ -308,6 +314,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0439D32C1B8773C3001850DD /* libAFNetworking.a in Frameworks */,
+				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
+				0439D3281B876EA9001850DD /* Security.framework in Frameworks */,
 				049AA6EA1B73DBB2003888CE /* AssetsLibrary.framework in Frameworks */,
 				502199C61B33838A00A64387 /* CoreMotion.framework in Frameworks */,
 				50C9A7931B276F430091FEC9 /* Social.framework in Frameworks */,
@@ -319,7 +328,6 @@
 				81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */,
 				81BA817D1A49E0EA00E65899 /* MobileCoreServices.framework in Frameworks */,
 				506F8BCE1B34F3EF0080D2C0 /* ParseFacebookUtilsV4.framework in Frameworks */,
-				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				502348F91B34F5FF00614FE6 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				50BED87E1B21E05100CBB715 /* DigitsKit.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
@@ -339,6 +347,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0464219B1B876D3D00953719 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				0439D3291B8773BD001850DD /* AFNetworking.xcworkspace */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
 		049222A71B725CAA00FFB08A /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +376,7 @@
 		049AA6441B73D9E0003888CE /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				0464219B1B876D3D00953719 /* AFNetworking */,
 				049AA6B71B73DB84003888CE /* SDWebImage */,
 				049AA6B31B73DB72003888CE /* MBProgressHUD */,
 				049AA6AC1B73DB2E003888CE /* DACircularProgress */,
@@ -599,6 +616,8 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0439D32B1B8773C3001850DD /* libAFNetworking.a */,
+				0439D3271B876EA9001850DD /* Security.framework */,
 				049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */,
 				049AA6441B73D9E0003888CE /* Vendor */,
 				502348F31B34F5FF00614FE6 /* FBSDKCoreKit.framework */,
@@ -736,6 +755,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0439D32A1B8773BD001850DD /* AFNetworking.xcworkspace in Resources */,
 				049AA69D1B73DA01003888CE /* UIBarButtonItemGrid@2x.png in Resources */,
 				049AA69C1B73DA01003888CE /* UIBarButtonItemGrid.png in Resources */,
 				50BED87F1B21E05100CBB715 /* DigitsKitResources.bundle in Resources */,
@@ -1016,6 +1036,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1024,6 +1047,7 @@
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 					"$(PROJECT_DIR)/Vendor",
 				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1040,6 +1064,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1075,6 +1100,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1083,6 +1111,7 @@
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 					"$(PROJECT_DIR)/Vendor",
 				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -1095,6 +1124,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
