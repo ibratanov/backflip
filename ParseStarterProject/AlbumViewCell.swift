@@ -13,7 +13,7 @@ class AlbumViewCell: UICollectionViewCell {
 
     //@IBOutlet var imageView: PFImageView?
     
-    @IBOutlet weak var imageView: PFImageView!
+    @IBOutlet weak var imageView: UIImageView!
 
 	
 	override func prepareForReuse()

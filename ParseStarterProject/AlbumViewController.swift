@@ -855,9 +855,8 @@ class AlbumViewController: UICollectionViewController,
                 
                 // Temp image until actual image loads CAUSES MEMORY WARNING ON MANY REFRESH
                 //albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
-                
-                albumCell.imageView.file = imageFilesTime[indexPath.row]
-                albumCell.imageView.loadInBackground()
+				
+				// albumCell.imageView.setImageWithURL(NSURL(string: imageFilesTime[indexPath.row].url!))
                 
             }
             
@@ -873,8 +872,8 @@ class AlbumViewController: UICollectionViewController,
                 // Temp image until actual image loads
                 albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
                 
-                albumCell.imageView.file = imageFilesLikes[indexPath.row]
-                albumCell.imageView.loadInBackground()
+                //albumCell.imageView.file = imageFilesLikes[indexPath.row]
+                //albumCell.imageView.loadInBackground()
                 
                 
                 
@@ -894,8 +893,8 @@ class AlbumViewController: UICollectionViewController,
                 // Temp image until actual image loads
                 albumCell.imageView.image = UIImage(contentsOfFile: "backfliplogo80.png")
                 
-                albumCell.imageView.file = myPhotos[indexPath.row]
-                albumCell.imageView.loadInBackground()
+                //albumCell.imageView.file = myPhotos[indexPath.row]
+                //albumCell.imageView.loadInBackground()
             }
         }
         

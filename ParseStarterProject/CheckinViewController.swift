@@ -159,8 +159,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
 			let photo = event.photos![indexPath.row]
-			cell.imageView.file = photo.thumbnail
-			cell.imageView.loadInBackground()
+			cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail.url!))
 		}
 		
 		// cell.addGestureRecognizer(self.doubleTapGesture!)
