@@ -202,9 +202,24 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		}
 		
 		if self.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-            imageViewContent = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)!
-			previewViewController.imageToCrop = imageViewContent
-			//UIImage(CGImage: initialImage.CGImage, scale: 1, orientation: initialImage.imageOrientation)!
+            //var imageViewContent2 = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)
+                        //var imageViewContent3 = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: imageViewContent.imageOrientation)!
+            
+                       var tempImageViewContent = UIImageView(image: imageViewContent)
+                       UIGraphicsBeginImageContext(tempImageViewContent.frame.size)
+                       var context:CGContextRef = UIGraphicsGetCurrentContext()
+                       //var flipIint = CGAffineTransformMakeScale(-1.0, 1.0)
+                       var flipHorizontal:CGAffineTransform = CGAffineTransformMake(-1.0, 0.0, 0.0, 1.0, tempImageViewContent.frame.size.width, 0.0)
+                      //var flipHorizontal:CGAffineTransform = CGAffineTransformMake(-1.0, 0.0, 0.0, 1.0, 0.0, tempImageViewContent.frame.size.height)
+        
+                      CGContextConcatCTM(context, flipHorizontal)
+                       tempImageViewContent.layer.renderInContext(context)
+        
+                       var imageViewContent4:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext();
+            
+            previewViewController.imageToCrop = imageViewContent4
+        
 		}
 		else{
 			previewViewController.imageToCrop = imageViewContent
