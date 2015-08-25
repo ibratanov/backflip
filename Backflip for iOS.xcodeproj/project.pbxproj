@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event+Share.swift */; };
 		04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04196F521B8B996000AE5FA5 /* File+CoreDataProperties.swift */; };
-		0434BCD61B73BDCF00EF57EC /* Image+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0434BCD51B73BDCF00EF57EC /* Image+Share.swift */; };
+		0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0434BCD51B73BDCF00EF57EC /* Image.swift */; };
 		0439D3281B876EA9001850DD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3271B876EA9001850DD /* Security.framework */; };
 		0439D3401B8B76B1001850DD /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D32F1B8B76B1001850DD /* Branch.framework */; };
 		0439D3411B8B76B1001850DD /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3311B8B76B1001850DD /* DigitsKit.framework */; };
@@ -57,7 +57,8 @@
 		0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3D41B8B8896001850DD /* CheckinViewController.swift */; };
 		0439D3D81B8B8D5C001850DD /* Mixpanel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3901B8B7923001850DD /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0439D3DE1B8B93A5001850DD /* Backflip.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */; };
-		049222AB1B72653900FFB08A /* Album+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AA1B72653900FFB08A /* Album+Share.swift */; };
+		043C72041B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */; };
+		049222AB1B72653900FFB08A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AA1B72653900FFB08A /* Album.swift */; };
 		049AA6811B73DA01003888CE /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6481B73DA01003888CE /* ImageError.png */; };
 		049AA6821B73DA01003888CE /* ImageError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6491B73DA01003888CE /* ImageError@2x.png */; };
 		049AA6831B73DA01003888CE /* ImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA64A1B73DA01003888CE /* ImageError@3x.png */; };
@@ -100,18 +101,18 @@
 		049AA6A91B73DA01003888CE /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA67B1B73DA01003888CE /* MWTapDetectingView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6AA1B73DA01003888CE /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA67D1B73DA01003888CE /* MWZoomingScrollView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6AB1B73DA01003888CE /* UIImage+MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA67F1B73DA01003888CE /* UIImage+MWPhotoBrowser.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		049AA6B11B73DB2E003888CE /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6AE1B73DB2E003888CE /* DACircularProgressView.m */; };
-		049AA6B21B73DB2E003888CE /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6B01B73DB2E003888CE /* DALabeledCircularProgressView.m */; };
+		049AA6B11B73DB2E003888CE /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6AE1B73DB2E003888CE /* DACircularProgressView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		049AA6B21B73DB2E003888CE /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6B01B73DB2E003888CE /* DALabeledCircularProgressView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6B61B73DB72003888CE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6B51B73DB72003888CE /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6D91B73DB84003888CE /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6B91B73DB84003888CE /* MKAnnotationView+WebCache.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6DA1B73DB84003888CE /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6BB1B73DB84003888CE /* NSData+ImageContentType.m */; };
-		049AA6DB1B73DB84003888CE /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6BD1B73DB84003888CE /* SDImageCache.m */; };
+		049AA6DB1B73DB84003888CE /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6BD1B73DB84003888CE /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6DC1B73DB84003888CE /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6BF1B73DB84003888CE /* SDWebImageCompat.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6DD1B73DB84003888CE /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6C11B73DB84003888CE /* SDWebImageDecoder.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		049AA6DE1B73DB84003888CE /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6C31B73DB84003888CE /* SDWebImageDownloader.m */; };
+		049AA6DE1B73DB84003888CE /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6C31B73DB84003888CE /* SDWebImageDownloader.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6DF1B73DB84003888CE /* SDWebImageDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6C51B73DB84003888CE /* SDWebImageDownloaderOperation.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6E01B73DB84003888CE /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6C71B73DB84003888CE /* SDWebImageManager.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		049AA6E11B73DB84003888CE /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6CA1B73DB84003888CE /* SDWebImagePrefetcher.m */; };
+		049AA6E11B73DB84003888CE /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6CA1B73DB84003888CE /* SDWebImagePrefetcher.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6E21B73DB84003888CE /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6CC1B73DB84003888CE /* UIButton+WebCache.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6E31B73DB84003888CE /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6CE1B73DB84003888CE /* UIImage+GIF.m */; };
 		049AA6E41B73DB84003888CE /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6D01B73DB84003888CE /* UIImage+MultiFormat.m */; };
@@ -128,9 +129,16 @@
 		04C61FC21B8B982600E2ACB5 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FBA1B8B982600E2ACB5 /* Photo.swift */; };
 		04C61FC31B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FBB1B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift */; };
 		04C61FC41B8B982600E2ACB5 /* GeoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FBC1B8B982600E2ACB5 /* GeoPoint.swift */; };
-		04C61FC81B8B987B00E2ACB5 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FC61B8B987B00E2ACB5 /* Event+CoreDataProperties.swift */; };
 		04CA5D7F1B8B9BE80075C0A8 /* BFDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA5D7E1B8B9BE80075C0A8 /* BFDataFetcher.swift */; };
 		04CA5D821B8B9C060075C0A8 /* BFDataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA5D811B8B9C060075C0A8 /* BFDataProcessor.swift */; };
+		04CA5D871B8B9D440075C0A8 /* ZAActivityBar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04CA5D841B8B9D440075C0A8 /* ZAActivityBar.bundle */; };
+		04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CA5D861B8B9D440075C0A8 /* ZAActivityBar.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		04CA5DC01B8B9D4B0075C0A8 /* SKBounceAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CA5DA41B8B9D4B0075C0A8 /* SKBounceAnimation.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		04CA5DCD1B8B9F900075C0A8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CA5DCC1B8B9F900075C0A8 /* CoreData.framework */; };
+		04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; };
+		04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04CCD6691B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */; };
+		04D558FC1B8D00AB002E63B6 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB71B8B982600E2ACB5 /* Event+CoreDataProperties.swift */; };
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
 		50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */; };
 		502199AE1B33817100A64387 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199AD1B33817100A64387 /* Accounts.framework */; };
@@ -168,6 +176,69 @@
 			remoteGlobalIDString = 7C170C291A4A02F500D9E0F2;
 			remoteInfo = Mixpanel;
 		};
+		04CCD6501B8CB70500664FB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 905D07181A63DE190076B54E;
+			remoteInfo = "MagicalRecord for iOS";
+		};
+		04CCD6521B8CB70500664FB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9004F5211A94CBCF00A61312;
+			remoteInfo = "MagicalRecord for iOS Tests";
+		};
+		04CCD6541B8CB70500664FB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 905D073B1A63DE690076B54E;
+			remoteInfo = "MagicalRecord for OS X";
+		};
+		04CCD6561B8CB70500664FB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9004F5661A94CBF900A61312;
+			remoteInfo = "MagicalRecord for OS X Tests";
+		};
+		04CCD6581B8CB70500664FB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C7CF97AB17498414008D9D13;
+			remoteInfo = "libMagicalRecord for iOS";
+		};
+		04CCD65A1B8CB70500664FB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C7CF97FF174984CA008D9D13;
+			remoteInfo = "libMagicalRecord for iOS Tests";
+		};
+		04CCD65C1B8CB70500664FB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C7CF97BB1749843F008D9D13;
+			remoteInfo = "libMagicalRecord for OS X";
+		};
+		04CCD65E1B8CB70500664FB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C7CF9816174984E4008D9D13;
+			remoteInfo = "libMagicalRecord for OS X Tests";
+		};
+		04CCD6621B8CB7EB00664FB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 905D07171A63DE190076B54E;
+			remoteInfo = "MagicalRecord for iOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -177,6 +248,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */,
 				0439D3D81B8B8D5C001850DD /* Mixpanel.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -187,7 +259,7 @@
 /* Begin PBXFileReference section */
 		040B27D11B794E9B004B4FB2 /* Event+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Share.swift"; sourceTree = "<group>"; };
 		04196F521B8B996000AE5FA5 /* File+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "File+CoreDataProperties.swift"; path = "Models/File+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0434BCD51B73BDCF00EF57EC /* Image+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+Share.swift"; sourceTree = "<group>"; };
+		0434BCD51B73BDCF00EF57EC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		0439D3271B876EA9001850DD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0439D32F1B8B76B1001850DD /* Branch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Branch.framework; sourceTree = "<group>"; };
 		0439D3311B8B76B1001850DD /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
@@ -235,7 +307,9 @@
 		0439D3D21B8B887C001850DD /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		0439D3D41B8B8896001850DD /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 		0439D3DD1B8B93A5001850DD /* Backflip.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Backflip.xcdatamodel; sourceTree = "<group>"; };
-		049222AA1B72653900FFB08A /* Album+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Album+Share.swift"; sourceTree = "<group>"; };
+		043C72021B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Extensions.h"; sourceTree = "<group>"; };
+		043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Extensions.m"; sourceTree = "<group>"; };
+		049222AA1B72653900FFB08A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		049AA6481B73DA01003888CE /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
 		049AA6491B73DA01003888CE /* ImageError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@2x.png"; sourceTree = "<group>"; };
 		049AA64A1B73DA01003888CE /* ImageError@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@3x.png"; sourceTree = "<group>"; };
@@ -340,9 +414,18 @@
 		04C61FBB1B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "GeoPoint+CoreDataProperties.swift"; path = "Models/GeoPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FBC1B8B982600E2ACB5 /* GeoPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoPoint.swift; sourceTree = "<group>"; };
 		04C61FC51B8B987B00E2ACB5 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Photo+CoreDataProperties.swift"; path = "Models/Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		04C61FC61B8B987B00E2ACB5 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Event+CoreDataProperties.swift"; path = "Models/Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04CA5D7E1B8B9BE80075C0A8 /* BFDataFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFDataFetcher.swift; sourceTree = "<group>"; };
 		04CA5D811B8B9C060075C0A8 /* BFDataProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFDataProcessor.swift; sourceTree = "<group>"; };
+		04CA5D841B8B9D440075C0A8 /* ZAActivityBar.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZAActivityBar.bundle; path = Vendor/ZAActivityBar/ZAActivityBar/ZAActivityBar.bundle; sourceTree = "<group>"; };
+		04CA5D851B8B9D440075C0A8 /* ZAActivityBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZAActivityBar.h; path = Vendor/ZAActivityBar/ZAActivityBar/ZAActivityBar.h; sourceTree = "<group>"; };
+		04CA5D861B8B9D440075C0A8 /* ZAActivityBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZAActivityBar.m; path = Vendor/ZAActivityBar/ZAActivityBar/ZAActivityBar.m; sourceTree = "<group>"; };
+		04CA5DA31B8B9D4B0075C0A8 /* SKBounceAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SKBounceAnimation.h; path = SKBounceAnimation/SKBounceAnimation.h; sourceTree = "<group>"; };
+		04CA5DA41B8B9D4B0075C0A8 /* SKBounceAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SKBounceAnimation.m; path = SKBounceAnimation/SKBounceAnimation.m; sourceTree = "<group>"; };
+		04CA5DCC1B8B9F900075C0A8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MagicalRecord.xcodeproj; path = Vendor/MagicalRecord/MagicalRecord.xcodeproj; sourceTree = "<group>"; };
+		04CCD6661B8CBE4400664FB3 /* NSManagedObject+MagicalAggregation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+MagicalAggregation.h"; path = "Vendor/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalAggregation.h"; sourceTree = SOURCE_ROOT; };
+		04CCD6671B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FetchOrCreate.h"; sourceTree = "<group>"; };
+		04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FetchOrCreate.m"; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAvailable.swift; sourceTree = "<group>"; };
 		502199AD1B33817100A64387 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -366,10 +449,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04CA5DCD1B8B9F900075C0A8 /* CoreData.framework in Frameworks */,
 				0439D3971B8B79C3001850DD /* libz.dylib in Frameworks */,
 				0439D3951B8B79B5001850DD /* libc++.dylib in Frameworks */,
 				0439D3931B8B7936001850DD /* Mixpanel.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
+				04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */,
 				0439D34B1B8B76B1001850DD /* ParseFacebookUtilsV4.framework in Frameworks */,
 				0439D3281B876EA9001850DD /* Security.framework in Frameworks */,
 				0439D3411B8B76B1001850DD /* DigitsKit.framework in Frameworks */,
@@ -404,6 +489,8 @@
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				04CCD5C91B8CB2D200664FB3 /* MagicalRecord */,
+				04CA5D831B8B9D390075C0A8 /* ZAActivityBar */,
 				0439D38A1B8B7919001850DD /* Mixpanel */,
 				0439D32E1B8B76B1001850DD /* Branch */,
 				0439D3301B8B76B1001850DD /* Fabric */,
@@ -524,6 +611,10 @@
 		0439D3C51B8B86AC001850DD /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				04CCD6671B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.h */,
+				04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */,
+				043C72021B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.h */,
+				043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */,
 				0439D3C61B8B86AC001850DD /* CGRect+Extensions.swift */,
 				0439D3CC1B8B8758001850DD /* NSDate+Extensions.swift */,
 				0439D3C71B8B86AC001850DD /* CGSize+Extensions.swift */,
@@ -537,8 +628,8 @@
 		0439D3DF1B8B9721001850DD /* Sharing */ = {
 			isa = PBXGroup;
 			children = (
-				0434BCD51B73BDCF00EF57EC /* Image+Share.swift */,
-				049222AA1B72653900FFB08A /* Album+Share.swift */,
+				0434BCD51B73BDCF00EF57EC /* Image.swift */,
+				049222AA1B72653900FFB08A /* Album.swift */,
 				040B27D11B794E9B004B4FB2 /* Event+Share.swift */,
 			);
 			name = Sharing;
@@ -714,7 +805,6 @@
 			children = (
 				04196F521B8B996000AE5FA5 /* File+CoreDataProperties.swift */,
 				04C61FC51B8B987B00E2ACB5 /* Photo+CoreDataProperties.swift */,
-				04C61FC61B8B987B00E2ACB5 /* Event+CoreDataProperties.swift */,
 				04C61FB71B8B982600E2ACB5 /* Event+CoreDataProperties.swift */,
 				04C61FB91B8B982600E2ACB5 /* Photo+CoreDataProperties.swift */,
 				04C61FBB1B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift */,
@@ -732,6 +822,50 @@
 			);
 			name = "Data Management";
 			path = ..;
+			sourceTree = "<group>";
+		};
+		04CA5D831B8B9D390075C0A8 /* ZAActivityBar */ = {
+			isa = PBXGroup;
+			children = (
+				04CA5D891B8B9D4B0075C0A8 /* SKBounceAnimation */,
+				04CA5D841B8B9D440075C0A8 /* ZAActivityBar.bundle */,
+				04CA5D851B8B9D440075C0A8 /* ZAActivityBar.h */,
+				04CA5D861B8B9D440075C0A8 /* ZAActivityBar.m */,
+			);
+			name = ZAActivityBar;
+			sourceTree = "<group>";
+		};
+		04CA5D891B8B9D4B0075C0A8 /* SKBounceAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				04CA5DA31B8B9D4B0075C0A8 /* SKBounceAnimation.h */,
+				04CA5DA41B8B9D4B0075C0A8 /* SKBounceAnimation.m */,
+			);
+			name = SKBounceAnimation;
+			path = Vendor/ZAActivityBar/External/SKBounceAnimation;
+			sourceTree = "<group>";
+		};
+		04CCD5C91B8CB2D200664FB3 /* MagicalRecord */ = {
+			isa = PBXGroup;
+			children = (
+				04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */,
+			);
+			name = MagicalRecord;
+			sourceTree = "<group>";
+		};
+		04CCD6451B8CB70500664FB3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */,
+				04CCD6531B8CB70500664FB3 /* MagicalRecord for iOS Tests.xctest */,
+				04CCD6551B8CB70500664FB3 /* MagicalRecord.framework */,
+				04CCD6571B8CB70500664FB3 /* MagicalRecord for OS X Tests.xctest */,
+				04CCD6591B8CB70500664FB3 /* libMagicalRecord.a */,
+				04CCD65B1B8CB70500664FB3 /* libMagicalRecord for iOS Tests.xctest */,
+				04CCD65D1B8CB70500664FB3 /* libMagicalRecord.dylib */,
+				04CCD65F1B8CB70500664FB3 /* libMagicalRecord for OS X Tests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		04F41BEE1B74FBF4001AB8DA /* Controllers */ = {
@@ -790,6 +924,7 @@
 				0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81821A49E27F00E65899 /* Backflip-Bridging-Header.h */,
+				04CCD6661B8CBE4400664FB3 /* NSManagedObject+MagicalAggregation.h */,
 				0439D34F1B8B780D001850DD /* BestPractices.xcconfig */,
 			);
 			path = "Supporting Files";
@@ -803,6 +938,7 @@
 				0439D3941B8B79B5001850DD /* libc++.dylib */,
 				81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */,
 				81BA81761A49E0D500E65899 /* libsqlite3.dylib */,
+				04CA5DCC1B8B9F900075C0A8 /* CoreData.framework */,
 				0439D3271B876EA9001850DD /* Security.framework */,
 				049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */,
 				502199C51B33838A00A64387 /* CoreMotion.framework */,
@@ -835,6 +971,7 @@
 			dependencies = (
 				0439D3921B8B7930001850DD /* PBXTargetDependency */,
 				0439D3DA1B8B8D5C001850DD /* PBXTargetDependency */,
+				04CCD6631B8CB7EB00664FB3 /* PBXTargetDependency */,
 			);
 			name = Backflip;
 			productName = ParseStarterProject;
@@ -856,6 +993,9 @@
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 59T8YRE4TR;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.InAppPurchase = {
 								enabled = 0;
 							};
@@ -876,6 +1016,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 04CCD6451B8CB70500664FB3 /* Products */;
+					ProjectRef = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
+				},
+				{
 					ProductGroup = 0439D38C1B8B7922001850DD /* Products */;
 					ProjectRef = 0439D38B1B8B7922001850DD /* Mixpanel.xcodeproj */;
 				},
@@ -893,6 +1037,62 @@
 			fileType = wrapper.framework;
 			path = Mixpanel.framework;
 			remoteRef = 0439D38F1B8B7923001850DD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MagicalRecord.framework;
+			remoteRef = 04CCD6501B8CB70500664FB3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04CCD6531B8CB70500664FB3 /* MagicalRecord for iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "MagicalRecord for iOS Tests.xctest";
+			remoteRef = 04CCD6521B8CB70500664FB3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04CCD6551B8CB70500664FB3 /* MagicalRecord.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MagicalRecord.framework;
+			remoteRef = 04CCD6541B8CB70500664FB3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04CCD6571B8CB70500664FB3 /* MagicalRecord for OS X Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "MagicalRecord for OS X Tests.xctest";
+			remoteRef = 04CCD6561B8CB70500664FB3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04CCD6591B8CB70500664FB3 /* libMagicalRecord.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMagicalRecord.a;
+			remoteRef = 04CCD6581B8CB70500664FB3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04CCD65B1B8CB70500664FB3 /* libMagicalRecord for iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "libMagicalRecord for iOS Tests.xctest";
+			remoteRef = 04CCD65A1B8CB70500664FB3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04CCD65D1B8CB70500664FB3 /* libMagicalRecord.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libMagicalRecord.dylib;
+			remoteRef = 04CCD65C1B8CB70500664FB3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04CCD65F1B8CB70500664FB3 /* libMagicalRecord for OS X Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "libMagicalRecord for OS X Tests.xctest";
+			remoteRef = 04CCD65E1B8CB70500664FB3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -935,6 +1135,7 @@
 				049AA6991B73DA01003888CE /* UIBarButtonItemArrowRight.png in Resources */,
 				049AA6971B73DA01003888CE /* UIBarButtonItemArrowLeft@2x.png in Resources */,
 				049AA6921B73DA01003888CE /* PlayButtonOverlayLarge@3x.png in Resources */,
+				04CA5D871B8B9D440075C0A8 /* ZAActivityBar.bundle in Resources */,
 				049AA6A11B73DA01003888CE /* VideoOverlay@3x.png in Resources */,
 				049AA69A1B73DA01003888CE /* UIBarButtonItemArrowRight@2x.png in Resources */,
 				049AA6831B73DA01003888CE /* ImageError@3x.png in Resources */,
@@ -969,17 +1170,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04C61FC81B8B987B00E2ACB5 /* Event+CoreDataProperties.swift in Sources */,
 				0439D3B11B8B8249001850DD /* EventTableViewCell.swift in Sources */,
 				50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */,
-				0434BCD61B73BDCF00EF57EC /* Image+Share.swift in Sources */,
+				0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */,
 				0439D3D11B8B87D3001850DD /* BFTabBarControllerDelegate.swift in Sources */,
 				04C61FC01B8B982600E2ACB5 /* Event.swift in Sources */,
 				0439D3C91B8B86AC001850DD /* CGRect+Extensions.swift in Sources */,
 				049AA6DC1B73DB84003888CE /* SDWebImageCompat.m in Sources */,
 				049AA6E21B73DB84003888CE /* UIButton+WebCache.m in Sources */,
-				049222AB1B72653900FFB08A /* Album+Share.swift in Sources */,
+				049222AB1B72653900FFB08A /* Album.swift in Sources */,
 				0439D3C01B8B83AE001850DD /* ReportImage.swift in Sources */,
+				04D558FC1B8D00AB002E63B6 /* Event+CoreDataProperties.swift in Sources */,
 				040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */,
 				049AA6E01B73DB84003888CE /* SDWebImageManager.m in Sources */,
 				0439D3AB1B8B8210001850DD /* PreviewViewController.swift in Sources */,
@@ -1010,18 +1211,21 @@
 				04C61FC41B8B982600E2ACB5 /* GeoPoint.swift in Sources */,
 				0439D3C41B8B867C001850DD /* CustomCamera.swift in Sources */,
 				049AA6E71B73DB84003888CE /* UIImageView+WebCache.m in Sources */,
+				04CA5DC01B8B9D4B0075C0A8 /* SKBounceAnimation.m in Sources */,
 				049AA6E81B73DB84003888CE /* UIView+WebCacheOperation.m in Sources */,
 				0439D3D31B8B887C001850DD /* Array+Extensions.swift in Sources */,
 				049AA6B61B73DB72003888CE /* MBProgressHUD.m in Sources */,
 				049AA6A41B73DA01003888CE /* MWGridCell.m in Sources */,
 				049AA6DE1B73DB84003888CE /* SDWebImageDownloader.m in Sources */,
 				049AA6B11B73DB2E003888CE /* DACircularProgressView.m in Sources */,
+				04CCD6691B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m in Sources */,
 				049AA6E31B73DB84003888CE /* UIImage+GIF.m in Sources */,
 				049AA6A91B73DA01003888CE /* MWTapDetectingView.m in Sources */,
 				04C61FC21B8B982600E2ACB5 /* Photo.swift in Sources */,
 				049AA6DB1B73DB84003888CE /* SDImageCache.m in Sources */,
 				049AA6DA1B73DB84003888CE /* NSData+ImageContentType.m in Sources */,
 				04CA5D7F1B8B9BE80075C0A8 /* BFDataFetcher.swift in Sources */,
+				043C72041B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m in Sources */,
 				049AA6E11B73DB84003888CE /* SDWebImagePrefetcher.m in Sources */,
 				04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */,
 				04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */,
@@ -1032,6 +1236,7 @@
 				0439D3A31B8B81A6001850DD /* BFCImagePickerController.swift in Sources */,
 				04C61FC31B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift in Sources */,
 				04CA5D821B8B9C060075C0A8 /* BFDataProcessor.swift in Sources */,
+				04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				0439D3B01B8B8249001850DD /* AlbumViewCell.swift in Sources */,
 				0439D3DE1B8B93A5001850DD /* Backflip.xcdatamodeld in Sources */,
@@ -1050,6 +1255,11 @@
 			isa = PBXTargetDependency;
 			name = Mixpanel;
 			targetProxy = 0439D3D91B8B8D5C001850DD /* PBXContainerItemProxy */;
+		};
+		04CCD6631B8CB7EB00664FB3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "MagicalRecord for iOS";
+			targetProxy = 04CCD6621B8CB7EB00664FB3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1144,7 +1354,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				BUNDLE_ID = "com.getbackflip.Backflip-Dev";
+				BUNDLE_ID = com.getbackflip.Frontflip;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -1172,6 +1382,7 @@
 					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
 					"$(PROJECT_DIR)/Vendor/**",
 					"\"$(SRCROOT)/Vendor/AFNetworking/UIKit+AFNetworking\"",
+					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1204,6 +1415,7 @@
 				PRODUCT_NAME = Frontflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Supporting Files/Backflip-Bridging-Header.h";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1237,6 +1449,7 @@
 					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
 					"$(PROJECT_DIR)/Vendor/**",
 					"\"$(SRCROOT)/Vendor/AFNetworking/UIKit+AFNetworking\"",
+					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1269,6 +1482,7 @@
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Supporting Files/Backflip-Bridging-Header.h";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

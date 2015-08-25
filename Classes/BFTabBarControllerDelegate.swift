@@ -35,11 +35,11 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 				window?.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
 			} else {
 				
-				var event = Event()
-				event.objectId = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id") as? String
-				event.name = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_name") as? String
+				//var event = Event()
+				//event.objectId = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id") as? String
+				//event.name = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_name") as? String
 			
-				displayCamera(event)
+				// displayCamera(event)
 
 			}
 			
@@ -56,7 +56,7 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 		var testCamera = CustomCamera()
 		if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
 			
-			testCamera.event = event
+			// testCamera.event = event
 			
 			testCamera.delegate = self
 			testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen

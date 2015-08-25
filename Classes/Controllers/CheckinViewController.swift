@@ -14,7 +14,7 @@ import Foundation
 
 class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
-	var events : [Event] = []
+	// var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
 	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
@@ -131,18 +131,18 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
 		let index = self.pickerView?.selectedRowInComponent(0)
-		if (self.events.count == 0 || self.events.count < index) {
-			return 0
-		}
+//		if (self.events.count == 0 || self.events.count < index) {
+//			return 0
+//		}
 		
-		let event = self.events[Int(index!)]
-		if (event.photos?.count > 0) {
-			if (event.photos?.count > 5) {
-				return 6
-			} else {
-				return 1 + event.photos!.count
-			}
-		}
+//		let event = self.events[Int(index!)]
+//		if (event.photos?.count > 0) {
+//			if (event.photos?.count > 5) {
+//				return 6
+//			} else {
+//				return 1 + event.photos!.count
+//			}
+//		}
 		
 		return 0
 	}
@@ -152,15 +152,15 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
 		
 		let index = self.pickerView?.selectedRowInComponent(0)
-		let event = self.events[Int(index!)]
+		// let event = self.events[Int(index!)]
 		
 		if ((1 + indexPath.row) == self.collectionView(collectionView, numberOfItemsInSection: 0)) {
 			cell.imageView.image = UIImage(named: "check-in-screen-double-tap")
 			
-		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
-			let photo = event.photos![indexPath.row]
+		} /* else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
+			// let photo = event.photos![indexPath.row]
 			// cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail.url!))
-		}
+		} */
 		
 		// cell.addGestureRecognizer(self.doubleTapGesture!)
 		cell.layer.shouldRasterize = true
@@ -182,85 +182,37 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
 	{
-		if (self.events.count < 1) {
-			return 1
-		} else {
-			return self.events.count
-		}
+//		if (self.events.count < 1) {
+//			return 1
+//		} else {
+//			return self.events.count
+//		}
+		
+		return 0;
 	}
 	
 	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!
 	{
         //self.pickerView?.selectRow(0, inComponent: 0, animated: true)
-        if (self.events.count < 1) {
+        /* if (self.events.count < 1) {
             checkinButton.enabled = false
 			return "No nearby events"
 		} else {
             checkinButton.enabled = true
 			return self.events[row].name!
-		}
+		} */
+		return ""
 	}
 	
 	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
 	{
-		if (self.events.count < row) {
-			return
-		}
+//		if (self.events.count < row) {
+//			return
+//		}
 		
 		self.collectionView?.reloadData()
 	}
 	
-	
-	//-------------------------------------
-	// MARK: Tabbar Delegate
-	//-------------------------------------
-	
-	
-	func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
-	{
-		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
-		if (selectedIndex == 1) {
-			
-			let currentEvent: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
-			if (currentEvent == nil) {
-				var alertController = UIAlertController(title: "Take Photo", message: "Please check in or create an event before uploading photos.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: { (alertAction) -> Void in
-					println("Should switch back to 'current event' tab")
-				}))
-				
-				self.presentViewController(alertController, animated: true, completion: nil)
-			} else {
-			
-				//let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
-				//dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-					
-					var testCamera = CustomCamera()
-					if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-						
-						let index = self.pickerView?.selectedRowInComponent(0)
-						let event = self.events[Int(index!)]
-						testCamera.event = event
-						
-						testCamera.delegate = self
-						testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-						testCamera.sourceType = .Camera
-						testCamera.allowsEditing = false
-						testCamera.showsCameraControls = false
-						testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-						testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-						
-						self.presentViewController(testCamera, animated: true, completion: nil)
-					}
-				
-				//})
-			}
-			
-			return false
-		}
-		
-		return true
-	}
 	
 	
 	//-------------------------------------
@@ -282,6 +234,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	@IBAction func checkIn()
 	{
+		return
+		/*
 		if (self.events.count < 1) {
 			return
 		}
@@ -333,6 +287,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		
 		self.performSegueWithIdentifier("display-event-album", sender: self)
+		*/
 	}
 	
 	func processDoubleTap(sender: UITapGestureRecognizer)
@@ -362,9 +317,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				albumViewController.eventTitle =  NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_name") as? String
 			} else {
 				let index = self.pickerView?.selectedRowInComponent(0)
-				let event = self.events[Int(index!)]
-				albumViewController.eventId = event.objectId
-				albumViewController.eventTitle = event.name
+				//let event = self.events[Int(index!)]
+				//albumViewController.eventId = event.objectId
+				//albumViewController.eventTitle = event.name
 			}
 		}
 		
@@ -391,6 +346,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func fetchData()
 	{
+		/*
 		if (NetworkAvailable.networkConnection() == false) {
 			return
 		}
@@ -425,26 +381,26 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 					event.objectId = object.objectId
 					event.name = object["eventName"] as? String
 					// event.geoLocation = object["geoLocation"] as? PFGeoPoint
-					event.live = object["isLive"] as? Boolean
+					// event.live = object["isLive"] as? Boolean
 					event.startTime = object["startTime"] as? NSDate
 					event.venue = object["venue"] as? String
-					event.photos = [Photo]()
+					// event.photos = [Photo]()
 					
 					let photoQuery : PFQuery = object.relationForKey("photos").query()!
 					photoQuery.whereKey("flagged", notEqualTo: true)
 					photoQuery.whereKey("blocked", notEqualTo: true)
 					photoQuery.findObjectsInBackgroundWithBlock({ (photos, error) -> Void in
 						
-						for photo in photos as! [PFObject] {
-							let image = Photo()
-							image.objectId = photo.objectId
-							// image.likes = photo["upvoteCount"] as! Int
-							image.image = photo["image"] as! PFFile
-							image.thumbnail = photo["thumbnail"] as! PFFile
-							image.createdAt = photo.createdAt
-							// image.likedBy = photo["usersLiked"] as! [String]
-							// event.photos?.append(image)
-						}
+//						for photo in photos as! [PFObject] {
+//							let image = Photo()
+//							image.objectId = photo.objectId
+//							// image.likes = photo["upvoteCount"] as! Int
+//							image.image = photo["image"] as! PFFile
+//							image.thumbnail = photo["thumbnail"] as! PFFile
+//							image.createdAt = photo.createdAt
+//							// image.likedBy = photo["usersLiked"] as! [String]
+//							// event.photos?.append(image)
+//						}
 						
 						self.pickerView(self.pickerView!, didSelectRow: self.pickerView!.selectedRowInComponent(0), inComponent: 0)
 						self.collectionView?.reloadData()
@@ -454,7 +410,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				}
 				
 				
-				self.events = content
+				// self.events = content
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
 					
 					self.activityIndicator.stopAnimating()
@@ -467,6 +423,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				
 			}
 		})
+		*/
 	}
 	
 }

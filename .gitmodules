@@ -1,3 +1,9 @@
 [submodule "Vendor/Mixpanel"]
 	path = Vendor/Mixpanel
 	url = https://github.com/mixpanel/mixpanel-iphone.git
+[submodule "Vendor/ZAActivityBar"]
+	path = Vendor/ZAActivityBar
+	url = https://github.com/zacaltman/ZAActivityBar.git
+[submodule "Vendor/MagicalRecord"]
+	path = Vendor/MagicalRecord
+	url = https://github.com/magicalpanda/MagicalRecord.git

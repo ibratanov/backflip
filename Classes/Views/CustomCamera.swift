@@ -33,7 +33,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	
 	
 	// Hi, this the an "event" model object, you can find it's prop's in Event.swift Under Project > Models
-	var event : Event?
+	// var event : Event?
 	
 	// Checker for sort button. Sort in chronological order by default.
 	var sortedByLikes = true
@@ -96,7 +96,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 							NSBundle.mainBundle().loadNibNamed("OverlayView", owner:self, options:nil)
 							self.overlayView!.frame = self.frame
 							
-							self.eventNameLabel?.text = "Uploading to: \(self.event!.name!)"
+							// self.eventNameLabel?.text = "Uploading to: \(self.event!.name!)"
 							self.cameraOverlayView = self.overlayView
 							
 							self.overlayView = nil
@@ -210,7 +210,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 			previewViewController.imageToCrop = imageViewContent
 		}
 		
-		previewViewController.eventId = self.event!.objectId!
+		// previewViewController.eventId = self.event!.objectId!
 		// previewViewController.eventTitle = self.event!.name!
 		previewViewController.downloadToCameraRoll = downloadToCameraRoll
 		
@@ -487,7 +487,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		
 		        var query2 = PFQuery(className: "EventAttendance")
 		        query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-		        query2.whereKey("eventID", equalTo: event!.objectId!)
+		        // query2.whereKey("eventID", equalTo: event!.objectId!)
 		
 		        //var photoObjectList = query2.findObjects()
 		        var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
@@ -498,7 +498,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		                photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
 		
 		                var queryEvent = PFQuery(className: "Event")
-		                queryEvent.whereKey("objectId", equalTo: self.event!.objectId!)
+		                // queryEvent.whereKey("objectId", equalTo: self.event!.objectId!)
 		                //var objects = queryEvent.findObjects()
 		                var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
 		

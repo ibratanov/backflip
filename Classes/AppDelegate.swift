@@ -11,6 +11,7 @@ import Parse
 import Fabric
 import DigitsKit
 import FBSDKCoreKit
+import MagicalRecord
 
 
 
@@ -42,10 +43,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		
 
 		
+		
+		
 		//--------------------------------------
 		// Setup Parse & Application appearance
 		//--------------------------------------
 		setupParse()
+		setupCoreData()
 		setupApperance()
 		
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
@@ -64,6 +68,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 
         PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 
+		
+		//--------------------------------------
+		// CoreData
+		//--------------------------------------
+		BFDataFetcher.sharedFetcher.fetchData(true);
+		
+		
+		
         if application.applicationState != UIApplicationState.Background {
             // Track an app open here if we launch with a push, unless
             // "content_available" was used to trigger a background push (introduced in iOS 7).
@@ -127,7 +139,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                 // the first time a user has opened the app (aka an "Install").
                 //Custom logic goes here --> dependent on access to cloud services
                 if((params["referringOut"])  != nil) {
-					
+					/*
 					var event = Event()
 					event.objectId = params["eventId"] as? String
 					event.name = params["eventTitle"] as? String
@@ -140,6 +152,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 					
 					let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
 					window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+					*/
 				}
             }
         })
@@ -358,9 +371,20 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	
 	
 	//--------------------------------------
+	// MARK: CoreData
+	//--------------------------------------
+	func setupCoreData()
+	{
+		MagicalRecord.setupCoreDataStack()
+	}
+	
+
+
+	//--------------------------------------
 	// MARK: Parse
 	//--------------------------------------
 	
+	/*
 	func checkIn(event: Event)
 	{
 		 // You have been invited to join <EVENT>, would you like to check in?
@@ -395,6 +419,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
 		
 	}
+	*/
 	
 }
 
