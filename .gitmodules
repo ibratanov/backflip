@@ -7,3 +7,9 @@
 [submodule "Vendor/MagicalRecord"]
 	path = Vendor/MagicalRecord
 	url = https://github.com/magicalpanda/MagicalRecord.git
+[submodule "Vednor/SwiftLocation"]
+	path = Vednor/SwiftLocation
+	url = https://github.com/malcommac/SwiftLocation.git
+[submodule "Vendor/SwiftLocation"]
+	path = Vendor/SwiftLocation
+	url = https://github.com/malcommac/SwiftLocation.git

@@ -240,7 +240,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     object?.addUniqueObject(eventName, forKey:"savedEventNames")
                                     
                                     object!.save()
-                                    
+									
                                     // Add the EventAttendance join table relationship for photos (liked and uploaded)
                                     var attendance = PFObject(className:"EventAttendance")
                                     attendance["eventID"] = event.objectId

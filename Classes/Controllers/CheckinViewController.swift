@@ -9,12 +9,13 @@
 import Parse
 import DigitsKit
 import Foundation
+import CoreLocation
 
 
 
 class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
-	// var events : [Event] = []
+	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
 	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
@@ -182,33 +183,30 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
 	{
-//		if (self.events.count < 1) {
-//			return 1
-//		} else {
-//			return self.events.count
-//		}
-		
-		return 0;
+		if (self.events.count < 1) {
+			return 1
+		} else {
+			return self.events.count
+		}
 	}
 	
 	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!
 	{
         //self.pickerView?.selectRow(0, inComponent: 0, animated: true)
-        /* if (self.events.count < 1) {
+        if (self.events.count < 1) {
             checkinButton.enabled = false
 			return "No nearby events"
 		} else {
             checkinButton.enabled = true
 			return self.events[row].name!
-		} */
-		return ""
+		}
 	}
 	
 	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
 	{
-//		if (self.events.count < row) {
-//			return
-//		}
+		if (self.events.count < row) {
+			return
+		}
 		
 		self.collectionView?.reloadData()
 	}
@@ -234,8 +232,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	@IBAction func checkIn()
 	{
-		return
-		/*
 		if (self.events.count < 1) {
 			return
 		}
@@ -271,12 +267,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         let eventQuery = PFQuery(className: "Event")
         eventQuery.whereKey("eventName", equalTo: event.name!)
         eventQuery.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+			(objects: [AnyObject]?, error: NSError?) -> Void in
             
-        var eventObj = objects!.first as! PFObject
-        let relation = eventObj.relationForKey("attendees")
-        relation.addObject(PFUser.currentUser()!)
-        eventObj.saveInBackground()
+			var eventObj = objects!.first as! PFObject
+			let relation = eventObj.relationForKey("attendees")
+			relation.addObject(PFUser.currentUser()!)
+			eventObj.saveInBackground()
             
         }
 
@@ -287,7 +283,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		
 		self.performSegueWithIdentifier("display-event-album", sender: self)
-		*/
 	}
 	
 	func processDoubleTap(sender: UITapGestureRecognizer)
@@ -313,13 +308,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			let albumViewController : EventAlbumViewController = segue.destinationViewController as! EventAlbumViewController
 			let currentEventId: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
 			if (currentEventId != nil) {
-				albumViewController.eventId = currentEventId as? String
-				albumViewController.eventTitle =  NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_name") as? String
+				albumViewController.event = Event.fetchOrCreateWhereAttribute("objectId", isValue: currentEventId!) as? Event
 			} else {
 				let index = self.pickerView?.selectedRowInComponent(0)
-				//let event = self.events[Int(index!)]
-				//albumViewController.eventId = event.objectId
-				//albumViewController.eventTitle = event.name
+				let event = self.events[Int(index!)]
+				albumViewController.event = event;
 			}
 		}
 		
@@ -346,84 +339,67 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func fetchData()
 	{
-		/*
-		if (NetworkAvailable.networkConnection() == false) {
-			return
-		}
-		
-		let config = PFConfig.currentConfig()
-		PFGeoPoint.geoPointForCurrentLocationInBackground({ (geopoint, error) -> Void in
+		SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
+			// location is a CLPlacemark
+			print("We have a location!! ")
+			println(location)
 			
-			let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-			dispatch_async(dispatch_get_global_queue(priority, 0)) {
-				let query = PFQuery(className: "Event")
-				let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10 kms
-				query.whereKey("geoLocation", nearGeoPoint: geopoint!, withinKilometers:Double(radius))
-				query.limit = config["nearby_events_limit"] != nil ? Int(config["nearby_events_limit"]! as! NSNumber) : 60 // Default: 60 events
-				query.whereKey("isLive", equalTo:true)
-				var objects = query.findObjects()
-				if (objects == nil) {
-					return
-				}
-				
-				var account = PFQuery.getUserObjectWithId(PFUser.currentUser()!.objectId!)
-				var eventHistory: [String] = account!.objectForKey("savedEventNames") as! [String]
-				
-				
-				var content = [Event]()
-				for object in objects as! [PFObject] {
-					let pastEvent = contains(eventHistory, object["eventName"] as! String)
-					if (pastEvent) {
-						continue
+
+			let config = PFConfig.currentConfig()
+			var _events = Event.MR_findAll() as! [Event]
+			var nearbyEvents : NSMutableArray = NSMutableArray()
+			
+			let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10km (It's really in meters here 'cause of legacy, turns to Kms below)
+			var region : CLCircularRegion = CLCircularRegion(circularRegionWithCenter: location!.coordinate, radius: (radius.doubleValue * 1000), identifier: "nearby-events-region")
+			
+			for event : Event in _events {
+				if (event.geoLocation != nil) {
+					var coordinate = CLLocationCoordinate2D(latitude: event.geoLocation!.latitude!.doubleValue, longitude: event.geoLocation!.longitude!.doubleValue)
+					if (region.containsCoordinate(coordinate)) {
+						nearbyEvents.addObject(event)
 					}
-					
-					var event = Event()
-					event.objectId = object.objectId
-					event.name = object["eventName"] as? String
-					// event.geoLocation = object["geoLocation"] as? PFGeoPoint
-					// event.live = object["isLive"] as? Boolean
-					event.startTime = object["startTime"] as? NSDate
-					event.venue = object["venue"] as? String
-					// event.photos = [Photo]()
-					
-					let photoQuery : PFQuery = object.relationForKey("photos").query()!
-					photoQuery.whereKey("flagged", notEqualTo: true)
-					photoQuery.whereKey("blocked", notEqualTo: true)
-					photoQuery.findObjectsInBackgroundWithBlock({ (photos, error) -> Void in
-						
-//						for photo in photos as! [PFObject] {
-//							let image = Photo()
-//							image.objectId = photo.objectId
-//							// image.likes = photo["upvoteCount"] as! Int
-//							image.image = photo["image"] as! PFFile
-//							image.thumbnail = photo["thumbnail"] as! PFFile
-//							image.createdAt = photo.createdAt
-//							// image.likedBy = photo["usersLiked"] as! [String]
-//							// event.photos?.append(image)
-//						}
-						
-						self.pickerView(self.pickerView!, didSelectRow: self.pickerView!.selectedRowInComponent(0), inComponent: 0)
-						self.collectionView?.reloadData()
-					})
-					
-					content.append(event)
 				}
-				
-				
-				// self.events = content
-				dispatch_async(dispatch_get_main_queue(), { () -> Void in
-					
-					self.activityIndicator.stopAnimating()
-					self.activityIndicator.hidden = true
-					
-					self.pickerView?.reloadAllComponents()
-					self.collectionView?.reloadData()
-					self.pickerView?.hidden = false
-				})
-				
 			}
-		})
-		*/
+			
+			
+			// Sort by closest to furthest
+			nearbyEvents.sortedArrayWithOptions(NSSortOptions.Concurrent, usingComparator: { (event1, event2) -> NSComparisonResult in
+				
+				var location1 = CLLocation(latitude: (event1 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event1 as! Event).geoLocation!.longitude!.doubleValue)
+				var location2 = CLLocation(latitude: (event2 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event2 as! Event).geoLocation!.longitude!.doubleValue)
+				
+				var distance1 : NSNumber = NSNumber(double: location!.distanceFromLocation(location1))
+				var distance2 : NSNumber = NSNumber(double: location!.distanceFromLocation(location2))
+				
+				
+				return distance1.compare(distance2)
+//				if (location!.distanceFromLocation(location1) > location!.distanceFromLocation(location2)) {
+//					return .OrderedAscending
+//				} else {
+//					return .OrderedDescending
+//				}
+			})
+			
+			
+			// Update UI
+			self.events = (nearbyEvents.copy()) as! [Event]
+			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				
+				self.activityIndicator.stopAnimating()
+				self.activityIndicator.hidden = true
+				
+				self.pickerView?.reloadAllComponents()
+				self.collectionView?.reloadData()
+				self.pickerView?.hidden = false
+				
+			})
+			
+		}) { (error) -> Void in
+			// something went wrong
+			println("SwiftLocation error :(")
+			print(error)
+		}
+
 	}
 	
 }

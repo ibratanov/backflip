@@ -325,7 +325,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		if (config["appearance_navigation_tint"] != nil) {
 			bartintColor = config["appearance_navigation_tint"] as! String
 		}
-		
 		navigationBarAppearance.barTintColor = UIColor(rgba: bartintColor)
 		
 		

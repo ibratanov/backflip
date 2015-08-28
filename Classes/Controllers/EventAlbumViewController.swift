@@ -20,14 +20,11 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	// MARK: Global Variables
 	//-------------------------------------
 	
-	var eventId : String?
-	var eventTitle : String?
-	// var event : Event?
+	var event : Event?
 	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
 	
-	var orginalContent : [Image] = []
-	var collectionContent : [Image] = []
+	var collectionContent : [Photo] = []
 	
 	var photoBrowser : MWPhotoBrowser?
 	
@@ -55,11 +52,11 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		super.viewDidLoad()
 		
-		self.title = self.eventTitle
+		self.title = self.event?.name
 		
 		// Hide the "leave" button when pushed from event history
 		let currentEventId = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id") as? String
-		if (currentEventId == self.eventId) {
+		if (currentEventId == self.event?.objectID) {
 			self.navigationController?.setViewControllers([self], animated: false)
 		} else {
 			self.navigationItem.leftBarButtonItem = nil
@@ -139,11 +136,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			return nil;
 		}
 		
-		// let file = collectionContent[Int(index)]
-		// let photo = MWPhoto(URL: NSURL(string: file.image.url!))
-		
-		let photo = MWPhoto(URL: NSURL(string: "http//google.com"))
-		return photo
+		let photo = collectionContent[Int(index)]
+		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!))
+
+		return _photo
 	}
 	
 	func photoBrowser(photoBrowser: MWPhotoBrowser!, didDisplayPhotoAtIndex index: UInt)
@@ -184,6 +180,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			cell.imageView.tintColor = UIColor.grayColor()
 		} else if (self.collectionContent.count >= indexPath.row) {
 			
+			let photo = collectionContent[Int(indexPath.row)-1]
+			cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!))
 			// var file : PFFile = collectionContent[Int(indexPath.row)-1].thumbnail
 			// cell.imageView.setImageWithURL(NSURL(string: file.url!))
 			
@@ -259,12 +257,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	@IBAction func segementedControlValueChanged(sender: AnyObject)
 	{
-		if (self.orginalContent.count < 1) {
+		var photos : [Photo] = event?.photos?.allObjects as! [Photo]
+		if (photos.count < 1) {
 			return
 		}
 		
 		let segementedControl = sender as! UISegmentedControl
-		var content = self.orginalContent
+		var content = photos
 		
 		self.collectionContent.removeAll(keepCapacity: true)
 		self.collectionView?.reloadData()
@@ -272,12 +271,12 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 //		if segementedControl.selectedSegmentIndex == 0 {
 //			content.sort{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
 //		} else if segementedControl.selectedSegmentIndex == 1 {
-//			content.sort{ $0.likes > $1.likes }
+//			content.sort{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
 //		} else if segementedControl.selectedSegmentIndex == 2 {
 //			content.removeAll(keepCapacity: true)
-//			for (var i = 0; i < self.orginalContent.count; i++) {
-//				let image = self.orginalContent[i]
-//				let liked = contains(image.likedBy, PFUser.currentUser()!.username!)
+//			for (var i = 0; i < photos.count; i++) {
+//				let image = photos[i]
+//				let liked = image.usersLiked!.contains(PFUser.currentUser()!.username!)
 //				if (liked) {
 //					content.append(image)
 //				}
@@ -308,13 +307,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			user  = PFUser.currentUser()!.objectId!
 		}
 		
-		var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.eventId!)", "eventTitle": "\(self.eventTitle!)"]
+		var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
 		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
 			if (error != nil) {
 				NSLog("Branch short URL generation failed, %@", error);
 			} else {
 				
-				let album = Album(text: String(format:"Check out the photos from %@ on ", self.eventTitle!), url: url);
+				let album = Album(text: String(format:"Check out the photos from %@ on ", self.event!.name!), url: url);
 				
 				// Now we share.
 				let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [album, url], applicationActivities: nil)
@@ -412,8 +411,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 					var imageIndex = find(self.collectionContent, image)
 					self.collectionContent.removeAtIndex(imageIndex!)
 					
-					imageIndex = find(self.orginalContent, image)
-					self.orginalContent.removeAtIndex(imageIndex!)
+					// imageIndex = find(self.orginalContent, image)
+					// self.orginalContent.removeAtIndex(imageIndex!)
 					
 					dispatch_async(dispatch_get_main_queue(), {
 						self.photoBrowser?.reloadData()
@@ -438,6 +437,32 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	func updateData()
 	{
+		if (self.event == nil) {
+			println("No event passed to EventAlbumViewController :(");
+			return
+		}
+		
+		var photos : [Photo] = event?.photos?.allObjects as! [Photo]
+		if (photos.count < 1) {
+			print("No Photos/ No Updates")
+			dispatch_async(dispatch_get_main_queue()) {
+				self.spinner.stopAnimating()
+				self.refreshControl.endRefreshing()
+			}
+		} else {
+		
+			self.collectionContent = photos
+			// self.segementedControlValueChanged(self.segmentedControl)
+					
+			dispatch_async(dispatch_get_main_queue()) {
+				self.collectionView?.reloadData()
+				self.spinner.stopAnimating()
+				self.refreshControl.endRefreshing()
+			}
+		}
+		
+		self.collectionContent = photos
+		
 		/*
 		if (self.eventId == nil) {
 			print("eventId < 0, NOP'ing out")

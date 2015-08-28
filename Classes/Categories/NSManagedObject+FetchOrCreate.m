@@ -47,7 +47,7 @@
     if (!instanceVar) {
         instanceVar = [self MR_createEntityInContext:context];
         for (NSString *key in allKeys) {
-            instanceVar[key] = attributeDict[key];
+			[instanceVar setValue:attributeDict[key] forKey:key];
         }
     }
 

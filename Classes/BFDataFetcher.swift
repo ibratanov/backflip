@@ -31,10 +31,10 @@ class BFDataFetcher : NSObject {
 			}
 			
 			
-			let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+			let priority = DISPATCH_QUEUE_PRIORITY_BACKGROUND
 			dispatch_async(dispatch_get_global_queue(priority, 0)) {
 				var objects: AnyObject? = object?.objectForKey("Event")
-				if (objects!.count > 0) {
+				if (objects?.count > 0) {
 					if (activityInidactor) {
 						ZAActivityBar.showWithStatus("Processing Events", forAction: "process_events")
 					}
@@ -48,6 +48,23 @@ class BFDataFetcher : NSObject {
 				
 			}
 			
+			
+			// Photos
+			dispatch_async(dispatch_get_global_queue(priority, 0)) {
+				var objects: AnyObject? = object?.objectForKey("Photo")
+				if (objects?.count > 0) {
+					if (activityInidactor) {
+						ZAActivityBar.showWithStatus("Processing Photos", forAction: "process_photos")
+					}
+					
+					BFDataProcessor.sharedProcessor.processPhotos(objects as! [PFObject], completion: { () -> Void in
+						if (activityInidactor) {
+							ZAActivityBar.showSuccessWithStatus("Photos Processed", forAction: "process_photos")
+						}
+					})
+				}
+				
+			}
 			
 		})
 		
