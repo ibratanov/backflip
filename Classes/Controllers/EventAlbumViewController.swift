@@ -50,6 +50,14 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		UIApplication.sharedApplication().statusBarHidden = false
 	}
+    
+    override func viewWillAppear(animated: Bool) {
+        var tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Event Album")
+        
+        var builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
+    }
 	
 	override func viewDidLoad()
 	{

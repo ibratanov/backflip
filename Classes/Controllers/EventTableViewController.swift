@@ -48,6 +48,12 @@ class EventTableViewController: UITableViewController {
         } else {
             displayNoInternetAlert()
         }
+        
+        var tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Event Table View")
+        
+        var builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
     }
     
     override func viewDidLoad() {

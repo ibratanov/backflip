@@ -125,6 +125,7 @@
 		502199C21B33833E00A64387 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C11B33833E00A64387 /* AVFoundation.framework */; };
 		502199C61B33838A00A64387 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C51B33838A00A64387 /* CoreMotion.framework */; };
 		50C9A7931B276F430091FEC9 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C9A7921B276F430091FEC9 /* Social.framework */; };
+		67ABC6DB1B8E29B200F7A3D0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67ABC6DA1B8E29B200F7A3D0 /* GoogleService-Info.plist */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA81521A49DA1800E65899 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
 		81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81761A49E0D500E65899 /* libsqlite3.dylib */; };
@@ -322,6 +323,7 @@
 		502199C11B33833E00A64387 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		502199C51B33838A00A64387 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		50C9A7921B276F430091FEC9 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		67ABC6DA1B8E29B200F7A3D0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Activity Items/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* Frontflip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Frontflip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA81491A49DA1800E65899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -721,6 +723,7 @@
 				0439D3B31B8B82E2001850DD /* Interface */,
 				0439D3BE1B8B838F001850DD /* Activity Items */,
 				81BA81491A49DA1800E65899 /* Info.plist */,
+				67ABC6DA1B8E29B200F7A3D0 /* GoogleService-Info.plist */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81821A49E27F00E65899 /* Backflip-Bridging-Header.h */,
 				0439D34F1B8B780D001850DD /* BestPractices.xcconfig */,
@@ -875,6 +878,7 @@
 				049AA6851B73DA01003888CE /* ImageSelectedOff@2x.png in Resources */,
 				049AA6981B73DA01003888CE /* UIBarButtonItemArrowLeft@3x.png in Resources */,
 				049AA6871B73DA01003888CE /* ImageSelectedOn.png in Resources */,
+				67ABC6DB1B8E29B200F7A3D0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -138,7 +138,13 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
 		
 	}
-	
+    override func viewWillAppear(animated: Bool) {
+        var tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Camera Screen")
+        
+        var builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
+    }
 	//--------------- Camera ---------------
 	//initialize camera
 	

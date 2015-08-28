@@ -35,6 +35,18 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		application.setStatusBarStyle(.LightContent, animated: true)
 		UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
 		
+        //-------Google Analytics
+        // Configure tracker from GoogleService-Info.plist.
+        var configureError:NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        
+        // Optional: configure GAI options.
+        var gai = GAI.sharedInstance()
+        gai.trackUncaughtExceptions = true  // report uncaught exceptions
+        gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+        //-------------------------
+        
 		//-------New Relic
         NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
         //-------Branch

@@ -25,4 +25,6 @@
 	#import "NewRelicAgent/NewRelic.h"
 	#import "MWPhotoBrowserPrivate.h"
 
+    #import <Google/Analytics.h>
+
 #endif

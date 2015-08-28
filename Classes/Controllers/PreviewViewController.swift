@@ -176,6 +176,14 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        var tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Preview Screen")
+        
+        var builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
+    }
+    
     @IBAction func cropButtonPressed(sender: AnyObject) {
         let cropDimension = cropOpeningView.bounds.size.minDimension()
         let contentRectVisibleInScrollView = CGRect(
