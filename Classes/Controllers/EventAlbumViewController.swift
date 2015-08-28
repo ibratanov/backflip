@@ -56,7 +56,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		// Hide the "leave" button when pushed from event history
 		let currentEventId = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id") as? String
-		if (currentEventId == self.event?.objectID) {
+		if (currentEventId == self.event?.objectId) {
 			self.navigationController?.setViewControllers([self], animated: false)
 		} else {
 			self.navigationItem.leftBarButtonItem = nil
@@ -181,10 +181,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		} else if (self.collectionContent.count >= indexPath.row) {
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
-			cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!))
-			// var file : PFFile = collectionContent[Int(indexPath.row)-1].thumbnail
-			// cell.imageView.setImageWithURL(NSURL(string: file.url!))
-			
+			cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!)!)
+		
 		}
 		
 		cell.layer.shouldRasterize = true

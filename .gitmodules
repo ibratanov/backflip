@@ -13,3 +13,6 @@
 [submodule "Vendor/SwiftLocation"]
 	path = Vendor/SwiftLocation
 	url = https://github.com/malcommac/SwiftLocation.git
+[submodule "Vendor/AFNetworking"]
+	path = Vendor/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git

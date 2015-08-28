@@ -140,7 +140,7 @@
 		04D558FC1B8D00AB002E63B6 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB71B8B982600E2ACB5 /* Event+CoreDataProperties.swift */; };
 		04FD59DD1B8E5ED6005A1FA4 /* SwiftLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
-		04FD5A231B902064005A1FA4 /* AFNetworking.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 04FD5A221B902064005A1FA4 /* AFNetworking.xcworkspace */; };
+		04FD5A251B90210F005A1FA4 /* AFNetworking.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 04FD5A241B90210F005A1FA4 /* AFNetworking.xcworkspace */; };
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
 		50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */; };
 		502199AE1B33817100A64387 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199AD1B33817100A64387 /* Accounts.framework */; };
@@ -429,7 +429,8 @@
 		04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FetchOrCreate.m"; sourceTree = "<group>"; };
 		04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftLocation.swift; path = Vendor/SwiftLocation/Pod/Classes/SwiftLocation.swift; sourceTree = "<group>"; };
 		04FD59E11B901D63005A1FA4 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		04FD5A221B902064005A1FA4 /* AFNetworking.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = AFNetworking.xcworkspace; path = Vendor/AFNetworking/AFNetworking.xcworkspace; sourceTree = SOURCE_ROOT; };
+		04FD5A241B90210F005A1FA4 /* AFNetworking.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = AFNetworking.xcworkspace; path = Vendor/AFNetworking/AFNetworking.xcworkspace; sourceTree = SOURCE_ROOT; };
+		04FD5A261B90218D005A1FA4 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAvailable.swift; sourceTree = "<group>"; };
 		502199AD1B33817100A64387 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -644,7 +645,7 @@
 		0464219B1B876D3D00953719 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				04FD5A221B902064005A1FA4 /* AFNetworking.xcworkspace */,
+				04FD5A241B90210F005A1FA4 /* AFNetworking.xcworkspace */,
 			);
 			name = AFNetworking;
 			path = ParseStarterProject/Vendor/AFNetworking;
@@ -939,6 +940,7 @@
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81821A49E27F00E65899 /* Backflip-Bridging-Header.h */,
 				04CCD6661B8CBE4400664FB3 /* NSManagedObject+MagicalAggregation.h */,
+				04FD5A261B90218D005A1FA4 /* UIImageView+AFNetworking.h */,
 				0439D34F1B8B780D001850DD /* BestPractices.xcconfig */,
 			);
 			path = "Supporting Files";
@@ -1145,7 +1147,7 @@
 				049AA6821B73DA01003888CE /* ImageError@2x.png in Resources */,
 				049AA6881B73DA01003888CE /* ImageSelectedOn@2x.png in Resources */,
 				049AA68B1B73DA01003888CE /* ImageSelectedSmallOff@2x.png in Resources */,
-				04FD5A231B902064005A1FA4 /* AFNetworking.xcworkspace in Resources */,
+				04FD5A251B90210F005A1FA4 /* AFNetworking.xcworkspace in Resources */,
 				049AA6991B73DA01003888CE /* UIBarButtonItemArrowRight.png in Resources */,
 				049AA6971B73DA01003888CE /* UIBarButtonItemArrowLeft@2x.png in Resources */,
 				049AA6921B73DA01003888CE /* PlayButtonOverlayLarge@3x.png in Resources */,
@@ -1397,7 +1399,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
 					"$(PROJECT_DIR)/Vendor/**",
-					"\"$(SRCROOT)/Vendor/AFNetworking/UIKit+AFNetworking\"",
+					"\"$(SRCROOT)/Vendor/AFNetworking\"/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
@@ -1464,7 +1466,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
 					"$(PROJECT_DIR)/Vendor/**",
-					"\"$(SRCROOT)/Vendor/AFNetworking/UIKit+AFNetworking\"",
+					"\"$(SRCROOT)/Vendor/AFNetworking\"/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";

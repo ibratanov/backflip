@@ -26,6 +26,7 @@
 
 	#import "AFNetworking.h"
 	#import "UIKit+AFNetworking.h"
+	#import "UIImageView+AFNetworking.h"
 
 	#import <Mixpanel/Mixpanel.h>
 	#import "MWPhotoBrowser.h"
