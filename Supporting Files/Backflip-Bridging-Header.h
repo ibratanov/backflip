@@ -20,11 +20,13 @@
 	#import "AFNetworking.h"
 	#import "UIKit+AFNetworking.h"
 
+	// Analytics yo
 	#import <Mixpanel/Mixpanel.h>
-	#import "MWPhotoBrowser.h"
+	#import "GoogleAnalytics.h"
 	#import "NewRelicAgent/NewRelic.h"
+
+	#import "MWPhotoBrowser.h"
 	#import "MWPhotoBrowserPrivate.h"
 
-    #import <Google/Analytics.h>
 
 #endif
