@@ -25,7 +25,11 @@ class EventTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
         super.prepareForReuse()
         
         self.imageOne.image = nil
+		self.imageOne.tintColor = UIColor.whiteColor()
+		
         self.imageTwo.image = nil
+		self.imageTwo.tintColor = UIColor.whiteColor()
+		
         self.imageThree.image = nil
         self.imageFour.image = nil
         self.imageFive.image = nil

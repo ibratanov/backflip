@@ -22,12 +22,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	var event : Event?
 	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
+	let ADD_CELL_REUSE_IDENTIFIER = "add-album-cell"
 	
 	var collectionContent : [Photo] = []
 	
 	var photoBrowser : MWPhotoBrowser?
 	
-	var likeButton : UIBarButtonItem?
+	var likeButton : DOFavoriteButton?
 	var likeLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 100, 21))
 	
 	
@@ -40,11 +41,29 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	// MARK: View Delegate
 	//-------------------------------------
 	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		
+		if let navigationController = self.navigationController as? ScrollingNavigationController {
+			navigationController.followScrollView(self.collectionView!, delay: 50.0)
+		}
+	}
+	
 	override func viewDidAppear(animated: Bool)
 	{
 		super.viewDidAppear(animated)
 		
 		UIApplication.sharedApplication().statusBarHidden = false
+	}
+	
+	override func viewDidDisappear(animated: Bool)
+	{
+		super.viewDidDisappear(animated)
+		
+		if let navigationController = self.navigationController as? ScrollingNavigationController {
+			navigationController.stopFollowingScrollView()
+		}
 	}
 	
 	override func viewDidLoad()
@@ -149,12 +168,12 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		if (photo.usersLiked != nil) {
 			let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
 			if (liked) {
-				likeButton?.image = UIImage(named: "heart-icon-filled")
+				likeButton!.select()
 			} else {
-				likeButton?.image = UIImage(named: "heart-icon-empty")
+				likeButton!.deselect()
 			}
 		} else {
-			likeButton?.image = UIImage(named: "heart-icon-empty")
+			likeButton!.deselect()
 		}
 	}
 	
@@ -175,16 +194,23 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
 	{
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
-		
+		var cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
 		if (indexPath.row == 0) {
+			cell = collectionView.dequeueReusableCellWithReuseIdentifier(ADD_CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
+		}
+			
+		if (indexPath.row == 0) {
+			
 			cell.imageView.image = UIImage(named: "album-add-photo")
 			cell.imageView.image!.imageWithRenderingMode(.AlwaysTemplate)
 			cell.imageView.tintColor = UIColor.grayColor()
+			
 		} else if (self.collectionContent.count >= indexPath.row) {
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
-			cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!)!)
+			if (cell.imageView.image == nil) {
+				cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!)!)
+			}
 		
 		}
 		
@@ -213,19 +239,23 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 			// Toolbar items
 			let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-			let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: self, action: nil)
-			fixedSpace.width = 8
 		
-			likeButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: "likePhoto")
-			likeButton?.image = UIImage(named: "heart-icon-empty")
+			likeButton = DOFavoriteButton(frame: CGRectMake(0, 0, 50, 44), image: UIImage(named: "heart-icon-empty"))
+			likeButton!.addTarget(self, action: Selector("likePhoto"), forControlEvents: .TouchUpInside)
+			likeButton!.imageColorOff = UIColor.whiteColor()
+			likeButton!.imageColorOn = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
+			likeButton!.lineColor = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
+			likeButton!.circleColor = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
 		
 			likeLabel.font = UIFont(name: "Avenir-Medium", size: 16)
 			likeLabel.textColor = UIColor.whiteColor()
 			likeLabel.backgroundColor = UIColor.clearColor()
 		
 			let likeLabelButton = UIBarButtonItem(customView: likeLabel)
-		
-			photoBrowser?.toolbar?.items = [fixedSpace, likeButton!, fixedSpace, likeLabelButton, flexSpace, shareBarButton]
+			let likeBarButton = UIBarButtonItem(customView: likeButton!)
+			likeBarButton.width = 40
+			
+			photoBrowser?.toolbar?.items = [likeBarButton, likeLabelButton, flexSpace, shareBarButton]
 		
 			photoBrowser?.setCurrentPhotoIndex(UInt(indexPath.row)-1)
 		
@@ -245,6 +275,17 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		}
 		
 		return supplementaryView as! UICollectionReusableView
+	}
+	
+	
+	func tapped(sender: DOFavoriteButton) {
+		if sender.selected {
+			// deselect
+			sender.deselect()
+		} else {
+			// select with animation
+			sender.select()
+		}
 	}
 	
 	
@@ -305,18 +346,27 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			user  = PFUser.currentUser()!.objectId!
 		}
 		
+		PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Retriving invite code…")
+		PKHUD.sharedHUD.show()
+		
 		let params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
 		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
 			if (error != nil) {
 				NSLog("Branch short URL generation failed, %@", error);
 			} else {
 				
-				let album = Album(text: String(format:"Check out the photos from %@ on ", self.event!.name!), url: url);
+				PKHUD.sharedHUD.hide(afterDelay: 0)
 				
-				// Now we share.
-				let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [album, url], applicationActivities: nil)
-				activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]
-				self.presentViewController(activityViewController, animated: true, completion: nil)
+				// Delay .2 seconds for visual effect
+				let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+				dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+					
+					let album = Album(text: String(format:"Check out the photos from %@ on ", self.event!.name!), url: url);
+					// Now we share.
+					let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [album, url], applicationActivities: nil)
+					activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]
+					self.presentViewController(activityViewController, animated: true, completion: nil)
+				})
 				
 			}
 			
@@ -399,9 +449,9 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 					if (photo.usersLiked != nil) {
 						let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
 						if (liked) {
-							self.likeButton?.image = UIImage(named: "heart-icon-filled")
+							self.likeButton!.select()
 						} else {
-							self.likeButton?.image = UIImage(named: "heart-icon-empty")
+							self.likeButton!.deselect()
 						}
 					}
 					

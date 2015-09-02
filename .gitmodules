@@ -16,3 +16,12 @@
 [submodule "Vendor/AFNetworking"]
 	path = Vendor/AFNetworking
 	url = https://github.com/AFNetworking/AFNetworking.git
+[submodule "Vendor/DOFavoriteButton"]
+	path = Vendor/DOFavoriteButton
+	url = https://github.com/okmr-d/DOFavoriteButton.git
+[submodule "Vendor/AMScrollingNavbar"]
+	path = Vendor/AMScrollingNavbar
+	url = https://github.com/andreamazz/AMScrollingNavbar.git
+[submodule "Vendor/PKHUD"]
+	path = Vendor/PKHUD
+	url = https://github.com/pkluz/PKHUD.git

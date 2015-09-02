@@ -123,6 +123,21 @@
 		049AA6E71B73DB84003888CE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6D61B73DB84003888CE /* UIImageView+WebCache.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6E81B73DB84003888CE /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6D81B73DB84003888CE /* UIView+WebCacheOperation.m */; };
 		049AA6EA1B73DBB2003888CE /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */; };
+		04B1C6571B97648C00F30C80 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6521B97648C00F30C80 /* DOFavoriteButton.swift */; };
+		04B1C6581B97648C00F30C80 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6531B97648C00F30C80 /* heart.png */; };
+		04B1C6591B97648C00F30C80 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6541B97648C00F30C80 /* like.png */; };
+		04B1C65A1B97648C00F30C80 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6551B97648C00F30C80 /* smile.png */; };
+		04B1C65B1B97648C00F30C80 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6561B97648C00F30C80 /* star.png */; };
+		04B1C6671B9779F700F30C80 /* ScrollingNavbar+Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6641B9779F700F30C80 /* ScrollingNavbar+Sizes.swift */; };
+		04B1C6681B9779F700F30C80 /* ScrollingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6651B9779F700F30C80 /* ScrollingNavigationController.swift */; };
+		04B1C6691B9779F700F30C80 /* ScrollingNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6661B9779F700F30C80 /* ScrollingNavigationViewController.swift */; };
+		04B1C6731B9783E000F30C80 /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C66B1B9783E000F30C80 /* FrameView.swift */; };
+		04B1C6741B9783E000F30C80 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C66C1B9783E000F30C80 /* Images.xcassets */; };
+		04B1C6751B9783E000F30C80 /* PKHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C66E1B9783E000F30C80 /* PKHUD.swift */; };
+		04B1C6761B9783E000F30C80 /* PKHUDAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C66F1B9783E000F30C80 /* PKHUDAssets.swift */; };
+		04B1C6771B9783E000F30C80 /* PKHUDContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6701B9783E000F30C80 /* PKHUDContentView.swift */; };
+		04B1C6781B9783E000F30C80 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6711B9783E000F30C80 /* Window.swift */; };
+		04B1C6791B9783E000F30C80 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6721B9783E000F30C80 /* WindowRootViewController.swift */; };
 		04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */; };
 		04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */; };
 		04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB61B8B982600E2ACB5 /* File.swift */; };
@@ -410,6 +425,22 @@
 		049AA6D71B73DB84003888CE /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		049AA6D81B73DB84003888CE /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		04B1C6521B97648C00F30C80 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOFavoriteButton.swift; sourceTree = "<group>"; };
+		04B1C6531B97648C00F30C80 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		04B1C6541B97648C00F30C80 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
+		04B1C6551B97648C00F30C80 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
+		04B1C6561B97648C00F30C80 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		04B1C6641B9779F700F30C80 /* ScrollingNavbar+Sizes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ScrollingNavbar+Sizes.swift"; path = "Vendor/AMScrollingNavbar/Source/ScrollingNavbar+Sizes.swift"; sourceTree = "<group>"; };
+		04B1C6651B9779F700F30C80 /* ScrollingNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollingNavigationController.swift; path = Vendor/AMScrollingNavbar/Source/ScrollingNavigationController.swift; sourceTree = "<group>"; };
+		04B1C6661B9779F700F30C80 /* ScrollingNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollingNavigationViewController.swift; path = Vendor/AMScrollingNavbar/Source/ScrollingNavigationViewController.swift; sourceTree = "<group>"; };
+		04B1C66B1B9783E000F30C80 /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameView.swift; path = Vendor/PKHUD/PKHUD/FrameView.swift; sourceTree = "<group>"; };
+		04B1C66C1B9783E000F30C80 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Vendor/PKHUD/PKHUD/Images.xcassets; sourceTree = "<group>"; };
+		04B1C66D1B9783E000F30C80 /* PKHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PKHUD.h; path = Vendor/PKHUD/PKHUD/PKHUD.h; sourceTree = "<group>"; };
+		04B1C66E1B9783E000F30C80 /* PKHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUD.swift; path = Vendor/PKHUD/PKHUD/PKHUD.swift; sourceTree = "<group>"; };
+		04B1C66F1B9783E000F30C80 /* PKHUDAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDAssets.swift; path = Vendor/PKHUD/PKHUD/PKHUDAssets.swift; sourceTree = "<group>"; };
+		04B1C6701B9783E000F30C80 /* PKHUDContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDContentView.swift; path = Vendor/PKHUD/PKHUD/PKHUDContentView.swift; sourceTree = "<group>"; };
+		04B1C6711B9783E000F30C80 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Vendor/PKHUD/PKHUD/Window.swift; sourceTree = "<group>"; };
+		04B1C6721B9783E000F30C80 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowRootViewController.swift; path = Vendor/PKHUD/PKHUD/WindowRootViewController.swift; sourceTree = "<group>"; };
 		04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ParseObject+CoreDataProperties.swift"; path = "Models/ParseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
 		04C61FB61B8B982600E2ACB5 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -496,6 +527,9 @@
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				04B1C66A1B9783CD00F30C80 /* PKHUD */,
+				04B1C6631B9779EB00F30C80 /* AMScrollingNavbar */,
+				04B1C6511B97648C00F30C80 /* DOFavoriteButton */,
 				04FD59D41B8E5DFC005A1FA4 /* SwiftLocation */,
 				04CCD5C91B8CB2D200664FB3 /* MagicalRecord */,
 				04CA5D831B8B9D390075C0A8 /* ZAActivityBar */,
@@ -809,6 +843,44 @@
 			name = SDWebImage;
 			path = Vendor/SDWebImage;
 			sourceTree = SOURCE_ROOT;
+		};
+		04B1C6511B97648C00F30C80 /* DOFavoriteButton */ = {
+			isa = PBXGroup;
+			children = (
+				04B1C6521B97648C00F30C80 /* DOFavoriteButton.swift */,
+				04B1C6531B97648C00F30C80 /* heart.png */,
+				04B1C6541B97648C00F30C80 /* like.png */,
+				04B1C6551B97648C00F30C80 /* smile.png */,
+				04B1C6561B97648C00F30C80 /* star.png */,
+			);
+			name = DOFavoriteButton;
+			path = Vendor/DOFavoriteButton/DOFavoriteButton;
+			sourceTree = "<group>";
+		};
+		04B1C6631B9779EB00F30C80 /* AMScrollingNavbar */ = {
+			isa = PBXGroup;
+			children = (
+				04B1C6641B9779F700F30C80 /* ScrollingNavbar+Sizes.swift */,
+				04B1C6651B9779F700F30C80 /* ScrollingNavigationController.swift */,
+				04B1C6661B9779F700F30C80 /* ScrollingNavigationViewController.swift */,
+			);
+			name = AMScrollingNavbar;
+			sourceTree = "<group>";
+		};
+		04B1C66A1B9783CD00F30C80 /* PKHUD */ = {
+			isa = PBXGroup;
+			children = (
+				04B1C66B1B9783E000F30C80 /* FrameView.swift */,
+				04B1C66C1B9783E000F30C80 /* Images.xcassets */,
+				04B1C66D1B9783E000F30C80 /* PKHUD.h */,
+				04B1C66E1B9783E000F30C80 /* PKHUD.swift */,
+				04B1C66F1B9783E000F30C80 /* PKHUDAssets.swift */,
+				04B1C6701B9783E000F30C80 /* PKHUDContentView.swift */,
+				04B1C6711B9783E000F30C80 /* Window.swift */,
+				04B1C6721B9783E000F30C80 /* WindowRootViewController.swift */,
+			);
+			name = PKHUD;
+			sourceTree = "<group>";
 		};
 		04C61FB41B8B97F700E2ACB5 /* CoreData */ = {
 			isa = PBXGroup;
@@ -1131,6 +1203,7 @@
 				0439D3B91B8B82E2001850DD /* InviteViewController.xib in Resources */,
 				049AA69B1B73DA01003888CE /* UIBarButtonItemArrowRight@3x.png in Resources */,
 				0439D3BD1B8B82E2001850DD /* PreviewViewController.xib in Resources */,
+				04B1C65B1B97648C00F30C80 /* star.png in Resources */,
 				049AA6951B73DA01003888CE /* PlayButtonOverlayLargeTap@3x.png in Resources */,
 				049AA6841B73DA01003888CE /* ImageSelectedOff.png in Resources */,
 				049AA6901B73DA01003888CE /* PlayButtonOverlayLarge.png in Resources */,
@@ -1144,6 +1217,7 @@
 				0439D3991B8B7AEE001850DD /* DigitsKitResources.bundle in Resources */,
 				0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */,
 				049AA6941B73DA01003888CE /* PlayButtonOverlayLargeTap@2x.png in Resources */,
+				04B1C6741B9783E000F30C80 /* Images.xcassets in Resources */,
 				049AA6A01B73DA01003888CE /* VideoOverlay@2x.png in Resources */,
 				049AA69F1B73DA01003888CE /* VideoOverlay.png in Resources */,
 				049AA6821B73DA01003888CE /* ImageError@2x.png in Resources */,
@@ -1152,9 +1226,12 @@
 				04FD5A251B90210F005A1FA4 /* AFNetworking.xcworkspace in Resources */,
 				049AA6991B73DA01003888CE /* UIBarButtonItemArrowRight.png in Resources */,
 				049AA6971B73DA01003888CE /* UIBarButtonItemArrowLeft@2x.png in Resources */,
+				04B1C6591B97648C00F30C80 /* like.png in Resources */,
 				049AA6921B73DA01003888CE /* PlayButtonOverlayLarge@3x.png in Resources */,
 				04CA5D871B8B9D440075C0A8 /* ZAActivityBar.bundle in Resources */,
 				049AA6A11B73DA01003888CE /* VideoOverlay@3x.png in Resources */,
+				04B1C6581B97648C00F30C80 /* heart.png in Resources */,
+				04B1C65A1B97648C00F30C80 /* smile.png in Resources */,
 				049AA69A1B73DA01003888CE /* UIBarButtonItemArrowRight@2x.png in Resources */,
 				049AA6831B73DA01003888CE /* ImageError@3x.png in Resources */,
 				049AA6931B73DA01003888CE /* PlayButtonOverlayLargeTap.png in Resources */,
@@ -1189,6 +1266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0439D3B11B8B8249001850DD /* EventTableViewCell.swift in Sources */,
+				04B1C6681B9779F700F30C80 /* ScrollingNavigationController.swift in Sources */,
 				50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */,
 				0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */,
 				0439D3D11B8B87D3001850DD /* BFTabBarControllerDelegate.swift in Sources */,
@@ -1200,6 +1278,7 @@
 				0439D3C01B8B83AE001850DD /* ReportImage.swift in Sources */,
 				040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */,
 				049AA6E01B73DB84003888CE /* SDWebImageManager.m in Sources */,
+				04B1C6761B9783E000F30C80 /* PKHUDAssets.swift in Sources */,
 				0439D3AB1B8B8210001850DD /* PreviewViewController.swift in Sources */,
 				0439D3CF1B8B8777001850DD /* UIColor+Extensions.swift in Sources */,
 				04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */,
@@ -1215,10 +1294,13 @@
 				04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */,
 				0439D3A41B8B81A6001850DD /* CreatePublicEventViewController.swift in Sources */,
 				0439D3A91B8B81A6001850DD /* LoginViewController.swift in Sources */,
+				04B1C6691B9779F700F30C80 /* ScrollingNavigationViewController.swift in Sources */,
 				049AA6DF1B73DB84003888CE /* SDWebImageDownloaderOperation.m in Sources */,
+				04B1C6571B97648C00F30C80 /* DOFavoriteButton.swift in Sources */,
 				049AA6D91B73DB84003888CE /* MKAnnotationView+WebCache.m in Sources */,
 				049AA6AB1B73DA01003888CE /* UIImage+MWPhotoBrowser.m in Sources */,
 				04C61FC11B8B982600E2ACB5 /* Photo+CoreDataProperties.swift in Sources */,
+				04B1C6751B9783E000F30C80 /* PKHUD.swift in Sources */,
 				0439D3A51B8B81A6001850DD /* EventAlbumViewController.swift in Sources */,
 				049AA6E61B73DB84003888CE /* UIImageView+HighlightedWebCache.m in Sources */,
 				049AA6B21B73DB2E003888CE /* DALabeledCircularProgressView.m in Sources */,
@@ -1241,22 +1323,27 @@
 				049AA6E31B73DB84003888CE /* UIImage+GIF.m in Sources */,
 				049AA6A91B73DA01003888CE /* MWTapDetectingView.m in Sources */,
 				04C61FC21B8B982600E2ACB5 /* Photo.swift in Sources */,
+				04B1C6781B9783E000F30C80 /* Window.swift in Sources */,
 				049AA6DB1B73DB84003888CE /* SDImageCache.m in Sources */,
 				049AA6DA1B73DB84003888CE /* NSData+ImageContentType.m in Sources */,
 				04CA5D7F1B8B9BE80075C0A8 /* BFDataFetcher.swift in Sources */,
 				043C72041B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m in Sources */,
 				049AA6E11B73DB84003888CE /* SDWebImagePrefetcher.m in Sources */,
+				04B1C6731B9783E000F30C80 /* FrameView.swift in Sources */,
 				04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */,
 				04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */,
 				0439D3CD1B8B8758001850DD /* NSDate+Extensions.swift in Sources */,
+				04B1C6791B9783E000F30C80 /* WindowRootViewController.swift in Sources */,
 				0439D3A81B8B81A6001850DD /* InviteViewController.swift in Sources */,
 				04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */,
+				04B1C6771B9783E000F30C80 /* PKHUDContentView.swift in Sources */,
 				049AA6E41B73DB84003888CE /* UIImage+MultiFormat.m in Sources */,
 				0439D3CA1B8B86AC001850DD /* CGSize+Extensions.swift in Sources */,
 				0439D3A31B8B81A6001850DD /* BFCImagePickerController.swift in Sources */,
 				04C61FC31B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift in Sources */,
 				04CA5D821B8B9C060075C0A8 /* BFDataProcessor.swift in Sources */,
 				041F37991B94B08700610881 /* Attendance.swift in Sources */,
+				04B1C6671B9779F700F30C80 /* ScrollingNavbar+Sizes.swift in Sources */,
 				04FD59DD1B8E5ED6005A1FA4 /* SwiftLocation.swift in Sources */,
 				04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,

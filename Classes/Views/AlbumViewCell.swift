@@ -9,9 +9,8 @@
 import UIKit
 import ParseUI
 
-class AlbumViewCell: UICollectionViewCell {
-
-    //@IBOutlet var imageView: PFImageView?
+class AlbumViewCell: UICollectionViewCell
+{
     
     @IBOutlet weak var imageView: UIImageView!
 
@@ -20,8 +19,8 @@ class AlbumViewCell: UICollectionViewCell {
 	{
 		super.prepareForReuse()
 		
-		self.imageView.image = nil
-		self.imageView.tintColor = nil
+		// self.imageView.image = nil
+		// self.imageView.tintColor = nil
 	}
 	
 	override func layoutSubviews()

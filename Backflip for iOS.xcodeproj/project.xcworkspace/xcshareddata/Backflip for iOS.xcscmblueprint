@@ -5,6 +5,9 @@
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "548AC090E1DB22900595581804DA116AAACB2ABF" : 0,
+    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : 0,
+    "4EA48C4418C0D37C936EB709C50F03661DB187D9" : 0,
+    "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : 0,
     "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : 0,
     "677E8E9414FADC8C089A94C6134023AA45E42A2C" : 0,
     "958932E9D08E4465709D54DB1E7CECF23B0F442E" : 0,
@@ -15,6 +18,9 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0957CE20-4077-40D1-9F68-0D5801E14CE1",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "548AC090E1DB22900595581804DA116AAACB2ABF" : "application\/Vendor\/ZAActivityBar\/",
+    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : "application\/Vendor\/AMScrollingNavbar\/",
+    "4EA48C4418C0D37C936EB709C50F03661DB187D9" : "application\/Vendor\/PKHUD\/",
+    "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : "application\/Vendor\/DOFavoriteButton\/",
     "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : "applicationVendor\/Mixpanel",
     "677E8E9414FADC8C089A94C6134023AA45E42A2C" : "application\/Vendor\/SwiftLocation\/",
     "958932E9D08E4465709D54DB1E7CECF23B0F442E" : "application\/Vendor\/MagicalRecord\/",
@@ -27,9 +33,24 @@
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Backflip for iOS.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/okmr-d\/DOFavoriteButton.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "00C8F6554FA404FC771F59E32BE27BC2793D9BB4"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/andreamazz\/AMScrollingNavbar.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mixpanel\/mixpanel-iphone.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/pkluz\/PKHUD.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4EA48C4418C0D37C936EB709C50F03661DB187D9"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/zacaltman\/ZAActivityBar.git",

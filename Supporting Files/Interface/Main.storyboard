@@ -285,7 +285,7 @@
         <!--Event Albums-->
         <scene sceneID="0XN-eA-FQT">
             <objects>
-                <navigationController title="Event Albums" id="Oc7-Mf-MXx" sceneMemberID="viewController">
+                <navigationController title="Event Albums" id="Oc7-Mf-MXx" customClass="ScrollingNavigationController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Event History" image="tabBar-eventHistory" selectedImage="tabBar-eventHistory-filled" id="Fho-OT-gwv">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="tabBar-eventHistory-filled"/>
@@ -586,6 +586,26 @@
                                     <outlet property="imageView" destination="HHM-Lc-oGr" id="Z78-tB-pHJ"/>
                                 </connections>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="add-album-cell" id="1g4-eY-6nj" customClass="AlbumViewCell" customModule="Backflip" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="125" height="125"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YQS-HY-SNS">
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                            <animations/>
+                                        </imageView>
+                                    </subviews>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <animations/>
+                                <connections>
+                                    <outlet property="imageView" destination="YQS-HY-SNS" id="0jq-sl-rZG"/>
+                                </connections>
+                            </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="header-view" id="9Jr-DJ-Mbz">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -644,7 +664,7 @@
         <!--Current Event-->
         <scene sceneID="dIp-dR-pyX">
             <objects>
-                <navigationController title="Current Event" id="O7c-aj-Qx3" sceneMemberID="viewController">
+                <navigationController title="Current Event" id="O7c-aj-Qx3" customClass="ScrollingNavigationController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Current Event" image="tabBar-locator" id="65X-vP-VEc">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="tabBar-locator-filled"/>
@@ -860,10 +880,10 @@
             </objects>
             <point key="canvasLocation" x="3237.5" y="-1994.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Scrolling Navigation Controller-->
         <scene sceneID="aqR-S5-k7b">
             <objects>
-                <navigationController id="nKw-HA-0z8" sceneMemberID="viewController">
+                <navigationController id="nKw-HA-0z8" customClass="ScrollingNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ul5-kI-psl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -160,7 +160,7 @@ class EventTableViewController: UITableViewController
 			cell.imageFive.image = UIImage()
 			cell.imageFive.backgroundColor = CELL_BACKGROUND_COLOR
 			
-		} else if event.photos?.count == 5 {
+		} else if event.photos?.count >= 5 {
 		
 			let photos : [Photo] = event.photos?.allObjects as! [Photo]
 			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!)!)
