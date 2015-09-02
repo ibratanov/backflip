@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
-
 import Parse
 import Photos
 import MessageUI
@@ -98,7 +97,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	@IBAction func leaveEvent()
 	{
-		var alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave? This event will be moved to your event history.", preferredStyle: .Alert)
+		let alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave? This event will be moved to your event history.", preferredStyle: .Alert)
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Leave", style: .Destructive, handler: { (alertAction) -> Void in
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
@@ -144,15 +143,19 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	func photoBrowser(photoBrowser: MWPhotoBrowser!, didDisplayPhotoAtIndex index: UInt)
 	{
-//		let image = self.collectionContent[Int(index)]
-//		likeLabel.text = NSString(format: "%i likes", image.likes) as String
-//		
-//		let liked = contains(image.likedBy, PFUser.currentUser()!.username!)
-//		if (liked) {
-//			likeButton?.image = UIImage(named: "heart-icon-filled")
-//		} else {
-//			likeButton?.image = UIImage(named: "heart-icon-empty")
-//		}
+		let photo = collectionContent[Int(index)]
+		likeLabel.text = NSString(format: "%i likes", photo.upvoteCount!.integerValue) as String
+
+		if (photo.usersLiked != nil) {
+			let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
+			if (liked) {
+				likeButton?.image = UIImage(named: "heart-icon-filled")
+			} else {
+				likeButton?.image = UIImage(named: "heart-icon-empty")
+			}
+		} else {
+			likeButton?.image = UIImage(named: "heart-icon-empty")
+		}
 	}
 	
 	
@@ -194,12 +197,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 	{
 		if (indexPath.row == 0) {
-			
-			// var event = Event()
-			// let tabBarDelegate = BFTabBarControllerDelegate.sharedDelegate
-			// event.objectId = self.eventId
-			// event.name = self.eventTitle
-			// tabBarDelegate.displayCamera(event)
+
+			BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
 			
 		} else {
 		
@@ -224,7 +223,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			likeLabel.textColor = UIColor.whiteColor()
 			likeLabel.backgroundColor = UIColor.clearColor()
 		
-			var likeLabelButton = UIBarButtonItem(customView: likeLabel)
+			let likeLabelButton = UIBarButtonItem(customView: likeLabel)
 		
 			photoBrowser?.toolbar?.items = [fixedSpace, likeButton!, fixedSpace, likeLabelButton, flexSpace, shareBarButton]
 		
@@ -260,27 +259,28 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			return
 		}
 		
-		let segementedControl = sender as! UISegmentedControl
 		var content = photos
+		let segementedControl = sender as! UISegmentedControl
 		
 		self.collectionContent.removeAll(keepCapacity: true)
 		self.collectionView?.reloadData()
 		
-//		if segementedControl.selectedSegmentIndex == 0 {
-//			content.sort{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
-//		} else if segementedControl.selectedSegmentIndex == 1 {
-//			content.sort{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
-//		} else if segementedControl.selectedSegmentIndex == 2 {
-//			content.removeAll(keepCapacity: true)
-//			for (var i = 0; i < photos.count; i++) {
-//				let image = photos[i]
-//				let liked = image.usersLiked!.contains(PFUser.currentUser()!.username!)
-//				if (liked) {
-//					content.append(image)
-//				}
-//			}
-//			
-//		}
+		if segementedControl.selectedSegmentIndex == 0 {
+			content.sort{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
+		} else if segementedControl.selectedSegmentIndex == 1 {
+			content.sort{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
+		} else if segementedControl.selectedSegmentIndex == 2 {
+			content.removeAll(keepCapacity: true)
+			for (var i = 0; i < photos.count; i++) {
+				let photo = photos[i]
+				if (photo.usersLiked != nil) {
+					let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
+					if (liked) {
+						content.append(photo)
+					}
+				}
+			}
+		}
 		
 		self.collectionContent = content
 
@@ -305,7 +305,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			user  = PFUser.currentUser()!.objectId!
 		}
 		
-		var params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
+		let params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
 		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
 			if (error != nil) {
 				NSLog("Branch short URL generation failed, %@", error);
@@ -327,6 +327,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	@IBAction func sharePhoto()
 	{
+		
 		let selectedIndex = photoBrowser?.currentIndex
 		let image = collectionContent[Int(selectedIndex!)]
 
@@ -341,40 +342,72 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	@IBAction func likePhoto()
 	{
-		return ;
+
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
 		
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-		
-			let selectedIndex = self.photoBrowser?.currentIndex
-			let image = self.collectionContent[Int(selectedIndex!)]
-			// let liked = contains(image.likedBy, PFUser.currentUser()!.username!)
-//			if (liked) {
-//				let index = find(image.likedBy, PFUser.currentUser()!.username!)
-//				image.likedBy.removeAtIndex(index!)
-//				image.likes -= 1
-//			} else {
-//				image.likedBy.append(PFUser.currentUser()!.username!)
-//				image.likes += 1
-//			}
 			
-			var photo = PFObject(className: "Photo")
-			photo.objectId = image.objectId
-			// photo["upvoteCount"] = image.likes
-			// photo["usersLiked"] = image.likedBy
-			
-			photo.saveInBackground()
-			
-			dispatch_async(dispatch_get_main_queue(), {
+			let context = NSManagedObjectContext.MR_defaultContext()
+			context.saveWithBlock({ (context) -> Void in
 				
-				// self.likeLabel.text = NSString(format: "%i likes", image.likes) as String
+				let selectedIndex = self.photoBrowser?.currentIndex
+				let _photo = self.collectionContent[Int(selectedIndex!)]
+				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 				
-				let liked = false
-				// let liked = contains(image.likedBy, PFUser.currentUser()!.username!)
-				if (liked) {
-					self.likeButton?.image = UIImage(named: "heart-icon-filled")
-				} else {
-					self.likeButton?.image = UIImage(named: "heart-icon-empty")
+				
+				if (photo.usersLiked == nil) {
+					photo.usersLiked = ""
 				}
+				
+				let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
+				if (liked) {
+					var liked = photo.usersLiked!.componentsSeparatedByString(",")
+					let index = find(liked, PFUser.currentUser()!.username!)
+					liked.removeAtIndex(index!)
+					photo.usersLiked = ",".join(liked)
+					
+					photo.upvoteCount = photo.upvoteCount!.integerValue - 1
+				} else {
+					var liked = photo.usersLiked!.componentsSeparatedByString(",")
+					liked.append(PFUser.currentUser()!.username!)
+					photo.usersLiked = ",".join(liked)
+
+					photo.upvoteCount = photo.upvoteCount!.integerValue + 1
+				}
+				
+			}, completion: { (completed, error) -> Void in
+				
+				let selectedIndex = self.photoBrowser?.currentIndex
+				let _photo = self.collectionContent[Int(selectedIndex!)]
+				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
+				
+				let photoObject = PFObject(className: "Photo")
+				photoObject.objectId = photo.objectId
+				photoObject["upvoteCount"] = photo.upvoteCount
+				if (photo.usersLiked != nil) {
+					photoObject["usersLiked"] = photo.usersLiked!.componentsSeparatedByString(",")
+				}
+				
+				photoObject.saveInBackground()
+				
+				dispatch_async(dispatch_get_main_queue(), {
+					
+					self.likeLabel.text = NSString(format: "%i likes", photo.upvoteCount!.integerValue) as String
+					
+					let selectedIndex = self.photoBrowser?.currentIndex
+					let _photo = self.collectionContent[Int(selectedIndex!)]
+					let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
+					if (photo.usersLiked != nil) {
+						let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
+						if (liked) {
+							self.likeButton?.image = UIImage(named: "heart-icon-filled")
+						} else {
+							self.likeButton?.image = UIImage(named: "heart-icon-empty")
+						}
+					}
+					
+				})
+
+				
 			})
 			
 		})
@@ -460,80 +493,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		}
 		
 		self.collectionContent = photos
-		
-		/*
-		if (self.eventId == nil) {
-			print("eventId < 0, NOP'ing out")
-			return
-		}
-		
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-			
-			var imagesQuery = PFQuery(className: "Event")
-			imagesQuery.limit = 1
-			// imagesQuery.selectKeys(["name","photos"])
-			imagesQuery.whereKey("objectId", equalTo: self.eventId!)
-			let uploadedImages = imagesQuery.findObjects()
-			
-			if (uploadedImages?.count < 1) {
-				print("No Photos/ No Updates")
-				dispatch_async(dispatch_get_main_queue()) {
-					self.spinner.stopAnimating()
-					self.refreshControl.endRefreshing()
-				}
-			} else {
-				let _object = uploadedImages!.first as! PFObject
-				let _photos = _object["photos"] as! PFRelation
-				
-				if (_object["name"] != nil) {
-					self.navigationItem.title = _object["name"] as? String
-					self.eventTitle = _object["name"] as? String
-				}
-				
-				let photosQuery = _photos.query()!
-				photosQuery.limit = 300
-				photosQuery.whereKey("flagged", notEqualTo: true)
-				photosQuery.whereKey("blocked", notEqualTo: true)
-				let photos = photosQuery.findObjects()
-				
-				if (photos?.count < 0) {
-					print("No Photos/ No Updates")
-					dispatch_async(dispatch_get_main_queue()) {
-						self.spinner.stopAnimating()
-						self.refreshControl.endRefreshing()
-					}
-				} else {
-					
-					self.collectionContent.removeAll(keepCapacity: true)
-					for photo in photos! {
-						
-						let image = Image(text: "Check out this photo!")
-						image.objectId = photo.objectId
-						image.likes = photo["upvoteCount"] as! Int
-						image.image = photo["image"] as! PFFile
-						image.thumbnail = photo["thumbnail"] as! PFFile
-						image.createdAt = photo.createdAt
-						image.likedBy = photo["usersLiked"] as! [String]
-						
-						// self.collectionContent.append(image)
-					}
-					self.orginalContent = self.collectionContent
-					
-					
-					self.segementedControlValueChanged(self.segmentedControl)
-					
-					dispatch_async(dispatch_get_main_queue()) {
-						self.collectionView?.reloadData()
-						self.spinner.stopAnimating()
-						self.refreshControl.endRefreshing()
-					}
-				}
-				
-				
-			}
-			
-		})
-		*/
 	}
 	
 }

@@ -9,13 +9,13 @@
 import UIKit
 import ParseUI
 
-class EventTableViewCell: UITableViewCell,UIGestureRecognizerDelegate {
+class EventTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
 
-    let imageOne = PFImageView()
-    let imageTwo = PFImageView()
-    let imageThree = PFImageView()
-    let imageFour = PFImageView()
-    let imageFive = PFImageView()
+    let imageOne = UIImageView()
+    let imageTwo = UIImageView()
+    let imageThree = UIImageView()
+    let imageFour = UIImageView()
+    let imageFive = UIImageView()
 
     @IBOutlet var eventName: UILabel!
 
@@ -35,8 +35,8 @@ class EventTableViewCell: UITableViewCell,UIGestureRecognizerDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        var bounds = UIScreen.mainScreen().bounds
-        var width = bounds.size.width
+        let bounds = UIScreen.mainScreen().bounds
+        let width = bounds.size.width
         
         // Sizing for iPhone 4/5, iPhone 6 Display Zoom
         if width == 320 {

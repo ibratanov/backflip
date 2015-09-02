@@ -53,7 +53,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     func displayAlert(title:String, error: String) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
             
             self.presentViewController(alert, animated: true, completion: nil)
@@ -62,7 +62,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     func displayAlertLogout(title:String, error: String) {
         
-        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
 		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { action in
@@ -80,7 +80,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     func displayNoInternetAlert() {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+            let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
         })

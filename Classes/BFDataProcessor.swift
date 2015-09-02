@@ -29,7 +29,7 @@ class BFDataProcessor
 			
 			for object : PFObject in events {
 			
-				var event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Event;
+				let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Event;
 				if (object.createdAt != nil) {
 					event.createdAt = object.createdAt
 				}
@@ -59,11 +59,11 @@ class BFDataProcessor
 				}
 
 				if (self.isValid(object["geoLocation"])) {
-					var geoObject = object["geoLocation"] as? PFGeoPoint
+					let geoObject = object["geoLocation"] as? PFGeoPoint
 					if (geoObject != nil) {
 						
-						var attributes = ["latitude" : NSNumber(double: geoObject!.latitude), "longitude": NSNumber(double: geoObject!.longitude)]
-						var geoPoint : GeoPoint = GeoPoint.fetchOrCreateWithAttributesAndValues(attributes) as! GeoPoint
+						let attributes = ["latitude" : NSNumber(double: geoObject!.latitude), "longitude": NSNumber(double: geoObject!.longitude)]
+						let geoPoint : GeoPoint = GeoPoint.fetchOrCreateWithAttributesAndValues(attributes) as! GeoPoint
 						event.geoLocation = geoPoint;
 					}
 				}
@@ -76,6 +76,44 @@ class BFDataProcessor
 	}
 
 	
+	func processAttendees(attendees: [PFObject], completion: () -> Void)
+	{
+		if (attendees.count < 1) {
+			return
+		}
+		
+		let context = NSManagedObjectContext.MR_defaultContext()
+		context.saveWithBlock({ (context) -> Void in
+			
+			for object : PFObject in attendees {
+				
+				let attendee : Attendance = Attendance.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Attendance
+				if (object.createdAt != nil) {
+					attendee.createdAt = object.createdAt
+				}
+
+				if (object.updatedAt != nil) {
+					attendee.updatedAt = object.updatedAt
+				}
+				
+				if (self.isValid(object["attendeeID"])) {
+					attendee.attendeeId = object["attendeeID"] as? String
+				}
+				
+				if (self.isValid(object["event"])) {
+					let eventObject : PFObject = object["event"] as! PFObject
+					let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject.objectId) as! Event
+					attendee.event = event;
+				}
+				
+			}
+		}, completion: { (contextDidSave, error) -> Void in
+			return completion()
+		})
+		
+	}
+	
+	
 	func processPhotos(photos: [PFObject], completion: () -> Void)
 	{
 		if (photos.count < 1) {
@@ -87,7 +125,7 @@ class BFDataProcessor
 			
 			for object : PFObject in photos {
 			
-				var photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Photo;
+				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Photo;
 				if (object.createdAt != nil) {
 					photo.createdAt = object.createdAt
 				}
@@ -105,26 +143,26 @@ class BFDataProcessor
 				
 				
 				if (self.isValid(object["event"])) {
-					var eventObject = object["event"] as? PFObject
+					let eventObject = object["event"] as? PFObject
 					if (eventObject != nil) {
-						var event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject!.objectId!) as! Event
+						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject!.objectId!) as! Event
 						photo.event = event;
 					}
 				}
 
 
 				if (self.isValid(object["image"])) {
-					var imageObject = object["image"] as? PFFile
+					let imageObject = object["image"] as? PFFile
 					if (imageObject != nil) {
-						var file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url) as! File
+						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url) as! File
 						photo.image = file;
 					}
 				}
 
 				if (self.isValid(object["thumbnail"])) {
-					var imageObject = object["thumbnail"] as? PFFile
+					let imageObject = object["thumbnail"] as? PFFile
 					if (imageObject != nil) {
-						var file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url) as! File
+						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url) as! File
 						photo.thumbnail = file;
 					}
 				}

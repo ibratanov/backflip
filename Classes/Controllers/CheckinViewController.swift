@@ -28,6 +28,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var checkinButton: UIButton!
 	@IBOutlet weak var activityIndicator : UIActivityIndicatorView!
 	
+
 	//-------------------------------------
 	// MARK: View Delegate
 	//-------------------------------------
@@ -69,12 +70,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			checkoutDelay = Int(config["checkout_timeout"] as! NSNumber)
 		}
 		
-		var checkinTime = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_time") as? NSDate
+		let checkinTime = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_time") as? NSDate
 		if (checkinTime == nil) {
 			return
 		}
 		
-		var expiryTime = checkinTime?.addHours(Int(checkoutDelay))
+		let expiryTime = checkinTime?.addHours(Int(checkoutDelay))
 		if (expiryTime != nil && NSDate().isGreaterThanDate(expiryTime!)) {
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
@@ -94,7 +95,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		self.activityIndicator.hidden = false
 
         //TODO: refactor
-        var checkinTime = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_time") as? NSDate
+        let checkinTime = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_time") as? NSDate
         if (checkinTime != nil) {
             // check for current event
             let config = PFConfig.currentConfig()
@@ -103,7 +104,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
                 checkoutDelay = Int(config["checkout_timeout"] as! NSNumber)
             }
             
-            var expiryTime = checkinTime?.addHours(Int(checkoutDelay))
+            let expiryTime = checkinTime?.addHours(Int(checkoutDelay))
             if (expiryTime != nil && NSDate().isGreaterThanDate(expiryTime!)) {
                 NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
                 NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
@@ -120,6 +121,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         }
 	}
 	
+
 	//-------------------------------------
 	// MARK: UICollectioViewDataSource
 	//-------------------------------------
@@ -132,18 +134,18 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
 		let index = self.pickerView?.selectedRowInComponent(0)
-//		if (self.events.count == 0 || self.events.count < index) {
-//			return 0
-//		}
+		if (self.events.count == 0 || self.events.count < index) {
+			return 0
+		}
 		
-//		let event = self.events[Int(index!)]
-//		if (event.photos?.count > 0) {
-//			if (event.photos?.count > 5) {
-//				return 6
-//			} else {
-//				return 1 + event.photos!.count
-//			}
-//		}
+		let event = self.events[Int(index!)]
+		if (event.photos?.count > 0) {
+			if (event.photos?.count > 5) {
+				return 6
+			} else {
+				return 1 + event.photos!.count
+			}
+		}
 		
 		return 0
 	}
@@ -153,15 +155,15 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
 		
 		let index = self.pickerView?.selectedRowInComponent(0)
-		// let event = self.events[Int(index!)]
+		let event = self.events[Int(index!)]
 		
 		if ((1 + indexPath.row) == self.collectionView(collectionView, numberOfItemsInSection: 0)) {
 			cell.imageView.image = UIImage(named: "check-in-screen-double-tap")
 			
-		} /* else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
-			// let photo = event.photos![indexPath.row]
-			// cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail.url!))
-		} */
+		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
+			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
+			cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail!.url!)!)
+		}
 		
 		// cell.addGestureRecognizer(self.doubleTapGesture!)
 		cell.layer.shouldRasterize = true
@@ -190,7 +192,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		}
 	}
 	
-	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!
+	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
 	{
         //self.pickerView?.selectRow(0, inComponent: 0, animated: true)
         if (self.events.count < 1) {
@@ -219,7 +221,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	@IBAction func logout()
 	{
-		var alertController = UIAlertController(title: "Are you sure you want to logout?", message:"", preferredStyle: .Alert)
+		let alertController = UIAlertController(title: "Are you sure you want to logout?", message:"", preferredStyle: .Alert)
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (alertAction) -> Void in
 			PFUser.logOut()
@@ -245,7 +247,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		currentInstallation.saveInBackground()
 		
 		// Create & save attendance object
-		var attendance = PFObject(className:"EventAttendance")
+		let attendance = PFObject(className:"EventAttendance")
 		attendance["eventID"] = event.objectId
 		attendance["attendeeID"] = PFUser.currentUser()?.objectId
 		attendance["photosLikedID"] = []
@@ -258,7 +260,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		attendance.saveInBackground()
 		
 		
-		var account = PFUser.currentUser()
+		let account = PFUser.currentUser()
 		account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
 		account?.addUniqueObject(event.name!, forKey: "savedEventNames")
 		account?.saveInBackground()
@@ -269,7 +271,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         eventQuery.findObjectsInBackgroundWithBlock {
 			(objects: [AnyObject]?, error: NSError?) -> Void in
             
-			var eventObj = objects!.first as! PFObject
+			let eventObj = objects!.first as! PFObject
 			let relation = eventObj.relationForKey("attendees")
 			relation.addObject(PFUser.currentUser()!)
 			eventObj.saveInBackground()
@@ -287,14 +289,13 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func processDoubleTap(sender: UITapGestureRecognizer)
 	{
-		//if (sender.state == .Ended) {
-			let touchPoint = sender.locationInView(self.collectionView)
-			let hitDetect = CGRectContainsPoint(self.collectionView!.bounds, touchPoint)
-			if (hitDetect == true) {
-				checkIn()
-			}
-			
-		//}
+		
+		let touchPoint = sender.locationInView(self.collectionView)
+		let hitDetect = CGRectContainsPoint(self.collectionView!.bounds, touchPoint)
+		if (hitDetect == true) {
+			checkIn()
+		}
+
 	}
 	
 	
@@ -323,7 +324,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		if (identifier == "create-event" && NetworkAvailable.networkConnection() == false) {
 			
-			var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to create an event.")
+			let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to create an event.")
 			self.presentViewController(alert, animated: true, completion: nil)
 			
 			return false
@@ -342,19 +343,19 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
 			// location is a CLPlacemark
 			print("We have a location!! ")
-			println(location)
+			print(location)
 			
 
 			let config = PFConfig.currentConfig()
-			var _events = Event.MR_findAll() as! [Event]
-			var nearbyEvents : NSMutableArray = NSMutableArray()
+			let _events = Event.MR_findAll() as! [Event]
+			let nearbyEvents : NSMutableArray = NSMutableArray()
 			
 			let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10km (It's really in meters here 'cause of legacy, turns to Kms below)
-			var region : CLCircularRegion = CLCircularRegion(circularRegionWithCenter: location!.coordinate, radius: (radius.doubleValue * 1000), identifier: "nearby-events-region")
+			let region : CLCircularRegion = CLCircularRegion(center: location!.coordinate, radius: (radius.doubleValue * 1000), identifier: "nearby-events-region")
 			
 			for event : Event in _events {
 				if (event.geoLocation != nil) {
-					var coordinate = CLLocationCoordinate2D(latitude: event.geoLocation!.latitude!.doubleValue, longitude: event.geoLocation!.longitude!.doubleValue)
+					let coordinate = CLLocationCoordinate2D(latitude: event.geoLocation!.latitude!.doubleValue, longitude: event.geoLocation!.longitude!.doubleValue)
 					if (region.containsCoordinate(coordinate)) {
 						nearbyEvents.addObject(event)
 					}
@@ -363,21 +364,15 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 			
 			// Sort by closest to furthest
-			nearbyEvents.sortedArrayWithOptions(NSSortOptions.Concurrent, usingComparator: { (event1, event2) -> NSComparisonResult in
+			nearbyEvents.sortedArrayWithOptions(.Concurrent, usingComparator: { (event1, event2) -> NSComparisonResult in
 				
-				var location1 = CLLocation(latitude: (event1 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event1 as! Event).geoLocation!.longitude!.doubleValue)
-				var location2 = CLLocation(latitude: (event2 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event2 as! Event).geoLocation!.longitude!.doubleValue)
+				let location1 = CLLocation(latitude: (event1 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event1 as! Event).geoLocation!.longitude!.doubleValue)
+				let location2 = CLLocation(latitude: (event2 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event2 as! Event).geoLocation!.longitude!.doubleValue)
 				
-				var distance1 : NSNumber = NSNumber(double: location!.distanceFromLocation(location1))
-				var distance2 : NSNumber = NSNumber(double: location!.distanceFromLocation(location2))
-				
+				let distance1 : NSNumber = NSNumber(double: location!.distanceFromLocation(location1))
+				let distance2 : NSNumber = NSNumber(double: location!.distanceFromLocation(location2))
 				
 				return distance1.compare(distance2)
-//				if (location!.distanceFromLocation(location1) > location!.distanceFromLocation(location2)) {
-//					return .OrderedAscending
-//				} else {
-//					return .OrderedDescending
-//				}
 			})
 			
 			

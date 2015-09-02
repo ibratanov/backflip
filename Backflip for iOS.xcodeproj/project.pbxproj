@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event+Share.swift */; };
 		04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04196F521B8B996000AE5FA5 /* File+CoreDataProperties.swift */; };
+		041F37971B94B08700610881 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041F37941B94B08700610881 /* Event+CoreDataProperties.swift */; };
+		041F37981B94B08700610881 /* Attendance+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041F37951B94B08700610881 /* Attendance+CoreDataProperties.swift */; };
+		041F37991B94B08700610881 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041F37961B94B08700610881 /* Attendance.swift */; };
 		0434BCD61B73BDCF00EF57EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0434BCD51B73BDCF00EF57EC /* Image.swift */; };
 		0439D3281B876EA9001850DD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3271B876EA9001850DD /* Security.framework */; };
 		0439D3401B8B76B1001850DD /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D32F1B8B76B1001850DD /* Branch.framework */; };
@@ -137,7 +140,6 @@
 		04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; };
 		04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04CCD6691B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */; };
-		04D558FC1B8D00AB002E63B6 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB71B8B982600E2ACB5 /* Event+CoreDataProperties.swift */; };
 		04FD59DD1B8E5ED6005A1FA4 /* SwiftLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
 		04FD5A251B90210F005A1FA4 /* AFNetworking.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 04FD5A241B90210F005A1FA4 /* AFNetworking.xcworkspace */; };
@@ -261,6 +263,9 @@
 /* Begin PBXFileReference section */
 		040B27D11B794E9B004B4FB2 /* Event+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Share.swift"; sourceTree = "<group>"; };
 		04196F521B8B996000AE5FA5 /* File+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "File+CoreDataProperties.swift"; path = "Models/File+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		041F37941B94B08700610881 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Event+CoreDataProperties.swift"; path = "Models/Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		041F37951B94B08700610881 /* Attendance+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Attendance+CoreDataProperties.swift"; path = "Models/Attendance+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		041F37961B94B08700610881 /* Attendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		0434BCD51B73BDCF00EF57EC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		0439D3271B876EA9001850DD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0439D32F1B8B76B1001850DD /* Branch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Branch.framework; sourceTree = "<group>"; };
@@ -408,7 +413,6 @@
 		04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ParseObject+CoreDataProperties.swift"; path = "Models/ParseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
 		04C61FB61B8B982600E2ACB5 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		04C61FB71B8B982600E2ACB5 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Event+CoreDataProperties.swift"; path = "Models/Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FB81B8B982600E2ACB5 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		04C61FB91B8B982600E2ACB5 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Photo+CoreDataProperties.swift"; path = "Models/Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FBA1B8B982600E2ACB5 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
@@ -424,13 +428,11 @@
 		04CA5DA41B8B9D4B0075C0A8 /* SKBounceAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SKBounceAnimation.m; path = SKBounceAnimation/SKBounceAnimation.m; sourceTree = "<group>"; };
 		04CA5DCC1B8B9F900075C0A8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MagicalRecord.xcodeproj; path = Vendor/MagicalRecord/MagicalRecord.xcodeproj; sourceTree = "<group>"; };
-		04CCD6661B8CBE4400664FB3 /* NSManagedObject+MagicalAggregation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+MagicalAggregation.h"; path = "Vendor/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalAggregation.h"; sourceTree = SOURCE_ROOT; };
 		04CCD6671B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FetchOrCreate.h"; sourceTree = "<group>"; };
 		04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FetchOrCreate.m"; sourceTree = "<group>"; };
 		04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftLocation.swift; path = Vendor/SwiftLocation/Pod/Classes/SwiftLocation.swift; sourceTree = "<group>"; };
 		04FD59E11B901D63005A1FA4 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		04FD5A241B90210F005A1FA4 /* AFNetworking.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = AFNetworking.xcworkspace; path = Vendor/AFNetworking/AFNetworking.xcworkspace; sourceTree = SOURCE_ROOT; };
-		04FD5A261B90218D005A1FA4 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAvailable.swift; sourceTree = "<group>"; };
 		502199AD1B33817100A64387 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -658,6 +660,7 @@
 				0439D3DF1B8B9721001850DD /* Sharing */,
 				04C61FB41B8B97F700E2ACB5 /* CoreData */,
 				04C61FB61B8B982600E2ACB5 /* File.swift */,
+				041F37961B94B08700610881 /* Attendance.swift */,
 				04C61FB81B8B982600E2ACB5 /* Event.swift */,
 				04C61FBA1B8B982600E2ACB5 /* Photo.swift */,
 				04C61FBC1B8B982600E2ACB5 /* GeoPoint.swift */,
@@ -811,8 +814,9 @@
 			isa = PBXGroup;
 			children = (
 				04196F521B8B996000AE5FA5 /* File+CoreDataProperties.swift */,
+				041F37951B94B08700610881 /* Attendance+CoreDataProperties.swift */,
 				04C61FC51B8B987B00E2ACB5 /* Photo+CoreDataProperties.swift */,
-				04C61FB71B8B982600E2ACB5 /* Event+CoreDataProperties.swift */,
+				041F37941B94B08700610881 /* Event+CoreDataProperties.swift */,
 				04C61FB91B8B982600E2ACB5 /* Photo+CoreDataProperties.swift */,
 				04C61FBB1B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift */,
 				04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */,
@@ -939,8 +943,6 @@
 				0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81821A49E27F00E65899 /* Backflip-Bridging-Header.h */,
-				04CCD6661B8CBE4400664FB3 /* NSManagedObject+MagicalAggregation.h */,
-				04FD5A261B90218D005A1FA4 /* UIImageView+AFNetworking.h */,
 				0439D34F1B8B780D001850DD /* BestPractices.xcconfig */,
 			);
 			path = "Supporting Files";
@@ -1196,7 +1198,6 @@
 				049AA6E21B73DB84003888CE /* UIButton+WebCache.m in Sources */,
 				049222AB1B72653900FFB08A /* Album.swift in Sources */,
 				0439D3C01B8B83AE001850DD /* ReportImage.swift in Sources */,
-				04D558FC1B8D00AB002E63B6 /* Event+CoreDataProperties.swift in Sources */,
 				040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */,
 				049AA6E01B73DB84003888CE /* SDWebImageManager.m in Sources */,
 				0439D3AB1B8B8210001850DD /* PreviewViewController.swift in Sources */,
@@ -1224,11 +1225,13 @@
 				049AA6A81B73DA01003888CE /* MWTapDetectingImageView.m in Sources */,
 				049AA6A61B73DA01003888CE /* MWPhoto.m in Sources */,
 				049AA6A31B73DA01003888CE /* MWCaptionView.m in Sources */,
+				041F37971B94B08700610881 /* Event+CoreDataProperties.swift in Sources */,
 				04C61FC41B8B982600E2ACB5 /* GeoPoint.swift in Sources */,
 				0439D3C41B8B867C001850DD /* CustomCamera.swift in Sources */,
 				049AA6E71B73DB84003888CE /* UIImageView+WebCache.m in Sources */,
 				04CA5DC01B8B9D4B0075C0A8 /* SKBounceAnimation.m in Sources */,
 				049AA6E81B73DB84003888CE /* UIView+WebCacheOperation.m in Sources */,
+				041F37981B94B08700610881 /* Attendance+CoreDataProperties.swift in Sources */,
 				0439D3D31B8B887C001850DD /* Array+Extensions.swift in Sources */,
 				049AA6B61B73DB72003888CE /* MBProgressHUD.m in Sources */,
 				049AA6A41B73DA01003888CE /* MWGridCell.m in Sources */,
@@ -1253,6 +1256,7 @@
 				0439D3A31B8B81A6001850DD /* BFCImagePickerController.swift in Sources */,
 				04C61FC31B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift in Sources */,
 				04CA5D821B8B9C060075C0A8 /* BFDataProcessor.swift in Sources */,
+				041F37991B94B08700610881 /* Attendance.swift in Sources */,
 				04FD59DD1B8E5ED6005A1FA4 /* SwiftLocation.swift in Sources */,
 				04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
@@ -1368,7 +1372,6 @@
 		};
 		81BA81651A49DA1800E65899 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0439D34F1B8B780D001850DD /* BestPractices.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

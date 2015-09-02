@@ -82,10 +82,10 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 							self.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
 							// resize
 							if (self.zoomImage.camera) {
-								var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
-								var cameraAspectRatio: CGFloat = 4.0/3.0
-								var cameraViewHeight = screenBounds.width * cameraAspectRatio
-								var scale = screenBounds.height / cameraViewHeight
+								let screenBounds: CGSize = UIScreen.mainScreen().bounds.size
+								let cameraAspectRatio: CGFloat = 4.0/3.0
+								let cameraViewHeight = screenBounds.width * cameraAspectRatio
+								let scale = screenBounds.height / cameraViewHeight
 								self.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
 								self.cameraViewTransform = CGAffineTransformScale(self.cameraViewTransform, scale, scale)
 								self.zoomImage.camera = false
@@ -106,7 +106,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 							self.newMedia = true
 						} else {
 							if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
-								var picker = UIImagePickerController()
+								let picker = UIImagePickerController()
 								picker.delegate = self;
 								picker.sourceType = .PhotoLibrary
 								picker.mediaTypes = [kUTTypeImage]
@@ -144,7 +144,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	
 	func saveImageAlert()
 	{
-		var alert:UIAlertView = UIAlertView()
+		let alert:UIAlertView = UIAlertView()
 		alert.title = "Saved!"
 		alert.message = "Saved to Camera Roll"
 		alert.delegate = self
@@ -153,7 +153,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	}
 	
 	@IBAction func loadFromLibrary(sender: AnyObject) {
-		var picker = UIImagePickerController()
+		let picker = UIImagePickerController()
 		picker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
 		picker.delegate = self
 		self.presentViewController(picker, animated: true, completion: nil)
@@ -267,7 +267,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		let sourceType = UIImagePickerControllerSourceType.Camera
 		if (!UIImagePickerController.isSourceTypeAvailable(sourceType))
 		{
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Cannot access camera!"
 			alert.message = " "
 			alert.delegate = self
@@ -279,7 +279,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		let rearCamera = UIImagePickerControllerCameraDevice.Rear
 		if (!UIImagePickerController.isCameraDeviceAvailable(frontCamera))
 		{
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Cannot access front-facing camera!"
 			alert.message = " "
 			alert.delegate = self
@@ -288,7 +288,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		}
 		if (!UIImagePickerController.isCameraDeviceAvailable(rearCamera))
 		{
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Cannot access rear-facing camera!"
 			alert.message = " "
 			alert.delegate = self
@@ -296,18 +296,18 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 			alert.show()
 		}
 		
-		var status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+		let status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
 		if (status == AVAuthorizationStatus.Authorized) {
 			println("authorized")
 		} else if(status == AVAuthorizationStatus.Denied){
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Camera Disabled"
 			alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
 			alert.delegate = self
 			alert.addButtonWithTitle("Ok")
 			alert.show()
 		} else if(status == AVAuthorizationStatus.Restricted){
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Camera Disabled"
 			alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
 			alert.delegate = self
@@ -397,7 +397,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	}
 	
 	func updateThumbnail(){
-        var image = UIImage()
+        let image = UIImage()
 
 		thumbnailButton.setBackgroundImage(image, forState: .Normal)
 		thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
@@ -418,17 +418,17 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	
 	//TO-DO: restriction through geotagged image
 	func setLastPhoto(){
-		var fetchOptions: PHFetchOptions = PHFetchOptions()
+		let fetchOptions: PHFetchOptions = PHFetchOptions()
 		
 		fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
 		
-		var fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
+		let fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
 		
 		if (fetchResult.lastObject != nil) {
 			
-			var lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
+			let lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
 			
-			var sizeIM = CGSizeMake(50,50)
+			let sizeIM = CGSizeMake(50,50)
 			PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: sizeIM , contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
 				self.thumbnailButton.setBackgroundImage(result, forState: .Normal)
 				self.thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
@@ -455,17 +455,17 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		
 		        var capturedImage = uImage as UIImage!
 		
-		        var imageData = compressImage(uImage, shrinkRatio: 1.0)
-		        var imageFile = PFFile(name: "image.png", data: imageData)
+		        let imageData = compressImage(uImage, shrinkRatio: 1.0)
+		        let imageFile = PFFile(name: "image.png", data: imageData)
 		
 		
 		
-		        var thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
-		        var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+		        let thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
+		        let thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
 		
 		
 		        //Upload photos to database
-		        var photo = PFObject(className: "Photo")
+		        let photo = PFObject(className: "Photo")
 		        photo["caption"] = "Camera roll upload"
 		        photo["image"] = imageFile
 		        photo["thumbnail"] = thumbnailFile
@@ -479,31 +479,31 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		        photo["reporter"] = ""
 		        photo["reportMessage"] = ""
 		
-		        var photoACL = PFACL(user: PFUser.currentUser()!)
+		        let photoACL = PFACL(user: PFUser.currentUser()!)
 		        photoACL.setPublicWriteAccess(true)
 		        photoACL.setPublicReadAccess(true)
 		        photo.ACL = photoACL
 		
 		
-		        var query2 = PFQuery(className: "EventAttendance")
+		        let query2 = PFQuery(className: "EventAttendance")
 		        query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
 		        // query2.whereKey("eventID", equalTo: event!.objectId!)
 		
 		        //var photoObjectList = query2.findObjects()
 		        var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
 		            if (objs != nil && objs!.count != 0) {
-		                var photoObject = objs!.first as! PFObject
+		                let photoObject = objs!.first as! PFObject
 		
 		                photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
 		                photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
 		
-		                var queryEvent = PFQuery(className: "Event")
+		                let queryEvent = PFQuery(className: "Event")
 		                // queryEvent.whereKey("objectId", equalTo: self.event!.objectId!)
 		                //var objects = queryEvent.findObjects()
 		                var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
 		
 		                    if (sobjs != nil && sobjs!.count != 0) {
-		                        var eventObject = sobjs!.first as! PFObject
+		                        let eventObject = sobjs!.first as! PFObject
 		
 		                        let relation = eventObject.relationForKey("photos")
 		
@@ -549,10 +549,10 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 	func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
 		var imageHeight:CGFloat = image.size.height
 		var imageWidth:CGFloat = image.size.width
-		var maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
-		var maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
+		let maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
+		let maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
 		var imageRatio:CGFloat = imageWidth/imageHeight
-		var scalingRatio:CGFloat = maxWidth/maxHeight
+		let scalingRatio:CGFloat = maxWidth/maxHeight
 		
 		//lowest quality rating with acceptable encoding
 		var quality:CGFloat = 0.7
@@ -582,11 +582,11 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 			}
 		}
 		
-		var rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
+		let rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
 		//bit-map based graphic context and set the boundaries of still image
 		UIGraphicsBeginImageContext(rect.size);
 		image.drawInRect(rect)
-		var imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
+		let imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
 		let imageData = UIImageJPEGRepresentation(imageCompressed, quality);
 		UIGraphicsEndImageContext();
 		
@@ -599,7 +599,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
     }
 	
 	func displayNoInternetAlert() {
-		var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+		let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
 		self.presentViewController(alert, animated: true, completion: nil)
 		println("no internet")
 	}

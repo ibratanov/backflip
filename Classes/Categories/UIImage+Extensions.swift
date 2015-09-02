@@ -17,7 +17,7 @@ extension UIImage {
     func croppedToRect(cropRect: CGRect) -> UIImage {
         UIGraphicsBeginImageContext(cropRect.size)
         
-        var context = UIGraphicsGetCurrentContext()
+        let context = UIGraphicsGetCurrentContext()
         CGContextScaleCTM(context, 1.0, 1.0);
         CGContextTranslateCTM(context, -cropRect.origin.x, -cropRect.origin.y)
         

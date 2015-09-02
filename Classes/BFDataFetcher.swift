@@ -31,9 +31,9 @@ class BFDataFetcher : NSObject {
 			}
 			
 			
-			let priority = DISPATCH_QUEUE_PRIORITY_BACKGROUND
+			let priority = DISPATCH_QUEUE_PRIORITY_HIGH
 			dispatch_async(dispatch_get_global_queue(priority, 0)) {
-				var objects: AnyObject? = object?.objectForKey("Event")
+				let objects: AnyObject? = object?.objectForKey("Event")
 				if (objects?.count > 0) {
 					if (activityInidactor) {
 						ZAActivityBar.showWithStatus("Processing Events", forAction: "process_events")
@@ -49,9 +49,27 @@ class BFDataFetcher : NSObject {
 			}
 			
 			
+			// Event Attendance
+			dispatch_async(dispatch_get_global_queue(priority, 0)) {
+				let objects: AnyObject? = object?.objectForKey("EventAttendance")
+				if (objects?.count > 0) {
+					if (activityInidactor) {
+						ZAActivityBar.showWithStatus("Processing Attendees", forAction: "process_attendees")
+					}
+					
+					BFDataProcessor.sharedProcessor.processAttendees(objects as! [PFObject], completion: { () -> Void in
+						if (activityInidactor) {
+							ZAActivityBar.showSuccessWithStatus("Attendees Processed", forAction: "process_attendees")
+						}
+					})
+				}
+				
+			}
+			
+			
 			// Photos
 			dispatch_async(dispatch_get_global_queue(priority, 0)) {
-				var objects: AnyObject? = object?.objectForKey("Photo")
+				let objects: AnyObject? = object?.objectForKey("Photo")
 				if (objects?.count > 0) {
 					if (activityInidactor) {
 						ZAActivityBar.showWithStatus("Processing Photos", forAction: "process_photos")
@@ -65,6 +83,8 @@ class BFDataFetcher : NSObject {
 				}
 				
 			}
+			
+			
 			
 		})
 		
@@ -80,9 +100,9 @@ class BFDataFetcher : NSObject {
 	
 	func cloudCodeParameters() -> AnyObject
 	{
-		var parameters = NSMutableDictionary()
+		let parameters = NSMutableDictionary()
 		
-		var lastUpdated = NSMutableDictionary()
+		let lastUpdated = NSMutableDictionary()
 		let classNames : [String] = ["Event", "Photo"]
 		for className: String in classNames {
 			let updated : NSDate = self.lastUpdated(className)
@@ -106,7 +126,7 @@ class BFDataFetcher : NSObject {
 		let object : NSManagedObject.Type = objectType as! NSManagedObject.Type
 		let coreObject = object.MR_findFirstOrderedByAttribute("updatedAt", ascending: false)
 		if (coreObject != nil) {
-			var parseObject : ParseObject = coreObject as! ParseObject
+			let parseObject : ParseObject = coreObject as! ParseObject
 			return parseObject.updatedAt!
 		}
 		

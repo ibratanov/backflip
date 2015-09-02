@@ -44,7 +44,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     
     func displayAlert(title:String,error: String) {
         
-        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: { action in
 
         }))
@@ -53,14 +53,14 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func displayNoInternetAlert() {
-        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+        let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
         self.presentViewController(alert, animated: true, completion: nil)
         println("no internet")
     }
     
     func displayAlertUserBlocked(title:String, error: String) {
         
-        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -383,7 +383,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                 let query = PFUser.query()
                 query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                     if (error == nil && object != nil) {
-                        var blocked = object!.valueForKey("blocked") as! Bool
+                        let blocked = object!.valueForKey("blocked") as! Bool
                         if blocked == false {
                             // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
                             println(Digits.sharedInstance().session())

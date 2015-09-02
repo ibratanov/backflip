@@ -367,7 +367,7 @@ class BFCImagePickerController: UINavigationController {
     internal var selectedAssets: [BFCAsset]!
     internal  weak var pickerDelegate: BFCImagePickerControllerDelegate?
     lazy internal var doneButton: UIButton =  {
-        let button = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+		let button = UIButton.buttonWithType(.Custom) as! UIButton
         button.setTitle("", forState: UIControlState.Normal)
         button.setTitleColor(self.navigationBar.tintColor, forState: UIControlState.Normal)
         button.reversesTitleShadowWhenHighlighted = true
@@ -384,8 +384,8 @@ class BFCImagePickerController: UINavigationController {
     }
     
     convenience init() {
-        var libraryController = BFCAssetsLibraryController()
-        var wrapperVC = BFCContentWrapperViewController(libraryController)
+        let libraryController = BFCAssetsLibraryController()
+        let wrapperVC = BFCContentWrapperViewController(libraryController)
         self.init(rootViewController: wrapperVC)
         selectedAssets = [BFCAsset]()
     }

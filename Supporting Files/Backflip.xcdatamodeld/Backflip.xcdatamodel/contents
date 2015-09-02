@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="15A178w" minimumToolsVersion="Xcode 4.3">
+    <entity name="Attendance" representedClassName="Attendance" parentEntity="ParseObject" syncable="YES">
+        <attribute name="attendeeId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="attendees" inverseEntity="Event" syncable="YES"/>
+    </entity>
     <entity name="Event" representedClassName="Event" parentEntity="ParseObject" syncable="YES">
         <attribute name="endTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="live" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="attendees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="event" inverseEntity="Attendance" syncable="YES"/>
         <relationship name="geoLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GeoPoint" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="event" inverseEntity="Photo" syncable="YES"/>
     </entity>
@@ -40,10 +45,11 @@
         <relationship name="thumbnail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="File" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Event" positionX="-54" positionY="18" width="128" height="150"/>
+        <element name="Attendance" positionX="223" positionY="81" width="128" height="75"/>
+        <element name="Event" positionX="-54" positionY="18" width="128" height="163"/>
         <element name="File" positionX="-18" positionY="81" width="128" height="75"/>
         <element name="GeoPoint" positionX="-36" positionY="36" width="128" height="90"/>
         <element name="ParseObject" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="Photo" positionX="0" positionY="90" width="128" height="180"/>
+        <element name="Photo" positionX="43" positionY="126" width="128" height="180"/>
     </elements>
 </model>

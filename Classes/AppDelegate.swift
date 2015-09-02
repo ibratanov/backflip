@@ -205,7 +205,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                 event.save()
                 
                 // TODO: Check for existing event_list for eventName
-                var listEvents = object!.objectForKey("savedEventNames") as! [String]
+                let listEvents = object!.objectForKey("savedEventNames") as! [String]
                 if contains(listEvents, event["eventName"] as! String)
                 {
                     print("Event already in list")
@@ -221,7 +221,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                     
                     
                     // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                    var attendance = PFObject(className:"EventAttendance")
+                    let attendance = PFObject(className:"EventAttendance")
                     attendance["eventID"] = event.objectId
                     attendance["attendeeID"] = PFUser.currentUser()?.objectId
                     attendance["photosLikedID"] = []
@@ -318,7 +318,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		
 		let config = PFConfig.currentConfig()
 		
-		var navigationBarAppearance = UINavigationBar.appearance()
+		let navigationBarAppearance = UINavigationBar.appearance()
 		navigationBarAppearance.tintColor = UIColor.whiteColor()
 		
 		var bartintColor = "#108475"
@@ -334,10 +334,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			NSForegroundColorAttributeName: UIColor.whiteColor()
 		]
 		
-		var barButtonAppearance = UIBarButtonItem.appearance()
+		let barButtonAppearance = UIBarButtonItem.appearance()
 		barButtonAppearance.tintColor = UIColor.whiteColor()
 		
-		var tabBarAppearance = UITabBar.appearance()
+		let tabBarAppearance = UITabBar.appearance()
 		tabBarAppearance.tintColor = (config["appearance_tabbar_tint"] != nil) ? UIColor(rgba:config["appearance_tabbar_tint"] as! String) :  UIColor.whiteColor()
 		tabBarAppearance.barTintColor = (config["appearance_tabbar_bartint"] != nil) ? UIColor(rgba:config["appearance_tabbar_bartint"] as! String) :  UIColor.blackColor()
 		tabBarAppearance.translucent = true;

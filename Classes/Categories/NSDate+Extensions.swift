@@ -46,8 +46,8 @@ extension NSDate
 	
 	func addDays(daysToAdd : Int) -> NSDate
 	{
-		var secondsInDays : NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
-		var dateWithDaysAdded : NSDate = self.dateByAddingTimeInterval(secondsInDays)
+		let secondsInDays : NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
+		let dateWithDaysAdded : NSDate = self.dateByAddingTimeInterval(secondsInDays)
 		
 		//Return Result
 		return dateWithDaysAdded
