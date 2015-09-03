@@ -345,7 +345,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     //----------Filters
-    
+	
     func showOriginalImage() {
         self.imageView.image = resizeImage(imageToCrop!) //imageToCrop!
     }

@@ -24,7 +24,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_defaultContext()
+		let context = NSManagedObjectContext.MR_newPrivateQueueContext()
 		context.saveWithBlock({ (context) -> Void in
 			
 			for object : PFObject in events {
@@ -82,7 +82,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_defaultContext()
+		let context = NSManagedObjectContext.MR_newPrivateQueueContext()
 		context.saveWithBlock({ (context) -> Void in
 			
 			for object : PFObject in attendees {
@@ -120,7 +120,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_defaultContext()
+		let context = NSManagedObjectContext.MR_newPrivateQueueContext()
 		context.saveWithBlock({ (context) -> Void in
 			
 			for object : PFObject in photos {
@@ -139,7 +139,11 @@ class BFDataProcessor
 				photo.reporter = object["reporter"] as? String
 				photo.uploader = object["uploader"] as? String
 				photo.upvoteCount = object["upvoteCount"] as? NSNumber
-				photo.usersLiked = object["usersLiked"] as? String
+				
+				if (self.isValid(object["usersLiked"])) {
+					let likedArray = object["usersLiked"] as? [String]
+					photo.usersLiked = ",".join(likedArray!)
+				}
 				
 				
 				if (self.isValid(object["event"])) {
@@ -192,7 +196,7 @@ class BFDataProcessor
 	
 	func save(block: (context: NSManagedObjectContext) -> Void, completionHandler:(contextDidSave: Bool, error: NSError) -> Void)
 	{
-		let context = NSManagedObjectContext.MR_defaultContext()
+		let context = NSManagedObjectContext.MR_rootSavingContext()
 		context.performBlock { () -> Void in
 			block(context: context)
 			

@@ -15,8 +15,6 @@
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
             <string>Avenir-Medium</string>
-            <string>Avenir-Medium</string>
-            <string>Avenir-Light</string>
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
@@ -286,7 +284,7 @@
         <scene sceneID="0XN-eA-FQT">
             <objects>
                 <navigationController title="Event Albums" id="Oc7-Mf-MXx" customClass="ScrollingNavigationController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Event History" image="tabBar-eventHistory" selectedImage="tabBar-eventHistory-filled" id="Fho-OT-gwv">
+                    <tabBarItem key="tabBarItem" title="Event History" image="tabBar-eventHistory" id="Fho-OT-gwv">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="tabBar-eventHistory-filled"/>
                         </userDefinedRuntimeAttributes>
@@ -513,14 +511,14 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[CURRENT EVENT]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Stv-eF-mP4">
                                             <rect key="frame" x="11" y="18" width="301" height="21"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[LOCATION]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZd-rr-cD5">
                                             <rect key="frame" x="11" y="40" width="301" height="21"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -540,9 +538,7 @@
                             <outlet property="delegate" destination="Xac-HV-Hf1" id="uLI-C6-r1K"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="Item" id="901-ZQ-YzX"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Event History" id="AlS-vE-J4m"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </tableViewController>

@@ -19,8 +19,8 @@ class AlbumViewCell: UICollectionViewCell
 	{
 		super.prepareForReuse()
 		
-		// self.imageView.image = nil
-		// self.imageView.tintColor = nil
+		self.imageView.image = nil
+		self.imageView.tintColor = nil
 	}
 	
 	override func layoutSubviews()

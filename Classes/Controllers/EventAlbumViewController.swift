@@ -411,7 +411,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
 				if (liked) {
 					var liked = photo.usersLiked!.componentsSeparatedByString(",")
-					let index = find(liked, PFUser.currentUser()!.username!)
+					let index = liked.indexOf(PFUser.currentUser()!.username!)  // find(liked, PFUser.currentUser()!.username!)
 					liked.removeAtIndex(index!)
 					photo.usersLiked = ",".join(liked)
 					
