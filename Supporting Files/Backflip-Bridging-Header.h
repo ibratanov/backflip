@@ -22,7 +22,8 @@
 
 	// Analytics yo
 	#import <Mixpanel/Mixpanel.h>
-	#import "GoogleAnalytics.h"
+	//#import "GoogleAnalytics.h"
+    #import <Google/Analytics.h>
 	#import "NewRelicAgent/NewRelic.h"
 
 	#import "MWPhotoBrowser.h"
