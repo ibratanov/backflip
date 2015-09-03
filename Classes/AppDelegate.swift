@@ -370,7 +370,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		gai.trackUncaughtExceptions = true  // report uncaught exceptions
 		gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
         
-        logUser("dummy-test")
+        
+        //method called when a user signs in to an authentication system
+        GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
 		//-------------------------
 		
@@ -419,11 +421,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		
 	}
     
-    func logUser(id: String){
-        //method called when a user signs in to an authentication system
-        GAI.sharedInstance().defaultTracker.set("&uid", value: id)
-    }
-    
+
     
     // This hit will be sent with the User ID value and be visible in User-ID-enabled views (profiles).
 //    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"           
