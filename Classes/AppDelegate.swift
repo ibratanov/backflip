@@ -369,6 +369,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		var gai = GAI.sharedInstance()
 		gai.trackUncaughtExceptions = true  // report uncaught exceptions
 		gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+        
+        logUser("dummy-test")
+
 		//-------------------------
 		
 		//-------New Relic
@@ -415,6 +418,24 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
 		
 	}
+    
+    func logUser(id: String){
+        //method called when a user signs in to an authentication system
+        GAI.sharedInstance().defaultTracker.set("&uid", value: id)
+    }
+    
+    
+    // This hit will be sent with the User ID value and be visible in User-ID-enabled views (profiles).
+//    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"           
+    // Event category (required)
+//    action:@"User Sign In"  
+    // Event action (required)
+//    label:nil              
+    // Event label
+//    value:nil] build]];    
+    // Event value
+
+    
 	
 }
 
