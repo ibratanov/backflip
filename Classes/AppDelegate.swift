@@ -372,7 +372,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         
         //method called when a user signs in to an authentication system
-        GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
+        //GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
 		//-------------------------
 		

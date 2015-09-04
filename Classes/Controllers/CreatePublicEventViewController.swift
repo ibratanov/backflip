@@ -38,6 +38,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
         var tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Create Public Event")
+        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
         
         var builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])

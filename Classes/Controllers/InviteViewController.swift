@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import DigitsKit
 
 class InviteViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
@@ -27,6 +29,8 @@ class InviteViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         var tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Invite Screen")
+        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
         
         var builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])

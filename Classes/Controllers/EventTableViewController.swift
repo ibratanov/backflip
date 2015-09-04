@@ -51,6 +51,8 @@ class EventTableViewController: UITableViewController {
         
         var tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Event Table View")
+        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
         
         var builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
