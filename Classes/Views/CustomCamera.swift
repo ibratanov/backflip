@@ -17,7 +17,13 @@ import MessageUI
 import AVFoundation
 import DigitsKit
 
-class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UINavigationControllerDelegate ,BFCImagePickerControllerDelegate {
+class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UINavigationControllerDelegate ,BFCImagePickerControllerDelegate, FastttCameraDelegate {
+    
+    //------------------FastttCamera----------------
+    var fastCamera = FastttFilterCamera()
+   // var currentFilter = ExampleFilter()
+   // _currentFilter = [ExampleFilter filterWithType:FastttCameraFilterRetro];
+   // _fastCamera = [FastttFilterCamera cameraWithFilterImage:self.currentFilter.filterImage];
 	
 	//------------------Camera Att.-----------------
 	var flashOff = UIImage(named:"flash-icon-large") as UIImage!
@@ -55,6 +61,14 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		self.eventNameLabel?.text = self.eventTitle
 		
 		//NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
+        
+        var swipeRight = UISwipeGestureRecognizer(target: self, action: "filterSwipeGesture:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        var swipeDown = UISwipeGestureRecognizer(target: self, action: "filterSwipeGesture:")
+        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+        self.view.addGestureRecognizer(swipeDown)
 		
 		if NetworkAvailable.networkConnection() == true {
 			let query = PFUser.query()
@@ -69,17 +83,19 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 						self.fullScreen = false
 						self.posted = true
 						
-						if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-							println("Button capture")
-							self.delegate = self
-							
-							//primary delegate for the picker
-							self.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-							self.sourceType = .Camera
-							self.mediaTypes = [kUTTypeImage]
-							self.allowsEditing = false
-							self.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-							self.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+//-----del						if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+//							println("Button capture")
+//							self.delegate = self
+//							
+//							//primary delegate for the picker
+//							self.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+//							self.sourceType = .Camera
+//							self.mediaTypes = [kUTTypeImage]
+//							self.allowsEditing = false
+//							self.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+//							self.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+                        
+                        
 							// resize
 							if (self.zoomImage.camera) {
 								var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
@@ -104,7 +120,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 							self.setLastPhoto()
 							self.updateThumbnail()
 							self.newMedia = true
-						} else {
+						//--del } else {
 							if (UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)) {
 								var picker = UIImagePickerController()
 								picker.delegate = self;
@@ -118,7 +134,7 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 								self.setLastPhoto()
 								self.updateThumbnail()
 							}
-						}
+						//---del}
 						
 						self.testCalled()
 						
@@ -603,5 +619,13 @@ class CustomCamera : UIImagePickerController, UIImagePickerControllerDelegate,UI
 		self.presentViewController(alert, animated: true, completion: nil)
 		println("no internet")
 	}
+    func filterSwipeGesture(gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+//            self.currentFilter = self.currentFilter.nextFilter
+//            self.fastCamera.filterImage = self.currentFilter.filterImage
+        
+            }
+        
+    }
 	
 }

@@ -12,7 +12,7 @@ import Foundation
 
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
 {
 	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
@@ -230,37 +230,53 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				}))
 				
 				self.presentViewController(alertController, animated: true, completion: nil)
-			} else {
-			
-				//let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
-				//dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-					
-					var testCamera = CustomCamera()
-					if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-						
-						let index = self.pickerView?.selectedRowInComponent(0)
-						let event = self.events[Int(index!)]
-						testCamera.event = event
-						
-						testCamera.delegate = self
-						testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-						testCamera.sourceType = .Camera
-						testCamera.allowsEditing = false
-						testCamera.showsCameraControls = false
-						testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-						testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-						
-						self.presentViewController(testCamera, animated: true, completion: nil)
-					}
-				
-				//})
-			}
-			
-			return false
-		}
-		
-		return true
-	}
+            } else {
+                
+                //let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
+                //dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                
+                //					var testCamera = CustomCamera()
+                //					if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+                //
+                //						let index = self.pickerView?.selectedRowInComponent(0)
+                //						let event = self.events[Int(index!)]
+                //						testCamera.event = event
+                //
+                //						testCamera.delegate = self
+                //						testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+                //						testCamera.sourceType = .Camera
+                //						testCamera.allowsEditing = false
+                //						testCamera.showsCameraControls = false
+                //						testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
+                //						testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
+                //
+                //						self.presentViewController(testCamera, animated: true, completion: nil)
+                //
+                //
+                //					}
+                
+                var fastCamera = FastttFilterCamera()
+                fastCamera.delegate = self
+                //fastCamera.willMoveToParentViewController(self)
+                fastCamera.beginAppearanceTransition(true, animated: false)
+                //
+                
+                //self.addChildViewController(self.fastCamera)
+                //fastCamera.didMoveToParentViewController(self)
+                fastCamera.endAppearanceTransition()
+                //
+                //fastCamera.view.frame = self.view.frame
+                
+                self.presentViewController(fastCamera, animated: true, completion: nil)
+                
+                //})
+            }
+            
+            return false
+        }
+        
+        return true
+    }
 	
 	
 	//-------------------------------------

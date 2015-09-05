@@ -24,5 +24,6 @@
 	#import "MWPhotoBrowser.h"
 	#import "NewRelicAgent/NewRelic.h"
 	#import "MWPhotoBrowserPrivate.h"
+    #import <FastttFilterCamera.h>
 
 #endif
