@@ -9,9 +9,8 @@
 import UIKit
 import ParseUI
 
-class AlbumViewCell: UICollectionViewCell {
-
-    //@IBOutlet var imageView: PFImageView?
+class AlbumViewCell: UICollectionViewCell
+{
     
     @IBOutlet weak var imageView: UIImageView!
 

@@ -5,6 +5,7 @@
 //
 #import <UIKit/UIKit.h>
 #import <Branch/Branch.h>
+#import <CoreData/CoreData.h>
 
 #ifndef Bridging_Header
 	#define Bridging_Header
@@ -17,8 +18,15 @@
 	#import <SystemConfiguration/SystemConfiguration.h>
 	#import <MobileCoreServices/MobileCoreServices.h>
 
+	#import "NSManagedObject+FetchOrCreate.h"
+	#import "NSManagedObjectContext+Extensions.h"
+	#import "NSManagedObject+MagicalAggregation.h"
+
+	#import "ZAActivityBar.h"
+
 	#import "AFNetworking.h"
 	#import "UIKit+AFNetworking.h"
+	#import "UIImageView+AFNetworking.h"
 
 	#import <Mixpanel/Mixpanel.h>
 	#import "MWPhotoBrowser.h"
