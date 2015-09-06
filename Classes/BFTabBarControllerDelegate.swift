@@ -52,6 +52,12 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 	
     func displayCamera(event: Event)
     {
+        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        var customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
+        customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+        let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+        window?.rootViewController!.presentViewController(customCameraFCF, animated: true, completion: nil)
+        
         //
         //		var testCamera = CustomCamera()
         //		if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
@@ -69,20 +75,20 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
         //			let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
         //			window?.rootViewController!.presentViewController(testCamera, animated: true, completion: nil)
         //		}
-        var fastCamera = FastttFilterCamera()
-        fastCamera.delegate = self
-        //fastCamera.willMoveToParentViewController(self)
-        fastCamera.beginAppearanceTransition(true, animated: false)
-        //
-        
-        //self.addChildViewController(self.fastCamera)
-        //fastCamera.didMoveToParentViewController(self)
-        fastCamera.endAppearanceTransition()
-        //
-        //fastCamera.view.frame = self.view.frame
-        
-        let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
-        window?.rootViewController!.presentViewController(fastCamera, animated: true, completion: nil)
+//        var fastCamera = FastttFilterCamera()
+//        fastCamera.delegate = self
+//        //fastCamera.willMoveToParentViewController(self)
+//        fastCamera.beginAppearanceTransition(true, animated: false)
+//        //
+//        
+//        //self.addChildViewController(self.fastCamera)
+//        //fastCamera.didMoveToParentViewController(self)
+//        fastCamera.endAppearanceTransition()
+//        //
+//        //fastCamera.view.frame = self.view.frame
+//        
+//        let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+//        window?.rootViewController!.presentViewController(fastCamera, animated: true, completion: nil)
         
         
     }

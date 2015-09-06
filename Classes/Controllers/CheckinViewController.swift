@@ -232,6 +232,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				self.presentViewController(alertController, animated: true, completion: nil)
             } else {
                 
+                var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                var customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
+                customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+                self.presentViewController(customCameraFCF as UIViewController, animated: true, completion: nil)
+                
                 //let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
                 //dispatch_after(dispatchTime, dispatch_get_main_queue(), {
                 
@@ -255,21 +260,21 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
                 //
                 //					}
                 
-                var fastCamera = FastttFilterCamera()
-                fastCamera.delegate = self
-                //fastCamera.willMoveToParentViewController(self)
-                fastCamera.beginAppearanceTransition(true, animated: false)
-                //
-                
-                //self.addChildViewController(self.fastCamera)
-                //fastCamera.didMoveToParentViewController(self)
-                fastCamera.endAppearanceTransition()
-                //
-                //fastCamera.view.frame = self.view.frame
-                
-                self.presentViewController(fastCamera, animated: true, completion: nil)
-                
-                //})
+//                var fastCamera = FastttFilterCamera()
+//                fastCamera.delegate = self
+//                //fastCamera.willMoveToParentViewController(self)
+//                fastCamera.beginAppearanceTransition(true, animated: false)
+//                //
+//                
+//                //self.addChildViewController(self.fastCamera)
+//                //fastCamera.didMoveToParentViewController(self)
+//                fastCamera.endAppearanceTransition()
+//                //
+//                //fastCamera.view.frame = self.view.frame
+//                
+//                self.presentViewController(fastCamera, animated: true, completion: nil)
+//                
+//                //})
             }
             
             return false
