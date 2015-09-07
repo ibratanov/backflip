@@ -60,6 +60,7 @@
 		0439D3D81B8B8D5C001850DD /* Mixpanel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3901B8B7923001850DD /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0439D3DE1B8B93A5001850DD /* Backflip.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */; };
 		043C72041B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */; };
+		044BD34C1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */; settings = {ASSET_TAGS = (); }; };
 		049222AB1B72653900FFB08A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049222AA1B72653900FFB08A /* Album.swift */; };
 		049AA6811B73DA01003888CE /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6481B73DA01003888CE /* ImageError.png */; };
 		049AA6821B73DA01003888CE /* ImageError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6491B73DA01003888CE /* ImageError@2x.png */; };
@@ -172,6 +173,7 @@
 		04F7A7911B9E2422008758D3 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A77E1B9E2422008758D3 /* UIProgressView+AFNetworking.m */; };
 		04F7A7921B9E2422008758D3 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7801B9E2422008758D3 /* UIRefreshControl+AFNetworking.m */; };
 		04F7A7931B9E2422008758D3 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7821B9E2422008758D3 /* UIWebView+AFNetworking.m */; };
+		04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */; };
 		04FD59DD1B8E5ED6005A1FA4 /* SwiftLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
@@ -346,6 +348,7 @@
 		0439D3DD1B8B93A5001850DD /* Backflip.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Backflip.xcdatamodel; sourceTree = "<group>"; };
 		043C72021B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Extensions.h"; sourceTree = "<group>"; };
 		043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Extensions.m"; sourceTree = "<group>"; };
+		044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MWZoomingScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		049222AA1B72653900FFB08A /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		049AA6481B73DA01003888CE /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
 		049AA6491B73DA01003888CE /* ImageError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@2x.png"; sourceTree = "<group>"; };
@@ -515,6 +518,7 @@
 		04F7A7811B9E2422008758D3 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		04F7A7821B9E2422008758D3 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		04F7A7941B9E24BD008758D3 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
 		04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftLocation.swift; path = Vendor/SwiftLocation/Pod/Classes/SwiftLocation.swift; sourceTree = "<group>"; };
 		04FD59E11B901D63005A1FA4 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -711,6 +715,8 @@
 				043C72021B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.h */,
 				043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */,
 				0439D3C61B8B86AC001850DD /* CGRect+Extensions.swift */,
+				044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */,
+				04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */,
 				0439D3CC1B8B8758001850DD /* NSDate+Extensions.swift */,
 				0439D3C71B8B86AC001850DD /* CGSize+Extensions.swift */,
 				0439D3C81B8B86AC001850DD /* UIImage+Extensions.swift */,
@@ -1396,6 +1402,7 @@
 				04F7A7891B9E2422008758D3 /* AFURLRequestSerialization.m in Sources */,
 				04F7A7921B9E2422008758D3 /* UIRefreshControl+AFNetworking.m in Sources */,
 				0439D3B21B8B8249001850DD /* FeedViewCell.swift in Sources */,
+				04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */,
 				049AA6AA1B73DA01003888CE /* MWZoomingScrollView.m in Sources */,
 				04F7A78A1B9E2422008758D3 /* AFURLResponseSerialization.m in Sources */,
 				049AA6DD1B73DB84003888CE /* SDWebImageDecoder.m in Sources */,
@@ -1450,6 +1457,7 @@
 				04CA5D7F1B8B9BE80075C0A8 /* BFDataFetcher.swift in Sources */,
 				043C72041B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m in Sources */,
 				049AA6E11B73DB84003888CE /* SDWebImagePrefetcher.m in Sources */,
+				044BD34C1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift in Sources */,
 				04B1C6731B9783E000F30C80 /* FrameView.swift in Sources */,
 				04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */,
 				04F7A7931B9E2422008758D3 /* UIWebView+AFNetworking.m in Sources */,

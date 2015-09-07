@@ -41,6 +41,12 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	// MARK: View Delegate
 	//-------------------------------------
 	
+	override func loadView()
+	{
+		super.loadView()
+				
+	}
+
 	override func viewWillAppear(animated: Bool)
 	{
 		super.viewWillAppear(animated)
@@ -155,7 +161,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		let photo = collectionContent[Int(index)]
 		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!))
-
+	
 		return _photo
 	}
 	
@@ -228,7 +234,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		} else {
 		
 			photoBrowser = MWPhotoBrowser(delegate: self)
-			photoBrowser?.alwaysShowControls = false
+			photoBrowser?.alwaysShowControls = true
 			photoBrowser?.displayActionButton = false
 		
 			// Our own custom share button
