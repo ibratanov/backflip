@@ -44,7 +44,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	override func loadView()
 	{
 		super.loadView()
-				
+		
 	}
 
 	override func viewWillAppear(animated: Bool)
