@@ -17,7 +17,7 @@ import MessageUI
 import AVFoundation
 import DigitsKit
 
-class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttCameraDelegate {
+class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate ,BFCImagePickerControllerDelegate, FastttCameraDelegate {
     
     //------------------FastttCamera----------------
     //var fastCamera = FastttFilterCamera()
@@ -85,7 +85,8 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
         self.fastCamera.willMoveToParentViewController(self)
         self.fastCamera.beginAppearanceTransition(true, animated: false)
         self.addChildViewController(self.fastCamera)
-        self.view.insertSubview(self.fastCamera.view, belowSubview: previewScreenView)
+        self.view.insertSubview(self.fastCamera.view, belowSubview: bottomBar)
+        self.view.insertSubview(topBar, aboveSubview: bottomBar)
         self.fastCamera.didMoveToParentViewController(self)
         self.fastCamera.endAppearanceTransition()
         self.fastCamera.view.frame = self.view.frame
