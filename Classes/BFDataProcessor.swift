@@ -24,7 +24,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_newPrivateQueueContext()
+		let context = NSManagedObjectContext.MR_defaultContext()
 		context.saveWithBlock({ (context) -> Void in
 			
 			for object : PFObject in events {
@@ -43,7 +43,7 @@ class BFDataProcessor
 				}
 				
 				if (self.isValid(object["isLive"])) {
-					event.live = object["eventName"] as? NSNumber
+					event.live = NSNumber(bool: (object["isLive"] as! Bool))
 				}
 				
 				if (self.isValid(object["venue"])) {
@@ -82,7 +82,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_newPrivateQueueContext()
+		let context = NSManagedObjectContext.MR_defaultContext()
 		context.saveWithBlock({ (context) -> Void in
 			
 			for object : PFObject in attendees {
@@ -120,7 +120,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_newPrivateQueueContext()
+		let context = NSManagedObjectContext.MR_defaultContext()
 		context.saveWithBlock({ (context) -> Void in
 			
 			for object : PFObject in photos {
