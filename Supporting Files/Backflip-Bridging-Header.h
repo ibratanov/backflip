@@ -1,7 +1,7 @@
 //
-//  ParseStarterProject-Bridging-Header.h
+//  Backflip-Bridging-Header.h
 //
-//  Copyright 2011-present Parse Inc. All rights reserved.
+//  Copyright 2011-present Backflip Inc. All rights reserved.
 //
 #import <UIKit/UIKit.h>
 #import <Branch/Branch.h>

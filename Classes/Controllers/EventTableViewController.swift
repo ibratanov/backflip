@@ -222,10 +222,15 @@ class EventTableViewController: UITableViewController
 	{
 		var _events : [Event] = []
 		
+		let currentEventId : String? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id") as? String
 		let user = PFUser.currentUser()!.objectId
 		let attendances = Attendance.MR_findByAttribute("attendeeId", withValue: user) as! [Attendance]
 		for attendance : Attendance in attendances {
-			_events.append(attendance.event!)
+			if (currentEventId == attendance.event?.objectId) {
+				continue
+			} else {
+				_events.append(attendance.event!)
+			}
 		}
 		
 		self.events = _events;
