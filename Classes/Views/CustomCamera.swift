@@ -17,10 +17,12 @@ import MessageUI
 import AVFoundation
 import DigitsKit
 
-class CustomCamera : UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate ,BFCImagePickerControllerDelegate, FastttCameraDelegate {
+class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttCameraDelegate {
     
     //------------------FastttCamera----------------
+    //var fastCamera = FastttFilterCamera()
     var fastCamera = FastttFilterCamera()
+    
    // var currentFilter = ExampleFilter()
    // _currentFilter = [ExampleFilter filterWithType:FastttCameraFilterRetro];
    // _fastCamera = [FastttFilterCamera cameraWithFilterImage:self.currentFilter.filterImage];
@@ -55,9 +57,10 @@ class CustomCamera : UIViewController, UIImagePickerControllerDelegate,UINavigat
 	// Title and ID of event passed from previous VC, based on selected row
 	var eventId : String?
 	var eventTitle: String?
-	
 	// Keeps track of photo source and only downloads newly taken images
 	var downloadToCameraRoll = true
+    
+    var fastFilter = FastttFilter()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -76,7 +79,10 @@ class CustomCamera : UIViewController, UIImagePickerControllerDelegate,UINavigat
         
         view.addGestureRecognizer(leftSwipe)
         view.addGestureRecognizer(rightSwipe)
-		
+		//self.currentFilter.filterType = FastttFilterType.CameraFilterRetro
+        //self.fastCamera = FastttFilterCamera(filterImage: self.currentFilter.filterImage)
+        //self.fastCamera = FastttFilterCamera(filterImage: UIImage(named: "SepiaFilter"))
+        
         self.fastCamera.delegate = self
         self.fastCamera.willMoveToParentViewController(self)
         self.fastCamera.beginAppearanceTransition(true, animated: false)
@@ -87,8 +93,6 @@ class CustomCamera : UIViewController, UIImagePickerControllerDelegate,UINavigat
         self.fastCamera.view.frame = self.view.frame
         self.fastCamera.cameraDevice = FastttCameraDevice.Rear
         //self.fastCamera.filterImage = FastttCameraFilterHighContrast
-        
-
         
         if (FastttFilterCamera.isCameraDeviceAvailable(FastttCameraDevice.Front)) {
             //self.fastCamera.cameraDevice = FastttCameraDevice.Front
@@ -112,7 +116,6 @@ class CustomCamera : UIViewController, UIImagePickerControllerDelegate,UINavigat
 //						self.setLastPhoto()
 //						self.updateThumbnail()
 						
-						
 					}
 				} else {
 					
@@ -123,10 +126,8 @@ class CustomCamera : UIViewController, UIImagePickerControllerDelegate,UINavigat
 			displayNoInternetAlert() }
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeUpButtonDownNotification", object: nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name: "_UIApplicationVolumeDownButtonDownNotification", object: nil)
-        
-        self.view.addSubview(topBar)
-        self.view.addSubview(bottomBar)
 		
+
 	}
 	
 	//--------------- Camera ---------------
@@ -142,13 +143,13 @@ class CustomCamera : UIViewController, UIImagePickerControllerDelegate,UINavigat
 		alert.show()
 	}
 	
-	@IBAction func loadFromLibrary(sender: AnyObject) {
-		var picker = UIImagePickerController()
-		picker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
-		picker.delegate = self
-		self.presentViewController(picker, animated: true, completion: nil)
-		
-	}
+//	@IBAction func loadFromLibrary(sender: AnyObject) {
+//		var picker = UIImagePickerController()
+//		picker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+//		picker.delegate = self
+//		self.presentViewController(picker, animated: true, completion: nil)
+//		
+//	}
 	
 	
 //	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
@@ -645,7 +646,12 @@ class CustomCamera : UIViewController, UIImagePickerControllerDelegate,UINavigat
             if(filterCount>0){
                 filterCount -= 1
                 var filterName = filterNames[filterCount]
+                
+                
+              //  self.currentFilter = self.currentFilter.nextFilter()
+              //  self.fastCamera.filterImage = self.currentFilter.filterImage
             }else{
+                
             }
             
         }
@@ -658,4 +664,6 @@ class CustomCamera : UIViewController, UIImagePickerControllerDelegate,UINavigat
             }
         }
     }
+    
+
 }

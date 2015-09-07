@@ -889,11 +889,11 @@
                         <viewControllerLayoutGuide type="bottom" id="6fA-sW-cev"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Pgm-9a-nEw">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FOA-2d-H3V">
-                                <rect key="frame" x="112" y="-33" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1dA-ga-YWd">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -1033,8 +1033,8 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="Hgk-tX-76i"/>
                                                 <exclude reference="HQI-nd-oJi"/>
+                                                <exclude reference="Hgk-tX-76i"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=compact" fixedFrame="YES">
@@ -1063,6 +1063,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="bottomBar" destination="Ocw-Sk-fVS" id="a8i-0p-4TA"/>
                         <outlet property="eventNameLabel" destination="raQ-rr-mJ0" id="kyV-2t-omh"/>
@@ -1074,7 +1075,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nlx-QP-sHT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1183" y="151"/>
+            <point key="canvasLocation" x="1134.5" y="81.5"/>
         </scene>
     </scenes>
     <resources>
