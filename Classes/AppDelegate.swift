@@ -259,9 +259,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         PFPush.subscribeToChannelInBackground("", block: { (succeeded: Bool, error: NSError?) -> Void in
             if succeeded {
-                println("ParseStarterProject successfully subscribed to push notifications on the broadcast channel.");
+                println("Backflip successfully subscribed to push notifications on the broadcast channel.");
             } else {
-                println("ParseStarterProject failed to subscribe to push notifications on the broadcast channel with error = %@.", error)
+                println("Backflip failed to subscribe to push notifications on the broadcast channel with error = %@.", error)
             }
         })
     }
