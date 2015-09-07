@@ -36,6 +36,7 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
     @IBOutlet weak var flashButton: UIButton!
     @IBOutlet var eventNameLabel : UILabel?
     
+    
 	var flashOff = UIImage(named:"flash-icon-large") as UIImage!
 	var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
 	var loopAllImagesBool = false
@@ -60,7 +61,7 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
 	// Keeps track of photo source and only downloads newly taken images
 	var downloadToCameraRoll = true
     
-    var fastFilter = FastttFilter()
+    //var fastFilter = FastttFilter()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -68,8 +69,6 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
 		UIApplication.sharedApplication().statusBarHidden = true
 		
 		self.eventNameLabel?.text = self.eventTitle
-		
-		//NSNotificationCenter.defaultCenter().addObserver(self, selector: "capture:", name:  "AVSystemController_SystemVolumeDidChangeNotification", object: nil)
         
         var leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
         var rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
@@ -82,7 +81,6 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
 		//self.currentFilter.filterType = FastttFilterType.CameraFilterRetro
         //self.fastCamera = FastttFilterCamera(filterImage: self.currentFilter.filterImage)
         //self.fastCamera = FastttFilterCamera(filterImage: UIImage(named: "SepiaFilter"))
-        
         self.fastCamera.delegate = self
         self.fastCamera.willMoveToParentViewController(self)
         self.fastCamera.beginAppearanceTransition(true, animated: false)
@@ -91,7 +89,7 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
         self.fastCamera.didMoveToParentViewController(self)
         self.fastCamera.endAppearanceTransition()
         self.fastCamera.view.frame = self.view.frame
-        self.fastCamera.cameraDevice = FastttCameraDevice.Rear
+        //self.fastCamera.cameraDevice = FastttCameraDevice.Rear
         //self.fastCamera.filterImage = FastttCameraFilterHighContrast
         
         if (FastttFilterCamera.isCameraDeviceAvailable(FastttCameraDevice.Front)) {
@@ -142,84 +140,16 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
 		alert.addButtonWithTitle("Ok")
 		alert.show()
 	}
-	
-//	@IBAction func loadFromLibrary(sender: AnyObject) {
-//		var picker = UIImagePickerController()
-//		picker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
-//		picker.delegate = self
-//		self.presentViewController(picker, animated: true, completion: nil)
-//		
-//	}
-	
-	
-//	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
-//	{
-//        var imageViewContent = UIImage()
-//
-//		//image stored in local variable to contain lifespan in method
-//		var imageShortLife:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-//		imageViewContent = imageShortLife
-//		//picker.dismissViewControllerAnimated(true, completion: nil)
-//		
-//		//Retake and crop options------------------------------------------------------------------------
-//		var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
-//		previewViewController.cropCompletionHandler = {
-//			imageViewContent = $0!
-//			previewViewController.dismissViewControllerAnimated(true, completion: nil)
-//
-//			
-//			var imageView = UIImageView(image: imageViewContent)
-//			imageView.contentMode = UIViewContentMode.ScaleAspectFit
-//			//self.uploadImages(imageView.image!)
-//			
-//			picker.dismissViewControllerAnimated(true, completion: nil)
-//            UIApplication.sharedApplication().statusBarHidden = false
-//
-//            
-//			
-//		}
-//		previewViewController.cancelCompletionHandler = {
-//			//retake image
-//			
-//			//self.presentViewController(picker, animated:true, completion:{})
-//			self.setLastPhoto()
-//			self.updateThumbnail()
-//			self.flashButton.hidden = false
-//			self.setLastPhoto()
-//			self.updateThumbnail()
-//            UIApplication.sharedApplication().statusBarHidden = false
-//
-//			
-//		}
-//		
-//		if self.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-//            imageViewContent = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)!
-//			previewViewController.imageToCrop = imageViewContent
-//			//UIImage(CGImage: initialImage.CGImage, scale: 1, orientation: initialImage.imageOrientation)!
-//		}
-//		else{
-//			previewViewController.imageToCrop = imageViewContent
-//		}
-//		
-//		previewViewController.eventId = self.event!.objectId!
-//		// previewViewController.eventTitle = self.event!.name!
-//		previewViewController.downloadToCameraRoll = downloadToCameraRoll
-//		
-//		self.presentViewController(previewViewController, animated: true, completion: nil);
-//		setLastPhoto()
-//		updateThumbnail()
-//        UIApplication.sharedApplication().statusBarHidden = false
-//
-//	}
+
 //	
 //	
 //	func imagePickerControllerDidCancel(picker: UIImagePickerController){
 //		
 //		picker.dismissViewControllerAnimated(true, completion: nil)
 //	}
-//    override func prefersStatusBarHidden() -> Bool {
-//        return false
-//    }
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
 	
 	func cropToSquare(image originalImage: UIImage) -> UIImage {
 		// Get image and measurements
@@ -312,66 +242,26 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
         switch (self.fastCamera.cameraDevice) {
         case FastttCameraDevice.Front:
             cameraDevice = FastttCameraDevice.Rear
+            break
             
         case FastttCameraDevice.Rear:
             cameraDevice = FastttCameraDevice.Front
+            self.flashButton.hidden = true
+            break
             
         default:
-            cameraDevice = FastttCameraDevice.Front;
+            cameraDevice = FastttCameraDevice.Front
+            self.flashButton.hidden = true
         }
         
         if (FastttFilterCamera.isCameraDeviceAvailable(cameraDevice)) {
             self.fastCamera.cameraDevice = cameraDevice
         }
-//		//TO-DO: add transition when reversed
-//		if self.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-//			
-//			var screenBounds: CGSize = UIScreen.mainScreen().bounds.size
-//			var cameraAspectRatio: CGFloat = 4.0/3.0
-//			var cameraViewHeight = screenBounds.width * cameraAspectRatio
-//			var scale = screenBounds.height / cameraViewHeight
-//			self.cameraViewTransform = CGAffineTransformMakeTranslation(0, (screenBounds.height - cameraViewHeight) / 2.0)
-//			self.cameraViewTransform = CGAffineTransformScale(self.cameraViewTransform, scale, scale)
-//			self.zoomImage.camera = false
-//			
-//			
-//			UIView.transitionWithView(self.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
-//				self.cameraDevice = UIImagePickerControllerCameraDevice.Rear
-//				}, completion: nil)
-//			
-//			self.flashButton.hidden = false
-//		}else{
-//			
-//			//----------------------------------------------------------------------------
-//			self.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, -5.0)
-//			self.cameraViewTransform = CGAffineTransformScale(self.cameraViewTransform, 1.0, 1.0)
-//			
-//			// resize
-//			if (zoomImage.camera) {
-//				self.zoomImage.camera = false
-//			}
-//			//----------------------------------------------------------------------------
-//			
-//			UIView.transitionWithView(self.view, duration: 0.5, options: UIViewAnimationOptions.AllowAnimatedContent | UIViewAnimationOptions.TransitionFlipFromRight , animations: { () -> Void in
-//				self.cameraDevice = UIImagePickerControllerCameraDevice.Front
-//				}, completion: nil)
-//			
-//			self.flashButton.hidden = true
-//		}
 	
     
     }
 	
 	@IBAction func showCameraRoll(sender: UIButton) {
-		//self.dismissViewControllerAnimated(true, completion: nil)
-		
-		//        downloadToCameraRoll = false
-		//
-		//        var controller = UIImagePickerController()
-		//        controller.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
-		//        controller.mediaTypes = [kUTTypeImage]
-		//        controller.delegate = self
-		//        self.presentViewController(controller, animated:true, completion:nil)
 		
 		let pickerController = BFCImagePickerController()
 		pickerController.pickerDelegate = self
@@ -419,10 +309,13 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
         switch (self.fastCamera.cameraFlashMode) {
         case FastttCameraFlashMode.On:
             torchMode = FastttCameraFlashMode.Off
+            self.flashButton.setImage(flashOff, forState: .Normal)
+            
             break
         //case FFastttCameraFlashModeOn:
         default:
             torchMode = FastttCameraFlashMode.On
+            self.flashButton.setImage(flashOn, forState: .Normal)
             break
         }
 
@@ -611,7 +504,64 @@ class CustomCamera : UIViewController ,BFCImagePickerControllerDelegate, FastttC
     }
     
     // MARK: - FastttCameraDelegate
-    func cameraController(cameraController: FastttCameraInterface!, didFinishCapturingImage capturedImage: FastttCapturedImage!) {}
+    func cameraController(cameraController: FastttCameraInterface!, didFinishCapturingImage capturedImage: FastttCapturedImage!) {
+    
+        //        var imageViewContent = UIImage()
+        //
+        //		//image stored in local variable to contain lifespan in method
+        //		var imageShortLife:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        //		imageViewContent = imageShortLife
+        //		//picker.dismissViewControllerAnimated(true, completion: nil)
+        //
+        //		//Retake and crop options------------------------------------------------------------------------
+        //		var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
+        //		previewViewController.cropCompletionHandler = {
+        //			imageViewContent = $0!
+        //			previewViewController.dismissViewControllerAnimated(true, completion: nil)
+        //
+        //
+        //			var imageView = UIImageView(image: imageViewContent)
+        //			imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        //			//self.uploadImages(imageView.image!)
+        //
+        //			picker.dismissViewControllerAnimated(true, completion: nil)
+        //            UIApplication.sharedApplication().statusBarHidden = false
+        //
+        //
+        //
+        //		}
+        //		previewViewController.cancelCompletionHandler = {
+        //			//retake image
+        //
+        //			//self.presentViewController(picker, animated:true, completion:{})
+        //			self.setLastPhoto()
+        //			self.updateThumbnail()
+        //			self.flashButton.hidden = false
+        //			self.setLastPhoto()
+        //			self.updateThumbnail()
+        //            UIApplication.sharedApplication().statusBarHidden = false
+        //
+        //
+        //		}
+        //
+        //		if self.cameraDevice == UIImagePickerControllerCameraDevice.Front{
+        //            imageViewContent = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)!
+        //			previewViewController.imageToCrop = imageViewContent
+        //			//UIImage(CGImage: initialImage.CGImage, scale: 1, orientation: initialImage.imageOrientation)!
+        //		}
+        //		else{
+        //			previewViewController.imageToCrop = imageViewContent
+        //		}
+        //
+        //		previewViewController.eventId = self.event!.objectId!
+        //		// previewViewController.eventTitle = self.event!.name!
+        //		previewViewController.downloadToCameraRoll = downloadToCameraRoll
+        //		
+        //		self.presentViewController(previewViewController, animated: true, completion: nil);
+        //		setLastPhoto()
+        //		updateThumbnail()
+        //        UIApplication.sharedApplication().statusBarHidden = false
+    }
     
     func cameraController(cameraController: FastttCameraInterface!, didFinishScalingCapturedImage capturedImage: FastttCapturedImage!) {}
     

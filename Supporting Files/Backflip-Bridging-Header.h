@@ -30,6 +30,7 @@
     #import "AVCaptureDevice+FastttCamera.h"
     #import "FastttFocus.h"
     #import "FastttFilter.h"
+    #import "FastttFilterCamera.h"
     #import "FastttCapturedImage+Process.h"
 
 #endif

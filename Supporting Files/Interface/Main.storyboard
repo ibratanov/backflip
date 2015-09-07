@@ -892,10 +892,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FOA-2d-H3V">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FOA-2d-H3V">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1dA-ga-YWd">
+                                    <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1dA-ga-YWd">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="Xrr-JZ-6eV">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -906,12 +906,22 @@
                                         </constraints>
                                         <blurEffect style="dark"/>
                                     </visualEffectView>
-                                    <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uUS-2c-aXV">
+                                    <visualEffectView hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uUS-2c-aXV">
                                         <rect key="frame" x="0.0" y="435" width="375" height="232"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="BaV-xo-Nwh">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="232"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raQ-rr-mJ0">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="Htx-0J-Vsh"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ocw-Sk-fVS" userLabel="Bottom">
                                                     <rect key="frame" x="0.0" y="60" width="375" height="172"/>
                                                     <subviews>
@@ -968,28 +978,11 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raQ-rr-mJ0">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="60" id="Htx-0J-Vsh"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                         </view>
                                         <blurEffect style="dark"/>
                                     </visualEffectView>
-                                    <view alpha="0.0" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZIQ-s3-DAh" userLabel="Square">
-                                        <rect key="frame" x="0.0" y="60" width="375" height="375"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="ZIQ-s3-DAh" secondAttribute="height" multiplier="1:1" id="CdM-rX-Yqz"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yP2-xX-Ge0" userLabel="Top">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yP2-xX-Ge0" userLabel="Top">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxs-8h-ohk">
@@ -1001,7 +994,7 @@
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcL-cL-HUh" userLabel="Switch Camera Button">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcL-cL-HUh" userLabel="Switch Camera Button">
                                                 <rect key="frame" x="330" y="5" width="35" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="hVq-2a-fmV"/>
@@ -1012,7 +1005,7 @@
                                                     <rect key="frame" x="275" y="0.0" width="56" height="48"/>
                                                 </variation>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Gt-Up-WSC">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Gt-Up-WSC">
                                                 <rect key="frame" x="187" y="30" width="0.0" height="0.0"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1041,23 +1034,170 @@
                                             <rect key="frame" x="0.0" y="0.0" width="400" height="48"/>
                                         </variation>
                                     </view>
+                                    <view alpha="0.0" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZIQ-s3-DAh" userLabel="Square">
+                                        <rect key="frame" x="0.0" y="60" width="375" height="375"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ZIQ-s3-DAh" secondAttribute="height" multiplier="1:1" id="CdM-rX-Yqz"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="yP2-xX-Ge0" secondAttribute="leading" id="0Xo-3N-eQL"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="1IV-Iy-Icr"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="2Ay-PN-bBX"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="2Uh-vW-yu3"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="2YD-zG-zo7"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="2gk-ue-4Vh"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="centerX" secondItem="yP2-xX-Ge0" secondAttribute="centerX" id="2w2-se-bOa"/>
                                     <constraint firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="2zw-PM-6kx"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="3vD-HP-B63"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="4SI-th-Fpl"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="4Tc-3b-nTv"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="4ob-c2-arD"/>
+                                    <constraint firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="4vR-Li-1LK"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="centerX" secondItem="1dA-ga-YWd" secondAttribute="centerX" id="51f-cJ-6BU"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="centerX" secondItem="FOA-2d-H3V" secondAttribute="centerX" id="549-QO-fVh"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="uUS-2c-aXV" secondAttribute="leading" id="5ZS-rl-vmB"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="5ZY-90-Obb"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="top" secondItem="ZIQ-s3-DAh" secondAttribute="bottom" id="5sQ-Re-peW"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="6FI-aJ-EOg"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="ZIQ-s3-DAh" secondAttribute="leading" id="6HF-TO-S1f"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="6aV-7P-4Z1"/>
+                                    <constraint firstAttribute="bottom" secondItem="uUS-2c-aXV" secondAttribute="bottom" id="6dy-wI-UTD"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="ZIQ-s3-DAh" secondAttribute="leading" id="7EQ-AY-QPS"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="top" secondItem="yP2-xX-Ge0" secondAttribute="bottom" id="8DW-P9-qYX"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="8PQ-v5-4mD"/>
+                                    <constraint firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="Aa9-ZU-5Gd"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="1dA-ga-YWd" secondAttribute="leading" id="BzP-Go-cRH"/>
+                                    <constraint firstAttribute="trailing" secondItem="1dA-ga-YWd" secondAttribute="trailing" id="CMJ-bv-LuH"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" constant="60" id="CbC-aM-PO2"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="Cqh-2m-8fQ"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="D2s-Fn-46u"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="bottom" secondItem="1dA-ga-YWd" secondAttribute="bottom" id="EbH-ui-8hL"/>
+                                    <constraint firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="EyC-HX-IiK"/>
                                     <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="FR6-Pk-O2L"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="FZB-dM-k3w"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="top" secondItem="1dA-ga-YWd" secondAttribute="bottom" id="Ffl-Bn-cJN"/>
+                                    <constraint firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="Fkr-Wt-Iom"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="GqX-PF-u8d"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="HRL-60-EwY"/>
                                     <constraint firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="HXE-A3-tMN"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="I9B-qj-wtY"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="IPY-eL-doW"/>
+                                    <constraint firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="JPo-30-dEp"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="KH9-vB-3fY"/>
+                                    <constraint firstAttribute="bottom" secondItem="uUS-2c-aXV" secondAttribute="bottom" id="LKI-uk-Qoe"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="LWC-RU-UjR"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="LlF-cd-Tqk"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="yP2-xX-Ge0" secondAttribute="leading" id="Lld-fL-OE1"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" constant="60" id="LmR-nJ-RSl"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="centerX" secondItem="yP2-xX-Ge0" secondAttribute="centerX" id="Lz0-UI-ObL"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="centerX" secondItem="FOA-2d-H3V" secondAttribute="centerX" id="M66-Ih-yc9"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="uUS-2c-aXV" secondAttribute="leading" id="Mzw-6y-z2c"/>
+                                    <constraint firstAttribute="trailing" secondItem="1dA-ga-YWd" secondAttribute="trailing" id="NFX-ga-aIf"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="centerX" secondItem="yP2-xX-Ge0" secondAttribute="centerX" id="OIH-gY-tZA"/>
                                     <constraint firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="PSq-X8-324"/>
                                     <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="QGb-Ki-poM"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="yP2-xX-Ge0" secondAttribute="top" id="RIO-KZ-Xcz"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="centerX" secondItem="uUS-2c-aXV" secondAttribute="centerX" id="Ray-7x-Kp8"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" constant="60" id="Rei-kl-gyD"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="centerX" secondItem="ZIQ-s3-DAh" secondAttribute="centerX" id="Rhs-5l-lrh"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZIQ-s3-DAh" secondAttribute="bottom" constant="232" id="S0U-hC-mzp"/>
+                                    <constraint firstAttribute="trailing" secondItem="1dA-ga-YWd" secondAttribute="trailing" id="T8G-cn-JTb"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="TcF-bp-9gD"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="TnB-KZ-6QN"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="TxC-K9-5na"/>
+                                    <constraint firstAttribute="trailing" secondItem="1dA-ga-YWd" secondAttribute="trailing" id="U13-BZ-IR4"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="UCX-TQ-9cd"/>
+                                    <constraint firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="UGC-Hy-MtM"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="yP2-xX-Ge0" secondAttribute="leading" id="ULI-G8-7Np"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="UlP-iY-TYt"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" constant="60" id="Uow-oH-sUc"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="Urv-o2-oj9"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="Uto-lj-QhZ"/>
                                     <constraint firstAttribute="trailing" secondItem="1dA-ga-YWd" secondAttribute="trailing" id="VAZ-sj-AN6"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZIQ-s3-DAh" secondAttribute="bottom" constant="232" id="VBi-QC-sMI"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="bottom" secondItem="yP2-xX-Ge0" secondAttribute="bottom" id="VhK-ub-WLD"/>
                                     <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="W5o-MX-Bj9"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="Wdj-8l-hvy"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="centerX" secondItem="1dA-ga-YWd" secondAttribute="centerX" id="Whc-nj-TbV"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="top" secondItem="1dA-ga-YWd" secondAttribute="bottom" id="X0K-W4-rcw"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="XKw-kn-8ee"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="centerX" secondItem="yP2-xX-Ge0" secondAttribute="centerX" id="XnG-NX-Yfy"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="YOF-ad-WM3"/>
                                     <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="Ysg-sO-J1R"/>
                                     <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="a6F-yn-eiL"/>
+                                    <constraint firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="a6z-lj-gnN"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="a9H-oO-hcT"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="trailing" secondItem="1dA-ga-YWd" secondAttribute="trailing" id="aIy-bk-n1A"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="aUV-Rp-meC"/>
                                     <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="yP2-xX-Ge0" secondAttribute="top" id="afp-49-NMx"/>
+                                    <constraint firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="alk-9o-MpR"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="cpg-Nn-O9x"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="d8x-kA-g6V"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="centerX" secondItem="FOA-2d-H3V" secondAttribute="centerX" id="e7P-PA-Jsr"/>
                                     <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="eLg-6K-m0i"/>
                                     <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="edi-dh-2pa"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="eeY-jC-uYl"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="eie-IW-NmO"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="f6W-xy-Rqo"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="fvK-ZZ-vga"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="ZIQ-s3-DAh" secondAttribute="leading" id="gHJ-fN-9tC"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="gY2-tt-x4z"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="gga-r0-a4I"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="gwe-Js-Z07"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="centerX" secondItem="FOA-2d-H3V" secondAttribute="centerX" id="hHX-9d-Mnb"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="hVb-yb-6AH"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="top" secondItem="ZIQ-s3-DAh" secondAttribute="bottom" id="hWe-Qf-NgB"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="hYd-zr-YHM"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="hgd-Rj-vBT"/>
+                                    <constraint firstAttribute="bottom" secondItem="yP2-xX-Ge0" secondAttribute="bottom" constant="607" id="hhB-DZ-Zau"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="centerX" secondItem="FOA-2d-H3V" secondAttribute="centerX" id="iXh-Fd-asq"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="ZIQ-s3-DAh" secondAttribute="leading" id="ivr-uj-rUr"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="top" secondItem="yP2-xX-Ge0" secondAttribute="bottom" id="jCs-sA-JZC"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="jIe-63-huu"/>
+                                    <constraint firstAttribute="bottom" secondItem="uUS-2c-aXV" secondAttribute="bottom" id="jXc-dW-g1P"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="jl3-Xc-YuM"/>
+                                    <constraint firstAttribute="bottom" secondItem="yP2-xX-Ge0" secondAttribute="bottom" constant="607" id="joG-pk-p2P"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="centerY" secondItem="1dA-ga-YWd" secondAttribute="centerY" id="kA6-jd-odd"/>
+                                    <constraint firstAttribute="bottom" secondItem="uUS-2c-aXV" secondAttribute="bottom" id="lc7-eK-Kh8"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="mCr-KK-VbP"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="yP2-xX-Ge0" secondAttribute="top" id="mkY-z6-FDY"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="centerY" secondItem="1dA-ga-YWd" secondAttribute="centerY" id="nkY-Z0-Pwt"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="nnP-Oe-74b"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="o8p-Cr-BhL"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="pAj-0Z-Mbp"/>
                                     <constraint firstAttribute="bottom" secondItem="uUS-2c-aXV" secondAttribute="bottom" id="pDQ-g6-f3H"/>
+                                    <constraint firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="phV-bC-7RY"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" constant="435" id="qsK-iq-cZa"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="trailing" secondItem="yP2-xX-Ge0" secondAttribute="trailing" id="r3B-Ix-ZgD"/>
+                                    <constraint firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="rIf-py-HbX"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="rVT-eK-mRw"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="leading" secondItem="ZIQ-s3-DAh" secondAttribute="leading" id="rXq-Dd-e4I"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" constant="435" id="s4j-hJ-xU6"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="sCc-X6-gff"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="centerX" secondItem="FOA-2d-H3V" secondAttribute="centerX" id="t3a-QW-C0y"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="tC6-vj-AD1"/>
+                                    <constraint firstAttribute="bottom" secondItem="uUS-2c-aXV" secondAttribute="bottom" id="tfm-J0-mRU"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="tlX-rG-yIc"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="centerX" secondItem="ZIQ-s3-DAh" secondAttribute="centerX" id="tp7-8D-ifW"/>
                                     <constraint firstItem="ZIQ-s3-DAh" firstAttribute="top" secondItem="yP2-xX-Ge0" secondAttribute="bottom" id="uM9-oS-0eT"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZIQ-s3-DAh" secondAttribute="trailing" id="uUf-Qp-yGX"/>
+                                    <constraint firstItem="ZIQ-s3-DAh" firstAttribute="leading" secondItem="1dA-ga-YWd" secondAttribute="leading" id="vCl-Bh-Nqj"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="vHB-hy-pVg"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="top" secondItem="FOA-2d-H3V" secondAttribute="top" id="vLQ-Yh-bgG"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="centerX" secondItem="1dA-ga-YWd" secondAttribute="centerX" id="w4Y-mZ-BNC"/>
                                     <constraint firstAttribute="trailing" secondItem="uUS-2c-aXV" secondAttribute="trailing" id="wJx-Mx-fxp"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="centerX" secondItem="uUS-2c-aXV" secondAttribute="centerX" id="wyw-dN-liE"/>
+                                    <constraint firstAttribute="bottom" secondItem="uUS-2c-aXV" secondAttribute="bottom" id="x7e-Ew-8LI"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="xNU-et-kZq"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="xSR-Mi-osp"/>
+                                    <constraint firstItem="1dA-ga-YWd" firstAttribute="centerX" secondItem="ZIQ-s3-DAh" secondAttribute="centerX" id="xvR-Eq-W6T"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="ydz-Hy-zPy"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="leading" secondItem="FOA-2d-H3V" secondAttribute="leading" id="z1M-oq-Old"/>
+                                    <constraint firstItem="uUS-2c-aXV" firstAttribute="centerX" secondItem="FOA-2d-H3V" secondAttribute="centerX" id="zEB-p3-V0p"/>
+                                    <constraint firstItem="yP2-xX-Ge0" firstAttribute="centerX" secondItem="FOA-2d-H3V" secondAttribute="centerX" id="zOb-kB-3Qu"/>
                                 </constraints>
                             </view>
                         </subviews>
