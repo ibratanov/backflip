@@ -1,0 +1,20 @@
+//
+//  PrefixHeader.pch
+//  Backflip for iOS
+//
+//  Created by Jack Perry on 2015-09-07.
+//  Copyright (c) 2015 Backflip. All rights reserved.
+//
+
+#import <Availability.h>
+
+// For AFNetworking
+#ifndef TARGET_OS_IOS
+	#define TARGET_OS_IOS TARGET_OS_IPHONE
+#endif
+
+#ifndef TARGET_OS_WATCH
+	#define TARGET_OS_WATCH 0
+#endif
+
+

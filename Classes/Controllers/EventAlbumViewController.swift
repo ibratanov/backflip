@@ -113,7 +113,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	// MARK: Actions
 	//-------------------------------------
 	
-	
 	@IBAction func leaveEvent()
 	{
 		let alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave? This event will be moved to your event history.", preferredStyle: .Alert)

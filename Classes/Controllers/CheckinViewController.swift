@@ -353,11 +353,25 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10km (It's really in meters here 'cause of legacy, turns to Kms below)
 			let region : CLCircularRegion = CLCircularRegion(center: location!.coordinate, radius: (radius.doubleValue * 1000), identifier: "nearby-events-region")
 			
+			// Filter by event location and attancance
 			for event : Event in _events {
 				if (event.geoLocation != nil) {
 					let coordinate = CLLocationCoordinate2D(latitude: event.geoLocation!.latitude!.doubleValue, longitude: event.geoLocation!.longitude!.doubleValue)
 					if (region.containsCoordinate(coordinate)) {
-						nearbyEvents.addObject(event)
+						
+						var attended = false
+						let attendees = event.attendees!.allObjects as! [Attendance]
+						for attendee : Attendance in attendees {
+							if (attendee.attendeeId == PFUser.currentUser()!.objectId!) {
+								attended = true
+								break
+							}
+						}
+						
+						if (attended == false) {
+							nearbyEvents.addObject(event)
+						}
+						
 					}
 				}
 			}
@@ -374,6 +388,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				
 				return distance1.compare(distance2)
 			})
+			
 			
 			
 			// Update UI
