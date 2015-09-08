@@ -236,45 +236,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
                 var customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
                 customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
                 self.presentViewController(customCameraFCF as UIViewController, animated: true, completion: nil)
-                
-                //let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
-                //dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                
-                //					var testCamera = CustomCamera()
-                //					if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-                //
-                //						let index = self.pickerView?.selectedRowInComponent(0)
-                //						let event = self.events[Int(index!)]
-                //						testCamera.event = event
-                //
-                //						testCamera.delegate = self
-                //						testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-                //						testCamera.sourceType = .Camera
-                //						testCamera.allowsEditing = false
-                //						testCamera.showsCameraControls = false
-                //						testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-                //						testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-                //
-                //						self.presentViewController(testCamera, animated: true, completion: nil)
-                //
-                //
-                //					}
-                
-//                var fastCamera = FastttFilterCamera()
-//                fastCamera.delegate = self
-//                //fastCamera.willMoveToParentViewController(self)
-//                fastCamera.beginAppearanceTransition(true, animated: false)
-//                //
-//                
-//                //self.addChildViewController(self.fastCamera)
-//                //fastCamera.didMoveToParentViewController(self)
-//                fastCamera.endAppearanceTransition()
-//                //
-//                //fastCamera.view.frame = self.view.frame
-//                
-//                self.presentViewController(fastCamera, animated: true, completion: nil)
-//                
-//                //})
             }
             
             return false

@@ -58,39 +58,6 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
         let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
         window?.rootViewController!.presentViewController(customCameraFCF, animated: true, completion: nil)
         
-        //
-        //		var testCamera = CustomCamera()
-        //		if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-        //
-        //			testCamera.event = event
-        //
-        //			testCamera.delegate = self
-        //			testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-        //			testCamera.sourceType = .Camera
-        //			testCamera.allowsEditing = false
-        //			testCamera.showsCameraControls = false
-        //			testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-        //			testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-        //
-        //			let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
-        //			window?.rootViewController!.presentViewController(testCamera, animated: true, completion: nil)
-        //		}
-//        var fastCamera = FastttFilterCamera()
-//        fastCamera.delegate = self
-//        //fastCamera.willMoveToParentViewController(self)
-//        fastCamera.beginAppearanceTransition(true, animated: false)
-//        //
-//        
-//        //self.addChildViewController(self.fastCamera)
-//        //fastCamera.didMoveToParentViewController(self)
-//        fastCamera.endAppearanceTransition()
-//        //
-//        //fastCamera.view.frame = self.view.frame
-//        
-//        let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
-//        window?.rootViewController!.presentViewController(fastCamera, animated: true, completion: nil)
-        
-        
     }
 	
 }

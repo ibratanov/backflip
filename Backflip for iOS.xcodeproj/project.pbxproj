@@ -318,6 +318,7 @@
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817D1A49E0EA00E65899 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817C1A49E0EA00E65899 /* MobileCoreServices.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
+		CE89CD051B9E5FBA009C8015 /* CustomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE89CD041B9E5FBA009C8015 /* CustomFilter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1247,6 +1248,7 @@
 		81BA817C1A49E0EA00E65899 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81821A49E27F00E65899 /* Backflip-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Backflip-Bridging-Header.h"; sourceTree = "<group>"; };
+		CE89CD041B9E5FBA009C8015 /* CustomFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFilter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1440,6 +1442,7 @@
 				0434BCD51B73BDCF00EF57EC /* Image.swift */,
 				049222AA1B72653900FFB08A /* Album.swift */,
 				040B27D11B794E9B004B4FB2 /* Event.swift */,
+				CE89CD041B9E5FBA009C8015 /* CustomFilter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2859,6 +2862,7 @@
 				67E9C0E21B9AAF0400093A16 /* GPUImagePixellatePositionFilter.m in Sources */,
 				67E9C0AC1B9AAF0400093A16 /* GPUImageGaussianSelectiveBlurFilter.m in Sources */,
 				67E9C0961B9AAF0400093A16 /* GPUImageCrosshatchFilter.m in Sources */,
+				CE89CD051B9E5FBA009C8015 /* CustomFilter.swift in Sources */,
 				67E9C0CA1B9AAF0400093A16 /* GPUImageLuminanceThresholdFilter.m in Sources */,
 				67E9C10C1B9AAF0400093A16 /* GPUImageTwoInputCrossTextureSamplingFilter.m in Sources */,
 				67E9BDBF1B9AAEF200093A16 /* FastttCamera.m in Sources */,

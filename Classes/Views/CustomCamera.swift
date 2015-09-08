@@ -22,12 +22,21 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
     //------------------FastttCamera----------------
     //var fastCamera = FastttFilterCamera()
     var fastCamera = FastttFilterCamera()
+    var currentFilter = CustomFilter()
     
-   // var currentFilter = ExampleFilter()
-   // _currentFilter = [ExampleFilter filterWithType:FastttCameraFilterRetro];
-   // _fastCamera = [FastttFilterCamera cameraWithFilterImage:self.currentFilter.filterImage];
-	
-	//------------------Camera Att.-----------------
+    
+    enum FastttFilterType{
+        case FastttCameraFilterNone
+        case FastttCameraFilterRetro
+        case FastttCameraFilterHighContrast
+        case FastttCameraFilterBW
+        case FastttCameraFilterSepia
+        
+        init() {
+            self = .FastttCameraFilterNone
+        }
+    }
+   	//------------------Camera Att.-----------------
     
     @IBOutlet weak var bottomBar: UIView!
     @IBOutlet weak var topBar: UIView!
@@ -81,6 +90,15 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		//self.currentFilter.filterType = FastttFilterType.CameraFilterRetro
         //self.fastCamera = FastttFilterCamera(filterImage: self.currentFilter.filterImage)
         //self.fastCamera = FastttFilterCamera(filterImage: UIImage(named: "SepiaFilter"))
+
+        // _currentFilter = [ExampleFilter filterWithType:FastttCameraFilterRetro];
+        // _fastCamera = [FastttFilterCamera cameraWithFilterImage:self.currentFilter.filterImage];
+        
+        self.currentFilter.filterWithType(CustomFilter.FastttFilterType.FastttCameraFilterRetro)
+        //self.fastCamera = FastttFilterCamera(filterImage: self.currentFilter.filterImage)
+
+        //self.currentFilter = self.currentFilter.nextFilter()
+        //self.fastCamera.filterImage = self.currentFilter.filterImage
         self.fastCamera.delegate = self
         self.fastCamera.willMoveToParentViewController(self)
         self.fastCamera.beginAppearanceTransition(true, animated: false)
@@ -90,8 +108,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         self.fastCamera.didMoveToParentViewController(self)
         self.fastCamera.endAppearanceTransition()
         self.fastCamera.view.frame = self.view.frame
-        //self.fastCamera.cameraDevice = FastttCameraDevice.Rear
-        //self.fastCamera.filterImage = FastttCameraFilterHighContrast
+        
         
         if (FastttFilterCamera.isCameraDeviceAvailable(FastttCameraDevice.Front)) {
             //self.fastCamera.cameraDevice = FastttCameraDevice.Front
@@ -107,13 +124,13 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 						Digits.sharedInstance().logOut()
 						self.performSegueWithIdentifier("logOutBlocked", sender: self)
 					} else {
-//						self.fullScreen = false
-//						self.posted = true
-//						
-//						self.testCalled()
-//						
-//						self.setLastPhoto()
-//						self.updateThumbnail()
+						self.fullScreen = false
+						self.posted = true
+						
+						self.testCalled()
+						
+						self.setLastPhoto()
+						self.updateThumbnail()
 						
 					}
 				} else {
@@ -142,12 +159,6 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		alert.show()
 	}
 
-//	
-//	
-//	func imagePickerControllerDidCancel(picker: UIImagePickerController){
-//		
-//		picker.dismissViewControllerAnimated(true, completion: nil)
-//	}
     override func prefersStatusBarHidden() -> Bool {
         return false
     }
@@ -311,7 +322,6 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         case FastttCameraFlashMode.On:
             torchMode = FastttCameraFlashMode.Off
             self.flashButton.setImage(flashOff, forState: .Normal)
-            
             break
         //case FFastttCameraFlashModeOn:
         default:
@@ -615,6 +625,11 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
             }
         }
     }
-    
+    func changeFilter() {
+        print("switch filter");
+        self.currentFilter = self.currentFilter.nextFilter()
+        
+        self.fastCamera.filterImage = self.currentFilter.filterImage
+    }
 
 }

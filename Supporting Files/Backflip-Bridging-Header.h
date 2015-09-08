@@ -32,5 +32,7 @@
     #import "FastttFilter.h"
     #import "FastttFilterCamera.h"
     #import "FastttCapturedImage+Process.h"
+    #import "FastttLookupFilter.h"
+    #import "FastttEmptyFilter.h"
 
 #endif
