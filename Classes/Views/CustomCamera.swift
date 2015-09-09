@@ -523,6 +523,36 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         *  image with its rotation adjusted to match the orientation in which the
         *  image was captured.
         */
+        if let wnd = self.fastCamera.view{
+            
+            var v = UIView(frame: wnd.bounds)
+            v.backgroundColor = UIColor.whiteColor()
+            v.alpha = 1.0
+            
+            wnd.addSubview(v)
+
+            UIView.animateWithDuration(1500, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+                v.alpha = 1.0
+                }, completion: { (finished:Bool) -> Void in
+                    println("inside")
+                    v.removeFromSuperview()
+            })
+            
+            
+            var v2 = UIView(frame: wnd.bounds)
+            v2.backgroundColor = UIColor.whiteColor()
+            v2.alpha = 1
+
+            UIView.animateWithDuration(1500, delay: 1500, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                v2.alpha = 1.0
+                }, completion: { (finished:Bool) -> Void in
+                    println("outside")
+                    v2.removeFromSuperview()
+            })
+            
+
+        }
+        
                 var imageViewContent = UIImage()
         
         		//image stored in local variable to contain lifespan in method

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -27,15 +27,16 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Hm8-KL-gkI">
+                    <rect key="frame" x="168" y="307" width="37" height="37"/>
+                    <animations/>
+                    <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
                 <view hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ys9-ZT-loK" userLabel="Full Size Reference View">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <animations/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Hm8-KL-gkI">
-                    <rect key="frame" x="177" y="324" width="20" height="20"/>
-                    <animations/>
-                </activityIndicatorView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="500" placeholderIntrinsicHeight="500" translatesAutoresizingMaskIntoConstraints="NO" id="Qr6-XV-dtf">
                     <rect key="frame" x="-257" y="0.0" width="889" height="667"/>
                     <subviews>
@@ -148,7 +149,7 @@
                 <constraint firstAttribute="trailing" secondItem="BBL-aR-gtQ" secondAttribute="trailing" id="IWV-Xt-4Oi"/>
                 <constraint firstItem="R6s-Gn-XjS" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="N1d-oS-snV"/>
                 <constraint firstAttribute="bottom" secondItem="ys9-ZT-loK" secondAttribute="bottom" id="O6V-5t-m8Q"/>
-                <constraint firstItem="Hm8-KL-gkI" firstAttribute="centerX" secondItem="BBL-aR-gtQ" secondAttribute="centerX" id="RA5-tq-8Fq"/>
+                <constraint firstItem="Hm8-KL-gkI" firstAttribute="centerX" secondItem="BBL-aR-gtQ" secondAttribute="centerX" constant="-1" id="RA5-tq-8Fq"/>
                 <constraint firstAttribute="centerX" secondItem="Qr6-XV-dtf" secondAttribute="centerX" id="Sma-42-UI0"/>
                 <constraint firstItem="BBL-aR-gtQ" firstAttribute="leading" secondItem="GLu-AF-z8l" secondAttribute="leading" id="TMV-c4-CBU"/>
                 <constraint firstItem="BBL-aR-gtQ" firstAttribute="top" secondItem="R6s-Gn-XjS" secondAttribute="bottom" id="TQN-Yv-9G7"/>

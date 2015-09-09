@@ -55,7 +55,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func prefersStatusBarHidden() -> Bool {
-        return false
+        return true
     }
 	
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -70,8 +70,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageLoad.hidden=false
-
         
         var leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
         var rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
@@ -167,7 +165,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         imageView.image = resizeImage(imageToCrop!) //imageToCrop!
         
-        imageLoad.hidden=true
 
     }
     override func didReceiveMemoryWarning() {
