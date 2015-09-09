@@ -94,7 +94,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         // _currentFilter = [ExampleFilter filterWithType:FastttCameraFilterRetro];
         // _fastCamera = [FastttFilterCamera cameraWithFilterImage:self.currentFilter.filterImage];
         
-        self.currentFilter.filterWithType(CustomFilter.FastttFilterType.FastttCameraFilterRetro)
+        //self.currentFilter.filterWithType(CustomFilter.FastttFilterType.FastttCameraFilterRetro)
         //self.fastCamera = FastttFilterCamera(filterImage: self.currentFilter.filterImage)
 
         //self.currentFilter = self.currentFilter.nextFilter()
@@ -189,8 +189,10 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)
 		
 		//Define original orientation
-		let image: UIImage = UIImage(CGImage: imageRef, scale: originalImage.scale, orientation: originalImage.imageOrientation)!
+		//let image: UIImage = UIImage(CGImage: imageRef, scale: originalImage.scale, orientation: originalImage.imageOrientation)!
 		
+        let image: UIImage = UIImage(CGImage: imageRef)!
+
 		return image
 	}
 	
@@ -317,17 +319,15 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	}
 	@IBAction func toggleTorch(sender: UIButton) {
         print("toggle pressed")
-        var torchMode = FastttCameraFlashMode.On
-        switch (self.fastCamera.cameraFlashMode) {
-        case FastttCameraFlashMode.On:
-            torchMode = FastttCameraFlashMode.Off
+        
+        if self.fastCamera.cameraFlashMode == FastttCameraFlashMode.On {
+            self.fastCamera.cameraFlashMode = FastttCameraFlashMode.Off
+            
             self.flashButton.setImage(flashOff, forState: .Normal)
-            break
-        //case FFastttCameraFlashModeOn:
-        default:
-            torchMode = FastttCameraFlashMode.On
+            
+        }else{
+            self.fastCamera.cameraFlashMode = FastttCameraFlashMode.On
             self.flashButton.setImage(flashOn, forState: .Normal)
-            break
         }
 
     }
@@ -517,66 +517,86 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
     // MARK: - FastttCameraDelegate
     func cameraController(cameraController: FastttCameraInterface!, didFinishCapturingImage capturedImage: FastttCapturedImage!) {
     
-        //        var imageViewContent = UIImage()
-        //
-        //		//image stored in local variable to contain lifespan in method
-        //		var imageShortLife:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        //		imageViewContent = imageShortLife
-        //		//picker.dismissViewControllerAnimated(true, completion: nil)
-        //
-        //		//Retake and crop options------------------------------------------------------------------------
-        //		var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
-        //		previewViewController.cropCompletionHandler = {
-        //			imageViewContent = $0!
-        //			previewViewController.dismissViewControllerAnimated(true, completion: nil)
-        //
-        //
-        //			var imageView = UIImageView(image: imageViewContent)
-        //			imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        //			//self.uploadImages(imageView.image!)
-        //
-        //			picker.dismissViewControllerAnimated(true, completion: nil)
-        //            UIApplication.sharedApplication().statusBarHidden = false
-        //
-        //
-        //
-        //		}
-        //		previewViewController.cancelCompletionHandler = {
-        //			//retake image
-        //
-        //			//self.presentViewController(picker, animated:true, completion:{})
-        //			self.setLastPhoto()
-        //			self.updateThumbnail()
-        //			self.flashButton.hidden = false
-        //			self.setLastPhoto()
-        //			self.updateThumbnail()
-        //            UIApplication.sharedApplication().statusBarHidden = false
-        //
-        //
-        //		}
-        //
-        //		if self.cameraDevice == UIImagePickerControllerCameraDevice.Front{
-        //            imageViewContent = UIImage(CGImage: imageViewContent.CGImage, scale: 1.0, orientation: .LeftMirrored)!
-        //			previewViewController.imageToCrop = imageViewContent
-        //			//UIImage(CGImage: initialImage.CGImage, scale: 1, orientation: initialImage.imageOrientation)!
-        //		}
-        //		else{
-        //			previewViewController.imageToCrop = imageViewContent
-        //		}
-        //
-        //		previewViewController.eventId = self.event!.objectId!
-        //		// previewViewController.eventTitle = self.event!.name!
-        //		previewViewController.downloadToCameraRoll = downloadToCameraRoll
-        //		
-        //		self.presentViewController(previewViewController, animated: true, completion: nil);
-        //		setLastPhoto()
-        //		updateThumbnail()
-        //        UIApplication.sharedApplication().statusBarHidden = false
+        /**
+        *  Here, capturedImage.fullImage contains the full-resolution captured
+        *  image, while capturedImage.rotatedPreviewImage contains the full-resolution
+        *  image with its rotation adjusted to match the orientation in which the
+        *  image was captured.
+        */
+                var imageViewContent = UIImage()
+        
+        		//image stored in local variable to contain lifespan in method
+        
+        		var imageShortLife:UIImage = capturedImage.rotatedPreviewImage
+        
+        		imageViewContent = imageShortLife
+        		//picker.dismissViewControllerAnimated(true, completion: nil)
+        
+        		//Retake and crop options------------------------------------------------------------------------
+        		var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
+        		previewViewController.cropCompletionHandler = {
+        			imageViewContent = $0!
+        			previewViewController.dismissViewControllerAnimated(true, completion: nil)
+        
+        
+        			var imageView = UIImageView(image: imageViewContent)
+        			imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        			//self.uploadImages(imageView.image!)
+        
+        			self.dismissViewControllerAnimated(true, completion: nil)
+                    UIApplication.sharedApplication().statusBarHidden = true
+        
+        
+        
+        		}
+        		previewViewController.cancelCompletionHandler = {
+        			//retake image
+        
+        			//self.presentViewController(picker, animated:true, completion:{})
+        			self.setLastPhoto()
+        			self.updateThumbnail()
+        			self.flashButton.hidden = false
+        			self.setLastPhoto()
+        			self.updateThumbnail()
+                    UIApplication.sharedApplication().statusBarHidden = true
+        
+        
+        		}
+        
+            if self.fastCamera.cameraDevice == FastttCameraDevice.Front {
+            previewViewController.imageToCrop = imageViewContent
+            }
+            else{
+        			previewViewController.imageToCrop = imageViewContent
+        		}
+        
+        		//previewViewController.eventId = self.event!.objectId!
+        		//previewViewController.eventTitle = self.event!.name!
+        		previewViewController.downloadToCameraRoll = downloadToCameraRoll
+        		
+        		self.presentViewController(previewViewController, animated: true, completion: nil);
+        		setLastPhoto()
+        		updateThumbnail()
+                UIApplication.sharedApplication().statusBarHidden = false
     }
     
-    func cameraController(cameraController: FastttCameraInterface!, didFinishScalingCapturedImage capturedImage: FastttCapturedImage!) {}
+    func cameraController(cameraController: FastttCameraInterface!, didFinishScalingCapturedImage capturedImage: FastttCapturedImage!) {
     
-    func cameraController(cameraController: FastttCameraInterface!, didFinishNormalizingCapturedImage capturedImage: FastttCapturedImage!) {}
+        /**
+        *  Here, capturedImage.scaledImage contains the scaled-down version
+        *  of the image.
+        */
+    }
+    
+    func cameraController(cameraController: FastttCameraInterface!, didFinishNormalizingCapturedImage capturedImage: FastttCapturedImage!) {
+        /**
+        *  Here, capturedImage.fullImage and capturedImage.scaledImage have
+        *  been rotated so that they have image orientations equal to
+        *  UIImageOrientationUp. These images are ready for saving and uploading,
+        *  as they should be rendered more consistently across different web
+        *  services than images with non-standard orientations.
+        */
+    }
     
     func cameraController(cameraController: FastttCameraInterface!, didReceiveRawBuffer imageData: [NSObject : AnyObject]!) {}
 
@@ -607,7 +627,6 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
             if(filterCount>0){
                 filterCount -= 1
                 var filterName = filterNames[filterCount]
-                
                 
               //  self.currentFilter = self.currentFilter.nextFilter()
               //  self.fastCamera.filterImage = self.currentFilter.filterImage
