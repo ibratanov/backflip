@@ -34,7 +34,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	@IBOutlet weak var segmentedControl : UISegmentedControl!
 	let spinner : UIActivityIndicatorView = UIActivityIndicatorView()
-	let refreshControl : UIRefreshControl = UIRefreshControl.new()
+	let refreshControl : UIRefreshControl = UIRefreshControl()
 	
 	
 	//-------------------------------------
@@ -366,9 +366,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
 				dispatch_after(dispatchTime, dispatch_get_main_queue(), {
 					
-					let album = Album(text: String(format:"Check out the photos from %@ on ", self.event!.name!), url: url);
 					// Now we share.
-					let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [album, url], applicationActivities: nil)
+					let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [self.event!, NSURL(string: url)! ], applicationActivities: nil)
 					activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]
 					self.presentViewController(activityViewController, animated: true, completion: nil)
 				})
@@ -455,7 +454,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 						let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
 						if (liked) {
 							self.likeButton!.select()
-						} else {.
+						} else {
 							self.likeButton!.deselect()
 						}
 					}
