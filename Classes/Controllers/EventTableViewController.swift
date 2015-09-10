@@ -233,6 +233,10 @@ class EventTableViewController: UITableViewController
 			}
 		}
 		
+		
+		// Sort events
+		_events.sort{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
+		
 		self.events = _events;
 		self.tableView.reloadData()
 	}

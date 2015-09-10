@@ -455,7 +455,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 						let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
 						if (liked) {
 							self.likeButton!.select()
-						} else {
+						} else {.
 							self.likeButton!.deselect()
 						}
 					}
