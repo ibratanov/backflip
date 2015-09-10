@@ -63,7 +63,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func displayNoInternetAlert() {
-        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to access content.")
+        let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to access content.")
         self.presentViewController(alert, animated: true, completion: nil)
         println("no internet")
     }
@@ -73,8 +73,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         imageLoad.hidden=false
 
         
-        var leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
-        var rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
         
         leftSwipe.direction = .Left
         rightSwipe.direction = .Right
@@ -89,9 +89,9 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 
     //, newHeight: CGFloat, newWidth: CGFloat
     func resizeImage(image: UIImage) -> UIImage {
-        var screenH =         UIScreen.mainScreen().bounds.height
+        let screenH =         UIScreen.mainScreen().bounds.height
 
-        var screenW =         UIScreen.mainScreen().bounds.width
+        let screenW =         UIScreen.mainScreen().bounds.width
 
         let newHeight:CGFloat = screenH * 3.757
         //let newHeight:CGFloat = referenceView.bounds.height * 3.757
@@ -206,21 +206,21 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         if NetworkAvailable.networkConnection() == true {
 
-        var capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
+        let capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
             if (downloadToCameraRoll!) {
                 UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
             }
             
             
-            var imageData = compressImage(capturedImage, shrinkRatio: 1.0)
-            var imageFile = PFFile(name: "image.png", data: imageData)
+            let imageData = compressImage(capturedImage, shrinkRatio: 1.0)
+            let imageFile = PFFile(name: "image.png", data: imageData)
             
-            var thumbnailData = compressImage(capturedImage, shrinkRatio: 0.5)
-            var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+            let thumbnailData = compressImage(capturedImage, shrinkRatio: 0.5)
+            let thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
             
             
             //Upload photos to database
-            var photo = PFObject(className: "Photo")
+            let photo = PFObject(className: "Photo")
             photo["caption"] = "Camera roll upload"
             photo["image"] = imageFile
             photo["thumbnail"] = thumbnailFile
@@ -234,32 +234,32 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             photo["reporter"] = ""
             photo["reportMessage"] = ""
             
-            var photoACL = PFACL(user: PFUser.currentUser()!)
+            let photoACL = PFACL(user: PFUser.currentUser()!)
             photoACL.setPublicWriteAccess(true)
             photoACL.setPublicReadAccess(true)
             photo.ACL = photoACL
             
             
-            var query2 = PFQuery(className: "EventAttendance")
+            let query2 = PFQuery(className: "EventAttendance")
             query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
             query2.whereKey("eventID", equalTo: eventId!)
 
             //var photoObjectList = query2.findObjects()
             var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
                 if (objs != nil && objs!.count != 0) {
-                    var photoObject = objs!.first as! PFObject
+                    let photoObject = objs!.first as! PFObject
                     
 //TODO: Investigate issue with multi-flagged photos
 //                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
 //                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
                     
-                    var queryEvent = PFQuery(className: "Event")
+                    let queryEvent = PFQuery(className: "Event")
                     queryEvent.whereKey("objectId", equalTo: self.eventId!)
                     //var objects = queryEvent.findObjects()
                     var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
                         
                         if (sobjs != nil && sobjs!.count != 0) {
-                            var eventObject = sobjs!.first as! PFObject
+                            let eventObject = sobjs!.first as! PFObject
                             
                             let relation = eventObject.relationForKey("photos")
                             
@@ -301,10 +301,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
         var imageHeight:CGFloat = image.size.height
         var imageWidth:CGFloat = image.size.width
-        var maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
-        var maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
+        let maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
+        let maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
         var imageRatio:CGFloat = imageWidth/imageHeight
-        var scalingRatio:CGFloat = maxWidth/maxHeight
+        let scalingRatio:CGFloat = maxWidth/maxHeight
         
         //lowest quality rating with acceptable encoding
         var quality:CGFloat = 0.4
@@ -334,7 +334,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        var rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
+        let rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
         //bit-map based graphic context and set the boundaries of still image
         UIGraphicsBeginImageContext(rect.size);
         image.drawInRect(rect)
@@ -355,7 +355,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     //----------Filters
-    
+	
     func showOriginalImage() {
         self.imageView.image = resizeImage(imageToCrop!) //imageToCrop!
     }
@@ -393,7 +393,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             println("Left \(filterCount)")
             if(filterCount>0){
                 filterCount -= 1
-            var filterName = filterNames[filterCount]
+            let filterName = filterNames[filterCount]
             filter = CIFilter(name: filterName)
                 outputImage()
             }else{
@@ -406,7 +406,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             if(filterCount<filterNames.count-1){
             println("Right \(filterCount)")
                 filterCount += 1
-            var filterName = filterNames[filterCount]
+            let filterName = filterNames[filterCount]
             filter = CIFilter(name: filterName)
                 outputImage()
             }

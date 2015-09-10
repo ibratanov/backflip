@@ -1,5 +1,5 @@
 //
-//  Event.swift
+//  PFGeoPoint.swift
 //  Backflip for iOS
 //
 //  Created by Jack Perry on 2015-08-24.
@@ -9,8 +9,8 @@
 import Foundation
 import CoreData
 
-@objc(Event)
-class Event: ParseObject {
+@objc(GeoPoint)
+class GeoPoint: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
