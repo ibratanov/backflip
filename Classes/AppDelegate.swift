@@ -51,6 +51,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupParse()
 		setupCoreData()
 		setupApperance()
+        
+        setupBranch(launchOptions) // Branch.io
+        
+        
 		
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
@@ -131,31 +135,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         //--------------------------BRANCH.IO------------------------------------
         
-        let branch: Branch = Branch.getInstance()
-        //Now a connection can be established between a referring user and a referred user during anysession, not just the very first time a user opens the app.
-        branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
-            if (error == nil) {
-                // This can now count as a referred session even if this isn't
-                // the first time a user has opened the app (aka an "Install").
-                //Custom logic goes here --> dependent on access to cloud services
-                if((params["referringOut"])  != nil) {
-					/*
-					var event = Event()
-					event.objectId = params["eventId"] as? String
-					event.name = params["eventTitle"] as? String
-					
-					var alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
-					alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-					alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
-						self.checkIn(event)
-					}))
-					
-					let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
-					window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-					*/
-				}
-            }
-        })
         return true
     }
     
@@ -374,51 +353,52 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	//--------------------------------------
 	func setupCoreData()
 	{
-		MagicalRecord.setupCoreDataStack()
+		BFDataMananger.sharedManager.setupDatabase()
 	}
 	
+    
+    
+    //--------------------------------------
+    // MARK: Branch.io
+    //--------------------------------------
+    func setupBranch(launchOptions: [NSObject: AnyObject]?)
+    {
+        
+        let branch: Branch = Branch.getInstance()
+        branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
+            
+            if (error == nil) {
+                
+                if ((params["referringOut"])  != nil) {
+                    
+                    let eventId =  params["eventId"] as? String
+                    if (eventId != nil) {
+                        
+                        let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventId) as! Event
+                        var alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
+                        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                        alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
+                            
+                            let checkinController : CheckinViewController = CheckinViewController()
+                            // checkinController.checkIn(event)
+                            
+                        }))
+                        
+                    } else {
+                     
+                        var alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
+                        alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+                      
+                        let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+                        window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                    
+                }
+            }
+        })
 
-
-	//--------------------------------------
-	// MARK: Parse
-	//--------------------------------------
-	
-	/*
-	func checkIn(event: Event)
-	{
-		 // You have been invited to join <EVENT>, would you like to check in?
-		
-		// subscribe to event push notifications
-		let currentInstallation = PFInstallation.currentInstallation()
-		currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
-		currentInstallation.saveInBackground()
-		
-		// Create & save attendance object
-		var attendance = PFObject(className:"EventAttendance")
-		attendance["eventID"] = event.objectId
-		attendance["attendeeID"] = PFUser.currentUser()?.objectId
-		attendance["photosLikedID"] = []
-		attendance["photosLiked"] = []
-		attendance["photosUploadedID"] = []
-		attendance["photosUploaded"] = []
-		attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
-		
-		attendance.saveInBackground()
-		
-		var account = PFUser.currentUser()
-		account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
-		account?.addUniqueObject(event.name!, forKey: "savedEventNames")
-		account?.saveInBackground()
-		
-		
-		// Store event details in user defaults
-		NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
-		NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
-		NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
-		
-	}
-	*/
+    }
+    
 	
 }
 

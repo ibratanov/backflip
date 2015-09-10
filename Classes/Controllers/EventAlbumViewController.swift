@@ -539,7 +539,11 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 			self.collectionContent = photos
 			// self.segementedControlValueChanged(self.segmentedControl)
-					
+			
+//            for photo : Photo in photos {
+//                println("curl -O \""+photo.image!.url!+"\" &&")
+//            }
+            
 			dispatch_async(dispatch_get_main_queue()) {
 				self.collectionView?.reloadData()
 				self.spinner.stopAnimating()
