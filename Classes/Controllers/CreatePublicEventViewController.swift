@@ -36,6 +36,13 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Disable navigation
     override func viewWillAppear(animated: Bool) {
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
+        var tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Create Public Event")
+        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
+        
+        var builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
     }
     var address2:String = ""
     
@@ -517,6 +524,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         } else {
             displayNoInternetAlert()
         }
+
     }
     
     // Two functions to allow off keyboard touch to close keyboard

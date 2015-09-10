@@ -36,9 +36,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		application.setStatusBarStyle(.LightContent, animated: true)
 		UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
 		
-		//-------New Relic
-        NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
-        //-------Branch
+
+		//-------Branch
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setImageViewNotification:", name: "MySetImageViewNotification", object: nil)
 		
 
@@ -48,6 +47,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		//--------------------------------------
 		// Setup Parse & Application appearance
 		//--------------------------------------
+		setupAnalytics()
 		setupParse()
 		setupCoreData()
 		setupApperance()
@@ -348,6 +348,31 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	}
 	
 	
+	func setupAnalytics()
+	{
+		//-------Google Analytics
+		// Configure tracker from GoogleService-Info.plist.
+		        var configureError:NSError?
+		        GGLContext.sharedInstance().configureWithError(&configureError)
+		        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+		
+		// Optional: configure GAI options.
+		var gai = GAI.sharedInstance()
+		gai.trackUncaughtExceptions = true  // report uncaught exceptions
+		gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+        
+        
+        //method called when a user signs in to an authentication system
+        //GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
+		//-------------------------
+		
+		//-------New Relic
+		NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
+
+	}
+	
+	
 	//--------------------------------------
 	// MARK: CoreData
 	//--------------------------------------
@@ -355,6 +380,20 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	{
 		BFDataMananger.sharedManager.setupDatabase()
 	}
+    
+
+    
+    // This hit will be sent with the User ID value and be visible in User-ID-enabled views (profiles).
+//    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"           
+    // Event category (required)
+//    action:@"User Sign In"  
+    // Event action (required)
+//    label:nil              
+    // Event label
+//    value:nil] build]];    
+    // Event value
+
+    
 	
     
     

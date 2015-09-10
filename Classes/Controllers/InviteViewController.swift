@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import DigitsKit
 
 class InviteViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
@@ -23,6 +25,15 @@ class InviteViewController: UIViewController {
         NSNotificationCenter.defaultCenter().postNotificationName("MySetImageViewNotification", object: nil, userInfo: ["imageView": imageView])
         imageView.contentMode = .ScaleAspectFit
         
+    }
+    override func viewWillAppear(animated: Bool) {
+        var tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Invite Screen")
+        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
+        
+        var builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)

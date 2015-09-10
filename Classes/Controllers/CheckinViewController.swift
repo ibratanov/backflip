@@ -119,6 +119,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
             fetchData()
         }
+        
+        var tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Checkin view")
+        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
+        
+        var builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
 	}
 	
 

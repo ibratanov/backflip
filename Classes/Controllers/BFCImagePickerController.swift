@@ -8,7 +8,8 @@
 import UIKit
 import AssetsLibrary
 import AVFoundation
-
+import Parse
+import DigitsKit
 
 protocol BFCImagePickerControllerDelegate : NSObjectProtocol {
     func imagePickerControllerDidSelectedAssets(images: [BFCAsset]!)
@@ -403,6 +404,15 @@ class BFCImagePickerController: UINavigationController {
 		super.viewWillAppear(animated)
 		
 		UIApplication.sharedApplication().statusBarHidden = false
+        
+            var tracker = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value: "Multi Image Picker")
+        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
+        
+            var builder = GAIDictionaryBuilder.createScreenView()
+            tracker.send(builder.build() as [NSObject : AnyObject])
+        
 	}
 	
     override func viewDidLoad() {

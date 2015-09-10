@@ -21,6 +21,7 @@ class EventTableViewController: UITableViewController
 	// MARK: View Delegate
 	//-------------------------------------
 	
+    let spinner: UIActivityIndicatorView = UIActivityIndicatorView()
 	override func viewWillAppear(animated: Bool)
 	{
 		super.viewWillAppear(animated)
