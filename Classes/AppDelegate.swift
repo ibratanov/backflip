@@ -353,7 +353,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	//--------------------------------------
 	func setupCoreData()
 	{
-		MagicalRecord.setupCoreDataStack()
+		BFDataMananger.sharedManager.setupDatabase()
 	}
 	
     
