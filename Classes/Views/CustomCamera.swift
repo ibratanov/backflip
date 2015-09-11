@@ -48,6 +48,8 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
     
 	var flashOff = UIImage(named:"flash-icon-large") as UIImage!
 	var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
+    var flashAuto = UIImage(named:"flashon-icon-large") as UIImage!
+
 	var loopAllImagesBool = false
 	let frame: CGRect = UIScreen.mainScreen().bounds
 
@@ -99,7 +101,14 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 
         //self.currentFilter = self.currentFilter.nextFilter()
         //self.fastCamera.filterImage = self.currentFilter.filterImage
+        //var filterImageSet = UIImage(named: "SepiaFilter")
+        
+      
+        
         self.fastCamera.delegate = self
+        var UIori = UIInterfaceOrientationMask.All
+        
+       self.fastCamera.supportedInterfaceOrientations()
         self.fastCamera.willMoveToParentViewController(self)
         self.fastCamera.beginAppearanceTransition(true, animated: false)
         self.addChildViewController(self.fastCamera)
@@ -196,6 +205,8 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		return image
 	}
 	
+    
+    
 	func testCalled()
 	{
 		
@@ -324,6 +335,11 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
             self.fastCamera.cameraFlashMode = FastttCameraFlashMode.Off
             
             self.flashButton.setImage(flashOff, forState: .Normal)
+            
+        }else if self.fastCamera.cameraFlashMode == FastttCameraFlashMode.Off{
+            self.fastCamera.cameraFlashMode = FastttCameraFlashMode.Auto
+            
+            //self.flashButton.setImage(flashAuto, forState: .Normal)
             
         }else{
             self.fastCamera.cameraFlashMode = FastttCameraFlashMode.On
@@ -557,9 +573,19 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         
         		//image stored in local variable to contain lifespan in method
         
-        		var imageShortLife:UIImage = capturedImage.rotatedPreviewImage
+        		var imageShortLife:UIImage = capturedImage.fullImage
+        var imageShortLife_Corrected = UIImage()
+        if imageShortLife.imageOrientation != UIImageOrientation.Up{
         
-        		imageViewContent = imageShortLife
+            imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage, scale: 0.0, orientation: capturedImage.capturedImageOrientation)!
+        }else{
+        imageShortLife_Corrected = imageShortLife
+        }
+    
+
+        print("\(capturedImage.capturedImageOrientation)")
+        
+        		imageViewContent = imageShortLife_Corrected
         		//picker.dismissViewControllerAnimated(true, completion: nil)
         
         		//Retake and crop options------------------------------------------------------------------------
@@ -626,6 +652,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         *  as they should be rendered more consistently across different web
         *  services than images with non-standard orientations.
         */
+        
     }
     
     func cameraController(cameraController: FastttCameraInterface!, didReceiveRawBuffer imageData: [NSObject : AnyObject]!) {}
