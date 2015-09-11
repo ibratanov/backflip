@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="15A178w" minimumToolsVersion="Xcode 4.3">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Xcode 4.3">
     <entity name="Attendance" representedClassName="Attendance" parentEntity="ParseObject" syncable="YES">
         <attribute name="attendeeId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="attendees" inverseEntity="Event" syncable="YES"/>
@@ -25,6 +25,7 @@
     </entity>
     <entity name="ParseObject" representedClassName="ParseObject" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="enabled" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <compoundIndexes>
@@ -49,7 +50,7 @@
         <element name="Event" positionX="-54" positionY="18" width="128" height="163"/>
         <element name="File" positionX="-18" positionY="81" width="128" height="75"/>
         <element name="GeoPoint" positionX="-36" positionY="36" width="128" height="90"/>
-        <element name="ParseObject" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="ParseObject" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Photo" positionX="43" positionY="126" width="128" height="180"/>
     </elements>
 </model>

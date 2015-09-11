@@ -57,6 +57,10 @@ class BFDataProcessor
 				if (self.isValid(object["endTime"])) {
 					event.endTime = object["endTime"] as? NSDate
 				}
+				
+				if (self.isValid(object["enabled"])) {
+					event.enabled = NSNumber(bool: (object["enabled"] as! Bool))
+				}
 
 				if (self.isValid(object["geoLocation"])) {
 					let geoObject = object["geoLocation"] as? PFGeoPoint
@@ -98,6 +102,10 @@ class BFDataProcessor
 				
 				if (self.isValid(object["attendeeID"])) {
 					attendee.attendeeId = object["attendeeID"] as? String
+				}
+				
+				if (self.isValid(object["enabled"])) {
+					attendee.enabled = NSNumber(bool: (object["enabled"] as! Bool))
 				}
 				
 				if (self.isValid(object["event"])) {
@@ -145,6 +153,9 @@ class BFDataProcessor
 					photo.usersLiked = ",".join(likedArray!)
 				}
 				
+				if (self.isValid(object["enabled"])) {
+					photo.enabled = NSNumber(bool: (object["enabled"] as! Bool))
+				}
 				
 				if (self.isValid(object["event"])) {
 					let eventObject = object["event"] as? PFObject
