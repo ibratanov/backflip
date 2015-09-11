@@ -24,7 +24,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_defaultContext()
+		let context = NSManagedObjectContext.MR_rootSavingContext()
 		context.saveWithBlock({ (context) -> Void in
 			
 			for object : PFObject in events {
@@ -86,7 +86,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_defaultContext()
+		let context = NSManagedObjectContext.MR_rootSavingContext()
 		context.saveWithBlock({ (context) -> Void in
 			
 			for object : PFObject in attendees {
@@ -128,7 +128,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_defaultContext()
+		let context = NSManagedObjectContext.MR_rootSavingContext()
 		context.saveWithBlock({ (context) -> Void in
 			
 			for object : PFObject in photos {
