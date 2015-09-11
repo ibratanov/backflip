@@ -195,6 +195,29 @@ class EventTableViewController: UITableViewController
 		
 	}
 	
+	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+	{
+		if (editingStyle == .Delete) {
+			
+			// Check network status
+			if (NetworkAvailable.networkConnection() == true) {
+				
+				self.tableView.beginUpdates()
+				
+				let event = self.events[indexPath.row]
+				self.events.removeAtIndex(indexPath.row)
+				
+				// Here, we need to update coredata and save to parse..
+				disableAttendance(event)
+				
+				tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+				
+				self.tableView.endUpdates()
+			}
+			
+		}
+	}
+	
 	
 	
 	//-------------------------------------
@@ -229,7 +252,7 @@ class EventTableViewController: UITableViewController
 		for attendance : Attendance in attendances {
 			if (currentEventId == attendance.event?.objectId) {
 				continue
-			} else {
+			} else if (attendance.enabled != nil && Bool(attendance.enabled!) == true) {
 				_events.append(attendance.event!)
 			}
 		}
@@ -242,6 +265,40 @@ class EventTableViewController: UITableViewController
 		self.tableView.reloadData()
 	}
 	
+	func disableAttendance(event : Event)
+	{
+		var object : Attendance? = nil
+		let attendances = Attendance.MR_findByAttribute("attendeeId", withValue: PFUser.currentUser()!.objectId) as! [Attendance]
+		for attendance : Attendance in attendances {
+			if (attendance.event != nil && attendance.event!.objectId! == event.objectId!) {
+				object = attendance
+				break
+			}
+		}
+		
+		if (object != nil && object!.objectId != nil) {
+			
+			// Save to CoreData
+			let context = NSManagedObjectContext.MR_defaultContext()
+			context.saveWithBlock({ (_context) -> Void in
+				
+				let _object = Attendance.MR_findFirstByAttribute("objectId", withValue: object!.objectId!)
+				_object.enabled = NSNumber(bool: false)
+				
+			}, completion:nil)
+		
+			
+			// Save to Parse
+			let attendance = PFObject(withoutDataWithClassName: "EventAttendance", objectId: object!.objectId)
+			attendance["enabled"] = false
+			
+			attendance.saveInBackground()
+			
+		}
+		
+	}
+	
+	
 	
 	//-------------------------------------
 	// MARK: Memory
@@ -251,101 +308,6 @@ class EventTableViewController: UITableViewController
 	{
         super.didReceiveMemoryWarning()
     }
-
-//    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if (editingStyle == UITableViewCellEditingStyle.Delete) {
-//            if NetworkAvailable.networkConnection() == true {
-//                
-//                self.tableView.beginUpdates()
-//                // Remove from Parse DB
-//                let current = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
-//                let eventObject = eventObjs[indexPath.row]
-//                eventDelete(eventObject)
-//                
-//                // Remove elements from datasource, remove row, reload tableview
-//                self.eventObjs.removeAtIndex(indexPath.row)
-//                self.eventWithPhotos.removeValueForKey(eventObject.objectId!)
-//                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-//                self.tableView.reloadData()
-//                self.tableView.endUpdates()
-//                
-//            } else {
-//                displayNoInternetAlert()
-//            }
-//        }
-//        
-//
-//    }
-
     
-    
-    func eventDelete (event : Event ) {
-        
-//        let eventTitle = event.name
-//        let eventID = event.objectId
-//
-//        if NetworkAvailable.networkConnection() == true {
-//           
-//            
-//            // Set the spinner
-//            dispatch_async(dispatch_get_main_queue()) {
-//                println(self.view.bounds.width)
-//                self.spinner.frame = CGRectMake(self.view.bounds.width/2 - 75, self.view.bounds.height/2 - 75, 150, 150)
-//                //self.spinner.center = self.view.center
-//                self.spinner.hidden = false
-//                self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-//                self.spinner.color = UIColor.blackColor()
-//                self.view.addSubview(self.spinner)
-//                self.view.bringSubviewToFront(self.spinner)
-//                self.spinner.startAnimating()
-//                self.tableView.userInteractionEnabled = false
-//            }
-//            
-//
-//            // Delete event info from the users DB entry
-//            let query = PFUser.query()
-//            query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-//                object!.removeObject(event, forKey:"savedEvents")
-//                object!.removeObject(eventTitle, forKey: "savedEventNames")
-//                object!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-//                    if (success) {
-//                        
-//                        // Re-enable interaction, stop the spinner once parse update is done
-//                        self.spinner.stopAnimating()
-//                        self.tableView.userInteractionEnabled = true
-//                    }
-//                }
-//            })
-//            
-//            // Delete event attendence row in Event Attendance class
-//            let attendanceQuery = PFQuery(className: "EventAttendance")
-//            attendanceQuery.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-//            attendanceQuery.whereKey("eventID", equalTo: eventID)
-//            attendanceQuery.selectKeys(["photosLiked", "photosLikedID", "flagged", "blocked"])
-//            attendanceQuery.limit = 1
-//            attendanceQuery.findObjectsInBackgroundWithBlock {
-//                (objects: [AnyObject]?, error: NSError?) -> Void in
-//                objects?.first?.deleteInBackground()
-//            }
-//            
-//            // Delete user object from event - attendee relation
-//            let eventQuery = PFQuery(className: "Event")
-//            eventQuery.whereKey("eventName", equalTo: eventTitle)
-//            eventQuery.selectKeys(["attendees"])
-//            eventQuery.findObjectsInBackgroundWithBlock {
-//                (objects: [AnyObject]?, error: NSError?) -> Void in
-//                var eventObj = objects?.first as! PFObject
-//                let relation = eventObj.relationForKey("attendees")
-//                relation.removeObject(PFUser.currentUser()!)
-//                eventObj.saveInBackground()
-//                
-//            }
-//        } else {
-//            displayNoInternetAlert()
-//        }
-        
-    }
-    
-
 
 }
