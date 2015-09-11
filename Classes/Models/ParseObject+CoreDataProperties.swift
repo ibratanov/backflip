@@ -17,5 +17,6 @@ extension ParseObject {
     @NSManaged var createdAt: NSDate?
     @NSManaged var objectId: String?
     @NSManaged var updatedAt: NSDate?
+	@NSManaged var enabled : NSNumber?
 
 }

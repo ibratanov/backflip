@@ -368,7 +368,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				NSLog("Branch short URL generation failed, %@", error);
 			} else {
 				
-				PKHUD.sharedHUD.hide(afterDelay: 0)
+				PKHUD.sharedHUD.hideAnimated()
 				
 				// Delay .2 seconds for visual effect
 				let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
