@@ -452,7 +452,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 			// Filter by event location and attancance
 			for event : Event in _events {
-				if (event.geoLocation != nil && event.live != nil && Bool(event.live!) == true && Bool(event.enabled!) == true) {
+				if (event.geoLocation != nil && event.live != nil && Bool(event.live!) == true && event.enabled != nil && Bool(event.enabled!) == true) {
 					let coordinate = CLLocationCoordinate2D(latitude: event.geoLocation!.latitude!.doubleValue, longitude: event.geoLocation!.longitude!.doubleValue)
 					if (region.containsCoordinate(coordinate)) {
 						

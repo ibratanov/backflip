@@ -189,10 +189,16 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
             
         } else {
             if NetworkAvailable.networkConnection() == true {
+				
+				// Display a HUD letting the user know we're checking them in
+				PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Creating Event..")
+				PKHUD.sharedHUD.show()
+				
                 let query = PFUser.query()
                 query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                     if error != nil {
                         println(error)
+						PKHUD.sharedHUD.hideAnimated()
                         
                     } else {
                         
@@ -231,6 +237,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     event["venue"] = address
                                     event["startTime"] = NSDate()
                                     event["isLive"] = true
+									event["enabled"] = true
                                     var eventACL = PFACL(user: PFUser.currentUser()!)
                                     eventACL.setPublicWriteAccess(true)
                                     eventACL.setPublicReadAccess(true)
@@ -259,23 +266,29 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     attendance["photosLiked"] = []
                                     attendance["photosUploadedID"] = []
                                     attendance["photosUploaded"] = []
+									attendance["enabled"] = true
                                     
                                     attendance.save()
-                                    
-                                    // Store event details in user defaults
-                                    NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
-                                    NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
-                                    NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
-
-                                    // When successful, segue to events page
-                                    dispatch_async(dispatch_get_main_queue()) {
-                                        
-                                        println("Saved")
-                                        // self.albumview?.eventId = self.eventID
-                                        //self.performSegueWithIdentifier("eventsPage", sender: self)
-                                        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-                                    }
-                                    
+									
+									BFDataProcessor.sharedProcessor.processEvents([event], completion: { () -> Void in
+										
+										// Store event details in user defaults
+										NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+										NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+										NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
+										
+										// When successful, segue to events page
+										dispatch_async(dispatch_get_main_queue()) {
+											
+											println("Saved")
+											PKHUD.sharedHUD.hideAnimated()
+											// self.albumview?.eventId = self.eventID
+											//self.performSegueWithIdentifier("eventsPage", sender: self)
+											self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+										}
+										
+									})
+									
                                 } else {
                                     self.displayAlert("This event already exists", error: "Join an existing event on the Nearby Events screen.")
                                 }
