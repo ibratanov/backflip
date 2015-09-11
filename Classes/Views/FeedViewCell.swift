@@ -1,6 +1,6 @@
 //
 //  cell.swift
-//  ParseStarterProject
+//  Backflip
 //
 //  Created by Jonathan Arlauskas on 2015-05-13.
 //  Copyright (c) 2015 Parse. All rights reserved.

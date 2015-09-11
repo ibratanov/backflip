@@ -11,6 +11,7 @@ import Parse
 import Fabric
 import DigitsKit
 import FBSDKCoreKit
+import MagicalRecord
 
 
 
@@ -35,18 +36,25 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		application.setStatusBarStyle(.LightContent, animated: true)
 		UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
 		
-		//-------New Relic
-        NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
-        //-------Branch
+
+		//-------Branch
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setImageViewNotification:", name: "MySetImageViewNotification", object: nil)
 		
 
 		
+		
+		
 		//--------------------------------------
 		// Setup Parse & Application appearance
 		//--------------------------------------
+		setupAnalytics()
 		setupParse()
+		setupCoreData()
 		setupApperance()
+        
+        setupBranch(launchOptions) // Branch.io
+        
+        
 		
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
@@ -64,6 +72,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 
         PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 
+		
+		//--------------------------------------
+		// CoreData
+		//--------------------------------------
+		BFDataFetcher.sharedFetcher.fetchData(true);
+		
+		
+		
         if application.applicationState != UIApplicationState.Background {
             // Track an app open here if we launch with a push, unless
             // "content_available" was used to trigger a background push (introduced in iOS 7).
@@ -119,30 +135,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         //--------------------------BRANCH.IO------------------------------------
         
-        let branch: Branch = Branch.getInstance()
-        //Now a connection can be established between a referring user and a referred user during anysession, not just the very first time a user opens the app.
-        branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
-            if (error == nil) {
-                // This can now count as a referred session even if this isn't
-                // the first time a user has opened the app (aka an "Install").
-                //Custom logic goes here --> dependent on access to cloud services
-                if((params["referringOut"])  != nil) {
-					
-					var event = Event()
-					event.objectId = params["eventId"] as? String
-					event.name = params["eventTitle"] as? String
-					
-					var alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
-					alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-					alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
-						self.checkIn(event)
-					}))
-					
-					let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
-					window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-				}
-            }
-        })
         return true
     }
     
@@ -192,7 +184,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                 event.save()
                 
                 // TODO: Check for existing event_list for eventName
-                var listEvents = object!.objectForKey("savedEventNames") as! [String]
+                let listEvents = object!.objectForKey("savedEventNames") as! [String]
                 if contains(listEvents, event["eventName"] as! String)
                 {
                     print("Event already in list")
@@ -208,7 +200,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                     
                     
                     // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                    var attendance = PFObject(className:"EventAttendance")
+                    let attendance = PFObject(className:"EventAttendance")
                     attendance["eventID"] = event.objectId
                     attendance["attendeeID"] = PFUser.currentUser()?.objectId
                     attendance["photosLikedID"] = []
@@ -246,9 +238,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         PFPush.subscribeToChannelInBackground("", block: { (succeeded: Bool, error: NSError?) -> Void in
             if succeeded {
-                println("ParseStarterProject successfully subscribed to push notifications on the broadcast channel.");
+                println("Backflip successfully subscribed to push notifications on the broadcast channel.");
             } else {
-                println("ParseStarterProject failed to subscribe to push notifications on the broadcast channel with error = %@.", error)
+                println("Backflip failed to subscribe to push notifications on the broadcast channel with error = %@.", error)
             }
         })
     }
@@ -305,14 +297,13 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		
 		let config = PFConfig.currentConfig()
 		
-		var navigationBarAppearance = UINavigationBar.appearance()
+		let navigationBarAppearance = UINavigationBar.appearance()
 		navigationBarAppearance.tintColor = UIColor.whiteColor()
 		
 		var bartintColor = "#108475"
 		if (config["appearance_navigation_tint"] != nil) {
 			bartintColor = config["appearance_navigation_tint"] as! String
 		}
-		
 		navigationBarAppearance.barTintColor = UIColor(rgba: bartintColor)
 		
 		
@@ -322,10 +313,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			NSForegroundColorAttributeName: UIColor.whiteColor()
 		]
 		
-		var barButtonAppearance = UIBarButtonItem.appearance()
+		let barButtonAppearance = UIBarButtonItem.appearance()
 		barButtonAppearance.tintColor = UIColor.whiteColor()
 		
-		var tabBarAppearance = UITabBar.appearance()
+		let tabBarAppearance = UITabBar.appearance()
 		tabBarAppearance.tintColor = (config["appearance_tabbar_tint"] != nil) ? UIColor(rgba:config["appearance_tabbar_tint"] as! String) :  UIColor.whiteColor()
 		tabBarAppearance.barTintColor = (config["appearance_tabbar_bartint"] != nil) ? UIColor(rgba:config["appearance_tabbar_bartint"] as! String) :  UIColor.blackColor()
 		tabBarAppearance.translucent = true;
@@ -357,44 +348,96 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	}
 	
 	
-	//--------------------------------------
-	// MARK: Parse
-	//--------------------------------------
-	
-	func checkIn(event: Event)
+	func setupAnalytics()
 	{
-		 // You have been invited to join <EVENT>, would you like to check in?
+		//-------Google Analytics
+		// Configure tracker from GoogleService-Info.plist.
+		        var configureError:NSError?
+		        GGLContext.sharedInstance().configureWithError(&configureError)
+		        assert(configureError == nil, "Error configuring Google services: \(configureError)")
 		
-		// subscribe to event push notifications
-		let currentInstallation = PFInstallation.currentInstallation()
-		currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
-		currentInstallation.saveInBackground()
+		// Optional: configure GAI options.
+		var gai = GAI.sharedInstance()
+		gai.trackUncaughtExceptions = true  // report uncaught exceptions
+		gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+        
+        
+        //method called when a user signs in to an authentication system
+        //GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
+		//-------------------------
 		
-		// Create & save attendance object
-		var attendance = PFObject(className:"EventAttendance")
-		attendance["eventID"] = event.objectId
-		attendance["attendeeID"] = PFUser.currentUser()?.objectId
-		attendance["photosLikedID"] = []
-		attendance["photosLiked"] = []
-		attendance["photosUploadedID"] = []
-		attendance["photosUploaded"] = []
-		attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
-		
-		attendance.saveInBackground()
-		
-		var account = PFUser.currentUser()
-		account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
-		account?.addUniqueObject(event.name!, forKey: "savedEventNames")
-		account?.saveInBackground()
-		
-		
-		// Store event details in user defaults
-		NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
-		NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
-		NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
-		
+		//-------New Relic
+		NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
+
 	}
+	
+	
+	//--------------------------------------
+	// MARK: CoreData
+	//--------------------------------------
+	func setupCoreData()
+	{
+		BFDataMananger.sharedManager.setupDatabase()
+	}
+    
+
+    
+    // This hit will be sent with the User ID value and be visible in User-ID-enabled views (profiles).
+//    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"           
+    // Event category (required)
+//    action:@"User Sign In"  
+    // Event action (required)
+//    label:nil              
+    // Event label
+//    value:nil] build]];    
+    // Event value
+
+    
+	
+    
+    
+    //--------------------------------------
+    // MARK: Branch.io
+    //--------------------------------------
+    func setupBranch(launchOptions: [NSObject: AnyObject]?)
+    {
+        
+        let branch: Branch = Branch.getInstance()
+        branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
+            
+            if (error == nil) {
+                
+                if ((params["referringOut"])  != nil) {
+                    
+                    let eventId =  params["eventId"] as? String
+                    if (eventId != nil) {
+                        
+                        let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventId) as! Event
+                        var alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
+                        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                        alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
+                            
+                            let checkinController : CheckinViewController = CheckinViewController()
+                            // checkinController.checkIn(event)
+                            
+                        }))
+                        
+                    } else {
+                     
+                        var alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
+                        alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+                      
+                        let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+                        window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                    
+                }
+            }
+        })
+
+    }
+    
 	
 }
 

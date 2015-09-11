@@ -1,3 +1,28 @@
 [submodule "Vendor/Mixpanel"]
 	path = Vendor/Mixpanel
 	url = https://github.com/mixpanel/mixpanel-iphone.git
+	ignore = dirty
+[submodule "Vendor/ZAActivityBar"]
+	path = Vendor/ZAActivityBar
+	url = https://github.com/zacaltman/ZAActivityBar.git
+[submodule "Vendor/MagicalRecord"]
+	path = Vendor/MagicalRecord
+	url = https://github.com/magicalpanda/MagicalRecord.git
+	ignore = dirty
+[submodule "Vendor/SwiftLocation"]
+	path = Vendor/SwiftLocation
+	url = https://github.com/malcommac/SwiftLocation.git
+	ignore = dirty
+[submodule "Vendor/AFNetworking"]
+	path = Vendor/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git
+[submodule "Vendor/DOFavoriteButton"]
+	path = Vendor/DOFavoriteButton
+	url = https://github.com/okmr-d/DOFavoriteButton.git
+[submodule "Vendor/AMScrollingNavbar"]
+	path = Vendor/AMScrollingNavbar
+	url = https://github.com/andreamazz/AMScrollingNavbar.git
+[submodule "Vendor/PKHUD"]
+	path = Vendor/PKHUD
+	url = https://github.com/pkluz/PKHUD.git
+	ignore = dirty

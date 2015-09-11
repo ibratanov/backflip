@@ -8,7 +8,8 @@
 import UIKit
 import AssetsLibrary
 import AVFoundation
-
+import Parse
+import DigitsKit
 
 protocol BFCImagePickerControllerDelegate : NSObjectProtocol {
     func imagePickerControllerDidSelectedAssets(images: [BFCAsset]!)
@@ -367,7 +368,7 @@ class BFCImagePickerController: UINavigationController {
     internal var selectedAssets: [BFCAsset]!
     internal  weak var pickerDelegate: BFCImagePickerControllerDelegate?
     lazy internal var doneButton: UIButton =  {
-        let button = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+		let button = UIButton.buttonWithType(.Custom) as! UIButton
         button.setTitle("", forState: UIControlState.Normal)
         button.setTitleColor(self.navigationBar.tintColor, forState: UIControlState.Normal)
         button.reversesTitleShadowWhenHighlighted = true
@@ -384,8 +385,8 @@ class BFCImagePickerController: UINavigationController {
     }
     
     convenience init() {
-        var libraryController = BFCAssetsLibraryController()
-        var wrapperVC = BFCContentWrapperViewController(libraryController)
+        let libraryController = BFCAssetsLibraryController()
+        let wrapperVC = BFCContentWrapperViewController(libraryController)
         self.init(rootViewController: wrapperVC)
         selectedAssets = [BFCAsset]()
     }
@@ -403,6 +404,15 @@ class BFCImagePickerController: UINavigationController {
 		super.viewWillAppear(animated)
 		
 		UIApplication.sharedApplication().statusBarHidden = false
+        
+            var tracker = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value: "Multi Image Picker")
+        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
+        
+            var builder = GAIDictionaryBuilder.createScreenView()
+            tracker.send(builder.build() as [NSObject : AnyObject])
+        
 	}
 	
     override func viewDidLoad() {

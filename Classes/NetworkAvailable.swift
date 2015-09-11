@@ -43,7 +43,7 @@ public class NetworkAvailable {
     
     class func networkAlert(title:String,error: String) -> UIAlertController {
         
-        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Ok" , style: .Default, handler: nil))
         

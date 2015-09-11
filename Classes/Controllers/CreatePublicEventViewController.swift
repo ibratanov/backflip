@@ -36,6 +36,13 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Disable navigation
     override func viewWillAppear(animated: Bool) {
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
+        var tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Create Public Event")
+        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
+        
+        var builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
     }
     var address2:String = ""
     
@@ -53,7 +60,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     func displayAlert(title:String, error: String) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in }))
             
             self.presentViewController(alert, animated: true, completion: nil)
@@ -62,7 +69,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     func displayAlertLogout(title:String, error: String) {
         
-        var alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
 		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { action in
@@ -80,7 +87,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     
     func displayNoInternetAlert() {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+            let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
             self.presentViewController(alert, animated: true, completion: nil)
             println("no internet")
         })
@@ -240,7 +247,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     object?.addUniqueObject(eventName, forKey:"savedEventNames")
                                     
                                     object!.save()
-                                    
+									
                                     // Add the EventAttendance join table relationship for photos (liked and uploaded)
                                     var attendance = PFObject(className:"EventAttendance")
                                     attendance["eventID"] = event.objectId
@@ -517,6 +524,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         } else {
             displayNoInternetAlert()
         }
+
     }
     
     // Two functions to allow off keyboard touch to close keyboard

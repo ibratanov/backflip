@@ -16,8 +16,6 @@
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
             <string>Avenir-Medium</string>
-            <string>Avenir-Medium</string>
-            <string>Avenir-Light</string>
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
             <string>Avenir-Book</string>
@@ -287,8 +285,8 @@
         <!--Event Albums-->
         <scene sceneID="0XN-eA-FQT">
             <objects>
-                <navigationController title="Event Albums" id="Oc7-Mf-MXx" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Event History" image="tabBar-eventHistory" selectedImage="tabBar-eventHistory-filled" id="Fho-OT-gwv">
+                <navigationController title="Event Albums" id="Oc7-Mf-MXx" customClass="ScrollingNavigationController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Event History" image="tabBar-eventHistory" id="Fho-OT-gwv">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="tabBar-eventHistory-filled"/>
                         </userDefinedRuntimeAttributes>
@@ -363,14 +361,14 @@
                                 <rect key="frame" x="16" y="10" width="343" height="22"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearby Events" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CvR-kJ-0nI">
                                 <rect key="frame" x="16" y="140" width="343" height="29"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="21"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gAn-y3-J5G">
@@ -515,14 +513,14 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[CURRENT EVENT]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Stv-eF-mP4">
                                             <rect key="frame" x="11" y="18" width="301" height="21"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[LOCATION]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZd-rr-cD5">
                                             <rect key="frame" x="11" y="40" width="301" height="21"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -542,9 +540,7 @@
                             <outlet property="delegate" destination="Xac-HV-Hf1" id="uLI-C6-r1K"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="Item" id="901-ZQ-YzX"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Event History" id="AlS-vE-J4m"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </tableViewController>
@@ -575,7 +571,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HHM-Lc-oGr">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HHM-Lc-oGr">
                                             <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
                                             <animations/>
                                         </imageView>
@@ -586,6 +582,26 @@
                                 <animations/>
                                 <connections>
                                     <outlet property="imageView" destination="HHM-Lc-oGr" id="Z78-tB-pHJ"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="add-album-cell" id="1g4-eY-6nj" customClass="AlbumViewCell" customModule="Backflip" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="125" height="125"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YQS-HY-SNS">
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                            <animations/>
+                                        </imageView>
+                                    </subviews>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <animations/>
+                                <connections>
+                                    <outlet property="imageView" destination="YQS-HY-SNS" id="0jq-sl-rZG"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -646,7 +662,7 @@
         <!--Current Event-->
         <scene sceneID="dIp-dR-pyX">
             <objects>
-                <navigationController title="Current Event" id="O7c-aj-Qx3" sceneMemberID="viewController">
+                <navigationController title="Current Event" id="O7c-aj-Qx3" customClass="ScrollingNavigationController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Current Event" image="tabBar-locator" id="65X-vP-VEc">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="tabBar-locator-filled"/>
@@ -862,10 +878,10 @@
             </objects>
             <point key="canvasLocation" x="3237.5" y="-1994.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Scrolling Navigation Controller-->
         <scene sceneID="aqR-S5-k7b">
             <objects>
-                <navigationController id="nKw-HA-0z8" sceneMemberID="viewController">
+                <navigationController id="nKw-HA-0z8" customClass="ScrollingNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ul5-kI-psl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

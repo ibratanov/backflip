@@ -1,0 +1,86 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A378226EC2FD4B06544EB459EF19E06596F9C811",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "548AC090E1DB22900595581804DA116AAACB2ABF" : 0,
+    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : 0,
+    "4EA48C4418C0D37C936EB709C50F03661DB187D9" : 0,
+    "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : 0,
+    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : 0,
+    "677E8E9414FADC8C089A94C6134023AA45E42A2C" : 0,
+    "958932E9D08E4465709D54DB1E7CECF23B0F442E" : 0,
+    "A378226EC2FD4B06544EB459EF19E06596F9C811" : 0,
+    "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : 0,
+    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0957CE20-4077-40D1-9F68-0D5801E14CE1",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "548AC090E1DB22900595581804DA116AAACB2ABF" : "application\/Vendor\/ZAActivityBar\/",
+    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : "application\/Vendor\/AMScrollingNavbar\/",
+    "4EA48C4418C0D37C936EB709C50F03661DB187D9" : "application\/Vendor\/PKHUD\/",
+    "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : "application\/Vendor\/DOFavoriteButton\/",
+    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : "applicationVendor\/Mixpanel",
+    "677E8E9414FADC8C089A94C6134023AA45E42A2C" : "application\/Vendor\/SwiftLocation\/",
+    "958932E9D08E4465709D54DB1E7CECF23B0F442E" : "application\/Vendor\/MagicalRecord\/",
+    "A378226EC2FD4B06544EB459EF19E06596F9C811" : "application",
+    "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : "application\/Vendor\/AFNetworking\/",
+    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : "application\/Vendor\/MagicalRecord\/Carthage\/Checkouts\/expecta\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Backflip for iOS",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Backflip for iOS.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/okmr-d\/DOFavoriteButton.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "00C8F6554FA404FC771F59E32BE27BC2793D9BB4"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/andreamazz\/AMScrollingNavbar.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mixpanel\/mixpanel-iphone.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/pkluz\/PKHUD.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4EA48C4418C0D37C936EB709C50F03661DB187D9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/zacaltman\/ZAActivityBar.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "548AC090E1DB22900595581804DA116AAACB2ABF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/malcommac\/SwiftLocation.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "677E8E9414FADC8C089A94C6134023AA45E42A2C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/specta\/expecta.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/magicalpanda\/MagicalRecord.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "958932E9D08E4465709D54DB1E7CECF23B0F442E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:ibratanov\/backflip.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A378226EC2FD4B06544EB459EF19E06596F9C811"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/AFNetworking\/AFNetworking.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8"
+    }
+  ]
+}
