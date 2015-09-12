@@ -539,101 +539,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         *  image with its rotation adjusted to match the orientation in which the
         *  image was captured.
         */
-        if let wnd = self.fastCamera.view{
-            
-            var v = UIView(frame: wnd.bounds)
-            v.backgroundColor = UIColor.whiteColor()
-            v.alpha = 1.0
-            
-            wnd.addSubview(v)
-
-            UIView.animateWithDuration(1500, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
-                v.alpha = 1.0
-                }, completion: { (finished:Bool) -> Void in
-                    println("inside")
-                    v.removeFromSuperview()
-            })
-            
-            
-            var v2 = UIView(frame: wnd.bounds)
-            v2.backgroundColor = UIColor.whiteColor()
-            v2.alpha = 1
-
-            UIView.animateWithDuration(1500, delay: 1500, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                v2.alpha = 1.0
-                }, completion: { (finished:Bool) -> Void in
-                    println("outside")
-                    v2.removeFromSuperview()
-            })
-            
-
-        }
         
-                var imageViewContent = UIImage()
-        
-        		//image stored in local variable to contain lifespan in method
-        
-        		var imageShortLife:UIImage = capturedImage.fullImage
-        var imageShortLife_Corrected = UIImage()
-        if imageShortLife.imageOrientation != UIImageOrientation.Up{
-        
-            imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage, scale: 0.0, orientation: capturedImage.capturedImageOrientation)!
-        }else{
-        imageShortLife_Corrected = imageShortLife
-        }
-    
-
-        print("\(capturedImage.capturedImageOrientation)")
-        
-        		imageViewContent = imageShortLife_Corrected
-        		//picker.dismissViewControllerAnimated(true, completion: nil)
-        
-        		//Retake and crop options------------------------------------------------------------------------
-        		var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
-        		previewViewController.cropCompletionHandler = {
-        			imageViewContent = $0!
-        			previewViewController.dismissViewControllerAnimated(true, completion: nil)
-        
-        
-        			var imageView = UIImageView(image: imageViewContent)
-        			imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        			//self.uploadImages(imageView.image!)
-        
-        			self.dismissViewControllerAnimated(true, completion: nil)
-                    UIApplication.sharedApplication().statusBarHidden = true
-        
-        
-        
-        		}
-        		previewViewController.cancelCompletionHandler = {
-        			//retake image
-        
-        			//self.presentViewController(picker, animated:true, completion:{})
-        			self.setLastPhoto()
-        			self.updateThumbnail()
-        			self.flashButton.hidden = false
-        			self.setLastPhoto()
-        			self.updateThumbnail()
-                    UIApplication.sharedApplication().statusBarHidden = true
-        
-        
-        		}
-        
-            if self.fastCamera.cameraDevice == FastttCameraDevice.Front {
-            previewViewController.imageToCrop = imageViewContent
-            }
-            else{
-        			previewViewController.imageToCrop = imageViewContent
-        		}
-        
-        		//previewViewController.eventId = self.event!.objectId!
-        		//previewViewController.eventTitle = self.event!.name!
-        		previewViewController.downloadToCameraRoll = downloadToCameraRoll
-        		
-        		self.presentViewController(previewViewController, animated: true, completion: nil);
-        		setLastPhoto()
-        		updateThumbnail()
-                UIApplication.sharedApplication().statusBarHidden = false
     }
     
     func cameraController(cameraController: FastttCameraInterface!, didFinishScalingCapturedImage capturedImage: FastttCapturedImage!) {
@@ -652,24 +558,121 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         *  as they should be rendered more consistently across different web
         *  services than images with non-standard orientations.
         */
+
+ 
+        if let wnd = self.fastCamera.view{
+            
+            var v = UIView(frame: wnd.bounds)
+            v.backgroundColor = UIColor.whiteColor()
+            v.alpha = 1.0
+            
+            wnd.addSubview(v)
+            
+            UIView.animateWithDuration(1500, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+                v.alpha = 1.0
+                }, completion: { (finished:Bool) -> Void in
+                    println("inside")
+                    v.removeFromSuperview()
+            })
+            
+            
+            var v2 = UIView(frame: wnd.bounds)
+            v2.backgroundColor = UIColor.whiteColor()
+            v2.alpha = 1
+            
+            UIView.animateWithDuration(1500, delay: 1500, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                v2.alpha = 1.0
+                }, completion: { (finished:Bool) -> Void in
+                    println("outside")
+                    v2.removeFromSuperview()
+            })
+            
+            
+        }
+        
+        var imageViewContent = UIImage()
+        
+        //image stored in local variable to contain lifespan in method
+        
+        var imageShortLife:UIImage = capturedImage.scaledImage
+        var imageShortLife_Corrected = UIImage()
+        if imageShortLife.imageOrientation != UIImageOrientation.Up{
+            
+            imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage, scale: 0.0, orientation: capturedImage.capturedImageOrientation)!
+        }else{
+            imageShortLife_Corrected = imageShortLife
+        }
+        
+        
+        print("\(capturedImage.capturedImageOrientation)")
+        
+        imageViewContent = imageShortLife
+        //picker.dismissViewControllerAnimated(true, completion: nil)
+        
+        //Retake and crop options------------------------------------------------------------------------
+        var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
+        previewViewController.cropCompletionHandler = {
+            imageViewContent = $0!
+            previewViewController.dismissViewControllerAnimated(true, completion: nil)
+            
+            
+            var imageView = UIImageView(image: imageViewContent)
+            imageView.contentMode = UIViewContentMode.ScaleAspectFit
+            //self.uploadImages(imageView.image!)
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+            UIApplication.sharedApplication().statusBarHidden = true
+            
+            
+            
+        }
+        previewViewController.cancelCompletionHandler = {
+            //retake image
+            
+            //self.presentViewController(picker, animated:true, completion:{})
+            self.setLastPhoto()
+            self.updateThumbnail()
+            self.flashButton.hidden = false
+            self.setLastPhoto()
+            self.updateThumbnail()
+            UIApplication.sharedApplication().statusBarHidden = true
+            
+            
+        }
+        
+        if self.fastCamera.cameraDevice == FastttCameraDevice.Front {
+            previewViewController.imageToCrop = imageViewContent
+        }
+        else{
+            previewViewController.imageToCrop = imageViewContent
+        }
+        
+        //previewViewController.eventId = self.event!.objectId!
+        //previewViewController.eventTitle = self.event!.name!
+        previewViewController.downloadToCameraRoll = downloadToCameraRoll
+        
+        self.presentViewController(previewViewController, animated: true, completion: nil);
+        setLastPhoto()
+        updateThumbnail()
+        UIApplication.sharedApplication().statusBarHidden = false
         
     }
     
     func cameraController(cameraController: FastttCameraInterface!, didReceiveRawBuffer imageData: [NSObject : AnyObject]!) {}
-
-	
-	func displayNoInternetAlert() {
-		var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
-		self.presentViewController(alert, animated: true, completion: nil)
-		println("no internet")
-	}
+    
+    
+    func displayNoInternetAlert() {
+        var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+        self.presentViewController(alert, animated: true, completion: nil)
+        println("no internet")
+    }
     func filterSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-//            self.currentFilter = self.currentFilter.nextFilter
-//            self.fastCamera.filterImage = self.currentFilter.filterImage
-
-        
-            }
+            //            self.currentFilter = self.currentFilter.nextFilter
+            //            self.fastCamera.filterImage = self.currentFilter.filterImage
+            
+            
+        }
         
     }
 	
