@@ -161,9 +161,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        while(self.imageLoad == nil){
-            print("search loop")
-        }
+
         assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
         
         imageView.image = resizeImage(imageToCrop!) //imageToCrop!

@@ -36,6 +36,10 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
             self = .FastttCameraFilterNone
         }
     }
+    
+    lazy var context: CIContext = {
+        return CIContext(options: nil)
+        }()
    	//------------------Camera Att.-----------------
     
     @IBOutlet weak var bottomBar: UIView!
@@ -620,6 +624,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
             imageView.contentMode = UIViewContentMode.ScaleAspectFit
             //self.uploadImages(imageView.image!)
             
+            
             self.dismissViewControllerAnimated(true, completion: nil)
             UIApplication.sharedApplication().statusBarHidden = true
             
@@ -641,10 +646,71 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         }
         
         if self.fastCamera.cameraDevice == FastttCameraDevice.Front {
-            previewViewController.imageToCrop = imageViewContent
+            
+            let orientation = UIDevice.currentDevice().orientation
+            
+            if orientation == UIDeviceOrientation.Portrait{
+                previewViewController.imageToCrop = imageViewContent
+
+            } else if orientation == UIDeviceOrientation.LandscapeLeft{
+                
+            var t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
+            var inputImage = CIImage(image: imageViewContent)
+
+            
+            inputImage = inputImage.imageByApplyingTransform(t)
+            var cgImage = self.context.createCGImage(inputImage, fromRect: inputImage.extent())
+             imageViewContent = UIImage(CGImage: cgImage)!
+            
+                previewViewController.imageToCrop = imageViewContent
+                
+            } else if orientation == UIDeviceOrientation.LandscapeRight{
+                
+                var t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
+                var inputImage = CIImage(image: imageViewContent)
+                
+                
+                inputImage = inputImage.imageByApplyingTransform(t)
+                var cgImage = self.context.createCGImage(inputImage, fromRect: inputImage.extent())
+                imageViewContent = UIImage(CGImage: cgImage)!
+                
+                previewViewController.imageToCrop = imageViewContent
+                
+            }
+
         }
         else{
-            previewViewController.imageToCrop = imageViewContent
+            let orientation = UIDevice.currentDevice().orientation
+            
+            if orientation == UIDeviceOrientation.Portrait{
+                previewViewController.imageToCrop = imageViewContent
+                
+            } else if orientation == UIDeviceOrientation.LandscapeLeft{
+                
+                var t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
+                var inputImage = CIImage(image: imageViewContent)
+                
+                
+                inputImage = inputImage.imageByApplyingTransform(t)
+                var cgImage = self.context.createCGImage(inputImage, fromRect: inputImage.extent())
+                imageViewContent = UIImage(CGImage: cgImage)!
+                
+                previewViewController.imageToCrop = imageViewContent
+                
+            } else if orientation == UIDeviceOrientation.LandscapeRight{
+                
+                var t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
+                var inputImage = CIImage(image: imageViewContent)
+                
+                
+                inputImage = inputImage.imageByApplyingTransform(t)
+                var cgImage = self.context.createCGImage(inputImage, fromRect: inputImage.extent())
+                imageViewContent = UIImage(CGImage: cgImage)!
+                
+                previewViewController.imageToCrop = imageViewContent
+                
+            }
+            
         }
         
         //previewViewController.eventId = self.event!.objectId!
