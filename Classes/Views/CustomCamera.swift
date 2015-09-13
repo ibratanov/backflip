@@ -46,9 +46,9 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet var eventNameLabel : UILabel?
     
     
-	var flashOff = UIImage(named:"flash-icon-large") as UIImage!
-	var flashOn = UIImage(named:"flashon-icon-large") as UIImage!
-    var flashAuto = UIImage(named:"flashon-icon-large") as UIImage!
+	var flashOff = UIImage(named:"flash-icon-off") as UIImage!
+	var flashOn = UIImage(named:"flash-icon-on") as UIImage!
+    var flashAuto = UIImage(named:"flash-icon-auto") as UIImage!
 
 	var loopAllImagesBool = false
 	let frame: CGRect = UIScreen.mainScreen().bounds
@@ -339,7 +339,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
         }else if self.fastCamera.cameraFlashMode == FastttCameraFlashMode.Off{
             self.fastCamera.cameraFlashMode = FastttCameraFlashMode.Auto
             
-            //self.flashButton.setImage(flashAuto, forState: .Normal)
+            self.flashButton.setImage(flashAuto, forState: .Normal)
             
         }else{
             self.fastCamera.cameraFlashMode = FastttCameraFlashMode.On
