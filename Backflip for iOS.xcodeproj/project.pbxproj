@@ -199,6 +199,8 @@
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817D1A49E0EA00E65899 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817C1A49E0EA00E65899 /* MobileCoreServices.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
+		CE23BA151BA63C2000315E73 /* FastttCamera in Resources */ = {isa = PBXBuildFile; fileRef = CE23BA141BA63C2000315E73 /* FastttCamera */; };
+		CE23BA1E1BA63C5A00315E73 /* GPUImage in Resources */ = {isa = PBXBuildFile; fileRef = CE23BA1D1BA63C5A00315E73 /* GPUImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -585,6 +587,8 @@
 		81BA817C1A49E0EA00E65899 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81821A49E27F00E65899 /* Backflip-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Backflip-Bridging-Header.h"; sourceTree = "<group>"; };
+		CE23BA141BA63C2000315E73 /* FastttCamera */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FastttCamera; path = Vendor/FastttCamera; sourceTree = "<group>"; };
+		CE23BA1D1BA63C5A00315E73 /* GPUImage */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GPUImage; path = Vendor/GPUImage; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -662,6 +666,8 @@
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				CE23BA1D1BA63C5A00315E73 /* GPUImage */,
+				CE23BA141BA63C2000315E73 /* FastttCamera */,
 				04A250F81BA20B76003B89E8 /* Google */,
 				04B1C66A1B9783CD00F30C80 /* PKHUD */,
 				04B1C6631B9779EB00F30C80 /* AMScrollingNavbar */,
@@ -1646,6 +1652,7 @@
 				049AA6811B73DA01003888CE /* ImageError.png in Resources */,
 				049AA68A1B73DA01003888CE /* ImageSelectedSmallOff.png in Resources */,
 				0439D3991B8B7AEE001850DD /* DigitsKitResources.bundle in Resources */,
+				CE23BA151BA63C2000315E73 /* FastttCamera in Resources */,
 				0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */,
 				049AA6941B73DA01003888CE /* PlayButtonOverlayLargeTap@2x.png in Resources */,
 				04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */,
@@ -1667,6 +1674,7 @@
 				049AA6831B73DA01003888CE /* ImageError@3x.png in Resources */,
 				049AA6931B73DA01003888CE /* PlayButtonOverlayLargeTap.png in Resources */,
 				049AA68D1B73DA01003888CE /* ImageSelectedSmallOn.png in Resources */,
+				CE23BA1E1BA63C5A00315E73 /* GPUImage in Resources */,
 				049AA6851B73DA01003888CE /* ImageSelectedOff@2x.png in Resources */,
 				049AA6981B73DA01003888CE /* UIBarButtonItemArrowLeft@3x.png in Resources */,
 				049AA6871B73DA01003888CE /* ImageSelectedOn.png in Resources */,
