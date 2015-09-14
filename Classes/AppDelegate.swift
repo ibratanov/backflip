@@ -52,20 +52,56 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupCoreData()
 		setupApperance()
         
-        setupBranch(launchOptions) // Branch.io
-        
-        
+		
+		
+		let branch: Branch = Branch.getInstance()
+		branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
+			
+			if (error == nil) {
+				
+				if ((params["referringOut"])  != nil) {
+					
+					let eventId =  params["eventId"] as? String
+					if (eventId != nil) {
+						
+						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventId!) as! Event
+						var alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
+						alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
+							
+							let checkinController : CheckinViewController = CheckinViewController()
+							checkinController.checkinWithEvent(event)
+							
+						}))
+						
+						let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+					} else {
+						
+						var alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
+						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+						
+						let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+					}
+					
+				}
+			}
+		})
+		
+		
+		
 		
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
-        
+		
         Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
         mixpanel.track("App launched")
 		
 
         let defaultACL = PFACL();
-        
-        
+		
+		
 
         // If you would like all objects to be private by default, remove this line.
         defaultACL.setPublicReadAccess(true)
@@ -403,38 +439,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     func setupBranch(launchOptions: [NSObject: AnyObject]?)
     {
         
-        let branch: Branch = Branch.getInstance()
-        branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
-            
-            if (error == nil) {
-                
-                if ((params["referringOut"])  != nil) {
-                    
-                    let eventId =  params["eventId"] as? String
-                    if (eventId != nil) {
-                        
-                        let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventId) as! Event
-                        var alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
-                        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-                        alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
-                            
-                            let checkinController : CheckinViewController = CheckinViewController()
-                            checkinController.checkinWithEvent(event)
-                            
-                        }))
-                        
-                    } else {
-                     
-                        var alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
-                        alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-                      
-                        let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
-                        window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-                    }
-                    
-                }
-            }
-        })
+
 
     }
     

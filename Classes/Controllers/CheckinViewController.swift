@@ -408,7 +408,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 
 		// Store event details in user defaults
 		NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
-		NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+		NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
 		NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
 		
 		

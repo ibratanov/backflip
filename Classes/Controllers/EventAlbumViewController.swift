@@ -498,7 +498,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 					photo["reporter"] = PFUser.currentUser()!.objectId
 					photo["reportMessage"] = textField.text
 					
-					photo.saveInBackground()
+					photo.saveInBackgroundWithBlock({ (success, error) -> Void in
+						
+						BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
+							println("Photo saved")
+						})
+						
+					})
 					
 					
 					var imageIndex = find(self.collectionContent, image)
