@@ -16,6 +16,7 @@
 		0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420283A1BA1E0CB0059F096 /* Defines.swift */; };
 		042028481BA1EFC50059F096 /* Backflip.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 042028471BA1ECE20059F096 /* Backflip.sqlite */; };
 		042028501BA1F4E20059F096 /* Photo+Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420284F1BA1F4E20059F096 /* Photo+Sharing.swift */; };
+		043188FE1BA7040F008FB5CE /* CustomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043188FD1BA7040F008FB5CE /* CustomFilter.swift */; };
 		0431A80D1BA6FED80097F2D8 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431A6CF1BA6FED70097F2D8 /* GLProgram.m */; };
 		0431A80E1BA6FED80097F2D8 /* GPUImage3x3ConvolutionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431A6D21BA6FED70097F2D8 /* GPUImage3x3ConvolutionFilter.m */; };
 		0431A80F1BA6FED80097F2D8 /* GPUImage3x3TextureSamplingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431A6D41BA6FED70097F2D8 /* GPUImage3x3TextureSamplingFilter.m */; };
@@ -490,6 +491,7 @@
 		0420283A1BA1E0CB0059F096 /* Defines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defines.swift; sourceTree = "<group>"; };
 		042028471BA1ECE20059F096 /* Backflip.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Backflip.sqlite; sourceTree = "<group>"; };
 		0420284F1BA1F4E20059F096 /* Photo+Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Photo+Sharing.swift"; sourceTree = "<group>"; };
+		043188FD1BA7040F008FB5CE /* CustomFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFilter.swift; sourceTree = "<group>"; };
 		0431A6CE1BA6FED70097F2D8 /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLProgram.h; path = Vendor/GPUImage/framework/Source/GLProgram.h; sourceTree = "<group>"; };
 		0431A6CF1BA6FED70097F2D8 /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLProgram.m; path = Vendor/GPUImage/framework/Source/GLProgram.m; sourceTree = "<group>"; };
 		0431A6D01BA6FED70097F2D8 /* GPUImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPUImage.h; path = Vendor/GPUImage/framework/Source/GPUImage.h; sourceTree = "<group>"; };
@@ -1682,6 +1684,7 @@
 		0439D3AC1B8B822C001850DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				043188FD1BA7040F008FB5CE /* CustomFilter.swift */,
 				0439D3C31B8B867C001850DD /* CustomCamera.swift */,
 				0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */,
 				0439D3AE1B8B8249001850DD /* EventTableViewCell.swift */,
@@ -2835,6 +2838,7 @@
 				04B1C6771B9783E000F30C80 /* PKHUDContentView.swift in Sources */,
 				0431A8821BA6FED80097F2D8 /* GPUImageSaturationBlendFilter.m in Sources */,
 				042028501BA1F4E20059F096 /* Photo+Sharing.swift in Sources */,
+				043188FE1BA7040F008FB5CE /* CustomFilter.swift in Sources */,
 				0431A82C1BA6FED80097F2D8 /* GPUImageDilationFilter.m in Sources */,
 				0431A81B1BA6FED80097F2D8 /* GPUImageCannyEdgeDetectionFilter.m in Sources */,
 				0431A8391BA6FED80097F2D8 /* GPUImageFilterPipeline.m in Sources */,

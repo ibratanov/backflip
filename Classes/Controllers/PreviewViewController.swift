@@ -16,7 +16,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     var eventTitle : String?
     var eventLocation: PFGeoPoint?
     var downloadToCameraRoll: Bool?
-    
+    var imageReady: Bool?
     
     //---------Filters
     lazy var context: CIContext = {
@@ -161,6 +161,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
+
         assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
         
         imageView.image = resizeImage(imageToCrop!) //imageToCrop!
@@ -169,7 +170,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        imageToCrop = nil
+        //imageToCrop = nil
         
     }
     
@@ -343,6 +344,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
+        imageView.image = nil
+
+        imageToCrop = nil
+
         self.dismissViewControllerAnimated(true, completion: cancelCompletionHandler)
     }
     
