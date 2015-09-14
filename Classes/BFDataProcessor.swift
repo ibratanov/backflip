@@ -23,11 +23,11 @@ class BFDataProcessor
 	
 	init()
 	{
-		dispatch_set_target_queue(self.dataQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
+		dispatch_set_target_queue(self.dataQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0));
 		
 		// Setup a parent context..
 		dispatch_async(dataQueue) { () -> Void in
-			let mainContext : NSManagedObjectContext = NSManagedObjectContext.MR_defaultContext()
+			let mainContext : NSManagedObjectContext = NSManagedObjectContext.MR_rootSavingContext()
 			self.dataContext = NSManagedObjectContext.MR_contextWithParent(mainContext)
 			self.dataContext?.undoManager = nil
 		}
@@ -229,7 +229,7 @@ class BFDataProcessor
 	func save(block: (context: NSManagedObjectContext!) -> Void, completionHandler:(contextDidSave: Bool?, error: NSError?) -> Void)
 	{
 		dispatch_async(self.dataQueue) { () -> Void in
-			self.dataContext?.performBlock({ () -> Void in
+			self.dataContext!.performBlock({ () -> Void in
 				
 				block(context: self.dataContext!)
 				

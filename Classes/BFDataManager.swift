@@ -21,7 +21,7 @@ class BFDataMananger : NSObject
         #if DEBUG
             print("Not seeding database because we're running in DEBUG mode")
 		#else
-			// self.seedDatabase()
+			self.seedDatabase()
         #endif
 		
 		MagicalRecord.setupCoreDataStackWithAutoMigratingSqliteStoreNamed(kAppDatabaseName)
@@ -39,7 +39,7 @@ class BFDataMananger : NSObject
 		let fileManager = NSFileManager.defaultManager()
 		if (!fileManager.fileExistsAtPath(defaultStorePath.path!)) {
 			let seedPath = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(kAppDatabaseName, ofType: "sqlite")!)
-			print("Core data store does not yet exist at: %@. Attempting to copy from seed db %@.", defaultStorePath!.path!, seedPath!.path!)
+			print("Core data store does not yet exist at: "+defaultStorePath!.path!+". Attempting to copy from seed db"+seedPath!.path!)
 			
 			self.createPathToStoreFileIfNeccessary(defaultStorePath)
 			
@@ -56,7 +56,6 @@ class BFDataMananger : NSObject
 		let documentsDirectory = defaultStorePath.URLByDeletingLastPathComponent
 		self.excludePathFromBackup(documentsDirectory!)
 		
-		 
 		return copySuccessful
     }
 	
