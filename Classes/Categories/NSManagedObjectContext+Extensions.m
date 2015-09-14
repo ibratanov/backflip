@@ -11,6 +11,7 @@
 @implementation NSManagedObjectContext(Extensions)
 
 
+
 - (void)saveWithOptions:(NSInteger)options completion:(void(^)(BOOL contextDidSave, NSError *error))completion
 {
 	return [self MR_saveWithOptions:MRSaveParentContexts completion:completion];
@@ -18,12 +19,23 @@
 
 - (void)saveWithBlock:(void(^)(NSManagedObjectContext *localContext))block completion:(MRSaveCompletionHandler)completion
 {
-	[self performBlock:^{
-		if (block)
-			block(self);
+//	if (self.dataQueue == nil) {
+//		self.dataQueue = dispatch_queue_create("com.backflip.dataQueue", DISPATCH_QUEUE_SERIAL);
+//		 dispatch_set_target_queue(self.dataQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
+//	}
+	
+	[self setUndoManager:nil];
+	
+	//dispatch_async(self.dataQueue, ^{
 		
-		[self MR_saveWithOptions:MRSaveParentContexts completion:completion];
-	}];
+		[self performBlock:^{
+			if (block)
+				block(self);
+			
+			[self MR_saveWithOptions:MRSaveSynchronouslyExceptRootContext completion:completion];
+		}];
+		
+	//});
 }
 
 @end
