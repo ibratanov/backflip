@@ -75,6 +75,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
         
+        if(self.imageToCrop != nil ){imageView.image = resizeImage(imageToCrop!) }
         leftSwipe.direction = .Left
         rightSwipe.direction = .Right
         
@@ -163,12 +164,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
 
-        assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
-        
-        imageView.image = resizeImage(imageToCrop!) //imageToCrop!
-        
-
-    }
+        if(self.imageToCrop != nil ){imageView.image = resizeImage(imageToCrop!) }
+            }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         //imageToCrop = nil
