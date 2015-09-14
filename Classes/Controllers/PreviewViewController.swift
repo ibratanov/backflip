@@ -232,6 +232,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             photo["blocked"] = false
             photo["reporter"] = ""
             photo["reportMessage"] = ""
+			photo["event"] = PFObject.init(withoutDataWithClassName: "Event", objectId: self.event!.objectId!);
             
             let photoACL = PFACL(user: PFUser.currentUser()!)
             photoACL.setPublicWriteAccess(true)
