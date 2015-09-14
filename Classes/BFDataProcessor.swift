@@ -28,7 +28,7 @@ class BFDataProcessor
 		// Setup a parent context..
 		dispatch_async(dataQueue) { () -> Void in
 			let mainContext : NSManagedObjectContext = NSManagedObjectContext.MR_rootSavingContext()
-			self.dataContext = NSManagedObjectContext.MR_contextWithParent(mainContext)
+			self.dataContext = NSManagedObjectContext.MR_defaultContext()
 			self.dataContext?.undoManager = nil
 		}
 		

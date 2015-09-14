@@ -72,7 +72,7 @@ class BFDataFetcher : NSObject {
 				let objects: AnyObject? = object?.objectForKey("Photo")
 				if (objects?.count > 0) {
 					if (activityInidactor) {
-						ZAActivityBar.showWithStatus("Processing Photos", forAction: "process_photos")
+						ZAActivityBar.showWithStatus("Processing Photos ("+NSNumber(long: objects!.count).stringValue+")", forAction: "process_photos")
 					}
 					
 					BFDataProcessor.sharedProcessor.processPhotos(objects as! [PFObject], completion: { () -> Void in
@@ -103,10 +103,11 @@ class BFDataFetcher : NSObject {
 		let parameters = NSMutableDictionary()
 		
 		let lastUpdated = NSMutableDictionary()
-		let classNames : [String] = ["Event", "Photo"]
+		let classNames : [String] = ["Event", "Photo", "Attendance"]
+		let parseClassNames : [String] = ["Event", "Photo", "EventAttendance"]
 		for className: String in classNames {
 			let updated : NSDate = self.lastUpdated(className)
-			lastUpdated.setObject(updated, forKey: className)
+			lastUpdated.setObject(updated, forKey: parseClassNames[find(classNames, className)!])
 		}
 		
 		if (PFUser.currentUser() != nil) {
