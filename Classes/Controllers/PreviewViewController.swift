@@ -11,9 +11,10 @@ import Parse
 
 class PreviewViewController: UIViewController, UIScrollViewDelegate {
     var filterCount = 0;
+	
     // Title passed from previous VC
-    var eventId : String?
-    var eventTitle : String?
+	var event : Event?
+
     var eventLocation: PFGeoPoint?
     var downloadToCameraRoll: Bool?
     var imageReady: Bool?
@@ -240,7 +241,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
             
             let query2 = PFQuery(className: "EventAttendance")
             query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-            query2.whereKey("eventID", equalTo: eventId!)
+            query2.whereKey("eventID", equalTo: event!.objectId!)
 
             //var photoObjectList = query2.findObjects()
             var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
@@ -252,7 +253,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 //                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
                     
                     let queryEvent = PFQuery(className: "Event")
-                    queryEvent.whereKey("objectId", equalTo: self.eventId!)
+                    queryEvent.whereKey("objectId", equalTo: self.event!.objectId!)
                     //var objects = queryEvent.findObjects()
                     var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
                         
@@ -260,7 +261,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                             let eventObject = sobjs!.first as! PFObject
                             
                             let relation = eventObject.relationForKey("photos")
-                            
+							
                             //photo.save()
                             photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
                                 if valid {
@@ -271,12 +272,20 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                                     photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
                                     photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
                                 }
+
+
                                 //issue
                                 eventObject.saveInBackground()
                                 
                                 //issue
                                 photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
-									NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
+									BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
+										println("Photo stored in coredata..");
+										let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+										dispatch_after(delayTime, dispatch_get_main_queue()) {
+											NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
+										}
+									})
 								})
                             })
                         } else {

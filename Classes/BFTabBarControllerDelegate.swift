@@ -51,6 +51,7 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
     {
         var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         var customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
+		customCameraFCF.event = event
         customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
         let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
         window?.rootViewController!.presentViewController(customCameraFCF, animated: true, completion: nil)

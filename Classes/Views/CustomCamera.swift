@@ -70,9 +70,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	var myPhotoSelected = false
 	var fullScreen = false
 	var posted = false
-	// Title and ID of event passed from previous VC, based on selected row
-	var eventId : String?
-	var eventTitle: String?
+	
 	// Keeps track of photo source and only downloads newly taken images
 	var downloadToCameraRoll = true
 	
@@ -83,7 +81,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 		UIApplication.sharedApplication().statusBarHidden = true
 		
-		self.eventNameLabel?.text = self.eventTitle
+		self.eventNameLabel?.text = self.event!.name!
 		
 		var leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
 		var rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
@@ -615,6 +613,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 		//Retake and crop options------------------------------------------------------------------------
 		var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
+		previewViewController.event = event
 		previewViewController.cropCompletionHandler = {
 			imageViewContent = $0!
 			previewViewController.dismissViewControllerAnimated(true, completion: nil)

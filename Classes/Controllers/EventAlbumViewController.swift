@@ -545,7 +545,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		} else {
 		
 			self.collectionContent = photos
-			// self.segementedControlValueChanged(self.segmentedControl)
+			
+			if (self.segmentedControl != nil) {
+				self.segementedControlValueChanged(self.segmentedControl)
+			}
 			
 //            for photo : Photo in photos {
 //                println("curl -O \""+photo.image!.url!+"\" &&")
