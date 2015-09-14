@@ -13,6 +13,7 @@ import DigitsKit
 class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var termsTextView: UITextView!
+    @IBOutlet weak var facebookButton: UIButton!
     
     let permissions : [String] = ["public_profile", "email"]
     
@@ -67,8 +68,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
     //Hide the status bar
     override func prefersStatusBarHidden() -> Bool {
-        
-        return true;
+        return true
     }
     
     override func viewDidLoad() {
@@ -79,6 +79,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
+        facebookButton.hidden = true
+        
         var tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Login Screen")
         tracker.set("&uid", value: PFUser.currentUser()?.objectId)
