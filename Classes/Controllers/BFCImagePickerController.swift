@@ -247,7 +247,16 @@ class BFCAssetsLibraryController: UICollectionViewController {
         
         return cell
     }
-    
+	
+	override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
+	{
+		if (self.imagePickerController!.selectedAssets.count >= 10) {
+			return false
+		}
+		
+		return true
+	}
+	
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         NSNotificationCenter.defaultCenter().postNotificationName(BFCImageSelectedNotification, object: imageAssets[indexPath.row])
     }
@@ -456,9 +465,11 @@ class BFCImagePickerController: UINavigationController {
     func selectedImage(notification: NSNotification) {
         //set affordance for image selected
         if let asset = notification.object as? BFCAsset {
-            selectedAssets.append(asset)
-            self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
-            self.doneButton.sizeToFit()
+			if (selectedAssets.count < 10) {
+				selectedAssets.append(asset)
+				self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
+				self.doneButton.sizeToFit()
+			}
         }
     }
     
@@ -466,10 +477,12 @@ class BFCImagePickerController: UINavigationController {
         //set affordance for image unselected
         
         if let asset = notification.object as? BFCAsset {
-            selectedAssets.removeAtIndex(find(selectedAssets, asset)!)
-            self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
-            self.doneButton.sizeToFit()
-            
+			if (find(selectedAssets, asset) != nil) {
+				selectedAssets.removeAtIndex(find(selectedAssets, asset)!)
+				self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
+				self.doneButton.sizeToFit()
+			}
+				
             if selectedAssets.count <= 0 {
 
                 self.doneButton.setTitle("", forState: UIControlState.Normal)
