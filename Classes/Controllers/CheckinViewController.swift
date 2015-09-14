@@ -343,7 +343,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
 				
 				
-				
 				PKHUD.sharedHUD.hideAnimated()
 				
 				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))

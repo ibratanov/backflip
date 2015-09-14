@@ -53,7 +53,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupApperance()
         
 		
-		
 		let branch: Branch = Branch.getInstance()
 		branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
 			
@@ -69,8 +68,16 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 						alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
 							
-							let checkinController : CheckinViewController = CheckinViewController()
-							checkinController.checkinWithEvent(event)
+							
+							let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+							let tabBar : UITabBarController = window?.rootViewController! as! UITabBarController
+							let checkinViewController : CheckinViewController = (tabBar.viewControllers![0] as! UINavigationController).viewControllers[0] as! CheckinViewController
+
+							println(checkinViewController)
+							
+							
+							// let checkinController : CheckinViewController = CheckinViewController()
+							checkinViewController.checkinWithEvent(event)
 							
 						}))
 						
