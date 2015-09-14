@@ -412,6 +412,8 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			photo["blocked"] = false
 			photo["reporter"] = ""
 			photo["reportMessage"] = ""
+			photo["event"] = PFObject.init(withoutDataWithClassName: "Event", objectId: self.event!.objectId!);
+
 			
 			var photoACL = PFACL(user: PFUser.currentUser()!)
 			photoACL.setPublicWriteAccess(true)
@@ -453,7 +455,13 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 								
 								//issue
 								photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
-									NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
+									BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
+										println("Photo stored in coredata..");
+										let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+										dispatch_after(delayTime, dispatch_get_main_queue()) {
+											NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
+										}
+									})
 								})
 							})
 							
