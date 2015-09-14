@@ -92,6 +92,34 @@ class BFDataFetcher : NSObject {
 	
 	
 	
+	func fetchDataInBackground(completion: (completed : Bool) -> Void)
+	{
+		// Query the cloud
+		PFCloud.callFunctionInBackground("query_databaseUpdate", withParameters: self.cloudCodeParameters() as? [NSObject : AnyObject], block: { (object, error) -> Void in
+			
+			let priority = DISPATCH_QUEUE_PRIORITY_HIGH
+			dispatch_async(dispatch_get_global_queue(priority, 0)) {
+				
+				let photos : AnyObject? = object?.objectForKey("Photo")
+				let events : AnyObject? = object?.objectForKey("Event")
+				let attendance : AnyObject? = object?.objectForKey("EventAttendance")
+				
+				
+				BFDataProcessor.sharedProcessor.processEvents(events as! [PFObject], completion: { () -> Void in
+					BFDataProcessor.sharedProcessor.processAttendees(attendance as! [PFObject], completion: { () -> Void in
+						BFDataProcessor.sharedProcessor.processPhotos(photos as! [PFObject], completion: { () -> Void in
+							return completion(completed: true)
+						})
+					})
+				})
+				
+			}
+			
+		});
+	}
+	
+	
+	
 	
 
 	// --------------------------------------------------

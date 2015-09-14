@@ -39,7 +39,7 @@ class BFDataProcessor
 	func processEvents(events: [PFObject], completion: () -> Void)
 	{
 		if (events.count < 1) {
-			return
+			return completion()
 		}
 
 		self.save({ (context) -> Void in
@@ -101,7 +101,7 @@ class BFDataProcessor
 	func processAttendees(attendees: [PFObject], completion: () -> Void)
 	{
 		if (attendees.count < 1) {
-			return
+			return completion()
 		}
 		
 		self.save({ (context) -> Void in
@@ -143,7 +143,7 @@ class BFDataProcessor
 	func processPhotos(photos: [PFObject], completion: () -> Void)
 	{
 		if (photos.count < 1) {
-			return
+			return completion()
 		}
 		
 		
