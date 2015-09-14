@@ -81,9 +81,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         view.addGestureRecognizer(leftSwipe)
         view.addGestureRecognizer(rightSwipe)
-
-//        scrollView.addGestureRecognizer(leftSwipe)
-//        scrollView.addGestureRecognizer(rightSwipe)
     }
     
 
