@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -40,7 +40,7 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="500" placeholderIntrinsicHeight="500" translatesAutoresizingMaskIntoConstraints="NO" id="Qr6-XV-dtf">
                     <rect key="frame" x="-257" y="0.0" width="889" height="667"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="532" placeholderIntrinsicHeight="400" image="unable-phone@3x.png" translatesAutoresizingMaskIntoConstraints="NO" id="MYo-N8-JBd">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="532" placeholderIntrinsicHeight="400" image="heart-icon-empty" translatesAutoresizingMaskIntoConstraints="NO" id="MYo-N8-JBd">
                             <rect key="frame" x="0.0" y="0.0" width="532" height="400"/>
                             <animations/>
                         </imageView>
@@ -173,7 +173,7 @@
     </objects>
     <resources>
         <image name="close-icon-large" width="28" height="27"/>
+        <image name="heart-icon-empty" width="29" height="25"/>
         <image name="next-icon-large" width="15" height="26"/>
-        <image name="unable-phone@3x.png" width="333" height="531"/>
     </resources>
 </document>
