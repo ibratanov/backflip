@@ -331,7 +331,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	func setupParse()
 	{
 		// Local caching of query results
-		Parse.enableLocalDatastore()
+		// Parse.enableLocalDatastore()
 		
 		#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
