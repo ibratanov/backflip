@@ -15,29 +15,46 @@ import Foundation
 class BFDataProcessor
 {
 
-	static let sharedProcessor = BFDataProcessor()
+	static let sharedProcessor = BFDataProcessor.init()
+	
+	var dataQueue : dispatch_queue_t = dispatch_queue_create("com.backflip.dataQueue", DISPATCH_QUEUE_SERIAL)
+	var dataContext : NSManagedObjectContext?
 	
 	
+	init()
+	{
+		dispatch_set_target_queue(self.dataQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
+		
+		// Setup a parent context..
+		dispatch_async(dataQueue) { () -> Void in
+			let mainContext : NSManagedObjectContext = NSManagedObjectContext.MR_defaultContext()
+			self.dataContext = NSManagedObjectContext.MR_contextWithParent(mainContext)
+			self.dataContext?.undoManager = nil
+		}
+		
+	}
+
+
+
 	func processEvents(events: [PFObject], completion: () -> Void)
 	{
 		if (events.count < 1) {
 			return
 		}
-		
-		let context = NSManagedObjectContext.MR_defaultContext()
-		context.saveWithBlock({ (context) -> Void in
+
+		self.save({ (context) -> Void in
 			
 			for object : PFObject in events {
-			
+				
 				let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Event;
 				if (object.createdAt != nil) {
 					event.createdAt = object.createdAt
 				}
-			
+				
 				if (object.updatedAt != nil) {
 					event.updatedAt = object.updatedAt
 				}
-			
+				
 				if (self.isValid(object["eventName"])) {
 					event.name = object["eventName"] as? String
 				}
@@ -49,7 +66,7 @@ class BFDataProcessor
 				if (self.isValid(object["venue"])) {
 					event.venue = object["venue"] as? String
 				}
-
+				
 				if (self.isValid(object["startTime"])) {
 					event.startTime = object["startTime"] as? NSDate
 				}
@@ -61,7 +78,7 @@ class BFDataProcessor
 				if (self.isValid(object["enabled"])) {
 					event.enabled = NSNumber(bool: (object["enabled"] as! Bool))
 				}
-
+				
 				if (self.isValid(object["geoLocation"])) {
 					let geoObject = object["geoLocation"] as? PFGeoPoint
 					if (geoObject != nil) {
@@ -71,9 +88,10 @@ class BFDataProcessor
 						event.geoLocation = geoPoint;
 					}
 				}
-
+				
 			}
-		}, completion: { (contextDidSave, error) -> Void in
+			
+		}, completionHandler: { (contextDidSave, error) -> Void in
 			return completion()
 		})
 		
@@ -86,8 +104,7 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_defaultContext()
-		context.saveWithBlock({ (context) -> Void in
+		self.save({ (context) -> Void in
 			
 			for object : PFObject in attendees {
 				
@@ -95,7 +112,7 @@ class BFDataProcessor
 				if (object.createdAt != nil) {
 					attendee.createdAt = object.createdAt
 				}
-
+				
 				if (object.updatedAt != nil) {
 					attendee.updatedAt = object.updatedAt
 				}
@@ -115,7 +132,8 @@ class BFDataProcessor
 				}
 				
 			}
-		}, completion: { (contextDidSave, error) -> Void in
+
+		}, completionHandler: { (contextDidSave, error) -> Void in
 			return completion()
 		})
 		
@@ -128,16 +146,16 @@ class BFDataProcessor
 			return
 		}
 		
-		let context = NSManagedObjectContext.MR_defaultContext()
-		context.saveWithBlock({ (context) -> Void in
+		
+		self.save({ (context) -> Void in
 			
 			for object : PFObject in photos {
-			
+				
 				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Photo;
 				if (object.createdAt != nil) {
 					photo.createdAt = object.createdAt
 				}
-
+				
 				if (object.updatedAt != nil) {
 					photo.updatedAt = object.updatedAt
 				}
@@ -164,8 +182,8 @@ class BFDataProcessor
 						photo.event = event;
 					}
 				}
-
-
+				
+				
 				if (self.isValid(object["image"])) {
 					let imageObject = object["image"] as? PFFile
 					if (imageObject != nil) {
@@ -173,7 +191,7 @@ class BFDataProcessor
 						photo.image = file;
 					}
 				}
-
+				
 				if (self.isValid(object["thumbnail"])) {
 					let imageObject = object["thumbnail"] as? PFFile
 					if (imageObject != nil) {
@@ -181,11 +199,14 @@ class BFDataProcessor
 						photo.thumbnail = file;
 					}
 				}
-
+				
 			}
-		}, completion: { (contextDidSave, error) -> Void in
+			
+		}) { (contextDidSave, error) -> Void in
+			
 			return completion()
-		})
+			
+		}
 	}
 	
 	
@@ -204,18 +225,23 @@ class BFDataProcessor
 	}
 
 
-	
-	func save(block: (context: NSManagedObjectContext) -> Void, completionHandler:(contextDidSave: Bool, error: NSError) -> Void)
+
+	func save(block: (context: NSManagedObjectContext!) -> Void, completionHandler:(contextDidSave: Bool?, error: NSError?) -> Void)
 	{
-		let context = NSManagedObjectContext.MR_rootSavingContext()
-		context.performBlock { () -> Void in
-			block(context: context)
-			
-			context.saveWithOptions(1, completion: { (didSave, err) -> Void in
-				// completionHandler(contextDidSave: true, error: nil);
+		dispatch_async(self.dataQueue) { () -> Void in
+			self.dataContext?.performBlock({ () -> Void in
+				
+				block(context: self.dataContext!)
+				
+				self.dataContext!.saveWithOptions(1, completion: { (didSave, error) -> Void in
+					
+					completionHandler(contextDidSave: didSave, error: error)
+					
+				})
 			})
 			
 		}
+		
 	}
 	
 }
