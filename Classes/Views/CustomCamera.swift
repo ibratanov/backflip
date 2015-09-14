@@ -676,7 +676,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				previewViewController.imageToCrop = imageViewContent
 				
 			}
-			
+			previewViewController.imageToCrop = imageViewContent
 		}
 		else{
 			let orientation = UIDevice.currentDevice().orientation
@@ -709,6 +709,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				previewViewController.imageToCrop = imageViewContent
 				
 			}
+                previewViewController.imageToCrop = imageViewContent
 			
 		}
 		
