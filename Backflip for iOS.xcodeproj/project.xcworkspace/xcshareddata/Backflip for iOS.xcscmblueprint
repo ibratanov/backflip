@@ -4,32 +4,36 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "548AC090E1DB22900595581804DA116AAACB2ABF" : 0,
-    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : 0,
-    "4EA48C4418C0D37C936EB709C50F03661DB187D9" : 0,
-    "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : 0,
-    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : 0,
     "677E8E9414FADC8C089A94C6134023AA45E42A2C" : 0,
-    "958932E9D08E4465709D54DB1E7CECF23B0F442E" : 0,
-    "A378226EC2FD4B06544EB459EF19E06596F9C811" : 0,
+    "548AC090E1DB22900595581804DA116AAACB2ABF" : 0,
     "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : 0,
-    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : 0
+    "A378226EC2FD4B06544EB459EF19E06596F9C811" : 0,
+    "4EA48C4418C0D37C936EB709C50F03661DB187D9" : 0,
+    "E609DD15689CC93D8F4D219EB393F30F9F726178" : 0,
+    "958932E9D08E4465709D54DB1E7CECF23B0F442E" : 0,
+    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : 0,
+    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : 0,
+    "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : 0,
+    "E3AA66F3670798BA2103D1449BFEE1B21C931FA7" : 0,
+    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0957CE20-4077-40D1-9F68-0D5801E14CE1",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "548AC090E1DB22900595581804DA116AAACB2ABF" : "application\/Vendor\/ZAActivityBar\/",
-    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : "application\/Vendor\/AMScrollingNavbar\/",
-    "4EA48C4418C0D37C936EB709C50F03661DB187D9" : "application\/Vendor\/PKHUD\/",
-    "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : "application\/Vendor\/DOFavoriteButton\/",
-    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : "applicationVendor\/Mixpanel",
     "677E8E9414FADC8C089A94C6134023AA45E42A2C" : "application\/Vendor\/SwiftLocation\/",
-    "958932E9D08E4465709D54DB1E7CECF23B0F442E" : "application\/Vendor\/MagicalRecord\/",
-    "A378226EC2FD4B06544EB459EF19E06596F9C811" : "application",
+    "548AC090E1DB22900595581804DA116AAACB2ABF" : "application\/Vendor\/ZAActivityBar\/",
     "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : "application\/Vendor\/AFNetworking\/",
-    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : "application\/Vendor\/MagicalRecord\/Carthage\/Checkouts\/expecta\/"
+    "A378226EC2FD4B06544EB459EF19E06596F9C811" : "application",
+    "4EA48C4418C0D37C936EB709C50F03661DB187D9" : "application\/Vendor\/PKHUD\/",
+    "E609DD15689CC93D8F4D219EB393F30F9F726178" : "application\/Vendor\/GPUImage\/",
+    "958932E9D08E4465709D54DB1E7CECF23B0F442E" : "application\/Vendor\/MagicalRecord\/",
+    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : "application\/Vendor\/AMScrollingNavbar\/",
+    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : "application\/Vendor\/MagicalRecord\/Carthage\/Checkouts\/expecta\/",
+    "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : "application\/Vendor\/DOFavoriteButton\/",
+    "E3AA66F3670798BA2103D1449BFEE1B21C931FA7" : "application\/Vendor\/FastttCamera\/",
+    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : "applicationVendor\/Mixpanel"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Backflip for iOS",
-  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Backflip for iOS.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
@@ -81,6 +85,16 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/AFNetworking\/AFNetworking.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:JackoPlane\/FastttCamera.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E3AA66F3670798BA2103D1449BFEE1B21C931FA7"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/BradLarson\/GPUImage.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E609DD15689CC93D8F4D219EB393F30F9F726178"
     }
   ]
 }

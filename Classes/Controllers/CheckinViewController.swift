@@ -13,7 +13,7 @@ import CoreLocation
 
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
 {
 	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
@@ -222,6 +222,38 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	}
 	
 	
+	//-------------------------------------
+	// MARK: Tabbar Delegate
+	//-------------------------------------
+	
+	
+	func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
+	{
+		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
+		if (selectedIndex == 1) {
+			
+			let currentEvent: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
+			if (currentEvent == nil) {
+				var alertController = UIAlertController(title: "Take Photo", message: "Please check in or create an event before uploading photos.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: { (alertAction) -> Void in
+					println("Should switch back to 'current event' tab")
+				}))
+				
+				self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                
+                var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                var customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
+                customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+                self.presentViewController(customCameraFCF as UIViewController, animated: true, completion: nil)
+            }
+            
+            return false
+        }
+        
+        return true
+    }
 	
 	//-------------------------------------
 	// MARK: Actions

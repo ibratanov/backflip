@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
 {
 	static let sharedDelegate = BFTabBarControllerDelegate()
 	
@@ -47,27 +47,14 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 		return true
 	}
 	
-	
-	func displayCamera(event: Event)
-	{
-		
-		let testCamera = CustomCamera()
-		if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-			
-			// testCamera.event = event
-			
-			testCamera.delegate = self
-			testCamera.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-			testCamera.sourceType = .Camera
-			testCamera.allowsEditing = false
-			testCamera.showsCameraControls = false
-			testCamera.cameraViewTransform = CGAffineTransformMakeTranslation(0.0, 71.0)
-			testCamera.cameraViewTransform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 71.0), 1.333333, 1.333333)
-			
-			let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
-			window?.rootViewController!.presentViewController(testCamera, animated: true, completion: nil)
-		}
-		
-	}
+    func displayCamera(event: Event)
+    {
+        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        var customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
+        customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+        let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+        window?.rootViewController!.presentViewController(customCameraFCF, animated: true, completion: nil)
+        
+    }
 	
 }

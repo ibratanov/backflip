@@ -16,7 +16,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     var eventTitle : String?
     var eventLocation: PFGeoPoint?
     var downloadToCameraRoll: Bool?
-    
+    var imageReady: Bool?
     
     //---------Filters
     lazy var context: CIContext = {
@@ -55,7 +55,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func prefersStatusBarHidden() -> Bool {
-        return false
+        return true
     }
 	
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -70,8 +70,6 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageLoad.hidden=false
-
         
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
@@ -163,16 +161,16 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
+
         assert({ self.imageToCrop != nil }(), "image not set before PreviewViewController's view is loaded.")
         
         imageView.image = resizeImage(imageToCrop!) //imageToCrop!
         
-        imageLoad.hidden=true
 
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        imageToCrop = nil
+        //imageToCrop = nil
         
     }
     
@@ -346,6 +344,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
+        imageView.image = nil
+
+        imageToCrop = nil
+
         self.dismissViewControllerAnimated(true, completion: cancelCompletionHandler)
     }
     
