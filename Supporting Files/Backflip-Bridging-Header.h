@@ -36,8 +36,9 @@
 
 	#import "MWPhotoBrowser.h"
 	#import "MWPhotoBrowserPrivate.h"
-    #import <FastttFilterCamera.h>
 
+    #import "FastttFilterCamera.h"
+	#import "FastttCamera.h"
     #import "UIImage+FastttCamera.h"
     #import "AVCaptureDevice+FastttCamera.h"
     #import "FastttFocus.h"

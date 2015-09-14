@@ -26,3 +26,9 @@
 	path = Vendor/PKHUD
 	url = https://github.com/pkluz/PKHUD.git
 	ignore = dirty
+[submodule "Vendor/FastttCamera"]
+	path = Vendor/FastttCamera
+	url = git@github.com:JackoPlane/FastttCamera.git
+[submodule "Vendor/GPUImage"]
+	path = Vendor/GPUImage
+	url = https://github.com/BradLarson/GPUImage.git
