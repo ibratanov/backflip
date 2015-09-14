@@ -101,7 +101,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		refreshControl.tintColor = UIColor(red:0,  green:0.588,  blue:0.533, alpha:1)
 		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-		refreshControl.addTarget(self, action: "updateData", forControlEvents: .ValueChanged)
+		refreshControl.addTarget(self, action: "refreshData", forControlEvents: .ValueChanged)
 		self.collectionView!.addSubview(refreshControl)
 		
 		// Layout -  Only run on the main thread
@@ -563,5 +563,14 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		self.collectionContent = photos
 	}
+	
+	
+	func refreshData()
+	{
+		BFDataFetcher.sharedFetcher.fetchDataInBackground { (completed) -> Void in
+			self.updateData();
+		}
+	}
+	
 	
 }
