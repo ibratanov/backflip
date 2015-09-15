@@ -32,3 +32,6 @@
 [submodule "Vendor/GPUImage"]
 	path = Vendor/GPUImage
 	url = https://github.com/BradLarson/GPUImage.git
+[submodule "Vendor/MapleBacon"]
+	path = Vendor/MapleBacon
+	url = git@github.com:zalando/MapleBacon.git
