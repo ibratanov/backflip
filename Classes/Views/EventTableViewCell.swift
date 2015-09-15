@@ -9,7 +9,7 @@
 import UIKit
 import ParseUI
 
-class EventTableViewCell: UITableViewCell, UIGestureRecognizerDelegate {
+class EventTableViewCell: UITableViewCell {
 
     let imageOne = UIImageView()
     let imageTwo = UIImageView()

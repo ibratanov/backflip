@@ -9,12 +9,14 @@
 import Parse
 import DigitsKit
 import Foundation
+import MapleBacon
 import CoreLocation
 
 
 
 class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
 {
+	var shakeCount : Int = 0
 	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
 	
@@ -29,6 +31,40 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	@IBOutlet weak var activityIndicator : UIActivityIndicatorView!
 	
 
+	//-------------------------------------
+	// MARK: Memory
+	//-------------------------------------
+	
+	override func didReceiveMemoryWarning()
+	{
+		super.didReceiveMemoryWarning()
+		
+		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+	}
+	
+	
+	
+	//-------------------------------------
+	// MARK: Pop, lock and shake
+	//-------------------------------------
+	
+	override func canBecomeFirstResponder() -> Bool
+	{
+		return true
+	}
+	
+	override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?)
+	{
+		if motion == .MotionShake {
+			shakeCount++
+			if (shakeCount > 3) {
+				self.presentViewController(GameViewController(), animated: true, completion: nil)
+				shakeCount = 0
+			}
+		}
+	}
+	
+	
 	//-------------------------------------
 	// MARK: View Delegate
 	//-------------------------------------
@@ -45,7 +81,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		self.doubleTapGesture?.numberOfTapsRequired = 2
 		self.view.addGestureRecognizer(self.doubleTapGesture!)
 		
-		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
+		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate()
 	}
 	
 	override func viewDidLoad()
@@ -120,12 +156,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
             fetchData()
         }
         
-        var tracker = GAI.sharedInstance().defaultTracker
+        let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Checkin view")
         tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
         
-        var builder = GAIDictionaryBuilder.createScreenView()
+        let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
 	}
 	
@@ -170,7 +206,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
 			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
-			cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail!.url!)!)
+			cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 		}
 		
 		// cell.addGestureRecognizer(self.doubleTapGesture!)
@@ -234,17 +270,17 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 			let currentEvent: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
 			if (currentEvent == nil) {
-				var alertController = UIAlertController(title: "Take Photo", message: "Please check in or create an event before uploading photos.", preferredStyle: .Alert)
+				let alertController = UIAlertController(title: "Take Photo", message: "Please check in or create an event before uploading photos.", preferredStyle: .Alert)
 				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: { (alertAction) -> Void in
-					println("Should switch back to 'current event' tab")
+					print("Should switch back to 'current event' tab")
 				}))
 				
 				self.presentViewController(alertController, animated: true, completion: nil)
             } else {
                 
-                var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                var customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
+                let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
                 customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
                 self.presentViewController(customCameraFCF as UIViewController, animated: true, completion: nil)
             }
@@ -296,7 +332,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		// Store channel for push notifications
 		let currentInstallation = PFInstallation.currentInstallation()
 		currentInstallation.addUniqueObject("a"+event.objectId!, forKey: "channels")
-		currentInstallation.saveInBackground()
+		try! currentInstallation.saveInBackground()
 		
 		
 		// Create attendance object, save to parse; save to CoreData
@@ -312,7 +348,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
 		
 		
-		attendance.saveInBackgroundWithBlock { (success, error) -> Void in
+		try! attendance.saveInBackgroundWithBlock { (success, error) -> Void in
 			
 			let attendees : [PFObject] = [attendance] 
 			BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
@@ -321,18 +357,18 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				let account = PFUser.currentUser()
 				account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
 				account?.addUniqueObject(event.name!, forKey: "savedEventNames")
-				account?.saveInBackground()
+				try! account?.saveInBackground()
 				
 				
 				// Add user to Event objects relation
 				let eventQuery = PFQuery(className: "Event")
 				eventQuery.whereKey("eventName", equalTo: event.name!)
-				eventQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+				try! eventQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
 					
 					let eventObj = objects!.first as! PFObject
 					let relation = eventObj.relationForKey("attendees")
 					relation.addObject(PFUser.currentUser()!)
-					eventObj.saveInBackground()
+					try! eventObj.saveInBackground()
 					
 				}
 				
@@ -391,7 +427,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	}
 	
 	
-	override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool
+	override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool
 	{
 		if (identifier == "create-event" && NetworkAvailable.networkConnection() == false) {
 			
@@ -414,8 +450,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
 			// location is a CLPlacemark
-			print("We have a location!! ")
-			print(location)
+			print("We have a location!! ", terminator: "")
+			print(location, terminator: "")
 			
 
 			let config = PFConfig.currentConfig()
@@ -478,8 +514,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 		}) { (error) -> Void in
 			// something went wrong
-			println("SwiftLocation error :(")
-			print(error)
+			print("SwiftLocation error :(")
+			print(error, terminator: "")
 		}
 
 	}

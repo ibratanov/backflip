@@ -24,10 +24,6 @@
 
 	#import "ZAActivityBar.h"
 
-	#import "AFNetworking.h"
-	#import "UIKit+AFNetworking.h"
-	#import "UIImageView+AFNetworking.h"
-
 	// Analytics yo
 	#import <Mixpanel/Mixpanel.h>
 	//#import "GoogleAnalytics.h"

@@ -82,18 +82,18 @@ class BFCAssetsLibraryController: UICollectionViewController {
         
         ///Check if user can access image
         
-        var status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+        let status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
         if (status == AVAuthorizationStatus.Authorized) {
-            println("authorized")
+            print("authorized")
         } else if(status == AVAuthorizationStatus.Denied){
-            var alert:UIAlertView = UIAlertView()
+            let alert:UIAlertView = UIAlertView()
             alert.title = "Photo Access Disabled"
             alert.message = "Please enable photo access in the iOS settings for Backflip to upload from camera roll."
             alert.delegate = self
             alert.addButtonWithTitle("Ok")
             alert.show()
         } else if(status == AVAuthorizationStatus.Restricted){
-            var alert:UIAlertView = UIAlertView()
+            let alert:UIAlertView = UIAlertView()
             alert.title = "Photo Access Disabled"
             alert.message = "Please enable photo access in the iOS settings for Backflip to upload from camera roll."
             alert.delegate = self
@@ -182,7 +182,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
             self.contentView.addSubview(checkView)
         }
         
-        required init(coder aDecoder: NSCoder) {
+        required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
         
@@ -219,7 +219,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
         self.init(collectionViewLayout: layout)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("Error must init!")
     }
         
@@ -237,7 +237,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
         let asset = imageAssets[indexPath.row] as! BFCAsset
         cell.thumbnail = asset.thumbnailImage
         
-        if find(self.imagePickerController!.selectedAssets, asset) != nil {
+        if self.imagePickerController!.selectedAssets.indexOf(asset) != nil {
             cell.selected = true
             collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
         } else {
@@ -312,7 +312,7 @@ class BFCImagePickerController: UINavigationController {
         
         func removeAsset(asset: BFCAsset) {
             imagesDict.removeValueForKey(asset)
-            let index = find(assets, asset)
+            let index = assets.indexOf(asset)
             if let toRemIndex = index {
                 assets.removeAtIndex(toRemIndex)
                 setupContent(false)
@@ -321,12 +321,12 @@ class BFCImagePickerController: UINavigationController {
         
         private func setupContent(isInsert: Bool) {
             if isInsert == false {
-                for (index,asset) in enumerate(assets) {
+                for (index,asset) in assets.enumerate() {
                     let imageView = imagesDict[asset]!
                     imageView.frame = imageFrameForIndex(index)
                 }
             }
-            self.contentSize = CGSize(width: CGRectGetMaxX((self.subviews.last as! UIView).frame) + interval,
+            self.contentSize = CGSize(width: CGRectGetMaxX((self.subviews.last!).frame) + interval,
                 height: self.bounds.height)
         }
     }
@@ -357,11 +357,11 @@ class BFCImagePickerController: UINavigationController {
             contentViewController.removeObserver(self, forKeyPath: "title")
         }
         
-        required init(coder aDecoder: NSCoder) {
+        required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
         
-        override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
             if keyPath == "title" {
                 self.title = contentViewController.title
             }
@@ -377,7 +377,7 @@ class BFCImagePickerController: UINavigationController {
     internal var selectedAssets: [BFCAsset]!
     internal  weak var pickerDelegate: BFCImagePickerControllerDelegate?
     lazy internal var doneButton: UIButton =  {
-		let button = UIButton.buttonWithType(.Custom) as! UIButton
+		let button = UIButton(type: .Custom)
         button.setTitle("", forState: UIControlState.Normal)
         button.setTitleColor(self.navigationBar.tintColor, forState: UIControlState.Normal)
         button.reversesTitleShadowWhenHighlighted = true
@@ -400,7 +400,7 @@ class BFCImagePickerController: UINavigationController {
         selectedAssets = [BFCAsset]()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -414,12 +414,12 @@ class BFCImagePickerController: UINavigationController {
 		
 		UIApplication.sharedApplication().statusBarHidden = false
         
-            var tracker = GAI.sharedInstance().defaultTracker
+            let tracker = GAI.sharedInstance().defaultTracker
             tracker.set(kGAIScreenName, value: "Multi Image Picker")
-        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
         
-            var builder = GAIDictionaryBuilder.createScreenView()
+            let builder = GAIDictionaryBuilder.createScreenView()
             tracker.send(builder.build() as [NSObject : AnyObject])
         
 	}
@@ -436,15 +436,15 @@ class BFCImagePickerController: UINavigationController {
     }
     
     override func pushViewController(viewController: UIViewController, animated: Bool) {
-        var wrapperVC = BFCContentWrapperViewController(viewController)
+        let wrapperVC = BFCContentWrapperViewController(viewController)
         super.pushViewController(wrapperVC, animated: animated)
 		
 
-		self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "onDoneClicked")
+		self.topViewController!.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "onDoneClicked")
         // self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.doneButton)
         
         if self.viewControllers.count == 1 && self.topViewController?.navigationItem.leftBarButtonItem == nil {
-            self.topViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel,
+            self.topViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel,
                 target: self,
                 action: "onCancelClicked")
         }
@@ -467,7 +467,7 @@ class BFCImagePickerController: UINavigationController {
         if let asset = notification.object as? BFCAsset {
 			if (selectedAssets.count < 10) {
 				selectedAssets.append(asset)
-				self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
+				self.topViewController!.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
 				self.doneButton.sizeToFit()
 			}
         }
@@ -477,9 +477,9 @@ class BFCImagePickerController: UINavigationController {
         //set affordance for image unselected
         
         if let asset = notification.object as? BFCAsset {
-			if (find(selectedAssets, asset) != nil) {
-				selectedAssets.removeAtIndex(find(selectedAssets, asset)!)
-				self.topViewController.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
+			if (selectedAssets.indexOf(asset) != nil) {
+				selectedAssets.removeAtIndex(selectedAssets.indexOf(asset)!)
+				self.topViewController!.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
 				self.doneButton.sizeToFit()
 			}
 				

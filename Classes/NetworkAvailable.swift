@@ -12,35 +12,29 @@ import SystemConfiguration
 public class NetworkAvailable {
     
     
-    class func networkConnection() -> Bool {
-        
-        var address = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0 , 0, 0, 0, 0, 0, 0, 0))
-        address.sin_len = UInt8(sizeofValue(address))
-        address.sin_family = sa_family_t(AF_INET)
-        
-        let defRouteReachability = withUnsafePointer(&address) {
-            
-            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0)).takeRetainedValue()
-            
-        }
-        
-        
-        var flag: SCNetworkReachabilityFlags = 0
-        if SCNetworkReachabilityGetFlags(defRouteReachability, &flag) == 0 {
-            
-            return false
-            
-        }
-        
-        let reachable = (flag & UInt32(kSCNetworkFlagsReachable)) != 0
-        let noConnection = (flag & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
-        
-        return reachable && !noConnection
-  
-        
-    }
-    
-    
+    class func networkConnection() -> Bool
+	{
+		return isConnectedToNetwork()
+	}
+	
+	class func isConnectedToNetwork() -> Bool
+	{
+		var zeroAddress = sockaddr_in()
+		zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+		zeroAddress.sin_family = sa_family_t(AF_INET)
+		let defaultRouteReachability = withUnsafePointer(&zeroAddress) {
+			SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+		}
+		var flags = SCNetworkReachabilityFlags.ConnectionAutomatic
+		if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+			return false
+		}
+		let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+		let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+		return (isReachable && !needsConnection)
+	}
+	
+	
     class func networkAlert(title:String,error: String) -> UIAlertController {
         
         let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)

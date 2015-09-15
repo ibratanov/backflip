@@ -9,6 +9,7 @@
 import Parse
 import Photos
 import MessageUI
+import MapleBacon
 import Foundation
 
 
@@ -47,37 +48,26 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 	}
 
-	override func viewWillAppear(animated: Bool)
-	{
-		super.viewWillAppear(animated)
-		
-		if let navigationController = self.navigationController as? ScrollingNavigationController {
-			navigationController.followScrollView(self.collectionView!, delay: 50.0)
-		}
-	}
-	
 	override func viewDidAppear(animated: Bool)
 	{
 		super.viewDidAppear(animated)
 		
 		UIApplication.sharedApplication().statusBarHidden = false
 
-        var tracker = GAI.sharedInstance().defaultTracker
+        let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Event Album")
         tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
         
-        var builder = GAIDictionaryBuilder.createScreenView()
+        let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
     }
 	
-	override func viewDidDisappear(animated: Bool)
+	override func viewWillDisappear(animated: Bool)
 	{
-		super.viewDidDisappear(animated)
+		super.viewWillDisappear(animated)
 		
-		if let navigationController = self.navigationController as? ScrollingNavigationController {
-			navigationController.stopFollowingScrollView()
-		}
+		MapleBaconStorage.sharedStorage.clearMemoryStorage()
 	}
 	
 	override func viewDidLoad()
@@ -168,7 +158,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		}
 		
 		let photo = collectionContent[Int(index)]
-		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!))
+		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://")))
 	
 		return _photo
 	}
@@ -222,7 +212,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
 			if (cell.imageView.image == nil) {
-				cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!)!)
+				cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!, cacheScaled: true)
 			}
 		
 		}
@@ -328,9 +318,9 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		self.collectionView?.reloadData()
 		
 		if segementedControl.selectedSegmentIndex == 0 {
-			content.sort{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
+			content.sortInPlace{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
 		} else if segementedControl.selectedSegmentIndex == 1 {
-			content.sort{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
+			content.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
 		} else if segementedControl.selectedSegmentIndex == 2 {
 			content.removeAll(keepCapacity: true)
 			for (var i = 0; i < photos.count; i++) {
@@ -433,13 +423,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 					var liked = photo.usersLiked!.componentsSeparatedByString(",")
 					let index = liked.indexOf(PFUser.currentUser()!.username!)  // find(liked, PFUser.currentUser()!.username!)
 					liked.removeAtIndex(index!)
-					photo.usersLiked = ",".join(liked)
+					photo.usersLiked = liked.joinWithSeparator(",")
 					
 					photo.upvoteCount = photo.upvoteCount!.integerValue - 1
 				} else {
 					var liked = photo.usersLiked!.componentsSeparatedByString(",")
 					liked.append(PFUser.currentUser()!.username!)
-					photo.usersLiked = ",".join(liked)
+					photo.usersLiked = liked.joinWithSeparator(",")
 
 					photo.upvoteCount = photo.upvoteCount!.integerValue + 1
 				}
@@ -486,7 +476,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	func flagPhoto(sender: AnyObject)
 	{
 		dispatch_async(dispatch_get_main_queue(), {
-			var alertController = UIAlertController(title: "Flag inappropriate content", message: "What's wrong with this photo?", preferredStyle: .Alert)
+			let alertController = UIAlertController(title: "Flag inappropriate content", message: "What's wrong with this photo?", preferredStyle: .Alert)
 			alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in }
 			alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 			alertController.addAction(UIAlertAction(title: "Flag", style: .Default, handler: { (UIAlertAction) -> Void in
@@ -497,8 +487,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 					let image = self.collectionContent[Int(selectedIndex!)]
 					
 					
-					let textField = alertController.textFields?.first as! UITextField
-					var photo = PFObject(className: "Photo")
+					let textField = alertController.textFields!.first! 
+					let photo = PFObject(className: "Photo")
 					photo.objectId = image.objectId
 					photo["flagged"] = true
 					photo["reviewed"] = false
@@ -509,13 +499,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 					photo.saveInBackgroundWithBlock({ (success, error) -> Void in
 						
 						BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
-							println("Photo saved")
+							print("Photo saved")
 						})
 						
 					})
 					
 					
-					var imageIndex = find(self.collectionContent, image)
+					let imageIndex = self.collectionContent.indexOf(image)
 					self.collectionContent.removeAtIndex(imageIndex!)
 					
 					// imageIndex = find(self.orginalContent, image)
@@ -536,6 +526,18 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 
 	
 	
+	//-------------------------------------
+	// MARK: Memory
+	//-------------------------------------
+	
+	override func didReceiveMemoryWarning()
+	{
+		super.didReceiveMemoryWarning()
+		
+		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+	}
+	
+	
 	
 	
 	//-------------------------------------
@@ -545,7 +547,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	func updateData()
 	{
 		if (self.event == nil) {
-			println("No event passed to EventAlbumViewController :(");
+			print("No event passed to EventAlbumViewController :(");
 			return
 		}
 		
