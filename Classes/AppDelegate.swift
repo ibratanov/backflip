@@ -38,9 +38,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 
 		//-------Branch
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setImageViewNotification:", name: "MySetImageViewNotification", object: nil)
-		
 
-		
 		
 		
 		//--------------------------------------
