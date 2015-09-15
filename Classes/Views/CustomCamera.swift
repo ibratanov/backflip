@@ -386,12 +386,9 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		println("------------------\nUPLOAD CANVAS\n----------------------------------------\n")
 		
 		if NetworkAvailable.networkConnection() == true {
-			
-			var capturedImage = uImage as UIImage!
-			
+						
 			var imageData = compressImage(uImage, shrinkRatio: 1.0)
 			var imageFile = PFFile(name: "image.png", data: imageData)
-			
 			
 			
 			var thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
