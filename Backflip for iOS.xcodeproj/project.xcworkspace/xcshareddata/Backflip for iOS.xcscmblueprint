@@ -10,13 +10,14 @@
     "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : 0,
     "A378226EC2FD4B06544EB459EF19E06596F9C811" : 0,
     "4EA48C4418C0D37C936EB709C50F03661DB187D9" : 0,
+    "6917724A5540354287E66C785DDF08E7A7EDACEA" : 0,
     "E609DD15689CC93D8F4D219EB393F30F9F726178" : 0,
     "958932E9D08E4465709D54DB1E7CECF23B0F442E" : 0,
     "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : 0,
     "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : 0,
     "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : 0,
-    "E3AA66F3670798BA2103D1449BFEE1B21C931FA7" : 0,
-    "0EE08EE6A8FB3D9CB15C196A2A3C955D1D1200ED" : 0
+    "0EE08EE6A8FB3D9CB15C196A2A3C955D1D1200ED" : 0,
+    "E3AA66F3670798BA2103D1449BFEE1B21C931FA7" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0957CE20-4077-40D1-9F68-0D5801E14CE1",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
@@ -26,13 +27,14 @@
     "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : "application\/Vendor\/AFNetworking\/",
     "A378226EC2FD4B06544EB459EF19E06596F9C811" : "application",
     "4EA48C4418C0D37C936EB709C50F03661DB187D9" : "application\/Vendor\/PKHUD\/",
+    "6917724A5540354287E66C785DDF08E7A7EDACEA" : "application\/Vendor\/AFNetwork\/",
     "E609DD15689CC93D8F4D219EB393F30F9F726178" : "application\/Vendor\/GPUImage\/",
     "958932E9D08E4465709D54DB1E7CECF23B0F442E" : "application\/Vendor\/MagicalRecord\/",
     "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : "application\/Vendor\/AMScrollingNavbar\/",
     "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : "application\/Vendor\/MagicalRecord\/Carthage\/Checkouts\/expecta\/",
     "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : "application\/Vendor\/DOFavoriteButton\/",
-    "E3AA66F3670798BA2103D1449BFEE1B21C931FA7" : "application\/Vendor\/FastttCamera\/",
-    "0EE08EE6A8FB3D9CB15C196A2A3C955D1D1200ED" : "application\/Vendor\/MapleBacon\/"
+    "0EE08EE6A8FB3D9CB15C196A2A3C955D1D1200ED" : "application\/Vendor\/MapleBacon\/",
+    "E3AA66F3670798BA2103D1449BFEE1B21C931FA7" : "application\/Vendor\/FastttCamera\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Backflip for iOS",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -72,6 +74,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/malcommac\/SwiftLocation.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "677E8E9414FADC8C089A94C6134023AA45E42A2C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:fullstackio\/FlappySwift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6917724A5540354287E66C785DDF08E7A7EDACEA"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/specta\/expecta.git",

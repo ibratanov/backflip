@@ -367,6 +367,11 @@
 		04E39D531BA895AF0061EA36 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; };
 		04E39D541BA895B40061EA36 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; };
 		04E39D551BA895B40061EA36 /* MapleBacon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04E39D601BA8BCF50061EA36 /* bird.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 04E39D5A1BA8BCF50061EA36 /* bird.atlas */; };
+		04E39D611BA8BCF50061EA36 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 04E39D5B1BA8BCF50061EA36 /* GameScene.sks */; };
+		04E39D621BA8BCF50061EA36 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E39D5C1BA8BCF50061EA36 /* GameScene.swift */; };
+		04E39D631BA8BCF50061EA36 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E39D5D1BA8BCF50061EA36 /* GameViewController.swift */; };
+		04E39D641BA8BCF50061EA36 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E39D5E1BA8BCF50061EA36 /* Images.xcassets */; };
 		04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */; };
 		04FD59DD1B8E5ED6005A1FA4 /* SwiftLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
@@ -1133,6 +1138,11 @@
 		04E39D401BA88AC20061EA36 /* ParseTwitterUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseTwitterUtils.framework; sourceTree = "<group>"; };
 		04E39D411BA88AC20061EA36 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = Vendor/MapleBacon/Library/MapleBacon/MapleBacon.xcodeproj; sourceTree = "<group>"; };
+		04E39D5A1BA8BCF50061EA36 /* bird.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = bird.atlas; path = Vendor/AFNetwork/FlappyBird/bird.atlas; sourceTree = "<group>"; };
+		04E39D5B1BA8BCF50061EA36 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = Vendor/AFNetwork/FlappyBird/GameScene.sks; sourceTree = "<group>"; };
+		04E39D5C1BA8BCF50061EA36 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Vendor/AFNetwork/FlappyBird/GameScene.swift; sourceTree = "<group>"; };
+		04E39D5D1BA8BCF50061EA36 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = Vendor/AFNetwork/FlappyBird/GameViewController.swift; sourceTree = "<group>"; };
+		04E39D5E1BA8BCF50061EA36 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Vendor/AFNetwork/FlappyBird/Images.xcassets; sourceTree = "<group>"; };
 		04F7A7941B9E24BD008758D3 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
 		04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftLocation.swift; path = Vendor/SwiftLocation/Pod/Classes/SwiftLocation.swift; sourceTree = "<group>"; };
@@ -1620,6 +1630,7 @@
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				04E39D581BA8BCDE0061EA36 /* AFNetwork */,
 				04E39D491BA895290061EA36 /* MapleBacon */,
 				0431A8BC1BA6FF8D0097F2D8 /* FastttCamera */,
 				0431A4E01BA6FE7A0097F2D8 /* GPUImage */,
@@ -2341,6 +2352,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		04E39D581BA8BCDE0061EA36 /* AFNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				04E39D5A1BA8BCF50061EA36 /* bird.atlas */,
+				04E39D5B1BA8BCF50061EA36 /* GameScene.sks */,
+				04E39D5C1BA8BCF50061EA36 /* GameScene.swift */,
+				04E39D5D1BA8BCF50061EA36 /* GameViewController.swift */,
+				04E39D5E1BA8BCF50061EA36 /* Images.xcassets */,
+			);
+			name = AFNetwork;
+			sourceTree = "<group>";
+		};
 		04F41BEE1B74FBF4001AB8DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2632,6 +2655,7 @@
 				049AA68A1B73DA01003888CE /* ImageSelectedSmallOff.png in Resources */,
 				0439D3991B8B7AEE001850DD /* DigitsKitResources.bundle in Resources */,
 				0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */,
+				04E39D611BA8BCF50061EA36 /* GameScene.sks in Resources */,
 				049AA6941B73DA01003888CE /* PlayButtonOverlayLargeTap@2x.png in Resources */,
 				04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */,
 				049AA6A01B73DA01003888CE /* VideoOverlay@2x.png in Resources */,
@@ -2650,9 +2674,11 @@
 				049AA69A1B73DA01003888CE /* UIBarButtonItemArrowRight@2x.png in Resources */,
 				049AA6831B73DA01003888CE /* ImageError@3x.png in Resources */,
 				049AA6931B73DA01003888CE /* PlayButtonOverlayLargeTap.png in Resources */,
+				04E39D641BA8BCF50061EA36 /* Images.xcassets in Resources */,
 				049AA68D1B73DA01003888CE /* ImageSelectedSmallOn.png in Resources */,
 				049AA6851B73DA01003888CE /* ImageSelectedOff@2x.png in Resources */,
 				049AA6981B73DA01003888CE /* UIBarButtonItemArrowLeft@3x.png in Resources */,
+				04E39D601BA8BCF50061EA36 /* bird.atlas in Resources */,
 				049AA6871B73DA01003888CE /* ImageSelectedOn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2810,6 +2836,7 @@
 				0431A8141BA6FED80097F2D8 /* GPUImageAverageColor.m in Sources */,
 				0431A8701BA6FED80097F2D8 /* GPUImageOverlayBlendFilter.m in Sources */,
 				0431A8181BA6FED80097F2D8 /* GPUImageBrightnessFilter.m in Sources */,
+				04E39D621BA8BCF50061EA36 /* GameScene.swift in Sources */,
 				04CA5DC01B8B9D4B0075C0A8 /* SKBounceAnimation.m in Sources */,
 				0431A82B1BA6FED80097F2D8 /* GPUImageDifferenceBlendFilter.m in Sources */,
 				049AA6E81B73DB84003888CE /* UIView+WebCacheOperation.m in Sources */,
@@ -2917,6 +2944,7 @@
 				0431A8E11BA6FF8D0097F2D8 /* FastttFilterCamera.m in Sources */,
 				0430D2891BA8517B00375AA4 /* PKHUDAssets.swift in Sources */,
 				0431A80D1BA6FED80097F2D8 /* GLProgram.m in Sources */,
+				04E39D631BA8BCF50061EA36 /* GameViewController.swift in Sources */,
 				0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */,
 				0431A8851BA6FED80097F2D8 /* GPUImageSepiaFilter.m in Sources */,
 				0431A8921BA6FED80097F2D8 /* GPUImageStretchDistortionFilter.m in Sources */,

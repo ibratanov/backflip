@@ -35,3 +35,6 @@
 [submodule "Vendor/MapleBacon"]
 	path = Vendor/MapleBacon
 	url = git@github.com:zalando/MapleBacon.git
+[submodule "Vendor/AFNetwork"]
+	path = Vendor/AFNetwork
+	url = git@github.com:fullstackio/FlappySwift.git

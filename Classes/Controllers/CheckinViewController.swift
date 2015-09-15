@@ -16,6 +16,7 @@ import CoreLocation
 
 class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
 {
+	var shakeCount : Int = 0
 	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
 	
@@ -41,6 +42,27 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		MapleBaconStorage.sharedStorage.clearMemoryStorage()
 	}
 	
+	
+	
+	//-------------------------------------
+	// MARK: Pop, lock and shake
+	//-------------------------------------
+	
+	override func canBecomeFirstResponder() -> Bool
+	{
+		return true
+	}
+	
+	override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?)
+	{
+		if motion == .MotionShake {
+			shakeCount++
+			if (shakeCount > 3) {
+				self.presentViewController(GameViewController(), animated: true, completion: nil)
+				shakeCount = 0
+			}
+		}
+	}
 	
 	
 	//-------------------------------------
