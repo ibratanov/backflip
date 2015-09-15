@@ -106,7 +106,6 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		//var filterImageSet = UIImage(named: "SepiaFilter")
 		
 		
-		
 		self.fastCamera.delegate = self
 		
 		self.fastCamera.supportedInterfaceOrientations()

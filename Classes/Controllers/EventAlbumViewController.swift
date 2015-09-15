@@ -47,15 +47,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 	}
 
-	override func viewWillAppear(animated: Bool)
-	{
-		super.viewWillAppear(animated)
-		
-		if let navigationController = self.navigationController as? ScrollingNavigationController {
-			navigationController.followScrollView(self.collectionView!, delay: 50.0)
-		}
-	}
-	
 	override func viewDidAppear(animated: Bool)
 	{
 		super.viewDidAppear(animated)
@@ -70,15 +61,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
     }
-	
-	override func viewDidDisappear(animated: Bool)
-	{
-		super.viewDidDisappear(animated)
-		
-		if let navigationController = self.navigationController as? ScrollingNavigationController {
-			navigationController.stopFollowingScrollView()
-		}
-	}
 	
 	override func viewDidLoad()
 	{

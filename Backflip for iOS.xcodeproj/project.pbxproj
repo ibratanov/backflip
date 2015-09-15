@@ -349,9 +349,6 @@
 		04B1C6591B97648C00F30C80 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6541B97648C00F30C80 /* like.png */; };
 		04B1C65A1B97648C00F30C80 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6551B97648C00F30C80 /* smile.png */; };
 		04B1C65B1B97648C00F30C80 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6561B97648C00F30C80 /* star.png */; };
-		04B1C6671B9779F700F30C80 /* ScrollingNavbar+Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6641B9779F700F30C80 /* ScrollingNavbar+Sizes.swift */; };
-		04B1C6681B9779F700F30C80 /* ScrollingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6651B9779F700F30C80 /* ScrollingNavigationController.swift */; };
-		04B1C6691B9779F700F30C80 /* ScrollingNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6661B9779F700F30C80 /* ScrollingNavigationViewController.swift */; };
 		04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */; };
 		04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */; };
 		04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB61B8B982600E2ACB5 /* File.swift */; };
@@ -1094,9 +1091,6 @@
 		04B1C6541B97648C00F30C80 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
 		04B1C6551B97648C00F30C80 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		04B1C6561B97648C00F30C80 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
-		04B1C6641B9779F700F30C80 /* ScrollingNavbar+Sizes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ScrollingNavbar+Sizes.swift"; path = "Vendor/AMScrollingNavbar/Source/ScrollingNavbar+Sizes.swift"; sourceTree = "<group>"; };
-		04B1C6651B9779F700F30C80 /* ScrollingNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollingNavigationController.swift; path = Vendor/AMScrollingNavbar/Source/ScrollingNavigationController.swift; sourceTree = "<group>"; };
-		04B1C6661B9779F700F30C80 /* ScrollingNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollingNavigationViewController.swift; path = Vendor/AMScrollingNavbar/Source/ScrollingNavigationViewController.swift; sourceTree = "<group>"; };
 		04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ParseObject+CoreDataProperties.swift"; path = "Models/ParseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
 		04C61FB61B8B982600E2ACB5 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -1606,7 +1600,6 @@
 				0431A4E01BA6FE7A0097F2D8 /* GPUImage */,
 				04A250F81BA20B76003B89E8 /* Google */,
 				04B1C66A1B9783CD00F30C80 /* PKHUD */,
-				04B1C6631B9779EB00F30C80 /* AMScrollingNavbar */,
 				04B1C6511B97648C00F30C80 /* DOFavoriteButton */,
 				04FD59D41B8E5DFC005A1FA4 /* SwiftLocation */,
 				04CCD5C91B8CB2D200664FB3 /* MagicalRecord */,
@@ -2224,16 +2217,6 @@
 			path = Vendor/DOFavoriteButton/DOFavoriteButton;
 			sourceTree = "<group>";
 		};
-		04B1C6631B9779EB00F30C80 /* AMScrollingNavbar */ = {
-			isa = PBXGroup;
-			children = (
-				04B1C6641B9779F700F30C80 /* ScrollingNavbar+Sizes.swift */,
-				04B1C6651B9779F700F30C80 /* ScrollingNavigationController.swift */,
-				04B1C6661B9779F700F30C80 /* ScrollingNavigationViewController.swift */,
-			);
-			name = AMScrollingNavbar;
-			sourceTree = "<group>";
-		};
 		04B1C66A1B9783CD00F30C80 /* PKHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -2650,7 +2633,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0439D3B11B8B8249001850DD /* EventTableViewCell.swift in Sources */,
-				04B1C6681B9779F700F30C80 /* ScrollingNavigationController.swift in Sources */,
 				0431A8321BA6FED80097F2D8 /* GPUImageErosionFilter.m in Sources */,
 				50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */,
 				0431A87D1BA6FED80097F2D8 /* GPUImageRGBClosingFilter.m in Sources */,
@@ -2737,7 +2719,6 @@
 				0431A8A11BA6FED80097F2D8 /* GPUImageTwoPassFilter.m in Sources */,
 				0431A8801BA6FED80097F2D8 /* GPUImageRGBFilter.m in Sources */,
 				0431A8471BA6FED80097F2D8 /* GPUImageHighPassFilter.m in Sources */,
-				04B1C6691B9779F700F30C80 /* ScrollingNavigationViewController.swift in Sources */,
 				0430D28F1BA8517B00375AA4 /* PKHUDSystemActivityIndicatorView.swift in Sources */,
 				0431A8891BA6FED80097F2D8 /* GPUImageSketchFilter.m in Sources */,
 				049AA6DF1B73DB84003888CE /* SDWebImageDownloaderOperation.m in Sources */,
@@ -2882,7 +2863,6 @@
 				0431A8E51BA6FF8D0097F2D8 /* UIImage+FastttCamera.m in Sources */,
 				04CA5D821B8B9C060075C0A8 /* BFDataProcessor.swift in Sources */,
 				041F37991B94B08700610881 /* Attendance.swift in Sources */,
-				04B1C6671B9779F700F30C80 /* ScrollingNavbar+Sizes.swift in Sources */,
 				0431A8A01BA6FED80097F2D8 /* GPUImageTwoInputFilter.m in Sources */,
 				0431A8A41BA6FED80097F2D8 /* GPUImageUnsharpMaskFilter.m in Sources */,
 				0431A8311BA6FED80097F2D8 /* GPUImageEmbossFilter.m in Sources */,
@@ -3042,6 +3022,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3121,6 +3102,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
