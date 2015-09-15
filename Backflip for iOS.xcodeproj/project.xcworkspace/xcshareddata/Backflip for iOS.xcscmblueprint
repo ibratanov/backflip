@@ -4,6 +4,7 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : 0,
     "677E8E9414FADC8C089A94C6134023AA45E42A2C" : 0,
     "548AC090E1DB22900595581804DA116AAACB2ABF" : 0,
     "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : 0,
@@ -15,10 +16,11 @@
     "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : 0,
     "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : 0,
     "E3AA66F3670798BA2103D1449BFEE1B21C931FA7" : 0,
-    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : 0
+    "0EE08EE6A8FB3D9CB15C196A2A3C955D1D1200ED" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0957CE20-4077-40D1-9F68-0D5801E14CE1",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : "applicationVendor\/Mixpanel",
     "677E8E9414FADC8C089A94C6134023AA45E42A2C" : "application\/Vendor\/SwiftLocation\/",
     "548AC090E1DB22900595581804DA116AAACB2ABF" : "application\/Vendor\/ZAActivityBar\/",
     "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : "application\/Vendor\/AFNetworking\/",
@@ -30,7 +32,7 @@
     "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB" : "application\/Vendor\/MagicalRecord\/Carthage\/Checkouts\/expecta\/",
     "00C8F6554FA404FC771F59E32BE27BC2793D9BB4" : "application\/Vendor\/DOFavoriteButton\/",
     "E3AA66F3670798BA2103D1449BFEE1B21C931FA7" : "application\/Vendor\/FastttCamera\/",
-    "16ACBFB590A9E1151B4BE762DC3AC04A938B37EF" : "applicationVendor\/Mixpanel"
+    "0EE08EE6A8FB3D9CB15C196A2A3C955D1D1200ED" : "application\/Vendor\/MapleBacon\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Backflip for iOS",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -45,6 +47,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/andreamazz\/AMScrollingNavbar.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:zalando\/MapleBacon.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0EE08EE6A8FB3D9CB15C196A2A3C955D1D1200ED"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mixpanel\/mixpanel-iphone.git",

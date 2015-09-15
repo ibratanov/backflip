@@ -9,6 +9,7 @@
 import Parse
 import DigitsKit
 import Foundation
+import MapleBacon
 import CoreLocation
 
 
@@ -30,6 +31,19 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 
 	//-------------------------------------
+	// MARK: Memory
+	//-------------------------------------
+	
+	override func didReceiveMemoryWarning()
+	{
+		super.didReceiveMemoryWarning()
+		
+		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+	}
+	
+	
+	
+	//-------------------------------------
 	// MARK: View Delegate
 	//-------------------------------------
 	
@@ -45,7 +59,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		self.doubleTapGesture?.numberOfTapsRequired = 2
 		self.view.addGestureRecognizer(self.doubleTapGesture!)
 		
-		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
+		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate()
 	}
 	
 	override func viewDidLoad()
@@ -170,7 +184,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
 			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
-			cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail!.url!)!)
+			cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 		}
 		
 		// cell.addGestureRecognizer(self.doubleTapGesture!)
@@ -296,7 +310,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		// Store channel for push notifications
 		let currentInstallation = PFInstallation.currentInstallation()
 		currentInstallation.addUniqueObject("a"+event.objectId!, forKey: "channels")
-		currentInstallation.saveInBackground()
+		try! currentInstallation.saveInBackground()
 		
 		
 		// Create attendance object, save to parse; save to CoreData
@@ -312,7 +326,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
 		
 		
-		attendance.saveInBackgroundWithBlock { (success, error) -> Void in
+		try! attendance.saveInBackgroundWithBlock { (success, error) -> Void in
 			
 			let attendees : [PFObject] = [attendance] 
 			BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
@@ -321,18 +335,18 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				let account = PFUser.currentUser()
 				account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
 				account?.addUniqueObject(event.name!, forKey: "savedEventNames")
-				account?.saveInBackground()
+				try! account?.saveInBackground()
 				
 				
 				// Add user to Event objects relation
 				let eventQuery = PFQuery(className: "Event")
 				eventQuery.whereKey("eventName", equalTo: event.name!)
-				eventQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+				try! eventQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
 					
 					let eventObj = objects!.first as! PFObject
 					let relation = eventObj.relationForKey("attendees")
 					relation.addObject(PFUser.currentUser()!)
-					eventObj.saveInBackground()
+					try! eventObj.saveInBackground()
 					
 				}
 				

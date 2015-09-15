@@ -31,14 +31,6 @@
 		0430D2921BA8517B00375AA4 /* PKHUDWideBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2831BA8517B00375AA4 /* PKHUDWideBaseView.swift */; };
 		0430D2931BA8517B00375AA4 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2841BA8517B00375AA4 /* Window.swift */; };
 		0430D2941BA8517B00375AA4 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2851BA8517B00375AA4 /* WindowRootViewController.swift */; };
-		0430D2C11BA86A3C00375AA4 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430D2BE1BA86A3C00375AA4 /* ParseCrashReporting.framework */; };
-		0430D2C21BA86A3C00375AA4 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430D2BF1BA86A3C00375AA4 /* ParseFacebookUtilsV4.framework */; };
-		0430D2C31BA86A3C00375AA4 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430D2C01BA86A3C00375AA4 /* ParseUI.framework */; };
-		0430D2C91BA86B0A00375AA4 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430D2C81BA86B0A00375AA4 /* Bolts.framework */; };
-		0430D2CB1BA86B2400375AA4 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430D2CA1BA86B2400375AA4 /* Parse.framework */; };
-		0430D2D61BA8749500375AA4 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430D2D31BA8748800375AA4 /* MapleBacon.framework */; };
-		0430D2D71BA8749A00375AA4 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430D2D31BA8748800375AA4 /* MapleBacon.framework */; };
-		0430D2D81BA8749A00375AA4 /* MapleBacon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430D2D31BA8748800375AA4 /* MapleBacon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		043188FE1BA7040F008FB5CE /* CustomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043188FD1BA7040F008FB5CE /* CustomFilter.swift */; };
 		0431A80D1BA6FED80097F2D8 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431A6CF1BA6FED70097F2D8 /* GLProgram.m */; };
 		0431A80E1BA6FED80097F2D8 /* GPUImage3x3ConvolutionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431A6D21BA6FED70097F2D8 /* GPUImage3x3ConvolutionFilter.m */; };
@@ -322,8 +314,6 @@
 		049AA6E71B73DB84003888CE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6D61B73DB84003888CE /* UIImageView+WebCache.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		049AA6E81B73DB84003888CE /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AA6D81B73DB84003888CE /* UIView+WebCacheOperation.m */; };
 		049AA6EA1B73DBB2003888CE /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */; };
-		04A250F41BA20B01003B89E8 /* AFNetworking in Resources */ = {isa = PBXBuildFile; fileRef = 04A250F21BA20B01003B89E8 /* AFNetworking */; };
-		04A250F51BA20B01003B89E8 /* UIKit+AFNetworking in Resources */ = {isa = PBXBuildFile; fileRef = 04A250F31BA20B01003B89E8 /* UIKit+AFNetworking */; };
 		04A251591BA20B76003B89E8 /* libGGLAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A251061BA20B76003B89E8 /* libGGLAnalytics.a */; };
 		04A2515A1BA20B76003B89E8 /* libGGLCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A251071BA20B76003B89E8 /* libGGLCore.a */; };
 		04A2515B1BA20B76003B89E8 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A251161BA20B76003B89E8 /* libGoogleAnalytics.a */; };
@@ -369,6 +359,14 @@
 		04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; };
 		04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04CCD6691B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */; };
+		04E39D421BA88AC20061EA36 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D3B1BA88AC20061EA36 /* Bolts.framework */; };
+		04E39D431BA88AC20061EA36 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D3C1BA88AC20061EA36 /* Parse.framework */; };
+		04E39D441BA88AC20061EA36 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D3D1BA88AC20061EA36 /* ParseCrashReporting.framework */; };
+		04E39D471BA88AC20061EA36 /* ParseTwitterUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D401BA88AC20061EA36 /* ParseTwitterUtils.framework */; };
+		04E39D481BA88AC20061EA36 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D411BA88AC20061EA36 /* ParseUI.framework */; };
+		04E39D531BA895AF0061EA36 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; };
+		04E39D541BA895B40061EA36 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; };
+		04E39D551BA895B40061EA36 /* MapleBacon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */; };
 		04FD59DD1B8E5ED6005A1FA4 /* SwiftLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
@@ -388,27 +386,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0430D2D21BA8748800375AA4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0430D2CD1BA8748800375AA4 /* MapleBacon.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F2520C481A3EDAFE0061BB33;
-			remoteInfo = MapleBacon;
-		};
-		0430D2D41BA8748800375AA4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0430D2CD1BA8748800375AA4 /* MapleBacon.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F2520C531A3EDAFF0061BB33;
-			remoteInfo = MapleBaconTests;
-		};
-		0430D2D91BA8749A00375AA4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0430D2CD1BA8748800375AA4 /* MapleBacon.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F2520C471A3EDAFE0061BB33;
-			remoteInfo = MapleBacon;
-		};
 		0439D38F1B8B7923001850DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0439D38B1B8B7922001850DD /* Mixpanel.xcodeproj */;
@@ -493,6 +470,27 @@
 			remoteGlobalIDString = 905D07171A63DE190076B54E;
 			remoteInfo = "MagicalRecord for iOS";
 		};
+		04E39D4F1BA895330061EA36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F2520C481A3EDAFE0061BB33;
+			remoteInfo = MapleBacon;
+		};
+		04E39D511BA895330061EA36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F2520C531A3EDAFF0061BB33;
+			remoteInfo = MapleBaconTests;
+		};
+		04E39D561BA895B40061EA36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F2520C471A3EDAFE0061BB33;
+			remoteInfo = MapleBacon;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -504,7 +502,7 @@
 			files = (
 				04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */,
 				0439D3D81B8B8D5C001850DD /* Mixpanel.framework in Embed Frameworks */,
-				0430D2D81BA8749A00375AA4 /* MapleBacon.framework in Embed Frameworks */,
+				04E39D551BA895B40061EA36 /* MapleBacon.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -537,12 +535,6 @@
 		0430D2831BA8517B00375AA4 /* PKHUDWideBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDWideBaseView.swift; path = Vendor/PKHUD/PKHUD/PKHUDWideBaseView.swift; sourceTree = "<group>"; };
 		0430D2841BA8517B00375AA4 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Vendor/PKHUD/PKHUD/Window.swift; sourceTree = "<group>"; };
 		0430D2851BA8517B00375AA4 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowRootViewController.swift; path = Vendor/PKHUD/PKHUD/WindowRootViewController.swift; sourceTree = "<group>"; };
-		0430D2BE1BA86A3C00375AA4 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
-		0430D2BF1BA86A3C00375AA4 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
-		0430D2C01BA86A3C00375AA4 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
-		0430D2C81BA86B0A00375AA4 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		0430D2CA1BA86B2400375AA4 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		0430D2CD1BA8748800375AA4 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = Vendor/MapleBacon/Library/MapleBacon/MapleBacon.xcodeproj; sourceTree = "<group>"; };
 		043188FD1BA7040F008FB5CE /* CustomFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFilter.swift; sourceTree = "<group>"; };
 		0431A6CE1BA6FED70097F2D8 /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLProgram.h; path = Vendor/GPUImage/framework/Source/GLProgram.h; sourceTree = "<group>"; };
 		0431A6CF1BA6FED70097F2D8 /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLProgram.m; path = Vendor/GPUImage/framework/Source/GLProgram.m; sourceTree = "<group>"; };
@@ -1039,8 +1031,6 @@
 		049AA6D71B73DB84003888CE /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		049AA6D81B73DB84003888CE /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		04A250F21BA20B01003B89E8 /* AFNetworking */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AFNetworking; path = Vendor/AFNetworking/AFNetworking; sourceTree = SOURCE_ROOT; };
-		04A250F31BA20B01003B89E8 /* UIKit+AFNetworking */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "UIKit+AFNetworking"; path = "Vendor/AFNetworking/UIKit+AFNetworking"; sourceTree = SOURCE_ROOT; };
 		04A250FD1BA20B76003B89E8 /* Analytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Analytics.h; sourceTree = "<group>"; };
 		04A250FE1BA20B76003B89E8 /* GGLContext+Analytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GGLContext+Analytics.h"; sourceTree = "<group>"; };
 		04A251011BA20B76003B89E8 /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
@@ -1137,6 +1127,12 @@
 		04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MagicalRecord.xcodeproj; path = Vendor/MagicalRecord/MagicalRecord.xcodeproj; sourceTree = "<group>"; };
 		04CCD6671B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FetchOrCreate.h"; sourceTree = "<group>"; };
 		04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FetchOrCreate.m"; sourceTree = "<group>"; };
+		04E39D3B1BA88AC20061EA36 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		04E39D3C1BA88AC20061EA36 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		04E39D3D1BA88AC20061EA36 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
+		04E39D401BA88AC20061EA36 /* ParseTwitterUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseTwitterUtils.framework; sourceTree = "<group>"; };
+		04E39D411BA88AC20061EA36 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = Vendor/MapleBacon/Library/MapleBacon/MapleBacon.xcodeproj; sourceTree = "<group>"; };
 		04F7A7941B9E24BD008758D3 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
 		04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftLocation.swift; path = Vendor/SwiftLocation/Pod/Classes/SwiftLocation.swift; sourceTree = "<group>"; };
@@ -1164,23 +1160,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0430D2D61BA8749500375AA4 /* MapleBacon.framework in Frameworks */,
+				04E39D531BA895AF0061EA36 /* MapleBacon.framework in Frameworks */,
 				04A251621BA20B76003B89E8 /* libGTM_GTMURLBuilder.a in Frameworks */,
 				04CA5DCD1B8B9F900075C0A8 /* CoreData.framework in Frameworks */,
 				0439D3971B8B79C3001850DD /* libz.dylib in Frameworks */,
-				0430D2C91BA86B0A00375AA4 /* Bolts.framework in Frameworks */,
 				0439D3951B8B79B5001850DD /* libc++.dylib in Frameworks */,
 				0439D3931B8B7936001850DD /* Mixpanel.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				04A251691BA20B76003B89E8 /* libGTM_Regex.a in Frameworks */,
 				04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */,
 				04A2515E1BA20B76003B89E8 /* libGSDK_Overload.a in Frameworks */,
-				0430D2CB1BA86B2400375AA4 /* Parse.framework in Frameworks */,
 				0439D3281B876EA9001850DD /* Security.framework in Frameworks */,
-				0430D2C11BA86A3C00375AA4 /* ParseCrashReporting.framework in Frameworks */,
 				04A251681BA20B76003B89E8 /* libGTM_NSStringXML.a in Frameworks */,
 				0439D3411B8B76B1001850DD /* DigitsKit.framework in Frameworks */,
-				0430D2C21BA86A3C00375AA4 /* ParseFacebookUtilsV4.framework in Frameworks */,
 				04A2516E1BA20B76003B89E8 /* libGTMStackTrace.a in Frameworks */,
 				049AA6EA1B73DBB2003888CE /* AssetsLibrary.framework in Frameworks */,
 				04A251661BA20B76003B89E8 /* libGTM_NSScannerJSON.a in Frameworks */,
@@ -1189,7 +1181,10 @@
 				50C9A7931B276F430091FEC9 /* Social.framework in Frameworks */,
 				3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */,
 				0439D3401B8B76B1001850DD /* Branch.framework in Frameworks */,
+				04E39D421BA88AC20061EA36 /* Bolts.framework in Frameworks */,
 				04A251611BA20B76003B89E8 /* libGTM_DebugUtils.a in Frameworks */,
+				04E39D481BA88AC20061EA36 /* ParseUI.framework in Frameworks */,
+				04E39D471BA88AC20061EA36 /* ParseTwitterUtils.framework in Frameworks */,
 				04A2515A1BA20B76003B89E8 /* libGGLCore.a in Frameworks */,
 				04A251671BA20B76003B89E8 /* libGTM_NSStringHTML.a in Frameworks */,
 				502199AE1B33817100A64387 /* Accounts.framework in Frameworks */,
@@ -1204,16 +1199,17 @@
 				0439D3461B8B76B1001850DD /* FBSDKShareKit.framework in Frameworks */,
 				04A2516C1BA20B76003B89E8 /* libGTM_SystemVersion.a in Frameworks */,
 				04A2516B1BA20B76003B89E8 /* libGTM_StringEncoding.a in Frameworks */,
-				0430D2C31BA86A3C00375AA4 /* ParseUI.framework in Frameworks */,
 				04A2516D1BA20B76003B89E8 /* libGTM_UIFont+LineHeight.a in Frameworks */,
+				04E39D441BA88AC20061EA36 /* ParseCrashReporting.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
-				0430D2D71BA8749A00375AA4 /* MapleBacon.framework in Frameworks */,
 				04A251641BA20B76003B89E8 /* libGTM_KVO.a in Frameworks */,
+				04E39D541BA895B40061EA36 /* MapleBacon.framework in Frameworks */,
 				0439D3451B8B76B1001850DD /* FBSDKMessengerShareKit.framework in Frameworks */,
 				04A251591BA20B76003B89E8 /* libGGLAnalytics.a in Frameworks */,
 				04A251651BA20B76003B89E8 /* libGTM_NSDictionary+URLArguments.a in Frameworks */,
 				04A2515F1BA20B76003B89E8 /* libGTM_AddressBook.a in Frameworks */,
 				0439D3471B8B76B1001850DD /* NewRelicAgent.framework in Frameworks */,
+				04E39D431BA88AC20061EA36 /* Parse.framework in Frameworks */,
 				04A251631BA20B76003B89E8 /* libGTM_iPhone.a in Frameworks */,
 				81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */,
 				0439D3421B8B76B1001850DD /* Fabric.framework in Frameworks */,
@@ -1231,23 +1227,6 @@
 				042028471BA1ECE20059F096 /* Backflip.sqlite */,
 			);
 			name = Database;
-			sourceTree = "<group>";
-		};
-		0430D2CC1BA8747000375AA4 /* MapleBacon */ = {
-			isa = PBXGroup;
-			children = (
-				0430D2CD1BA8748800375AA4 /* MapleBacon.xcodeproj */,
-			);
-			name = MapleBacon;
-			sourceTree = "<group>";
-		};
-		0430D2CE1BA8748800375AA4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0430D2D31BA8748800375AA4 /* MapleBacon.framework */,
-				0430D2D51BA8748800375AA4 /* MapleBaconTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		0431A4E01BA6FE7A0097F2D8 /* GPUImage */ = {
@@ -1641,7 +1620,7 @@
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				0430D2CC1BA8747000375AA4 /* MapleBacon */,
+				04E39D491BA895290061EA36 /* MapleBacon */,
 				0431A8BC1BA6FF8D0097F2D8 /* FastttCamera */,
 				0431A4E01BA6FE7A0097F2D8 /* GPUImage */,
 				04A250F81BA20B76003B89E8 /* Google */,
@@ -1656,7 +1635,6 @@
 				0439D3331B8B76B1001850DD /* Facebook */,
 				0439D3381B8B76B1001850DD /* NewRelic */,
 				0439D33A1B8B76B1001850DD /* Parse */,
-				0464219B1B876D3D00953719 /* AFNetworking */,
 				049AA6B71B73DB84003888CE /* SDWebImage */,
 				049AA6B31B73DB72003888CE /* MBProgressHUD */,
 				049AA6AC1B73DB2E003888CE /* DACircularProgress */,
@@ -1710,11 +1688,11 @@
 		0439D33A1B8B76B1001850DD /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				0430D2CA1BA86B2400375AA4 /* Parse.framework */,
-				0430D2C81BA86B0A00375AA4 /* Bolts.framework */,
-				0430D2BE1BA86A3C00375AA4 /* ParseCrashReporting.framework */,
-				0430D2BF1BA86A3C00375AA4 /* ParseFacebookUtilsV4.framework */,
-				0430D2C01BA86A3C00375AA4 /* ParseUI.framework */,
+				04E39D3B1BA88AC20061EA36 /* Bolts.framework */,
+				04E39D3C1BA88AC20061EA36 /* Parse.framework */,
+				04E39D3D1BA88AC20061EA36 /* ParseCrashReporting.framework */,
+				04E39D401BA88AC20061EA36 /* ParseTwitterUtils.framework */,
+				04E39D411BA88AC20061EA36 /* ParseUI.framework */,
 			);
 			name = Parse;
 			path = Vendor/Parse;
@@ -1795,16 +1773,6 @@
 				0420284F1BA1F4E20059F096 /* Photo+Sharing.swift */,
 			);
 			name = Sharing;
-			sourceTree = "<group>";
-		};
-		0464219B1B876D3D00953719 /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				04A250F21BA20B01003B89E8 /* AFNetworking */,
-				04A250F31BA20B01003B89E8 /* UIKit+AFNetworking */,
-			);
-			name = AFNetworking;
-			path = ParseStarterProject/Vendor/AFNetworking;
 			sourceTree = "<group>";
 		};
 		049222A71B725CAA00FFB08A /* Models */ = {
@@ -2356,6 +2324,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		04E39D491BA895290061EA36 /* MapleBacon */ = {
+			isa = PBXGroup;
+			children = (
+				04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */,
+			);
+			name = MapleBacon;
+			sourceTree = "<group>";
+		};
+		04E39D4B1BA895330061EA36 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04E39D501BA895330061EA36 /* MapleBacon.framework */,
+				04E39D521BA895330061EA36 /* MapleBaconTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		04F41BEE1B74FBF4001AB8DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2471,7 +2456,7 @@
 				0439D3921B8B7930001850DD /* PBXTargetDependency */,
 				0439D3DA1B8B8D5C001850DD /* PBXTargetDependency */,
 				04CCD6631B8CB7EB00664FB3 /* PBXTargetDependency */,
-				0430D2DA1BA8749A00375AA4 /* PBXTargetDependency */,
+				04E39D571BA895B40061EA36 /* PBXTargetDependency */,
 			);
 			name = Backflip;
 			productName = ParseStarterProject;
@@ -2521,8 +2506,8 @@
 					ProjectRef = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
 				},
 				{
-					ProductGroup = 0430D2CE1BA8748800375AA4 /* Products */;
-					ProjectRef = 0430D2CD1BA8748800375AA4 /* MapleBacon.xcodeproj */;
+					ProductGroup = 04E39D4B1BA895330061EA36 /* Products */;
+					ProjectRef = 04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */;
 				},
 				{
 					ProductGroup = 0439D38C1B8B7922001850DD /* Products */;
@@ -2537,20 +2522,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		0430D2D31BA8748800375AA4 /* MapleBacon.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MapleBacon.framework;
-			remoteRef = 0430D2D21BA8748800375AA4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0430D2D51BA8748800375AA4 /* MapleBaconTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MapleBaconTests.xctest;
-			remoteRef = 0430D2D41BA8748800375AA4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		0439D3901B8B7923001850DD /* Mixpanel.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -2614,6 +2585,20 @@
 			remoteRef = 04CCD65E1B8CB70500664FB3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		04E39D501BA895330061EA36 /* MapleBacon.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MapleBacon.framework;
+			remoteRef = 04E39D4F1BA895330061EA36 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04E39D521BA895330061EA36 /* MapleBaconTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MapleBaconTests.xctest;
+			remoteRef = 04E39D511BA895330061EA36 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -2633,7 +2618,6 @@
 				049AA68F1B73DA01003888CE /* ImageSelectedSmallOn@3x.png in Resources */,
 				0439D3B91B8B82E2001850DD /* InviteViewController.xib in Resources */,
 				049AA69B1B73DA01003888CE /* UIBarButtonItemArrowRight@3x.png in Resources */,
-				04A250F41BA20B01003B89E8 /* AFNetworking in Resources */,
 				0439D3BD1B8B82E2001850DD /* PreviewViewController.xib in Resources */,
 				04B1C65B1B97648C00F30C80 /* star.png in Resources */,
 				049AA6951B73DA01003888CE /* PlayButtonOverlayLargeTap@3x.png in Resources */,
@@ -2670,7 +2654,6 @@
 				049AA6851B73DA01003888CE /* ImageSelectedOff@2x.png in Resources */,
 				049AA6981B73DA01003888CE /* UIBarButtonItemArrowLeft@3x.png in Resources */,
 				049AA6871B73DA01003888CE /* ImageSelectedOn.png in Resources */,
-				04A250F51BA20B01003B89E8 /* UIKit+AFNetworking in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2956,7 +2939,6 @@
 				0431A87C1BA6FED80097F2D8 /* GPUImageRawDataOutput.m in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				0431A8781BA6FED80097F2D8 /* GPUImagePolkaDotFilter.m in Sources */,
-				0439D3B01B8B8249001850DD /* AlbumViewCell.swift in Sources */,
 				0431A8291BA6FED80097F2D8 /* GPUImageCrosshatchFilter.m in Sources */,
 				0431A8B71BA6FF710097F2D8 /* GPUImageContext.m in Sources */,
 				0431A8E61BA6FF8D0097F2D8 /* UIViewController+FastttCamera.m in Sources */,
@@ -2967,17 +2949,13 @@
 				0439D3DE1B8B93A5001850DD /* Backflip.xcdatamodeld in Sources */,
 				0430D28B1BA8517B00375AA4 /* PKHUDProgressVIew.swift in Sources */,
 				0431A8121BA6FED80097F2D8 /* GPUImageAlphaBlendFilter.m in Sources */,
+				0439D3B01B8B8249001850DD /* AlbumViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0430D2DA1BA8749A00375AA4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MapleBacon;
-			targetProxy = 0430D2D91BA8749A00375AA4 /* PBXContainerItemProxy */;
-		};
 		0439D3921B8B7930001850DD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Mixpanel;
@@ -2992,6 +2970,11 @@
 			isa = PBXTargetDependency;
 			name = "MagicalRecord for iOS";
 			targetProxy = 04CCD6621B8CB7EB00664FB3 /* PBXContainerItemProxy */;
+		};
+		04E39D571BA895B40061EA36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MapleBacon;
+			targetProxy = 04E39D561BA895B40061EA36 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3089,7 +3072,6 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
-				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -3103,7 +3085,8 @@
 					"$(PROJECT_DIR)/Vendor/Fabric",
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
-					"$(PROJECT_DIR)/Vendor/Parse",
+					"$(PROJECT_DIR)/Vendor/Parse/**",
+					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3117,11 +3100,11 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
 					"$(PROJECT_DIR)/Vendor/**",
-					"\"$(SRCROOT)/Vendor/AFNetworking\"/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
+					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3156,7 +3139,7 @@
 				PRODUCT_NAME = Frontflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Supporting Files/Backflip-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -3170,7 +3153,6 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
-				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -3184,7 +3166,8 @@
 					"$(PROJECT_DIR)/Vendor/Fabric",
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
-					"$(PROJECT_DIR)/Vendor/Parse",
+					"$(PROJECT_DIR)/Vendor/Parse/**",
+					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3194,11 +3177,11 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
 					"$(PROJECT_DIR)/Vendor/**",
-					"\"$(SRCROOT)/Vendor/AFNetworking\"/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
+					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

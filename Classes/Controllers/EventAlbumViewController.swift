@@ -9,6 +9,7 @@
 import Parse
 import Photos
 import MessageUI
+import MapleBacon
 import Foundation
 
 
@@ -61,6 +62,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
     }
+	
+	override func viewWillDisappear(animated: Bool)
+	{
+		super.viewWillDisappear(animated)
+		
+		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+	}
 	
 	override func viewDidLoad()
 	{
@@ -150,7 +158,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		}
 		
 		let photo = collectionContent[Int(index)]
-		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!))
+		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://")))
 	
 		return _photo
 	}
@@ -204,7 +212,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
 			if (cell.imageView.image == nil) {
-				cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!)!)
+				cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!, cacheScaled: true)
 			}
 		
 		}
@@ -516,6 +524,18 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 	}
 
+	
+	
+	//-------------------------------------
+	// MARK: Memory
+	//-------------------------------------
+	
+	override func didReceiveMemoryWarning()
+	{
+		super.didReceiveMemoryWarning()
+		
+		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+	}
 	
 	
 	

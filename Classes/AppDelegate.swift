@@ -14,7 +14,6 @@ import FBSDKCoreKit
 import MagicalRecord
 
 
-
 @UIApplicationMain
 class AppDelegate : UIResponder, UIApplicationDelegate
 {
@@ -99,7 +98,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		
 		
 		
-        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+        // PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
 		
         Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
@@ -191,77 +190,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         alert.delegate = self
         alert.show()
     }
-    
-    func checkinToEvent(event: PFObject) {
-        let query = PFUser.query()
-        
-        print(PFUser.currentUser()!.objectId!)
-        query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
-            
-            if error != nil {
-                print(error)
-            }
-            else
-            {
-            
-                // Subscribe user to the channel of the event for push notifications
-                let currentInstallation = PFInstallation.currentInstallation()
-                currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
-                //currentInstallation.saveInBackground()
-                currentInstallation.save()
-                
-                // Store the relation
-                let relation = event.relationForKey("attendees")
-                relation.addObject(object!)
-                
-                //                    event.saveInBackgroundWithBlock {
-                //                        (success: Bool, error: NSError?) -> Void in
-                //                        if (success) {
-                //                            // The object has been saved.
-                //                            println("\n\nSuccess, event saved \(event.objectId)")
-                //                        } else {
-                //                            // There was a problem, check error.description
-                //                            println("\n\nFailed to save the event object \(error)")
-                //                        }
-                //                    }
-                event.save()
-                
-                // TODO: Check for existing event_list for eventName
-                let listEvents = object!.objectForKey("savedEventNames") as! [String]
-                if listEvents.contains((event["eventName"] as! String))
-                {
-                    print("Event already in list", terminator: "")
-                }
-                else
-                {
-                    // Add the event to the User object
-                    object?.addUniqueObject(event, forKey:"savedEvents")
-                    object?.addUniqueObject(event["eventName"] as! String, forKey:"savedEventNames")
-                    
-                    //object!.saveInBackground()
-                    object!.save()
-                    
-                    
-                    // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                    let attendance = PFObject(className:"EventAttendance")
-                    attendance["eventID"] = event.objectId
-                    attendance["attendeeID"] = PFUser.currentUser()?.objectId
-                    attendance["photosLikedID"] = []
-                    attendance["photosLiked"] = []
-                    attendance["photosUploadedID"] = []
-                    attendance["photosUploaded"] = []
-                    attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-                    attendance.setObject(event, forKey: "event")
-                    
-                    //attendance.saveInBackground()
-                    attendance.save()
-                    
-                    print("Saved")
-                }
-            }
-        })
-    }
-    
+	
     func setImageViewNotification(note: NSNotification){
         
         let userInfo = note.userInfo as! [String: UIImageView]

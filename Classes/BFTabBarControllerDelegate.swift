@@ -11,7 +11,18 @@ import Foundation
 
 class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
 {
-	static let sharedDelegate = BFTabBarControllerDelegate()
+	static let sharedDelegate = BFTabBarControllerDelegate.init()
+	
+	weak var _camera : CustomCamera?
+	
+	
+	
+	override init()
+	{
+		weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+		_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
+	}
+	
 	
 	func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
 	{
@@ -49,12 +60,10 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 	
     func displayCamera(event: Event)
     {
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
-		customCameraFCF.event = event
-        customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+		_camera?.event = event
+        _camera?.modalPresentationStyle = UIModalPresentationStyle.FullScreen
         let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-        window?.rootViewController!.presentViewController(customCameraFCF, animated: true, completion: nil)
+        window?.rootViewController!.presentViewController(_camera!, animated: true, completion: nil)
         
     }
 	

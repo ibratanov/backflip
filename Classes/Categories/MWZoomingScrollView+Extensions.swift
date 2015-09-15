@@ -15,7 +15,7 @@ extension MWZoomingScrollView
 	
 	func swizzled_handleDoubleTap(point : CGPoint)
 	{
-		print("Photo double tapped!");
+		print("Photo double tapped!", terminator: "");
 	}
 	
 }

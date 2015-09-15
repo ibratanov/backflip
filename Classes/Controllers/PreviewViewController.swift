@@ -12,6 +12,8 @@ import Parse
 class PreviewViewController: UIViewController, UIScrollViewDelegate {
     var filterCount = 0;
 	
+	static let sharedPreview : PreviewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil)
+	
     // Title passed from previous VC
 	var event : Event?
 
@@ -199,81 +201,82 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         if NetworkAvailable.networkConnection() == true {
 
-        let capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
-            if (downloadToCameraRoll!) {
-                UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
-            }
-            
-            
-            let imageData = compressImage(capturedImage, shrinkRatio: 1.0)
-            let imageFile = PFFile(name: "image.png", data: imageData)
-            
-            let thumbnailData = compressImage(capturedImage, shrinkRatio: 0.5)
-            let thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
-            
-            
-            //Upload photos to database
-            let photo = PFObject(className: "Photo")
-            photo["caption"] = "Camera roll upload"
-            photo["image"] = imageFile
-            photo["thumbnail"] = thumbnailFile
-            photo["upvoteCount"] = 1
-            photo["usersLiked"] = [PFUser.currentUser()!.username!]
-            photo["uploader"] = PFUser.currentUser()!
-            photo["uploaderName"] = PFUser.currentUser()!.username!
-            photo["flagged"] = false
-            photo["reviewed"] = false
-            photo["blocked"] = false
-            photo["reporter"] = ""
-            photo["reportMessage"] = ""
+		autoreleasepool({ () -> () in
+			let capturedImage = self.imageView.image?.croppedToRect(imageViewRect) as UIImage!
+			if (downloadToCameraRoll!) {
+				UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
+			}
+			
+			
+			let imageData = compressImage(capturedImage, shrinkRatio: 1.0)
+			let imageFile = PFFile(name: "image.png", data: imageData)
+			
+			let thumbnailData = compressImage(capturedImage, shrinkRatio: 0.5)
+			let thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+			
+			
+			//Upload photos to database
+			let photo = PFObject(className: "Photo")
+			photo["caption"] = "Camera roll upload"
+			photo["image"] = imageFile
+			photo["thumbnail"] = thumbnailFile
+			photo["upvoteCount"] = 1
+			photo["usersLiked"] = [PFUser.currentUser()!.username!]
+			photo["uploader"] = PFUser.currentUser()!
+			photo["uploaderName"] = PFUser.currentUser()!.username!
+			photo["flagged"] = false
+			photo["reviewed"] = false
+			photo["blocked"] = false
+			photo["reporter"] = ""
+			photo["reportMessage"] = ""
 			photo["event"] = PFObject.init(withoutDataWithClassName: "Event", objectId: self.event!.objectId!);
-            
-            let photoACL = PFACL(user: PFUser.currentUser()!)
-            photoACL.setPublicWriteAccess(true)
-            photoACL.setPublicReadAccess(true)
-            photo.ACL = photoACL
-            
-            
-            let query2 = PFQuery(className: "EventAttendance")
-            query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
-            query2.whereKey("eventID", equalTo: event!.objectId!)
-
-            //var photoObjectList = query2.findObjects()
-            var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
-                if (objs != nil && objs!.count != 0) {
-                    let photoObject = objs!.first as! PFObject
-                    
-//TODO: Investigate issue with multi-flagged photos
-//                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
-//                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
-                    
-                    let queryEvent = PFQuery(className: "Event")
-                    queryEvent.whereKey("objectId", equalTo: self.event!.objectId!)
-                    //var objects = queryEvent.findObjects()
-                    var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
-                        
-                        if (sobjs != nil && sobjs!.count != 0) {
-                            let eventObject = sobjs!.first as! PFObject
-                            
-                            let relation = eventObject.relationForKey("photos")
+			
+			let photoACL = PFACL(user: PFUser.currentUser()!)
+			photoACL.setPublicWriteAccess(true)
+			photoACL.setPublicReadAccess(true)
+			photo.ACL = photoACL
+			
+			
+			let query2 = PFQuery(className: "EventAttendance")
+			query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
+			query2.whereKey("eventID", equalTo: event!.objectId!)
+			
+			//var photoObjectList = query2.findObjects()
+			query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
+				if (objs != nil && objs!.count != 0) {
+					let photoObject = objs!.first as! PFObject
+					
+					//TODO: Investigate issue with multi-flagged photos
+					//                    photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
+					//                    photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
+					
+					let queryEvent = PFQuery(className: "Event")
+					queryEvent.whereKey("objectId", equalTo: self.event!.objectId!)
+					//var objects = queryEvent.findObjects()
+					queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
+						
+						if (sobjs != nil && sobjs!.count != 0) {
+							let eventObject = sobjs!.first as! PFObject
 							
-                            //photo.save()
-                            photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
-                                if valid {
-                                    relation.addObject(photo)
-                                    photoObject.addUniqueObject(imageFile, forKey:"photosUploaded")
-                                    photoObject.addUniqueObject(imageFile, forKey: "photosLiked")
-                                    
-                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
-                                    photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
-                                }
-
-
-                                //issue
-                                eventObject.saveInBackground()
-                                
-                                //issue
-                                photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
+							let relation = eventObject.relationForKey("photos")
+							
+							//photo.save()
+							photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
+								if valid {
+									relation.addObject(photo)
+									photoObject.addUniqueObject(imageFile, forKey:"photosUploaded")
+									photoObject.addUniqueObject(imageFile, forKey: "photosLiked")
+									
+									photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
+									photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
+								}
+								
+								
+								//issue
+								eventObject.saveInBackground()
+								
+								//issue
+								photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
 									BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
 										print("Photo stored in coredata..");
 										let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
@@ -282,24 +285,26 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 										}
 									})
 								})
-                            })
-                        } else {
-                            self.displayNoInternetAlert()
-                        }
-                    })
-                }
-                else {
-                    self.displayNoInternetAlert()
-                    print("Object Issue")
-                }
-                
-            })
-            
+							})
+						} else {
+							self.displayNoInternetAlert()
+						}
+					})
+				}
+				else {
+					self.displayNoInternetAlert()
+					print("Object Issue")
+				}
+				
+			})
+
+		})
+			
         } else {
             displayNoInternetAlert()
         }
     }
-    
+	
     func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
         var imageHeight:CGFloat = image.size.height
         var imageWidth:CGFloat = image.size.width
@@ -307,10 +312,10 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         let maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
         var imageRatio:CGFloat = imageWidth/imageHeight
         let scalingRatio:CGFloat = maxWidth/maxHeight
-        
+		
         //lowest quality rating with acceptable encoding
         var quality:CGFloat = 0.4
-        
+		
         if (imageHeight > maxHeight || imageWidth > maxWidth){
             if(imageRatio < scalingRatio){
                 /* To ensure aspect ratio is maintained adjust
@@ -367,26 +372,28 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func outputImage() {
-        
-        let inputImage = CIImage(image: imageToCrop!)
-        
-        filter.setValue(inputImage, forKey: kCIInputImageKey)
-        
-        var outputImage =  filter.outputImage
-        var t: CGAffineTransform!
-
-        let orientation = UIDevice.currentDevice().orientation
-            t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
-        
-        //t = CGAffineTransformMakeRotation(0)
-        
-        outputImage = outputImage!.imageByApplyingTransform(t)
-        
-        let cgImage = self.context.createCGImage(outputImage!, fromRect: outputImage!.extent)
-        //ciImage = outputImage
-        let ImageC = UIImage(CGImage: cgImage)
-    
-        imageView.image = resizeImage(ImageC) //imageToCrop!
+		
+		autoreleasepool { () -> () in
+			let inputImage = CIImage(image: imageToCrop!)
+			
+			filter.setValue(inputImage, forKey: kCIInputImageKey)
+			
+			var outputImage =  filter.outputImage
+			var t: CGAffineTransform!
+			
+			let orientation = UIDevice.currentDevice().orientation
+			t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
+			
+			//t = CGAffineTransformMakeRotation(0)
+			
+			outputImage = outputImage!.imageByApplyingTransform(t)
+			
+			let cgImage = self.context.createCGImage(outputImage!, fromRect: outputImage!.extent)
+			//ciImage = outputImage
+			let ImageC = UIImage(CGImage: cgImage)
+			
+			imageView.image = resizeImage(ImageC) //imageToCrop!
+		}
 
     }
     lazy var filterNames: [String] = {

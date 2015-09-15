@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import DigitsKit
+import MapleBacon
 
 class EventTableViewController: UITableViewController
 {
@@ -27,6 +28,7 @@ class EventTableViewController: UITableViewController
 		super.viewWillAppear(animated)
 		
 		self.tableView.reloadData()
+		MapleBaconStorage.sharedStorage.clearMemoryStorage()
 		
 		fetchData()
 	}
@@ -92,7 +94,7 @@ class EventTableViewController: UITableViewController
 		} else if event.photos?.count == 1 {
 			
 			let photos : [Photo] = event.photos?.allObjects as! [Photo]
-			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!)!)
+			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageOne.backgroundColor = CELL_BACKGROUND_COLOR
 			
 			cell.imageTwo.image = UIImage()
@@ -110,10 +112,10 @@ class EventTableViewController: UITableViewController
 		} else if event.photos?.count == 2 {
 			
 			let photos : [Photo] = event.photos?.allObjects as! [Photo]
-			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!)!)
+			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageOne.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageTwo.setImageWithURL(NSURL(string: photos[1].thumbnail!.url!)!)
+			cell.imageTwo.setImageWithURL(NSURL(string: photos[1].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageTwo.backgroundColor = CELL_BACKGROUND_COLOR
 			
 			cell.imageThree.image = UIImage()
@@ -128,13 +130,13 @@ class EventTableViewController: UITableViewController
 		} else if event.photos?.count == 3 {
 		
 			let photos : [Photo] = event.photos?.allObjects as! [Photo]
-			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!)!)
+			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageOne.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageTwo.setImageWithURL(NSURL(string: photos[1].thumbnail!.url!)!)
+			cell.imageTwo.setImageWithURL(NSURL(string: photos[1].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageTwo.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageThree.setImageWithURL(NSURL(string: photos[2].thumbnail!.url!)!)
+			cell.imageThree.setImageWithURL(NSURL(string: photos[2].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageThree.backgroundColor = CELL_BACKGROUND_COLOR
 			
 			cell.imageFour.image = UIImage()
@@ -146,16 +148,16 @@ class EventTableViewController: UITableViewController
 		} else if event.photos?.count == 4 {
 			
 			let photos : [Photo] = event.photos?.allObjects as! [Photo]
-			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!)!)
+			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageOne.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageTwo.setImageWithURL(NSURL(string: photos[1].thumbnail!.url!)!)
+			cell.imageTwo.setImageWithURL(NSURL(string: photos[1].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageTwo.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageThree.setImageWithURL(NSURL(string: photos[2].thumbnail!.url!)!)
+			cell.imageThree.setImageWithURL(NSURL(string: photos[2].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageThree.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageFour.setImageWithURL(NSURL(string: photos[3].thumbnail!.url!)!)
+			cell.imageFour.setImageWithURL(NSURL(string: photos[3].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageFour.backgroundColor = CELL_BACKGROUND_COLOR
 			
 			cell.imageFive.image = UIImage()
@@ -164,19 +166,19 @@ class EventTableViewController: UITableViewController
 		} else if event.photos?.count >= 5 {
 		
 			let photos : [Photo] = event.photos?.allObjects as! [Photo]
-			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!)!)
+			cell.imageOne.setImageWithURL(NSURL(string: photos[0].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageOne.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageTwo.setImageWithURL(NSURL(string: photos[1].thumbnail!.url!)!)
+			cell.imageTwo.setImageWithURL(NSURL(string: photos[1].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageTwo.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageThree.setImageWithURL(NSURL(string: photos[2].thumbnail!.url!)!)
+			cell.imageThree.setImageWithURL(NSURL(string: photos[2].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageThree.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageFour.setImageWithURL(NSURL(string: photos[3].thumbnail!.url!)!)
+			cell.imageFour.setImageWithURL(NSURL(string: photos[3].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageFour.backgroundColor = CELL_BACKGROUND_COLOR
 			
-			cell.imageFive.setImageWithURL(NSURL(string: photos[4].thumbnail!.url!)!)
+			cell.imageFive.setImageWithURL(NSURL(string: photos[4].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 			cell.imageFive.backgroundColor = CELL_BACKGROUND_COLOR
 			
 		}
@@ -192,7 +194,7 @@ class EventTableViewController: UITableViewController
 
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
 	{
-		
+		MapleBaconStorage.sharedStorage.clearMemoryStorage()
 	}
 	
 	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
@@ -227,7 +229,7 @@ class EventTableViewController: UITableViewController
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
 	{
 		if segue.identifier == "display-event-album" {
-			
+						
 			let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell)
 			
 			let event = self.events[selectedPath!.row]
@@ -307,7 +309,10 @@ class EventTableViewController: UITableViewController
     override func didReceiveMemoryWarning()
 	{
         super.didReceiveMemoryWarning()
+		
+		MapleBaconStorage.sharedStorage.clearMemoryStorage()
     }
+	
     
 
 }
