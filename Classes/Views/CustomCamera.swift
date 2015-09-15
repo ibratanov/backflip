@@ -83,8 +83,8 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 		self.eventNameLabel?.text = self.event!.name!
 		
-		var leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
-		var rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
+		let leftSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
+		let rightSwipe = UISwipeGestureRecognizer(target: self, action: ("handleSwipes:"))
 		
 		leftSwipe.direction = .Left
 		rightSwipe.direction = .Right
@@ -108,7 +108,6 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 		
 		self.fastCamera.delegate = self
-		var UIori = UIInterfaceOrientationMask.All
 		
 		self.fastCamera.supportedInterfaceOrientations()
 		self.fastCamera.willMoveToParentViewController(self)
@@ -146,7 +145,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 					}
 				} else {
 					
-					println(error)
+					print(error)
 				}
 			})
 		} else {
@@ -162,7 +161,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	func saveImageAlert()
 	{
-		var alert:UIAlertView = UIAlertView()
+		let alert:UIAlertView = UIAlertView()
 		alert.title = "Saved!"
 		alert.message = "Saved to Camera Roll"
 		alert.delegate = self
@@ -176,7 +175,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	func cropToSquare(image originalImage: UIImage) -> UIImage {
 		// Get image and measurements
-		let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage)!
+		let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage!)
 		let contextSize: CGSize = contextImage.size
 		let posX: CGFloat
 		let posY: CGFloat
@@ -197,12 +196,12 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		}
 		
 		let rect: CGRect = CGRectMake(posX, posY, width, height)
-		let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)
+		let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage!, rect)!
 		
 		//Define original orientation
 		//let image: UIImage = UIImage(CGImage: imageRef, scale: originalImage.scale, orientation: originalImage.imageOrientation)!
 		
-		let image: UIImage = UIImage(CGImage: imageRef)!
+		let image: UIImage = UIImage(CGImage: imageRef)
 		
 		return image
 	}
@@ -215,7 +214,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		let sourceType = UIImagePickerControllerSourceType.Camera
 		if (!UIImagePickerController.isSourceTypeAvailable(sourceType))
 		{
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Cannot access camera!"
 			alert.message = " "
 			alert.delegate = self
@@ -227,7 +226,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		let rearCamera = UIImagePickerControllerCameraDevice.Rear
 		if (!UIImagePickerController.isCameraDeviceAvailable(frontCamera))
 		{
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Cannot access front-facing camera!"
 			alert.message = " "
 			alert.delegate = self
@@ -236,7 +235,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		}
 		if (!UIImagePickerController.isCameraDeviceAvailable(rearCamera))
 		{
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Cannot access rear-facing camera!"
 			alert.message = " "
 			alert.delegate = self
@@ -244,18 +243,18 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			alert.show()
 		}
 		
-		var status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+		let status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
 		if (status == AVAuthorizationStatus.Authorized) {
-			println("authorized")
+			print("authorized")
 		} else if(status == AVAuthorizationStatus.Denied){
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Camera Disabled"
 			alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
 			alert.delegate = self
 			alert.addButtonWithTitle("Ok")
 			alert.show()
 		} else if(status == AVAuthorizationStatus.Restricted){
-			var alert:UIAlertView = UIAlertView()
+			let alert:UIAlertView = UIAlertView()
 			alert.title = "Camera Disabled"
 			alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
 			alert.delegate = self
@@ -298,7 +297,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	//********call back functions for ^^^^**********
 	func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
 		//Send assets to parse
-		for (index, asset) in enumerate(assets) {
+		for (index, asset) in assets.enumerate() {
 			let imageView = UIImageView(image: asset.fullScreenImage)
 			imageView.contentMode = UIViewContentMode.ScaleAspectFit
 			uploadImages(imageView.image!)
@@ -323,7 +322,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	}
 	
 	func updateThumbnail(){
-		var image = UIImage()
+		let image = UIImage()
 		
 		thumbnailButton.setBackgroundImage(image, forState: .Normal)
 		thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
@@ -331,7 +330,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 	}
 	@IBAction func toggleTorch(sender: UIButton) {
-		print("toggle pressed")
+		print("toggle pressed", terminator: "")
 		
 		if self.fastCamera.cameraFlashMode == FastttCameraFlashMode.On {
 			self.fastCamera.cameraFlashMode = FastttCameraFlashMode.Off
@@ -352,17 +351,17 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	//TO-DO: restriction through geotagged image
 	func setLastPhoto(){
-		var fetchOptions: PHFetchOptions = PHFetchOptions()
+		let fetchOptions: PHFetchOptions = PHFetchOptions()
 		
 		fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
 		
-		var fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
+		let fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
 		
 		if (fetchResult.lastObject != nil) {
 			
-			var lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
+			let lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
 			
-			var sizeIM = CGSizeMake(50,50)
+			let sizeIM = CGSizeMake(50,50)
 			PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: sizeIM , contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
 				self.thumbnailButton.setBackgroundImage(result, forState: .Normal)
 				self.thumbnailButton.layer.borderColor = UIColor.whiteColor().CGColor
@@ -375,7 +374,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	@IBAction func cancelCamera(sender: AnyObject) {
 		
-		println("here on cancel")
+		print("here on cancel")
 		self.dismissViewControllerAnimated(true, completion: nil)
 		
 	}
@@ -383,23 +382,20 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	func uploadImages(uImage: UIImage)
 	{
-		println("------------------\nUPLOAD CANVAS\n----------------------------------------\n")
+		print("------------------\nUPLOAD CANVAS\n----------------------------------------\n")
 		
 		if NetworkAvailable.networkConnection() == true {
-			
-			var capturedImage = uImage as UIImage!
-			
-			var imageData = compressImage(uImage, shrinkRatio: 1.0)
-			var imageFile = PFFile(name: "image.png", data: imageData)
+						
+			let imageData = compressImage(uImage, shrinkRatio: 1.0)
+			let imageFile = PFFile(name: "image.png", data: imageData)
 			
 			
-			
-			var thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
-			var thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
+			let thumbnailData = compressImage(cropToSquare(image: uImage), shrinkRatio: 0.5)
+			let thumbnailFile = PFFile(name: "image.png", data: thumbnailData)
 			
 			
 			//Upload photos to database
-			var photo = PFObject(className: "Photo")
+			let photo = PFObject(className: "Photo")
 			photo["caption"] = "Camera roll upload"
 			photo["image"] = imageFile
 			photo["thumbnail"] = thumbnailFile
@@ -415,31 +411,31 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			photo["event"] = PFObject.init(withoutDataWithClassName: "Event", objectId: self.event!.objectId!);
 
 			
-			var photoACL = PFACL(user: PFUser.currentUser()!)
+			let photoACL = PFACL(user: PFUser.currentUser()!)
 			photoACL.setPublicWriteAccess(true)
 			photoACL.setPublicReadAccess(true)
 			photo.ACL = photoACL
 			
 			
-			var query2 = PFQuery(className: "EventAttendance")
+			let query2 = PFQuery(className: "EventAttendance")
 			query2.whereKey("attendeeID", equalTo: PFUser.currentUser()!.objectId!)
 			query2.whereKey("eventID", equalTo: event!.objectId!)
 			
 			//var photoObjectList = query2.findObjects()
 			var photoObjectList: Void = query2.findObjectsInBackgroundWithBlock({ (objs:[AnyObject]?, error:NSError?) -> Void in
 				if (objs != nil && objs!.count != 0) {
-					var photoObject = objs!.first as! PFObject
+					let photoObject = objs!.first as! PFObject
 					
 					photoObject.addUniqueObject(thumbnailFile, forKey:"photosUploaded")
 					photoObject.addUniqueObject(thumbnailFile, forKey: "photosLiked")
 					
-					var queryEvent = PFQuery(className: "Event")
+					let queryEvent = PFQuery(className: "Event")
 					queryEvent.whereKey("objectId", equalTo: self.event!.objectId!)
 					//var objects = queryEvent.findObjects()
 					var objects: Void = queryEvent.findObjectsInBackgroundWithBlock({ (sobjs:[AnyObject]?, error:NSError?) -> Void in
 						
 						if (sobjs != nil && sobjs!.count != 0) {
-							var eventObject = sobjs!.first as! PFObject
+							let eventObject = sobjs!.first as! PFObject
 							
 							let relation = eventObject.relationForKey("photos")
 							
@@ -456,7 +452,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 								//issue
 								photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
 									BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
-										println("Photo stored in coredata..");
+										print("Photo stored in coredata..");
 										let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
 										dispatch_after(delayTime, dispatch_get_main_queue()) {
 											NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
@@ -472,7 +468,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				}
 				else {
 					self.displayNoInternetAlert()
-					println("Object Issue")
+					print("Object Issue")
 				}
 				
 			})
@@ -491,10 +487,10 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	func compressImage(image:UIImage, shrinkRatio: CGFloat) -> NSData {
 		var imageHeight:CGFloat = image.size.height
 		var imageWidth:CGFloat = image.size.width
-		var maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
-		var maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
+		let maxHeight:CGFloat = 3264 * shrinkRatio//2272 * shrinkRatio//1136.0 * shrinkRatio
+		let maxWidth:CGFloat = 1838 * shrinkRatio//1280 * shrinkRatio//640.0 * shrinkRatio
 		var imageRatio:CGFloat = imageWidth/imageHeight
-		var scalingRatio:CGFloat = maxWidth/maxHeight
+		let scalingRatio:CGFloat = maxWidth/maxHeight
 		
 		//lowest quality rating with acceptable encoding
 		var quality:CGFloat = 0.7
@@ -524,15 +520,15 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			}
 		}
 		
-		var rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
+		let rect = CGRectMake(0.0, 0.0, imageWidth, imageHeight);
 		//bit-map based graphic context and set the boundaries of still image
 		UIGraphicsBeginImageContext(rect.size);
 		image.drawInRect(rect)
-		var imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
+		let imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
 		let imageData = UIImageJPEGRepresentation(imageCompressed, quality);
 		UIGraphicsEndImageContext();
 		
-		return imageData;
+		return imageData!;
 		
 	}
 	override func didReceiveMemoryWarning() {
@@ -572,7 +568,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 		if let wnd = self.fastCamera.view{
 			
-			var v = UIView(frame: wnd.bounds)
+			let v = UIView(frame: wnd.bounds)
 			v.backgroundColor = UIColor.whiteColor()
 			v.alpha = 1.0
 			
@@ -581,19 +577,19 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			UIView.animateWithDuration(1500, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
 				v.alpha = 1.0
 				}, completion: { (finished:Bool) -> Void in
-					println("inside")
+					print("inside")
 					v.removeFromSuperview()
 			})
 			
 			
-			var v2 = UIView(frame: wnd.bounds)
+			let v2 = UIView(frame: wnd.bounds)
 			v2.backgroundColor = UIColor.whiteColor()
 			v2.alpha = 1
 			
 			UIView.animateWithDuration(1500, delay: 1500, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
 				v2.alpha = 1.0
 				}, completion: { (finished:Bool) -> Void in
-					println("outside")
+					print("outside")
 					v2.removeFromSuperview()
 			})
 			
@@ -604,30 +600,30 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 		//image stored in local variable to contain lifespan in method
 		
-		var imageShortLife:UIImage = capturedImage.scaledImage
+		let imageShortLife:UIImage = capturedImage.scaledImage
 		var imageShortLife_Corrected = UIImage()
 		if imageShortLife.imageOrientation != UIImageOrientation.Up{
 			
-			imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage, scale: 0.0, orientation: capturedImage.capturedImageOrientation)!
+			imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage!, scale: 0.0, orientation: capturedImage.capturedImageOrientation)
 		}else{
 			imageShortLife_Corrected = imageShortLife
 		}
 		
 		
-		print("\(capturedImage.capturedImageOrientation)")
+		print("\(capturedImage.capturedImageOrientation)", terminator: "")
 		
 		imageViewContent = imageShortLife
 		//picker.dismissViewControllerAnimated(true, completion: nil)
 		
 		//Retake and crop options------------------------------------------------------------------------
-		var previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
+		let previewViewController = PreviewViewController(nibName: "PreviewViewController", bundle: nil);
 		previewViewController.event = event
 		previewViewController.cropCompletionHandler = {
 			imageViewContent = $0!
 			previewViewController.dismissViewControllerAnimated(true, completion: nil)
 			
 			
-			var imageView = UIImageView(image: imageViewContent)
+			let imageView = UIImageView(image: imageViewContent)
 			imageView.contentMode = UIViewContentMode.ScaleAspectFit
 			//self.uploadImages(imageView.image!)
 			
@@ -661,25 +657,25 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				
 			} else if orientation == UIDeviceOrientation.LandscapeLeft{
 				
-				var t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
+				let t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
 				var inputImage = CIImage(image: imageViewContent)
 				
 				
-				inputImage = inputImage.imageByApplyingTransform(t)
-				var cgImage = self.context.createCGImage(inputImage, fromRect: inputImage.extent())
-				imageViewContent = UIImage(CGImage: cgImage)!
+				inputImage = inputImage!.imageByApplyingTransform(t)
+				let cgImage = self.context.createCGImage(inputImage!, fromRect: inputImage!.extent)
+				imageViewContent = UIImage(CGImage: cgImage)
 				
 				previewViewController.imageToCrop = imageViewContent
 				
 			} else if orientation == UIDeviceOrientation.LandscapeRight{
 				
-				var t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
+				let t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
 				var inputImage = CIImage(image: imageViewContent)
 				
 				
-				inputImage = inputImage.imageByApplyingTransform(t)
-				var cgImage = self.context.createCGImage(inputImage, fromRect: inputImage.extent())
-				imageViewContent = UIImage(CGImage: cgImage)!
+				inputImage = inputImage!.imageByApplyingTransform(t)
+				let cgImage = self.context.createCGImage(inputImage!, fromRect: inputImage!.extent)
+				imageViewContent = UIImage(CGImage: cgImage)
 				
 				previewViewController.imageToCrop = imageViewContent
 				
@@ -694,25 +690,25 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				
 			} else if orientation == UIDeviceOrientation.LandscapeLeft{
 				
-				var t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
+				let t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
 				var inputImage = CIImage(image: imageViewContent)
 				
 				
-				inputImage = inputImage.imageByApplyingTransform(t)
-				var cgImage = self.context.createCGImage(inputImage, fromRect: inputImage.extent())
-				imageViewContent = UIImage(CGImage: cgImage)!
+				inputImage = inputImage!.imageByApplyingTransform(t)
+				let cgImage = self.context.createCGImage(inputImage!, fromRect: inputImage!.extent)
+				imageViewContent = UIImage(CGImage: cgImage)
 				
 				previewViewController.imageToCrop = imageViewContent
 				
 			} else if orientation == UIDeviceOrientation.LandscapeRight{
 				
-				var t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
+				let t:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
 				var inputImage = CIImage(image: imageViewContent)
 				
 				
-				inputImage = inputImage.imageByApplyingTransform(t)
-				var cgImage = self.context.createCGImage(inputImage, fromRect: inputImage.extent())
-				imageViewContent = UIImage(CGImage: cgImage)!
+				inputImage = inputImage!.imageByApplyingTransform(t)
+				let cgImage = self.context.createCGImage(inputImage!, fromRect: inputImage!.extent)
+				imageViewContent = UIImage(CGImage: cgImage)
 				
 				previewViewController.imageToCrop = imageViewContent
 				
@@ -736,17 +732,17 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	
 	func displayNoInternetAlert() {
-		var alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
+		let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
 		self.presentViewController(alert, animated: true, completion: nil)
-		println("no internet")
+		print("no internet")
 	}
 	func filterSwipeGesture(gesture: UIGestureRecognizer) {
-		if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-			//            self.currentFilter = self.currentFilter.nextFilter
-			//            self.fastCamera.filterImage = self.currentFilter.filterImage
-			
-			
-		}
+//		if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+//			//            self.currentFilter = self.currentFilter.nextFilter
+//			//            self.fastCamera.filterImage = self.currentFilter.filterImage
+//			
+//			
+//		}
 		
 	}
 	
@@ -757,10 +753,10 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	func handleSwipes(sender:UISwipeGestureRecognizer) {
 		if (sender.direction == .Left) {
-			println("Left \(filterCount)")
+			print("Left \(filterCount)")
 			if(filterCount>0){
 				filterCount -= 1
-				var filterName = filterNames[filterCount]
+				// var filterName = filterNames[filterCount]
 				
 				//  self.currentFilter = self.currentFilter.nextFilter()
 				//  self.fastCamera.filterImage = self.currentFilter.filterImage
@@ -772,14 +768,14 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 		if (sender.direction == .Right) {
 			if(filterCount<filterNames.count-1){
-				println("Right \(filterCount)")
+				print("Right \(filterCount)")
 				filterCount += 1
-				var filterName = filterNames[filterCount]
+				// var filterName = filterNames[filterCount]
 			}
 		}
 	}
 	func changeFilter() {
-		print("switch filter");
+		print("switch filter", terminator: "");
 		self.currentFilter = self.currentFilter.nextFilter()
 		
 		self.fastCamera.filterImage = self.currentFilter.filterImage

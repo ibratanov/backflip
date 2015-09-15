@@ -56,7 +56,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     func displayNoInternetAlert() {
         let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
         self.presentViewController(alert, animated: true, completion: nil)
-        println("no internet")
+        print("no internet")
     }
     
     func displayAlertUserBlocked(title:String, error: String) {
@@ -81,12 +81,12 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     override func viewWillAppear(animated: Bool) {
         facebookButton.hidden = true
         
-        var tracker = GAI.sharedInstance().defaultTracker
+        let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Login Screen")
         tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
         
-        var builder = GAIDictionaryBuilder.createScreenView()
+        let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
     }
 
@@ -104,7 +104,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
             
             // Use the UUID to check if user has logged in before via phone method
             let deviceQuery = PFUser.query()
-            deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor.UUIDString)
+            deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor!.UUIDString)
             deviceQuery?.limit = 1
             
             deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
@@ -112,7 +112,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                 if error == nil{
                     if results?.count == 0 {
                         // If this is first login for both methods, sign them in with Facebook, intialize fields in DB
-                        println("First time for Facebook signup method")
+                        print("First time for Facebook signup method")
                         
                         PFFacebookUtils.logInInBackgroundWithReadPermissions(self.permissions) {
                             (user: PFUser? , error: NSError?) -> Void in
@@ -129,21 +129,21 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                     user["savedEventNames"] = []
                                     user["blocked"] = false
                                     user["firstUse"] = true
-                                    user["UUID"] = UIDevice.currentDevice().identifierForVendor.UUIDString
+                                    user["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
                                     user.saveInBackground()
                                     
-                                    println("User signed up and logged in through facebook!")
+                                    print("User signed up and logged in through facebook!")
                                     
                                     //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                                     self.dismissViewControllerAnimated(true, completion: nil)
                                     
                                 } else {
-                                    println("User logged in through facebook!")
+                                    print("User logged in through facebook!")
                                     //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                                     self.dismissViewControllerAnimated(true, completion: nil)
                                 }
                             } else {
-                                println("Uh oh. The user cancelled the Facebook Login")
+                                print("Uh oh. The user cancelled the Facebook Login")
                             }
                             
                         }
@@ -153,8 +153,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         
                         // User has already signed in before with phone method
                         // Link the phone number account with Facebook account
-                        var oldUser = results!.first! as! PFUser
-                        var phoneNumber = oldUser["phone"] as? String
+                        let oldUser = results!.first! as! PFUser
+                        let phoneNumber = oldUser["phone"] as? String
                         
                         // If there is a phonenumber and facebook auth, they logged in with digits before, so link the account
                         //otherwise login regular way with FB
@@ -168,12 +168,12 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                 PFFacebookUtils.linkUserInBackground(results!.first! as! PFUser, withReadPermissions: self.permissions, block: {
                                     (succeeded: Bool, error: NSError?) -> Void in
                                     if succeeded {
-                                        println("Previous Backflip user account now linked with Facebook!")
+                                        print("Previous Backflip user account now linked with Facebook!")
                                         //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                                         self.dismissViewControllerAnimated(true, completion: nil)
                                     } else {
                                         
-                                        println(error)
+                                        print(error)
                                     }
                                 })
                                 
@@ -192,12 +192,12 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                 (user: PFUser? , error: NSError?) -> Void in
                                 
                                 if error == nil {
-                                    println("Logged in through Facebook")
+                                    print("Logged in through Facebook")
                                     //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                                     self.dismissViewControllerAnimated(true, completion: nil)
                                 } else {
                                     
-                                    println(error)
+                                    print(error)
                                 }
                                 
                             }
@@ -206,7 +206,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                     }
                 } else {
                     
-                    println(error)
+                    print(error)
                 }
             }
         } else {
@@ -237,12 +237,12 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         let query = PFUser.query()
                         query!.whereKey("phone", equalTo: session.phoneNumber)
                         query!.limit = 1
-                        var phoneResult = query!.findObjects()
+                        let phoneResult = query!.findObjects()
                         
                         
                         // Use the UUID to check if user has logged in before via Facebook method
                         let deviceQuery = PFUser.query()
-                        deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor.UUIDString)
+                        deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor!.UUIDString)
                         deviceQuery?.limit = 1
                         
                         
@@ -261,7 +261,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                             // If user proceeds with phone authentication, login with phonenumber to parse database
                                             if error == nil {
                                                 // Initialize whatever data necessary for every user being put in database
-                                                var user = PFUser()
+                                                let user = PFUser()
                                                 user.username = session.phoneNumber
                                                 user.password = session.phoneNumber
                                                 user["photosLiked"] = []
@@ -269,7 +269,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                 user["phone"] = session.phoneNumber
                                                 user["savedEvents"] = []
                                                 user["savedEventNames"] = []
-                                                user["UUID"] = UIDevice.currentDevice().identifierForVendor.UUIDString
+                                                user["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
                                                 user["blocked"] = false
                                                 user["firstUse"] = true
                                                 
@@ -278,13 +278,13 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                     
                                                     if error == nil {
                                                         
-                                                        println("Signed Up")
+                                                        print("Signed Up")
                                                         //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                                                         self.dismissViewControllerAnimated(true, completion: nil)
     
                                                         
                                                     } else {
-                                                        println(error)
+                                                        print(error)
                                                     }
                                                 }
                                             }
@@ -292,7 +292,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                         } else {
                                             
                                             // User had logged in with facebook. Set the phonenumber in appropriate fields, login
-                                            var oldUser = results!.first! as! PFUser
+                                            let oldUser = results!.first! as! PFUser
                                             
                                             PFUser.logInWithUsernameInBackground(oldUser.username!, password: "Password") { (user, error) -> Void in
                                                 
@@ -309,7 +309,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                             }
                                         }
                                     } else {
-                                        println(error)
+                                        print(error)
                                     }
                                     
                                 }
@@ -319,7 +319,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                 // User has logged in before with either facebook or digits
                                 deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
                                     //User has phone number, logged in wih Digits
-                                    var user = phoneResult?.first as! PFUser
+                                    let user = phoneResult?.first as! PFUser
                                     
                                     // Check for blocked. User must have account to be blocked. If not blocked, log in with username
                                     if (user["blocked"] as! Bool == false) {
@@ -330,18 +330,18 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                             PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
                                                 
                                                 // If older user, with no UUID, set the UUID
-                                                var uuid = user?["UUID"] as? String
+                                                let uuid = user?["UUID"] as? String
                                                 
                                                 if user != nil {
                                                     
                                                     if uuid == nil {
                                                         
-                                                        user!["UUID"] = UIDevice.currentDevice().identifierForVendor.UUIDString
+                                                        user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
                                                         user?.saveInBackground()
                                                         
                                                     }
                                                     
-                                                    println("Log in successful")
+                                                    print("Log in successful")
                                                     //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                                                     self.dismissViewControllerAnimated(true, completion: nil)
     
@@ -350,7 +350,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                             }
                                         } else {
                                             
-                                            var oldUser = results!.first as! PFUser
+                                            let oldUser = results!.first as! PFUser
                                             
                                             PFUser.logInWithUsernameInBackground(oldUser.username!, password: "Password") { (user, error) -> Void in
                                                 
@@ -370,7 +370,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                     } else {
                                         Digits.sharedInstance().logOut()
                                         PFUser.logOut()
-                                        println("User is Blocked")
+                                        print("User is Blocked")
                                         self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
                                     }
                                 }
@@ -397,20 +397,20 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         let blocked = object!.valueForKey("blocked") as! Bool
                         if blocked == false {
                             // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
-                            println(Digits.sharedInstance().session())
+                            print(Digits.sharedInstance().session())
                             //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                             self.performSegueWithIdentifier("toTabBar", sender: self)
 
                         }
                         else {
-                            println("User is Blocked")
+                            print("User is Blocked")
                             self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
                         }
                     } else {
                         if (error != nil) {
-                            println(error)
+                            print(error)
                         }
-                        println("User was deleted, proceed to signup")
+                        print("User was deleted, proceed to signup")
                         
                     }
                 })

@@ -51,7 +51,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     private let NibName = "PreviewViewController"
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(nibName: NibName, bundle: nil);
     }
     
@@ -66,7 +66,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     func displayNoInternetAlert() {
         let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to access content.")
         self.presentViewController(alert, animated: true, completion: nil)
-        println("no internet")
+        print("no internet")
     }
     
     override func viewDidLoad() {
@@ -93,13 +93,13 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         let newHeight:CGFloat = screenH * 3.757
         //let newHeight:CGFloat = referenceView.bounds.height * 3.757
 
-        print("\(newHeight)+\(screenH)")
+        print("\(newHeight)+\(screenH)", terminator: "")
         
        // let newWidth:CGFloat = 2134
         let newWidth:CGFloat = screenW * 6.796
 
         //let newWidth:CGFloat = referenceView.bounds.width * 6.796
-        print("-------\(newWidth)+\(screenW)")
+        print("-------\(newWidth)+\(screenW)", terminator: "")
         
         if(image.size.width > image.size.height){
             
@@ -170,12 +170,12 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
-        var tracker = GAI.sharedInstance().defaultTracker
+        let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Preview Screen")
         tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
         
-        var builder = GAIDictionaryBuilder.createScreenView()
+        let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
     }
     
@@ -275,7 +275,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                                 //issue
                                 photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
 									BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
-										println("Photo stored in coredata..");
+										print("Photo stored in coredata..");
 										let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
 										dispatch_after(delayTime, dispatch_get_main_queue()) {
 											NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
@@ -290,7 +290,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
                 }
                 else {
                     self.displayNoInternetAlert()
-                    println("Object Issue")
+                    print("Object Issue")
                 }
                 
             })
@@ -340,11 +340,11 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         //bit-map based graphic context and set the boundaries of still image
         UIGraphicsBeginImageContext(rect.size);
         image.drawInRect(rect)
-        var imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
+        let imageCompressed = UIGraphicsGetImageFromCurrentImageContext();
         let imageData = UIImageJPEGRepresentation(imageCompressed, quality);
         UIGraphicsEndImageContext();
         
-        return imageData;
+        return imageData!;
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
@@ -368,7 +368,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     func outputImage() {
         
-        let inputImage = CIImage(image: imageToCrop)
+        let inputImage = CIImage(image: imageToCrop!)
         
         filter.setValue(inputImage, forKey: kCIInputImageKey)
         
@@ -380,13 +380,13 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         //t = CGAffineTransformMakeRotation(0)
         
-        outputImage = outputImage.imageByApplyingTransform(t)
+        outputImage = outputImage!.imageByApplyingTransform(t)
         
-        let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent())
+        let cgImage = self.context.createCGImage(outputImage!, fromRect: outputImage!.extent)
         //ciImage = outputImage
-        var ImageC = UIImage(CGImage: cgImage)
+        let ImageC = UIImage(CGImage: cgImage)
     
-        imageView.image = resizeImage(ImageC!) //imageToCrop!
+        imageView.image = resizeImage(ImageC) //imageToCrop!
 
     }
     lazy var filterNames: [String] = {
@@ -396,7 +396,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     
     func handleSwipes(sender:UISwipeGestureRecognizer) {
         if (sender.direction == .Left) {
-            println("Left \(filterCount)")
+            print("Left \(filterCount)")
             if(filterCount>0){
                 filterCount -= 1
             let filterName = filterNames[filterCount]
@@ -410,7 +410,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
         if (sender.direction == .Right) {
             if(filterCount<filterNames.count-1){
-            println("Right \(filterCount)")
+            print("Right \(filterCount)")
                 filterCount += 1
             let filterName = filterNames[filterCount]
             filter = CIFilter(name: filterName)

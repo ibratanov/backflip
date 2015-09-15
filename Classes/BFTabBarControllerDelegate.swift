@@ -31,7 +31,7 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 					
 				}))
 				
-				let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+				let window : UIWindow? = UIApplication.sharedApplication().windows.first!
 				window?.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
 			} else {
 				
@@ -49,11 +49,11 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 	
     func displayCamera(event: Event)
     {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
 		customCameraFCF.event = event
         customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-        let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+        let window : UIWindow? = UIApplication.sharedApplication().windows.first!
         window?.rootViewController!.presentViewController(customCameraFCF, animated: true, completion: nil)
         
     }

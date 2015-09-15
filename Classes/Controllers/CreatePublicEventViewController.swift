@@ -28,7 +28,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         tabBarController?.selectedIndex = 0
     }
     // Quality of service variable for threading
-    let qos = (Int(QOS_CLASS_BACKGROUND.value))
+    let qos = (Int(QOS_CLASS_BACKGROUND.rawValue))
     
     @IBOutlet var addressText: UIImageView!
     
@@ -36,12 +36,12 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Disable navigation
     override func viewWillAppear(animated: Bool) {
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
-        var tracker = GAI.sharedInstance().defaultTracker
+        let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Create Public Event")
         tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
         
-        var builder = GAIDictionaryBuilder.createScreenView()
+        let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
     }
     var address2:String = ""
@@ -89,23 +89,23 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
             self.presentViewController(alert, animated: true, completion: nil)
-            println("no internet")
+            print("no internet")
         })
     }
     
     func getUserAddress() {
-        var userLatitude = self.userGeoPoint.latitude
-        var userLongitude = self.userGeoPoint.longitude
+        let userLatitude = self.userGeoPoint.latitude
+        let userLongitude = self.userGeoPoint.longitude
         
         if (self.locationDisabled == true) {
             self.addressField.text = "No location found"
         } else {
-            var geoCoder = CLGeocoder()
-            var location = CLLocation(latitude: userLatitude, longitude: userLongitude)
+            let geoCoder = CLGeocoder()
+            let location = CLLocation(latitude: userLatitude, longitude: userLongitude)
             
             geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
                 if (error == nil) {
-                    let placeArray = placemarks as! [CLPlacemark]
+                    let placeArray = placemarks!
                     
                     // Place details
                     var placeMark: CLPlacemark!
@@ -116,44 +116,44 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                     
                     // Location name
                     var streetNumber = ""
-                    if let locationName = placeMark.addressDictionary["Name"] as? NSString {
-                        println(locationName)
+                    if let locationName = placeMark.addressDictionary?["Name"] as? NSString {
+                        print(locationName)
                         streetNumber = locationName as String
                     }
                     
                     var streetAddress = ""
                     // Street address
-                    if let street = placeMark.addressDictionary["Thoroughfare"] as? NSString {
-                        println(street)
+                    if let street = placeMark.addressDictionary?["Thoroughfare"] as? NSString {
+                        print(street)
                         streetAddress = street as String
                     }
                     
                     var cityName = ""
                     // City
-                    if let city = placeMark.addressDictionary["City"] as? NSString {
-                        println(city)
+                    if let city = placeMark.addressDictionary?["City"] as? NSString {
+                        print(city)
                         cityName = city as String
                         
                     }
                     
                     // Zip code
-                    if let zip = placeMark.addressDictionary["ZIP"] as? NSString {
-                        println(zip)
+                    if let zip = placeMark.addressDictionary?["ZIP"] as? NSString {
+                        print(zip)
                     }
                     
                     // Country
                     var countryName = ""
-                    if let country = placeMark.addressDictionary["Country"] as? NSString {
-                        println(country)
+                    if let country = placeMark.addressDictionary?["Country"] as? NSString {
+                        print(country)
                         countryName = country as String
                     }
                     
-                    var address = streetNumber + ", " + streetAddress
+                    let address = streetNumber + ", " + streetAddress
                     self.address2 = streetNumber + ", " + cityName + ", " + countryName
                     self.addressField.text = address
                 } else {
                     self.displayNoInternetAlert()
-                    println("could not generate location - no internet")
+                    print("could not generate location - no internet")
                     self.address2 = "No location found"
                     self.addressField.text = self.address2
                 }
@@ -165,17 +165,17 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         
         var error = ""
         
-        var address = self.addressField.text
+        let address = self.addressField.text
         
         //Limit number of characters in event name (Make sure not 0 characters)
-        var myStr = self.eventName.text as NSString
-        var eventName = myStr as String
+        let myStr = self.eventName.text!
+        let eventName = myStr as String
         
         if (locationDisabled == true) {
             error = "Please enable location access in the iOS settings for Backflip."
         } else if (eventName == "") {// || address == "") {
             error = "Please enter an event name."
-        } else if (count(eventName) < 2) {
+        } else if (eventName.characters.count < 2) {
             error = "Please enter a valid event name."
         }
         
@@ -197,21 +197,21 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                 let query = PFUser.query()
                 query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                     if error != nil {
-                        println(error)
+                        print(error)
 						PKHUD.sharedHUD.hideAnimated()
                         
                     } else {
                         
-                        var event = PFObject(className: "Event")
+                        let event = PFObject(className: "Event")
                         
-                        var geocoder = CLGeocoder()
-                        geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+                        let geocoder = CLGeocoder()
+                        geocoder.geocodeAddressString(address!, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
                             //print(placemarks?[0])
                             
-                            if let placemark = placemarks?[0] as? CLPlacemark {
-                                var location = placemark.location as CLLocation
-                                var eventLatitude = location.coordinate.latitude
-                                var eventLongitude = location.coordinate.longitude
+							if let placemark : CLPlacemark = placemarks![0] {
+								let location : CLLocation = placemark.location!
+                                let eventLatitude = location.coordinate.latitude
+                                let eventLongitude = location.coordinate.longitude
                                 
                                 let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
                                 
@@ -238,7 +238,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     event["startTime"] = NSDate()
                                     event["isLive"] = true
 									event["enabled"] = true
-                                    var eventACL = PFACL(user: PFUser.currentUser()!)
+                                    let eventACL = PFACL(user: PFUser.currentUser()!)
                                     eventACL.setPublicWriteAccess(true)
                                     eventACL.setPublicReadAccess(true)
                                     event.ACL = eventACL
@@ -256,7 +256,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     object!.save()
 									
                                     // Add the EventAttendance join table relationship for photos (liked and uploaded)
-                                    var attendance = PFObject(className:"EventAttendance")
+                                    let attendance = PFObject(className:"EventAttendance")
                                     attendance["eventID"] = event.objectId
                                     //let temp = PFUser.currentUser()?.objectId// as String
                                     attendance["attendeeID"] = PFUser.currentUser()?.objectId
@@ -274,13 +274,13 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
 										
 										// Store event details in user defaults
 										NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
-										NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+										NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
 										NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
 										
 										// When successful, segue to events page
 										dispatch_async(dispatch_get_main_queue()) {
 											
-											println("Saved")
+											print("Saved")
 											PKHUD.sharedHUD.hideAnimated()
 											// self.albumview?.eventId = self.eventID
 											//self.performSegueWithIdentifier("eventsPage", sender: self)
@@ -315,7 +315,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         var resp : UIResponder = textField
         while !(resp is UIAlertController) { resp = resp.nextResponder()!}
         let alert = resp as! UIAlertController
-        (alert.actions[1] as! UIAlertAction).enabled = (count(textField.text) > 1)
+        alert.actions[1].enabled = (textField.text!.characters.count > 1)
         
     }
     
@@ -324,46 +324,45 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Information on how this delegate method works
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
-        if (range.length + range.location > count(textField.text) )
+        if (range.length + range.location > textField.text!.characters.count )
         {
             return false;
         }
         
-        let newLength = count(textField.text) + count(string) - range.length
+        let newLength = textField.text!.characters.count + string.characters.count - range.length
         return newLength <= 25
     }
     
     // Function displaying alert when creating an event that has no content in it
     func noNameAlert() {
-        var alert = UIAlertController(title: "Please enter an event name.", message: "Event name:", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Please enter an event name.", message: "Event name:", preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Create", style: UIAlertActionStyle.Default, handler: { (action) in
             
                 // Content that is in textfield when create is pressed
-                var eventTitle = alert.textFields?.first as! UITextField
+                let eventTitle = alert.textFields!.first!
                 
-                var address = self.addressField.text
+                let address = self.addressField.text
                 
-                var eventName = eventTitle.text
-                println(eventName)
+                let eventName = eventTitle.text
+                print(eventName)
                 
                 let query = PFUser.query()
                 query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
                     
                     if error != nil {
-                        println(error)
+                        print(error)
                     } else {
                         
-                        var event = PFObject(className: "Event")
-                        var geocoder = CLGeocoder()
-                        
-                        geocoder.geocodeAddressString(address, completionHandler: {( placemarks: [AnyObject]!, error: NSError!) -> Void in
-                            if let placemark = placemarks?[0] as? CLPlacemark {
-                                
-                                var location = placemark.location as CLLocation
-                                var eventLatitude = location.coordinate.latitude
-                                var eventLongitude = location.coordinate.longitude
+                        let event = PFObject(className: "Event")
+						let geocoder = CLGeocoder()
+                        geocoder.geocodeAddressString(address!, completionHandler: {( placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+							if let placemark : CLPlacemark = placemarks![0] {
+								
+								let location : CLLocation = placemark.location!
+                                let eventLatitude = location.coordinate.latitude
+                                let eventLongitude = location.coordinate.longitude
                                 
                                 let userGeoPoint = PFGeoPoint(latitude: eventLatitude, longitude: eventLongitude)
                                 
@@ -378,7 +377,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                             
                             // Query for event names
                             let queryEvent = PFQuery(className: "Event")
-                            queryEvent.whereKey("eventName", equalTo: eventName)
+                            queryEvent.whereKey("eventName", equalTo: eventName!)
                             let scoreArray = queryEvent.findObjects()
                             
                             // Nil means no connection established, count of 0 means no other events exist of the same name
@@ -391,7 +390,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     event["isLive"] = true
                                     
                                     // Set access rules for events
-                                    var eventACL = PFACL(user: PFUser.currentUser()!)
+                                    let eventACL = PFACL(user: PFUser.currentUser()!)
                                     eventACL.setPublicReadAccess(true)
                                     eventACL.setPublicWriteAccess(true)
                                     event.ACL = eventACL
@@ -405,11 +404,11 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     
                                     // Add the event name and object to the Users profile
                                     object?.addUniqueObject(event, forKey: "savedEvents")
-                                    object?.addUniqueObject(eventName, forKey: "savedEventNames")
+                                    object?.addUniqueObject(eventName!, forKey: "savedEventNames")
                                     object!.save()
                                     
                                     // Add relationship in the EventAttendance join table
-                                    var attendance = PFObject(className: "EventAttendance")
+                                    let attendance = PFObject(className: "EventAttendance")
                                     attendance["eventID"] = event.objectId
                                     attendance["attendeeID"] = PFUser.currentUser()?.objectId
                                     attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
@@ -423,13 +422,13 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     
                                     // Store event details in user defaults
                                     NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
-                                    NSUserDefaults.standardUserDefaults().setValue(NSDate.new(), forKey: "checkin_event_time")
+                                    NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
                                     NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
 
                                     // Upon successful add to DB, segue to the events page
                                     dispatch_async(dispatch_get_main_queue()) {
                                         
-                                        println("Saved")
+                                        print("Saved")
                                         // self.albumview?.eventId = self.eventID
                                         self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
                                     }
@@ -452,7 +451,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         }
         
         // Add the cancel button, as well as disable interaction with create button until 2 or more characters present in textfield
-        (alert.actions[1] as! UIAlertAction).enabled = false
+        (alert.actions[1] ).enabled = false
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
@@ -517,11 +516,11 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
             
             PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
                 if error == nil {
-                    print(geoPoint)
+                    print(geoPoint, terminator: "")
                     self.userGeoPoint = geoPoint!
                 }
                 else {
-                    println("Error with User Geopoint")
+                    print("Error with User Geopoint")
                     self.locationDisabled = true
                 }
             }
@@ -541,7 +540,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     }
     
     // Two functions to allow off keyboard touch to close keyboard
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
     

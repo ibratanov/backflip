@@ -27,9 +27,9 @@ class BFDataProcessor
 		
 		// Setup a parent context..
 		dispatch_async(dataQueue) { () -> Void in
-			let mainContext : NSManagedObjectContext = NSManagedObjectContext.MR_rootSavingContext()
+			// let mainContext : NSManagedObjectContext = NSManagedObjectContext.MR_rootSavingContext()
 			self.dataContext = NSManagedObjectContext.MR_defaultContext()
-			// self.dataContext?.undoManager = nil
+			self.dataContext?.undoManager = nil
 		}
 		
 	}
@@ -170,7 +170,7 @@ class BFDataProcessor
 				
 				if (self.isValid(object["usersLiked"])) {
 					let likedArray = object["usersLiked"] as? [String]
-					photo.usersLiked = ",".join(likedArray!)
+					photo.usersLiked = (likedArray!).joinWithSeparator(",")
 				}
 				
 				if (self.isValid(object["enabled"])) {

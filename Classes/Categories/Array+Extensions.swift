@@ -15,7 +15,7 @@ extension Array {
 	}
 	
 	func indexOf<U: Equatable>(object: U) -> Int? {
-		for (idx, objectToCompare) in enumerate(self) {
+		for (idx, objectToCompare) in self.enumerate() {
 			if let to = objectToCompare as? U {
 				if object == to {
 					return idx

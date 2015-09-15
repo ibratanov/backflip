@@ -25,7 +25,7 @@ public class NetworkAvailable {
         }
         
         
-        var flag: SCNetworkReachabilityFlags = 0
+        var flag: SCNetworkReachabilityFlags = []
         if SCNetworkReachabilityGetFlags(defRouteReachability, &flag) == 0 {
             
             return false

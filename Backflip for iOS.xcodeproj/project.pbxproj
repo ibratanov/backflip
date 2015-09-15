@@ -16,6 +16,21 @@
 		0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420283A1BA1E0CB0059F096 /* Defines.swift */; };
 		042028481BA1EFC50059F096 /* Backflip.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 042028471BA1ECE20059F096 /* Backflip.sqlite */; };
 		042028501BA1F4E20059F096 /* Photo+Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420284F1BA1F4E20059F096 /* Photo+Sharing.swift */; };
+		0430D2861BA8517B00375AA4 /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2761BA8517B00375AA4 /* FrameView.swift */; };
+		0430D2871BA8517B00375AA4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0430D2771BA8517B00375AA4 /* Images.xcassets */; };
+		0430D2881BA8517B00375AA4 /* PKHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2791BA8517B00375AA4 /* PKHUD.swift */; };
+		0430D2891BA8517B00375AA4 /* PKHUDAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D27A1BA8517B00375AA4 /* PKHUDAssets.swift */; };
+		0430D28A1BA8517B00375AA4 /* PKHUDImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D27B1BA8517B00375AA4 /* PKHUDImageView.swift */; };
+		0430D28B1BA8517B00375AA4 /* PKHUDProgressVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D27C1BA8517B00375AA4 /* PKHUDProgressVIew.swift */; };
+		0430D28C1BA8517B00375AA4 /* PKHUDSquareBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D27D1BA8517B00375AA4 /* PKHUDSquareBaseView.swift */; };
+		0430D28D1BA8517B00375AA4 /* PKHUDStatusVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D27E1BA8517B00375AA4 /* PKHUDStatusVIew.swift */; };
+		0430D28E1BA8517B00375AA4 /* PKHUDSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D27F1BA8517B00375AA4 /* PKHUDSubtitleView.swift */; };
+		0430D28F1BA8517B00375AA4 /* PKHUDSystemActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2801BA8517B00375AA4 /* PKHUDSystemActivityIndicatorView.swift */; };
+		0430D2901BA8517B00375AA4 /* PKHUDTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2811BA8517B00375AA4 /* PKHUDTextView.swift */; };
+		0430D2911BA8517B00375AA4 /* PKHUDTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2821BA8517B00375AA4 /* PKHUDTitleView.swift */; };
+		0430D2921BA8517B00375AA4 /* PKHUDWideBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2831BA8517B00375AA4 /* PKHUDWideBaseView.swift */; };
+		0430D2931BA8517B00375AA4 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2841BA8517B00375AA4 /* Window.swift */; };
+		0430D2941BA8517B00375AA4 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2851BA8517B00375AA4 /* WindowRootViewController.swift */; };
 		043188FE1BA7040F008FB5CE /* CustomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043188FD1BA7040F008FB5CE /* CustomFilter.swift */; };
 		0431A80D1BA6FED80097F2D8 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431A6CF1BA6FED70097F2D8 /* GLProgram.m */; };
 		0431A80E1BA6FED80097F2D8 /* GPUImage3x3ConvolutionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431A6D21BA6FED70097F2D8 /* GPUImage3x3ConvolutionFilter.m */; };
@@ -337,13 +352,6 @@
 		04B1C6671B9779F700F30C80 /* ScrollingNavbar+Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6641B9779F700F30C80 /* ScrollingNavbar+Sizes.swift */; };
 		04B1C6681B9779F700F30C80 /* ScrollingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6651B9779F700F30C80 /* ScrollingNavigationController.swift */; };
 		04B1C6691B9779F700F30C80 /* ScrollingNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6661B9779F700F30C80 /* ScrollingNavigationViewController.swift */; };
-		04B1C6731B9783E000F30C80 /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C66B1B9783E000F30C80 /* FrameView.swift */; };
-		04B1C6741B9783E000F30C80 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C66C1B9783E000F30C80 /* Images.xcassets */; };
-		04B1C6751B9783E000F30C80 /* PKHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C66E1B9783E000F30C80 /* PKHUD.swift */; };
-		04B1C6761B9783E000F30C80 /* PKHUDAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C66F1B9783E000F30C80 /* PKHUDAssets.swift */; };
-		04B1C6771B9783E000F30C80 /* PKHUDContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6701B9783E000F30C80 /* PKHUDContentView.swift */; };
-		04B1C6781B9783E000F30C80 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6711B9783E000F30C80 /* Window.swift */; };
-		04B1C6791B9783E000F30C80 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6721B9783E000F30C80 /* WindowRootViewController.swift */; };
 		04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */; };
 		04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */; };
 		04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB61B8B982600E2ACB5 /* File.swift */; };
@@ -491,6 +499,22 @@
 		0420283A1BA1E0CB0059F096 /* Defines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defines.swift; sourceTree = "<group>"; };
 		042028471BA1ECE20059F096 /* Backflip.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Backflip.sqlite; sourceTree = "<group>"; };
 		0420284F1BA1F4E20059F096 /* Photo+Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Photo+Sharing.swift"; sourceTree = "<group>"; };
+		0430D2761BA8517B00375AA4 /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameView.swift; path = Vendor/PKHUD/PKHUD/FrameView.swift; sourceTree = "<group>"; };
+		0430D2771BA8517B00375AA4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Vendor/PKHUD/PKHUD/Images.xcassets; sourceTree = "<group>"; };
+		0430D2781BA8517B00375AA4 /* PKHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PKHUD.h; path = Vendor/PKHUD/PKHUD/PKHUD.h; sourceTree = "<group>"; };
+		0430D2791BA8517B00375AA4 /* PKHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUD.swift; path = Vendor/PKHUD/PKHUD/PKHUD.swift; sourceTree = "<group>"; };
+		0430D27A1BA8517B00375AA4 /* PKHUDAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDAssets.swift; path = Vendor/PKHUD/PKHUD/PKHUDAssets.swift; sourceTree = "<group>"; };
+		0430D27B1BA8517B00375AA4 /* PKHUDImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDImageView.swift; path = Vendor/PKHUD/PKHUD/PKHUDImageView.swift; sourceTree = "<group>"; };
+		0430D27C1BA8517B00375AA4 /* PKHUDProgressVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDProgressVIew.swift; path = Vendor/PKHUD/PKHUD/PKHUDProgressVIew.swift; sourceTree = "<group>"; };
+		0430D27D1BA8517B00375AA4 /* PKHUDSquareBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDSquareBaseView.swift; path = Vendor/PKHUD/PKHUD/PKHUDSquareBaseView.swift; sourceTree = "<group>"; };
+		0430D27E1BA8517B00375AA4 /* PKHUDStatusVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDStatusVIew.swift; path = Vendor/PKHUD/PKHUD/PKHUDStatusVIew.swift; sourceTree = "<group>"; };
+		0430D27F1BA8517B00375AA4 /* PKHUDSubtitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDSubtitleView.swift; path = Vendor/PKHUD/PKHUD/PKHUDSubtitleView.swift; sourceTree = "<group>"; };
+		0430D2801BA8517B00375AA4 /* PKHUDSystemActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDSystemActivityIndicatorView.swift; path = Vendor/PKHUD/PKHUD/PKHUDSystemActivityIndicatorView.swift; sourceTree = "<group>"; };
+		0430D2811BA8517B00375AA4 /* PKHUDTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDTextView.swift; path = Vendor/PKHUD/PKHUD/PKHUDTextView.swift; sourceTree = "<group>"; };
+		0430D2821BA8517B00375AA4 /* PKHUDTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDTitleView.swift; path = Vendor/PKHUD/PKHUD/PKHUDTitleView.swift; sourceTree = "<group>"; };
+		0430D2831BA8517B00375AA4 /* PKHUDWideBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDWideBaseView.swift; path = Vendor/PKHUD/PKHUD/PKHUDWideBaseView.swift; sourceTree = "<group>"; };
+		0430D2841BA8517B00375AA4 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Vendor/PKHUD/PKHUD/Window.swift; sourceTree = "<group>"; };
+		0430D2851BA8517B00375AA4 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowRootViewController.swift; path = Vendor/PKHUD/PKHUD/WindowRootViewController.swift; sourceTree = "<group>"; };
 		043188FD1BA7040F008FB5CE /* CustomFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFilter.swift; sourceTree = "<group>"; };
 		0431A6CE1BA6FED70097F2D8 /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLProgram.h; path = Vendor/GPUImage/framework/Source/GLProgram.h; sourceTree = "<group>"; };
 		0431A6CF1BA6FED70097F2D8 /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLProgram.m; path = Vendor/GPUImage/framework/Source/GLProgram.m; sourceTree = "<group>"; };
@@ -1073,14 +1097,6 @@
 		04B1C6641B9779F700F30C80 /* ScrollingNavbar+Sizes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ScrollingNavbar+Sizes.swift"; path = "Vendor/AMScrollingNavbar/Source/ScrollingNavbar+Sizes.swift"; sourceTree = "<group>"; };
 		04B1C6651B9779F700F30C80 /* ScrollingNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollingNavigationController.swift; path = Vendor/AMScrollingNavbar/Source/ScrollingNavigationController.swift; sourceTree = "<group>"; };
 		04B1C6661B9779F700F30C80 /* ScrollingNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollingNavigationViewController.swift; path = Vendor/AMScrollingNavbar/Source/ScrollingNavigationViewController.swift; sourceTree = "<group>"; };
-		04B1C66B1B9783E000F30C80 /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameView.swift; path = Vendor/PKHUD/PKHUD/FrameView.swift; sourceTree = "<group>"; };
-		04B1C66C1B9783E000F30C80 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Vendor/PKHUD/PKHUD/Images.xcassets; sourceTree = "<group>"; };
-		04B1C66D1B9783E000F30C80 /* PKHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PKHUD.h; path = Vendor/PKHUD/PKHUD/PKHUD.h; sourceTree = "<group>"; };
-		04B1C66E1B9783E000F30C80 /* PKHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUD.swift; path = Vendor/PKHUD/PKHUD/PKHUD.swift; sourceTree = "<group>"; };
-		04B1C66F1B9783E000F30C80 /* PKHUDAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDAssets.swift; path = Vendor/PKHUD/PKHUD/PKHUDAssets.swift; sourceTree = "<group>"; };
-		04B1C6701B9783E000F30C80 /* PKHUDContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDContentView.swift; path = Vendor/PKHUD/PKHUD/PKHUDContentView.swift; sourceTree = "<group>"; };
-		04B1C6711B9783E000F30C80 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Vendor/PKHUD/PKHUD/Window.swift; sourceTree = "<group>"; };
-		04B1C6721B9783E000F30C80 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowRootViewController.swift; path = Vendor/PKHUD/PKHUD/WindowRootViewController.swift; sourceTree = "<group>"; };
 		04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ParseObject+CoreDataProperties.swift"; path = "Models/ParseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
 		04C61FB61B8B982600E2ACB5 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -2221,14 +2237,22 @@
 		04B1C66A1B9783CD00F30C80 /* PKHUD */ = {
 			isa = PBXGroup;
 			children = (
-				04B1C66B1B9783E000F30C80 /* FrameView.swift */,
-				04B1C66C1B9783E000F30C80 /* Images.xcassets */,
-				04B1C66D1B9783E000F30C80 /* PKHUD.h */,
-				04B1C66E1B9783E000F30C80 /* PKHUD.swift */,
-				04B1C66F1B9783E000F30C80 /* PKHUDAssets.swift */,
-				04B1C6701B9783E000F30C80 /* PKHUDContentView.swift */,
-				04B1C6711B9783E000F30C80 /* Window.swift */,
-				04B1C6721B9783E000F30C80 /* WindowRootViewController.swift */,
+				0430D2761BA8517B00375AA4 /* FrameView.swift */,
+				0430D2771BA8517B00375AA4 /* Images.xcassets */,
+				0430D2781BA8517B00375AA4 /* PKHUD.h */,
+				0430D2791BA8517B00375AA4 /* PKHUD.swift */,
+				0430D27A1BA8517B00375AA4 /* PKHUDAssets.swift */,
+				0430D27B1BA8517B00375AA4 /* PKHUDImageView.swift */,
+				0430D27C1BA8517B00375AA4 /* PKHUDProgressVIew.swift */,
+				0430D27D1BA8517B00375AA4 /* PKHUDSquareBaseView.swift */,
+				0430D27E1BA8517B00375AA4 /* PKHUDStatusVIew.swift */,
+				0430D27F1BA8517B00375AA4 /* PKHUDSubtitleView.swift */,
+				0430D2801BA8517B00375AA4 /* PKHUDSystemActivityIndicatorView.swift */,
+				0430D2811BA8517B00375AA4 /* PKHUDTextView.swift */,
+				0430D2821BA8517B00375AA4 /* PKHUDTitleView.swift */,
+				0430D2831BA8517B00375AA4 /* PKHUDWideBaseView.swift */,
+				0430D2841BA8517B00375AA4 /* Window.swift */,
+				0430D2851BA8517B00375AA4 /* WindowRootViewController.swift */,
 			);
 			name = PKHUD;
 			sourceTree = "<group>";
@@ -2431,8 +2455,9 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = BF;
+				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Backflip;
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
@@ -2549,6 +2574,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				042028481BA1EFC50059F096 /* Backflip.sqlite in Resources */,
+				0430D2871BA8517B00375AA4 /* Images.xcassets in Resources */,
 				049AA69D1B73DA01003888CE /* UIBarButtonItemGrid@2x.png in Resources */,
 				0439D3BB1B8B82E2001850DD /* Main.storyboard in Resources */,
 				049AA69C1B73DA01003888CE /* UIBarButtonItemGrid.png in Resources */,
@@ -2576,7 +2602,6 @@
 				0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */,
 				049AA6941B73DA01003888CE /* PlayButtonOverlayLargeTap@2x.png in Resources */,
 				04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */,
-				04B1C6741B9783E000F30C80 /* Images.xcassets in Resources */,
 				049AA6A01B73DA01003888CE /* VideoOverlay@2x.png in Resources */,
 				049AA69F1B73DA01003888CE /* VideoOverlay.png in Resources */,
 				049AA6821B73DA01003888CE /* ImageError@2x.png in Resources */,
@@ -2648,14 +2673,15 @@
 				040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */,
 				049AA6E01B73DB84003888CE /* SDWebImageManager.m in Sources */,
 				0431A85D1BA6FED80097F2D8 /* GPUImageLuminanceThresholdFilter.m in Sources */,
-				04B1C6761B9783E000F30C80 /* PKHUDAssets.swift in Sources */,
 				0439D3AB1B8B8210001850DD /* PreviewViewController.swift in Sources */,
 				0439D3CF1B8B8777001850DD /* UIColor+Extensions.swift in Sources */,
 				0431A8A31BA6FED80097F2D8 /* GPUImageUIElement.m in Sources */,
 				0431A80F1BA6FED80097F2D8 /* GPUImage3x3TextureSamplingFilter.m in Sources */,
+				0430D2861BA8517B00375AA4 /* FrameView.swift in Sources */,
 				04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */,
 				0431A86C1BA6FED80097F2D8 /* GPUImageNormalBlendFilter.m in Sources */,
 				0431A8DE1BA6FF8D0097F2D8 /* FastttFocus.m in Sources */,
+				0430D28E1BA8517B00375AA4 /* PKHUDSubtitleView.swift in Sources */,
 				0431A8E31BA6FF8D0097F2D8 /* UIImage+FastttFilters.m in Sources */,
 				0431A86D1BA6FED80097F2D8 /* GPUImageOpacityFilter.m in Sources */,
 				0431A8DC1BA6FF8D0097F2D8 /* FastttCapturedImage+Process.m in Sources */,
@@ -2670,7 +2696,9 @@
 				049AA6AA1B73DA01003888CE /* MWZoomingScrollView.m in Sources */,
 				049AA6DD1B73DB84003888CE /* SDWebImageDecoder.m in Sources */,
 				0431A8331BA6FED80097F2D8 /* GPUImageExclusionBlendFilter.m in Sources */,
+				0430D2931BA8517B00375AA4 /* Window.swift in Sources */,
 				049AA6A51B73DA01003888CE /* MWGridViewController.m in Sources */,
+				0430D28C1BA8517B00375AA4 /* PKHUDSquareBaseView.swift in Sources */,
 				0431A8871BA6FED80097F2D8 /* GPUImageShiTomasiFeatureDetectionFilter.m in Sources */,
 				0431A8501BA6FED80097F2D8 /* GPUImageJFAVoronoiFilter.m in Sources */,
 				0431A87B1BA6FED80097F2D8 /* GPUImageRawDataInput.m in Sources */,
@@ -2701,6 +2729,8 @@
 				0431A8961BA6FED80097F2D8 /* GPUImageTextureOutput.m in Sources */,
 				0431A8561BA6FED80097F2D8 /* GPUImageLightenBlendFilter.m in Sources */,
 				0431A8491BA6FED80097F2D8 /* GPUImageHistogramFilter.m in Sources */,
+				0430D2921BA8517B00375AA4 /* PKHUDWideBaseView.swift in Sources */,
+				0430D28A1BA8517B00375AA4 /* PKHUDImageView.swift in Sources */,
 				0431A8281BA6FED80097F2D8 /* GPUImageCrosshairGenerator.m in Sources */,
 				0431A8881BA6FED80097F2D8 /* GPUImageSingleComponentGaussianBlurFilter.m in Sources */,
 				0431A8191BA6FED80097F2D8 /* GPUImageBuffer.m in Sources */,
@@ -2708,6 +2738,7 @@
 				0431A8801BA6FED80097F2D8 /* GPUImageRGBFilter.m in Sources */,
 				0431A8471BA6FED80097F2D8 /* GPUImageHighPassFilter.m in Sources */,
 				04B1C6691B9779F700F30C80 /* ScrollingNavigationViewController.swift in Sources */,
+				0430D28F1BA8517B00375AA4 /* PKHUDSystemActivityIndicatorView.swift in Sources */,
 				0431A8891BA6FED80097F2D8 /* GPUImageSketchFilter.m in Sources */,
 				049AA6DF1B73DB84003888CE /* SDWebImageDownloaderOperation.m in Sources */,
 				04B1C6571B97648C00F30C80 /* DOFavoriteButton.swift in Sources */,
@@ -2716,7 +2747,6 @@
 				049AA6AB1B73DA01003888CE /* UIImage+MWPhotoBrowser.m in Sources */,
 				0431A8371BA6FED80097F2D8 /* GPUImageFilter.m in Sources */,
 				04C61FC11B8B982600E2ACB5 /* Photo+CoreDataProperties.swift in Sources */,
-				04B1C6751B9783E000F30C80 /* PKHUD.swift in Sources */,
 				0439D3A51B8B81A6001850DD /* EventAlbumViewController.swift in Sources */,
 				0431A8381BA6FED80097F2D8 /* GPUImageFilterGroup.m in Sources */,
 				049AA6E61B73DB84003888CE /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -2759,6 +2789,7 @@
 				0431A8931BA6FED80097F2D8 /* GPUImageSubtractBlendFilter.m in Sources */,
 				0439D3D31B8B887C001850DD /* Array+Extensions.swift in Sources */,
 				049AA6B61B73DB72003888CE /* MBProgressHUD.m in Sources */,
+				0430D2901BA8517B00375AA4 /* PKHUDTextView.swift in Sources */,
 				049AA6A41B73DA01003888CE /* MWGridCell.m in Sources */,
 				049AA6DE1B73DB84003888CE /* SDWebImageDownloader.m in Sources */,
 				0431A8A51BA6FED80097F2D8 /* GPUImageVideoCamera.m in Sources */,
@@ -2768,6 +2799,7 @@
 				0431A8731BA6FED80097F2D8 /* GPUImagePinchDistortionFilter.m in Sources */,
 				0431A8531BA6FED80097F2D8 /* GPUImageLanczosResamplingFilter.m in Sources */,
 				0431A8461BA6FED80097F2D8 /* GPUImageHighlightShadowFilter.m in Sources */,
+				0430D28D1BA8517B00375AA4 /* PKHUDStatusVIew.swift in Sources */,
 				0431A89E1BA6FED80097F2D8 /* GPUImageTransformFilter.m in Sources */,
 				0431A8761BA6FED80097F2D8 /* GPUImagePoissonBlendFilter.m in Sources */,
 				049AA6E31B73DB84003888CE /* UIImage+GIF.m in Sources */,
@@ -2785,11 +2817,12 @@
 				0431A86A1BA6FED80097F2D8 /* GPUImageNobleCornerDetectionFilter.m in Sources */,
 				0431A8621BA6FED80097F2D8 /* GPUImageMissEtikateFilter.m in Sources */,
 				0431A85F1BA6FED80097F2D8 /* GPUImageLuminosityBlendFilter.m in Sources */,
-				04B1C6781B9783E000F30C80 /* Window.swift in Sources */,
 				049AA6DB1B73DB84003888CE /* SDImageCache.m in Sources */,
 				0431A8771BA6FED80097F2D8 /* GPUImagePolarPixellateFilter.m in Sources */,
 				0431A88C1BA6FED80097F2D8 /* GPUImageSoftEleganceFilter.m in Sources */,
+				0430D2881BA8517B00375AA4 /* PKHUD.swift in Sources */,
 				0431A8AB1BA6FED80097F2D8 /* GPUImageZoomBlurFilter.m in Sources */,
+				0430D2941BA8517B00375AA4 /* WindowRootViewController.swift in Sources */,
 				0431A80E1BA6FED80097F2D8 /* GPUImage3x3ConvolutionFilter.m in Sources */,
 				049AA6DA1B73DB84003888CE /* NSData+ImageContentType.m in Sources */,
 				0431A84E1BA6FED80097F2D8 /* GPUImageHueFilter.m in Sources */,
@@ -2815,7 +2848,6 @@
 				0431A8521BA6FED80097F2D8 /* GPUImageKuwaharaRadius3Filter.m in Sources */,
 				0431A8221BA6FED80097F2D8 /* GPUImageColorDodgeBlendFilter.m in Sources */,
 				044BD34C1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift in Sources */,
-				04B1C6731B9783E000F30C80 /* FrameView.swift in Sources */,
 				04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */,
 				0431A8BB1BA6FF710097F2D8 /* GPUImageView.m in Sources */,
 				0431A88E1BA6FED80097F2D8 /* GPUImageSolidColorGenerator.m in Sources */,
@@ -2825,7 +2857,6 @@
 				0431A8DF1BA6FF8D0097F2D8 /* FastttEmptyFilter.m in Sources */,
 				0431A8A81BA6FED80097F2D8 /* GPUImageWeakPixelInclusionFilter.m in Sources */,
 				0439D3CD1B8B8758001850DD /* NSDate+Extensions.swift in Sources */,
-				04B1C6791B9783E000F30C80 /* WindowRootViewController.swift in Sources */,
 				0431A8591BA6FED80097F2D8 /* GPUImageLocalBinaryPatternFilter.m in Sources */,
 				0431A88F1BA6FED80097F2D8 /* GPUImageSourceOverBlendFilter.m in Sources */,
 				0431A85B1BA6FED80097F2D8 /* GPUImageLowPassFilter.m in Sources */,
@@ -2835,7 +2866,6 @@
 				0439D3A81B8B81A6001850DD /* InviteViewController.swift in Sources */,
 				0431A8201BA6FED80097F2D8 /* GPUImageColorBlendFilter.m in Sources */,
 				04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */,
-				04B1C6771B9783E000F30C80 /* PKHUDContentView.swift in Sources */,
 				0431A8821BA6FED80097F2D8 /* GPUImageSaturationBlendFilter.m in Sources */,
 				042028501BA1F4E20059F096 /* Photo+Sharing.swift in Sources */,
 				043188FE1BA7040F008FB5CE /* CustomFilter.swift in Sources */,
@@ -2857,6 +2887,7 @@
 				0431A8A41BA6FED80097F2D8 /* GPUImageUnsharpMaskFilter.m in Sources */,
 				0431A8311BA6FED80097F2D8 /* GPUImageEmbossFilter.m in Sources */,
 				0431A8E11BA6FF8D0097F2D8 /* FastttFilterCamera.m in Sources */,
+				0430D2891BA8517B00375AA4 /* PKHUDAssets.swift in Sources */,
 				0431A80D1BA6FED80097F2D8 /* GLProgram.m in Sources */,
 				0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */,
 				0431A8851BA6FED80097F2D8 /* GPUImageSepiaFilter.m in Sources */,
@@ -2873,6 +2904,7 @@
 				0431A8601BA6FED80097F2D8 /* GPUImageMaskFilter.m in Sources */,
 				0431A8131BA6FED80097F2D8 /* GPUImageAmatorkaFilter.m in Sources */,
 				0431A84B1BA6FED80097F2D8 /* GPUImageHoughTransformLineDetector.m in Sources */,
+				0430D2911BA8517B00375AA4 /* PKHUDTitleView.swift in Sources */,
 				04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */,
 				0431A83F1BA6FED80097F2D8 /* GPUImageGaussianSelectiveBlurFilter.m in Sources */,
 				0431A8941BA6FED80097F2D8 /* GPUImageSwirlFilter.m in Sources */,
@@ -2888,6 +2920,7 @@
 				0431A8211BA6FED80097F2D8 /* GPUImageColorBurnBlendFilter.m in Sources */,
 				0431A8811BA6FED80097F2D8 /* GPUImageRGBOpeningFilter.m in Sources */,
 				0439D3DE1B8B93A5001850DD /* Backflip.xcdatamodeld in Sources */,
+				0430D28B1BA8517B00375AA4 /* PKHUDProgressVIew.swift in Sources */,
 				0431A8121BA6FED80097F2D8 /* GPUImageAlphaBlendFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3071,7 +3104,7 @@
 				PRODUCT_NAME = Frontflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Supporting Files/Backflip-Bridging-Header.h";
-				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -3147,7 +3180,6 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Supporting Files/Backflip-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

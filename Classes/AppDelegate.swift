@@ -69,11 +69,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
 							
 							
-							let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+							let window : UIWindow? = UIApplication.sharedApplication().windows.first!
 							let tabBar : UITabBarController = window?.rootViewController! as! UITabBarController
 							let checkinViewController : CheckinViewController = (tabBar.viewControllers![0] as! UINavigationController).viewControllers[0] as! CheckinViewController
 
-							println(checkinViewController)
+							print(checkinViewController)
 							
 							
 							// let checkinController : CheckinViewController = CheckinViewController()
@@ -81,14 +81,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 							
 						}))
 						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
 						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
 					} else {
 						
 						var alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
 						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
 						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first! as? UIWindow
+						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
 						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
 					}
 					
@@ -151,7 +151,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         }*/
         
         
-        let userNotificationTypes = (UIUserNotificationType.Alert |  UIUserNotificationType.Badge |  UIUserNotificationType.Sound);
+        let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
         
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         application.registerUserNotificationSettings(settings)
@@ -182,7 +182,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     }
     
     func displayUnsuccessfulInvite() {
-        println("Object not found")
+        print("Object not found")
         let alert = UIAlertView()
         alert.title = "Event Invite Unsuccessful"
         alert.message = "Please log in and click the invite link again."
@@ -195,11 +195,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     func checkinToEvent(event: PFObject) {
         let query = PFUser.query()
         
-        println(PFUser.currentUser()!.objectId!)
+        print(PFUser.currentUser()!.objectId!)
         query!.getObjectInBackgroundWithId(PFUser.currentUser()!.objectId!, block: { (object, error) -> Void in
             
             if error != nil {
-                println(error)
+                print(error)
             }
             else
             {
@@ -228,9 +228,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                 
                 // TODO: Check for existing event_list for eventName
                 let listEvents = object!.objectForKey("savedEventNames") as! [String]
-                if contains(listEvents, event["eventName"] as! String)
+                if listEvents.contains((event["eventName"] as! String))
                 {
-                    print("Event already in list")
+                    print("Event already in list", terminator: "")
                 }
                 else
                 {
@@ -256,7 +256,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                     //attendance.saveInBackground()
                     attendance.save()
                     
-                    println("Saved")
+                    print("Saved")
                 }
             }
         })
@@ -281,9 +281,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
         PFPush.subscribeToChannelInBackground("", block: { (succeeded: Bool, error: NSError?) -> Void in
             if succeeded {
-                println("Backflip successfully subscribed to push notifications on the broadcast channel.");
+                print("Backflip successfully subscribed to push notifications on the broadcast channel.");
             } else {
-                println("Backflip failed to subscribe to push notifications on the broadcast channel with error = %@.", error)
+                print("Backflip failed to subscribe to push notifications on the broadcast channel with error = %@.", error)
             }
         })
     }
@@ -292,7 +292,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         if error.code == 3010 {
             //println("Push notifications are not supported in the iOS Simulator.")
         } else {
-            println("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
+            print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
         }
     }
 
@@ -303,9 +303,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         }
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        println(url)
-        println(url.host as String!)
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        print(url)
+        print(url.host as String!)
         if(url.host == "events"){
             window?.rootViewController?.performSegueWithIdentifier("gotoEventScene", sender: nil)
         }
@@ -313,8 +313,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         // if handleDeepLink returns true, and you registered a callback in initSessionAndRegisterDeepLinkHandler, the callback will be called with the data associated with the deep link
         if (!Branch.getInstance().handleDeepLink(url)) {
             // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
-            println(url)
-            println(url.host as String!)
+            print(url)
+            print(url.host as String!)
         }
 
         return FBSDKApplicationDelegate.sharedInstance().application(application,

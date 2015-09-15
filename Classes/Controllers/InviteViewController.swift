@@ -27,12 +27,12 @@ class InviteViewController: UIViewController {
         
     }
     override func viewWillAppear(animated: Bool) {
-        var tracker = GAI.sharedInstance().defaultTracker
+        let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "Invite Screen")
         tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
         
-        var builder = GAIDictionaryBuilder.createScreenView()
+        let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
     }
     override func viewDidAppear(animated: Bool) {
@@ -55,9 +55,9 @@ class InviteViewController: UIViewController {
         
         if imageView.image != nil {
             
-            UIImageWriteToSavedPhotosAlbum(imageView.image, nil, nil, nil)
+            UIImageWriteToSavedPhotosAlbum(imageView.image!, nil, nil, nil)
             
-            var alert = UIAlertController(title: "Success!", message: "Image saved to camera roll", preferredStyle: UIAlertControllerStyle.Alert)
+			let alert = UIAlertController(title: "Success!", message: "Image saved to camera roll", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:nil))
             
@@ -66,7 +66,7 @@ class InviteViewController: UIViewController {
             
         } else {
             
-            var alert = UIAlertController(title: "Error!", message: "No image saved!", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Error!", message: "No image saved!", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:nil))
             

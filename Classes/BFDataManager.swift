@@ -39,13 +39,14 @@ class BFDataMananger : NSObject
 		let fileManager = NSFileManager.defaultManager()
 		if (!fileManager.fileExistsAtPath(defaultStorePath.path!)) {
 			let seedPath = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(kAppDatabaseName, ofType: "sqlite")!)
-			print("Core data store does not yet exist at: "+defaultStorePath!.path!+". Attempting to copy from seed db"+seedPath!.path!)
+			print("Core data store does not yet exist at: "+defaultStorePath!.path!+". Attempting to copy from seed db"+seedPath.path!)
 			
 			self.createPathToStoreFileIfNeccessary(defaultStorePath)
 			
-			var errorPointer : NSErrorPointer = nil
-			copySuccessful = fileManager.copyItemAtURL(seedPath!, toURL: defaultStorePath, error: errorPointer)
-			if (errorPointer != nil) {
+			do {
+				try fileManager.copyItemAtURL(seedPath, toURL: defaultStorePath)
+				copySuccessful = true
+			} catch _ {
 				print("Seed Database error")
 			}
 			
@@ -63,14 +64,21 @@ class BFDataMananger : NSObject
 	
 	func createPathToStoreFileIfNeccessary(urlForStore: NSURL)
 	{
-		var error : NSErrorPointer = nil
-		NSFileManager.defaultManager().createDirectoryAtPath(urlForStore.URLByDeletingLastPathComponent!.path!, withIntermediateDirectories: true, attributes: nil, error: error)
+		let error : NSErrorPointer = nil
+		do {
+			try NSFileManager.defaultManager().createDirectoryAtPath(urlForStore.URLByDeletingLastPathComponent!.path!, withIntermediateDirectories: true, attributes: nil)
+		} catch let error1 as NSError {
+			error.memory = error1
+		}
 	}
     
 	
 	func excludePathFromBackup(path : NSURL)
 	{
-		path.setResourceValue(NSNumber(bool: true), forKey: NSURLIsExcludedFromBackupKey, error: nil)
+		do {
+			try path.setResourceValue(NSNumber(bool: true), forKey: NSURLIsExcludedFromBackupKey)
+		} catch _ {
+		}
 	}
 	
 }

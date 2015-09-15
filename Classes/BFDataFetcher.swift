@@ -135,7 +135,7 @@ class BFDataFetcher : NSObject {
 		let parseClassNames : [String] = ["Event", "Photo", "EventAttendance"]
 		for className: String in classNames {
 			let updated : NSDate = self.lastUpdated(className)
-			lastUpdated.setObject(updated, forKey: parseClassNames[find(classNames, className)!])
+			lastUpdated.setObject(updated, forKey: parseClassNames[classNames.indexOf(className)!])
 		}
 		
 		if (PFUser.currentUser() != nil) {
@@ -151,7 +151,7 @@ class BFDataFetcher : NSObject {
 
 	func lastUpdated(className: String) -> NSDate
 	{
-		let objectType : AnyObject.Type = NSClassFromString(className)
+		let objectType : AnyObject.Type = NSClassFromString(className)!
 		let object : NSManagedObject.Type = objectType as! NSManagedObject.Type
 		let coreObject = object.MR_findFirstOrderedByAttribute("updatedAt", ascending: false)
 		if (coreObject != nil) {
@@ -159,7 +159,7 @@ class BFDataFetcher : NSObject {
 			return parseObject.updatedAt!
 		}
 		
-		return NSDate.distantPast() as! NSDate
+		return NSDate.distantPast() 
 	}
 	
 	
