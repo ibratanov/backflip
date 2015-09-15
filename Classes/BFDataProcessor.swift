@@ -161,7 +161,9 @@ class BFDataProcessor
 				}
 				
 				photo.caption = object["caption"] as? String
-				photo.flagged = object["flagged"] as? NSNumber
+				if (self.isValid(object["flagged"])) {
+					photo.flagged = NSNumber(bool: (object["flagged"] as! Bool))
+				}
 				photo.reporter = object["reporter"] as? String
 				photo.uploader = object["uploader"] as? String
 				photo.upvoteCount = object["upvoteCount"] as? NSNumber

@@ -357,63 +357,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		}
 		
 	}
-	
-	
-	@IBAction func checkIn123()
-	{
-		if (self.events.count < 1) {
-			return
-		}
-		
-		let index = self.pickerView?.selectedRowInComponent(0)
-		let event = self.events[Int(index!)]
-		
-		// subscribe to event push notifications
-		let currentInstallation = PFInstallation.currentInstallation()
-		currentInstallation.addUniqueObject(("a" + event.objectId!) , forKey: "channels")
-		currentInstallation.saveInBackground()
-		
-		// Create & save attendance object
-		let attendance = PFObject(className:"EventAttendance")
-		attendance["eventID"] = event.objectId
-		attendance["attendeeID"] = PFUser.currentUser()?.objectId
-		attendance["photosLikedID"] = []
-		attendance["photosLiked"] = []
-		attendance["photosUploadedID"] = []
-		attendance["photosUploaded"] = []
-		attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
-		
-		attendance.saveInBackground()
-		
-		
-		let account = PFUser.currentUser()
-		account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
-		account?.addUniqueObject(event.name!, forKey: "savedEventNames")
-		account?.saveInBackground()
-        
-        // Add user to Event objects relation
-        let eventQuery = PFQuery(className: "Event")
-        eventQuery.whereKey("eventName", equalTo: event.name!)
-        eventQuery.findObjectsInBackgroundWithBlock {
-			(objects: [AnyObject]?, error: NSError?) -> Void in
-            
-			let eventObj = objects!.first as! PFObject
-			let relation = eventObj.relationForKey("attendees")
-			relation.addObject(PFUser.currentUser()!)
-			eventObj.saveInBackground()
-            
-        }
 
-		// Store event details in user defaults
-		NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
-		NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
-		NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
-		
-		
-		self.performSegueWithIdentifier("display-event-album", sender: self)
-	}
-	
 	func processDoubleTap(sender: UITapGestureRecognizer)
 	{
 		
