@@ -60,6 +60,11 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 	
     func displayCamera(event: Event)
     {
+		if (_camera == nil) {
+			weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+			_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
+		}
+		
 		_camera?.event = event
         _camera?.modalPresentationStyle = UIModalPresentationStyle.FullScreen
         let window : UIWindow? = UIApplication.sharedApplication().windows.first!

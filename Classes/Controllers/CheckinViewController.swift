@@ -81,7 +81,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		self.doubleTapGesture?.numberOfTapsRequired = 2
 		self.view.addGestureRecognizer(self.doubleTapGesture!)
 		
-		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate()
+		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
 	}
 	
 	override func viewDidLoad()

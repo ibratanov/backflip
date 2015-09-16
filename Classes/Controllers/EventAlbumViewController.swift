@@ -46,6 +46,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		super.loadView()
 		
+		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
 	}
 
 	override func viewDidAppear(animated: Bool)
@@ -206,6 +207,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			
 			cell.imageView.image = UIImage(named: "album-add-photo")
 			cell.imageView.image!.imageWithRenderingMode(.AlwaysTemplate)
+			cell.imageView.contentMode = .ScaleAspectFit
 			cell.imageView.tintColor = UIColor.grayColor()
 			
 		} else if (self.collectionContent.count >= indexPath.row) {
