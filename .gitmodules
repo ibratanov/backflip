@@ -16,9 +16,6 @@
 [submodule "Vendor/AFNetworking"]
 	path = Vendor/AFNetworking
 	url = https://github.com/AFNetworking/AFNetworking.git
-[submodule "Vendor/DOFavoriteButton"]
-	path = Vendor/DOFavoriteButton
-	url = https://github.com/okmr-d/DOFavoriteButton.git
 [submodule "Vendor/AMScrollingNavbar"]
 	path = Vendor/AMScrollingNavbar
 	url = https://github.com/andreamazz/AMScrollingNavbar.git
@@ -38,3 +35,6 @@
 [submodule "Vendor/AFNetwork"]
 	path = Vendor/AFNetwork
 	url = git@github.com:fullstackio/FlappySwift.git
+[submodule "Vendor/DOFavoriteButton"]
+	path = Vendor/DOFavoriteButton
+	url = git@github.com:kylebshr/DOFavoriteButton.git
