@@ -337,11 +337,6 @@
 		04A2516D1BA20B76003B89E8 /* libGTM_UIFont+LineHeight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A2512E1BA20B76003B89E8 /* libGTM_UIFont+LineHeight.a */; };
 		04A2516E1BA20B76003B89E8 /* libGTMStackTrace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A2512F1BA20B76003B89E8 /* libGTMStackTrace.a */; };
 		04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */; };
-		04B1C6571B97648C00F30C80 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1C6521B97648C00F30C80 /* DOFavoriteButton.swift */; };
-		04B1C6581B97648C00F30C80 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6531B97648C00F30C80 /* heart.png */; };
-		04B1C6591B97648C00F30C80 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6541B97648C00F30C80 /* like.png */; };
-		04B1C65A1B97648C00F30C80 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6551B97648C00F30C80 /* smile.png */; };
-		04B1C65B1B97648C00F30C80 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B1C6561B97648C00F30C80 /* star.png */; };
 		04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */; };
 		04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */; };
 		04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB61B8B982600E2ACB5 /* File.swift */; };
@@ -359,11 +354,16 @@
 		04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; };
 		04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04CCD6691B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */; };
-		04E39D421BA88AC20061EA36 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D3B1BA88AC20061EA36 /* Bolts.framework */; };
-		04E39D431BA88AC20061EA36 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D3C1BA88AC20061EA36 /* Parse.framework */; };
-		04E39D441BA88AC20061EA36 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D3D1BA88AC20061EA36 /* ParseCrashReporting.framework */; };
-		04E39D471BA88AC20061EA36 /* ParseTwitterUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D401BA88AC20061EA36 /* ParseTwitterUtils.framework */; };
-		04E39D481BA88AC20061EA36 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D411BA88AC20061EA36 /* ParseUI.framework */; };
+		04D7D7021BA9ACC000AC6AA3 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D7D6FD1BA9ACC000AC6AA3 /* DOFavoriteButton.swift */; settings = {ASSET_TAGS = (); }; };
+		04D7D7031BA9ACC000AC6AA3 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D6FE1BA9ACC000AC6AA3 /* heart.png */; settings = {ASSET_TAGS = (); }; };
+		04D7D7041BA9ACC000AC6AA3 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D6FF1BA9ACC000AC6AA3 /* like.png */; settings = {ASSET_TAGS = (); }; };
+		04D7D7051BA9ACC000AC6AA3 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7001BA9ACC000AC6AA3 /* smile.png */; settings = {ASSET_TAGS = (); }; };
+		04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7011BA9ACC000AC6AA3 /* star.png */; settings = {ASSET_TAGS = (); }; };
+		04D7D7161BA9ADB800AC6AA3 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7111BA9ADB800AC6AA3 /* Bolts.framework */; settings = {ASSET_TAGS = (); }; };
+		04D7D7171BA9ADB800AC6AA3 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7121BA9ADB800AC6AA3 /* Parse.framework */; settings = {ASSET_TAGS = (); }; };
+		04D7D7181BA9ADB800AC6AA3 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7131BA9ADB800AC6AA3 /* ParseCrashReporting.framework */; settings = {ASSET_TAGS = (); }; };
+		04D7D7191BA9ADB800AC6AA3 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7141BA9ADB800AC6AA3 /* ParseFacebookUtilsV4.framework */; settings = {ASSET_TAGS = (); }; };
+		04D7D71A1BA9ADB800AC6AA3 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7151BA9ADB800AC6AA3 /* ParseUI.framework */; settings = {ASSET_TAGS = (); }; };
 		04E39D531BA895AF0061EA36 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; };
 		04E39D541BA895B40061EA36 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; };
 		04E39D551BA895B40061EA36 /* MapleBacon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1107,11 +1107,6 @@
 		04A251571BA20B76003B89E8 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
 		04A251581BA20B76003B89E8 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		04B1C6521B97648C00F30C80 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOFavoriteButton.swift; sourceTree = "<group>"; };
-		04B1C6531B97648C00F30C80 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
-		04B1C6541B97648C00F30C80 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
-		04B1C6551B97648C00F30C80 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
-		04B1C6561B97648C00F30C80 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ParseObject+CoreDataProperties.swift"; path = "Models/ParseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
 		04C61FB61B8B982600E2ACB5 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -1132,11 +1127,16 @@
 		04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MagicalRecord.xcodeproj; path = Vendor/MagicalRecord/MagicalRecord.xcodeproj; sourceTree = "<group>"; };
 		04CCD6671B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FetchOrCreate.h"; sourceTree = "<group>"; };
 		04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FetchOrCreate.m"; sourceTree = "<group>"; };
-		04E39D3B1BA88AC20061EA36 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		04E39D3C1BA88AC20061EA36 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		04E39D3D1BA88AC20061EA36 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
-		04E39D401BA88AC20061EA36 /* ParseTwitterUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseTwitterUtils.framework; sourceTree = "<group>"; };
-		04E39D411BA88AC20061EA36 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		04D7D6FD1BA9ACC000AC6AA3 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DOFavoriteButton.swift; path = Vendor/DOFavoriteButton/DOFavoriteButton.swift; sourceTree = SOURCE_ROOT; };
+		04D7D6FE1BA9ACC000AC6AA3 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = Vendor/DOFavoriteButton/heart.png; sourceTree = SOURCE_ROOT; };
+		04D7D6FF1BA9ACC000AC6AA3 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = like.png; path = Vendor/DOFavoriteButton/like.png; sourceTree = SOURCE_ROOT; };
+		04D7D7001BA9ACC000AC6AA3 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smile.png; path = Vendor/DOFavoriteButton/smile.png; sourceTree = SOURCE_ROOT; };
+		04D7D7011BA9ACC000AC6AA3 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = Vendor/DOFavoriteButton/star.png; sourceTree = SOURCE_ROOT; };
+		04D7D7111BA9ADB800AC6AA3 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		04D7D7121BA9ADB800AC6AA3 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		04D7D7131BA9ADB800AC6AA3 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
+		04D7D7141BA9ADB800AC6AA3 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		04D7D7151BA9ADB800AC6AA3 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = Vendor/MapleBacon/Library/MapleBacon/MapleBacon.xcodeproj; sourceTree = "<group>"; };
 		04E39D5A1BA8BCF50061EA36 /* bird.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = bird.atlas; path = Vendor/AFNetwork/FlappyBird/bird.atlas; sourceTree = "<group>"; };
 		04E39D5B1BA8BCF50061EA36 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = Vendor/AFNetwork/FlappyBird/GameScene.sks; sourceTree = "<group>"; };
@@ -1176,12 +1176,15 @@
 				0439D3971B8B79C3001850DD /* libz.dylib in Frameworks */,
 				0439D3951B8B79B5001850DD /* libc++.dylib in Frameworks */,
 				0439D3931B8B7936001850DD /* Mixpanel.framework in Frameworks */,
+				04D7D7181BA9ADB800AC6AA3 /* ParseCrashReporting.framework in Frameworks */,
+				04D7D7171BA9ADB800AC6AA3 /* Parse.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				04A251691BA20B76003B89E8 /* libGTM_Regex.a in Frameworks */,
 				04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */,
 				04A2515E1BA20B76003B89E8 /* libGSDK_Overload.a in Frameworks */,
 				0439D3281B876EA9001850DD /* Security.framework in Frameworks */,
 				04A251681BA20B76003B89E8 /* libGTM_NSStringXML.a in Frameworks */,
+				04D7D7161BA9ADB800AC6AA3 /* Bolts.framework in Frameworks */,
 				0439D3411B8B76B1001850DD /* DigitsKit.framework in Frameworks */,
 				04A2516E1BA20B76003B89E8 /* libGTMStackTrace.a in Frameworks */,
 				049AA6EA1B73DBB2003888CE /* AssetsLibrary.framework in Frameworks */,
@@ -1189,12 +1192,10 @@
 				502199C61B33838A00A64387 /* CoreMotion.framework in Frameworks */,
 				04A2515B1BA20B76003B89E8 /* libGoogleAnalytics.a in Frameworks */,
 				50C9A7931B276F430091FEC9 /* Social.framework in Frameworks */,
+				04D7D71A1BA9ADB800AC6AA3 /* ParseUI.framework in Frameworks */,
 				3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */,
 				0439D3401B8B76B1001850DD /* Branch.framework in Frameworks */,
-				04E39D421BA88AC20061EA36 /* Bolts.framework in Frameworks */,
 				04A251611BA20B76003B89E8 /* libGTM_DebugUtils.a in Frameworks */,
-				04E39D481BA88AC20061EA36 /* ParseUI.framework in Frameworks */,
-				04E39D471BA88AC20061EA36 /* ParseTwitterUtils.framework in Frameworks */,
 				04A2515A1BA20B76003B89E8 /* libGGLCore.a in Frameworks */,
 				04A251671BA20B76003B89E8 /* libGTM_NSStringHTML.a in Frameworks */,
 				502199AE1B33817100A64387 /* Accounts.framework in Frameworks */,
@@ -1210,7 +1211,6 @@
 				04A2516C1BA20B76003B89E8 /* libGTM_SystemVersion.a in Frameworks */,
 				04A2516B1BA20B76003B89E8 /* libGTM_StringEncoding.a in Frameworks */,
 				04A2516D1BA20B76003B89E8 /* libGTM_UIFont+LineHeight.a in Frameworks */,
-				04E39D441BA88AC20061EA36 /* ParseCrashReporting.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				04A251641BA20B76003B89E8 /* libGTM_KVO.a in Frameworks */,
 				04E39D541BA895B40061EA36 /* MapleBacon.framework in Frameworks */,
@@ -1219,9 +1219,9 @@
 				04A251651BA20B76003B89E8 /* libGTM_NSDictionary+URLArguments.a in Frameworks */,
 				04A2515F1BA20B76003B89E8 /* libGTM_AddressBook.a in Frameworks */,
 				0439D3471B8B76B1001850DD /* NewRelicAgent.framework in Frameworks */,
-				04E39D431BA88AC20061EA36 /* Parse.framework in Frameworks */,
 				04A251631BA20B76003B89E8 /* libGTM_iPhone.a in Frameworks */,
 				81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */,
+				04D7D7191BA9ADB800AC6AA3 /* ParseFacebookUtilsV4.framework in Frameworks */,
 				0439D3421B8B76B1001850DD /* Fabric.framework in Frameworks */,
 				0439D3431B8B76B1001850DD /* FBSDKCoreKit.framework in Frameworks */,
 				0439D3441B8B76B1001850DD /* FBSDKLoginKit.framework in Frameworks */,
@@ -1699,11 +1699,11 @@
 		0439D33A1B8B76B1001850DD /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				04E39D3B1BA88AC20061EA36 /* Bolts.framework */,
-				04E39D3C1BA88AC20061EA36 /* Parse.framework */,
-				04E39D3D1BA88AC20061EA36 /* ParseCrashReporting.framework */,
-				04E39D401BA88AC20061EA36 /* ParseTwitterUtils.framework */,
-				04E39D411BA88AC20061EA36 /* ParseUI.framework */,
+				04D7D7111BA9ADB800AC6AA3 /* Bolts.framework */,
+				04D7D7121BA9ADB800AC6AA3 /* Parse.framework */,
+				04D7D7131BA9ADB800AC6AA3 /* ParseCrashReporting.framework */,
+				04D7D7141BA9ADB800AC6AA3 /* ParseFacebookUtilsV4.framework */,
+				04D7D7151BA9ADB800AC6AA3 /* ParseUI.framework */,
 			);
 			name = Parse;
 			path = Vendor/Parse;
@@ -2232,11 +2232,11 @@
 		04B1C6511B97648C00F30C80 /* DOFavoriteButton */ = {
 			isa = PBXGroup;
 			children = (
-				04B1C6521B97648C00F30C80 /* DOFavoriteButton.swift */,
-				04B1C6531B97648C00F30C80 /* heart.png */,
-				04B1C6541B97648C00F30C80 /* like.png */,
-				04B1C6551B97648C00F30C80 /* smile.png */,
-				04B1C6561B97648C00F30C80 /* star.png */,
+				04D7D6FD1BA9ACC000AC6AA3 /* DOFavoriteButton.swift */,
+				04D7D6FE1BA9ACC000AC6AA3 /* heart.png */,
+				04D7D6FF1BA9ACC000AC6AA3 /* like.png */,
+				04D7D7001BA9ACC000AC6AA3 /* smile.png */,
+				04D7D7011BA9ACC000AC6AA3 /* star.png */,
 			);
 			name = DOFavoriteButton;
 			path = Vendor/DOFavoriteButton/DOFavoriteButton;
@@ -2642,10 +2642,10 @@
 				0439D3B91B8B82E2001850DD /* InviteViewController.xib in Resources */,
 				049AA69B1B73DA01003888CE /* UIBarButtonItemArrowRight@3x.png in Resources */,
 				0439D3BD1B8B82E2001850DD /* PreviewViewController.xib in Resources */,
-				04B1C65B1B97648C00F30C80 /* star.png in Resources */,
 				049AA6951B73DA01003888CE /* PlayButtonOverlayLargeTap@3x.png in Resources */,
 				049AA6841B73DA01003888CE /* ImageSelectedOff.png in Resources */,
 				049AA6901B73DA01003888CE /* PlayButtonOverlayLarge.png in Resources */,
+				04D7D7031BA9ACC000AC6AA3 /* heart.png in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
 				0439D3BC1B8B82E2001850DD /* OverlayView.xib in Resources */,
 				049AA6861B73DA01003888CE /* ImageSelectedOff@3x.png in Resources */,
@@ -2654,23 +2654,23 @@
 				049AA6811B73DA01003888CE /* ImageError.png in Resources */,
 				049AA68A1B73DA01003888CE /* ImageSelectedSmallOff.png in Resources */,
 				0439D3991B8B7AEE001850DD /* DigitsKitResources.bundle in Resources */,
+				04D7D7041BA9ACC000AC6AA3 /* like.png in Resources */,
+				04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */,
 				0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */,
 				04E39D611BA8BCF50061EA36 /* GameScene.sks in Resources */,
 				049AA6941B73DA01003888CE /* PlayButtonOverlayLargeTap@2x.png in Resources */,
 				04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */,
 				049AA6A01B73DA01003888CE /* VideoOverlay@2x.png in Resources */,
 				049AA69F1B73DA01003888CE /* VideoOverlay.png in Resources */,
+				04D7D7051BA9ACC000AC6AA3 /* smile.png in Resources */,
 				049AA6821B73DA01003888CE /* ImageError@2x.png in Resources */,
 				049AA6881B73DA01003888CE /* ImageSelectedOn@2x.png in Resources */,
 				049AA68B1B73DA01003888CE /* ImageSelectedSmallOff@2x.png in Resources */,
 				049AA6991B73DA01003888CE /* UIBarButtonItemArrowRight.png in Resources */,
 				049AA6971B73DA01003888CE /* UIBarButtonItemArrowLeft@2x.png in Resources */,
-				04B1C6591B97648C00F30C80 /* like.png in Resources */,
 				049AA6921B73DA01003888CE /* PlayButtonOverlayLarge@3x.png in Resources */,
 				04CA5D871B8B9D440075C0A8 /* ZAActivityBar.bundle in Resources */,
 				049AA6A11B73DA01003888CE /* VideoOverlay@3x.png in Resources */,
-				04B1C6581B97648C00F30C80 /* heart.png in Resources */,
-				04B1C65A1B97648C00F30C80 /* smile.png in Resources */,
 				049AA69A1B73DA01003888CE /* UIBarButtonItemArrowRight@2x.png in Resources */,
 				049AA6831B73DA01003888CE /* ImageError@3x.png in Resources */,
 				049AA6931B73DA01003888CE /* PlayButtonOverlayLargeTap.png in Resources */,
@@ -2722,6 +2722,7 @@
 				0431A8981BA6FED80097F2D8 /* GPUImageThresholdEdgeDetectionFilter.m in Sources */,
 				049AA6E21B73DB84003888CE /* UIButton+WebCache.m in Sources */,
 				0431A8671BA6FED80097F2D8 /* GPUImageMovie.m in Sources */,
+				04D7D7021BA9ACC000AC6AA3 /* DOFavoriteButton.swift in Sources */,
 				0431A8441BA6FED80097F2D8 /* GPUImageHarrisCornerDetectionFilter.m in Sources */,
 				0431A8741BA6FED80097F2D8 /* GPUImagePixellateFilter.m in Sources */,
 				0431A89C1BA6FED80097F2D8 /* GPUImageToneCurveFilter.m in Sources */,
@@ -2796,7 +2797,6 @@
 				0430D28F1BA8517B00375AA4 /* PKHUDSystemActivityIndicatorView.swift in Sources */,
 				0431A8891BA6FED80097F2D8 /* GPUImageSketchFilter.m in Sources */,
 				049AA6DF1B73DB84003888CE /* SDWebImageDownloaderOperation.m in Sources */,
-				04B1C6571B97648C00F30C80 /* DOFavoriteButton.swift in Sources */,
 				049AA6D91B73DB84003888CE /* MKAnnotationView+WebCache.m in Sources */,
 				0431A8431BA6FED80097F2D8 /* GPUImageHardLightBlendFilter.m in Sources */,
 				049AA6AB1B73DA01003888CE /* UIImage+MWPhotoBrowser.m in Sources */,
@@ -3115,6 +3115,7 @@
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
 					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
+					"$(PROJECT_DIR)/Vendor/Parse",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3196,6 +3197,7 @@
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
 					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
+					"$(PROJECT_DIR)/Vendor/Parse",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
