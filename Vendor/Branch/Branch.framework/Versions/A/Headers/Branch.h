@@ -11,6 +11,8 @@
 #import "BNCServerInterface.h"
 #import "BNCServerRequestQueue.h"
 #import "BNCLinkCache.h"
+#import "BranchDeepLinkingController.h"
+#import "BNCPreferenceHelper.h"
 
 /**
  `Branch` is the primary interface of the Branch iOS SDK. Currently, all interactions you will make are funneled through this class. It is not meant to be instantiated or subclassed, usage should be limited to the global instance.
@@ -22,6 +24,7 @@ typedef void (^callbackWithParams) (NSDictionary *params, NSError *error);
 typedef void (^callbackWithUrl) (NSString *url, NSError *error);
 typedef void (^callbackWithStatus) (BOOL changed, NSError *error);
 typedef void (^callbackWithList) (NSArray *list, NSError *error);
+typedef void (^callbackWithUrlAndSpotlightIdentifier) (NSString *url, NSString *spotlightIdentifier, NSError *error);
 
 ///----------------
 /// @name Constants
@@ -106,15 +109,15 @@ typedef NS_ENUM(NSUInteger, BranchCreditHistoryOrder) {
     BranchLeastRecentFirst
 };
 
-typedef NS_ENUM(NSUInteger, BranchReferralCodeLocation) {
-    BranchReferreeUser = 0,
-    BranchReferringUser = 2,
-    BranchBothUsers = 3
+typedef NS_ENUM(NSUInteger, BranchPromoCodeRewardLocation) {
+    BranchPromoCodeRewardReferredUser = 0,
+    BranchPromoCodeRewardReferringUser = 2,
+    BranchPromoCodeRewardBothUsers = 3
 };
 
-typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
-    BranchUniqueRewards = 1,
-    BranchUnlimitedRewards = 0
+typedef NS_ENUM(NSUInteger, BranchPromoCodeUsageType) {
+    BranchPromoCodeUsageTypeOncePerUser = 1,
+    BranchPromoCodeUsageTypeUnlimitedUses = 0
 };
 
 @interface Branch : NSObject
@@ -162,13 +165,14 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
 
 /**
  Create a BranchActivityItemProvider which subclasses the `UIActivityItemProvider` This can be used for simple sharing via a `UIActivityViewController`.
- 
+
  Internally, this will create a short Branch Url that will be attached to the shared content.
- 
+
  @param params A dictionary to use while building up the Branch link.
  @param feature The feature the generated link will be associated with.
- */
-+ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andFeature:(NSString *)feature;
+*/
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params feature:(NSString *)feature;
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andFeature:(NSString *)feature  __attribute__((deprecated(("Use methods without 'and'"))));
 
 /**
  Create a BranchActivityItemProvider which subclasses the `UIActivityItemProvider` This can be used for simple sharing via a `UIActivityViewController`.
@@ -179,7 +183,8 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  @param feature The feature the generated link will be associated with.
  @param stage The stage used for the generated link, typically used to indicate what part of a funnel the user is in.
  */
-+ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andFeature:(NSString *)feature andStage:(NSString *)stage;
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params feature:(NSString *)feature stage:(NSString *)stage;
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andFeature:(NSString *)feature andStage:(NSString *)stage __attribute__((deprecated(("Use methods without 'and'"))));
 
 /**
  Create a BranchActivityItemProvider which subclasses the `UIActivityItemProvider` This can be used for simple sharing via a `UIActivityViewController`.
@@ -191,7 +196,8 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  @param stage The stage used for the generated link, typically used to indicate what part of a funnel the user is in.
  @param tags An array of tag strings to be associated with the link.
  */
-+ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andFeature:(NSString *)feature andStage:(NSString *)stage andTags:(NSArray *)tags;
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params feature:(NSString *)feature stage:(NSString *)stage tags:(NSArray *)tags;
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andFeature:(NSString *)feature andStage:(NSString *)stage andTags:(NSArray *)tags __attribute__((deprecated(("Use methods without 'and'"))));
 
 /**
  Create a BranchActivityItemProvider which subclasses the `UIActivityItemProvider` This can be used for simple sharing via a `UIActivityViewController`.
@@ -204,7 +210,9 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  @param alias The alias for a link.
  @warning This can fail if the alias is already taken.
  */
-+ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andFeature:(NSString *)feature andStage:(NSString *)stage andAlias:(NSString *)alias;
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params feature:(NSString *)feature stage:(NSString *)stage tags:(NSArray *)tags alias:(NSString *)alias;
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andFeature:(NSString *)feature andStage:(NSString *)stage andAlias:(NSString *)alias __attribute__((deprecated(("Use methods without 'and'"))));
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andTags:(NSArray *)tags andFeature:(NSString *)feature andStage:(NSString *)stage andAlias:(NSString *)alias __attribute__((deprecated(("Use methods without 'and'"))));
 
 /**
  Create a BranchActivityItemProvider which subclasses the `UIActivityItemProvider` This can be used for simple sharing via a `UIActivityViewController`.
@@ -212,13 +220,16 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  Internally, this will create a short Branch Url that will be attached to the shared content.
  
  @param params A dictionary to use while building up the Branch link.
- @param tags An array of tag strings to be associated with the link.
  @param feature The feature the generated link will be associated with.
  @param stage The stage used for the generated link, typically used to indicate what part of a funnel the user is in.
+ @param tags An array of tag strings to be associated with the link.
  @param alias The alias for a link.
+ @params delegate A delegate allowing you to override any of the parameters provided here based on the user-selected channel
  @warning This can fail if the alias is already taken.
  */
-+ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params andTags:(NSArray *)tags andFeature:(NSString *)feature andStage:(NSString *)stage andAlias:(NSString *)alias;
++ (BranchActivityItemProvider *)getBranchActivityItemWithParams:(NSDictionary *)params feature:(NSString *)feature stage:(NSString *)stage tags:(NSArray *)tags alias:(NSString *)alias delegate:(id <BranchActivityItemProviderDelegate>)delegate;
+
+
 
 #pragma mark - Initialization methods
 
@@ -250,13 +261,12 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
 - (void)initSession:(BOOL)isReferrable;
 
 /**
- Just initialize the Branch session with the app launch options, specifying whether to allow it to be treated as a referral.
+ Just initialize the Branch session, specifying whether to allow it to automatically display matching deep linked controllers
  
- @param options The launch options provided by the AppDelegate's `didFinishLaunchingWithOptions:` method.
- @param isReferrable Boolean representing whether to allow the session to be marked as referred, overriding the default behavior.
- @warning This is not the recommended method of initializing Branch. While Branch is able to properly attribute deep linking info with the launch options, you lose the ability to do anything with a callback.
+ @param automaticallyDisplayController Boolean indicating whether we will automatically launch into deep linked controller matched in the init session dictionary.
+ @warning This is not the recommended method of initializing Branch, as you potentially lose deep linking info by not passing the launch options.
  */
-- (void)initSessionWithLaunchOptions:(NSDictionary *)options isReferrable:(BOOL)isReferrable;
+- (void)initSessionAndAutomaticallyDisplayDeepLinkController:(BOOL)automaticallyDisplayController;
 
 /**
  Initialize the Branch session and handle the completion with a callback
@@ -265,6 +275,15 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  @warning This is not the recommended method of initializing Branch, as you potentially lose deep linking info by not passing the launch options.
  */
 - (void)initSessionAndRegisterDeepLinkHandler:(callbackWithParams)callback;
+
+/**
+ Just initialize the Branch session with the app launch options, specifying whether to allow it to be treated as a referral.
+ 
+ @param options The launch options provided by the AppDelegate's `didFinishLaunchingWithOptions:` method.
+ @param isReferrable Boolean representing whether to allow the session to be marked as referred, overriding the default behavior.
+ @warning This is not the recommended method of initializing Branch. While Branch is able to properly attribute deep linking info with the launch options, you lose the ability to do anything with a callback.
+ */
+- (void)initSessionWithLaunchOptions:(NSDictionary *)options isReferrable:(BOOL)isReferrable;
 
 /**
  Initialize the Branch session and handle the completion with a callback
@@ -287,11 +306,74 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  Initialize the Branch session with the app launch options and handle the completion with a callback
  
  @param options The launch options provided by the AppDelegate's `didFinishLaunchingWithOptions:` method.
+ @param automaticallyDisplayController Boolean indicating whether we will automatically launch into deep linked controller matched in the init session dictionary.
+ */
+- (void)initSessionWithLaunchOptions:(NSDictionary *)options automaticallyDisplayDeepLinkController:(BOOL)automaticallyDisplayController;
+
+/**
+ Initialize the Branch session and handle the completion with a callback
+ 
+ @param isReferrable Boolean representing whether to allow the session to be marked as referred, overriding the default behavior.
+ @param automaticallyDisplayController Boolean indicating whether we will automatically launch into deep linked controller matched in the init session dictionary.
+ @warning This is not the recommended method of initializing Branch, as you potentially lose deep linking info by not passing the launch options.
+ */
+- (void)initSession:(BOOL)isReferrable automaticallyDisplayDeepLinkController:(BOOL)automaticallyDisplayController;
+
+/**
+ Initialize the Branch session and handle the completion with a callback
+ 
+ @param automaticallyDisplayController Boolean indicating whether we will automatically launch into deep linked controller matched in the init session dictionary.
+ @param callback A callback that is called when the session is opened. This will be called multiple times during the apps life, including any time the app goes through a background / foreground cycle.
+ @warning This is not the recommended method of initializing Branch, as you potentially lose deep linking info by not passing the launch options.
+ */
+- (void)initSessionAndAutomaticallyDisplayDeepLinkController:(BOOL)automaticallyDisplayController deepLinkHandler:(callbackWithParams)callback;
+
+/**
+ Initialize the Branch session with the app launch options and handle the completion with a callback
+ 
+ @param options The launch options provided by the AppDelegate's `didFinishLaunchingWithOptions:` method.
  @param isReferrable Boolean representing whether to allow the session to be marked as referred, overriding the default behavior.
  @param callback A callback that is called when the session is opened. This will be called multiple times during the apps life, including any time the app goes through a background / foreground cycle.
  */
 - (void)initSessionWithLaunchOptions:(NSDictionary *)options isReferrable:(BOOL)isReferrable andRegisterDeepLinkHandler:(callbackWithParams)callback;
 
+/**
+ Initialize the Branch session with the app launch options and handle the completion with a callback
+ 
+ @param options The launch options provided by the AppDelegate's `didFinishLaunchingWithOptions:` method.
+ @param isReferrable Boolean representing whether to allow the session to be marked as referred, overriding the default behavior.
+ @param automaticallyDisplayController Boolean indicating whether we will automatically launch into deep linked controller matched in the init session dictionary.
+ */
+- (void)initSessionWithLaunchOptions:(NSDictionary *)options isReferrable:(BOOL)isReferrable automaticallyDisplayDeepLinkController:(BOOL)automaticallyDisplayController;
+
+/**
+ Initialize the Branch session with the app launch options and handle the completion with a callback
+ 
+ @param options The launch options provided by the AppDelegate's `didFinishLaunchingWithOptions:` method.
+ @param automaticallyDisplayController Boolean indicating whether we will automatically launch into deep linked controller matched in the init session dictionary.
+ @param callback A callback that is called when the session is opened. This will be called multiple times during the apps life, including any time the app goes through a background / foreground cycle.
+ */
+- (void)initSessionWithLaunchOptions:(NSDictionary *)options automaticallyDisplayDeepLinkController:(BOOL)automaticallyDisplayController deepLinkHandler:(callbackWithParams)callback;
+
+/**
+ Initialize the Branch session with the app launch options and handle the completion with a callback
+ 
+ @param automaticallyDisplayController Boolean indicating whether we will automatically launch into deep linked controller matched in the init session dictionary.
+ @param isReferrable Boolean representing whether to allow the session to be marked as referred, overriding the default behavior.
+ @param callback A callback that is called when the session is opened. This will be called multiple times during the apps life, including any time the app goes through a background / foreground cycle.
+ @warning This is not the recommended method of initializing Branch, as you potentially lose deep linking info by not passing the launch options.
+ */
+- (void)initSessionAndAutomaticallyDisplayDeepLinkController:(BOOL)automaticallyDisplayController isReferrable:(BOOL)isReferrable deepLinkHandler:(callbackWithParams)callback;
+
+/**
+ Initialize the Branch session with the app launch options and handle the completion with a callback
+ 
+ @param options The launch options provided by the AppDelegate's `didFinishLaunchingWithOptions:` method.
+ @param automaticallyDisplayController Boolean indicating whether we will automatically launch into deep linked controller matched in the init session dictionary.
+ @param isReferrable Boolean representing whether to allow the session to be marked as referred, overriding the default behavior.
+ @param callback A callback that is called when the session is opened. This will be called multiple times during the apps life, including any time the app goes through a background / foreground cycle.
+ */
+- (void)initSessionWithLaunchOptions:(NSDictionary *)options automaticallyDisplayDeepLinkController:(BOOL)automaticallyDisplayController isReferrable:(BOOL)isReferrable deepLinkHandler:(callbackWithParams)callback;
 
 /**
  Allow Branch to handle a link opening the app, returning whether it was from a Branch link or not.
@@ -299,6 +381,21 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  @param url The url that caused the app to be opened.
  */
 - (BOOL)handleDeepLink:(NSURL *)url;
+
+/**
+ Allow Branch to handle restoration from an NSUserActivity, returning whether or not it was from a Branch link.
+ 
+ @param userActivity The NSUserActivity that caused the app to be opened.
+*/
+- (BOOL)continueUserActivity:(NSUserActivity *)userActivity;
+
+#pragma mark - Deep Link Controller methods
+
+///---------------------------
+/// @name Deep Link Controller
+///---------------------------
+
+- (void)registerDeepLinkController:(UIViewController <BranchDeepLinkingController> *)controller forKey:(NSString *)key;
 
 #pragma mark - Configuration methods
 
@@ -326,7 +423,7 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  
  @param retryInterval Number of seconds to wait between retries.
  */
-- (void)setRetryInterval:(NSInteger)retryInterval;
+- (void)setRetryInterval:(NSTimeInterval)retryInterval;
 
 /**
  Specify the max number of times to retry in the case of a Branch server error
@@ -340,14 +437,7 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  
  @param timeout Number of seconds to before a request is considered timed out.
  */
-- (void)setNetworkTimeout:(NSInteger)timeout;
-
-/**
- Whether or not Branch should attempt to the devices list of apps
- 
- @param appListCheckEnabled Boolean indicating whether to perform the check.
- */
-- (void)setAppListCheckEnabled:(BOOL)appListCheckEnabled;
+- (void)setNetworkTimeout:(NSTimeInterval)timeout;
 
 #pragma mark - Session Item methods
 
@@ -968,57 +1058,207 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  */
 - (void)getReferralUrlWithParams:(NSDictionary *)params andTags:(NSArray *)tags andChannel:(NSString *)channel andCallback:(callbackWithUrl)callback;
 
+- (void)getSpotlightUrlWithParams:(NSDictionary *)params callback:(callbackWithParams)callback;
+
+#pragma mark - Content Discovery methods
+
+///--------------------------------
+/// @name Content Discovery methods
+///--------------------------------
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. It will not be public by default. Type defaults to kUTTypeImage.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. It will not be public by default. Type defaults to kUTTypeImage.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param callback Callback called with the Branch url this will fallback to.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description callback:(callbackWithUrl)callback;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. Will be public if specified. Type defaults to kUTTypeImage.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param publiclyIndexable Whether or not this item should be added to Apple's public search index.
+ @param callback Callback called with the Branch url this will fallback to.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description publiclyIndexable:(BOOL)publiclyIndexable callback:(callbackWithUrl)callback;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. Will be public if specified. You can override the type as desired, using one of the types provided in MobileCoreServices.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param type The type to use for the NSUserActivity, taken from the list of constants provided in the MobileCoreServices framework.
+ @param publiclyIndexable Whether or not this item should be added to Apple's public search index.
+ @param callback Callback called with the Branch url this will fallback to.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description type:(NSString *)type publiclyIndexable:(BOOL)publiclyIndexable callback:(callbackWithUrl)callback;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. Will be public if specified. You can override the type as desired, using one of the types provided in MobileCoreServices.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param thumbnailUrl Url to an image to be used for the thumnbail in spotlight.
+ @param type The type to use for the NSUserActivity, taken from the list of constants provided in the MobileCoreServices framework.
+ @param publiclyIndexable Whether or not this item should be added to Apple's public search index.
+ @param callback Callback called with the Branch url this will fallback to.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description thumbnailUrl:(NSURL *)thumbnailUrl type:(NSString *)type publiclyIndexable:(BOOL)publiclyIndexable callback:(callbackWithUrl)callback;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. Will be public if specified. You can override the type as desired, using one of the types provided in MobileCoreServices.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param publiclyIndexable Whether or not this item should be added to Apple's public search index.
+ @param thumbnailUrl Url to an image to be used for the thumnbail in spotlight.
+ @param type The type to use for the NSUserActivity, taken from the list of constants provided in the MobileCoreServices framework.
+ @param keywords A set of keywords to be used in Apple's search index.
+ @param callback Callback called with the Branch url this will fallback to.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description thumbnailUrl:(NSURL *)thumbnailUrl type:(NSString *)type publiclyIndexable:(BOOL)publiclyIndexable keywords:(NSSet *)keywords callback:(callbackWithUrl)callback;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. Will be public if specified. You can override the type as desired, using one of the types provided in MobileCoreServices.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param thumbnailUrl Url to an image to be used for the thumnbail in spotlight.
+ @param linkParams Additional params to be added to the NSUserActivity. These will also be added to the Branch link.
+ @param publiclyIndexable Whether or not this item should be added to Apple's public search index.
+ @param keywords A set of keywords to be used in Apple's search index.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description thumbnailUrl:(NSURL *)thumbnailUrl linkParams:(NSDictionary *)linkParams publiclyIndexable:(BOOL)publiclyIndexable keywords:(NSSet *)keywords;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. Will be public if specified. You can override the type as desired, using one of the types provided in MobileCoreServices.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param thumbnailUrl Url to an image to be used for the thumnbail in spotlight.
+ @param linkParams Additional params to be added to the NSUserActivity. These will also be added to the Branch link.
+ @param type The type to use for the NSUserActivity, taken from the list of constants provided in the MobileCoreServices framework.
+ @param publiclyIndexable Whether or not this item should be added to Apple's public search index.
+ @param keywords A set of keywords to be used in Apple's search index.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description thumbnailUrl:(NSURL *)thumbnailUrl linkParams:(NSDictionary *)linkParams type:(NSString *)type publiclyIndexable:(BOOL)publiclyIndexable keywords:(NSSet *)keywords;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. Will be public if specified. You can override the type as desired, using one of the types provided in MobileCoreServices.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param thumbnailUrl Url to an image to be used for the thumnbail in spotlight.
+ @param type The type to use for the NSUserActivity, taken from the list of constants provided in the MobileCoreServices framework.
+ @param publiclyIndexable Whether or not this item should be added to Apple's public search index.
+ @param keywords A set of keywords to be used in Apple's search index.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description thumbnailUrl:(NSURL *)thumbnailUrl type:(NSString *)type publiclyIndexable:(BOOL)publiclyIndexable keywords:(NSSet *)keywords;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. Will be public if specified. You can override the type as desired, using one of the types provided in MobileCoreServices.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param thumbnailUrl Url to an image to be used for the thumnbail in spotlight.
+ @param type The type to use for the NSUserActivity, taken from the list of constants provided in the MobileCoreServices framework.
+ @param publiclyIndexable Whether or not this item should be added to Apple's public search index.
+ @param keywords A set of keywords to be used in Apple's search index.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description thumbnailUrl:(NSURL *)thumbnailUrl linkParams:(NSDictionary *)linkParams publiclyIndexable:(BOOL)publiclyIndexable;
+
+/**
+ Take the current screen and make it discoverable, adding it to Apple's Core Spotlight index. Will be public if specified. You can override the type as desired, using one of the types provided in MobileCoreServices.
+ 
+ @param title Title for the spotlight preview item.
+ @param description Description for the spotlight preview item.
+ @param thumbnailUrl Url to an image to be used for the thumnbail in spotlight.
+ @param linkParams Additional params to be added to the NSUserActivity. These will also be added to the Branch link.
+ @param publiclyIndexable Whether or not this item should be added to Apple's public search index.
+ @param type The type to use for the NSUserActivity, taken from the list of constants provided in the MobileCoreServices framework.
+ @param keywords A set of keywords to be used in Apple's search index.
+ @param callback Callback called with the Branch url this will fallback to.
+ @warning These functions are only usable on iOS 9 or above. Earlier versions will simply receive the callback with an error.
+ */
+- (void)createDiscoverableContentWithTitle:(NSString *)title description:(NSString *)description thumbnailUrl:(NSURL *)thumbnailUrl linkParams:(NSDictionary *)linkParams type:(NSString *)type publiclyIndexable:(BOOL)publiclyIndexable keywords:(NSSet *)keywords callback:(callbackWithUrl)callback;
+
 #pragma mark - Referral Code methods
 
-///----------------------------
-/// @name Referral Code methods
-///----------------------------
+///-------------------------
+/// @name Promo Code methods
+///-------------------------
 
 /**
- Get a referral code without providing any parameters.
+ Get a promo code without providing any parameters.
  
  @param callback The callback that is called with the created referral code object.
  */
-- (void)getReferralCodeWithCallback:(callbackWithParams)callback;
+- (void)getPromoCodeWithCallback:(callbackWithParams)callback;
+- (void)getReferralCodeWithCallback:(callbackWithParams)callback __attribute__((deprecated(("Use getPromoCodeCallback: instead"))));;
 
 /**
- Get a referral code with an amount of credits the code will be worth.
+ Get a promo code with an amount of credits the code will be worth.
  
  @param amount Number of credits generating user will earn when a user is referred by this code.
  @param callback The callback that is called with the created referral code object.
  */
-- (void)getReferralCodeWithAmount:(NSInteger)amount andCallback:(callbackWithParams)callback;
+- (void)getPromoCodeWithAmount:(NSInteger)amount callback:(callbackWithParams)callback;
+- (void)getReferralCodeWithAmount:(NSInteger)amount andCallback:(callbackWithParams)callback __attribute__((deprecated(("Use getPromoCodeWithAmount:callback: instead"))));;
 
 /**
- Get a referral code with an amount of credits the code will be worth, and a prefix for the code.
+ Get a promo code with an amount of credits the code will be worth, and a prefix for the code.
  
  @param prefix The string to prefix the code with.
  @param amount Number of credits generating user will earn when a user is referred by this code.
  @param callback The callback that is called with the created referral code object.
  */
-- (void)getReferralCodeWithPrefix:(NSString *)prefix amount:(NSInteger)amount andCallback:(callbackWithParams)callback;
+- (void)getPromoCodeWithPrefix:(NSString *)prefix amount:(NSInteger)amount callback:(callbackWithParams)callback;
+- (void)getReferralCodeWithPrefix:(NSString *)prefix amount:(NSInteger)amount andCallback:(callbackWithParams)callback __attribute__((deprecated(("Use getPromoCodeWithPrefix:amount:callback: instead"))));;
 
 /**
- Get a referral code with an amount of credits the code will be worth, and an expiration date.
+ Get a promo code with an amount of credits the code will be worth, and an expiration date.
  
  @param amount Number of credits generating user will earn when a user is referred by this code.
  @param expiration The date when the code should be invalidated.
  @param callback The callback that is called with the created referral code object.
  */
-- (void)getReferralCodeWithAmount:(NSInteger)amount expiration:(NSDate *)expiration andCallback:(callbackWithParams)callback;
+- (void)getPromoCodeWithAmount:(NSInteger)amount expiration:(NSDate *)expiration callback:(callbackWithParams)callback;
+- (void)getReferralCodeWithAmount:(NSInteger)amount expiration:(NSDate *)expiration andCallback:(callbackWithParams)callback __attribute__((deprecated(("Use getPromoCodeWithAmount:expiration:callback: instead"))));
 
 /**
- Get a referral code with an amount of credits the code will be worth, the prefix to put in front of it, and an expiration date.
+ Get a promo code with an amount of credits the code will be worth, the prefix to put in front of it, and an expiration date.
  
  @param prefix The string to prefix the code with.
  @param amount Number of credits generating user will earn when a user is referred by this code.
  @param expiration The date when the code should be invalidated.
  @param callback The callback that is called with the created referral code object.
  */
-- (void)getReferralCodeWithPrefix:(NSString *)prefix amount:(NSInteger)amount expiration:(NSDate *)expiration andCallback:(callbackWithParams)callback;
+- (void)getPromoCodeWithPrefix:(NSString *)prefix amount:(NSInteger)amount expiration:(NSDate *)expiration callback:(callbackWithParams)callback;
+- (void)getReferralCodeWithPrefix:(NSString *)prefix amount:(NSInteger)amount expiration:(NSDate *)expiration andCallback:(callbackWithParams)callback __attribute__((deprecated(("Use getPromoCodeWithPrefix:amount:expiration:callback: instead"))));
 
 /**
- Get a referral code with an amount of credits the code will be worth, the prefix to put in front of it, an expiration date, the bucket it will be part of, the calculation method, and location of user earning credits.
+ Get a promo code with an amount of credits the code will be worth, the prefix to put in front of it, an expiration date, the bucket it will be part of, the calculation method, and location of user earning credits.
  
  @param prefix The string to prefix the code with.
  @param amount Number of credits to be earned (by the user specified by location).
@@ -1028,30 +1268,33 @@ typedef NS_ENUM(NSUInteger, BranchReferralCodeCalculation) {
  @param location The location of the user who earns credits for the referral, one of Referrer, Referree (the referred user), or Both.
  @param callback The callback that is called with the created referral code object.
  */
-- (void)getReferralCodeWithPrefix:(NSString *)prefix amount:(NSInteger)amount expiration:(NSDate *)expiration bucket:(NSString *)bucket calculationType:(BranchReferralCodeCalculation)calcType location:(BranchReferralCodeLocation)location andCallback:(callbackWithParams)callback;
+- (void)getPromoCodeWithPrefix:(NSString *)prefix amount:(NSInteger)amount expiration:(NSDate *)expiration bucket:(NSString *)bucket usageType:(BranchPromoCodeUsageType)usageType rewardLocation:(BranchPromoCodeRewardLocation)rewardLocation callback:(callbackWithParams)callback;
+- (void)getReferralCodeWithPrefix:(NSString *)prefix amount:(NSInteger)amount expiration:(NSDate *)expiration bucket:(NSString *)bucket calculationType:(BranchPromoCodeUsageType)calcType location:(BranchPromoCodeRewardLocation)location andCallback:(callbackWithParams)callback __attribute__((deprecated(("Use getPromoCodeWithPrefix:amount:expiration:bucket:usageType:rewardLocation:callback: instead"))));
 
 /**
- Validate a referral code. Will callback with the referral code object on success, or an error if it's invalid.
+ Validate a promo code. Will callback with the referral code object on success, or an error if it's invalid.
  
  @param code The referral code to validate
  @param callback The callback that is called with the referral code object on success, or an error if it's invalid.
  */
-- (void)validateReferralCode:(NSString *)code andCallback:(callbackWithParams)callback;
+- (void)validatePromoCode:(NSString *)code callback:(callbackWithParams)callback;
+- (void)validateReferralCode:(NSString *)code andCallback:(callbackWithParams)callback __attribute__((deprecated(("Use validatePromoCode:callback: instead"))));
 
 /**
- Apply a referral code, awarding the referral points. Will callback with the referral code object on success, or an error if it's invalid.
+ Apply a promo code, awarding the referral points. Will callback with the referral code object on success, or an error if it's invalid.
  
  @param code The referral code to validate
  @param callback The callback that is called with the referral code object on success, or an error if it's invalid.
  */
-- (void)applyReferralCode:(NSString *)code andCallback:(callbackWithParams)callback;
+- (void)applyPromoCode:(NSString *)code callback:(callbackWithParams)callback;
+- (void)applyReferralCode:(NSString *)code andCallback:(callbackWithParams)callback __attribute__((deprecated(("Use applyPromoCode:callback: instead"))));
 
 /**
  Method for creating a one of Branch instance and specifying its dependencies.
  
  @warning This is meant for use internally only (exposed for the sake of testing) and should not be used by apps.
  */
-- (id)initWithInterface:(BNCServerInterface *)interface queue:(BNCServerRequestQueue *)queue cache:(BNCLinkCache *)cache key:(NSString *)key;
+- (id)initWithInterface:(BNCServerInterface *)interface queue:(BNCServerRequestQueue *)queue cache:(BNCLinkCache *)cache preferenceHelper:(BNCPreferenceHelper *)preferenceHelper key:(NSString *)key;
 
 /**
  Method for logging a message to the Branch server, used when remote debugging is enabled.

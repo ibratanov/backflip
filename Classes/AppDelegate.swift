@@ -250,7 +250,16 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                     annotation: annotation)
 
     }
-    
+	
+	
+	func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool
+	{
+		Branch.getInstance().continueUserActivity(userActivity);
+		
+		return true
+	}
+	
+	
     func applicationDidBecomeActive(application: UIApplication) {
         FBSDKAppEvents.activateApp()
     }

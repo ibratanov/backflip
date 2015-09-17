@@ -300,15 +300,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	@IBAction func segementedControlValueChanged(sender: AnyObject)
 	{
-		var photos : [Photo] = []
-		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]
-		for photo : Photo in _photos {
-			if (photo.flagged != nil && Bool(photo.flagged!) == true) {
-				continue
-			}
-			
-			photos.append(photo)
-		}
+		
+		var photos : [Photo] = self.collectionContent
 		if (photos.count < 1) {
 			return
 		}
@@ -319,7 +312,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		self.collectionContent.removeAll(keepCapacity: true)
 		self.collectionView?.reloadData()
 		
-		if segementedControl.selectedSegmentIndex == 0 {
+		if segementedControl.selectedSegmentIndex <= 0 {
 			content.sortInPlace{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
 		} else if segementedControl.selectedSegmentIndex == 1 {
 			content.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
@@ -365,7 +358,15 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		let params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
 		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
 			if (error != nil) {
+				
+				PKHUD.sharedHUD.hideAnimated()
+				
 				NSLog("Branch short URL generation failed, %@", error);
+				
+				let alertController = UIAlertController(title: "Invite Friends", message: "Whoops, it appears we're having trouble generating a link to share with your friends. Please try again later", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+				self.presentViewController(alertController, animated: true, completion: nil)
+				
 			} else {
 				
 				PKHUD.sharedHUD.hideAnimated()
@@ -577,6 +578,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			
 			if (self.segmentedControl != nil) {
 				self.segementedControlValueChanged(self.segmentedControl)
+			} else {
+				let _segmentedControl = UISegmentedControl()
+				_segmentedControl.selectedSegmentIndex = 0;
+				self.segementedControlValueChanged(_segmentedControl)
 			}
 			
 //            for photo : Photo in photos {
@@ -590,7 +595,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			}
 		}
 		
-		self.collectionContent = photos
+		// self.collectionContent = photos
 	}
 	
 	
