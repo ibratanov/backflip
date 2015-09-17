@@ -76,6 +76,13 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	//var fastFilter = FastttFilter()
 	
+	override func viewDidDisappear(animated: Bool)
+	{
+		super.viewDidDisappear(animated)
+		
+		self.eventNameLabel?.text = ""
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
