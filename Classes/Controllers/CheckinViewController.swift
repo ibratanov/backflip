@@ -473,7 +473,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 						var attended = false
 						let attendees = event.attendees!.allObjects as! [Attendance]
 						for attendee : Attendance in attendees {
-							if (attendee.attendeeId == PFUser.currentUser()!.objectId!) {
+							if (PFUser.currentUser() != nil && attendee.attendeeId == PFUser.currentUser()!.objectId!) {
 								attended = true
 								break
 							}

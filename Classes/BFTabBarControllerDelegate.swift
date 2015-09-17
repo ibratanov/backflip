@@ -8,6 +8,9 @@
 
 import UIKit
 import Foundation
+import AssetsLibrary
+import PhotosUI
+
 
 class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
 {
@@ -63,6 +66,23 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 		if (_camera == nil) {
 			weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
 			_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
+		}
+		
+		let photoStatus : PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+		if (photoStatus != PHAuthorizationStatus.Authorized) {
+			PHPhotoLibrary.requestAuthorization({ (status) -> Void in
+				print("Dialouge?!")
+			})
+		}
+		
+		let status:ALAuthorizationStatus = ALAssetsLibrary.authorizationStatus()
+		if status != ALAuthorizationStatus.Authorized {
+			print("User has not given authorization for the camera roll ")
+			print(status)
+			
+			AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { (enabled) -> Void in
+				print("Requested an got "+NSNumber(bool: enabled).stringValue);
+			})
 		}
 		
 		_camera?.event = event

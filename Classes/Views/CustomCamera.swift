@@ -21,7 +21,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	//------------------FastttCamera----------------
 	//var fastCamera = FastttFilterCamera()
-	weak var fastCamera = FastttFilterCamera()
+	var fastCamera = FastttFilterCamera()
 	weak var currentFilter = CustomFilter()
 	
 	
@@ -113,17 +113,17 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		//var filterImageSet = UIImage(named: "SepiaFilter")
 		
 		
-		self.fastCamera!.delegate = self
+		self.fastCamera.delegate = self
 		
-		self.fastCamera!.supportedInterfaceOrientations()
-		self.fastCamera!.willMoveToParentViewController(self)
-		self.fastCamera!.beginAppearanceTransition(true, animated: false)
-		self.addChildViewController(self.fastCamera!)
-		self.view.insertSubview(self.fastCamera!.view, belowSubview: bottomBar)
+		self.fastCamera.supportedInterfaceOrientations()
+		self.fastCamera.willMoveToParentViewController(self)
+		self.fastCamera.beginAppearanceTransition(true, animated: false)
+		self.addChildViewController(self.fastCamera)
+		self.view.insertSubview(self.fastCamera.view, belowSubview: bottomBar)
 		self.view.insertSubview(topBar, aboveSubview: bottomBar)
-		self.fastCamera!.didMoveToParentViewController(self)
-		self.fastCamera!.endAppearanceTransition()
-		self.fastCamera!.view.frame = self.view.frame
+		self.fastCamera.didMoveToParentViewController(self)
+		self.fastCamera.endAppearanceTransition()
+		self.fastCamera.view.frame = self.view.frame
 		
 		
 		if (FastttFilterCamera.isCameraDeviceAvailable(FastttCameraDevice.Front)) {
@@ -271,7 +271,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	@IBAction func reverseCamera(sender: UIButton) {
 		var cameraDevice: FastttCameraDevice
-		switch (self.fastCamera!.cameraDevice) {
+		switch (self.fastCamera.cameraDevice) {
 		case FastttCameraDevice.Front:
 			cameraDevice = FastttCameraDevice.Rear
 			break
@@ -287,7 +287,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		}
 		
 		if (FastttFilterCamera.isCameraDeviceAvailable(cameraDevice)) {
-			self.fastCamera!.cameraDevice = cameraDevice
+			self.fastCamera.cameraDevice = cameraDevice
 		}
 		
 		
@@ -320,7 +320,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	@IBAction func capture(sender: UIButton) {
 		//self.takePicture()
-		self.fastCamera!.takePicture()
+		self.fastCamera.takePicture()
 		
 		downloadToCameraRoll = true
 		
@@ -338,18 +338,18 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	@IBAction func toggleTorch(sender: UIButton) {
 		print("toggle pressed", terminator: "")
 		
-		if self.fastCamera!.cameraFlashMode == FastttCameraFlashMode.On {
-			self.fastCamera!.cameraFlashMode = FastttCameraFlashMode.Off
+		if self.fastCamera.cameraFlashMode == FastttCameraFlashMode.On {
+			self.fastCamera.cameraFlashMode = FastttCameraFlashMode.Off
 			
 			self.flashButton.setImage(flashOff, forState: .Normal)
 			
-		}else if self.fastCamera?.cameraFlashMode == FastttCameraFlashMode.Off{
-			self.fastCamera?.cameraFlashMode = FastttCameraFlashMode.Auto
+		}else if self.fastCamera.cameraFlashMode == FastttCameraFlashMode.Off{
+			self.fastCamera.cameraFlashMode = FastttCameraFlashMode.Auto
 			
 			self.flashButton.setImage(flashAuto, forState: .Normal)
 			
 		}else{
-			self.fastCamera?.cameraFlashMode = FastttCameraFlashMode.On
+			self.fastCamera.cameraFlashMode = FastttCameraFlashMode.On
 			self.flashButton.setImage(flashOn, forState: .Normal)
 		}
 		
@@ -573,7 +573,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 		autoreleasepool { () -> () in
 			
-			if let wnd = self.fastCamera?.view {
+			if let wnd = self.fastCamera.view {
 				
 				let v = UIView(frame: wnd.bounds)
 				v.backgroundColor = UIColor.whiteColor()
@@ -655,7 +655,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				
 			}
 			
-			if self.fastCamera?.cameraDevice == FastttCameraDevice.Front {
+			if self.fastCamera.cameraDevice == FastttCameraDevice.Front {
 				
 				let orientation = UIDevice.currentDevice().orientation
 				
@@ -787,7 +787,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		print("switch filter", terminator: "");
 		self.currentFilter = self.currentFilter?.nextFilter()
 		
-		self.fastCamera?.filterImage = self.currentFilter?.filterImage
+		self.fastCamera.filterImage = self.currentFilter?.filterImage
 	}
 	
 }
