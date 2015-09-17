@@ -43,6 +43,8 @@ class BFDataFetcher : NSObject {
 						if (activityInidactor) {
 							ZAActivityBar.showSuccessWithStatus("Events Processed", forAction: "process_events")
 						}
+						
+						NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: nEventObjectsUpdated, object: nil))
 					})
 				}
 				
@@ -79,6 +81,8 @@ class BFDataFetcher : NSObject {
 						if (activityInidactor) {
 							ZAActivityBar.showSuccessWithStatus("Photos Processed", forAction: "process_photos")
 						}
+						
+						NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: nPhotoObjectsUpdated, object: nil))
 					})
 				}
 				

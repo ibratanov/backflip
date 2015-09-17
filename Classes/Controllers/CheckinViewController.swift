@@ -82,6 +82,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		self.view.addGestureRecognizer(self.doubleTapGesture!)
 		
 		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
+		
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("fetchData"), name: nEventObjectsUpdated, object: nil)
+		
 	}
 	
 	override func viewDidLoad()
