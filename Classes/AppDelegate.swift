@@ -254,8 +254,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	
 	func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool
 	{
-		Branch.getInstance().continueUserActivity(userActivity);
-		
+		if #available(iOS 9.0, OSX 10.10, watchOS 2, *) {
+			Branch.getInstance().continueUserActivity(userActivity);
+		}
+			
 		return true
 	}
 	
