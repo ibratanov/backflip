@@ -16,14 +16,14 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 {
 	static let sharedDelegate = BFTabBarControllerDelegate.init()
 	
-	weak var _camera : CustomCamera?
+	// weak var _camera : CustomCamera?
 	
 	
 	
 	override init()
 	{
-		weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-		_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
+		// weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+		// _camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
 	}
 	
 	
@@ -63,33 +63,45 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 	
     func displayCamera(event: Event)
     {
-		if (_camera == nil) {
-			weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-			_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
-		}
+//		if (_camera == nil) {
+//			weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//			_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
+//		}
+//		
+//		let photoStatus : PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+//		if (photoStatus != PHAuthorizationStatus.Authorized) {
+//			PHPhotoLibrary.requestAuthorization({ (status) -> Void in
+//				print("Dialouge?!")
+//			})
+//		}
+//		
+//		let status:ALAuthorizationStatus = ALAssetsLibrary.authorizationStatus()
+//		if status != ALAuthorizationStatus.Authorized {
+//			print("User has not given authorization for the camera roll ")
+//			print(status)
+//			
+//			AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { (enabled) -> Void in
+//				print("Requested an got "+NSNumber(bool: enabled).stringValue);
+//			})
+//		}
+//		
+//		_camera?.event = event
+//        _camera?.modalPresentationStyle = UIModalPresentationStyle.FullScreen
+//        let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+//        window?.rootViewController!.presentViewController(_camera!, animated: true, completion: nil)
+
 		
-		let photoStatus : PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
-		if (photoStatus != PHAuthorizationStatus.Authorized) {
-			PHPhotoLibrary.requestAuthorization({ (status) -> Void in
-				print("Dialouge?!")
-			})
-		}
+		let result = PHAsset.fetchAssetsWithMediaType(.Image, options: nil)
+
 		
-		let status:ALAuthorizationStatus = ALAssetsLibrary.authorizationStatus()
-		if status != ALAuthorizationStatus.Authorized {
-			print("User has not given authorization for the camera roll ")
-			print(status)
-			
-			AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { (enabled) -> Void in
-				print("Requested an got "+NSNumber(bool: enabled).stringValue);
-			})
-		}
+		let pickerController = UIImagePickerController()
+		pickerController.delegate = self
+		pickerController.sourceType = .Camera
+		pickerController.allowsEditing = true
+		let window : UIWindow? = UIApplication.sharedApplication().windows.first!
 		
-		_camera?.event = event
-        _camera?.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-        let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-        window?.rootViewController!.presentViewController(_camera!, animated: true, completion: nil)
-        
+		window?.rootViewController!.presentViewController(pickerController, animated: true, completion: nil)
+		
     }
 	
 }

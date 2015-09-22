@@ -40,6 +40,19 @@
 - (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret;
 
 /**
+ *  Start Digits with a consumer key, secret, and keychain access group. See -[Digits startWithConsumerKey:consumerSecret:]
+ *
+ *  @param consumerKey    Your Digits application's consumer key.
+ *  @param consumerSecret Your Digits application's consumer secret.
+ *  @param accessGroup    An optional keychain access group to apply to session objects stored in the keychain.
+ *
+ *  @note In the majority of situations applications will not need to specify an access group to use with Digits sessions.
+ *  This value is only needed if you plan to share credentials with another application that you control or if you are
+ *  using Digits with an app extension.
+ */
+- (void)startWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret accessGroup:(NSString *)accessGroup;
+
+/**
  *
  *  @return The Digits user session or nil if there's no authenticated user.
  */

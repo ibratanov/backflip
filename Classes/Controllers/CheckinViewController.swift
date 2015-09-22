@@ -14,7 +14,7 @@ import CoreLocation
 
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
+class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
 	var shakeCount : Int = 0
 	var events : [Event] = []
@@ -158,14 +158,16 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
             fetchData()
         }
-        
-        let tracker = GAI.sharedInstance().defaultTracker
-        tracker.set(kGAIScreenName, value: "Checkin view")
-        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+		
+		
+		#if FEATURE_GOOGLE_ANALYTICS
+			let tracker = GAI.sharedInstance().defaultTracker
+			tracker.set(kGAIScreenName, value: "Checkin view")
+			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
-        
-        let builder = GAIDictionaryBuilder.createScreenView()
-        tracker.send(builder.build() as [NSObject : AnyObject])
+			let builder = GAIDictionaryBuilder.createScreenView()
+			tracker.send(builder.build() as [NSObject : AnyObject])
+		#endif
 	}
 	
 
@@ -260,39 +262,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		self.collectionView?.reloadData()
 	}
 	
-	
-	//-------------------------------------
-	// MARK: Tabbar Delegate
-	//-------------------------------------
-	
-	
-	func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
-	{
-		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
-		if (selectedIndex == 1) {
-			
-			let currentEvent: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
-			if (currentEvent == nil) {
-				let alertController = UIAlertController(title: "Take Photo", message: "Please check in or create an event before uploading photos.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: { (alertAction) -> Void in
-					print("Should switch back to 'current event' tab")
-				}))
-				
-				self.presentViewController(alertController, animated: true, completion: nil)
-            } else {
-                
-                let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let customCameraFCF = storyboard.instantiateViewControllerWithIdentifier("customCameraFCF") as! CustomCamera
-                customCameraFCF.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-                self.presentViewController(customCameraFCF as UIViewController, animated: true, completion: nil)
-            }
-            
-            return false
-        }
-        
-        return true
-    }
 	
 	//-------------------------------------
 	// MARK: Actions

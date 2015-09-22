@@ -19,11 +19,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 {
 
     var window: UIWindow?
-    
-    //-------Branch
-    var inviteImage = UIImage()
-    var inviteViewController = InviteViewController(nibName: "InviteViewController", bundle: nil);
-    //-------------
+	
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -31,93 +27,22 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
 	{
-		application.statusBarStyle = .LightContent
-		application.setStatusBarStyle(.LightContent, animated: true)
-		UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-		
-
-		//-------Branch
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setImageViewNotification:", name: "MySetImageViewNotification", object: nil)
-
-		
 		
 		//--------------------------------------
 		// Setup Parse & Application appearance
 		//--------------------------------------
 		setupAnalytics()
 		setupParse()
+		setupBranch(launchOptions)
 		setupCoreData()
 		setupApperance()
-        
 		
-		let branch: Branch = Branch.getInstance()
-		branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
-			
-			if (error == nil) {
-				
-				if ((params["referringOut"])  != nil) {
-					
-					let eventId =  params["eventId"] as? String
-					if (eventId != nil) {
-						
-						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventId!) as! Event
-						var alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
-						alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
-							
-							
-							let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-							let tabBar : UITabBarController = window?.rootViewController! as! UITabBarController
-							let checkinViewController : CheckinViewController = (tabBar.viewControllers![0] as! UINavigationController).viewControllers[0] as! CheckinViewController
-
-							print(checkinViewController)
-							
-							
-							// let checkinController : CheckinViewController = CheckinViewController()
-							checkinViewController.checkinWithEvent(event)
-							
-						}))
-						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-					} else {
-						
-						var alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
-						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-					}
-					
-				}
-			}
-		})
-		
-		
-		
-		
-        // PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
-		
-        Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
-        let mixpanel: Mixpanel = Mixpanel.sharedInstance()
-        mixpanel.track("App launched")
-		
-
-        let defaultACL = PFACL();
-		
-		
-
-        // If you would like all objects to be private by default, remove this line.
-        defaultACL.setPublicReadAccess(true)
-
-        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 
 		
 		//--------------------------------------
-		// CoreData
+		// Coredata
 		//--------------------------------------
 		BFDataFetcher.sharedFetcher.fetchData(true);
-		
 		
 		
         if application.applicationState != UIApplicationState.Background {
@@ -135,73 +60,30 @@ class AppDelegate : UIResponder, UIApplicationDelegate
                 PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             }
         }
-        
-        //------------Parse Push Notifications------------------------------------
-        /*if application.respondsToSelector("registerUserNotificationSettings:") {
-            let userNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
-            let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-            application.registerUserNotificationSettings(settings)
-            application.registerForRemoteNotifications()
-        } else {
-            let types = UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound
-            application.registerForRemoteNotificationTypes(types)
-        }*/
-        
+		
         
         let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
         
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
-        
-        func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-            // Store the deviceToken in the current Installation and save it to Parse
-            let installation = PFInstallation.currentInstallation()
-            installation.setDeviceTokenFromData(deviceToken)
-            installation.saveInBackground()
-        }
-
-        // Used to add the device to the Parse push notification settings.
-        PFInstallation.currentInstallation().saveInBackground()
 		
 		
-		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
-		
-        //------------------------------------------------------------------------
-
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
 			Fabric.with([Digits()])
 		});
         
-        //--------------------------BRANCH.IO------------------------------------
-        
+		
         return true
     }
-    
-    func displayUnsuccessfulInvite() {
-        print("Object not found")
-        let alert = UIAlertView()
-        alert.title = "Event Invite Unsuccessful"
-        alert.message = "Please log in and click the invite link again."
-        alert.addButtonWithTitle("Ok")
-        
-        alert.delegate = self
-        alert.show()
-    }
-	
-    func setImageViewNotification(note: NSNotification){
-        
-        let userInfo = note.userInfo as! [String: UIImageView]
-        let imageView = userInfo["imageView"]
-        imageView?.image = self.inviteImage
-        self.inviteViewController.imageView.image = self.inviteImage
-    }
+
     
     //--------------------------------------
     // MARK: Push Notifications
     //--------------------------------------
 
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData)
+	{
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
         installation.saveInBackground()
@@ -215,29 +97,26 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         })
     }
 
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError)
+	{
         if error.code == 3010 {
-            //println("Push notifications are not supported in the iOS Simulator.")
+            print("Push notifications are not supported in the iOS Simulator.")
         } else {
             print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
         }
     }
 
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])
+	{
         PFPush.handlePush(userInfo)
         if application.applicationState == UIApplicationState.Inactive {
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        print(url)
-        print(url.host as String!)
-        if(url.host == "events"){
-            window?.rootViewController?.performSegueWithIdentifier("gotoEventScene", sender: nil)
-        }
-        // pass the url to the handle deep link call
-        // if handleDeepLink returns true, and you registered a callback in initSessionAndRegisterDeepLinkHandler, the callback will be called with the data associated with the deep link
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
+	{
+		
         if (!Branch.getInstance().handleDeepLink(url)) {
             // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
             print(url)
@@ -262,7 +141,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	}
 	
 	
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(application: UIApplication)
+	{
         FBSDKAppEvents.activateApp()
     }
 
@@ -275,6 +155,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	func setupApperance()
 	{
 		UIApplication.sharedApplication().statusBarStyle = .LightContent
+		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
 		
 		let config = PFConfig.currentConfig()
 		
@@ -312,14 +193,21 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	func setupParse()
 	{
 		// Local caching of query results
-		// Parse.enableLocalDatastore()
-		
+		#if FEATURE_PARSE_LOCAL
+			Parse.enableLocalDatastore()
+		#endif
+			
 		#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 		#else
 			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
 		#endif
 		
+		
+		// Default ACL
+		let defaultACL = PFACL();
+		defaultACL.setPublicReadAccess(true)
+		PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 		
 		if (NetworkAvailable.networkConnection()) {
 			PFConfig.getConfigInBackgroundWithBlock { (config, error) -> Void in
@@ -329,62 +217,100 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	}
 	
 	
+	//--------------------------------------
+	// MARK: Analytics
+	//--------------------------------------
+	
 	func setupAnalytics()
 	{
-		//-------Google Analytics
-		// Configure tracker from GoogleService-Info.plist.
-		        var configureError:NSError?
-		        GGLContext.sharedInstance().configureWithError(&configureError)
-		        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+		#if FEATURE_GOOGLE_ANALYTICS
 		
-		// Optional: configure GAI options.
-		let gai = GAI.sharedInstance()
-		gai.trackUncaughtExceptions = true  // report uncaught exceptions
-		gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
-        
-        
-        //method called when a user signs in to an authentication system
-        //GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
-
-		//-------------------------
+			var configureError:NSError?
+			GGLContext.sharedInstance().configureWithError(&configureError)
+			assert(configureError == nil, "Error configuring Google services: \(configureError)")
 		
-		//-------New Relic
-		NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
-
+			// Optional: configure GAI options.
+			let gai = GAI.sharedInstance()
+			gai.trackUncaughtExceptions = true  // report uncaught exceptions
+			gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+        
+		#endif
+		
+		
+		#if FEATURE_NEW_RELIC
+			NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
+		#endif
+		
+		
+		#if  FEATURE_MIXPANEL
+			Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
+			let mixpanel: Mixpanel = Mixpanel.sharedInstance()
+			mixpanel.track("App launched")
+		#endif
 	}
+	
 	
 	
 	//--------------------------------------
 	// MARK: CoreData
 	//--------------------------------------
+	
 	func setupCoreData()
 	{
 		BFDataMananger.sharedManager.setupDatabase()
 	}
-    
 
-    
-    // This hit will be sent with the User ID value and be visible in User-ID-enabled views (profiles).
-//    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"           
-    // Event category (required)
-//    action:@"User Sign In"  
-    // Event action (required)
-//    label:nil              
-    // Event label
-//    value:nil] build]];    
-    // Event value
-
-    
 	
-    
     
     //--------------------------------------
     // MARK: Branch.io
     //--------------------------------------
+	
     func setupBranch(launchOptions: [NSObject: AnyObject]?)
     {
         
-
+		let branch: Branch = Branch.getInstance()
+		branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
+			
+			if (error == nil) {
+				
+				if ((params["referringOut"])  != nil) {
+					
+					let eventId =  params["eventId"] as? String
+					if (eventId != nil) {
+						
+						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventId!) as! Event
+						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
+						alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
+							
+							
+							let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+							let tabBar : UITabBarController = window?.rootViewController! as! UITabBarController
+							let checkinViewController : CheckinViewController = (tabBar.viewControllers![0] as! UINavigationController).viewControllers[0] as! CheckinViewController
+							
+							print(checkinViewController)
+							
+							
+							// let checkinController : CheckinViewController = CheckinViewController()
+							checkinViewController.checkinWithEvent(event)
+							
+						}))
+						
+						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+					} else {
+						
+						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
+						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+						
+						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+					}
+					
+				}
+			}
+		})
 
     }
     
