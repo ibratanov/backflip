@@ -85,6 +85,8 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        probeAssets()
 		
 		UIApplication.sharedApplication().statusBarHidden = true
 		
@@ -790,4 +792,21 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		self.fastCamera.filterImage = self.currentFilter?.filterImage
 	}
 	
+    func probeAssets() {
+        
+        let library = ALAssetsLibrary()
+        library.enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos, usingBlock: { (group: ALAssetsGroup!, stop:UnsafeMutablePointer<ObjCBool>) -> Void in
+            
+            if group != nil {
+                group.setAssetsFilter(ALAssetsFilter.allPhotos())
+                group.enumerateAssetsAtIndexes(NSIndexSet(index: 0), options: NSEnumerationOptions(), usingBlock: { (asset: ALAsset!, index, innerStop) -> Void in                })
+            }
+            //Error handling
+            }) { (error: NSError!) -> Void in
+                print("Not able to get.")
+        }
+    }
+    
+    
+
 }
