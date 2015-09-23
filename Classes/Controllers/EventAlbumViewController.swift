@@ -230,18 +230,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		if (indexPath.row == 0) {
 
-			let result = PHAsset.fetchAssetsWithMediaType(.Image, options: nil)
-			
-			
-			let pickerController = UIImagePickerController()
-			pickerController.delegate = self
-			pickerController.sourceType = .Camera
-			pickerController.allowsEditing = true
-			let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-			
-			window?.rootViewController!.presentViewController(pickerController, animated: true, completion: nil)
-			
-			// BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
+            BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
 			
 		} else {
 		
