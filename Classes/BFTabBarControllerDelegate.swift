@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 
+
 class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
 {
 	static let sharedDelegate = BFTabBarControllerDelegate.init()
@@ -64,12 +65,11 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 			weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
 			_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
 		}
-		
+
 		_camera?.event = event
         _camera?.modalPresentationStyle = UIModalPresentationStyle.FullScreen
         let window : UIWindow? = UIApplication.sharedApplication().windows.first!
         window?.rootViewController!.presentViewController(_camera!, animated: true, completion: nil)
-        
     }
 	
 }

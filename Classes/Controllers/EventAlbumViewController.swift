@@ -13,7 +13,7 @@ import MapleBacon
 import Foundation
 
 
-class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDelegate
+class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
 	
 	//-------------------------------------
@@ -55,13 +55,14 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		UIApplication.sharedApplication().statusBarHidden = false
 
-        let tracker = GAI.sharedInstance().defaultTracker
-        tracker.set(kGAIScreenName, value: "Event Album")
-        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+		#if FEATURE_GOOGLE_ANALYTICS
+			let tracker = GAI.sharedInstance().defaultTracker
+			tracker.set(kGAIScreenName, value: "Event Album")
+			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
-        
-        let builder = GAIDictionaryBuilder.createScreenView()
-        tracker.send(builder.build() as [NSObject : AnyObject])
+			let builder = GAIDictionaryBuilder.createScreenView()
+			tracker.send(builder.build() as [NSObject : AnyObject])
+		#endif
     }
 	
 	override func viewWillDisappear(animated: Bool)
@@ -229,7 +230,18 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		if (indexPath.row == 0) {
 
-			BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
+			let result = PHAsset.fetchAssetsWithMediaType(.Image, options: nil)
+			
+			
+			let pickerController = UIImagePickerController()
+			pickerController.delegate = self
+			pickerController.sourceType = .Camera
+			pickerController.allowsEditing = true
+			let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+			
+			window?.rootViewController!.presentViewController(pickerController, animated: true, completion: nil)
+			
+			// BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
 			
 		} else {
 		

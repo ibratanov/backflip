@@ -8,11 +8,52 @@
 
 #import <Availability.h>
 
-// For AFNetworking
-#ifndef TARGET_OS_IOS
-	#define TARGET_OS_IOS TARGET_OS_IPHONE
+
+
+//----------------------------------
+// FEATURE: Analytics
+//----------------------------------
+
+#ifndef FEATURE_GOOGLE_ANALYTICS
+	#define FEATURE_GOOGLE_ANALYTICS 0
 #endif
 
-#ifndef TARGET_OS_WATCH
-	#define TARGET_OS_WATCH 0
+#ifndef FEATURE_NEW_RELIC
+	#define FEATURE_NEW_RELIC 0
+#endif
+
+#ifndef FEATURE_MIXPANEL
+	#define FEATURE_MIXPANEL 0
+#endif
+
+
+
+//----------------------------------
+// FEATURE: CoreData
+//----------------------------------
+
+#ifndef FEATURE_COREDATA_SEED
+
+	#if DEBUG
+		#define FEATURE_COREDATA_SEED 0
+	#else
+		#define FEATURE_COREDATA_SEED 1
+	#endif
+
+#endif
+
+
+
+//----------------------------------
+// FEATURE: Parse
+//----------------------------------
+
+#ifndef FEATURE_PARSE_LOCAL
+
+	#if DEBUG
+		#define FEATURE_PARSE_LOCAL 0
+	#else
+		#define FEATURE_PARSE_LOCAL 0
+	#endif
+
 #endif

@@ -11,24 +11,23 @@
 #ifndef Bridging_Header
 	#define Bridging_Header
 
-	// If you are using Facebook, uncomment this line to get automatic import of the header inside your project.
-	#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
-
-
-	#import <SystemConfiguration/SystemConfiguration.h>
-	#import <MobileCoreServices/MobileCoreServices.h>
-
 	#import "NSManagedObject+FetchOrCreate.h"
 	#import "NSManagedObjectContext+Extensions.h"
-	#import "NSManagedObject+MagicalAggregation.h"
 
 	#import "ZAActivityBar.h"
 
 	// Analytics yo
-	#import <Mixpanel/Mixpanel.h>
-	//#import "GoogleAnalytics.h"
-    #import <Google/Analytics.h>
-	#import "NewRelicAgent/NewRelic.h"
+	#if FEATURE_MIXPANEL
+		#import <Mixpanel/Mixpanel.h>
+	#endif
+
+	#if FEATURE_GOOGLE_ANALYTICS
+		#import <Google/Analytics.h>
+	#endif
+
+	#if FEATURE_NEW_RELIC
+		#import "NewRelicAgent/NewRelic.h"
+	#endif
 
 	#import "MWPhotoBrowser.h"
 	#import "MWPhotoBrowserPrivate.h"

@@ -171,14 +171,16 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        let tracker = GAI.sharedInstance().defaultTracker
-        tracker.set(kGAIScreenName, value: "Preview Screen")
-        tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+    override func viewWillAppear(animated: Bool)
+	{
+		#if FEATURE_GOOGLE_ANALYTICS
+			let tracker = GAI.sharedInstance().defaultTracker
+			tracker.set(kGAIScreenName, value: "Preview Screen")
+			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
 
-        
-        let builder = GAIDictionaryBuilder.createScreenView()
-        tracker.send(builder.build() as [NSObject : AnyObject])
+			let builder = GAIDictionaryBuilder.createScreenView()
+			tracker.send(builder.build() as [NSObject : AnyObject])
+		#endif
     }
     
     @IBAction func cropButtonPressed(sender: AnyObject) {
