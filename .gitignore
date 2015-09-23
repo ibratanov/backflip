@@ -23,3 +23,7 @@ build/
 *~
 *.dat
 *.dep
+
+
+# Merge files
+*.orig

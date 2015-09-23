@@ -18,4 +18,25 @@ Backflip is the best way to share photos with the crowd around you. Check into a
 - Open Project (`open *.xcodeproj`)
 
 
-## 
+## Release Cycle
+
+### Branches
+
+- `master` This is the current, most up to date (**stable**) AppStore build
+- `develop` This is the current, most up to date (**unstable**) Testflight build. Never work on `develop` directly, always use a feature/bug branch and merge in (after adequate testing)
+- `feat/bug-*` These are feature/bug branches, only commit and push these when required. 
+
+### Committing
+
+When pushing a commit with fixes for an issue, please reference that issue in your commit, for example:
+
+	Updated camera for iOS 9, fixes #153
+	
+### AppStore
+
+We ship every Friday, whatever is on `develop` and has been tested and marked stable, will be compiled; packaged and shipped off to Apple for review. Please ensure you have tested any code committed to `develop` to the best of your ability.
+
+
+## Feature Flags
+
+We take advantage of [feature flags](http://code.flickr.net/2009/12/02/flipping-out/), using them is super simple and quick to implement. If you look in [Supporting files/PrefixHEader.pch](https://github.com/ibratanov/backflip/blob/master/Supporting%20Files/PrefixHeader.pch) you can see how we define a "flag". We use feature flags as they make disabling / removing feature or sections quick and (mostly) pain free.
