@@ -38,3 +38,6 @@
 [submodule "Vendor/DOFavoriteButton"]
 	path = Vendor/DOFavoriteButton
 	url = git@github.com:kylebshr/DOFavoriteButton.git
+[submodule "Vendor/Watchdog"]
+	path = Vendor/Watchdog
+	url = git@github.com:wojteklukaszuk/Watchdog.git

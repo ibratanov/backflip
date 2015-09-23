@@ -199,6 +199,7 @@
 		042E8D6C1BB2F4BD00D61412 /* GPUImagePicture+TextureSubimage.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D641BB2F4BD00D61412 /* GPUImagePicture+TextureSubimage.m */; };
 		042E8D6D1BB2F4BD00D61412 /* GPUImagePicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D661BB2F4BD00D61412 /* GPUImagePicture.m */; };
 		042E8D6E1BB2F4BD00D61412 /* GPUImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D681BB2F4BD00D61412 /* GPUImageView.m */; };
+		042E8D711BB300A100D61412 /* Watchdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D701BB300A100D61412 /* Watchdog.swift */; };
 		0430D2861BA8517B00375AA4 /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2761BA8517B00375AA4 /* FrameView.swift */; };
 		0430D2871BA8517B00375AA4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0430D2771BA8517B00375AA4 /* Images.xcassets */; };
 		0430D2881BA8517B00375AA4 /* PKHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430D2791BA8517B00375AA4 /* PKHUD.swift */; };
@@ -838,6 +839,7 @@
 		042E8D661BB2F4BD00D61412 /* GPUImagePicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImagePicture.m; sourceTree = "<group>"; };
 		042E8D671BB2F4BD00D61412 /* GPUImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageView.h; sourceTree = "<group>"; };
 		042E8D681BB2F4BD00D61412 /* GPUImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageView.m; sourceTree = "<group>"; };
+		042E8D701BB300A100D61412 /* Watchdog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Watchdog.swift; path = Vendor/Watchdog/Classes/Watchdog.swift; sourceTree = "<group>"; };
 		0430D2761BA8517B00375AA4 /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameView.swift; path = Vendor/PKHUD/PKHUD/FrameView.swift; sourceTree = "<group>"; };
 		0430D2771BA8517B00375AA4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Vendor/PKHUD/PKHUD/Images.xcassets; sourceTree = "<group>"; };
 		0430D2781BA8517B00375AA4 /* PKHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PKHUD.h; path = Vendor/PKHUD/PKHUD/PKHUD.h; sourceTree = "<group>"; };
@@ -1487,9 +1489,18 @@
 			path = Framework;
 			sourceTree = "<group>";
 		};
+		042E8D6F1BB3009800D61412 /* Watchdog */ = {
+			isa = PBXGroup;
+			children = (
+				042E8D701BB300A100D61412 /* Watchdog.swift */,
+			);
+			name = Watchdog;
+			sourceTree = "<group>";
+		};
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				042E8D6F1BB3009800D61412 /* Watchdog */,
 				042E8B7A1BB2F48C00D61412 /* GPUImage */,
 				040FD1111BB2F39400DDB1A5 /* FastttCamera */,
 				04E39D581BA8BCDE0061EA36 /* AFNetwork */,
@@ -2051,7 +2062,7 @@
 								enabled = 0;
 							};
 							com.apple.SafariKeychain = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -2310,6 +2321,7 @@
 				0439D3CB1B8B86AC001850DD /* UIImage+Extensions.swift in Sources */,
 				049AA6A71B73DA01003888CE /* MWPhotoBrowser.m in Sources */,
 				0439D3A61B8B81A6001850DD /* EventTableViewController.swift in Sources */,
+				042E8D711BB300A100D61412 /* Watchdog.swift in Sources */,
 				049AA6E51B73DB84003888CE /* UIImage+WebP.m in Sources */,
 				042E8CE61BB2F49E00D61412 /* GPUImageFilterPipeline.m in Sources */,
 				04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */,
@@ -2623,6 +2635,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_ENTITLEMENTS = Frontflip.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -2705,6 +2718,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_ENTITLEMENTS = Frontflip.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;

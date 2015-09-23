@@ -37,6 +37,15 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupCoreData()
 		setupApperance()
 		
+		
+		//--------------------------------------
+		// Watchdog
+		//--------------------------------------
+		#if DEBUG
+			Watchdog(threshold: 0.3) { duration in
+				print("👮 Main thread was blocked for " + String(format:"%.2f", duration) + "s 👮")
+			}
+		#endif
 
 		
 		//--------------------------------------
