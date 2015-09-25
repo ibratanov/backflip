@@ -207,17 +207,17 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                         
                         let geocoder = CLGeocoder()
                         geocoder.geocodeAddressString(address!, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
-                            //print(placemarks?[0])
-                            
-							if let placemark : CLPlacemark = placemarks![0] {
-								let location : CLLocation = placemark.location!
-                                let eventLatitude = location.coordinate.latitude
-                                let eventLongitude = location.coordinate.longitude
-                                
-                                let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
-                                
-                                self.userGeoPoint = userGeoPoint
-								
+
+                            if placemarks != nil {
+                                if let placemark : CLPlacemark = placemarks![0] {
+                                    let location : CLLocation = placemark.location!
+                                    let eventLatitude = location.coordinate.latitude
+                                    let eventLongitude = location.coordinate.longitude
+                                    
+                                    let userGeoPoint = PFGeoPoint(latitude:eventLatitude, longitude:eventLongitude)
+                                    
+                                    self.userGeoPoint = userGeoPoint
+                                }
                             }
                         })
 						
