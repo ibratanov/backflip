@@ -20,8 +20,8 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 	
 	override init()
 	{
-		weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-		_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
+		//weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+		//_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
 	}
 	
 	
