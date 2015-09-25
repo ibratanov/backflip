@@ -37,12 +37,15 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
 		#if FEATURE_GOOGLE_ANALYTICS
-			let tracker = GAI.sharedInstance().defaultTracker
-			tracker.set(kGAIScreenName, value: "Create Public Event")
-			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
-
-			let builder = GAIDictionaryBuilder.createScreenView()
-			tracker.send(builder.build() as [NSObject : AnyObject])
+            
+            let tracker = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value: "Create Public Event")
+            //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+            tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
+            
+            
+            let builder = GAIDictionaryBuilder.createScreenView()
+            tracker.send(builder.build() as [NSObject : AnyObject])
 		#endif
     }
     var address2:String = ""
