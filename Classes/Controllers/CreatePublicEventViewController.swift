@@ -270,25 +270,33 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
 									attendance["enabled"] = true
                                     
                                     attendance.save()
-									
-									BFDataProcessor.sharedProcessor.processEvents([event], completion: { () -> Void in
-										
-										// Store event details in user defaults
-										NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
-										NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
-										NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
-										
-										// When successful, segue to events page
-										dispatch_async(dispatch_get_main_queue()) {
-											
-											print("Saved")
-											PKHUD.sharedHUD.hideAnimated()
-											// self.albumview?.eventId = self.eventID
-											//self.performSegueWithIdentifier("eventsPage", sender: self)
-											self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-										}
-										
-									})
+
+									attendance.saveInBackgroundWithBlock { (success, error) -> Void in
+
+										let attendees : [PFObject] = [attendance]
+										BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
+
+											BFDataProcessor.sharedProcessor.processEvents([event], completion: { () -> Void in
+
+												// Store event details in user defaults
+												NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+												NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
+												NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
+
+												// When successful, segue to events page
+												dispatch_async(dispatch_get_main_queue()) {
+
+													print("Saved")
+													PKHUD.sharedHUD.hideAnimated()
+													// self.albumview?.eventId = self.eventID
+													//self.performSegueWithIdentifier("eventsPage", sender: self)
+													self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+												}
+												
+											})
+
+										})
+									}
 									
                                 } else {
                                     self.displayAlert("This event already exists", error: "Join an existing event on the Nearby Events screen.")

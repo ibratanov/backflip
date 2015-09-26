@@ -1968,8 +1968,8 @@
 				0439D3AC1B8B822C001850DD /* Views */,
 				04F41BEE1B74FBF4001AB8DA /* Controllers */,
 				0439D3C51B8B86AC001850DD /* Categories */,
-				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				0420283A1BA1E0CB0059F096 /* Defines.swift */,
+				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */,
 				0439D3D01B8B87D3001850DD /* BFTabBarControllerDelegate.swift */,
 			);
