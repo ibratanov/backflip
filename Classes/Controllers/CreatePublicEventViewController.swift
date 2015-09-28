@@ -331,15 +331,9 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Delegate method to prevent typing in text over 25 characters in alertview
     // http://stackoverflow.com/questions/433337/set-the-maximum-character-length-of-a-uitextfield
     // Information on how this delegate method works
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        
-        if (range.length + range.location > textField.text!.characters.count )
-        {
-            return false;
-        }
-        
-        let newLength = textField.text!.characters.count + string.characters.count - range.length
-        return newLength <= 25
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+	{
+        return textField.text!.characters.count <= 25
     }
     
     // Function displaying alert when creating an event that has no content in it

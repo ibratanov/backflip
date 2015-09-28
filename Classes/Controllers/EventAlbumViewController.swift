@@ -230,11 +230,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		if (indexPath.row == 0) {
 
-<<<<<<< HEAD
 			BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
-=======
-            BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
->>>>>>> 375d3deaae303770b7957dae21e0daef64a77d01
 			
 		} else {
 		
