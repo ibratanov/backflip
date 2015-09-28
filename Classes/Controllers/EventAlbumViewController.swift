@@ -312,7 +312,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			photos.append(photo)
 		}
 		
-		// var photos : [Photo] = self.collectionContent
 		if (photos.count < 1) {
 			return
 		}

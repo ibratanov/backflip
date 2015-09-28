@@ -64,8 +64,12 @@ class EventHistoryViewController : UICollectionViewController
 	
 	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
-		if (self.events[section].photos != nil && self.events[section].photos!.allObjects.count < 11) {
-			return self.events[section].photos!.allObjects.count
+		
+		let predicate = NSPredicate(format: "ANY event.objectId == %@ && flagged == 0", self.events[section].objectId!)
+		let photos = Photo.MR_findAllWithPredicate(predicate) as? [Photo]
+		
+		if (photos != nil && photos?.count < 11) {
+			return photos!.count
 		} else {
 			return 10
 		}
@@ -76,9 +80,11 @@ class EventHistoryViewController : UICollectionViewController
 	{
 		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_IDENTIFIER, forIndexPath: indexPath) as! EventHistoryCollectionViewCell
 		
-		var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
-		photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
-		cell.imageView?.setImageWithURL(NSURL(string: photos[indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
+		
+		let predicate = NSPredicate(format: "ANY event.objectId == %@ && flagged == 0", self.events[indexPath.section].objectId!)
+		var photos = Photo.MR_findAllWithPredicate(predicate) as? [Photo]
+		photos!.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
+		cell.imageView?.setImageWithURL(NSURL(string: photos![indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 		
 		return cell
 	}
@@ -96,7 +102,9 @@ class EventHistoryViewController : UICollectionViewController
 		
 		view.eventTitle?.text = event.name
 		view.eventLocation?.text = event.venue
-		view.eventDate?.text = event.createdAt!.timeAgo
+		if (event.createdAt != nil) {
+			view.eventDate?.text = event.createdAt!.timeAgo
+		}
 		view.tag = indexPath.section
 		
 		let tapGestureRecognizer = UITapGestureRecognizer()
