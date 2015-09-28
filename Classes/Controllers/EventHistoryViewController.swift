@@ -132,7 +132,12 @@ class EventHistoryViewController : UICollectionViewController
 	{
 		let tapGestureRecognizer = sender as! UITapGestureRecognizer
 		let header = tapGestureRecognizer.view as! EventHistoryHeaderView
-		let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forRow: 0, inSection: header.tag))
+		var cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forRow: 0, inSection: header.tag))
+		if (cell == nil) {
+			cell = UICollectionViewCell()
+			cell!.tag = header.tag
+		}
+		
 		self.performSegueWithIdentifier("display-event-album", sender: cell)
 	}
 	
@@ -146,7 +151,11 @@ class EventHistoryViewController : UICollectionViewController
 	{
 		if segue.identifier == "display-event-album" {
 			
-			let selectedPath = collectionView?.indexPathForCell(sender as! UICollectionViewCell)
+			var selectedPath = collectionView?.indexPathForCell(sender as! UICollectionViewCell)
+			if (selectedPath == nil) {
+				selectedPath = NSIndexPath(forRow: 0, inSection: sender!.tag)
+			}
+			
 			let event = self.events[selectedPath!.section]
 			let eventViewController = segue.destinationViewController as! EventAlbumViewController
 			eventViewController.event = event
