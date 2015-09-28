@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.developer.associated-domains</key>
-	<array/>
+	<array>
+		<string>applinks:bnc.lt</string>
+		<string>applinks:invt.bkflp.co</string>
+		<string>applinks:getbackflip.com</string>
+	</array>
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)com.getbackflip.Backflip</string>

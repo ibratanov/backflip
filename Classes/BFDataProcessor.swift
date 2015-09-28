@@ -18,15 +18,15 @@ class BFDataProcessor
 	static let sharedProcessor = BFDataProcessor()
 
 
-	func processEvents(events: [PFObject], completion: () -> Void)
+	func processEvents(events: [PFObject]?, completion: () -> Void)
 	{
-		if (events.count < 1) {
+		if (events == nil || events!.count < 1) {
 			return completion()
 		}
 
 		MagicalRecord.saveWithBlock({ (localContext) -> Void in
 			
-			for object : PFObject in events {
+			for object : PFObject in events! {
 				
 				let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext: localContext) as! Event;
 				if (object.createdAt != nil) {
@@ -80,15 +80,15 @@ class BFDataProcessor
 	}
 
 	
-	func processAttendees(attendees: [PFObject], completion: () -> Void)
+	func processAttendees(attendees: [PFObject]?, completion: () -> Void)
 	{
-		if (attendees.count < 1) {
+		if (attendees == nil || attendees?.count < 1) {
 			return completion()
 		}
 		
 		MagicalRecord.saveWithBlock({ (localContext) -> Void in
 			
-			for object : PFObject in attendees {
+			for object : PFObject in attendees! {
 				
 				let attendee : Attendance = Attendance.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext: localContext) as! Attendance
 				if (object.createdAt != nil) {
@@ -122,16 +122,16 @@ class BFDataProcessor
 	}
 	
 	
-	func processPhotos(photos: [PFObject], completion: () -> Void)
+	func processPhotos(photos: [PFObject]?, completion: () -> Void)
 	{
-		if (photos.count < 1) {
+		if (photos == nil || photos?.count < 1) {
 			return completion()
 		}
 		
 		
 		MagicalRecord.saveWithBlock({ (localContext) -> Void in
 			
-			for object : PFObject in photos {
+			for object : PFObject in photos! {
 				
 				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext: localContext) as! Photo;
 				if (object.createdAt != nil) {
