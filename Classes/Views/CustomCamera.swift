@@ -417,6 +417,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				photo["reviewed"] = false
 				photo["blocked"] = false
 				photo["reporter"] = ""
+				photo["enabled"] = true
 				photo["reportMessage"] = ""
 				photo["event"] = PFObject.init(withoutDataWithClassName: "Event", objectId: self.event!.objectId!);
 				
@@ -461,8 +462,11 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 									
 									//issue
 									photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
+										
 										BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
-											print("Photo stored in coredata..");
+											print("Photo stored in coredata..")
+											print(photo)
+											
 											let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
 											dispatch_after(delayTime, dispatch_get_main_queue()) {
 												NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)

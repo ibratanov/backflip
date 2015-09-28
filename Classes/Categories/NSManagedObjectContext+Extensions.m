@@ -32,7 +32,7 @@
 			if (block)
 				block(self);
 			
-			[self MR_saveWithOptions:MRSaveSynchronouslyExceptRootContext completion:completion];
+			[self MR_saveWithOptions:MRSaveParentContexts completion:completion];
 		}];
 		
 	//});
