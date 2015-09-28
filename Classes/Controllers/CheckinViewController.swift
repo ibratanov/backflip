@@ -157,6 +157,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		// Data!!1!!!
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
             fetchData()
+			
+			
+			BFDataFetcher.sharedFetcher.fetchDataInBackground({ (completed) -> Void in
+				self.fetchData()
+			})
         }
 		
 		
