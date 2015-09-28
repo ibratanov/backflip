@@ -96,6 +96,11 @@ class EventHistoryViewController : UICollectionViewController
 		view.eventTitle?.text = event.name
 		view.eventLocation?.text = event.venue
 		view.eventDate?.text = event.createdAt!.timeAgo
+		view.tag = indexPath.section
+		
+		let tapGestureRecognizer = UITapGestureRecognizer()
+		tapGestureRecognizer.addTarget(self, action: "didSelectCollectionHeaderView:")
+		view.addGestureRecognizer(tapGestureRecognizer)
 		
 		return view
 	}
@@ -115,6 +120,20 @@ class EventHistoryViewController : UICollectionViewController
 	{
 		// Clear in-memory cache
 		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+	}
+	
+	
+	
+	//-------------------------------------
+	// MARK: Touch Handlers
+	//-------------------------------------
+	
+	func didSelectCollectionHeaderView(sender: AnyObject?)
+	{
+		let tapGestureRecognizer = sender as! UITapGestureRecognizer
+		let header = tapGestureRecognizer.view as! EventHistoryHeaderView
+		let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forRow: 0, inSection: header.tag))
+		self.performSegueWithIdentifier("display-event-album", sender: cell)
 	}
 	
 	
