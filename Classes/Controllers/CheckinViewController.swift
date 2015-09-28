@@ -304,7 +304,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		// Store channel for push notifications
 		let currentInstallation = PFInstallation.currentInstallation()
 		currentInstallation.addUniqueObject("a"+event.objectId!, forKey: "channels")
-		try! currentInstallation.saveInBackground()
+		currentInstallation.saveInBackground()
 		
 		
 		// Create attendance object, save to parse; save to CoreData
@@ -320,61 +320,51 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
 		
 		
-		try! attendance.saveInBackgroundWithBlock { (success, error) -> Void in
-			
+		attendance.saveInBackgroundWithBlock { (success, error) -> Void in
+
 			let attendees : [PFObject] = [attendance] 
 			BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
-				
+
 				// Add attendee to event
 				let account = PFUser.currentUser()
 				account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
 				account?.addUniqueObject(event.name!, forKey: "savedEventNames")
-				try! account?.saveInBackground()
-				
+				account?.saveInBackground()
 				
 				// Add user to Event objects relation
 				let eventQuery = PFQuery(className: "Event")
 				eventQuery.whereKey("eventName", equalTo: event.name!)
-				try! eventQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-					
+				eventQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
 					let eventObj = objects!.first as! PFObject
 					let relation = eventObj.relationForKey("attendees")
 					relation.addObject(PFUser.currentUser()!)
-					try! eventObj.saveInBackground()
-					
+					eventObj.saveInBackground()
 				}
-				
 				
 				// Store event details in user defaults
 				NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
 				NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
 				NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
 				
-				
 				PKHUD.sharedHUD.hideAnimated()
 				
 				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
 				dispatch_after(delayTime, dispatch_get_main_queue()) {
-					
 					self.performSegueWithIdentifier("display-event-album", sender: self)
-					
 				}
 			})
 			
-
 		}
 		
 	}
 
 	func processDoubleTap(sender: UITapGestureRecognizer)
 	{
-		
 		let touchPoint = sender.locationInView(self.collectionView)
 		let hitDetect = CGRectContainsPoint(self.collectionView!.bounds, touchPoint)
 		if (hitDetect == true) {
 			checkIn()
 		}
-
 	}
 	
 	
@@ -395,7 +385,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				albumViewController.event = event;
 			}
 		}
-		
 	}
 	
 	

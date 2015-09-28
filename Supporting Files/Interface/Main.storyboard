@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9046" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rap-jL-BIw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9046" systemVersion="15A279b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rap-jL-BIw">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
@@ -301,7 +301,7 @@
                         <animations/>
                     </navigationBar>
                     <connections>
-                        <segue destination="Xac-HV-Hf1" kind="relationship" relationship="rootViewController" id="OcJ-My-e0H"/>
+                        <segue destination="XTd-iv-hZc" kind="relationship" relationship="rootViewController" id="N6G-gD-bSd"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oPA-O9-Hy1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -500,16 +500,16 @@
             <objects>
                 <tableViewController title="Event Album" id="Xac-HV-Hf1" customClass="EventTableViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="146" sectionHeaderHeight="22" sectionFooterHeight="22" id="acj-5d-eH3">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="146" id="D4g-rg-eMf" customClass="EventTableViewCell" customModule="Backflip" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="22" width="375" height="146"/>
+                                <rect key="frame" x="0.0" y="22" width="600" height="146"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D4g-rg-eMf" id="mlm-QQ-UZC">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="145"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="145"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[CURRENT EVENT]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Stv-eF-mP4">
@@ -548,14 +548,14 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kVz-3T-M7e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1628.5" y="-3830.5"/>
+            <point key="canvasLocation" x="1639" y="-3864"/>
         </scene>
         <!--Event Album View Controller-->
         <scene sceneID="Lqx-4V-58o">
             <objects>
                 <collectionViewController storyboardIdentifier="EventAlbumViewController" id="XjT-mA-gxf" customClass="EventAlbumViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="8qJ-bL-LVp">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -587,7 +587,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="add-album-cell" id="1g4-eY-6nj" customClass="AlbumViewCell" customModule="Backflip" customModuleProvider="target">
-                                <rect key="frame" x="250" y="44" width="125" height="125"/>
+                                <rect key="frame" x="158" y="44" width="125" height="125"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
@@ -608,10 +608,10 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="header-view" id="9Jr-DJ-Mbz">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bE1-kd-Hll">
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bE1-kd-Hll">
                                     <rect key="frame" x="8" y="8" width="359" height="29"/>
                                     <animations/>
                                     <segments>
@@ -660,6 +660,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Hu-s4-Z9H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2380.5" y="-3008.5"/>
+        </scene>
+        <!--Event History View Controller-->
+        <scene sceneID="cdr-O8-dcc">
+            <objects>
+                <collectionViewController id="XTd-iv-hZc" customClass="EventHistoryViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Box-L6-erk">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <collectionViewLayout key="collectionViewLayout" id="sfT-vQ-4pW" customClass="EventHistoryViewFlowLayout" customModule="Backflip" customModuleProvider="target"/>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photo-cell-identifier" id="x1D-RJ-ynH" customClass="EventHistoryCollectionViewCell" customModule="Backflip" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3cQ-5B-ke4">
+                                            <rect key="frame" x="0.0" y="0.0" width="84" height="94"/>
+                                            <animations/>
+                                        </imageView>
+                                    </subviews>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstItem="3cQ-5B-ke4" firstAttribute="leading" secondItem="x1D-RJ-ynH" secondAttribute="leadingMargin" constant="-8" id="E3p-R8-5CN"/>
+                                    <constraint firstItem="3cQ-5B-ke4" firstAttribute="centerY" secondItem="x1D-RJ-ynH" secondAttribute="centerY" id="O9R-MM-UT1"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="3cQ-5B-ke4" secondAttribute="trailing" constant="-8" id="Vs9-nZ-aS3"/>
+                                    <constraint firstItem="3cQ-5B-ke4" firstAttribute="centerX" secondItem="x1D-RJ-ynH" secondAttribute="centerX" id="Vzt-3v-p5s"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="3cQ-5B-ke4" secondAttribute="bottom" constant="-8" id="gmi-OG-JaH"/>
+                                    <constraint firstItem="3cQ-5B-ke4" firstAttribute="top" secondItem="x1D-RJ-ynH" secondAttribute="topMargin" constant="-8" id="ujH-7B-7kf"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="3cQ-5B-ke4" id="sLh-m2-aUh"/>
+                                    <segue destination="XjT-mA-gxf" kind="show" identifier="display-event-album" id="RGz-OW-NbD"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="XTd-iv-hZc" id="C80-8V-cPv"/>
+                            <outlet property="delegate" destination="XTd-iv-hZc" id="Lg7-xE-fmN"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="fGN-qM-Jmy"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oy0-h9-NXW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2380.5" y="-3830.5"/>
         </scene>
         <!--Current Event-->
         <scene sceneID="dIp-dR-pyX">
@@ -914,6 +965,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="in9-PA-Uhf">
                                         <rect key="frame" x="317" y="50" width="50" height="50"/>
+                                        <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="6cJ-5F-Bqq"/>
@@ -928,6 +980,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rSe-6f-fCn">
                                         <rect key="frame" x="8" y="50" width="50" height="50"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="5oC-MO-sqK"/>
                                             <constraint firstAttribute="height" constant="50" id="fZj-PN-y3M"/>
@@ -941,6 +994,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yd7-FR-b7a">
                                         <rect key="frame" x="147" y="35" width="80" height="80"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Yd7-FR-b7a" secondAttribute="height" multiplier="1:1" id="Qwk-ec-YpI"/>
                                             <constraint firstAttribute="width" constant="80" id="Vz6-ia-Msw"/>
@@ -966,6 +1020,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <animations/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Yd7-FR-b7a" firstAttribute="leading" secondItem="rSe-6f-fCn" secondAttribute="trailing" constant="89" id="6G2-mI-leb"/>
@@ -995,6 +1050,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kBt-Gc-4IU">
                                         <rect key="frame" x="8" y="8" width="69" height="50"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="etx-oD-fMl"/>
                                         </constraints>
@@ -1007,6 +1063,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2yK-th-tlX" userLabel="Switch Camera Button">
                                         <rect key="frame" x="332" y="5" width="35" height="50"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="hEg-Dr-WxJ"/>
                                         </constraints>
@@ -1020,6 +1077,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <animations/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="2yK-th-tlX" firstAttribute="top" secondItem="dgz-TN-ciW" secondAttribute="top" constant="5" id="0Bc-39-gja"/>
@@ -1061,6 +1119,7 @@
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ID-h3-6jf">
                                 <rect key="frame" x="0.0" y="435" width="375" height="60"/>
+                                <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="44T-ER-LmZ"/>
@@ -1071,6 +1130,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qkT-AB-udn" firstAttribute="bottom" secondItem="VLR-aw-S3o" secondAttribute="top" id="0Eh-GI-fOY"/>

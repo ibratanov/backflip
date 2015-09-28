@@ -11,10 +11,11 @@ import Parse
 import DigitsKit
 import MapleBacon
 
-class EventTableViewController: UITableViewController
+class EventTableViewController: UITableViewController, UIViewControllerTransitioningDelegate
 {
 	
 	var events : [Event] = [];
+	private let animationController = DAExpandAnimation()
 	let CELL_BACKGROUND_COLOR : UIColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
 	
 	
@@ -231,13 +232,37 @@ class EventTableViewController: UITableViewController
 		if segue.identifier == "display-event-album" {
 						
 			let selectedPath = tableView.indexPathForCell(sender as! UITableViewCell)
+			let selectedCell = sender as! UITableViewCell
 			
 			let event = self.events[selectedPath!.row]
 			let eventViewController = segue.destinationViewController as! EventAlbumViewController
 			eventViewController.event = event
-
+			eventViewController.transitioningDelegate = self
+			eventViewController.modalPresentationStyle = .Custom
+			animationController.animationDuration = 2.0
+			animationController.collapsedViewFrame = {
+				selectedCell.frame
+			}
+			
+			tableView.deselectRowAtIndexPath(selectedPath!, animated: false)
 		}
 	}
+
+
+	//-------------------------------------
+	// MARK: Animations
+	//-------------------------------------
+	
+	func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning?
+	{
+		return animationController
+	}
+	
+	func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning?
+	{
+		return animationController
+	}
+	
 	
 	
 	//-------------------------------------

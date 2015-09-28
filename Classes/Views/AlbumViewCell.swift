@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ParseUI
 
 class AlbumViewCell: UICollectionViewCell
 {
