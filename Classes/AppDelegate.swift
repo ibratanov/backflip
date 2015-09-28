@@ -284,11 +284,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 				
 				if ((params["referringOut"])  != nil) {
 					
+					print(params)
+					print("Params ^^")
 					let eventId =  params["eventId"] as? String
 					if (eventId != nil) {
 						
-						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventId!) as! Event
-						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
+						// let event : Event = Event.MR_findFirstByAttribute("objectId", withValue: eventId!)
+						
+						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+(params["eventTitle"] as! String)+"', would you like to check in?", preferredStyle: .Alert)
 						alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
 							
@@ -301,6 +304,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 							
 							
 							// let checkinController : CheckinViewController = CheckinViewController()
+							let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: (params["eventId"] as! String)) as! Event
 							checkinViewController.checkinWithEvent(event)
 							
 						}))

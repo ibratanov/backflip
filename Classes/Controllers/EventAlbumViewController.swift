@@ -356,7 +356,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Retriving invite code…")
 		PKHUD.sharedHUD.show()
 		
-		let params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
+		let params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventObject": self.event!.objectId!, "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
 		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
 			if (error != nil) {
 				
