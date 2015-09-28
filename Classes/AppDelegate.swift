@@ -42,7 +42,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		// Watchdog
 		//--------------------------------------
 		#if DEBUG
-			Watchdog(threshold: 0.3) { duration in
+			let _ = Watchdog(threshold: 0.3) { duration in
 				print("👮 Main thread was blocked for " + String(format:"%.2f", duration) + "s 👮")
 			}
 		#endif
@@ -77,6 +77,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
 		
+		PFInstallation.currentInstallation().saveInBackground()
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
 			Fabric.with([Digits()])
