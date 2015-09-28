@@ -302,7 +302,17 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	@IBAction func segementedControlValueChanged(sender: AnyObject)
 	{
 		
-		var photos : [Photo] = self.collectionContent
+		var photos : [Photo] = []
+		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]
+		for photo : Photo in _photos {
+			if (photo.flagged != nil && Bool(photo.flagged!) == true) {
+				continue
+			}
+			
+			photos.append(photo)
+		}
+		
+		// var photos : [Photo] = self.collectionContent
 		if (photos.count < 1) {
 			return
 		}
