@@ -14,7 +14,7 @@
 
 - (void)saveWithOptions:(NSInteger)options completion:(void(^)(BOOL contextDidSave, NSError *error))completion
 {
-	return [self MR_saveWithOptions:MRSaveParentContexts completion:completion];
+	return [self MR_saveWithOptions:MRSaveParentContexts | MRSaveSynchronouslyExceptRootContext completion:completion];
 }
 
 - (void)saveWithBlock:(void(^)(NSManagedObjectContext *localContext))block completion:(MRSaveCompletionHandler)completion
@@ -27,12 +27,12 @@
 	[self setUndoManager:nil];
 	
 	//dispatch_async(self.dataQueue, ^{
-		
+	
 		[self performBlock:^{
 			if (block)
 				block(self);
 			
-			[self MR_saveWithOptions:MRSaveParentContexts completion:completion];
+			[self MR_saveWithOptions:MRSaveParentContexts | MRSaveSynchronouslyExceptRootContext completion:completion];
 		}];
 		
 	//});

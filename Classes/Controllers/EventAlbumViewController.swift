@@ -555,6 +555,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			return
 		}
 		
+		self.event = Event.MR_findByAttribute("objectId", withValue: event!.objectId!)!.first as? Event
 		
 		var photos : [Photo] = []
 		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]

@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
-import CoreData
 import Parse
+import CoreData
 import MagicalRecord
 import Foundation
 
@@ -15,25 +15,7 @@ import Foundation
 class BFDataProcessor
 {
 
-	static let sharedProcessor = BFDataProcessor.init()
-	
-	var dataQueue : dispatch_queue_t = dispatch_queue_create("com.backflip.dataQueue", DISPATCH_QUEUE_SERIAL)
-	var dataContext : NSManagedObjectContext?
-	
-	
-	init()
-	{
-		dispatch_set_target_queue(self.dataQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0));
-		
-		// Setup a parent context..
-		dispatch_async(dataQueue) { () -> Void in
-			let mainContext : NSManagedObjectContext = NSManagedObjectContext.MR_rootSavingContext()
-			self.dataContext = mainContext
-			self.dataContext?.undoManager = nil
-		}
-		
-	}
-
+	static let sharedProcessor = BFDataProcessor()
 
 
 	func processEvents(events: [PFObject], completion: () -> Void)
@@ -42,11 +24,11 @@ class BFDataProcessor
 			return completion()
 		}
 
-		self.save({ (context) -> Void in
+		MagicalRecord.saveWithBlock({ (localContext) -> Void in
 			
 			for object : PFObject in events {
 				
-				let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Event;
+				let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext: localContext) as! Event;
 				if (object.createdAt != nil) {
 					event.createdAt = object.createdAt
 				}
@@ -84,16 +66,16 @@ class BFDataProcessor
 					if (geoObject != nil) {
 						
 						let attributes = ["latitude" : NSNumber(double: geoObject!.latitude), "longitude": NSNumber(double: geoObject!.longitude)]
-						let geoPoint : GeoPoint = GeoPoint.fetchOrCreateWithAttributesAndValues(attributes) as! GeoPoint
+						let geoPoint : GeoPoint = GeoPoint.fetchOrCreateWithAttributesAndValues(attributes, inContext: localContext) as! GeoPoint
 						event.geoLocation = geoPoint;
 					}
 				}
 				
 			}
 			
-		}, completionHandler: { (contextDidSave, error) -> Void in
+		}) { (contextDidSave, error) -> Void in
 			return completion()
-		})
+		}
 		
 	}
 
@@ -104,11 +86,11 @@ class BFDataProcessor
 			return completion()
 		}
 		
-		self.save({ (context) -> Void in
+		MagicalRecord.saveWithBlock({ (localContext) -> Void in
 			
 			for object : PFObject in attendees {
 				
-				let attendee : Attendance = Attendance.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Attendance
+				let attendee : Attendance = Attendance.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext: localContext) as! Attendance
 				if (object.createdAt != nil) {
 					attendee.createdAt = object.createdAt
 				}
@@ -127,15 +109,15 @@ class BFDataProcessor
 				
 				if (self.isValid(object["event"])) {
 					let eventObject : PFObject = object["event"] as! PFObject
-					let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject.objectId) as! Event
+					let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject.objectId, inContext: localContext) as! Event
 					attendee.event = event;
 				}
 				
 			}
 
-		}, completionHandler: { (contextDidSave, error) -> Void in
+		}) { (contextDidSave, error) -> Void in
 			return completion()
-		})
+		}
 		
 	}
 	
@@ -147,11 +129,11 @@ class BFDataProcessor
 		}
 		
 		
-		self.save({ (context) -> Void in
+		MagicalRecord.saveWithBlock({ (localContext) -> Void in
 			
 			for object : PFObject in photos {
 				
-				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Photo;
+				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext: localContext) as! Photo;
 				if (object.createdAt != nil) {
 					photo.createdAt = object.createdAt
 				}
@@ -180,7 +162,7 @@ class BFDataProcessor
 				if (self.isValid(object["event"])) {
 					let eventObject = object["event"] as? PFObject
 					if (eventObject != nil) {
-						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject!.objectId!) as! Event
+						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject!.objectId!, inContext: localContext) as! Event
 						photo.event = event;
 					}
 				}
@@ -189,7 +171,7 @@ class BFDataProcessor
 				if (self.isValid(object["image"])) {
 					let imageObject = object["image"] as? PFFile
 					if (imageObject != nil) {
-						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url) as! File
+						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url, inContext: localContext) as! File
 						photo.image = file;
 					}
 				}
@@ -197,7 +179,7 @@ class BFDataProcessor
 				if (self.isValid(object["thumbnail"])) {
 					let imageObject = object["thumbnail"] as? PFFile
 					if (imageObject != nil) {
-						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url) as! File
+						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url, inContext: localContext) as! File
 						photo.thumbnail = file;
 					}
 				}
@@ -224,26 +206,6 @@ class BFDataProcessor
 		}
 		
 		return true
-	}
-
-
-
-	func save(block: (context: NSManagedObjectContext!) -> Void, completionHandler:(contextDidSave: Bool?, error: NSError?) -> Void)
-	{
-		dispatch_async(self.dataQueue) { () -> Void in
-			self.dataContext!.performBlock({ () -> Void in
-				
-				block(context: self.dataContext!)
-				
-				self.dataContext!.saveWithOptions(1, completion: { (didSave, error) -> Void in
-					
-					completionHandler(contextDidSave: didSave, error: error)
-					
-				})
-			})
-			
-		}
-		
 	}
 	
 }

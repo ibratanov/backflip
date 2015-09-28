@@ -41,6 +41,7 @@ class EventHistoryViewController : UICollectionViewController
 		
 		self.collectionView?.backgroundColor = UIColor.whiteColor()
 		
+		fetchData()
 		
 		// Layout -  Only run on the main thread
 		dispatch_async(dispatch_get_main_queue(), { () -> Void in

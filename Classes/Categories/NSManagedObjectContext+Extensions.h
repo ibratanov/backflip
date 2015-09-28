@@ -11,11 +11,7 @@
 
 @interface NSManagedObjectContext(Extensions)
 
-
 - (void)saveWithOptions:(NSInteger)options completion:(void(^)(BOOL contextDidSave, NSError *error))completion;
 - (void)saveWithBlock:(void(^)(NSManagedObjectContext *localContext))block completion:(MRSaveCompletionHandler)completion;
-
-
-@property (strong, nonatomic) dispatch_queue_t dataQueue;
 
 @end
