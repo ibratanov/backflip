@@ -74,7 +74,7 @@ class BFDataFetcher : NSObject {
 				let objects: AnyObject? = object?.objectForKey("Photo")
 				if (objects?.count > 0) {
 					if (activityInidactor) {
-						ZAActivityBar.showWithStatus("Processing Photos ("+NSNumber(long: objects!.count).stringValue+")", forAction: "process_photos")
+						ZAActivityBar.showWithStatus("Processing Photos", forAction: "process_photos")
 					}
 					
 					BFDataProcessor.sharedProcessor.processPhotos(objects as! [PFObject], completion: { () -> Void in
