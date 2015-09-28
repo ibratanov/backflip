@@ -230,7 +230,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		if (indexPath.row == 0) {
 
-            BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
+			BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
 			
 		} else {
 		
@@ -302,7 +302,16 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	@IBAction func segementedControlValueChanged(sender: AnyObject)
 	{
 		
-		var photos : [Photo] = self.collectionContent
+		var photos : [Photo] = []
+		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]
+		for photo : Photo in _photos {
+			if (photo.flagged != nil && Bool(photo.flagged!) == true) {
+				continue
+			}
+			
+			photos.append(photo)
+		}
+		
 		if (photos.count < 1) {
 			return
 		}
@@ -356,7 +365,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Retriving invite code…")
 		PKHUD.sharedHUD.show()
 		
-		let params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
+		let params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventObject": self.event!.objectId!, "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
 		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
 			if (error != nil) {
 				
@@ -555,6 +564,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			return
 		}
 		
+		self.event = Event.MR_findByAttribute("objectId", withValue: event!.objectId!)!.first as? Event
 		
 		var photos : [Photo] = []
 		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]

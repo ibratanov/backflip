@@ -12,7 +12,7 @@
 @implementation NSManagedObject(FetchOrCreate)
 
 + (id) fetchOrCreateWhereAttribute:(NSString *)key isValue:(id)value {
-    NSManagedObjectContext *context =[NSManagedObjectContext MR_contextForCurrentThread];
+    NSManagedObjectContext *context =[NSManagedObjectContext MR_defaultContext];
     [context setUndoManager:nil];
     return [self fetchOrCreateWhereAttribute:key isValue:value inContext:context];
 }
@@ -30,7 +30,7 @@
 }
 
 + (id) fetchOrCreateWithAttributesAndValues:(NSDictionary *)attributeDict {
-    return [self fetchOrCreateWithAttributesAndValues:attributeDict inContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    return [self fetchOrCreateWithAttributesAndValues:attributeDict inContext:[NSManagedObjectContext MR_defaultContext]];
 }
 
 + (id) fetchOrCreateWithAttributesAndValues:(NSDictionary *)attributeDict inContext:(NSManagedObjectContext *)context {

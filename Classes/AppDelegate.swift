@@ -6,12 +6,10 @@
 
 import UIKit
 
-import Bolts
 import Parse
 import Fabric
 import DigitsKit
 import FBSDKCoreKit
-import MagicalRecord
 
 
 @UIApplicationMain
@@ -37,6 +35,15 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupCoreData()
 		setupApperance()
 		
+		
+		//--------------------------------------
+		// Watchdog
+		//--------------------------------------
+		#if DEBUG
+			let _ = Watchdog(threshold: 0.3) { duration in
+				print("👮 Main thread was blocked for " + String(format:"%.2f", duration) + "s 👮")
+			}
+		#endif
 
 		
 		//--------------------------------------
@@ -68,6 +75,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
 		
+		PFInstallation.currentInstallation().saveInBackground()
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
 			Fabric.with([Digits()])
@@ -276,11 +284,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 				
 				if ((params["referringOut"])  != nil) {
 					
-					let eventId =  params["eventId"] as? String
+					let eventId =  params["eventObject"] as? String
 					if (eventId != nil) {
 						
-						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventId!) as! Event
-						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
+						let event : Event = Event.MR_findFirstByAttribute("objectId", withValue: eventId!)
+						
+						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+event.name!+"', would you like to check in?", preferredStyle: .Alert)
 						alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
 							

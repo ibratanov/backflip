@@ -39,7 +39,7 @@ class BFDataFetcher : NSObject {
 						ZAActivityBar.showWithStatus("Processing Events", forAction: "process_events")
 					}
 				
-					BFDataProcessor.sharedProcessor.processEvents(objects as! [PFObject], completion: { () -> Void in
+					BFDataProcessor.sharedProcessor.processEvents(objects as? [PFObject], completion: { () -> Void in
 						if (activityInidactor) {
 							ZAActivityBar.showSuccessWithStatus("Events Processed", forAction: "process_events")
 						}
@@ -59,7 +59,7 @@ class BFDataFetcher : NSObject {
 						ZAActivityBar.showWithStatus("Processing Attendees", forAction: "process_attendees")
 					}
 					
-					BFDataProcessor.sharedProcessor.processAttendees(objects as! [PFObject], completion: { () -> Void in
+					BFDataProcessor.sharedProcessor.processAttendees(objects as? [PFObject], completion: { () -> Void in
 						if (activityInidactor) {
 							ZAActivityBar.showSuccessWithStatus("Attendees Processed", forAction: "process_attendees")
 						}
@@ -74,10 +74,10 @@ class BFDataFetcher : NSObject {
 				let objects: AnyObject? = object?.objectForKey("Photo")
 				if (objects?.count > 0) {
 					if (activityInidactor) {
-						ZAActivityBar.showWithStatus("Processing Photos ("+NSNumber(long: objects!.count).stringValue+")", forAction: "process_photos")
+						ZAActivityBar.showWithStatus("Processing Photos", forAction: "process_photos")
 					}
 					
-					BFDataProcessor.sharedProcessor.processPhotos(objects as! [PFObject], completion: { () -> Void in
+					BFDataProcessor.sharedProcessor.processPhotos(objects as? [PFObject], completion: { () -> Void in
 						if (activityInidactor) {
 							ZAActivityBar.showSuccessWithStatus("Photos Processed", forAction: "process_photos")
 						}
@@ -109,9 +109,9 @@ class BFDataFetcher : NSObject {
 				let attendance : AnyObject? = object?.objectForKey("EventAttendance")
 				
 				
-				BFDataProcessor.sharedProcessor.processEvents(events as! [PFObject], completion: { () -> Void in
-					BFDataProcessor.sharedProcessor.processAttendees(attendance as! [PFObject], completion: { () -> Void in
-						BFDataProcessor.sharedProcessor.processPhotos(photos as! [PFObject], completion: { () -> Void in
+				BFDataProcessor.sharedProcessor.processEvents(events as? [PFObject], completion: { () -> Void in
+					BFDataProcessor.sharedProcessor.processAttendees(attendance as? [PFObject], completion: { () -> Void in
+						BFDataProcessor.sharedProcessor.processPhotos(photos as? [PFObject], completion: { () -> Void in
 							return completion(completed: true)
 						})
 					})
