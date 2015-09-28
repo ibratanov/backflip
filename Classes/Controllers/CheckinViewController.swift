@@ -175,6 +175,17 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		#endif
 	}
 	
+	
+	override func viewDidAppear(animated: Bool)
+	{
+		super.viewDidAppear(animated)
+	
+		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
+			fetchData()
+		}
+		
+	}
+	
 
 	//-------------------------------------
 	// MARK: UICollectioViewDataSource
@@ -481,7 +492,26 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		}) { (error) -> Void in
 			// something went wrong
 			print("SwiftLocation error :(")
-			print(error, terminator: "")
+			print(error)
+			
+			
+			let authorizationStatus = CLLocationManager.authorizationStatus()
+			if (authorizationStatus == .Denied || authorizationStatus == .Restricted) {
+				let alertController = UIAlertController(title: "Location Services", message: "We require location services to find nearby events, Please enable Location Services in settings", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+					
+					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+					dispatch_after(delayTime, dispatch_get_main_queue()) {
+						if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
+							UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+						}
+					}
+					
+				}))
+				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+				
+				self.presentViewController(alertController, animated: true, completion: nil)
+			}
 		}
 
 	}

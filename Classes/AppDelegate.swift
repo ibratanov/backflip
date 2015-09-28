@@ -6,12 +6,10 @@
 
 import UIKit
 
-import Bolts
 import Parse
 import Fabric
 import DigitsKit
 import FBSDKCoreKit
-import MagicalRecord
 
 
 @UIApplicationMain
