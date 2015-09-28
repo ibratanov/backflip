@@ -59,7 +59,6 @@ class EventHistoryViewFlowLayout : UICollectionViewFlowLayout
 				origin.y = min(max(contentOffset!.y, (CGRectGetMinY(firstCellAttributes!.frame)-headerHeight)), (CGRectGetMaxY(lastCellAttributes!.frame)-headerHeight))
 				layoutAttributes.zIndex = 1024
 				layoutAttributes.frame = CGRectMake(origin.x, origin.y, layoutAttributes.frame.size.width, layoutAttributes.frame.size.height)
-				
 			}
 		}
 		

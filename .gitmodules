@@ -41,6 +41,3 @@
 [submodule "Vendor/Watchdog"]
 	path = Vendor/Watchdog
 	url = git@github.com:wojteklukaszuk/Watchdog.git
-[submodule "Vendor/DAExpandAnimation"]
-	path = Vendor/DAExpandAnimation
-	url = git@github.com:ifitdoesntwork/DAExpandAnimation.git
