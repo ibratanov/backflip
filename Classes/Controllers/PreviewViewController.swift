@@ -383,7 +383,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 			var outputImage =  filter.outputImage
 			var t: CGAffineTransform!
 			
-			let orientation = UIDevice.currentDevice().orientation
+			_ = UIDevice.currentDevice().orientation
 			t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
 			
 			//t = CGAffineTransformMakeRotation(0)
