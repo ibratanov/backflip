@@ -265,6 +265,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			return "No nearby events"
 		} else {
             checkinButton.enabled = true
+			print(self.events[row].objectId!+" "+self.events[row].name!)
 			return self.events[row].name!
 		}
 	}
@@ -289,6 +290,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (alertAction) -> Void in
 			PFUser.logOut()
+			
+			FBSDKLoginManager().logOut()
+			FBSDKAccessToken.setCurrentAccessToken(nil)
+			
 			Digits.sharedInstance().logOut()
 			self.performSegueWithIdentifier("display-login-popover", sender: self)
 		}))

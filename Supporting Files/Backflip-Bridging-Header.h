@@ -16,10 +16,10 @@
 
 	#import "ZAActivityBar.h"
 
-	#if FEATURE_FACEBOOK
+	//#if FEATURE_FACEBOOK
 		#import <FBSDKCoreKit/FBSDKCoreKit.h>
 		#import <FBSDKLoginKit/FBSDKLoginKit.h>
-	#endif
+	//#endif
 
 
 	// Analytics yo
