@@ -254,6 +254,7 @@
 		044BD34C1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */; };
 		047790D21BB9CE4300BA8F9E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */; };
 		047790D41BB9CF3800BA8F9E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */; };
+		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
 		049AA6811B73DA01003888CE /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6481B73DA01003888CE /* ImageError.png */; };
 		049AA6821B73DA01003888CE /* ImageError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6491B73DA01003888CE /* ImageError@2x.png */; };
 		049AA6831B73DA01003888CE /* ImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA64A1B73DA01003888CE /* ImageError@3x.png */; };
@@ -902,6 +903,7 @@
 		044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MWZoomingScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Vendor/Facebook/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Vendor/Facebook/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		047790E61BBB1C5B00BA8F9E /* PopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		0495F1751BAB0CC0002E609E /* Frontflip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Frontflip.entitlements; sourceTree = "<group>"; };
 		049AA6481B73DA01003888CE /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
 		049AA6491B73DA01003888CE /* ImageError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@2x.png"; sourceTree = "<group>"; };
@@ -1573,12 +1575,11 @@
 		0439D3AC1B8B822C001850DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				047790F01BBB1D4900BA8F9E /* Table View */,
 				04B610311BB98FEE00C1AF1E /* Collection View */,
 				040FD10D1BB2F1FD00DDB1A5 /* CustomCamera.swift */,
 				040FD10E1BB2F1FD00DDB1A5 /* CustomFilter.swift */,
-				0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */,
-				0439D3AE1B8B8249001850DD /* EventTableViewCell.swift */,
-				0439D3AF1B8B8249001850DD /* FeedViewCell.swift */,
+				047790E61BBB1C5B00BA8F9E /* PopoverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1639,6 +1640,16 @@
 				047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */,
 			);
 			name = Facebook;
+			sourceTree = "<group>";
+		};
+		047790F01BBB1D4900BA8F9E /* Table View */ = {
+			isa = PBXGroup;
+			children = (
+				0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */,
+				0439D3AE1B8B8249001850DD /* EventTableViewCell.swift */,
+				0439D3AF1B8B8249001850DD /* FeedViewCell.swift */,
+			);
+			name = "Table View";
 			sourceTree = "<group>";
 		};
 		049222A71B725CAA00FFB08A /* Models */ = {
@@ -2429,6 +2440,7 @@
 				04C61FC41B8B982600E2ACB5 /* GeoPoint.swift in Sources */,
 				04062FBF1BA1DBF000F5FFE4 /* BFDataManager.swift in Sources */,
 				049AA6E71B73DB84003888CE /* UIImageView+WebCache.m in Sources */,
+				047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */,
 				042E8D0A1BB2F49E00D61412 /* GPUImageLuminanceThresholdFilter.m in Sources */,
 				04E39D621BA8BCF50061EA36 /* GameScene.swift in Sources */,
 				042E8CC91BB2F49E00D61412 /* GPUImageCGAColorspaceFilter.m in Sources */,
