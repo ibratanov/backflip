@@ -254,20 +254,22 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		let status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
 		if (status == AVAuthorizationStatus.Authorized) {
 			print("authorized")
-		} else if(status == AVAuthorizationStatus.Denied){
-			let alert:UIAlertView = UIAlertView()
-			alert.title = "Camera Disabled"
-			alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
-			alert.delegate = self
-			alert.addButtonWithTitle("Ok")
-			alert.show()
-		} else if(status == AVAuthorizationStatus.Restricted){
-			let alert:UIAlertView = UIAlertView()
-			alert.title = "Camera Disabled"
-			alert.message = "Please enable camera access in the iOS settings for Backflip or upload from your camera roll."
-			alert.delegate = self
-			alert.addButtonWithTitle("Ok")
-			alert.show()
+		} else if(status == .Denied || status == .Restricted){
+			
+			let alertController = UIAlertController(title: "Camera Access", message: "We require access to your camera in order to capture photos, Please enable Camera in settings", preferredStyle: .Alert)
+			alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+				
+				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+				dispatch_after(delayTime, dispatch_get_main_queue()) {
+					if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
+						UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+					}
+				}
+				
+			}))
+			alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+			
+			self.presentViewController(alertController, animated: true, completion: nil)
 		}
 	}
 	
@@ -276,16 +278,13 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		switch (self.fastCamera.cameraDevice) {
 		case FastttCameraDevice.Front:
 			cameraDevice = FastttCameraDevice.Rear
+			self.flashButton.hidden = false
 			break
 			
 		case FastttCameraDevice.Rear:
 			cameraDevice = FastttCameraDevice.Front
 			self.flashButton.hidden = true
 			break
-			
-		default:
-			cameraDevice = FastttCameraDevice.Front
-			self.flashButton.hidden = true
 		}
 		
 		if (FastttFilterCamera.isCameraDeviceAvailable(cameraDevice)) {
@@ -305,7 +304,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	//********call back functions for ^^^^**********
 	func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
 		//Send assets to parse
-		for (index, asset) in assets.enumerate() {
+		for (_, asset) in assets.enumerate() {
 			let imageView = UIImageView(image: asset.fullScreenImage)
 			imageView.contentMode = UIViewContentMode.ScaleAspectFit
 			uploadImages(imageView.image!)
@@ -415,6 +414,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				photo["reviewed"] = false
 				photo["blocked"] = false
 				photo["reporter"] = ""
+				photo["enabled"] = true
 				photo["reportMessage"] = ""
 				photo["event"] = PFObject.init(withoutDataWithClassName: "Event", objectId: self.event!.objectId!);
 				
@@ -459,8 +459,11 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 									
 									//issue
 									photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
+										
 										BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
-											print("Photo stored in coredata..");
+											print("Photo stored in coredata..")
+											print(photo)
+											
 											let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
 											dispatch_after(delayTime, dispatch_get_main_queue()) {
 												NSNotificationCenter.defaultCenter().postNotificationName("camera-photo-uploaded", object: photo)
@@ -610,13 +613,12 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			//image stored in local variable to contain lifespan in method
 			
 			let imageShortLife:UIImage = capturedImage.scaledImage
-			var imageShortLife_Corrected = UIImage()
-			if imageShortLife.imageOrientation != UIImageOrientation.Up{
-				
-				imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage!, scale: 0.0, orientation: capturedImage.capturedImageOrientation)
-			}else{
-				imageShortLife_Corrected = imageShortLife
-			}
+//			var imageShortLife_Corrected = UIImage()
+//			if imageShortLife.imageOrientation != UIImageOrientation.Up{
+//				imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage!, scale: 0.0, orientation: capturedImage.capturedImageOrientation)
+//			}else{
+//				imageShortLife_Corrected = imageShortLife
+//			}
 			
 			
 			print("\(capturedImage.capturedImageOrientation)", terminator: "")

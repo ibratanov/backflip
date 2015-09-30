@@ -233,6 +233,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 			photo["blocked"] = false
 			photo["reporter"] = ""
 			photo["reportMessage"] = ""
+			photo["enabled"] = true
 			photo["event"] = PFObject.init(withoutDataWithClassName: "Event", objectId: self.event!.objectId!);
 			
 			let photoACL = PFACL(user: PFUser.currentUser()!)
@@ -385,7 +386,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 			var outputImage =  filter.outputImage
 			var t: CGAffineTransform!
 			
-			let orientation = UIDevice.currentDevice().orientation
+			_ = UIDevice.currentDevice().orientation
 			t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
 			
 			//t = CGAffineTransformMakeRotation(0)

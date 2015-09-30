@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
-import CoreData
 import Parse
+import CoreData
 import MagicalRecord
 import Foundation
 
@@ -15,36 +15,18 @@ import Foundation
 class BFDataProcessor
 {
 
-	static let sharedProcessor = BFDataProcessor.init()
-	
-	var dataQueue : dispatch_queue_t = dispatch_queue_create("com.backflip.dataQueue", DISPATCH_QUEUE_SERIAL)
-	var dataContext : NSManagedObjectContext?
-	
-	
-	init()
+	static let sharedProcessor = BFDataProcessor()
+
+
+	func processEvents(events: [PFObject]?, completion: () -> Void)
 	{
-		dispatch_set_target_queue(self.dataQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0));
-		
-		// Setup a parent context..
-		dispatch_async(dataQueue) { () -> Void in
-			// let mainContext : NSManagedObjectContext = NSManagedObjectContext.MR_rootSavingContext()
-			self.dataContext = NSManagedObjectContext.MR_defaultContext()
-			self.dataContext?.undoManager = nil
-		}
-		
-	}
-
-
-
-	func processEvents(events: [PFObject], completion: () -> Void)
-	{
-		if (events.count < 1) {
+		if (events == nil || events!.count < 1) {
 			return completion()
 		}
 
-		self.save({ (context) -> Void in
+		MagicalRecord.saveWithBlock({ (localContext) -> Void in
 			
-			for object : PFObject in events {
+			for object : PFObject in events! {
 				
 				let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Event;
 				if (object.createdAt != nil) {
@@ -75,6 +57,11 @@ class BFDataProcessor
 					event.endTime = object["endTime"] as? NSDate
 				}
 				
+				if (self.isValid(object["owner"])) {
+					let ownerObject : PFObject = object["owner"] as! PFObject
+					event.owner = ownerObject.objectId
+				}
+				
 				if (self.isValid(object["enabled"])) {
 					event.enabled = NSNumber(bool: (object["enabled"] as! Bool))
 				}
@@ -91,22 +78,22 @@ class BFDataProcessor
 				
 			}
 			
-		}, completionHandler: { (contextDidSave, error) -> Void in
+		}) { (contextDidSave, error) -> Void in
 			return completion()
-		})
+		}
 		
 	}
 
 	
-	func processAttendees(attendees: [PFObject], completion: () -> Void)
+	func processAttendees(attendees: [PFObject]?, completion: () -> Void)
 	{
-		if (attendees.count < 1) {
+		if (attendees == nil || attendees?.count < 1) {
 			return completion()
 		}
 		
-		self.save({ (context) -> Void in
+		MagicalRecord.saveWithBlock({ (localContext) -> Void in
 			
-			for object : PFObject in attendees {
+			for object : PFObject in attendees! {
 				
 				let attendee : Attendance = Attendance.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Attendance
 				if (object.createdAt != nil) {
@@ -133,23 +120,23 @@ class BFDataProcessor
 				
 			}
 
-		}, completionHandler: { (contextDidSave, error) -> Void in
+		}) { (contextDidSave, error) -> Void in
 			return completion()
-		})
+		}
 		
 	}
 	
 	
-	func processPhotos(photos: [PFObject], completion: () -> Void)
+	func processPhotos(photos: [PFObject]?, completion: () -> Void)
 	{
-		if (photos.count < 1) {
+		if (photos == nil || photos?.count < 1) {
 			return completion()
 		}
 		
 		
-		self.save({ (context) -> Void in
+		MagicalRecord.saveWithBlock({ (localContext) -> Void in
 			
-			for object : PFObject in photos {
+			for object : PFObject in photos! {
 				
 				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Photo;
 				if (object.createdAt != nil) {
@@ -224,26 +211,6 @@ class BFDataProcessor
 		}
 		
 		return true
-	}
-
-
-
-	func save(block: (context: NSManagedObjectContext!) -> Void, completionHandler:(contextDidSave: Bool?, error: NSError?) -> Void)
-	{
-		dispatch_async(self.dataQueue) { () -> Void in
-			self.dataContext!.performBlock({ () -> Void in
-				
-				block(context: self.dataContext!)
-				
-				self.dataContext!.saveWithOptions(1, completion: { (didSave, error) -> Void in
-					
-					completionHandler(contextDidSave: didSave, error: error)
-					
-				})
-			})
-			
-		}
-		
 	}
 	
 }

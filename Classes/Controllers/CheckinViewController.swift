@@ -157,6 +157,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		// Data!!1!!!
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
             fetchData()
+			
+			
+			BFDataFetcher.sharedFetcher.fetchDataInBackground({ (completed) -> Void in
+				self.fetchData()
+			})
         }
 		
 		
@@ -171,6 +176,17 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
             tracker.send(builder.build() as [NSObject : AnyObject])
 
 		#endif
+	}
+	
+	
+	override func viewDidAppear(animated: Bool)
+	{
+		super.viewDidAppear(animated)
+	
+		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
+			fetchData()
+		}
+		
 	}
 	
 
@@ -252,6 +268,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			return "No nearby events"
 		} else {
             checkinButton.enabled = true
+			print(self.events[row].objectId!+" "+self.events[row].name!)
 			return self.events[row].name!
 		}
 	}
@@ -276,6 +293,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (alertAction) -> Void in
 			PFUser.logOut()
+			
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+			NSUserDefaults.standardUserDefaults().synchronize()
+			
+			FBSDKLoginManager().logOut()
+			FBSDKAccessToken.setCurrentAccessToken(nil)
+			
 			Digits.sharedInstance().logOut()
 			self.performSegueWithIdentifier("display-login-popover", sender: self)
 		}))
@@ -307,7 +332,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		// Store channel for push notifications
 		let currentInstallation = PFInstallation.currentInstallation()
 		currentInstallation.addUniqueObject("a"+event.objectId!, forKey: "channels")
-		try! currentInstallation.saveInBackground()
+		currentInstallation.saveInBackground()
 		
 		
 		// Create attendance object, save to parse; save to CoreData
@@ -323,61 +348,51 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
 		
 		
-		try! attendance.saveInBackgroundWithBlock { (success, error) -> Void in
-			
+		attendance.saveInBackgroundWithBlock { (success, error) -> Void in
+
 			let attendees : [PFObject] = [attendance] 
 			BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
-				
+
 				// Add attendee to event
 				let account = PFUser.currentUser()
 				account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
 				account?.addUniqueObject(event.name!, forKey: "savedEventNames")
-				try! account?.saveInBackground()
-				
+				account?.saveInBackground()
 				
 				// Add user to Event objects relation
 				let eventQuery = PFQuery(className: "Event")
 				eventQuery.whereKey("eventName", equalTo: event.name!)
-				try! eventQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-					
+				eventQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
 					let eventObj = objects!.first as! PFObject
 					let relation = eventObj.relationForKey("attendees")
 					relation.addObject(PFUser.currentUser()!)
-					try! eventObj.saveInBackground()
-					
+					eventObj.saveInBackground()
 				}
-				
 				
 				// Store event details in user defaults
 				NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
 				NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
 				NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
 				
-				
 				PKHUD.sharedHUD.hideAnimated()
 				
 				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
 				dispatch_after(delayTime, dispatch_get_main_queue()) {
-					
 					self.performSegueWithIdentifier("display-event-album", sender: self)
-					
 				}
 			})
 			
-
 		}
 		
 	}
 
 	func processDoubleTap(sender: UITapGestureRecognizer)
 	{
-		
 		let touchPoint = sender.locationInView(self.collectionView)
 		let hitDetect = CGRectContainsPoint(self.collectionView!.bounds, touchPoint)
 		if (hitDetect == true) {
 			checkIn()
 		}
-
 	}
 	
 	
@@ -391,14 +406,15 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			let albumViewController : EventAlbumViewController = segue.destinationViewController as! EventAlbumViewController
 			let currentEventId: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
 			if (currentEventId != nil) {
-				albumViewController.event = Event.fetchOrCreateWhereAttribute("objectId", isValue: currentEventId!) as? Event
+				let event = Event.MR_findFirstByAttribute("objectId", withValue: currentEventId!)
+				albumViewController.event = event
+				// albumViewController.event = Event.fetchOrCreateWhereAttribute("objectId", isValue: currentEventId!) as? Event
 			} else {
 				let index = self.pickerView?.selectedRowInComponent(0)
 				let event = self.events[Int(index!)]
 				albumViewController.event = event;
 			}
 		}
-		
 	}
 	
 	
@@ -427,7 +443,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			// location is a CLPlacemark
 			print("We have a location!! ", terminator: "")
 			print(location, terminator: "")
-			
 
 			let config = PFConfig.currentConfig()
 			let _events = Event.MR_findAll() as! [Event]
@@ -490,7 +505,26 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		}) { (error) -> Void in
 			// something went wrong
 			print("SwiftLocation error :(")
-			print(error, terminator: "")
+			print(error)
+			
+			
+			let authorizationStatus = CLLocationManager.authorizationStatus()
+			if (authorizationStatus == .Denied || authorizationStatus == .Restricted) {
+				let alertController = UIAlertController(title: "Location Services", message: "We require location services to find nearby events, Please enable Location Services in settings", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+					
+					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+					dispatch_after(delayTime, dispatch_get_main_queue()) {
+						if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
+							UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+						}
+					}
+					
+				}))
+				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+				
+				self.presentViewController(alertController, animated: true, completion: nil)
+			}
 		}
 
 	}

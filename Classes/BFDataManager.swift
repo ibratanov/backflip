@@ -13,7 +13,6 @@ class BFDataMananger : NSObject
 {
     
     static let sharedManager = BFDataMananger()
-
     
     func setupDatabase()
     {
@@ -25,7 +24,6 @@ class BFDataMananger : NSObject
         #endif
 		
 		MagicalRecord.setupCoreDataStackWithAutoMigratingSqliteStoreNamed(kAppDatabaseName)
-		
     }
     
     

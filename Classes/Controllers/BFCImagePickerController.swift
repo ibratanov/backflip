@@ -85,20 +85,23 @@ class BFCAssetsLibraryController: UICollectionViewController {
         let status : AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
         if (status == AVAuthorizationStatus.Authorized) {
             print("authorized")
-        } else if(status == AVAuthorizationStatus.Denied){
-            let alert:UIAlertView = UIAlertView()
-            alert.title = "Photo Access Disabled"
-            alert.message = "Please enable photo access in the iOS settings for Backflip to upload from camera roll."
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
-        } else if(status == AVAuthorizationStatus.Restricted){
-            let alert:UIAlertView = UIAlertView()
-            alert.title = "Photo Access Disabled"
-            alert.message = "Please enable photo access in the iOS settings for Backflip to upload from camera roll."
-            alert.delegate = self
-            alert.addButtonWithTitle("Ok")
-            alert.show()
+        } else if (status == .Denied || status == .Restricted){
+			
+			let alertController = UIAlertController(title: "Photo Access", message: "We require access to your photos in order to load your existing photos, Please enable Photos in settings", preferredStyle: .Alert)
+			alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+				
+				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+				dispatch_after(delayTime, dispatch_get_main_queue()) {
+					if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
+						UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+					}
+				}
+				
+			}))
+			alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+			
+			let window = UIApplication.sharedApplication().windows.first!
+			window.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
         }
         
         super.viewDidLoad()
@@ -154,6 +157,23 @@ class BFCAssetsLibraryController: UICollectionViewController {
             }, failureBlock: {(error: NSError!) in
                 self.noAccessView.frame = self.view.bounds
                 self.view.addSubview(self.noAccessView)
+				
+				
+				let alertController = UIAlertController(title: "Photo Access", message: "We require access to your photos in order to load your existing photos, Please enable Photos in settings", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+					
+					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+					dispatch_after(delayTime, dispatch_get_main_queue()) {
+						if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
+							UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+						}
+					}
+					
+				}))
+				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+				
+				self.presentViewController(alertController, animated: true, completion: nil)
+				
         })
         
     }

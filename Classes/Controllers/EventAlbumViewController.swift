@@ -13,7 +13,7 @@ import MapleBacon
 import Foundation
 
 
-class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate
 {
 	
 	//-------------------------------------
@@ -80,10 +80,23 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		self.title = self.event?.name
 		
+		let titleLabel = UILabel(frame: CGRectZero)
+		titleLabel.text = self.event?.name
+		titleLabel.textColor = UIColor.whiteColor()
+		titleLabel.userInteractionEnabled = true
+		let width = titleLabel.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
+		titleLabel.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 500))
+		self.navigationItem.titleView = titleLabel
+		
+		
+		
 		// Hide the "leave" button when pushed from event history
 		let currentEventId = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id") as? String
 		if (currentEventId == self.event?.objectId) {
 			self.navigationController?.setViewControllers([self], animated: false)
+			
+			let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
+			self.navigationItem.titleView?.addGestureRecognizer(longPressRecognizer)
 		} else {
 			self.navigationItem.leftBarButtonItem = nil
 		}
@@ -128,6 +141,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		alertController.addAction(UIAlertAction(title: "Leave", style: .Destructive, handler: { (alertAction) -> Void in
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+			NSUserDefaults.standardUserDefaults().synchronize()
 			
 			
 			let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
@@ -142,6 +156,71 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	func photoUploaded()
 	{
 		self.updateData()
+	}
+	
+	
+	func longPressed(sender: UILongPressGestureRecognizer)
+	{
+		if (self.event != nil && self.event?.owner! == PFUser.currentUser()!.objectId!) {
+			
+			let popover = EventEditingPopover()
+			popover.event = self.event
+			popover.modalPresentationStyle = .Popover
+			popover.preferredContentSize = CGSizeMake(self.view.frame.size.width - 20, 132)
+			popover.popoverPresentationController?.delegate = self
+			popover.popoverPresentationController?.sourceView = self.navigationController!.navigationBar
+			popover.popoverPresentationController?.sourceRect = CGRectMake(0, 0, self.view.frame.size.width, 40)
+			self.presentViewController(popover, animated: true, completion: nil)
+
+			
+		}
+		
+	}
+	
+	
+	
+	//-------------------------------------
+	// MARK: Popover Presentation Delegate
+	//-------------------------------------
+	
+	func prepareForPopoverPresentation(popoverPresentationController: UIPopoverPresentationController)
+	{
+		popoverPresentationController.sourceView = self.navigationController!.navigationBar
+		popoverPresentationController.sourceRect = CGRectMake(0, 0, self.view.frame.size.width, 40)
+	}
+	
+	func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController)
+	{
+		let popover = popoverPresentationController.presentedViewController as! EventEditingPopover
+		if ( popover.eventName!.text! != event!.name!  || popover.eventSwitch!.on != !(event!.live!.boolValue) ) {
+
+			PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Saving..")
+			PKHUD.sharedHUD.show()
+			
+			let eventObject = PFObject(className: "Event")
+			eventObject.objectId = event!.objectId!
+			eventObject.setObject(popover.eventName!.text!, forKey: "eventName")
+			eventObject.setObject(!(popover.eventSwitch!.on), forKey: "isLive")
+			eventObject.saveInBackgroundWithBlock({ (success, error) -> Void in
+				
+				BFDataProcessor.sharedProcessor.processEvents([eventObject], completion: { () -> Void in
+					
+					self.title = eventObject["eventName"] as? String
+					(self.navigationItem.titleView as! UILabel).text = eventObject["eventName"] as? String
+					PKHUD.sharedHUD.hide(animated: true)
+					
+				})
+				
+			})
+			
+			
+		}
+	
+	}
+	
+	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle
+	{
+		return .None
 	}
 	
 	
@@ -216,9 +295,9 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		} else if (self.collectionContent.count >= indexPath.row) {
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
-			if (cell.imageView.image == nil) {
+			// if (cell.imageView.image == nil) {
 				cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!, cacheScaled: true)
-			}
+			// }
 		
 		}
 		
@@ -232,18 +311,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		if (indexPath.row == 0) {
 
-			let result = PHAsset.fetchAssetsWithMediaType(.Image, options: nil)
-			
-			
-			let pickerController = UIImagePickerController()
-			pickerController.delegate = self
-			pickerController.sourceType = .Camera
-			pickerController.allowsEditing = true
-			let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-			
-			window?.rootViewController!.presentViewController(pickerController, animated: true, completion: nil)
-			
-			// BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
+			BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
 			
 		} else {
 		
@@ -315,7 +383,16 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	@IBAction func segementedControlValueChanged(sender: AnyObject)
 	{
 		
-		var photos : [Photo] = self.collectionContent
+		var photos : [Photo] = []
+		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]
+		for photo : Photo in _photos {
+			if (photo.flagged != nil && Bool(photo.flagged!) == true) {
+				continue
+			}
+			
+			photos.append(photo)
+		}
+		
 		if (photos.count < 1) {
 			return
 		}
@@ -369,7 +446,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Retriving invite code…")
 		PKHUD.sharedHUD.show()
 		
-		let params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
+		let params = [ "referringUsername": "\(user)", "referringOut": "AVC", "eventObject": self.event!.objectId!, "eventId":"\(self.event!.objectId!)", "eventTitle": "\(self.event!.name!)"]
 		Branch.getInstance().getShortURLWithParams(params, andChannel: "SMS", andFeature: "Referral", andCallback: { (url: String!, error: NSError!) -> Void in
 			if (error != nil) {
 				
@@ -568,7 +645,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			return
 		}
 		
-		
 		var photos : [Photo] = []
 		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]
 		for photo : Photo in _photos {
@@ -609,7 +685,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			}
 		}
 		
-		// self.collectionContent = photos
 	}
 	
 	
@@ -620,5 +695,125 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		}
 	}
 	
+}
+
+
+
+
+class EventEditingPopover : PopoverView, UITableViewDelegate, UITableViewDataSource
+{
+	var event : Event?
+	var tableView : UITableView?
 	
+	var eventName : UITextField?
+	var eventSwitch : UISwitch?
+	
+	
+	override init()
+	{
+		super.init()
+		
+		self.tableView = UITableView(frame: self.view.bounds, style: .Plain)
+		self.tableView?.dataSource = self
+		self.tableView?.delegate = self
+		self.tableView?.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+		self.tableView?.estimatedRowHeight = 88
+		self.view.addSubview(self.tableView!)
+	}
+
+	required init?(coder aDecoder: NSCoder)
+	{
+	    fatalError("init(coder:) has not been implemented")
+	}
+	
+	
+	//-------------------------------------
+	// MARK: View Layout
+	//-------------------------------------
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		
+		self.tableView?.frame = self.view.bounds
+	}
+	
+	override func viewDidAppear(animated: Bool)
+	{
+		super.viewDidAppear(animated)
+		
+		self.tableView?.frame = self.view.bounds
+	}
+	
+	
+	
+	//-------------------------------------
+	// MARK: Table View Delegate
+	//-------------------------------------
+	
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int
+	{
+		return 1
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+		return 2
+	}
+	
+	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+	{
+		return 66
+	}
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	{
+		let cell = self.tableView?.dequeueReusableCellWithIdentifier("cell", forIndexPath:indexPath)
+		cell?.selectionStyle = .None
+		
+		if (indexPath.row == 0) {
+			
+			cell?.textLabel!.text = "Event Name"
+			
+			eventName = UITextField(frame: CGRectMake(self.view.bounds.size.width - 230, 0, 220, 66))
+			eventName?.adjustsFontSizeToFitWidth = true
+			eventName?.textColor = UIColor.blackColor()
+			eventName?.placeholder = "Event name"
+			eventName?.text = event?.name
+			eventName?.textColor = UIColor.grayColor()
+			eventName?.keyboardType = .Default
+			eventName?.returnKeyType = .Done
+			eventName?.backgroundColor = UIColor.clearColor()
+			eventName?.autocorrectionType = .No
+			eventName?.autocapitalizationType = .None
+			eventName?.textAlignment = .Right
+			eventName?.clearButtonMode = .Never
+			cell?.contentView.addSubview(eventName!)
+
+		} else if (indexPath.row == 1) {
+			
+			cell?.textLabel!.text = "Private Event"
+			
+			eventSwitch = UISwitch(frame: CGRectMake(self.view.bounds.size.width - 55, 16, 94, 44))
+			eventSwitch!.on = !(event!.live!.boolValue)
+			
+			cell?.contentView.addSubview(eventSwitch!)
+		}
+
+
+		return cell!
+	}
+	
+	
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	{
+		if (indexPath.row == 0) {
+			eventName?.becomeFirstResponder()
+		} else if (indexPath.row == 1) {
+			eventSwitch?.setOn(!(eventSwitch!.on), animated: true)
+		}
+	}
+
+
+
 }

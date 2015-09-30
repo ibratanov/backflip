@@ -15,15 +15,15 @@
 //----------------------------------
 
 #ifndef FEATURE_GOOGLE_ANALYTICS
-	#define FEATURE_GOOGLE_ANALYTICS 0
+	#define FEATURE_GOOGLE_ANALYTICS 1
 #endif
 
 #ifndef FEATURE_NEW_RELIC
-	#define FEATURE_NEW_RELIC 0
+	#define FEATURE_NEW_RELIC 1
 #endif
 
 #ifndef FEATURE_MIXPANEL
-	#define FEATURE_MIXPANEL 0
+	#define FEATURE_MIXPANEL 1
 #endif
 
 
@@ -56,4 +56,10 @@
 		#define FEATURE_PARSE_LOCAL 0
 	#endif
 
+#endif
+
+
+
+#ifndef FEATURE_FACEBOOK
+	#define FEATURE_FACEBOOK 1
 #endif
