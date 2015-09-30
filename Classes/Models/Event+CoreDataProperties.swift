@@ -19,6 +19,7 @@ extension Event {
     @NSManaged var name: String?
     @NSManaged var startTime: NSDate?
     @NSManaged var venue: String?
+	@NSManaged var owner: String?
     @NSManaged var attendees: NSSet?
     @NSManaged var geoLocation: GeoPoint?
     @NSManaged var photos: NSSet?

@@ -160,7 +160,9 @@ class BFDataFetcher : NSObject {
 		let coreObject = object.MR_findFirstOrderedByAttribute("updatedAt", ascending: false)
 		if (coreObject != nil) {
 			let parseObject : ParseObject = coreObject as! ParseObject
-			return parseObject.updatedAt!
+			if (parseObject.updatedAt != nil) {
+				return parseObject.updatedAt!
+			}
 		}
 		
 		return NSDate.distantPast() 

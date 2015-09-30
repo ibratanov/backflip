@@ -139,6 +139,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		alertController.addAction(UIAlertAction(title: "Leave", style: .Destructive, handler: { (alertAction) -> Void in
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+			NSUserDefaults.standardUserDefaults().synchronize()
 			
 			
 			let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
@@ -158,17 +159,19 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	func longPressed(sender: UILongPressGestureRecognizer)
 	{
-		
-		
-		
-		let popover = EventEditingPopover()
-		popover.event = self.event
-		popover.modalPresentationStyle = .Popover
-		popover.preferredContentSize = CGSizeMake(self.view.frame.size.width - 20, 132)
-		popover.popoverPresentationController?.delegate = self
-		popover.popoverPresentationController?.sourceView = self.navigationController!.navigationBar
-		popover.popoverPresentationController?.sourceRect = CGRectMake(0, 0, self.view.frame.size.width, 40)
-		self.presentViewController(popover, animated: true, completion: nil)
+		if (self.event != nil && self.event?.owner! == PFUser.currentUser()!.objectId!) {
+			
+			let popover = EventEditingPopover()
+			popover.event = self.event
+			popover.modalPresentationStyle = .Popover
+			popover.preferredContentSize = CGSizeMake(self.view.frame.size.width - 20, 132)
+			popover.popoverPresentationController?.delegate = self
+			popover.popoverPresentationController?.sourceView = self.navigationController!.navigationBar
+			popover.popoverPresentationController?.sourceRect = CGRectMake(0, 0, self.view.frame.size.width, 40)
+			self.presentViewController(popover, animated: true, completion: nil)
+
+			
+		}
 		
 	}
 	
@@ -639,8 +642,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			print("No event passed to EventAlbumViewController :(");
 			return
 		}
-		
-		self.event = Event.MR_findByAttribute("objectId", withValue: event!.objectId!)!.first as? Event
 		
 		var photos : [Photo] = []
 		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]

@@ -239,6 +239,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     event["startTime"] = NSDate()
                                     event["isLive"] = true
 									event["enabled"] = true
+									event["owner"] = PFUser.currentUser()!
                                     let eventACL = PFACL(user: PFUser.currentUser()!)
                                     eventACL.setPublicWriteAccess(true)
                                     eventACL.setPublicReadAccess(true)
@@ -274,15 +275,16 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
 									attendance.saveInBackgroundWithBlock { (success, error) -> Void in
 
 										let attendees : [PFObject] = [attendance]
-										BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
-
-											BFDataProcessor.sharedProcessor.processEvents([event], completion: { () -> Void in
+										BFDataProcessor.sharedProcessor.processEvents([event], completion: { () -> Void in
+										
+											BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
 
 												// Store event details in user defaults
 												NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
 												NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
 												NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
-
+												NSUserDefaults.standardUserDefaults().synchronize()
+												
 												// When successful, segue to events page
 												dispatch_async(dispatch_get_main_queue()) {
 
@@ -391,6 +393,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     event["venue"] = address
                                     event["startTime"] = NSDate()
                                     event["isLive"] = true
+									event["enabled"] = true
+									event["owner"] = PFUser.currentUser()!
                                     
                                     // Set access rules for events
                                     let eventACL = PFACL(user: PFUser.currentUser()!)
