@@ -233,14 +233,25 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	{
 		#if FEATURE_GOOGLE_ANALYTICS
 		
-			var configureError:NSError?
-			GGLContext.sharedInstance().configureWithError(&configureError)
-			assert(configureError == nil, "Error configuring Google services: \(configureError)")
-		
-			// Optional: configure GAI options.
-			let gai = GAI.sharedInstance()
-			gai.trackUncaughtExceptions = true  // report uncaught exceptions
-			gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+            //-------Google Analytics
+            // Configure tracker from GoogleService-Info.plist.
+            var configureError:NSError?
+            GGLContext.sharedInstance().configureWithError(&configureError)
+            assert(configureError == nil, "Error configuring Google services: \(configureError)")
+            
+            // Optional: configure GAI options.
+            let gai = GAI.sharedInstance()
+            gai.trackUncaughtExceptions = true  // report uncaught exceptions
+            gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+            
+            //-----------Google Analytics
+            
+            var dimensionValue = "\(PFUser.currentUser()?.objectId)"
+            gai.set(GAIFields.customDimensionForIndex(1), value: PFUser.currentUser()?.objectId)
+            //gai.set(customDimensionForIndex:1, value: dimensionValue)
+            //method called when a user signs in to an authentication system
+            //GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
+
         
 		#endif
 		
