@@ -1105,6 +1105,7 @@
                             <constraint firstItem="dgz-TN-ciW" firstAttribute="top" secondItem="SlF-M6-jfa" secondAttribute="top" id="fZo-dw-tgD"/>
                             <constraint firstItem="dgz-TN-ciW" firstAttribute="top" secondItem="RQj-DW-tuv" secondAttribute="bottom" id="gJf-p8-OQ5"/>
                             <constraint firstItem="qkT-AB-udn" firstAttribute="trailing" secondItem="dgz-TN-ciW" secondAttribute="trailing" id="lgC-bg-O1v"/>
+                            <constraint firstItem="8ID-h3-6jf" firstAttribute="centerX" secondItem="SlF-M6-jfa" secondAttribute="centerX" id="vcC-Tj-Bu7"/>
                             <constraint firstAttribute="trailing" secondItem="qkT-AB-udn" secondAttribute="trailing" id="vfG-mb-4gY"/>
                             <constraint firstItem="dgz-TN-ciW" firstAttribute="top" secondItem="RQj-DW-tuv" secondAttribute="bottom" id="zY1-qP-2vV"/>
                         </constraints>
