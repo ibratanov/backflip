@@ -291,6 +291,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (alertAction) -> Void in
 			PFUser.logOut()
 			
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+			NSUserDefaults.standardUserDefaults().synchronize()
+			
 			FBSDKLoginManager().logOut()
 			FBSDKAccessToken.setCurrentAccessToken(nil)
 			
@@ -399,7 +403,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			let albumViewController : EventAlbumViewController = segue.destinationViewController as! EventAlbumViewController
 			let currentEventId: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
 			if (currentEventId != nil) {
-				albumViewController.event = Event.fetchOrCreateWhereAttribute("objectId", isValue: currentEventId!) as? Event
+				let event = Event.MR_findFirstByAttribute("objectId", withValue: currentEventId!)
+				albumViewController.event = event
+				// albumViewController.event = Event.fetchOrCreateWhereAttribute("objectId", isValue: currentEventId!) as? Event
 			} else {
 				let index = self.pickerView?.selectedRowInComponent(0)
 				let event = self.events[Int(index!)]
@@ -434,7 +440,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			// location is a CLPlacemark
 			print("We have a location!! ", terminator: "")
 			print(location, terminator: "")
-			
 
 			let config = PFConfig.currentConfig()
 			let _events = Event.MR_findAll() as! [Event]

@@ -147,24 +147,49 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 					
 					if (error == nil && results?.count == 0) {
 						
-						let user = PFUser()
-						user.username = id
-						user.password = "backflip-pass-"+id
-						user["photosLiked"] = []
-						user["nearbyEvents"] = []
-						user["phone"] = id
-						user["facebook_id"] = Int(id)
-						user["facebook_name"] = fullName
-						user["email"] = emailAddress
-						user["savedEvents"] = []
-						user["savedEventNames"] = []
-						user["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
-						user["blocked"] = false
-						user["firstUse"] = true
-						user.signUpInBackgroundWithBlock({ (success, error) -> Void in
-							
-							if (error == nil) {
-								self.dismissViewControllerAnimated(true, completion: nil)
+						let userQuery = PFUser.query()
+						userQuery?.whereKey("username", equalTo: id)
+						userQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
+						
+							if (error == nil && results?.count < 1) {
+								
+								let user = PFUser()
+								user.username = id
+								user.password = "backflip-pass-"+id
+								user["photosLiked"] = []
+								user["nearbyEvents"] = []
+								user["phone"] = id
+								user["facebook_id"] = Int(id)
+								user["facebook_name"] = fullName
+								user["email"] = emailAddress
+								user["savedEvents"] = []
+								user["savedEventNames"] = []
+								user["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+								user["blocked"] = false
+								user["firstUse"] = true
+								user.signUpInBackgroundWithBlock({ (success, error) -> Void in
+									
+									if (error == nil) {
+										self.dismissViewControllerAnimated(true, completion: nil)
+									} else {
+										print(error)
+									}
+									
+								})
+								
+							} else if (error == nil && results?.count > 0) {
+
+								PFUser.logInWithUsernameInBackground(id, password: "backflip-pass-"+id, block: { (user, error) -> Void in
+									
+									if (error == nil) {
+										print(user)
+										self.dismissViewControllerAnimated(true, completion: nil)
+									} else {
+										print(error)
+									}
+									
+								})
+								
 							} else {
 								print(error)
 							}
@@ -173,10 +198,17 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 						
 					} else if (error == nil && results?.count > 0) {
 						
-						PFUser.logInWithUsernameInBackground(id, password: "backflip-pass-"+id, block: { (user, error) -> Void in
+						let user = results?.first as? PFUser
+						PFUser.logInWithUsernameInBackground(user!.username!, password: user!.username!, block: { (user : PFUser?, error) -> Void in
 							
-							if (error == nil) {
-								print(user)
+							if (error == nil && user != nil) {
+								
+								user!["facebook_id"] = Int(id)
+								user!["facebook_name"] = fullName
+								user!["email"] = emailAddress
+								user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+								user!.saveInBackgroundWithBlock(nil)
+								
 								self.dismissViewControllerAnimated(true, completion: nil)
 							} else {
 								print(error)

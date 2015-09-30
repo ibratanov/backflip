@@ -228,13 +228,10 @@
 		0439D3A31B8B81A6001850DD /* BFCImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D39B1B8B81A6001850DD /* BFCImagePickerController.swift */; };
 		0439D3A41B8B81A6001850DD /* CreatePublicEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D39C1B8B81A6001850DD /* CreatePublicEventViewController.swift */; };
 		0439D3A51B8B81A6001850DD /* EventAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */; };
-		0439D3A61B8B81A6001850DD /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D39E1B8B81A6001850DD /* EventTableViewController.swift */; };
 		0439D3A81B8B81A6001850DD /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3A01B8B81A6001850DD /* InviteViewController.swift */; };
 		0439D3A91B8B81A6001850DD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3A11B8B81A6001850DD /* LoginViewController.swift */; };
 		0439D3AB1B8B8210001850DD /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3AA1B8B8210001850DD /* PreviewViewController.swift */; };
 		0439D3B01B8B8249001850DD /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */; };
-		0439D3B11B8B8249001850DD /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3AE1B8B8249001850DD /* EventTableViewCell.swift */; };
-		0439D3B21B8B8249001850DD /* FeedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3AF1B8B8249001850DD /* FeedViewCell.swift */; };
 		0439D3B91B8B82E2001850DD /* InviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3B41B8B82E2001850DD /* InviteViewController.xib */; };
 		0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3B51B8B82E2001850DD /* Launch Screen.xib */; };
 		0439D3BB1B8B82E2001850DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3B61B8B82E2001850DD /* Main.storyboard */; };
@@ -254,6 +251,7 @@
 		044BD34C1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */; };
 		047790D21BB9CE4300BA8F9E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */; };
 		047790D41BB9CF3800BA8F9E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */; };
+		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
 		049AA6811B73DA01003888CE /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6481B73DA01003888CE /* ImageError.png */; };
 		049AA6821B73DA01003888CE /* ImageError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6491B73DA01003888CE /* ImageError@2x.png */; };
 		049AA6831B73DA01003888CE /* ImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA64A1B73DA01003888CE /* ImageError@3x.png */; };
@@ -875,13 +873,10 @@
 		0439D39B1B8B81A6001850DD /* BFCImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFCImagePickerController.swift; sourceTree = "<group>"; };
 		0439D39C1B8B81A6001850DD /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
 		0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAlbumViewController.swift; sourceTree = "<group>"; };
-		0439D39E1B8B81A6001850DD /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		0439D3A01B8B81A6001850DD /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		0439D3A11B8B81A6001850DD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0439D3AA1B8B8210001850DD /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
-		0439D3AE1B8B8249001850DD /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
-		0439D3AF1B8B8249001850DD /* FeedViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewCell.swift; sourceTree = "<group>"; };
 		0439D3B41B8B82E2001850DD /* InviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InviteViewController.xib; sourceTree = "<group>"; };
 		0439D3B51B8B82E2001850DD /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		0439D3B61B8B82E2001850DD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -902,6 +897,7 @@
 		044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MWZoomingScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Vendor/Facebook/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Vendor/Facebook/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		047790E61BBB1C5B00BA8F9E /* PopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		0495F1751BAB0CC0002E609E /* Frontflip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Frontflip.entitlements; sourceTree = "<group>"; };
 		049AA6481B73DA01003888CE /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
 		049AA6491B73DA01003888CE /* ImageError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@2x.png"; sourceTree = "<group>"; };
@@ -1576,9 +1572,7 @@
 				04B610311BB98FEE00C1AF1E /* Collection View */,
 				040FD10D1BB2F1FD00DDB1A5 /* CustomCamera.swift */,
 				040FD10E1BB2F1FD00DDB1A5 /* CustomFilter.swift */,
-				0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */,
-				0439D3AE1B8B8249001850DD /* EventTableViewCell.swift */,
-				0439D3AF1B8B8249001850DD /* FeedViewCell.swift */,
+				047790E61BBB1C5B00BA8F9E /* PopoverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1837,6 +1831,7 @@
 		04B610311BB98FEE00C1AF1E /* Collection View */ = {
 			isa = PBXGroup;
 			children = (
+				0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */,
 				042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */,
 				042E8D791BB347FB00D61412 /* EventHistoryCollectionViewCell.swift */,
 				041312A61BB47A1B00C0E4D9 /* EventHistoryViewFlowLayout.swift */,
@@ -1952,7 +1947,6 @@
 				0439D39C1B8B81A6001850DD /* CreatePublicEventViewController.swift */,
 				0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */,
 				042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */,
-				0439D39E1B8B81A6001850DD /* EventTableViewController.swift */,
 				0439D3A01B8B81A6001850DD /* InviteViewController.swift */,
 				0439D3A11B8B81A6001850DD /* LoginViewController.swift */,
 			);
@@ -2287,7 +2281,6 @@
 				042E8D3A1BB2F49E00D61412 /* GPUImageSoftLightBlendFilter.m in Sources */,
 				042E8D4E1BB2F49E00D61412 /* GPUImageTwoPassFilter.m in Sources */,
 				042E8CEB1BB2F49E00D61412 /* GPUImageGaussianBlurPositionFilter.m in Sources */,
-				0439D3B11B8B8249001850DD /* EventTableViewCell.swift in Sources */,
 				50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */,
 				0439D3D11B8B87D3001850DD /* BFTabBarControllerDelegate.swift in Sources */,
 				042E8B671BB2F47B00D61412 /* FastttCapturedImage.m in Sources */,
@@ -2319,7 +2312,6 @@
 				042E8D221BB2F49E00D61412 /* GPUImagePixellatePositionFilter.m in Sources */,
 				0430D28E1BA8517B00375AA4 /* PKHUDSubtitleView.swift in Sources */,
 				042E8CD81BB2F49E00D61412 /* GPUImageDifferenceBlendFilter.m in Sources */,
-				0439D3B21B8B8249001850DD /* FeedViewCell.swift in Sources */,
 				042E8D6D1BB2F4BD00D61412 /* GPUImagePicture.m in Sources */,
 				04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */,
 				049AA6AA1B73DA01003888CE /* MWZoomingScrollView.m in Sources */,
@@ -2352,7 +2344,6 @@
 				0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */,
 				0439D3CB1B8B86AC001850DD /* UIImage+Extensions.swift in Sources */,
 				049AA6A71B73DA01003888CE /* MWPhotoBrowser.m in Sources */,
-				0439D3A61B8B81A6001850DD /* EventTableViewController.swift in Sources */,
 				042E8D711BB300A100D61412 /* Watchdog.swift in Sources */,
 				049AA6E51B73DB84003888CE /* UIImage+WebP.m in Sources */,
 				042E8CE61BB2F49E00D61412 /* GPUImageFilterPipeline.m in Sources */,
@@ -2429,6 +2420,7 @@
 				04C61FC41B8B982600E2ACB5 /* GeoPoint.swift in Sources */,
 				04062FBF1BA1DBF000F5FFE4 /* BFDataManager.swift in Sources */,
 				049AA6E71B73DB84003888CE /* UIImageView+WebCache.m in Sources */,
+				047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */,
 				042E8D0A1BB2F49E00D61412 /* GPUImageLuminanceThresholdFilter.m in Sources */,
 				04E39D621BA8BCF50061EA36 /* GameScene.swift in Sources */,
 				042E8CC91BB2F49E00D61412 /* GPUImageCGAColorspaceFilter.m in Sources */,
@@ -2668,12 +2660,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Frontflip.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2751,9 +2745,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Frontflip.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
