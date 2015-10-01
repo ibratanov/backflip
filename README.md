@@ -14,7 +14,7 @@ Backflip is the best way to share photos with the crowd around you. Check into a
 ### Getting Started
 
 - Clone repo (`git clone git@github.com:ibratanov/backflip.git`)
-- Setup submodules (`git submodule update --init --recursive`)
+- Setup submodules (`git submodule update --init --recursive Vendor/`)
 - Open Project (`open *.xcodeproj`)
 
 
