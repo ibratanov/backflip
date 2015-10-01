@@ -24,7 +24,7 @@ class BFDataProcessor
 			return completion()
 		}
 
-		MagicalRecord.saveWithBlock({ (localContext) -> Void in
+		MagicalRecord.saveWithBlockAndWait { (localContext) -> Void in
 			
 			for object : PFObject in events! {
 				
@@ -78,10 +78,9 @@ class BFDataProcessor
 				
 			}
 			
-		}) { (contextDidSave, error) -> Void in
-			return completion()
 		}
 		
+		return completion()
 	}
 
 	
@@ -91,8 +90,8 @@ class BFDataProcessor
 			return completion()
 		}
 		
-		MagicalRecord.saveWithBlock({ (localContext) -> Void in
-			
+		MagicalRecord.saveWithBlockAndWait { (localContext) -> Void in
+
 			for object : PFObject in attendees! {
 				
 				let attendee : Attendance = Attendance.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext:localContext) as! Attendance
@@ -120,9 +119,9 @@ class BFDataProcessor
 				
 			}
 
-		}) { (contextDidSave, error) -> Void in
-			return completion()
 		}
+		
+		return completion()
 		
 	}
 	
@@ -134,7 +133,7 @@ class BFDataProcessor
 		}
 		
 		
-		MagicalRecord.saveWithBlock({ (localContext) -> Void in
+		MagicalRecord.saveWithBlockAndWait { (localContext) -> Void in
 			
 			for object : PFObject in photos! {
 				
@@ -191,11 +190,9 @@ class BFDataProcessor
 				
 			}
 			
-		}) { (contextDidSave, error) -> Void in
-			
-			return completion()
-			
 		}
+		
+		return completion()
 	}
 	
 	

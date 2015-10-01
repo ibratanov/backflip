@@ -84,7 +84,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		titleLabel.userInteractionEnabled = true
 		titleLabel.textAlignment = .Center
 		let width = titleLabel.sizeThatFits(CGSizeMake(self.view.bounds.size.width, CGFloat.max)).width
-		titleLabel.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 500))
+		titleLabel.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 44))
 		self.navigationItem.titleView = titleLabel
 		
 		
