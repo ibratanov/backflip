@@ -28,7 +28,7 @@ class BFDataProcessor
 			
 			for object : PFObject in events! {
 				
-				let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Event;
+				let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext:localContext) as! Event;
 				if (object.createdAt != nil) {
 					event.createdAt = object.createdAt
 				}
@@ -71,7 +71,7 @@ class BFDataProcessor
 					if (geoObject != nil) {
 						
 						let attributes = ["latitude" : NSNumber(double: geoObject!.latitude), "longitude": NSNumber(double: geoObject!.longitude)]
-						let geoPoint : GeoPoint = GeoPoint.fetchOrCreateWithAttributesAndValues(attributes) as! GeoPoint
+						let geoPoint : GeoPoint = GeoPoint.fetchOrCreateWithAttributesAndValues(attributes, inContext:localContext) as! GeoPoint
 						event.geoLocation = geoPoint;
 					}
 				}
@@ -95,7 +95,7 @@ class BFDataProcessor
 			
 			for object : PFObject in attendees! {
 				
-				let attendee : Attendance = Attendance.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Attendance
+				let attendee : Attendance = Attendance.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext:localContext) as! Attendance
 				if (object.createdAt != nil) {
 					attendee.createdAt = object.createdAt
 				}
@@ -114,7 +114,7 @@ class BFDataProcessor
 				
 				if (self.isValid(object["event"])) {
 					let eventObject : PFObject = object["event"] as! PFObject
-					let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject.objectId) as! Event
+					let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject.objectId, inContext:localContext) as! Event
 					attendee.event = event;
 				}
 				
@@ -138,7 +138,7 @@ class BFDataProcessor
 			
 			for object : PFObject in photos! {
 				
-				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId) as! Photo;
+				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: object.objectId, inContext:localContext) as! Photo;
 				if (object.createdAt != nil) {
 					photo.createdAt = object.createdAt
 				}
@@ -167,7 +167,7 @@ class BFDataProcessor
 				if (self.isValid(object["event"])) {
 					let eventObject = object["event"] as? PFObject
 					if (eventObject != nil) {
-						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject!.objectId!) as! Event
+						let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: eventObject!.objectId!, inContext:localContext) as! Event
 						photo.event = event;
 					}
 				}
@@ -176,7 +176,7 @@ class BFDataProcessor
 				if (self.isValid(object["image"])) {
 					let imageObject = object["image"] as? PFFile
 					if (imageObject != nil) {
-						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url) as! File
+						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url, inContext:localContext) as! File
 						photo.image = file;
 					}
 				}
@@ -184,7 +184,7 @@ class BFDataProcessor
 				if (self.isValid(object["thumbnail"])) {
 					let imageObject = object["thumbnail"] as? PFFile
 					if (imageObject != nil) {
-						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url) as! File
+						let file : File = File.fetchOrCreateWhereAttribute("url", isValue: imageObject?.url, inContext:localContext) as! File
 						photo.thumbnail = file;
 					}
 				}

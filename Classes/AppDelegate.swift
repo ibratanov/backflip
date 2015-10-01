@@ -131,6 +131,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             print(url.host as String!)
         }
 
+		
         return FBSDKApplicationDelegate.sharedInstance().application(application,
                     openURL: url,
                     sourceApplication: sourceApplication,

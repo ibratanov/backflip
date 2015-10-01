@@ -82,7 +82,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		titleLabel.text = self.event?.name
 		titleLabel.textColor = UIColor.whiteColor()
 		titleLabel.userInteractionEnabled = true
-		let width = titleLabel.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
+		titleLabel.textAlignment = .Center
+		let width = titleLabel.sizeThatFits(CGSizeMake(self.view.bounds.size.width, CGFloat.max)).width
 		titleLabel.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 500))
 		self.navigationItem.titleView = titleLabel
 		
@@ -202,8 +203,11 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			eventObject.saveInBackgroundWithBlock({ (success, error) -> Void in
 				
 				BFDataProcessor.sharedProcessor.processEvents([eventObject], completion: { () -> Void in
+										
+					let width = self.navigationItem.titleView?.sizeThatFits(CGSizeMake(self.view.bounds.size.width, CGFloat.max)).width
+					self.navigationItem.titleView?.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width!, 44))
 					
-					self.title = eventObject["eventName"] as? String
+					// self.title = eventObject["eventName"] as? String
 					(self.navigationItem.titleView as! UILabel).text = eventObject["eventName"] as? String
 					PKHUD.sharedHUD.hide(animated: true)
 					
@@ -698,7 +702,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 
 
 
-class EventEditingPopover : PopoverView, UITableViewDelegate, UITableViewDataSource
+class EventEditingPopover : PopoverView, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
 {
 	var event : Event?
 	var tableView : UITableView?
@@ -786,6 +790,7 @@ class EventEditingPopover : PopoverView, UITableViewDelegate, UITableViewDataSou
 			eventName?.autocapitalizationType = .None
 			eventName?.textAlignment = .Right
 			eventName?.clearButtonMode = .Never
+			eventName?.delegate = self
 			cell?.contentView.addSubview(eventName!)
 
 		} else if (indexPath.row == 1) {
@@ -812,6 +817,38 @@ class EventEditingPopover : PopoverView, UITableViewDelegate, UITableViewDataSou
 		}
 	}
 
+	
+	//-------------------------------------
+	// MARK: TextField Delegate
+	//-------------------------------------
+	
+	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+	{
+		print("Char count")
+		print(textField.text!.characters.count)
+		
+		if (range.length + range.location > textField.text!.characters.count) {
+			return false;
+		}
+		
+		let newLength = textField.text!.characters.count + string.characters.count - range.length;
+		print("new char count")
+		print(newLength)
 
+		
+		return newLength < 26
+	}
+	
+	func textFieldShouldReturn(textField: UITextField) -> Bool
+	{
+		if (textField.text!.characters.count < 1) {
+			return false
+		}
+		
+		eventName?.resignFirstResponder()
+		eventName?.endEditing(true)
+		
+		return true
+	}
 
 }
