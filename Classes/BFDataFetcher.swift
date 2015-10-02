@@ -10,7 +10,8 @@ import Parse
 import Foundation
 
 
-class BFDataFetcher : NSObject {
+class BFDataFetcher : NSObject
+{
 	
 	
 	static let sharedFetcher = BFDataFetcher()
