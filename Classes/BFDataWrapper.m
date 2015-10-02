@@ -129,6 +129,11 @@
 }
 
 
++ (void)processAttendance:(NSArray *)attendance completion:(void (^)(void))completionBlock
+{
+	return [[BFDataWrapper sharedWrapper] processAttendance:attendance completion:completionBlock];
+}
+
 
 #pragma mark -
 #pragma mark (PRIVATE) Object saving
@@ -276,6 +281,56 @@
 		
 	}];
 	
+}
+
+
+- (void)processAttendance:(NSArray *)attendance completion:(void (^)(void))completionBlock
+{
+	if (attendance == NULL ||attendance.count < 1) {
+		if (completionBlock)
+			return completionBlock();
+		else
+			return ;
+	}
+	NSLog(@"📝 Processing %li attendees..", attendance.count);
+	
+	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
+		
+		for (PFObject *attendee in attendance) {
+			
+			Attendance *object = [Attendance fetchOrCreateWhereAttribute:@"objectId" isValue:attendee.objectId inContext:localContext];
+			
+			if (attendee.createdAt)
+				[object setCreatedAt:attendee.createdAt];
+			
+			if (attendee.updatedAt)
+				[object setUpdatedAt:attendee.updatedAt];
+			
+			if ([self isValidValue:attendee[@"enabled"]])
+				[object setEnabled:@([attendee[@"enabled"] boolValue])];
+			
+			if ([self isValidValue:attendee[@"attendeeID"]])
+				[object setAttendeeId:attendee[@"attendeeID"]];
+			
+			
+			if ([self isValidValue:attendee[@"event"]]) {
+				Event *event = [Event fetchOrCreateWhereAttribute:@"objectId" isValue:((PFObject *)attendee[@"event"]).objectId inContext:localContext];
+				[object setEvent:event];
+			}
+		}
+		
+	} completion:^(BOOL contextDidSave, NSError *error) {
+		
+		if (error)
+			NSLog(@"📛 Coredata error %@", error);
+		
+		if (completionBlock)
+			return completionBlock();
+		else
+			return ;
+		
+	}];
+
 }
 
 

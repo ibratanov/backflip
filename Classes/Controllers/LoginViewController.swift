@@ -230,7 +230,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 		
 	}
 	
-	
 
     func didTapButton() {
 		
@@ -365,16 +364,33 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                     
                                                 }
                                             }
-                                        } else {
-                                            
+										} else if (user.username!.characters.contains("+") == false) {
+										
+											PFUser.logInWithUsernameInBackground(user.username!, password: "backflip-pass-"+user.username!, block: { (user, error) -> Void in
+												
+												user!.username = session.phoneNumber
+												user!.password = session.phoneNumber
+												user!["phone"] = session.phoneNumber
+												user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+												
+												user!.saveInBackground()
+												
+												//self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
+												self.dismissViewControllerAnimated(true, completion: nil)
+												
+											})
+											
+										} else {
+											
                                             let oldUser = results!.first as! PFUser
-                                            
+											
                                             PFUser.logInWithUsernameInBackground(oldUser.username!, password: "Password") { (user, error) -> Void in
                                                 
                                                 user!.username = session.phoneNumber
                                                 user!.password = session.phoneNumber
                                                 user!["phone"] = session.phoneNumber
-                                                
+												user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+												
                                                 user!.saveInBackground()
                                                 
                                                 //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
