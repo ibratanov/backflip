@@ -438,8 +438,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func fetchData()
 	{
-		// let swiftLocation = SwiftLocation()
-
 		// Check Auth state first :)
 		let authorizationStatus = CLLocationManager.authorizationStatus()
 		if (authorizationStatus == .NotDetermined && requestedLocation == false) {
@@ -448,6 +446,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			locationManager.requestWhenInUseAuthorization()
 			requestedLocation = true
 
+			return
+		} else if (authorizationStatus != .AuthorizedWhenInUse) {
+			print("Location issue")
 			return
 		}
 
