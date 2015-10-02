@@ -826,17 +826,12 @@ class EventEditingPopover : PopoverView, UITableViewDelegate, UITableViewDataSou
 	
 	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
 	{
-		print("Char count")
-		print(textField.text!.characters.count)
 		
-		if (range.length + range.location > textField.text!.characters.count) {
-			return false;
-		}
-		
-		let newLength = textField.text!.characters.count + string.characters.count - range.length;
-		print("new char count")
-		print(newLength)
+//		if (range.length + range.location > textField.text!.characters.count) {
+//			return false;
+//		}
 
+		let newLength = textField.text!.characters.count + string.characters.count - range.length;
 		
 		return newLength < 26
 	}
