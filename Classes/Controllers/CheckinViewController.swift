@@ -268,7 +268,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			return "No nearby events"
 		} else {
             checkinButton.enabled = true
-			print(self.events[row].objectId!+" "+self.events[row].name!)
 			return self.events[row].name!
 		}
 	}
@@ -455,11 +454,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 
 		do {
 
-			// SwiftLocation.shared.cancelAllRequests()
+		// SwiftLocation.shared.cancelAllRequests()
 		try SwiftLocation.shared.currentLocation(.House, timeout: 10, onSuccess: { (location) -> Void in
 			// location is a CLPlacemark
-			print("We have a location!!")
-			print(location)
 
 			let config = PFConfig.currentConfig()
 			let _events = Event.MR_findAll() as! [Event]
