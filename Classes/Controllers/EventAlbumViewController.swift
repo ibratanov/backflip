@@ -409,7 +409,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		self.collectionView?.reloadData()
 		
 		if segementedControl.selectedSegmentIndex <= 0 {
-			content.sortInPlace{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
+			content.sortInPlace{ if ($0.createdAt != nil && $1.createdAt != nil) { return ($0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending) } else { return false } }
 		} else if segementedControl.selectedSegmentIndex == 1 {
 			content.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
 		} else if segementedControl.selectedSegmentIndex == 2 {
