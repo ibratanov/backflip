@@ -22,6 +22,8 @@
 	//#endif
 
 
+	#import "BFDataWrapper.h"
+
 	// Analytics yo
 	#if FEATURE_MIXPANEL
 		#import <Mixpanel/Mixpanel.h>

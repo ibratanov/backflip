@@ -19,7 +19,7 @@
 #endif
 
 #ifndef FEATURE_NEW_RELIC
-	#define FEATURE_NEW_RELIC 1
+	#define FEATURE_NEW_RELIC 0
 #endif
 
 #ifndef FEATURE_MIXPANEL

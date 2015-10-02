@@ -349,6 +349,7 @@
 		04E39D621BA8BCF50061EA36 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E39D5C1BA8BCF50061EA36 /* GameScene.swift */; };
 		04E39D631BA8BCF50061EA36 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E39D5D1BA8BCF50061EA36 /* GameViewController.swift */; };
 		04E39D641BA8BCF50061EA36 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E39D5E1BA8BCF50061EA36 /* Images.xcassets */; };
+		04E4CC2E1BBEED7D00D18047 /* BFDataWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E4CC2D1BBEED7D00D18047 /* BFDataWrapper.m */; };
 		04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */; };
 		04FD59DD1B8E5ED6005A1FA4 /* SwiftLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
@@ -1033,6 +1034,8 @@
 		04E39D5C1BA8BCF50061EA36 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Vendor/AFNetwork/FlappyBird/GameScene.swift; sourceTree = "<group>"; };
 		04E39D5D1BA8BCF50061EA36 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = Vendor/AFNetwork/FlappyBird/GameViewController.swift; sourceTree = "<group>"; };
 		04E39D5E1BA8BCF50061EA36 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Vendor/AFNetwork/FlappyBird/Images.xcassets; sourceTree = "<group>"; };
+		04E4CC2C1BBEED7D00D18047 /* BFDataWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFDataWrapper.h; sourceTree = "<group>"; };
+		04E4CC2D1BBEED7D00D18047 /* BFDataWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFDataWrapper.m; sourceTree = "<group>"; };
 		04F7A7941B9E24BD008758D3 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
 		04FD59DC1B8E5ED6005A1FA4 /* SwiftLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftLocation.swift; path = Vendor/SwiftLocation/Pod/Classes/SwiftLocation.swift; sourceTree = "<group>"; };
@@ -1867,6 +1870,8 @@
 			children = (
 				04CA5D7E1B8B9BE80075C0A8 /* BFDataFetcher.swift */,
 				04CA5D811B8B9C060075C0A8 /* BFDataProcessor.swift */,
+				04E4CC2C1BBEED7D00D18047 /* BFDataWrapper.h */,
+				04E4CC2D1BBEED7D00D18047 /* BFDataWrapper.m */,
 				04062FBE1BA1DBF000F5FFE4 /* BFDataManager.swift */,
 			);
 			name = "Data Management";
@@ -2324,6 +2329,7 @@
 				04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */,
 				042E8D221BB2F49E00D61412 /* GPUImagePixellatePositionFilter.m in Sources */,
 				042E8CD81BB2F49E00D61412 /* GPUImageDifferenceBlendFilter.m in Sources */,
+				04E4CC2E1BBEED7D00D18047 /* BFDataWrapper.m in Sources */,
 				042E8D6D1BB2F4BD00D61412 /* GPUImagePicture.m in Sources */,
 				04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */,
 				049AA6AA1B73DA01003888CE /* MWZoomingScrollView.m in Sources */,
@@ -2680,6 +2686,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2764,6 +2771,7 @@
 				CODE_SIGN_ENTITLEMENTS = Frontflip.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
