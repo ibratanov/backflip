@@ -291,16 +291,18 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			
 		if (indexPath.row == 0) {
 			
-			cell.imageView.image = UIImage(named: "album-add-photo")
-			cell.imageView.image!.imageWithRenderingMode(.AlwaysTemplate)
-			cell.imageView.contentMode = .ScaleAspectFit
-			cell.imageView.tintColor = UIColor.grayColor()
+			cell.imageView!.image = UIImage(named: "album-add-photo")
+			cell.imageView!.image!.imageWithRenderingMode(.AlwaysTemplate)
+			cell.imageView!.contentMode = .ScaleAspectFit
+			cell.imageView!.tintColor = UIColor.grayColor()
 			
 		} else if (self.collectionContent.count >= indexPath.row) {
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
 			// if (cell.imageView.image == nil) {
-				cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!, cacheScaled: true)
+			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			cell.imageView!.setImageWithURL(imageUrl, placeholder: nil, crossFadePlaceholder: true, cacheScaled: true, completion: nil)
+				// cell.imageView!.setImageWithURL(imageUrl, cacheScaled: true)
 			// }
 		
 		}

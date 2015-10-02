@@ -8,24 +8,44 @@
 
 import UIKit
 
-class AlbumViewCell: UICollectionViewCell
+public class AlbumViewCell: UICollectionViewCell
 {
     
-    @IBOutlet weak var imageView: UIImageView!
+    public var imageView: UIImageView?
 	
-	
-	override func prepareForReuse()
+
+	override public init(frame: CGRect)
+	{
+		super.init(frame: frame)
+
+		imageView = UIImageView(frame: self.bounds)
+		self.backgroundView?.addSubview(imageView!)
+	}
+
+	required public init?(coder aDecoder: NSCoder)
+	{
+	    super.init(coder: aDecoder)
+
+		imageView = UIImageView(frame: self.bounds)
+		self.backgroundView?.addSubview(imageView!)
+	}
+
+
+
+
+
+	override public func prepareForReuse()
 	{
 		super.prepareForReuse()
 		
-		self.imageView.image = nil
-		self.imageView.tintColor = nil
+		self.imageView?.image = nil
+		self.imageView?.tintColor = nil
 	}
 	
-	override func layoutSubviews()
+	override public func layoutSubviews()
 	{
 		super.layoutSubviews()
 		
-		self.imageView.frame = self.bounds
+		self.imageView?.frame = self.bounds
 	}
 }

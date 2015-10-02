@@ -897,6 +897,7 @@
 		043AB3AA1BBE212100BA5827 /* PKHUDWideBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUDWideBaseView.swift; path = Vendor/PKHUD/PKHUD/PKHUDWideBaseView.swift; sourceTree = "<group>"; };
 		043AB3AB1BBE212100BA5827 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Vendor/PKHUD/PKHUD/Window.swift; sourceTree = "<group>"; };
 		043AB3AC1BBE212100BA5827 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowRootViewController.swift; path = Vendor/PKHUD/PKHUD/WindowRootViewController.swift; sourceTree = "<group>"; };
+		043AB3BF1BBE304F00BA5827 /* Toronto, ON, Canada.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Toronto, ON, Canada.gpx"; sourceTree = "<group>"; };
 		043C72021B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Extensions.h"; sourceTree = "<group>"; };
 		043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Extensions.m"; sourceTree = "<group>"; };
 		044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MWZoomingScrollView+Extensions.swift"; sourceTree = "<group>"; };
@@ -2012,6 +2013,7 @@
 				81BA81491A49DA1800E65899 /* Info.plist */,
 				04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */,
 				0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */,
+				043AB3BF1BBE304F00BA5827 /* Toronto, ON, Canada.gpx */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81821A49E27F00E65899 /* Backflip-Bridging-Header.h */,
 				04F7A7941B9E24BD008758D3 /* PrefixHeader.pch */,

@@ -227,11 +227,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		let event = self.events[Int(index!)]
 		
 		if ((1 + indexPath.row) == self.collectionView(collectionView, numberOfItemsInSection: 0)) {
-			cell.imageView.image = UIImage(named: "check-in-screen-double-tap")
+			cell.imageView!.image = UIImage(named: "check-in-screen-double-tap")
 			
 		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
 			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
-			cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
+			cell.imageView!.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 		}
 		
 		// cell.addGestureRecognizer(self.doubleTapGesture!)
@@ -544,7 +544,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				self.presentViewController(alertController, animated: true, completion: nil)
 			} else {
 
-				self.fetchData()
+				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.0 * Double(NSEC_PER_SEC)))
+				dispatch_after(delayTime, dispatch_get_main_queue()) {
+
+					self.fetchData()
+
+				}
 
 			}
 		}
