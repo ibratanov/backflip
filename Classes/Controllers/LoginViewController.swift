@@ -107,7 +107,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 	{
 	
 		let login = FBSDKLoginManager()
-		login.logInWithReadPermissions(["public_profile", "email"], fromViewController: self) { (result, error) -> Void in
+		login.logInWithReadPermissions(["public_profile", "email"]) { (result, error) -> Void in
 			
 			if (error != nil) {
 				print("Facebook login error")
@@ -201,7 +201,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 					} else if (error == nil && results?.count > 0) {
 						
 						let user = results?.first as? PFUser
-						PFUser.logInWithUsernameInBackground(user!.username!, password: user!.username!, block: { (user : PFUser?, error) -> Void in
+						PFUser.logInWithUsernameInBackground(user!.username!, password: "backflip-pass-"+user!.username!, block: { (user : PFUser?, error) -> Void in
 							
 							if (error == nil && user != nil) {
 								
@@ -228,27 +228,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 			}
 		}
 		
-	}
-	
-	func returnUserData()
-	{
-		let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
-		graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-			
-			if ((error) != nil)
-			{
-				// Process error
-				print("Error: \(error)")
-			}
-			else
-			{
-				print("fetched user: \(result)")
-				let userName : NSString = result.valueForKey("name") as! NSString
-				print("User Name is: \(userName)")
-				let userEmail : NSString = result.valueForKey("id") as! NSString
-				print("User ID is: \(userEmail)")
-			}
-		})
 	}
 	
 	
@@ -330,20 +309,21 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                             
                                             // User had logged in with facebook. Set the phonenumber in appropriate fields, login
                                             let oldUser = results!.first! as! PFUser
-                                            
-                                            PFUser.logInWithUsernameInBackground(oldUser.username!, password: "Password") { (user, error) -> Void in
-                                                
-                                                user!.username = session.phoneNumber
-                                                user!.password = session.phoneNumber
-                                                user!["phone"] = session.phoneNumber
-                                                
-                                                user!.saveInBackground()
-                                                
-                                                //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                                self.dismissViewControllerAnimated(true, completion: nil)
-    
-                                                
-                                            }
+											
+											PFUser.logInWithUsernameInBackground(oldUser.username!, password: "backflip-pass-"+oldUser.username!, block: { (user : PFUser?, error) -> Void in
+												
+												if (error == nil && user != nil) {
+													
+													user!["phone"] = session.phoneNumber
+													user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+													user!.saveInBackgroundWithBlock(nil)
+													
+													self.dismissViewControllerAnimated(true, completion: nil)
+												} else {
+													print(error)
+												}
+												
+											})
                                         }
                                     } else {
                                         print(error)
