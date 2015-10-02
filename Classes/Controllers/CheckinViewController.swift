@@ -158,7 +158,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
             fetchData()
 			
-			//DOUBLE-CHECK
 			BFDataFetcher.sharedFetcher.fetchDataInBackground({ (completed) -> Void in
 				self.fetchData()
 			})
@@ -177,7 +176,19 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 
 		#endif
 	}
-    
+	
+	
+	override func viewDidAppear(animated: Bool)
+	{
+		super.viewDidAppear(animated)
+	
+        // Useful when dismissing a dialogue on the checkin screen - updates nearby events.
+		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
+			fetchData()
+		}
+		
+	}
+	
 
 	//-------------------------------------
 	// MARK: UICollectioViewDataSource
