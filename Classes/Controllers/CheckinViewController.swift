@@ -439,7 +439,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func fetchData()
 	{
-		SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
+		// let swiftLocation = SwiftLocation()
+
+		do {
+
+		try SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
 			// location is a CLPlacemark
 			print("We have a location!! ", terminator: "")
 			print(location, terminator: "")
@@ -525,6 +529,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				
 				self.presentViewController(alertController, animated: true, completion: nil)
 			}
+		}
+
+		} catch {
+			print("SwiftLocation failed :(")
 		}
 
 	}
