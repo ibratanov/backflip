@@ -22,7 +22,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
 
-	
+	var requestedLocation : Bool = false
+
 	@IBOutlet var pickerView : UIPickerView?
 	@IBOutlet var collectionView : UICollectionView?
 	
@@ -441,12 +442,25 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		// let swiftLocation = SwiftLocation()
 
+		// Check Auth state first :)
+		let authorizationStatus = CLLocationManager.authorizationStatus()
+		if (authorizationStatus == .NotDetermined && requestedLocation == false) {
+
+			let locationManager = CLLocationManager()
+			locationManager.requestWhenInUseAuthorization()
+			requestedLocation = true
+
+			return
+		}
+
+
 		do {
 
-		try SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
+			// SwiftLocation.shared.cancelAllRequests()
+		try SwiftLocation.shared.currentLocation(.House, timeout: 10, onSuccess: { (location) -> Void in
 			// location is a CLPlacemark
-			print("We have a location!! ", terminator: "")
-			print(location, terminator: "")
+			print("We have a location!!")
+			print(location)
 
 			let config = PFConfig.currentConfig()
 			let _events = Event.MR_findAll() as! [Event]
@@ -528,6 +542,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 				
 				self.presentViewController(alertController, animated: true, completion: nil)
+			} else {
+
+				self.fetchData()
+
 			}
 		}
 

@@ -107,8 +107,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Backflip would like to use your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Backflip would like to use your location.</string>
 	<key>UIMainStoryboardFile</key>
