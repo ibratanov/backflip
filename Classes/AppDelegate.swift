@@ -40,7 +40,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		// Watchdog
 		//--------------------------------------
 		#if DEBUG
-			let _ = Watchdog(threshold: 0.3) { duration in
+			let _ = Watchdog(threshold: 0.1) { duration in
 				print("👮 Main thread was blocked for " + String(format:"%.2f", duration) + "s 👮")
 			}
 		#endif
