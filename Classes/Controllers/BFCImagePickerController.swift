@@ -270,7 +270,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
 	
 	override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
 	{
-		if (self.imagePickerController!.selectedAssets.count >= 10) {
+		if (self.imagePickerController!.selectedAssets.count >= 20) {
 			return false
 		}
 		
@@ -488,7 +488,7 @@ class BFCImagePickerController: UINavigationController {
     func selectedImage(notification: NSNotification) {
         //set affordance for image selected
         if let asset = notification.object as? BFCAsset {
-			if (selectedAssets.count < 10) {
+			if (selectedAssets.count < 20) {
 				selectedAssets.append(asset)
 				self.topViewController!.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
 				self.doneButton.sizeToFit()
