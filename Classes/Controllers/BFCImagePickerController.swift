@@ -131,8 +131,9 @@ class BFCAssetsLibraryController: UICollectionViewController {
                     self.collectionView!.backgroundColor = UIColor.whiteColor()
                     self.collectionView!.allowsMultipleSelection = true
                     self.collectionView!.registerClass(BFCImageCollectionCell.self, forCellWithReuseIdentifier: ImageCellIdentifier)
-                    
-                    assetGroup.group.enumerateAssetsUsingBlock {[unowned self](result: ALAsset!, index: Int, stop: UnsafeMutablePointer<ObjCBool>) in
+                   // assetGroup.group.enumerateAssetsWithOptions(NSEnumerationOptions.Reverse, usingBlock: <#T##ALAssetsGroupEnumerationResultsBlock!##ALAssetsGroupEnumerationResultsBlock!##(ALAsset!, Int, UnsafeMutablePointer<ObjCBool>) -> Void#>)
+                   
+                    assetGroup.group.enumerateAssetsWithOptions(NSEnumerationOptions.Reverse, usingBlock:{[unowned self](result: ALAsset!, index: Int, stop: UnsafeMutablePointer<ObjCBool>) in
                         if result != nil {
                             let asset = BFCAsset()
                             asset.thumbnailImage = UIImage(CGImage:result.thumbnail().takeUnretainedValue())
@@ -142,12 +143,12 @@ class BFCAssetsLibraryController: UICollectionViewController {
                         } else {
                             self.collectionView!.reloadData()
                             dispatch_async(dispatch_get_main_queue()) {
-                                self.collectionView!.scrollToItemAtIndexPath(NSIndexPath(forRow: self.imageAssets.count-1, inSection: 0),
-                                    atScrollPosition: UICollectionViewScrollPosition.Bottom,
-                                    animated: false)
+                                self.collectionView!.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Top,animated: true)
+                                
+                                
                             }
                         }
-                    }
+                    })
                 }
             }
             }, failureBlock: {(error: NSError!) in
@@ -246,6 +247,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageAssets.count
     }
+    
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ImageCellIdentifier, forIndexPath: indexPath) as! BFCImageCollectionCell
