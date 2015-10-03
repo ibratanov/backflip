@@ -604,12 +604,6 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			//image stored in local variable to contain lifespan in method
 			
 			let imageShortLife:UIImage = capturedImage.scaledImage
-//			var imageShortLife_Corrected = UIImage()
-//			if imageShortLife.imageOrientation != UIImageOrientation.Up{
-//				imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage!, scale: 0.0, orientation: capturedImage.capturedImageOrientation)
-//			}else{
-//				imageShortLife_Corrected = imageShortLife
-//			}
 			
 			
 			print("\(capturedImage.capturedImageOrientation)", terminator: "")
