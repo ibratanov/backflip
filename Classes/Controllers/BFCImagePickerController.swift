@@ -122,11 +122,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
                     self.groups.insertObject(assetGroup, atIndex: 0)
                     
                     let assetGroup2 = self.groups[0] as! BFCAssetGroup
-                    
-                    //                    let imageGroupController = BFCImageGroupViewController()
-                    //                    imageGroupController.assetGroup = assetGroup2
                     self.assetGroup = assetGroup2
-                    //                    self.navigationController?.pushViewController(imageGroupController, animated: true)
                     
                     assert(self.assetGroup != nil, "Error")
                     
@@ -287,7 +283,6 @@ class BFCAssetsLibraryController: UICollectionViewController {
 }
 
 //Main---------------------------------------------------------------
-
 class BFCImagePickerController: UINavigationController {
     
     /// The height of the bottom of the preview
@@ -464,7 +459,6 @@ class BFCImagePickerController: UINavigationController {
 		
 
 		self.topViewController!.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: "onDoneClicked")
-        // self.topViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.doneButton)
         
         if self.viewControllers.count == 1 && self.topViewController?.navigationItem.leftBarButtonItem == nil {
             self.topViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel,
@@ -498,7 +492,6 @@ class BFCImagePickerController: UINavigationController {
     
     func unselectedImage(notification: NSNotification) {
         //set affordance for image unselected
-        
         if let asset = notification.object as? BFCAsset {
 			if (selectedAssets.indexOf(asset) != nil) {
 				selectedAssets.removeAtIndex(selectedAssets.indexOf(asset)!)
