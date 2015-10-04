@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9048" systemVersion="15A279b" minimumToolsVersion="Xcode 4.3">
+    <entity name="Attendance" representedClassName="Attendance" parentEntity="ParseObject" syncable="YES">
+        <attribute name="attendeeId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="attendees" inverseEntity="Event" syncable="YES"/>
+    </entity>
+    <entity name="Event" representedClassName="Event" parentEntity="ParseObject" syncable="YES">
+        <attribute name="endTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="live" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="attendees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="event" inverseEntity="Attendance" syncable="YES"/>
+        <relationship name="geoLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GeoPoint" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="event" inverseEntity="Photo" syncable="YES"/>
+    </entity>
+    <entity name="File" representedClassName="File" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="GeoPoint" representedClassName="GeoPoint" syncable="YES">
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <entity name="ParseObject" representedClassName="ParseObject" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="enabled" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="objectId"/>
+            </compoundIndex>
+        </compoundIndexes>
+    </entity>
+    <entity name="Photo" representedClassName="Photo" parentEntity="ParseObject" syncable="YES">
+        <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flagged" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="reporter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uploader" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="upvoteCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="usersLiked" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="photos" inverseEntity="Event" syncable="YES"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="File" syncable="YES"/>
+        <relationship name="thumbnail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="File" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Attendance" positionX="223" positionY="81" width="128" height="75"/>
+        <element name="Event" positionX="-54" positionY="18" width="128" height="180"/>
+        <element name="File" positionX="-18" positionY="81" width="128" height="75"/>
+        <element name="GeoPoint" positionX="-36" positionY="36" width="128" height="90"/>
+        <element name="ParseObject" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Photo" positionX="43" positionY="126" width="128" height="180"/>
+    </elements>
+</model>

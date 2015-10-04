@@ -1,1 +1,0 @@
-../../../../NewRelicAgent/NewRelic_iOS_Agent_5.2.0/NewRelicAgent.framework/Versions/A/Headers/NewRelicFeatureFlags.h
