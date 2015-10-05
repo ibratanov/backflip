@@ -107,7 +107,7 @@
 			if (block)
 				block(_dataContext);
 			
-			NSLog(@"CD SAVED");
+			NSLog(@"📖 Successfully saved to Coredata");
 			[_dataContext MR_saveWithOptions:MRSaveParentContexts completion:completion];
 		}];
 	});
@@ -147,7 +147,7 @@
 		else
 			return ;
 	}
-	NSLog(@"📝 Processing %u events..", events.count);
+	NSLog(@"📝 Processing %lu events..", events.count);
 	
 
 	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
@@ -217,7 +217,7 @@
 		else
 			return ;
 	}
-	NSLog(@"📝 Processing %li photos..", photos.count);
+	NSLog(@"📝 Processing %lu photos..", photos.count);
 	
 	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
 		
@@ -292,7 +292,7 @@
 		else
 			return ;
 	}
-	NSLog(@"📝 Processing %li attendees..", attendance.count);
+	NSLog(@"📝 Processing %lu attendees..", attendance.count);
 	
 	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
 		

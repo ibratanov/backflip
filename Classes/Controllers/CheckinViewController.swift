@@ -23,7 +23,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	let CELL_REUSE_IDENTIFIER = "album-cell"
 
 	var requestedLocation : Bool = false
-
+	var locationManager : CLLocationManager = CLLocationManager()
+	
 	@IBOutlet var pickerView : UIPickerView?
 	@IBOutlet var collectionView : UICollectionView?
 	
@@ -264,8 +265,13 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
         //self.pickerView?.selectRow(0, inComponent: 0, animated: true)
         if (self.events.count < 1) {
-            checkinButton.enabled = false
-			return "No nearby events"
+			checkinButton.enabled = false
+			let authorizationStatus = CLLocationManager.authorizationStatus()
+			if (authorizationStatus != .AuthorizedWhenInUse) {
+				return "Unable to get location"
+			} else {
+				return "No nearby events"
+			}
 		} else {
             checkinButton.enabled = true
 			return self.events[row].name!
@@ -440,15 +446,35 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		// Check Auth state first :)
 		let authorizationStatus = CLLocationManager.authorizationStatus()
-		if (authorizationStatus == .NotDetermined && requestedLocation == false) {
+		if (authorizationStatus == .NotDetermined) {
 
-			let locationManager = CLLocationManager()
-			locationManager.requestWhenInUseAuthorization()
-			requestedLocation = true
+			
+			var token: dispatch_once_t = 0
+			dispatch_once(&token) {
+				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC)))
+				dispatch_after(delayTime, dispatch_get_main_queue()) {
+					if (self.requestedLocation == false) {
+						self.locationManager.requestWhenInUseAuthorization()
+						self.requestedLocation = true
+					}
+				}
+			}
 
 			return
+			
 		} else if (authorizationStatus != .AuthorizedWhenInUse) {
 			print("Location issue")
+			print(CLLocationManager.authorizationStatus().rawValue)
+			
+			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				self.activityIndicator.stopAnimating()
+				self.activityIndicator.hidden = true
+				
+				self.pickerView?.reloadAllComponents()
+				self.collectionView?.reloadData()
+				self.pickerView?.hidden = false
+			})
+			
 			return
 		}
 
