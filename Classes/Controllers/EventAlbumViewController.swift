@@ -11,6 +11,7 @@ import Photos
 import MessageUI
 import MapleBacon
 import Foundation
+import MagicalRecord
 
 
 class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate
@@ -505,8 +506,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
 		
 			
-			let context = NSManagedObjectContext.MR_defaultContext()
-			context.saveWithBlock({ (context) -> Void in
+			
+			MagicalRecord.saveWithBlock({ (context) -> Void in
 				
 				let selectedIndex = self.photoBrowser?.currentIndex
 				let _photo = self.collectionContent[Int(selectedIndex!)]

@@ -250,7 +250,6 @@
 		043AB3BC1BBE212200BA5827 /* PKHUDWideBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB3AA1BBE212100BA5827 /* PKHUDWideBaseView.swift */; };
 		043AB3BD1BBE212200BA5827 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB3AB1BBE212100BA5827 /* Window.swift */; };
 		043AB3BE1BBE212200BA5827 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB3AC1BBE212100BA5827 /* WindowRootViewController.swift */; };
-		043C72041B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */; };
 		044BD34C1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */; };
 		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
 		049AA6811B73DA01003888CE /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 049AA6481B73DA01003888CE /* ImageError.png */; };
@@ -340,7 +339,6 @@
 		04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7011BA9ACC000AC6AA3 /* star.png */; };
 		04D7D7161BA9ADB800AC6AA3 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7111BA9ADB800AC6AA3 /* Bolts.framework */; };
 		04D7D7171BA9ADB800AC6AA3 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7121BA9ADB800AC6AA3 /* Parse.framework */; };
-		04E39D531BA895AF0061EA36 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; };
 		04E39D551BA895B40061EA36 /* MapleBacon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04E39D601BA8BCF50061EA36 /* bird.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 04E39D5A1BA8BCF50061EA36 /* bird.atlas */; };
 		04E39D611BA8BCF50061EA36 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 04E39D5B1BA8BCF50061EA36 /* GameScene.sks */; };
@@ -356,6 +354,7 @@
 		04ED9B1B1BC30374008493E3 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04ED9B1A1BC30374008493E3 /* NewRelicAgent.framework */; };
 		04ED9B1E1BC3037D008493E3 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */; };
 		04ED9B201BC3037D008493E3 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */; };
+		04ED9B221BC3370D008493E3 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; };
 		04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
@@ -474,7 +473,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		0439D3DB1B8B8D5C001850DD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
@@ -919,8 +918,6 @@
 		043AB3AB1BBE212100BA5827 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Vendor/PKHUD/PKHUD/Window.swift; sourceTree = "<group>"; };
 		043AB3AC1BBE212100BA5827 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowRootViewController.swift; path = Vendor/PKHUD/PKHUD/WindowRootViewController.swift; sourceTree = "<group>"; };
 		043AB3BF1BBE304F00BA5827 /* Toronto, ON, Canada.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Toronto, ON, Canada.gpx"; sourceTree = "<group>"; };
-		043C72021B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Extensions.h"; sourceTree = "<group>"; };
-		043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Extensions.m"; sourceTree = "<group>"; };
 		044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MWZoomingScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Vendor/Facebook/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Vendor/Facebook/FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -1094,7 +1091,7 @@
 				040FD1061BB2F14300DDB1A5 /* libsqlite3.tbd in Frameworks */,
 				040FD10C1BB2F19500DDB1A5 /* libstdc++.tbd in Frameworks */,
 				502199C21B33833E00A64387 /* AVFoundation.framework in Frameworks */,
-				04E39D531BA895AF0061EA36 /* MapleBacon.framework in Frameworks */,
+				04ED9B221BC3370D008493E3 /* MapleBacon.framework in Frameworks */,
 				04CA5DCD1B8B9F900075C0A8 /* CoreData.framework in Frameworks */,
 				04D7D7171BA9ADB800AC6AA3 /* Parse.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
@@ -1639,8 +1636,6 @@
 			children = (
 				04CCD6671B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.h */,
 				04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */,
-				043C72021B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.h */,
-				043C72031B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m */,
 				0439D3C61B8B86AC001850DD /* CGRect+Extensions.swift */,
 				044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */,
 				04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */,
@@ -2565,7 +2560,6 @@
 				049AA6DA1B73DB84003888CE /* NSData+ImageContentType.m in Sources */,
 				042E8D301BB2F49E00D61412 /* GPUImageSaturationFilter.m in Sources */,
 				04CA5D7F1B8B9BE80075C0A8 /* BFDataFetcher.swift in Sources */,
-				043C72041B8CE6DF00AB0635 /* NSManagedObjectContext+Extensions.m in Sources */,
 				042E8D081BB2F49E00D61412 /* GPUImageLowPassFilter.m in Sources */,
 				042E8D541BB2F49E00D61412 /* GPUImageVoronoiConsumerFilter.m in Sources */,
 				042E8CE81BB2F49E00D61412 /* GPUImageFramebufferCache.m in Sources */,
@@ -2764,16 +2758,18 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(SRCROOT)/**",
 					"$(PROJECT_DIR)",
-					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 					"$(PROJECT_DIR)/Vendor",
 					"$(PROJECT_DIR)/Vendor/Branch",
 					"$(PROJECT_DIR)/Vendor/Fabric",
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
-					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
-					"$(PROJECT_DIR)/Vendor/Parse",
+					"$(PROJECT_DIR)/Vendor/MapleBacon/Library/MapleBacon/build/**",
+					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
+					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/build\"/**",
+					"${TARGET_BUILD_DIR}/MapleBacon.framework",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2781,11 +2777,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
 					"$(PROJECT_DIR)/Vendor/**",
+					"$(SRCROOT)/Vendor/MagicalRecord/**/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
-					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
+					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon\"/**",
+					"$(SRCROOT)/Vendor/MapleBacon/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -2793,11 +2789,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
-					"$(PROJECT_DIR)/Vendor/Google/Google/Libraries",
-					"$(PROJECT_DIR)/Vendor/Google/GoogleAnalytics/Libraries",
-					"$(PROJECT_DIR)/Vendor/Google/GoogleNetworkingUtilities/Libraries",
-					"$(PROJECT_DIR)/Vendor/Google/GoogleSymbolUtilities/Libraries",
-					"$(PROJECT_DIR)/Vendor/Google/GoogleUtilities/Libraries",
+					"$(PROJECT_DIR)/Vendor/Google/**",
+					"$(PROJECT_DIR)/Vendor/MapleBacon/**/**",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2816,6 +2809,8 @@
 					"\"QuartzCore\"",
 					"-framework",
 					"\"SystemConfiguration\"",
+					"-framework",
+					"\"MagicalRecord\"",
 					"-framework",
 					"\"UIKit\"",
 					"-ObjC",
@@ -2849,27 +2844,29 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(SRCROOT)/**",
 					"$(PROJECT_DIR)",
-					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 					"$(PROJECT_DIR)/Vendor",
 					"$(PROJECT_DIR)/Vendor/Branch",
 					"$(PROJECT_DIR)/Vendor/Fabric",
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
-					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
-					"$(PROJECT_DIR)/Vendor/Parse",
+					"$(PROJECT_DIR)/Vendor/MapleBacon/Library/MapleBacon/build/**",
+					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
+					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/build\"/**",
+					"${TARGET_BUILD_DIR}/MapleBacon.framework",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Supporting Files/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
 					"$(PROJECT_DIR)/Vendor/**",
+					"$(SRCROOT)/Vendor/MagicalRecord/**/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
-					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/MapleBacon\"",
+					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon\"/**",
+					"$(SRCROOT)/Vendor/MapleBacon/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -2877,11 +2874,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
-					"$(PROJECT_DIR)/Vendor/Google/Google/Libraries",
-					"$(PROJECT_DIR)/Vendor/Google/GoogleAnalytics/Libraries",
-					"$(PROJECT_DIR)/Vendor/Google/GoogleNetworkingUtilities/Libraries",
-					"$(PROJECT_DIR)/Vendor/Google/GoogleSymbolUtilities/Libraries",
-					"$(PROJECT_DIR)/Vendor/Google/GoogleUtilities/Libraries",
+					"$(PROJECT_DIR)/Vendor/Google/**",
+					"$(PROJECT_DIR)/Vendor/MapleBacon/**/**",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2900,6 +2894,8 @@
 					"\"QuartzCore\"",
 					"-framework",
 					"\"SystemConfiguration\"",
+					"-framework",
+					"\"MagicalRecord\"",
 					"-framework",
 					"\"UIKit\"",
 					"-ObjC",

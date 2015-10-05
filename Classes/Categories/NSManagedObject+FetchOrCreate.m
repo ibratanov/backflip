@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Yoshimi Robotics. All rights reserved.
 //
 
+@import MagicalRecord;
 #import "NSManagedObject+FetchOrCreate.h"
-#import <MagicalRecord/MagicalRecord.h>
 
 @implementation NSManagedObject(FetchOrCreate)
 

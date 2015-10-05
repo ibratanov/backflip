@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import MagicalRecord
 
 class BFDataMananger : NSObject
 {

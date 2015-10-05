@@ -3,6 +3,7 @@
 //
 //  Copyright 2011-present Backflip Inc. All rights reserved.
 //
+
 #import <UIKit/UIKit.h>
 #import <Branch/Branch.h>
 #import <CoreData/CoreData.h>
@@ -15,7 +16,6 @@
 	#define Bridging_Header
 
 	#import "NSManagedObject+FetchOrCreate.h"
-	#import "NSManagedObjectContext+Extensions.h"
 
 	#import "ZAActivityBar.h"
 	#import "BFDataWrapper.h"
