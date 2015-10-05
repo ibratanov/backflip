@@ -167,8 +167,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
             tracker.set(kGAIScreenName, value: "Checkin view")
             //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
             tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
-            
-            
+			
             let builder = GAIDictionaryBuilder.createScreenView()
             tracker.send(builder.build() as [NSObject : AnyObject])
 

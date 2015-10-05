@@ -420,8 +420,8 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				
 				
 				let photoACL = PFACL(user: PFUser.currentUser()!)
-				photoACL.setPublicWriteAccess(true)
 				photoACL.setPublicReadAccess(true)
+				photoACL.setPublicWriteAccess(true)
 				photo.ACL = photoACL
 				
 				
@@ -448,17 +448,26 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 								let relation = eventObject.relationForKey("photos")
 								
 								//photo.save()
+								
 								photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
 									if valid {
 										relation.addObject(photo)
+										photoObject.addUniqueObject(imageFile, forKey:"photosUploaded")
+										photoObject.addUniqueObject(imageFile, forKey: "photosLiked")
+										
 										photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
 										photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
 									}
 									//issue
-									eventObject.saveInBackground()
+									eventObject.saveInBackgroundWithBlock({ (success, error) -> Void in
+										print("🚨🚨🚨 Parse error \(error)")
+										
+									})
 									
 									//issue
 									photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
+										
+										print("🚨 Parse error \(error)")
 										
 										BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
 											print("Photo stored in coredata..")

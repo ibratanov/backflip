@@ -10,11 +10,16 @@
 import Foundation
 import CoreLocation
 
+
 /**
  * Debugging
 */
+#if DEBUG
+	private let kLocationDebugging : Bool = true
+#else
+	private let kLocationDebugging : Bool = false
+#endif
 
-private let kLocationDebugging : Bool = true
 
 
 //------------------------------------
@@ -124,7 +129,7 @@ public class BFLocationManager : NSObject, CLLocationManagerDelegate
 				}
 				
 				locationPending = true
-				locationManager.desiredAccuracy = accuracy.accuracyThreshold()
+				// locationManager.desiredAccuracy = accuracy.accuracyThreshold()
 				
 				locationBlock = completion
 				

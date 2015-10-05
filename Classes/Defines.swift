@@ -15,3 +15,16 @@ let kAppDatabaseName : String = "Backflip"
 
 let nPhotoObjectsUpdated : String = "nPhotoObjectsUpdated"
 let nEventObjectsUpdated : String = "nEventObjectsUpdated"
+
+
+
+
+//------------------------------------
+// MARK: Feature Flags
+//------------------------------------
+
+let FEATURE_GOOGLE_ANALYTICS : Bool = false
+
+let FEATURE_NEW_RELIC : Bool = true
+
+let FEATURE_MIXPANEL : Bool = true

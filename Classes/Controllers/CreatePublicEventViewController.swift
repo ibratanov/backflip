@@ -244,8 +244,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
 									event["enabled"] = true
 									event["owner"] = PFUser.currentUser()!
                                     let eventACL = PFACL(user: PFUser.currentUser()!)
-                                    eventACL.setPublicWriteAccess(true)
-                                    eventACL.setPublicReadAccess(true)
+									eventACL.setPublicReadAccess(true)
+									eventACL.setPublicWriteAccess(true)
                                     event.ACL = eventACL
                                     
                                     // Store the relation
@@ -401,7 +401,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     
                                     // Set access rules for events
                                     let eventACL = PFACL(user: PFUser.currentUser()!)
-                                    eventACL.setPublicReadAccess(true)
+                                    // eventACL.setPublicReadAccess(true)
                                     eventACL.setPublicWriteAccess(true)
                                     event.ACL = eventACL
                                     

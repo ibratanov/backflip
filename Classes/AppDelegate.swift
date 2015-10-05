@@ -255,26 +255,24 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             
             //-----------Google Analytics
             
-            var dimensionValue = "\(PFUser.currentUser()?.objectId)"
-            gai.set(GAIFields.customDimensionForIndex(1), value: PFUser.currentUser()?.objectId)
+            // var dimensionValue = "\(PFUser.currentUser()?.objectId)"
+            // gai.set(GAIFields.customDimensionForIndex(1), value: PFUser.currentUser()?.objectId)
             //gai.set(customDimensionForIndex:1, value: dimensionValue)
             //method called when a user signs in to an authentication system
             //GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
-
         
 		#endif
 		
 		
-		#if FEATURE_NEW_RELIC
+		if (FEATURE_NEW_RELIC) {
 			NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
-		#endif
+		}
 		
-		
-		#if  FEATURE_MIXPANEL
+		if (FEATURE_MIXPANEL) {
 			Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
 			let mixpanel: Mixpanel = Mixpanel.sharedInstance()
 			mixpanel.track("App launched")
-		#endif
+		}
 	}
 	
 	

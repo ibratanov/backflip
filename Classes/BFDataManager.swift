@@ -17,7 +17,7 @@ class BFDataMananger : NSObject
     func setupDatabase()
     {
 		
-        #if DEBUG
+        #if FEATURE_COREDATA_SEED
             print("Not seeding database because we're running in DEBUG mode")
 		#else
 			self.seedDatabase()
