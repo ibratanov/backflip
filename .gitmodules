@@ -10,10 +10,6 @@
 	path = Vendor/MagicalRecord
 	url = https://github.com/magicalpanda/MagicalRecord.git
 	ignore = dirty
-[submodule "Vendor/SwiftLocation"]
-	path = Vendor/SwiftLocation
-	url = https://github.com/malcommac/SwiftLocation.git
-	ignore = dirty
 [submodule "Vendor/AMScrollingNavbar"]
 	path = Vendor/AMScrollingNavbar
 	url = https://github.com/andreamazz/AMScrollingNavbar.git

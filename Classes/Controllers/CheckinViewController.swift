@@ -14,16 +14,13 @@ import CoreLocation
 
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource
 {
 	var shakeCount : Int = 0
 	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
 	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
-
-	var requestedLocation : Bool = false
-	var locationManager : CLLocationManager = CLLocationManager()
 	
 	@IBOutlet var pickerView : UIPickerView?
 	@IBOutlet var collectionView : UICollectionView?
@@ -437,54 +434,41 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	}
 	
 	
-	
 	//-------------------------------------
 	// MARK: Data
 	//-------------------------------------
 	
 	func fetchData()
 	{
-		// Check Auth state first :)
 		let authorizationStatus = CLLocationManager.authorizationStatus()
 		if (authorizationStatus == .NotDetermined) {
-
 			
-			var token: dispatch_once_t = 0
-			dispatch_once(&token) {
-				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC)))
-				dispatch_after(delayTime, dispatch_get_main_queue()) {
-					if (self.requestedLocation == false) {
-						self.locationManager.requestWhenInUseAuthorization()
-						self.requestedLocation = true
-					}
+			if (PFUser.currentUser() != nil) {
+				var onceToken: dispatch_once_t = 0
+				dispatch_once(&onceToken) {
+					BFLocationManager.sharedManager.requestAuthorization({ (status, error) -> Void in
+					
+						if (status == .AuthorizedAlways || status == .AuthorizedWhenInUse) {
+							self.fetchData()
+						} else {
+							self.handleLocationError(error)
+						}
+					
+					})
 				}
 			}
 
-			return
-			
-		} else if (authorizationStatus != .AuthorizedWhenInUse) {
-			print("Location issue")
-			print(CLLocationManager.authorizationStatus().rawValue)
-			
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				self.activityIndicator.stopAnimating()
-				self.activityIndicator.hidden = true
-				
-				self.pickerView?.reloadAllComponents()
-				self.collectionView?.reloadData()
-				self.pickerView?.hidden = false
-			})
-			
+			// We return to stop attemping to call .fetchLocation
 			return
 		}
 
 
-		do {
-
-		// SwiftLocation.shared.cancelAllRequests()
-		try SwiftLocation.shared.currentLocation(.House, timeout: 10, onSuccess: { (location) -> Void in
-			// location is a CLPlacemark
-
+		BFLocationManager.sharedManager.fetchLocation(.House) { (location, error) -> Void in
+			
+			if (error != nil) {
+				return self.handleLocationError(error)
+			}
+			
 			let config = PFConfig.currentConfig()
 			let _events = Event.MR_findAll() as! [Event]
 			let nearbyEvents : NSMutableArray = NSMutableArray()
@@ -518,69 +502,58 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 			// Sort by closest to furthest
 			nearbyEvents.sortedArrayWithOptions(.Concurrent, usingComparator: { (event1, event2) -> NSComparisonResult in
-				
 				let location1 = CLLocation(latitude: (event1 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event1 as! Event).geoLocation!.longitude!.doubleValue)
 				let location2 = CLLocation(latitude: (event2 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event2 as! Event).geoLocation!.longitude!.doubleValue)
-				
 				let distance1 : NSNumber = NSNumber(double: location!.distanceFromLocation(location1))
 				let distance2 : NSNumber = NSNumber(double: location!.distanceFromLocation(location2))
-				
 				return distance1.compare(distance2)
 			})
-			
 			
 			
 			// Update UI
 			self.events = (nearbyEvents.copy()) as! [Event]
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				
 				self.activityIndicator.stopAnimating()
 				self.activityIndicator.hidden = true
-				
 				self.pickerView?.reloadAllComponents()
 				self.collectionView?.reloadData()
 				self.pickerView?.hidden = false
-				
 			})
 			
-            }, onFail: { (error) -> Void in
-                // something went wrong
-                print("SwiftLocation error :(")
-                print(error)
-                
-                
-                let authorizationStatus = CLLocationManager.authorizationStatus()
-                if (authorizationStatus == .Denied || authorizationStatus == .Restricted) {
-                    let alertController = UIAlertController(title: "Location Services", message: "We require location services to find nearby events, Please enable Location Services in settings", preferredStyle: .Alert)
-                    alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
-                        
-                        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
-                        dispatch_after(delayTime, dispatch_get_main_queue()) {
-                            if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
-                                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
-                            }
-                        }
-                        
-                    }))
-                    alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-                    
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                } else {
-
-                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.0 * Double(NSEC_PER_SEC)))
-                    dispatch_after(delayTime, dispatch_get_main_queue()) {
-
-                        self.fetchData()
-
-                    }
-
-                }
-            })
-
-		} catch {
-			print("SwiftLocation failed :(")
 		}
-
+	}
+	
+	
+	
+	func handleLocationError(error : NSError?)
+	{
+		
+		let authorizationStatus = CLLocationManager.authorizationStatus()
+		if (authorizationStatus == .Denied || authorizationStatus == .Restricted) {
+			let alertController = UIAlertController(title: "Location Services", message: "We require location services to find nearby events, Please enable Location Services in settings", preferredStyle: .Alert)
+			alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+				
+				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+				dispatch_after(delayTime, dispatch_get_main_queue()) {
+					if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
+						UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+					}
+				}
+				
+			}))
+			alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+			
+			self.presentViewController(alertController, animated: true, completion: nil)
+		} else {
+			
+			let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.0 * Double(NSEC_PER_SEC)))
+			dispatch_after(delayTime, dispatch_get_main_queue()) {
+				
+				self.fetchData()
+				
+			}
+			
+		}
 	}
 	
 }
