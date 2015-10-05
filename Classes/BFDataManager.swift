@@ -18,9 +18,9 @@ class BFDataMananger : NSObject
     {
 		
         #if FEATURE_COREDATA_SEED
-            print("Not seeding database because we're running in DEBUG mode")
-		#else
 			self.seedDatabase()
+		#else
+			print("Not seeding database because we're running in DEBUG mode")
         #endif
 		
 		MagicalRecord.setupCoreDataStackWithAutoMigratingSqliteStoreNamed(kAppDatabaseName)
