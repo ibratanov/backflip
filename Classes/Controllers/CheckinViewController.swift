@@ -14,14 +14,13 @@ import CoreLocation
 
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource
 {
 	var shakeCount : Int = 0
 	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
 	
 	let CELL_REUSE_IDENTIFIER = "album-cell"
-
 	
 	@IBOutlet var pickerView : UIPickerView?
 	@IBOutlet var collectionView : UICollectionView?
@@ -154,10 +153,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
             }
         }
 
-		// Data!!1!!!
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
             fetchData()
-			
 			
 			BFDataFetcher.sharedFetcher.fetchDataInBackground({ (completed) -> Void in
 				self.fetchData()
@@ -166,12 +163,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		
 		#if FEATURE_GOOGLE_ANALYTICS
-			let tracker = GAI.sharedInstance().defaultTracker
-			tracker.set(kGAIScreenName, value: "Checkin view")
-			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+            let tracker = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value: "Checkin view")
+            //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+            tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
+			
+            let builder = GAIDictionaryBuilder.createScreenView()
+            tracker.send(builder.build() as [NSObject : AnyObject])
 
-			let builder = GAIDictionaryBuilder.createScreenView()
-			tracker.send(builder.build() as [NSObject : AnyObject])
 		#endif
 	}
 	
@@ -180,6 +179,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
 		super.viewDidAppear(animated)
 	
+        // Useful when dismissing a dialogue on the checkin screen - updates nearby events.
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
 			fetchData()
 		}
@@ -223,11 +223,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		let event = self.events[Int(index!)]
 		
 		if ((1 + indexPath.row) == self.collectionView(collectionView, numberOfItemsInSection: 0)) {
-			cell.imageView.image = UIImage(named: "check-in-screen-double-tap")
+			cell.imageView!.image = UIImage(named: "check-in-screen-double-tap")
 			
 		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
 			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
-			cell.imageView.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
+			cell.imageView!.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 		}
 		
 		// cell.addGestureRecognizer(self.doubleTapGesture!)
@@ -261,8 +261,13 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	{
         //self.pickerView?.selectRow(0, inComponent: 0, animated: true)
         if (self.events.count < 1) {
-            checkinButton.enabled = false
-			return "No nearby events"
+			checkinButton.enabled = false
+			let authorizationStatus = CLLocationManager.authorizationStatus()
+			if (authorizationStatus != .AuthorizedWhenInUse) {
+				return "Unable to get location"
+			} else {
+				return "No nearby events"
+			}
 		} else {
             checkinButton.enabled = true
 			return self.events[row].name!
@@ -289,6 +294,14 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (alertAction) -> Void in
 			PFUser.logOut()
+			
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+			NSUserDefaults.standardUserDefaults().synchronize()
+			
+			FBSDKLoginManager().logOut()
+			FBSDKAccessToken.setCurrentAccessToken(nil)
+			
 			Digits.sharedInstance().logOut()
 			self.performSegueWithIdentifier("display-login-popover", sender: self)
 		}))
@@ -394,7 +407,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			let albumViewController : EventAlbumViewController = segue.destinationViewController as! EventAlbumViewController
 			let currentEventId: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
 			if (currentEventId != nil) {
-				albumViewController.event = Event.fetchOrCreateWhereAttribute("objectId", isValue: currentEventId!) as? Event
+				let event = Event.MR_findFirstByAttribute("objectId", withValue: currentEventId!)
+				albumViewController.event = event
+				// albumViewController.event = Event.fetchOrCreateWhereAttribute("objectId", isValue: currentEventId!) as? Event
 			} else {
 				let index = self.pickerView?.selectedRowInComponent(0)
 				let event = self.events[Int(index!)]
@@ -418,19 +433,41 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	}
 	
 	
-	
 	//-------------------------------------
 	// MARK: Data
 	//-------------------------------------
 	
 	func fetchData()
 	{
-		SwiftLocation.shared.currentLocation(Accuracy.Neighborhood, timeout: 20, onSuccess: { (location) -> Void in
-			// location is a CLPlacemark
-			print("We have a location!! ", terminator: "")
-			print(location, terminator: "")
+		let authorizationStatus = CLLocationManager.authorizationStatus()
+		if (authorizationStatus == .NotDetermined) {
 			
+			if (PFUser.currentUser() != nil) {
+				var onceToken: dispatch_once_t = 0
+				dispatch_once(&onceToken) {
+					BFLocationManager.sharedManager.requestAuthorization({ (status, error) -> Void in
+					
+						if (status == .AuthorizedAlways || status == .AuthorizedWhenInUse) {
+							self.fetchData()
+						} else {
+							self.handleLocationError(error)
+						}
+					
+					})
+				}
+			}
 
+			// We return to stop attemping to call .fetchLocation
+			return
+		}
+
+
+		BFLocationManager.sharedManager.fetchLocation(.House) { (location, error) -> Void in
+			
+			if (error != nil) {
+				return self.handleLocationError(error)
+			}
+			
 			let config = PFConfig.currentConfig()
 			let _events = Event.MR_findAll() as! [Event]
 			let nearbyEvents : NSMutableArray = NSMutableArray()
@@ -464,56 +501,58 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 			// Sort by closest to furthest
 			nearbyEvents.sortedArrayWithOptions(.Concurrent, usingComparator: { (event1, event2) -> NSComparisonResult in
-				
 				let location1 = CLLocation(latitude: (event1 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event1 as! Event).geoLocation!.longitude!.doubleValue)
 				let location2 = CLLocation(latitude: (event2 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event2 as! Event).geoLocation!.longitude!.doubleValue)
-				
 				let distance1 : NSNumber = NSNumber(double: location!.distanceFromLocation(location1))
 				let distance2 : NSNumber = NSNumber(double: location!.distanceFromLocation(location2))
-				
 				return distance1.compare(distance2)
 			})
-			
 			
 			
 			// Update UI
 			self.events = (nearbyEvents.copy()) as! [Event]
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				
 				self.activityIndicator.stopAnimating()
 				self.activityIndicator.hidden = true
-				
 				self.pickerView?.reloadAllComponents()
 				self.collectionView?.reloadData()
 				self.pickerView?.hidden = false
-				
 			})
 			
-		}) { (error) -> Void in
-			// something went wrong
-			print("SwiftLocation error :(")
-			print(error)
-			
-			
-			let authorizationStatus = CLLocationManager.authorizationStatus()
-			if (authorizationStatus == .Denied || authorizationStatus == .Restricted) {
-				let alertController = UIAlertController(title: "Location Services", message: "We require location services to find nearby events, Please enable Location Services in settings", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
-					
-					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
-					dispatch_after(delayTime, dispatch_get_main_queue()) {
-						if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
-							UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
-						}
-					}
-					
-				}))
-				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-				
-				self.presentViewController(alertController, animated: true, completion: nil)
-			}
 		}
-
+	}
+	
+	
+	
+	func handleLocationError(error : NSError?)
+	{
+		
+		let authorizationStatus = CLLocationManager.authorizationStatus()
+		if (authorizationStatus == .Denied || authorizationStatus == .Restricted) {
+			let alertController = UIAlertController(title: "Location Services", message: "We require location services to find nearby events, Please enable Location Services in settings", preferredStyle: .Alert)
+			alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+				
+				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+				dispatch_after(delayTime, dispatch_get_main_queue()) {
+					if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
+						UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+					}
+				}
+				
+			}))
+			alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+			
+			self.presentViewController(alertController, animated: true, completion: nil)
+		} else {
+			
+			let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.0 * Double(NSEC_PER_SEC)))
+			dispatch_after(delayTime, dispatch_get_main_queue()) {
+				
+				self.fetchData()
+				
+			}
+			
+		}
 	}
 	
 }

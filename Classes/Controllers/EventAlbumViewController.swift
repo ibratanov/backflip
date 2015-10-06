@@ -11,9 +11,10 @@ import Photos
 import MessageUI
 import MapleBacon
 import Foundation
+import MagicalRecord
 
 
-class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate
 {
 	
 	//-------------------------------------
@@ -56,12 +57,14 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		UIApplication.sharedApplication().statusBarHidden = false
 
 		#if FEATURE_GOOGLE_ANALYTICS
-			let tracker = GAI.sharedInstance().defaultTracker
-			tracker.set(kGAIScreenName, value: "Event Album")
-			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
-
-			let builder = GAIDictionaryBuilder.createScreenView()
-			tracker.send(builder.build() as [NSObject : AnyObject])
+            let tracker = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value: "Event Album")
+            //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+            tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
+            
+            
+            let builder = GAIDictionaryBuilder.createScreenView()
+            tracker.send(builder.build() as [NSObject : AnyObject])
 		#endif
     }
 	
@@ -78,10 +81,24 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		
 		self.title = self.event?.name
 		
+		let titleLabel = UILabel(frame: CGRectZero)
+		titleLabel.text = self.event?.name
+		titleLabel.textColor = UIColor.whiteColor()
+		titleLabel.userInteractionEnabled = true
+		titleLabel.textAlignment = .Center
+		let width = titleLabel.sizeThatFits(CGSizeMake(self.view.bounds.size.width, CGFloat.max)).width
+		titleLabel.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 44))
+		self.navigationItem.titleView = titleLabel
+		
+		
+		
 		// Hide the "leave" button when pushed from event history
 		let currentEventId = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id") as? String
 		if (currentEventId == self.event?.objectId) {
 			self.navigationController?.setViewControllers([self], animated: false)
+			
+			let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
+			self.navigationItem.titleView?.addGestureRecognizer(longPressRecognizer)
 		} else {
 			self.navigationItem.leftBarButtonItem = nil
 		}
@@ -126,6 +143,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		alertController.addAction(UIAlertAction(title: "Leave", style: .Destructive, handler: { (alertAction) -> Void in
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+			NSUserDefaults.standardUserDefaults().synchronize()
 			
 			
 			let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
@@ -140,6 +158,74 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	func photoUploaded()
 	{
 		self.updateData()
+	}
+	
+	
+	func longPressed(sender: UILongPressGestureRecognizer)
+	{
+		if (self.event != nil && self.event?.owner! == PFUser.currentUser()!.objectId!) {
+			
+			let popover = EventEditingPopover()
+			popover.event = self.event
+			popover.modalPresentationStyle = .Popover
+			popover.preferredContentSize = CGSizeMake(self.view.frame.size.width - 20, 132)
+			popover.popoverPresentationController?.delegate = self
+			popover.popoverPresentationController?.sourceView = self.navigationController!.navigationBar
+			popover.popoverPresentationController?.sourceRect = CGRectMake(0, 0, self.view.frame.size.width, 40)
+			self.presentViewController(popover, animated: true, completion: nil)
+
+			
+		}
+		
+	}
+	
+	
+	
+	//-------------------------------------
+	// MARK: Popover Presentation Delegate
+	//-------------------------------------
+	
+	func prepareForPopoverPresentation(popoverPresentationController: UIPopoverPresentationController)
+	{
+		popoverPresentationController.sourceView = self.navigationController!.navigationBar
+		popoverPresentationController.sourceRect = CGRectMake(0, 0, self.view.frame.size.width, 40)
+	}
+	
+	func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController)
+	{
+		let popover = popoverPresentationController.presentedViewController as! EventEditingPopover
+		if ( popover.eventName!.text! != event!.name!  || popover.eventSwitch!.on != !(event!.live!.boolValue) ) {
+
+			PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Saving..")
+			PKHUD.sharedHUD.show()
+			
+			let eventObject = PFObject(className: "Event")
+			eventObject.objectId = event!.objectId!
+			eventObject.setObject(popover.eventName!.text!, forKey: "eventName")
+			eventObject.setObject(!(popover.eventSwitch!.on), forKey: "isLive")
+			eventObject.saveInBackgroundWithBlock({ (success, error) -> Void in
+				
+				BFDataProcessor.sharedProcessor.processEvents([eventObject], completion: { () -> Void in
+										
+					let width = self.navigationItem.titleView?.sizeThatFits(CGSizeMake(self.view.bounds.size.width, CGFloat.max)).width
+					self.navigationItem.titleView?.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width!, 44))
+					
+					// self.title = eventObject["eventName"] as? String
+					(self.navigationItem.titleView as! UILabel).text = eventObject["eventName"] as? String
+					PKHUD.sharedHUD.hide(animated: true)
+					
+				})
+				
+			})
+			
+			
+		}
+	
+	}
+	
+	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle
+	{
+		return .None
 	}
 	
 	
@@ -206,17 +292,18 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			
 		if (indexPath.row == 0) {
 			
-			cell.imageView.image = UIImage(named: "album-add-photo")
-			cell.imageView.image!.imageWithRenderingMode(.AlwaysTemplate)
-			cell.imageView.contentMode = .ScaleAspectFit
-			cell.imageView.tintColor = UIColor.grayColor()
+			cell.imageView!.image = UIImage(named: "album-add-photo")
+			cell.imageView!.image!.imageWithRenderingMode(.AlwaysTemplate)
+			cell.imageView!.contentMode = .ScaleAspectFit
+			cell.imageView!.tintColor = UIColor.grayColor()
 			
 		} else if (self.collectionContent.count >= indexPath.row) {
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
-			if (cell.imageView.image == nil) {
-				cell.imageView.setImageWithURL(NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!, cacheScaled: true)
-			}
+
+			cell.prepareForReuse()
+			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			cell.imageView!.setImageWithURL(imageUrl, placeholder: nil, crossFadePlaceholder: true, cacheScaled: true, completion: nil)
 		
 		}
 		
@@ -323,7 +410,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		self.collectionView?.reloadData()
 		
 		if segementedControl.selectedSegmentIndex <= 0 {
-			content.sortInPlace{ $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
+			content.sortInPlace{ if ($0.createdAt != nil && $1.createdAt != nil) { return ($0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending) } else { return false } }
 		} else if segementedControl.selectedSegmentIndex == 1 {
 			content.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
 		} else if segementedControl.selectedSegmentIndex == 2 {
@@ -419,8 +506,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
 		
 			
-			let context = NSManagedObjectContext.MR_defaultContext()
-			context.saveWithBlock({ (context) -> Void in
+			
+			MagicalRecord.saveWithBlock({ (context) -> Void in
 				
 				let selectedIndex = self.photoBrowser?.currentIndex
 				let _photo = self.collectionContent[Int(selectedIndex!)]
@@ -564,8 +651,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			return
 		}
 		
-		self.event = Event.MR_findByAttribute("objectId", withValue: event!.objectId!)!.first as? Event
-		
 		var photos : [Photo] = []
 		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]
 		for photo : Photo in _photos {
@@ -606,7 +691,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			}
 		}
 		
-		// self.collectionContent = photos
 	}
 	
 	
@@ -617,5 +701,153 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		}
 	}
 	
+}
+
+
+
+
+class EventEditingPopover : PopoverView, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
+{
+	var event : Event?
+	var tableView : UITableView?
 	
+	var eventName : UITextField?
+	var eventSwitch : UISwitch?
+	
+	
+	override init()
+	{
+		super.init()
+		
+		self.tableView = UITableView(frame: self.view.bounds, style: .Plain)
+		self.tableView?.dataSource = self
+		self.tableView?.delegate = self
+		self.tableView?.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+		self.tableView?.estimatedRowHeight = 88
+		self.view.addSubview(self.tableView!)
+	}
+
+	required init?(coder aDecoder: NSCoder)
+	{
+	    fatalError("init(coder:) has not been implemented")
+	}
+	
+	
+	//-------------------------------------
+	// MARK: View Layout
+	//-------------------------------------
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		
+		self.tableView?.frame = self.view.bounds
+	}
+	
+	override func viewDidAppear(animated: Bool)
+	{
+		super.viewDidAppear(animated)
+		
+		self.tableView?.frame = self.view.bounds
+	}
+	
+	
+	
+	//-------------------------------------
+	// MARK: Table View Delegate
+	//-------------------------------------
+	
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int
+	{
+		return 1
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+		return 2
+	}
+	
+	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+	{
+		return 66
+	}
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	{
+		let cell = self.tableView?.dequeueReusableCellWithIdentifier("cell", forIndexPath:indexPath)
+		cell?.selectionStyle = .None
+		
+		if (indexPath.row == 0) {
+			
+			cell?.textLabel!.text = "Event Name"
+			
+			eventName = UITextField(frame: CGRectMake(self.view.bounds.size.width - 230, 0, 220, 66))
+			eventName?.adjustsFontSizeToFitWidth = true
+			eventName?.textColor = UIColor.blackColor()
+			eventName?.placeholder = "Event name"
+			eventName?.text = event?.name
+			eventName?.textColor = UIColor.grayColor()
+			eventName?.keyboardType = .Default
+			eventName?.returnKeyType = .Done
+			eventName?.backgroundColor = UIColor.clearColor()
+			eventName?.autocorrectionType = .No
+			eventName?.autocapitalizationType = .None
+			eventName?.textAlignment = .Right
+			eventName?.clearButtonMode = .Never
+			eventName?.delegate = self
+			cell?.contentView.addSubview(eventName!)
+
+		} else if (indexPath.row == 1) {
+			
+			cell?.textLabel!.text = "Private Event"
+			
+			eventSwitch = UISwitch(frame: CGRectMake(self.view.bounds.size.width - 55, 16, 94, 44))
+			eventSwitch!.on = !(event!.live!.boolValue)
+			
+			cell?.contentView.addSubview(eventSwitch!)
+		}
+
+
+		return cell!
+	}
+	
+	
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	{
+		if (indexPath.row == 0) {
+			eventName?.becomeFirstResponder()
+		} else if (indexPath.row == 1) {
+			eventSwitch?.setOn(!(eventSwitch!.on), animated: true)
+		}
+	}
+
+	
+	//-------------------------------------
+	// MARK: TextField Delegate
+	//-------------------------------------
+	
+	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+	{
+		
+//		if (range.length + range.location > textField.text!.characters.count) {
+//			return false;
+//		}
+
+		let newLength = textField.text!.characters.count + string.characters.count - range.length;
+		
+		return newLength < 26
+	}
+	
+	func textFieldShouldReturn(textField: UITextField) -> Bool
+	{
+		if (textField.text!.characters.count < 1) {
+			return false
+		}
+		
+		eventName?.resignFirstResponder()
+		eventName?.endEditing(true)
+		
+		return true
+	}
+
 }

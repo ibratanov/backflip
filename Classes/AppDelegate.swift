@@ -40,7 +40,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		// Watchdog
 		//--------------------------------------
 		#if DEBUG
-			let _ = Watchdog(threshold: 0.3) { duration in
+			let _ = Watchdog(threshold: 0.1) { duration in
 				print("👮 Main thread was blocked for " + String(format:"%.2f", duration) + "s 👮")
 			}
 		#endif
@@ -50,6 +50,14 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		// Coredata
 		//--------------------------------------
 		BFDataFetcher.sharedFetcher.fetchData(true);
+		
+		
+		//--------------------------------------
+		// Facebook
+		//--------------------------------------
+		FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
+		FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+		
 		
 		
         if application.applicationState != UIApplicationState.Background {
@@ -131,6 +139,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             print(url.host as String!)
         }
 
+		
         return FBSDKApplicationDelegate.sharedInstance().application(application,
                     openURL: url,
                     sourceApplication: sourceApplication,
@@ -233,28 +242,37 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	{
 		#if FEATURE_GOOGLE_ANALYTICS
 		
-			var configureError:NSError?
-			GGLContext.sharedInstance().configureWithError(&configureError)
-			assert(configureError == nil, "Error configuring Google services: \(configureError)")
-		
-			// Optional: configure GAI options.
-			let gai = GAI.sharedInstance()
-			gai.trackUncaughtExceptions = true  // report uncaught exceptions
-			gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+            //-------Google Analytics
+            // Configure tracker from GoogleService-Info.plist.
+            var configureError:NSError?
+            GGLContext.sharedInstance().configureWithError(&configureError)
+            assert(configureError == nil, "Error configuring Google services: \(configureError)")
+            
+            // Optional: configure GAI options.
+            let gai = GAI.sharedInstance()
+            gai.trackUncaughtExceptions = true  // report uncaught exceptions
+            gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+            
+            //-----------Google Analytics
+            
+            // var dimensionValue = "\(PFUser.currentUser()?.objectId)"
+            // gai.set(GAIFields.customDimensionForIndex(1), value: PFUser.currentUser()?.objectId)
+            //gai.set(customDimensionForIndex:1, value: dimensionValue)
+            //method called when a user signs in to an authentication system
+            //GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
         
 		#endif
 		
 		
-		#if FEATURE_NEW_RELIC
+		if (FEATURE_NEW_RELIC) {
 			NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
-		#endif
+		}
 		
-		
-		#if  FEATURE_MIXPANEL
+		if (FEATURE_MIXPANEL) {
 			Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
 			let mixpanel: Mixpanel = Mixpanel.sharedInstance()
 			mixpanel.track("App launched")
-		#endif
+		}
 	}
 	
 	

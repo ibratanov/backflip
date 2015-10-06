@@ -3,35 +3,36 @@
 //
 //  Copyright 2011-present Backflip Inc. All rights reserved.
 //
+
 #import <UIKit/UIKit.h>
 #import <Branch/Branch.h>
 #import <CoreData/CoreData.h>
+
+
+#import "PreProcessorMacros.h"
 
 
 #ifndef Bridging_Header
 	#define Bridging_Header
 
 	#import "NSManagedObject+FetchOrCreate.h"
-	#import "NSManagedObjectContext+Extensions.h"
 
 	#import "ZAActivityBar.h"
+	#import "BFDataWrapper.h"
+
+	// Facebook
+	#import <FBSDKCoreKit/FBSDKCoreKit.h>
+	#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 	// Analytics yo
-	#if FEATURE_MIXPANEL
-		#import <Mixpanel/Mixpanel.h>
-	#endif
-
-	#if FEATURE_GOOGLE_ANALYTICS
-		#import <Google/Analytics.h>
-	#endif
-
-	#if FEATURE_NEW_RELIC
-		#import "NewRelicAgent/NewRelic.h"
-	#endif
+	#import <Mixpanel/Mixpanel.h>
+	#import <Google/Analytics.h>
+	#import "NewRelicAgent/NewRelic.h"
 
 	#import "MWPhotoBrowser.h"
 	#import "MWPhotoBrowserPrivate.h"
 
+	// Camera
     #import "FastttFilterCamera.h"
 	#import "FastttCamera.h"
     #import "UIImage+FastttCamera.h"
@@ -42,6 +43,5 @@
     #import "FastttCapturedImage+Process.h"
     #import "FastttLookupFilter.h"
     #import "FastttEmptyFilter.h"
-
 
 #endif

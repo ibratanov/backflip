@@ -8,52 +8,61 @@
 
 #import <Availability.h>
 
+#import "PreProcessorMacros.h"
 
 
-//----------------------------------
-// FEATURE: Analytics
-//----------------------------------
-
-#ifndef FEATURE_GOOGLE_ANALYTICS
-	#define FEATURE_GOOGLE_ANALYTICS 0
-#endif
-
-#ifndef FEATURE_NEW_RELIC
-	#define FEATURE_NEW_RELIC 0
-#endif
-
-#ifndef FEATURE_MIXPANEL
-	#define FEATURE_MIXPANEL 0
-#endif
-
-
-
-//----------------------------------
-// FEATURE: CoreData
-//----------------------------------
-
-#ifndef FEATURE_COREDATA_SEED
-
-	#if DEBUG
-		#define FEATURE_COREDATA_SEED 0
-	#else
-		#define FEATURE_COREDATA_SEED 1
-	#endif
-
-#endif
-
-
-
-//----------------------------------
-// FEATURE: Parse
-//----------------------------------
-
-#ifndef FEATURE_PARSE_LOCAL
-
-	#if DEBUG
-		#define FEATURE_PARSE_LOCAL 0
-	#else
-		#define FEATURE_PARSE_LOCAL 0
-	#endif
-
-#endif
+////----------------------------------
+//// FEATURE: Analytics
+////----------------------------------
+//
+//
+//
+//#ifndef FEATURE_GOOGLE_ANALYTICS
+//	#define FEATURE_GOOGLE_ANALYTICS 1
+//#endif
+//
+//#ifndef FEATURE_NEW_RELIC
+//	#define FEATURE_NEW_RELIC 0
+//#endif
+//
+//#ifndef FEATURE_MIXPANEL
+//	#define FEATURE_MIXPANEL 1
+//#endif
+//
+//
+//
+////----------------------------------
+//// FEATURE: CoreData
+////----------------------------------
+//
+//#ifndef FEATURE_COREDATA_SEED
+//
+//	#if DEBUG
+//		#define FEATURE_COREDATA_SEED 1
+//	#else
+//		#define FEATURE_COREDATA_SEED 1
+//	#endif
+//
+//#endif
+//
+//
+//
+////----------------------------------
+//// FEATURE: Parse
+////----------------------------------
+//
+//#ifndef FEATURE_PARSE_LOCAL
+//
+//	#if DEBUG
+//		#define FEATURE_PARSE_LOCAL 0
+//	#else
+//		#define FEATURE_PARSE_LOCAL 0
+//	#endif
+//
+//#endif
+//
+//
+//
+//#ifndef FEATURE_FACEBOOK
+//	#define FEATURE_FACEBOOK 1
+//#endif
