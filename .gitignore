@@ -17,6 +17,9 @@ build/
 *.LinkFileList
 *.hmap
 
+
+fastlane/screenshots/
+
 # Automatic backup files
 *~.nib/
 *.swp

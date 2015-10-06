@@ -2901,7 +2901,7 @@
 					"-ObjC",
 					"-lz",
 				);
-				OTHER_SWIFT_FLAGS = "";
+				OTHER_SWIFT_FLAGS = "-D SNAPSHOT -DSNAPSHOT=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.getbackflip.Backflip;
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";

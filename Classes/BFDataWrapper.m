@@ -147,7 +147,7 @@
 		else
 			return ;
 	}
-	NSLog(@"📝 Processing %lu events..", events.count);
+	NSLog(@"📝 Processing %u events..", events.count);
 	
 
 	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
@@ -217,7 +217,7 @@
 		else
 			return ;
 	}
-	NSLog(@"📝 Processing %lu photos..", photos.count);
+	NSLog(@"📝 Processing %u photos..", photos.count);
 	
 	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
 		
@@ -292,7 +292,7 @@
 		else
 			return ;
 	}
-	NSLog(@"📝 Processing %lu attendees..", attendance.count);
+	NSLog(@"📝 Processing %u attendees..", attendance.count);
 	
 	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
 		

@@ -42,7 +42,7 @@
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -63,6 +63,10 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
+            argument = "-DSNAPSHOT=1"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-D DEBUG"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -72,6 +76,11 @@
             key = "DEBUG"
             value = "1"
             isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SNAPSHOT"
+            value = "1"
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "CG_CONTEXT_SHOW_BACKTRACE"

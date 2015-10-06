@@ -78,11 +78,20 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 		self.view.sendSubviewToBack(backgroundImageView)
 		termsTextView.editable = false
         termsTextView.userInteractionEnabled = false
+
+		#if SNAPSHOT
+			let tripleTap = UITapGestureRecognizer(target: self, action: "snapshopLogin")
+			tripleTap.numberOfTapsRequired = 3
+			self.backgroundImageView.userInteractionEnabled = true
+			self.backgroundImageView.addGestureRecognizer(tripleTap)
+		#endif
+
+		print(self.backgroundImageView.gestureRecognizers)
     }
     
     override func viewWillAppear(animated: Bool) {
         // facebookButton.hidden = true
-		
+
 		#if FEATURE_GOOGLE_ANALYTICS
             let tracker = GAI.sharedInstance().defaultTracker
             tracker.set(kGAIScreenName, value: "Login Screen")
@@ -95,7 +104,26 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 		#endif
     }
 
-    
+
+	#if SNAPSHOT
+
+		func snapshopLogin()
+		{
+			PFUser.logInWithUsernameInBackground("+14168375145", password: "+14168375145", block: { (user : PFUser?, error) -> Void in
+
+				if (error == nil && user != nil) {
+
+					self.dismissViewControllerAnimated(true, completion: nil)
+				} else {
+					print(error)
+				}
+
+			})
+		}
+
+	#endif
+
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
