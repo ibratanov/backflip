@@ -7,12 +7,11 @@
 //
 
 import Foundation
-
+import CoreData
 
 extension Event : UIActivityItemSource
 {
-	
-	
+
 	//-------------------------------------
 	// MARK: UIActivityItemSource
 	//-------------------------------------
@@ -42,19 +41,19 @@ extension Event : UIActivityItemSource
 	private func shareText(activityType: String?) -> String
 	{
 		if (activityType == UIActivityTypeMail) {
-			return "<html><body>Join me at '"+self.name!+"'"+"</body></html>"
+            return "<html><body>Check out the photos from \(self.name!) on Backflip! \(inviteUrl!)</body></html>"
 		} else if (activityType == UIActivityTypePostToTwitter) {
-			return "Join me using @getbackflip at '"+self.name!+"' #backflip"
+			return "Check out the photos from '\(self.name!)' on @getbackflip \(inviteUrl!) #backflip"
 		}
 		
 		
-		return "Join me at '"+self.name!+"'"
+		return "Check out the photos from \(self.name!) on Backflip!"
 	}
 	
 	private func shareSubject(activityType: String?) -> String
 	{
 		if (activityType == UIActivityTypeMail) {
-			return self.name!
+			return "Photos from \(self.name!)"
 		}
 		
 		return ""

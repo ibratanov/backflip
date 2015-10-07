@@ -471,7 +471,8 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				// Delay .2 seconds for visual effect
 				let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
 				dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-					
+                    self.event!.inviteUrl = url
+
 					// Now we share.
 					let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [self.event!, NSURL(string: url)! ], applicationActivities: nil)
 					activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]
