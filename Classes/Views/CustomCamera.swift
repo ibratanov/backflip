@@ -16,26 +16,30 @@ import Photos
 import MessageUI
 import AVFoundation
 import DigitsKit
+import CoreMedia
+
 
 class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate ,BFCImagePickerControllerDelegate, FastttCameraDelegate {
+    
+    //***************************-----********************************************
+    let HalftoneFilter = CIFilter(name: "CICMYKHalftone", withInputParameters: ["inputWidth" : 20, "inputSharpness": 1])
+    let StripEffectFilter = CIFilter(name: "CIComicEffect")
+    let CrystallizeFilter = CIFilter(name: "CICrystallize", withInputParameters: ["inputRadius" : 30])
+    let EdgesEffectFilter = CIFilter(name: "CIEdges", withInputParameters: ["inputIntensity" : 10])
+    let HexagonalPixellateFilter = CIFilter(name: "CIHexagonalPixellate", withInputParameters: ["inputScale" : 40])
+    let InvertFilter = CIFilter(name: "CIColorInvert")
+    let PointillizeFilter = CIFilter(name: "CIPointillize", withInputParameters: ["inputRadius" : 30])
+    let LineOverlayFilter = CIFilter(name: "CILineOverlay")
+    let PosterizeFilter = CIFilter(name: "CIColorPosterize", withInputParameters: ["inputLevels" : 5])
+    //***************************-----********************************************
+
 	
 	//------------------FastttCamera----------------
 	//var fastCamera = FastttFilterCamera()
 	var fastCamera = FastttFilterCamera()
-	weak var currentFilter = CustomFilter()
+	//weak var currentFilter = CustomFilter()
 	
-	
-	enum FastttFilterType{
-		case FastttCameraFilterNone
-		case FastttCameraFilterRetro
-		case FastttCameraFilterHighContrast
-		case FastttCameraFilterBW
-		case FastttCameraFilterSepia
-		
-		init() {
-			self = .FastttCameraFilterNone
-		}
-	}
+
 	
 	lazy var context: CIContext = {
 		return CIContext(options: nil)
@@ -100,19 +104,6 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		
 		view.addGestureRecognizer(leftSwipe)
 		view.addGestureRecognizer(rightSwipe)
-		//self.currentFilter.filterType = FastttFilterType.CameraFilterRetro
-		//self.fastCamera = FastttFilterCamera(filterImage: self.currentFilter.filterImage)
-		//self.fastCamera = FastttFilterCamera(filterImage: UIImage(named: "SepiaFilter"))
-		
-		// _currentFilter = [ExampleFilter filterWithType:FastttCameraFilterRetro];
-		// _fastCamera = [FastttFilterCamera cameraWithFilterImage:self.currentFilter.filterImage];
-		
-		//self.currentFilter.filterWithType(CustomFilter.FastttFilterType.FastttCameraFilterRetro)
-		//self.fastCamera = FastttFilterCamera(filterImage: self.currentFilter.filterImage)
-		
-		//self.currentFilter = self.currentFilter.nextFilter()
-		//self.fastCamera.filterImage = self.currentFilter.filterImage
-		//var filterImageSet = UIImage(named: "SepiaFilter")
 		
 		
 		self.fastCamera.delegate = self
@@ -622,12 +613,6 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			//image stored in local variable to contain lifespan in method
 			
 			let imageShortLife:UIImage = capturedImage.scaledImage
-//			var imageShortLife_Corrected = UIImage()
-//			if imageShortLife.imageOrientation != UIImageOrientation.Up{
-//				imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage!, scale: 0.0, orientation: capturedImage.capturedImageOrientation)
-//			}else{
-//				imageShortLife_Corrected = imageShortLife
-//			}
 			
 			
 			print("\(capturedImage.capturedImageOrientation)", terminator: "")
@@ -759,15 +744,11 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		print("no internet")
 	}
 	func filterSwipeGesture(gesture: UIGestureRecognizer) {
-		//		if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-		//			//            self.currentFilter = self.currentFilter.nextFilter
-		//			//            self.fastCamera.filterImage = self.currentFilter.filterImage
-		//
-		//
-		//		}
+
 		
 	}
 	
+    
 	lazy var filterNames: [String] = {
 		return ["FastttCameraFilterRetro","FastttCameraFilterHighContrast","FastttCameraFilterSepia","FastttCameraFilterBW","FastttCameraFilterNone"]
 		}()
@@ -778,11 +759,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			print("Left \(filterCount)")
 			if(filterCount>0){
 				filterCount -= 1
-				// var filterName = filterNames[filterCount]
-				
-				//  self.currentFilter = self.currentFilter.nextFilter()
-				//  self.fastCamera.filterImage = self.currentFilter.filterImage
-			}else{
+							}else{
 				
 			}
 			
@@ -798,9 +775,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	}
 	func changeFilter() {
 		print("switch filter", terminator: "");
-		self.currentFilter = self.currentFilter?.nextFilter()
-		
-		self.fastCamera.filterImage = self.currentFilter?.filterImage
+
 	}
 	
     func probeAssets() {

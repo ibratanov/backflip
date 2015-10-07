@@ -38,8 +38,6 @@ class CustomFilter:  NSObject{
     }
     
     func nextFilter()-> CustomFilter {
-        //        return [CustomFilter filterWithType:[self nextFilterType]];
-
        return CustomFilter().filterWithType(nextFilterType())
     }
     
@@ -69,25 +67,7 @@ class CustomFilter:  NSObject{
     }
     
     func imageForFilterType(filterType: FastttFilterType) -> UIImage {
-//         var lookupImageName:NSString = ""
-//        
-//        switch filterType {
-//        case .FastttCameraFilterRetro:
-//            lookupImageName = "RetroFilter"
-//            break
-//        case .FastttCameraFilterHighContrast:
-//            lookupImageName = "HighContrastFilter"
-//            break
-//        case .FastttCameraFilterSepia:
-//            lookupImageName = "SepiaFilter"
-//            break
-//        case .FastttCameraFilterBW:
-//            lookupImageName = "BWFilter"
-//            break
-//        default:
-//            break
-//        }
-        //LookupImageName replace
+
         return UIImage(named: "HighContrastFilter")!
         
     }
