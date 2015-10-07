@@ -49,7 +49,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		//--------------------------------------
 		// Coredata
 		//--------------------------------------
-		BFDataFetcher.sharedFetcher.fetchData(true);
+		// BFDataFetcher.sharedFetcher.fetchData(true);
 		
 		
 		//--------------------------------------
@@ -76,13 +76,16 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             }
         }
 		
+		#if ((arch(i386) || arch(x86_64)) && os(iOS)) || SNAPSHOT
+			print("📲 Disabling push notifications for the simulator")
+		#else
+			let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
         
-        let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
-        
-        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-        application.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()
-		
+			let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+			application.registerUserNotificationSettings(settings)
+			application.registerForRemoteNotifications()
+		#endif
+			
 		PFInstallation.currentInstallation().saveInBackground()
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {

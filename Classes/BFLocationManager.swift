@@ -133,6 +133,15 @@ public class BFLocationManager : NSObject, CLLocationManagerDelegate
 				
 				locationBlock = completion
 				
+				
+				#if SNAPSHOT
+					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
+					dispatch_after(delayTime, dispatch_get_main_queue()) {
+						let location = CLLocation(latitude: 43.64607355662625, longitude: -79.3959379037681)
+						self.locationManager(self.locationManager, didUpdateLocations: [location])
+					}
+					#endif
+				
 				if #available(iOS 9.0, *) {
 					locationManager.requestLocation()
 				} else {

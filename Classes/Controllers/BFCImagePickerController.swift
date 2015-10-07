@@ -106,8 +106,21 @@ class BFCAssetsLibraryController: UICollectionViewController {
         
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"newImageScan", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
         self.view.backgroundColor = UIColor.whiteColor()
         
+        refershControlAct()
+        
+    }
+    
+    func newImageScan(){
+        self.collectionView?.reloadData();
+        refershControlAct()
+        
+    }
+    
+    func refershControlAct(){
         library.enumerateGroupsWithTypes(ALAssetsGroupAll, usingBlock: {(group: ALAssetsGroup! , stop: UnsafeMutablePointer<ObjCBool>) in
             if group != nil {
                 if group.numberOfAssets() != 0 {
@@ -122,12 +135,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
                     self.groups.insertObject(assetGroup, atIndex: 0)
                     
                     let assetGroup2 = self.groups[0] as! BFCAssetGroup
-                    
-                    //                    let imageGroupController = BFCImageGroupViewController()
-                    //                    imageGroupController.assetGroup = assetGroup2
                     self.assetGroup = assetGroup2
-                    //                    self.navigationController?.pushViewController(imageGroupController, animated: true)
-                    
                     assert(self.assetGroup != nil, "Error")
                     
                     self.title = assetGroup.groupName
@@ -157,23 +165,23 @@ class BFCAssetsLibraryController: UICollectionViewController {
             }, failureBlock: {(error: NSError!) in
                 self.noAccessView.frame = self.view.bounds
                 self.view.addSubview(self.noAccessView)
-				
-				
-				let alertController = UIAlertController(title: "Photo Access", message: "We require access to your photos in order to load your existing photos, Please enable Photos in settings", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
-					
-					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
-					dispatch_after(delayTime, dispatch_get_main_queue()) {
-						if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
-							UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
-						}
-					}
-					
-				}))
-				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-				
-				self.presentViewController(alertController, animated: true, completion: nil)
-				
+                
+                
+                let alertController = UIAlertController(title: "Photo Access", message: "We require access to your photos in order to load your existing photos, Please enable Photos in settings", preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+                    
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        if (UIApplication.sharedApplication().canOpenURL(NSURL(string: UIApplicationOpenSettingsURLString)!) == true) {
+                            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+                        }
+                    }
+                    
+                }))
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
         })
         
     }
