@@ -9,19 +9,19 @@ target.delay(3)
 captureLocalizedScreenshot("0-LandingScreen")
 
 
-UIATarget.onAlert = function onAlert(alert){
-	var title = alert.name();
-	UIALogger.logWarning("Alert with title ’" + title + "’ encountered!");
-	target.frontMostApp().alert().defaultButton().tap();
-	return false; // use default handler
-}
+// UIATarget.onAlert = function onAlert(alert){
+//     var title = alert.name();
+//     UIALogger.logWarning("Alert with title ’" + title + "’ encountered!");
+//     target.frontMostApp().alert().defaultButton().tap();
+//     return false; // use default handler
+// }
 
 
-target.delay(20)
+target.delay(2)
 
 login()
 
-target.delay(5)
+target.delay(2)
 
 captureLocalizedScreenshot("1-CurrentEvent")
 
@@ -29,8 +29,16 @@ target.delay(1)
 
 checkin()
 
-captureLocalizedScreenshot("1-CheckedIn")
+captureLocalizedScreenshot("2-CheckedIn")
 
+
+target.delay(0.5);
+
+target.frontMostApp().tabBar().buttons()["Event History"].tap();
+
+captureLocalizedScreenshot("3-EventHistory")
+
+target.delay(0.5);
 
 // target.setDeviceOrientation(UIA_DEVICE_ORIENTATION_PORTRAIT);
 // target.frontMostApp().mainWindow().pickers()[0].wheels()[0].scrollToVisible();
@@ -53,9 +61,28 @@ captureLocalizedScreenshot("1-CheckedIn")
 
 function login()
 {
-	target.tap({x:155.00, y:501.00});
-	target.tap({x:155.00, y:501.00});
-	target.tap({x:155.00, y:501.00});
+	target.delay(1);
+	
+	target.tap({x:55.50, y:53.00});
+	target.tap({x:55.50, y:53.00});
+	target.tap({x:55.50, y:53.00});
+	
+	
+	UIATarget.onAlert = function onAlert(alert)
+	{
+		var title = alert.name();
+		UIALogger.logDebug("Caught onAlert: " + title);
+		if (title.indexOf("to access your location while you use the app?") > -1) {
+			alert.buttons()["Allow"].tap();
+			target.delay(0.3);
+			return true;
+		}
+		return false;
+	};
+	
+	
+	
+	target.delay(0.5)
 }
 
 
