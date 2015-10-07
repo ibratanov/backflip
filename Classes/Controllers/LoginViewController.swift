@@ -187,7 +187,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 								user.username = id
 								user.password = "backflip-pass-"+id
 								user["photosLiked"] = []
-								user["nearbyEvents"] = []
 								user["phone"] = id
 								user["facebook_id"] = Int(id)
 								user["facebook_name"] = fullName
@@ -308,7 +307,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                 user.username = session.phoneNumber
                                                 user.password = session.phoneNumber
                                                 user["photosLiked"] = []
-                                                user["nearbyEvents"] = []
                                                 user["phone"] = session.phoneNumber
                                                 user["savedEvents"] = []
                                                 user["savedEventNames"] = []
