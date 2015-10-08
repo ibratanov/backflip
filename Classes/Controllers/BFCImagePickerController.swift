@@ -87,7 +87,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
             print("authorized")
         } else if (status == .Denied || status == .Restricted){
 			
-			let alertController = UIAlertController(title: "Photo Access", message: "We require access to your photos in order to load your existing photos, Please enable Photos in settings", preferredStyle: .Alert)
+			let alertController = UIAlertController(title: "Enable Photos", message: "So you can upload the awesome shots you've taken!\n🌇🗻🌌🗽", preferredStyle: .Alert)
 			alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
 				
 				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
@@ -167,7 +167,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
                 self.view.addSubview(self.noAccessView)
                 
                 
-                let alertController = UIAlertController(title: "Photo Access", message: "We require access to your photos in order to load your existing photos, Please enable Photos in settings", preferredStyle: .Alert)
+                let alertController = UIAlertController(title: "Enable Photos", message: "So you can upload the awesome shots you've taken!\n🌇🗻🌌🗽", preferredStyle: .Alert)
                 alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
                     
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))

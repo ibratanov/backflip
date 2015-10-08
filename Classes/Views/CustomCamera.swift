@@ -256,7 +256,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			print("authorized")
 		} else if(status == .Denied || status == .Restricted){
 			
-			let alertController = UIAlertController(title: "Camera Access", message: "We require access to your camera in order to capture photos, Please enable Camera in settings", preferredStyle: .Alert)
+			let alertController = UIAlertController(title: "Enable Camera", message: "Backflip needs camera access to capture your shots! 👊", preferredStyle: .Alert)
 			alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
 				
 				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))

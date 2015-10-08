@@ -529,7 +529,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		let authorizationStatus = CLLocationManager.authorizationStatus()
 		if (authorizationStatus == .Denied || authorizationStatus == .Restricted) {
-			let alertController = UIAlertController(title: "Location Services", message: "We require location services to find nearby events, Please enable Location Services in settings", preferredStyle: .Alert)
+			let alertController = UIAlertController(title: "Enable Location", message: "Backflip needs location services to find nearby events 📍🌎", preferredStyle: .Alert)
 			alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
 				
 				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
