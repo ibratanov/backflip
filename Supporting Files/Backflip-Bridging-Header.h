@@ -5,7 +5,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Branch/Branch.h>
+#if TARGET_OS_IOS
+	#import <Branch/Branch.h>
+#endif
 #import <CoreData/CoreData.h>
 
 
@@ -21,27 +23,31 @@
 	#import "BFDataWrapper.h"
 
 	// Facebook
-	#import <FBSDKCoreKit/FBSDKCoreKit.h>
-	#import <FBSDKLoginKit/FBSDKLoginKit.h>
+	#if TARGET_OS_IOS
+		#import <FBSDKCoreKit/FBSDKCoreKit.h>
+		#import <FBSDKLoginKit/FBSDKLoginKit.h>
+	#endif
 
-	// Analytics yo
-	#import <Mixpanel/Mixpanel.h>
-	#import <Google/Analytics.h>
-	#import "NewRelicAgent/NewRelic.h"
+	#if TARGET_OS_IOS
+		// Analytics yo
+		#import <Mixpanel/Mixpanel.h>
+		#import <Google/Analytics.h>
+		#import "NewRelicAgent/NewRelic.h"
 
-	#import "MWPhotoBrowser.h"
-	#import "MWPhotoBrowserPrivate.h"
+		#import "MWPhotoBrowser.h"
+		#import "MWPhotoBrowserPrivate.h"
 
-	// Camera
-    #import "FastttFilterCamera.h"
-	#import "FastttCamera.h"
-    #import "UIImage+FastttCamera.h"
-    #import "AVCaptureDevice+FastttCamera.h"
-    #import "FastttFocus.h"
-    #import "FastttFilter.h"
-    #import "FastttFilterCamera.h"
-    #import "FastttCapturedImage+Process.h"
-    #import "FastttLookupFilter.h"
-    #import "FastttEmptyFilter.h"
+		// Camera
+		#import "FastttFilterCamera.h"
+		#import "FastttCamera.h"
+		#import "UIImage+FastttCamera.h"
+		#import "AVCaptureDevice+FastttCamera.h"
+		#import "FastttFocus.h"
+		#import "FastttFilter.h"
+		#import "FastttFilterCamera.h"
+		#import "FastttCapturedImage+Process.h"
+		#import "FastttLookupFilter.h"
+		#import "FastttEmptyFilter.h"
+	#endif
 
 #endif

@@ -10,10 +10,22 @@
 @import CoreData;
 @import MagicalRecord;
 
-#if DEBUG
-	#import "Frontflip-Swift.h"
+#if !TARGET_OS_IOS && TARGET_OS_TV
+
+	#if DEBUG
+		#import "Backflip_TV-Swift.h"
+	#else
+		#import "Backflip_TV-Swift.h"
+	#endif
+
 #else
-	#import "Backflip-Swift.h"
+
+	#if DEBUG
+		#import "Frontflip-Swift.h"
+	#else
+		#import "Backflip-Swift.h"
+	#endif
+
 #endif
 
 

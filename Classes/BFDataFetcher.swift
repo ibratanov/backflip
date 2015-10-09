@@ -20,7 +20,9 @@ class BFDataFetcher : NSObject
 	func fetchData(activityInidactor: Bool)
 	{
 		if (activityInidactor) {
-			ZAActivityBar.showWithStatus("Fetching Data", forAction: "data_loading")
+			#if os(iOS)
+				ZAActivityBar.showWithStatus("Fetching Data", forAction: "data_loading")
+			#endif
 		}
 		
 		
@@ -28,7 +30,9 @@ class BFDataFetcher : NSObject
 		PFCloud.callFunctionInBackground("query_databaseUpdate", withParameters: self.cloudCodeParameters() as? [NSObject : AnyObject], block: { (object, error) -> Void in
 			
 			if (activityInidactor) {
-				ZAActivityBar.showSuccessWithStatus("Data Fetched", forAction: "data_loading")
+				#if os(iOS)
+					ZAActivityBar.showSuccessWithStatus("Data Fetched", forAction: "data_loading")
+				#endif
 			}
 			
 			
@@ -37,12 +41,16 @@ class BFDataFetcher : NSObject
 				let objects: AnyObject? = object?.objectForKey("Event")
 				if (objects?.count > 0) {
 					if (activityInidactor) {
-						ZAActivityBar.showWithStatus("Processing Events", forAction: "process_events")
+						#if os(iOS)
+							ZAActivityBar.showWithStatus("Processing Events", forAction: "process_events")
+						#endif
 					}
 				
 					BFDataProcessor.sharedProcessor.processEvents(objects as? [PFObject], completion: { () -> Void in
 						if (activityInidactor) {
-							ZAActivityBar.showSuccessWithStatus("Events Processed", forAction: "process_events")
+							#if os(iOS)
+								ZAActivityBar.showSuccessWithStatus("Events Processed", forAction: "process_events")
+							#endif
 						}
 						
 						NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: nEventObjectsUpdated, object: nil))
@@ -57,12 +65,16 @@ class BFDataFetcher : NSObject
 				let objects: AnyObject? = object?.objectForKey("EventAttendance")
 				if (objects?.count > 0) {
 					if (activityInidactor) {
-						ZAActivityBar.showWithStatus("Processing Attendees", forAction: "process_attendees")
+						#if os(iOS)
+							ZAActivityBar.showWithStatus("Processing Attendees", forAction: "process_attendees")
+						#endif
 					}
 					
 					BFDataProcessor.sharedProcessor.processAttendees(objects as? [PFObject], completion: { () -> Void in
 						if (activityInidactor) {
-							ZAActivityBar.showSuccessWithStatus("Attendees Processed", forAction: "process_attendees")
+							#if os(iOS)
+								ZAActivityBar.showSuccessWithStatus("Attendees Processed", forAction: "process_attendees")
+							#endif
 						}
 					})
 				}
@@ -75,12 +87,16 @@ class BFDataFetcher : NSObject
 				let objects: AnyObject? = object?.objectForKey("Photo")
 				if (objects?.count > 0) {
 					if (activityInidactor) {
-						ZAActivityBar.showWithStatus("Processing Photos", forAction: "process_photos")
+						#if os(iOS)
+							ZAActivityBar.showWithStatus("Processing Photos", forAction: "process_photos")
+						#endif
 					}
 					
 					BFDataProcessor.sharedProcessor.processPhotos(objects as? [PFObject], completion: { () -> Void in
 						if (activityInidactor) {
-							ZAActivityBar.showSuccessWithStatus("Photos Processed", forAction: "process_photos")
+							#if os(iOS)
+								ZAActivityBar.showSuccessWithStatus("Photos Processed", forAction: "process_photos")
+							#endif
 						}
 						
 						NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: nPhotoObjectsUpdated, object: nil))
