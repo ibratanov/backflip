@@ -317,7 +317,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		if (indexPath.row == 0) {
 
-			BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
+			BFTabBarControllerDelegate.sharedDelegate.displayImagePickerSheet(self.event!)
 			
 		} else {
 		

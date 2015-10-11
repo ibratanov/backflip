@@ -159,7 +159,7 @@
 		else
 			return ;
 	}
-	NSLog(@"📝 Processing %u events..", events.count);
+	NSLog(@"📝 Processing %lu events..", events.count);
 	
 
 	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
