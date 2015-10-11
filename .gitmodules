@@ -10,29 +10,13 @@
 	path = Vendor/MagicalRecord
 	url = https://github.com/magicalpanda/MagicalRecord.git
 	ignore = dirty
-[submodule "Vendor/AMScrollingNavbar"]
-	path = Vendor/AMScrollingNavbar
-	url = https://github.com/andreamazz/AMScrollingNavbar.git
-	ignore = dirty
 [submodule "Vendor/PKHUD"]
 	path = Vendor/PKHUD
 	url = https://github.com/pkluz/PKHUD.git
 	ignore = dirty
-[submodule "Vendor/FastttCamera"]
-	path = Vendor/FastttCamera
-	url = git@github.com:JackoPlane/FastttCamera.git
-	ignore = dirty
-[submodule "Vendor/GPUImage"]
-	path = Vendor/GPUImage
-	url = https://github.com/BradLarson/GPUImage.git
-	ignore = dirty
 [submodule "Vendor/MapleBacon"]
 	path = Vendor/MapleBacon
 	url = git@github.com:zalando/MapleBacon.git
-	ignore = dirty
-[submodule "Vendor/AFNetwork"]
-	path = Vendor/AFNetwork
-	url = git@github.com:fullstackio/FlappySwift.git
 	ignore = dirty
 [submodule "Vendor/DOFavoriteButton"]
 	path = Vendor/DOFavoriteButton
