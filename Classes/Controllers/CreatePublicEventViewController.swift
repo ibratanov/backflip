@@ -37,12 +37,15 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
 		#if FEATURE_GOOGLE_ANALYTICS
-			let tracker = GAI.sharedInstance().defaultTracker
-			tracker.set(kGAIScreenName, value: "Create Public Event")
-			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
-
-			let builder = GAIDictionaryBuilder.createScreenView()
-			tracker.send(builder.build() as [NSObject : AnyObject])
+            
+            let tracker = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value: "Create Public Event")
+            //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+            tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
+            
+            
+            let builder = GAIDictionaryBuilder.createScreenView()
+            tracker.send(builder.build() as [NSObject : AnyObject])
 		#endif
     }
     var address2:String = ""
@@ -239,9 +242,10 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     event["startTime"] = NSDate()
                                     event["isLive"] = true
 									event["enabled"] = true
+									event["owner"] = PFUser.currentUser()!
                                     let eventACL = PFACL(user: PFUser.currentUser()!)
-                                    eventACL.setPublicWriteAccess(true)
-                                    eventACL.setPublicReadAccess(true)
+									eventACL.setPublicReadAccess(true)
+									eventACL.setPublicWriteAccess(true)
                                     event.ACL = eventACL
                                     
                                     // Store the relation
@@ -274,15 +278,16 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
 									attendance.saveInBackgroundWithBlock { (success, error) -> Void in
 
 										let attendees : [PFObject] = [attendance]
-										BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
-
-											BFDataProcessor.sharedProcessor.processEvents([event], completion: { () -> Void in
+										BFDataProcessor.sharedProcessor.processEvents([event], completion: { () -> Void in
+										
+											BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
 
 												// Store event details in user defaults
 												NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
 												NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
 												NSUserDefaults.standardUserDefaults().setValue(eventName, forKey: "checkin_event_name")
-
+												NSUserDefaults.standardUserDefaults().synchronize()
+												
 												// When successful, segue to events page
 												dispatch_async(dispatch_get_main_queue()) {
 
@@ -391,10 +396,12 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
                                     event["venue"] = address
                                     event["startTime"] = NSDate()
                                     event["isLive"] = true
+									event["enabled"] = true
+									event["owner"] = PFUser.currentUser()!
                                     
                                     // Set access rules for events
                                     let eventACL = PFACL(user: PFUser.currentUser()!)
-                                    eventACL.setPublicReadAccess(true)
+                                    // eventACL.setPublicReadAccess(true)
                                     eventACL.setPublicWriteAccess(true)
                                     event.ACL = eventACL
                                     

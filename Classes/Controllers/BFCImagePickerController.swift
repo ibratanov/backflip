@@ -270,7 +270,7 @@ class BFCAssetsLibraryController: UICollectionViewController {
 	
 	override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
 	{
-		if (self.imagePickerController!.selectedAssets.count >= 10) {
+		if (self.imagePickerController!.selectedAssets.count >= 20) {
 			return false
 		}
 		
@@ -437,11 +437,13 @@ class BFCImagePickerController: UINavigationController {
 		#if FEATURE_GOOGLE_ANALYTICS
             let tracker = GAI.sharedInstance().defaultTracker
             tracker.set(kGAIScreenName, value: "Multi Image Picker")
-			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
-
-        
+            //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+            tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
+            
+            
             let builder = GAIDictionaryBuilder.createScreenView()
             tracker.send(builder.build() as [NSObject : AnyObject])
+
 		#endif
 	}
 	
@@ -486,7 +488,7 @@ class BFCImagePickerController: UINavigationController {
     func selectedImage(notification: NSNotification) {
         //set affordance for image selected
         if let asset = notification.object as? BFCAsset {
-			if (selectedAssets.count < 10) {
+			if (selectedAssets.count < 20) {
 				selectedAssets.append(asset)
 				self.topViewController!.navigationItem.rightBarButtonItem!.title = rightButtonTitle + " (\(selectedAssets.count))"
 				self.doneButton.sizeToFit()

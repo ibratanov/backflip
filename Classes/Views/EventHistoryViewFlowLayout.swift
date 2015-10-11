@@ -47,9 +47,16 @@ class EventHistoryViewFlowLayout : UICollectionViewFlowLayout
 			if (layoutAttributes.representedElementKind == UICollectionElementKindSectionHeader) {
 				let section = layoutAttributes.indexPath.section
 				let itemsInSection = self.collectionView?.numberOfItemsInSection(section)
+				if (itemsInSection == 0) {
+					continue
+				}
 				
 				let firstCellIndexPath = NSIndexPath(forRow: 0, inSection: section)
 				let lastCellIndexPath = NSIndexPath(forRow: max(0, (itemsInSection! - 1)), inSection: section)
+				
+				if (firstCellIndexPath.row < 0 || lastCellIndexPath.row < 0) {
+					continue
+				}
 				
 				let firstCellAttributes = self.layoutAttributesForItemAtIndexPath(firstCellIndexPath)
 				let lastCellAttributes = self.layoutAttributesForItemAtIndexPath(lastCellIndexPath)

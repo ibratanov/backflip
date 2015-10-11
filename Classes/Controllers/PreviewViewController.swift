@@ -174,12 +174,14 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillAppear(animated: Bool)
 	{
 		#if FEATURE_GOOGLE_ANALYTICS
-			let tracker = GAI.sharedInstance().defaultTracker
-			tracker.set(kGAIScreenName, value: "Preview Screen")
-			tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+            let tracker = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value: "Preview Screen")
+            //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+            tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
+            
+            let builder = GAIDictionaryBuilder.createScreenView()
+            tracker.send(builder.build() as [NSObject : AnyObject])
 
-			let builder = GAIDictionaryBuilder.createScreenView()
-			tracker.send(builder.build() as [NSObject : AnyObject])
 		#endif
     }
     
@@ -231,6 +233,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 			photo["blocked"] = false
 			photo["reporter"] = ""
 			photo["reportMessage"] = ""
+			photo["enabled"] = true
 			photo["event"] = PFObject.init(withoutDataWithClassName: "Event", objectId: self.event!.objectId!);
 			
 			let photoACL = PFACL(user: PFUser.currentUser()!)
@@ -383,7 +386,7 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
 			var outputImage =  filter.outputImage
 			var t: CGAffineTransform!
 			
-			let orientation = UIDevice.currentDevice().orientation
+			_ = UIDevice.currentDevice().orientation
 			t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
 			
 			//t = CGAffineTransformMakeRotation(0)

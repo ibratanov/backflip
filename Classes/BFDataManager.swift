@@ -13,19 +13,17 @@ class BFDataMananger : NSObject
 {
     
     static let sharedManager = BFDataMananger()
-
     
     func setupDatabase()
     {
 		
-        #if DEBUG
-            print("Not seeding database because we're running in DEBUG mode")
-		#else
+        #if FEATURE_COREDATA_SEED
 			self.seedDatabase()
+		#else
+			print("Not seeding database because we're running in DEBUG mode")
         #endif
 		
 		MagicalRecord.setupCoreDataStackWithAutoMigratingSqliteStoreNamed(kAppDatabaseName)
-		
     }
     
     

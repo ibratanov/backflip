@@ -34,6 +34,22 @@ class EventHistoryViewController : UICollectionViewController
 		
 		fetchData()
 	}
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        #if FEATURE_GOOGLE_ANALYTICS
+            let tracker = GAI.sharedInstance().defaultTracker
+            tracker.set(kGAIScreenName, value: "Event History View")
+            //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
+            tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
+            
+            
+            let builder = GAIDictionaryBuilder.createScreenView()
+            tracker.send(builder.build() as [NSObject : AnyObject])
+        #endif
+    }
 	
 	override func viewDidAppear(animated: Bool)
 	{

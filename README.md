@@ -1,5 +1,9 @@
 # Backflip for iOS
 
+[![Build status](https://badge.buildkite.com/ac01128a2b2b4ab64713fd7ba43d77300728a3293ad3f3c018.svg)](https://buildkite.com/yoshimi-robotics/backflip-for-ios)
+![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
+
+
 Backflip is the best way to share photos with the crowd around you. Check into a nearby event, take and upload photos, and view the best content from everyone there.
 
 
@@ -14,7 +18,7 @@ Backflip is the best way to share photos with the crowd around you. Check into a
 ### Getting Started
 
 - Clone repo (`git clone git@github.com:ibratanov/backflip.git`)
-- Setup submodules (`git submodule update --init --recursive Vendor/`)
+- Setup submodules (`git submodule update --init --recursive`)
 - Open Project (`open *.xcodeproj`)
 
 
@@ -39,4 +43,4 @@ We ship every Friday, whatever is on `develop` and has been tested and marked st
 
 ## Feature Flags
 
-We take advantage of [feature flags](http://code.flickr.net/2009/12/02/flipping-out/), using them is super simple and quick to implement. If you look in [Supporting files/PrefixHEader.pch](https://github.com/ibratanov/backflip/blob/master/Supporting%20Files/PrefixHeader.pch) you can see how we define a "flag". We use feature flags as they make disabling / removing feature or sections quick and (mostly) pain free.
+We take advantage of [feature flags](http://code.flickr.net/2009/12/02/flipping-out/), using them is super simple and quick to implement. If you look in [Supporting files/PrefixHeader.pch](https://github.com/ibratanov/backflip/blob/master/Supporting%20Files/PrefixHeader.pch) you can see how we define a "flag". We use feature flags as they make disabling / removing feature or sections quick and (mostly) pain free.

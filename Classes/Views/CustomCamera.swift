@@ -278,16 +278,13 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 		switch (self.fastCamera.cameraDevice) {
 		case FastttCameraDevice.Front:
 			cameraDevice = FastttCameraDevice.Rear
+			self.flashButton.hidden = false
 			break
 			
 		case FastttCameraDevice.Rear:
 			cameraDevice = FastttCameraDevice.Front
 			self.flashButton.hidden = true
 			break
-			
-		default:
-			cameraDevice = FastttCameraDevice.Front
-			self.flashButton.hidden = true
 		}
 		
 		if (FastttFilterCamera.isCameraDeviceAvailable(cameraDevice)) {
@@ -307,7 +304,7 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 	//********call back functions for ^^^^**********
 	func imagePickerControllerDidSelectedAssets(assets: [BFCAsset]!) {
 		//Send assets to parse
-		for (index, asset) in assets.enumerate() {
+		for (_, asset) in assets.enumerate() {
 			let imageView = UIImageView(image: asset.fullScreenImage)
 			imageView.contentMode = UIViewContentMode.ScaleAspectFit
 			uploadImages(imageView.image!)
@@ -423,8 +420,8 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 				
 				
 				let photoACL = PFACL(user: PFUser.currentUser()!)
-				photoACL.setPublicWriteAccess(true)
 				photoACL.setPublicReadAccess(true)
+				photoACL.setPublicWriteAccess(true)
 				photo.ACL = photoACL
 				
 				
@@ -451,17 +448,26 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 								let relation = eventObject.relationForKey("photos")
 								
 								//photo.save()
+								
 								photo.saveInBackgroundWithBlock({ (valid:Bool, error:NSError?) -> Void in
 									if valid {
 										relation.addObject(photo)
+										photoObject.addUniqueObject(imageFile, forKey:"photosUploaded")
+										photoObject.addUniqueObject(imageFile, forKey: "photosLiked")
+										
 										photoObject.addUniqueObject(photo.objectId!, forKey: "photosUploadedID")
 										photoObject.addUniqueObject(photo.objectId!, forKey: "photosLikedID")
 									}
 									//issue
-									eventObject.saveInBackground()
+									eventObject.saveInBackgroundWithBlock({ (success, error) -> Void in
+										print("🚨🚨🚨 Parse error \(error)")
+										
+									})
 									
 									//issue
 									photoObject.saveInBackgroundWithBlock({ (completed, error) -> Void in
+										
+										print("🚨 Parse error \(error)")
 										
 										BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
 											print("Photo stored in coredata..")
@@ -616,13 +622,12 @@ class CustomCamera : UIViewController ,UIImagePickerControllerDelegate,UINavigat
 			//image stored in local variable to contain lifespan in method
 			
 			let imageShortLife:UIImage = capturedImage.scaledImage
-			var imageShortLife_Corrected = UIImage()
-			if imageShortLife.imageOrientation != UIImageOrientation.Up{
-				
-				imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage!, scale: 0.0, orientation: capturedImage.capturedImageOrientation)
-			}else{
-				imageShortLife_Corrected = imageShortLife
-			}
+//			var imageShortLife_Corrected = UIImage()
+//			if imageShortLife.imageOrientation != UIImageOrientation.Up{
+//				imageShortLife_Corrected = UIImage(CGImage: imageShortLife.CGImage!, scale: 0.0, orientation: capturedImage.capturedImageOrientation)
+//			}else{
+//				imageShortLife_Corrected = imageShortLife
+//			}
 			
 			
 			print("\(capturedImage.capturedImageOrientation)", terminator: "")

@@ -13,12 +13,11 @@ import Foundation
 class EventHistoryHeaderView : UICollectionReusableView
 {
 	
-	public var eventTitle : UILabel?
-	public var eventLocation : UILabel?
-	public var eventDate : UILabel?
+	var eventTitle : UILabel?
+	var eventLocation : UILabel?
+	var eventDate : UILabel?
 	
 	
-	internal var vibrancyEffectView : UIVisualEffectView?
 	internal var blurEffectView : UIVisualEffectView?
 	
 	
@@ -39,16 +38,10 @@ class EventHistoryHeaderView : UICollectionReusableView
 	
 	func setup()
 	{
-		let vibrancyEffect = UIVibrancyEffect(forBlurEffect: UIBlurEffect(style: .Dark))
-		vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
-		vibrancyEffectView?.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)
-		vibrancyEffectView?.autoresizingMask = .FlexibleWidth
-		
 		let blurEffect = UIBlurEffect(style: .Light)
 		blurEffectView = UIVisualEffectView(effect: blurEffect)
 		blurEffectView?.frame = self.bounds
 		self.addSubview(blurEffectView!)
-		
 
 		self.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
 		
@@ -68,8 +61,6 @@ class EventHistoryHeaderView : UICollectionReusableView
 		self.eventDate?.font = UIFont.systemFontOfSize(11.0)
 		self.eventDate?.textAlignment = .Right
 		blurEffectView?.contentView.addSubview(self.eventDate!)
-		
-		// self.addSubview(vibrancyEffectView!)
 	}
 	
 	
@@ -78,7 +69,6 @@ class EventHistoryHeaderView : UICollectionReusableView
 	{
 		super.layoutSubviews()
 		
-		// vibrancyEffectView?.frame = self.bounds
 		blurEffectView?.frame = self.bounds
 		
 		// Event Title
