@@ -2,6 +2,8 @@
 
 [![Build status](https://badge.buildkite.com/ac01128a2b2b4ab64713fd7ba43d77300728a3293ad3f3c018.svg)](https://buildkite.com/yoshimi-robotics/backflip-for-ios)
 ![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
+[![volkswagen status](https://auchenberg.github.io/volkswagen/volkswargen_ci.svg?v=1)](https://github.com/auchenberg/volkswagen)
+
 
 
 Backflip is the best way to share photos with the crowd around you. Check into a nearby event, take and upload photos, and view the best content from everyone there.
