@@ -703,6 +703,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		BFDataFetcher.sharedFetcher.fetchDataInBackground { (completed) -> Void in
 			self.updateData();
+
+			let event = Event.MR_findFirstByAttribute("objectId", withValue: self.event!.objectId!)
+			(self.navigationItem.titleView as? UILabel)?.text = event.name!
+			(self.navigationItem.titleView as? UILabel)?.sizeToFit()
 		}
 	}
 	
