@@ -90,11 +90,8 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     }
     
     func displayNoInternetAlert() {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
-            self.presentViewController(alert, animated: true, completion: nil)
-            print("no internet")
-        })
+        Reachability.presentUnavailableAlert()
+		print("no internet")
     }
     
     func getUserAddress() {
@@ -192,7 +189,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
             displayAlert("Couldn't Create Event", error: error)
             
         } else {
-            if NetworkAvailable.networkConnection() == true {
+            if Reachability.validNetworkConnection() == true {
 				
 				// Display a HUD letting the user know we're checking them in
 				PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Creating Event..")
@@ -520,7 +517,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
         //Add delegate, this prevents users from typing text over 25 characters
         eventName.delegate = self
         
-        if NetworkAvailable.networkConnection() == true {
+        if Reachability.validNetworkConnection() == true {
             
             //getUserAddress()
             
@@ -541,7 +538,7 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        if NetworkAvailable.networkConnection() == true {
+        if Reachability.validNetworkConnection() == true {
             getUserAddress()
         } else {
             displayNoInternetAlert()

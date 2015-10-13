@@ -12,7 +12,9 @@ public class AlbumViewCell: UICollectionViewCell
 {
     
     public var imageView: UIImageView?
-	
+
+	public var imageUrl: NSURL?
+
 
 	override public init(frame: CGRect)
 	{
@@ -37,7 +39,8 @@ public class AlbumViewCell: UICollectionViewCell
 	override public func prepareForReuse()
 	{
 		super.prepareForReuse()
-		
+
+		self.imageUrl = nil
 		self.imageView?.image = nil
 		self.imageView?.tintColor = nil
 	}

@@ -32,7 +32,7 @@
 		040EB5C51BC8162F00452620 /* GeoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FBC1B8B982600E2ACB5 /* GeoPoint.swift */; };
 		040EB5C61BC8162F00452620 /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */; };
 		040EB5C81BC8164500452620 /* Defines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420283A1BA1E0CB0059F096 /* Defines.swift */; };
-		040EB5C91BC8164A00452620 /* NetworkAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */; };
+		040EB5C91BC8164A00452620 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50099C0B1B389E4B005A9867 /* Reachability.swift */; };
 		040EB5CA1BC8171D00452620 /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; };
 		040EB5CD1BC8172C00452620 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7111BA9ADB800AC6AA3 /* Bolts.framework */; };
 		040EB5CE1BC8172C00452620 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7121BA9ADB800AC6AA3 /* Parse.framework */; };
@@ -219,7 +219,7 @@
 		04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
-		50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */; };
+		50099C0C1B389E4B005A9867 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50099C0B1B389E4B005A9867 /* Reachability.swift */; };
 		502199AE1B33817100A64387 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199AD1B33817100A64387 /* Accounts.framework */; };
 		502199C21B33833E00A64387 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C11B33833E00A64387 /* AVFoundation.framework */; };
 		502199C61B33838A00A64387 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502199C51B33838A00A64387 /* CoreMotion.framework */; };
@@ -620,7 +620,7 @@
 		04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
 		04FD59E11B901D63005A1FA4 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAvailable.swift; sourceTree = "<group>"; };
+		50099C0B1B389E4B005A9867 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		502199AD1B33817100A64387 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		502199C11B33833E00A64387 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		502199C51B33838A00A64387 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -1286,7 +1286,7 @@
 				04ED9AFF1BC2D8B4008493E3 /* Location Services */,
 				0420283A1BA1E0CB0059F096 /* Defines.swift */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				50099C0B1B389E4B005A9867 /* NetworkAvailable.swift */,
+				50099C0B1B389E4B005A9867 /* Reachability.swift */,
 				0439D3D01B8B87D3001850DD /* BFTabBarControllerDelegate.swift */,
 			);
 			path = Classes;
@@ -1663,7 +1663,7 @@
 				040EB5A21BC815EA00452620 /* Backflip_TV.xcdatamodeld in Sources */,
 				040EB5BD1BC8161100452620 /* Event+CoreDataProperties.swift in Sources */,
 				040EB5C31BC8162F00452620 /* Event.swift in Sources */,
-				040EB5C91BC8164A00452620 /* NetworkAvailable.swift in Sources */,
+				040EB5C91BC8164A00452620 /* Reachability.swift in Sources */,
 				040EB5C61BC8162F00452620 /* ParseObject.swift in Sources */,
 				040EB5BC1BC8161100452620 /* Photo+CoreDataProperties.swift in Sources */,
 				040EB5C41BC8162F00452620 /* Photo.swift in Sources */,
@@ -1681,7 +1681,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50099C0C1B389E4B005A9867 /* NetworkAvailable.swift in Sources */,
+				50099C0C1B389E4B005A9867 /* Reachability.swift in Sources */,
 				0439D3D11B8B87D3001850DD /* BFTabBarControllerDelegate.swift in Sources */,
 				04C61FC01B8B982600E2ACB5 /* Event.swift in Sources */,
 				046D98E41BCAABA8004B3DCD /* BFCameraOverlay.swift in Sources */,
@@ -2006,10 +2006,6 @@
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
-					"$(PROJECT_DIR)/Vendor/MapleBacon/Library/MapleBacon/build/**",
-					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
-					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/build\"/**",
-					"${TARGET_BUILD_DIR}/MapleBacon.framework",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2030,8 +2026,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
 					"$(PROJECT_DIR)/Vendor/Google/**",
-					"$(PROJECT_DIR)/Vendor/MapleBacon/**/**",
 				);
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"icucore\"",
@@ -2092,10 +2088,6 @@
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
-					"$(PROJECT_DIR)/Vendor/MapleBacon/Library/MapleBacon/build/**",
-					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
-					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon/build\"/**",
-					"${TARGET_BUILD_DIR}/MapleBacon.framework",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2115,8 +2107,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
 					"$(PROJECT_DIR)/Vendor/Google/**",
-					"$(PROJECT_DIR)/Vendor/MapleBacon/**/**",
 				);
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"icucore\"",

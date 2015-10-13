@@ -300,9 +300,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		} else if (self.collectionContent.count >= indexPath.row) {
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
-
-			cell.prepareForReuse()
 			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+
+			if (cell.imageUrl != imageUrl) {
+				cell.imageView?.image = nil
+			}
+
+			cell.imageUrl = imageUrl
 			cell.imageView!.setImageWithURL(imageUrl, placeholder: nil, crossFadePlaceholder: true, cacheScaled: true, completion: nil)
 		
 		}

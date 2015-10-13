@@ -398,10 +398,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool
 	{
-		if (identifier == "create-event" && NetworkAvailable.networkConnection() == false) {
-			
-			let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to create an event.")
-			self.presentViewController(alert, animated: true, completion: nil)
+		if (identifier == "create-event" && Reachability.validNetworkConnection() == false) {
+
+			Reachability.presentUnavailableAlert()
 			
 			return false
 		}

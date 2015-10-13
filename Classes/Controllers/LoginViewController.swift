@@ -55,8 +55,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func displayNoInternetAlert() {
-        let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
-        self.presentViewController(alert, animated: true, completion: nil)
+        Reachability.presentUnavailableAlert()
         print("no internet")
     }
     
@@ -261,7 +260,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     func didTapButton() {
 		
         // Check for availability of network connection using Network available class
-        if NetworkAvailable.networkConnection() == true {
+        if Reachability.validNetworkConnection() == true {
 			
             // Appearance settings for Digits pop up menu
             let digitsAppearance = DGTAppearance()
@@ -447,7 +446,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
     override func viewDidAppear(animated: Bool) {
         self.hidesBottomBarWhenPushed = true
-        if NetworkAvailable.networkConnection() == true {
+        if Reachability.validNetworkConnection() == true {
         // Check if the user is already logged in
             if PFUser.currentUser() != nil {
                 let query = PFUser.query()

@@ -35,7 +35,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupCoreData()
 		setupApperance()
 		
-		
+
 		//--------------------------------------
 		// Watchdog
 		//--------------------------------------
@@ -229,7 +229,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		defaultACL.setPublicReadAccess(true)
 		PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 		
-		if (NetworkAvailable.networkConnection()) {
+		if (Reachability.validNetworkConnection()) {
 			PFConfig.getConfigInBackgroundWithBlock { (config, error) -> Void in
 				self.setupApperance()
 			}
