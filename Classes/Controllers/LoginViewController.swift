@@ -283,7 +283,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         let query = PFUser.query()
                         query!.whereKey("phone", equalTo: session.phoneNumber)
                         query!.limit = 1
-						let phoneResult = try! query!.findObjects()
+						
+						let phoneResult = try? query!.findObjects()
                         
                         
                         // Use the UUID to check if user has logged in before via Facebook method
@@ -291,14 +292,16 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().uniqueDeviceIdentifier())
                         deviceQuery?.limit = 1
                         
-                        
+						
+						print("phoneResult = \(phoneResult)")
+						
                         // Result will have content if user has signed up already, will be nil if there is no internet
                         if (true == false) {
                             // self.displayNoInternetAlert()
                             
                         } else {
                             
-                            if (phoneResult.count == 0) {
+                            if (phoneResult?.count == 0) {
 								deviceQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
 
                                     if error == nil{
@@ -367,13 +370,14 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                 // User has logged in before with either facebook or digits
                                 deviceQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
                                     //User has phone number, logged in wih Digits
-                                    let user = results?.first as! PFUser
+                                    let user = results?.first as? PFUser
+	
                                     
                                     // Check for blocked. User must have account to be blocked. If not blocked, log in with username
-                                    if (user["blocked"] as! Bool == false) {
-                                        
+                                    if (user != nil && (user!["blocked"] as! Bool) == false) {
+										
                                         // Logged in with digits before, account may or may not be linked to FB. Login normally
-                                        if user.username! == session.phoneNumber {
+                                        if user!.username! == session.phoneNumber {
                                             // If user proceeds with phone authentication, login with phonenumber to parse database
                                             PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
                                                 
@@ -385,7 +389,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                     if uuid == nil {
                                                         
                                                         user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
-                                                        user?.saveInBackground()
+                                                        user?.saveInBackgroundWithBlock(nil)
                                                         
                                                     }
                                                     
@@ -396,16 +400,17 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                     
                                                 }
                                             }
-										} else if (user.username!.characters.contains("+") == false) {
+										} else if (user != nil && user!.username!.characters.contains("+") == false) {
 										
-											PFUser.logInWithUsernameInBackground(user.username!, password: "backflip-pass-"+user.username!, block: { (user, error) -> Void in
+											PFUser.logInWithUsernameInBackground(user!.username!, password: "backflip-pass-"+user!.username!, block: { (user, error) -> Void in
 												
 												user!.username = session.phoneNumber
 												user!.password = session.phoneNumber
 												user!["phone"] = session.phoneNumber
 												user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+												user!.saveInBackgroundWithBlock(nil)
 												
-												user!.saveInBackground()
+												print("User = \(user), ")
 												
 												//self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
 												self.dismissViewControllerAnimated(true, completion: nil)
@@ -423,7 +428,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                 user!["phone"] = session.phoneNumber
 												user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 												
-                                                user!.saveInBackground()
+                                                user!.saveInBackgroundWithBlock(nil)
                                                 
                                                 //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
                                                 self.dismissViewControllerAnimated(true, completion: nil)
