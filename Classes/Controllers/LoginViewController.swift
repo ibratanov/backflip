@@ -134,8 +134,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 	{
 	
 		let login = FBSDKLoginManager()
-		let viewController = UIApplication.sharedApplication().keyWindow?.rootViewController
-		login.logInWithReadPermissions(["public_profile", "email"], fromViewController: viewController) { (result, error) -> Void in
+		login.logInWithReadPermissions(["public_profile", "email"], fromViewController: self) { (result, error) -> Void in
 			if (error != nil) {
 				print("Facebook login error")
 				print(error)
@@ -171,7 +170,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 				
 				
 				let deviceQuery = PFUser.query()
-				deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor!.UUIDString)
+				deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().uniqueDeviceIdentifier())
 				deviceQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
 					
 					if (error == nil && results?.count == 0) {
@@ -192,7 +191,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 								user["email"] = emailAddress
 								user["savedEvents"] = []
 								user["savedEventNames"] = []
-								user["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+								user["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 								user["blocked"] = false
 								user["firstUse"] = true
 								user.signUpInBackgroundWithBlock({ (success, error) -> Void in
@@ -234,7 +233,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 								user!["facebook_id"] = Int(id)
 								user!["facebook_name"] = fullName
 								user!["email"] = emailAddress
-								user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+								user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 								user!.saveInBackgroundWithBlock(nil)
 								
 								self.dismissViewControllerAnimated(true, completion: nil)
@@ -289,7 +288,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         
                         // Use the UUID to check if user has logged in before via Facebook method
                         let deviceQuery = PFUser.query()
-                        deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor!.UUIDString)
+                        deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().uniqueDeviceIdentifier())
                         deviceQuery?.limit = 1
                         
                         
@@ -316,7 +315,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                 user["phone"] = session.phoneNumber
                                                 user["savedEvents"] = []
                                                 user["savedEventNames"] = []
-                                                user["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+                                                user["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
                                                 user["blocked"] = false
                                                 user["firstUse"] = true
                                                 
@@ -346,7 +345,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 												if (error == nil && user != nil) {
 													
 													user!["phone"] = session.phoneNumber
-													user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+													user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 													user!.saveInBackgroundWithBlock(nil)
 													
 													self.dismissViewControllerAnimated(true, completion: nil)
@@ -385,7 +384,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                     
                                                     if uuid == nil {
                                                         
-                                                        user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+                                                        user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
                                                         user?.saveInBackground()
                                                         
                                                     }
@@ -404,7 +403,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 												user!.username = session.phoneNumber
 												user!.password = session.phoneNumber
 												user!["phone"] = session.phoneNumber
-												user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+												user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 												
 												user!.saveInBackground()
 												
@@ -422,7 +421,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                                 user!.username = session.phoneNumber
                                                 user!.password = session.phoneNumber
                                                 user!["phone"] = session.phoneNumber
-												user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+												user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 												
                                                 user!.saveInBackground()
                                                 

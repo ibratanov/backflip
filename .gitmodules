@@ -32,3 +32,6 @@
 [submodule "Vendor/ImagePickerSheetController"]
 	path = Vendor/ImagePickerSheetController
 	url = git@github.com:larcus94/ImagePickerSheetController.git
+[submodule "Vendor/Locksmith"]
+	path = Vendor/Locksmith
+	url = git@github.com:matthewpalmer/Locksmith.git
