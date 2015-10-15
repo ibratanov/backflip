@@ -248,6 +248,11 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		let photo = collectionContent[Int(index)]
 		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://")))
 	
+		if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
+			_photo.caption = photo.caption
+		}
+		
+		
 		return _photo
 	}
 	
@@ -353,7 +358,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			likeBarButton.width = 40
 			
 			photoBrowser?.toolbar?.items = [likeBarButton, likeLabelButton, flexSpace, shareBarButton]
-		
+			
 			photoBrowser?.setCurrentPhotoIndex(UInt(indexPath.row)-1)
 		
 			self.navigationController?.pushViewController(photoBrowser!, animated: true)

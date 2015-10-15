@@ -155,7 +155,12 @@ public class BFImagePreviewController : UIViewController, UITextViewDelegate
 			print("🚀 uploadButtonTouched: \(sender)")
 		#endif
 
-		delegate?.imagePreviewDidSelectUploadButton?(self, button: uploadButton, image: imageView?.image, comment: textView?.text)
+		var comment = textView?.text
+		if (comment == "Add comment.."){
+			comment = nil
+		}
+		
+		delegate?.imagePreviewDidSelectUploadButton?(self, button: uploadButton, image: self.image, comment: comment)
 
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}

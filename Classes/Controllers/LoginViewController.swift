@@ -134,8 +134,8 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 	{
 	
 		let login = FBSDKLoginManager()
-		login.logInWithReadPermissions(["public_profile", "email"]) { (result, error) -> Void in
-			
+		let viewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+		login.logInWithReadPermissions(["public_profile", "email"], fromViewController: viewController) { (result, error) -> Void in
 			if (error != nil) {
 				print("Facebook login error")
 				print(error)
@@ -259,26 +259,32 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
     func didTapButton() {
 		
+		UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+		
         // Check for availability of network connection using Network available class
         if Reachability.validNetworkConnection() == true {
 			
             // Appearance settings for Digits pop up menu
             let digitsAppearance = DGTAppearance()
-            digitsAppearance.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
-            digitsAppearance.accentColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-            
-            let digits = Digits.sharedInstance()
+            digitsAppearance.backgroundColor = UIColor.whiteColor()
+			digitsAppearance.accentColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+			
+			
+			let digits = Digits.sharedInstance()
             
             // Initiate digits session
             digits.authenticateWithDigitsAppearance(digitsAppearance, viewController: nil, title: "Sign in to Backflip") { (session, error) in
-                if session != nil {
+				
+				UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+				
+				if session != nil {
 					
 					let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
                     dispatch_async(dispatch_get_global_queue(priority, 0)) {
                         let query = PFUser.query()
                         query!.whereKey("phone", equalTo: session.phoneNumber)
                         query!.limit = 1
-                        let phoneResult = query!.findObjects()
+						let phoneResult = try! query!.findObjects()
                         
                         
                         // Use the UUID to check if user has logged in before via Facebook method
@@ -288,13 +294,14 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                         
                         
                         // Result will have content if user has signed up already, will be nil if there is no internet
-                        if (phoneResult == nil) {
-                            self.displayNoInternetAlert()
+                        if (true == false) {
+                            // self.displayNoInternetAlert()
                             
                         } else {
                             
-                            if (phoneResult!.count == 0) {
-                                deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
+                            if (phoneResult.count == 0) {
+								deviceQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
+
                                     if error == nil{
                                         if results!.count == 0 {
                                             
@@ -353,14 +360,15 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                         print(error)
                                     }
                                     
-                                }
+                                })
                                 
                             } else {
-                                
+								
+								// WARNING: BUG
                                 // User has logged in before with either facebook or digits
-                                deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
+                                deviceQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
                                     //User has phone number, logged in wih Digits
-                                    let user = phoneResult?.first as! PFUser
+                                    let user = results?.first as! PFUser
                                     
                                     // Check for blocked. User must have account to be blocked. If not blocked, log in with username
                                     if (user["blocked"] as! Bool == false) {
@@ -431,7 +439,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                                         print("User is Blocked")
                                         self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
                                     }
-                                }
+                                })
                             }
                         }
                     }

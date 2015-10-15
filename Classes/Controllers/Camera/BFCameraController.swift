@@ -319,7 +319,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 				attendanceQuery.whereKey("eventID", equalTo: self!.event!.objectId!)
 				attendanceQuery.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
 
-					let attendanceObject = objects?.first as? PFObject
+					let attendanceObject = objects?.first
 					if (attendanceObject == nil) {
 						return
 					}
@@ -350,7 +350,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 					eventQuery.whereKey("objectId", equalTo: self!.event!.objectId!)
 					eventQuery.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
 
-						let event = objects?.first as? PFObject
+						let event = objects?.first
 						if (event != nil) {
 							let relation = event?.relationForKey("photos")
 							relation?.addObject(photo)
