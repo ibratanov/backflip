@@ -122,6 +122,33 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Backflip would like to use your location.</string>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>tabBar-locator</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Current Event</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).CurrentEvent</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Capture Photo</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Camera</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>tabBar-camera-filled</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>tabBar-eventHistory</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Event History</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).EventHistory</string>
+		</dict>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

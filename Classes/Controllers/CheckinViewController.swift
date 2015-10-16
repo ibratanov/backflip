@@ -73,8 +73,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		// Login validation
 		if (PFUser.currentUser() == nil) {
-			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
-			self.performSegueWithIdentifier("display-login-popover", sender: self)
 			return
 		}
 		
@@ -159,6 +157,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         // Useful when dismissing a dialogue on the checkin screen - updates nearby events.
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
 			fetchData()
+		} else {
+			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
+				self.performSegueWithIdentifier("display-login-popover", sender: self)
 		}
 		
 	}

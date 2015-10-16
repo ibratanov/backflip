@@ -25,7 +25,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
 	{
-		
+				
 		//--------------------------------------
 		// Setup Parse & Application appearance
 		//--------------------------------------
@@ -49,7 +49,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		//--------------------------------------
 		// Coredata
 		//--------------------------------------
-		// BFDataFetcher.sharedFetcher.fetchData(true);
+		BFDataFetcher.sharedFetcher.fetchData(true);
 		
 		
 		//--------------------------------------
@@ -71,6 +71,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             if let options = launchOptions {
                 noPushPayload = options[UIApplicationLaunchOptionsRemoteNotificationKey] != nil;
             }
+			
             if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
                 PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             }

@@ -7,6 +7,7 @@
 //
 
 import Parse
+import DigitsKit
 import Foundation
 
 
@@ -223,9 +224,181 @@ public class BFParseManager : NSObject
 			})
 		})
 		
+	}
+	
+	
+	
+	/**
+		Login with provided credentials
+	
+		- Parameters:
+			- digitsSession:
+	*/
+	public func login(digitsSession: DGTSession?, facebookResult: FBSDKLoginManagerLoginResult?, uponCompletion completion: (completed : Bool, error : NSError?) -> Void) -> Void
+	{
+		// Network reachability checking
+		guard Reachability.validNetworkConnection() else {
+			return completion(completed: false, error: NSError(domain: "com.backflip.reachability.parse", code: 100, userInfo: [NSLocalizedDescriptionKey: "Invalid network connection"]))
+		}
+		
+		
+		// Login via Facebook
+		if (facebookResult != nil && FBSDKAccessToken.currentAccessToken() != nil) {
+			print("Facebook Result = \(facebookResult!.token.userID)")
+			let graphRequest = FBSDKGraphRequest(graphPath: facebookResult!.token.userID!, parameters: ["fields": "id, about, email, first_name, last_name, name"])
+			graphRequest.startWithCompletionHandler { (connection, result, error) -> Void in
+					
+				print("📢📢📢📢📢📢📢📢📢📢📢📢 GRAPH RESULT HANDLER CALLED")
+				if (error != nil) {
+					print("Facebook error \(error)")
+					return completion(completed: false, error: error)
+				} else {
+					let facebookId = result.valueForKey("id") as? String
+					let emailAddress = result.valueForKey("email") as? String
+					let firstName = result.valueForKey("first_name") as? String
+					let lastName = result.valueForKey("last_name") as? String
+					
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+						self.login(firstName, lastName: lastName, emailAddress: emailAddress, facebookId: facebookId, phoneNumber: nil, uponCompletion: completion)
+					})
+				}
+			}
+		} else if (digitsSession != nil) { // Login via Digits
+				
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+				print("Login via digitsSession..")
+				let phoneNumber = digitsSession!.phoneNumber
+				self.login(nil, lastName: nil, emailAddress: nil, facebookId: nil, phoneNumber: phoneNumber, uponCompletion: completion)
+			})
+		}
+			
+	}
+	
+	
+	
+	private func login(firstName: String?, lastName: String?, emailAddress: String?, facebookId: String?, phoneNumber: String?, uponCompletion completion: (completed : Bool, error : NSError?) -> Void) -> Void
+	{
+		
+		let deviceQuery = PFUser.query()
+		deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().uniqueDeviceIdentifier())
+		deviceQuery?.limit = 1
+		var devices : [PFUser]?
+		do {
+			try devices = deviceQuery?.findObjects() as? [PFUser]
+		} catch {
+			print("Error with deviceQuery #1")
+		}
+		
+		// Not the first time, authenticate based on their device's UUID
+		if (devices?.count < 1) {
+		
+			let userQuery = PFUser.query()
+			print("facebook id = \(facebookId). phone Number = \(phoneNumber)")
+			userQuery?.whereKey("username", equalTo: ((facebookId != nil) ? facebookId! : phoneNumber!) )
+			var users : [PFUser]?
+			do {
+				try users = userQuery?.findObjects() as? [PFUser]
+			} catch {
+				print("Error with userQuery #1")
+			}
+			
+			if (users?.count > 0) {
+				
+				let user = users?.first
+				var password = (user!.username!.characters.contains("+") == false) ? "backflip-pass-"+user!.username! :  "Password"
+				if (user != nil && user!["facebook_id"] != nil) {
+					password = "backflip-pass-"+user!.username!
+				}
+				
+				print("Attemping to login with username \(user!.username!), password = \(password)")
+				PFUser.logInWithUsernameInBackground(user!.username!, password: password, block: { (user : PFUser?, error) -> Void in
+					
+					if (error == nil && user != nil) {
+						
+						user!.password = "backflip-pass-"+user!.username!
+						user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+						user!.saveInBackgroundWithBlock(nil)
+						
+						return completion(completed: true, error: nil)
+					} else {
+						return completion(completed: false, error: error)
+					}
+					
+				})
+				
+			} else {
+				// First time sign-up
+				self.createUser(firstName, lastName: lastName, emailAddress: emailAddress, facebookId: facebookId, phoneNumber: phoneNumber, uponCompletion: completion)
+			}
+			
+		} else if (devices?.count > 0) {
+			
+			let user = devices?.first
+			var password = (user!.username!.characters.contains("+") == false) ? "Password" : "backflip-pass-"+user!.username!
+			if (user != nil && user!["facebook_id"] != nil) {
+				password = "backflip-pass-"+user!.username!
+			}
+			
+			print("Attemping to login with username \(user!.username!), password = \(password)")
+			PFUser.logInWithUsernameInBackground(user!.username!, password: password, block: { (user : PFUser?, error) -> Void in
+				
+				if (error == nil && user != nil) {
+					
+					user!.password = "backflip-pass-"+user!.username!
+					user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+					user!.saveInBackgroundWithBlock(nil)
+					
+					return completion(completed: true, error: nil)
+				} else {
+					return completion(completed: false, error: error)
+				}
+				
+			})
+			
+		}
+		
 		
 		
 	}
 	
+	
+	
+	
+	private func createUser(firstName: String?, lastName: String?, emailAddress: String?, facebookId: String?, phoneNumber: String?, uponCompletion completion: (completed : Bool, error : NSError?) -> Void) -> Void
+	{
+		
+		let user = PFUser()
+		if (facebookId != nil) {
+			user.username = facebookId
+			user.password = "backflip-pass-\(facebookId!)"
+			user["facebook_id"] = Int(facebookId!)
+			user["email"] = emailAddress
+		} else {
+			user.username = phoneNumber
+			user.password = "backflip-pass-\(phoneNumber!)"
+			user["phone"] = phoneNumber
+		}
+		
+
+		user["photosLiked"] = []
+		user["facebook_name"] = "\(firstName) \(lastName)"
+		user["savedEvents"] = []
+		user["savedEventNames"] = []
+		user["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+		user["blocked"] = false
+		user["firstUse"] = true
+		
+		print("Signing up with username '\(user.username!)', and password '\(user.password!)'.")
+		user.signUpInBackgroundWithBlock({ (success, error) -> Void in
+			
+			if (error == nil) {
+				return completion(completed: true, error: nil)
+			} else {
+				return completion(completed: false, error: error)
+			}
+			
+		})
+		
+	}
 	
 }
