@@ -74,9 +74,6 @@
 		0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3B51B8B82E2001850DD /* Launch Screen.xib */; };
 		0439D3BB1B8B82E2001850DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3B61B8B82E2001850DD /* Main.storyboard */; };
 		0439D3C01B8B83AE001850DD /* ReportImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3BF1B8B83AE001850DD /* ReportImage.swift */; };
-		0439D3C91B8B86AC001850DD /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3C61B8B86AC001850DD /* CGRect+Extensions.swift */; };
-		0439D3CA1B8B86AC001850DD /* CGSize+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3C71B8B86AC001850DD /* CGSize+Extensions.swift */; };
-		0439D3CB1B8B86AC001850DD /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3C81B8B86AC001850DD /* UIImage+Extensions.swift */; };
 		0439D3CD1B8B8758001850DD /* NSDate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3CC1B8B8758001850DD /* NSDate+Extensions.swift */; };
 		0439D3CF1B8B8777001850DD /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3CE1B8B8777001850DD /* UIColor+Extensions.swift */; };
 		0439D3D11B8B87D3001850DD /* BFTabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3D01B8B87D3001850DD /* BFTabBarControllerDelegate.swift */; };
@@ -101,7 +98,6 @@
 		043AB3BC1BBE212200BA5827 /* PKHUDWideBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB3AA1BBE212100BA5827 /* PKHUDWideBaseView.swift */; };
 		043AB3BD1BBE212200BA5827 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB3AB1BBE212100BA5827 /* Window.swift */; };
 		043AB3BE1BBE212200BA5827 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB3AC1BBE212100BA5827 /* WindowRootViewController.swift */; };
-		044BD34C1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */; };
 		046D98BA1BCAAAF4004B3DCD /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98A91BCAAAF4004B3DCD /* AnimationController.swift */; };
 		046D98BB1BCAAAF4004B3DCD /* ImagePickerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98AA1BCAAAF4004B3DCD /* ImagePickerAction.swift */; };
 		046D98BC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98AC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift */; };
@@ -484,9 +480,6 @@
 		0439D3B51B8B82E2001850DD /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		0439D3B61B8B82E2001850DD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0439D3BF1B8B83AE001850DD /* ReportImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportImage.swift; sourceTree = "<group>"; };
-		0439D3C61B8B86AC001850DD /* CGRect+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
-		0439D3C71B8B86AC001850DD /* CGSize+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize+Extensions.swift"; sourceTree = "<group>"; };
-		0439D3C81B8B86AC001850DD /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		0439D3CC1B8B8758001850DD /* NSDate+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+Extensions.swift"; sourceTree = "<group>"; };
 		0439D3CE1B8B8777001850DD /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		0439D3D01B8B87D3001850DD /* BFTabBarControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFTabBarControllerDelegate.swift; sourceTree = "<group>"; };
@@ -512,7 +505,6 @@
 		043AB3AB1BBE212100BA5827 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Vendor/PKHUD/PKHUD/Window.swift; sourceTree = "<group>"; };
 		043AB3AC1BBE212100BA5827 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowRootViewController.swift; path = Vendor/PKHUD/PKHUD/WindowRootViewController.swift; sourceTree = "<group>"; };
 		043AB3BF1BBE304F00BA5827 /* Toronto, ON, Canada.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Toronto, ON, Canada.gpx"; sourceTree = "<group>"; };
-		044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MWZoomingScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		046D98A91BCAAAF4004B3DCD /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		046D98AA1BCAAAF4004B3DCD /* ImagePickerAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerAction.swift; sourceTree = "<group>"; };
 		046D98AB1BCAAAF4004B3DCD /* ImagePickerSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerSheetController.h; sourceTree = "<group>"; };
@@ -879,12 +871,8 @@
 			children = (
 				04CCD6671B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.h */,
 				04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */,
-				0439D3C61B8B86AC001850DD /* CGRect+Extensions.swift */,
-				044BD34B1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift */,
 				04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */,
 				0439D3CC1B8B8758001850DD /* NSDate+Extensions.swift */,
-				0439D3C71B8B86AC001850DD /* CGSize+Extensions.swift */,
-				0439D3C81B8B86AC001850DD /* UIImage+Extensions.swift */,
 				0439D3CE1B8B8777001850DD /* UIColor+Extensions.swift */,
 				04FD59E11B901D63005A1FA4 /* String+Extensions.swift */,
 				0439D3D21B8B887C001850DD /* Array+Extensions.swift */,
@@ -1793,7 +1781,6 @@
 				0439D3D11B8B87D3001850DD /* BFTabBarControllerDelegate.swift in Sources */,
 				04C61FC01B8B982600E2ACB5 /* Event.swift in Sources */,
 				046D98E41BCAABA8004B3DCD /* BFCameraOverlay.swift in Sources */,
-				0439D3C91B8B86AC001850DD /* CGRect+Extensions.swift in Sources */,
 				0422D1141BCFF3190078E7F6 /* BFDataManager.swift in Sources */,
 				049AA6DC1B73DB84003888CE /* SDWebImageCompat.m in Sources */,
 				049AA6E21B73DB84003888CE /* UIButton+WebCache.m in Sources */,
@@ -1819,7 +1806,6 @@
 				049AA6A51B73DA01003888CE /* MWGridViewController.m in Sources */,
 				0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */,
 				046D98E31BCAABA8004B3DCD /* BFCameraController.swift in Sources */,
-				0439D3CB1B8B86AC001850DD /* UIImage+Extensions.swift in Sources */,
 				049AA6A71B73DA01003888CE /* MWPhotoBrowser.m in Sources */,
 				042E8D711BB300A100D61412 /* Watchdog.swift in Sources */,
 				049AA6E51B73DB84003888CE /* UIImage+WebP.m in Sources */,
@@ -1873,7 +1859,6 @@
 				049AA6DB1B73DB84003888CE /* SDImageCache.m in Sources */,
 				049AA6DA1B73DB84003888CE /* NSData+ImageContentType.m in Sources */,
 				049AA6E11B73DB84003888CE /* SDWebImagePrefetcher.m in Sources */,
-				044BD34C1B9E33D100D22A6A /* MWZoomingScrollView+Extensions.swift in Sources */,
 				04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */,
 				04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */,
 				043AB3B01BBE212100BA5827 /* PKHUDAnimating.swift in Sources */,
@@ -1888,7 +1873,6 @@
 				04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */,
 				042028501BA1F4E20059F096 /* Photo+Sharing.swift in Sources */,
 				049AA6E41B73DB84003888CE /* UIImage+MultiFormat.m in Sources */,
-				0439D3CA1B8B86AC001850DD /* CGSize+Extensions.swift in Sources */,
 				046D98C11BCAAAF4004B3DCD /* PreviewCollectionViewLayout.swift in Sources */,
 				04C61FC31B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift in Sources */,
 				043AB3B71BBE212200BA5827 /* PKHUDSubtitleView.swift in Sources */,

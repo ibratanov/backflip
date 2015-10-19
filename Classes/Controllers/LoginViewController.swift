@@ -133,31 +133,35 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     @IBAction func facebookLogin()
 	{
 	
-		let login = FBSDKLoginManager()
-		login.logInWithReadPermissions(["public_profile", "email"]) { (result, error) -> Void in
-			if (error != nil) {
-				print("Facebook login error")
-				print(error)
-			} else if (result.isCancelled == true) {
-				print("Canceled")
-			} else {
-				print("Login success")
-				
-				if (FBSDKAccessToken.currentAccessToken() != nil) {
-					self.fetchDataAndLogin(result.token.tokenString, id: result.token.userID)
-				}
-				
-				BFParseManager.sharedManager.login(nil, facebookResult: result, uponCompletion: { (completed, error) -> Void in
-						
-					if (completed == true) {
-						self.dismissViewControllerAnimated(true, completion: nil)
+		FBSDKLoginManager.renewSystemCredentials { (results, error) -> Void in
+			
+			let login = FBSDKLoginManager()
+			login.logInWithReadPermissions(["public_profile", "email"], fromViewController: self) { (result, error) -> Void in
+				if (error != nil) {
+					print("Facebook login error")
+					print(error)
+				} else if (result.isCancelled == true) {
+					print("Canceled")
+				} else {
+					print("Login success")
+					
+					if (FBSDKAccessToken.currentAccessToken() != nil) {
+						self.fetchDataAndLogin(result.token.tokenString, id: result.token.userID)
 					}
 					
+					BFParseManager.sharedManager.login(nil, facebookResult: result, uponCompletion: { (completed, error) -> Void in
 						
-					print("Login completed = \(completed)")
-					print("Login error = \(error)")
+						if (completed == true) {
+							self.dismissViewControllerAnimated(true, completion: nil)
+						}
 						
-				})
+						
+						print("Login completed = \(completed)")
+						print("Login error = \(error)")
+						
+					})
+					
+				}
 				
 			}
 			
