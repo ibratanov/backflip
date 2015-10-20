@@ -10,6 +10,11 @@
 		040756B71BD6D34300F95E96 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040756AE1BD6D2E100F95E96 /* Parse.framework */; };
 		040756B81BD6D34300F95E96 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 040756AE1BD6D2E100F95E96 /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		040756BF1BD6D54500F95E96 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040756BE1BD6D54500F95E96 /* Bolts.framework */; };
+		040756C11BD6DC2100F95E96 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C01BD6DC2100F95E96 /* MasterViewController.swift */; };
+		040756C31BD6DD3700F95E96 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C21BD6DD3700F95E96 /* DetailViewController.swift */; };
+		040756C51BD6DD6F00F95E96 /* GradientMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */; };
+		040756C81BD6DD8800F95E96 /* DataItemCellComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */; };
+		040756C91BD6DD8800F95E96 /* DataItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */; };
 		040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event+Share.swift */; };
 		040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB59C1BC815EA00452620 /* AppDelegate.swift */; };
 		040EB59F1BC815EA00452620 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB59E1BC815EA00452620 /* ViewController.swift */; };
@@ -437,6 +442,11 @@
 /* Begin PBXFileReference section */
 		040756971BD6D2E000F95E96 /* Parse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Parse.xcodeproj; path = "../../../../../../../../private/tmp/Parse-SDK-iOS-OSX/Parse.xcodeproj"; sourceTree = "<group>"; };
 		040756BE1BD6D54500F95E96 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		040756C01BD6DC2100F95E96 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		040756C21BD6DD3700F95E96 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientMaskView.swift; sourceTree = "<group>"; };
+		040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItemCellComposer.swift; sourceTree = "<group>"; };
+		040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		040B27D11B794E9B004B4FB2 /* Event+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Share.swift"; sourceTree = "<group>"; };
 		040EB59A1BC815EA00452620 /* Backflip TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Backflip TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		040EB59C1BC815EA00452620 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -666,6 +676,11 @@
 				0485F6D71BD5B41A00E0465D /* Vendor */,
 				040EB59C1BC815EA00452620 /* AppDelegate.swift */,
 				040EB59E1BC815EA00452620 /* ViewController.swift */,
+				040756C01BD6DC2100F95E96 /* MasterViewController.swift */,
+				040756C21BD6DD3700F95E96 /* DetailViewController.swift */,
+				040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */,
+				040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */,
+				040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */,
 				040EB5A31BC815EA00452620 /* Main-TV.storyboard */,
 				040EB5A61BC815EA00452620 /* Assets.xcassets */,
 				040EB5A81BC815EA00452620 /* Info.plist */,
@@ -1624,15 +1639,20 @@
 				040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */,
 				040EB5C11BC8162F00452620 /* File.swift in Sources */,
 				040EB5A21BC815EA00452620 /* Backflip_TV.xcdatamodeld in Sources */,
+				040756C31BD6DD3700F95E96 /* DetailViewController.swift in Sources */,
 				040EB5BD1BC8161100452620 /* Event+CoreDataProperties.swift in Sources */,
 				040EB5C31BC8162F00452620 /* Event.swift in Sources */,
 				040EB5C91BC8164A00452620 /* Reachability.swift in Sources */,
 				040EB5C61BC8162F00452620 /* ParseObject.swift in Sources */,
+				040756C91BD6DD8800F95E96 /* DataItemCollectionViewCell.swift in Sources */,
 				040EB5BC1BC8161100452620 /* Photo+CoreDataProperties.swift in Sources */,
 				040EB5C41BC8162F00452620 /* Photo.swift in Sources */,
+				040756C81BD6DD8800F95E96 /* DataItemCellComposer.swift in Sources */,
 				040EB5C51BC8162F00452620 /* GeoPoint.swift in Sources */,
 				040EB5BA1BC8160D00452620 /* File+CoreDataProperties.swift in Sources */,
+				040756C51BD6DD6F00F95E96 /* GradientMaskView.swift in Sources */,
 				0432DC411BC81AF700B31D02 /* Backflip.xcdatamodeld in Sources */,
+				040756C11BD6DC2100F95E96 /* MasterViewController.swift in Sources */,
 				040EB5BB1BC8161100452620 /* Attendance+CoreDataProperties.swift in Sources */,
 				040EB5BF1BC8161100452620 /* ParseObject+CoreDataProperties.swift in Sources */,
 			);

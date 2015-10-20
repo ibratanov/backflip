@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9058" systemVersion="15A279b" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="Nwd-pq-PAD">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9058" systemVersion="15A279b" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="m44-68-q7o">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
     </dependencies>
@@ -7,18 +7,28 @@
         <!--Event History-->
         <scene sceneID="yBx-X2-APV">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="FBx-v0-Zt2" sceneMemberID="viewController">
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="FBx-v0-Zt2" customClass="MasterViewController" customModule="Backflip_TV" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="66" sectionHeaderHeight="40" sectionFooterHeight="40" id="b2n-m8-Ti3">
                         <rect key="frame" x="0.0" y="0.0" width="634" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" id="u4K-5i-jNx">
-                                <rect key="frame" x="0.0" y="199" width="634" height="66"/>
+                            <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell-identifier" textLabel="dak-ve-9br" style="IBUITableViewCellStyleDefault" id="u4K-5i-jNx">
+                                <rect key="frame" x="0.0" y="199" width="594" height="66"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u4K-5i-jNx" id="UzP-tL-oQb">
                                     <rect key="frame" x="0.0" y="0.0" width="618" height="66"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dak-ve-9br">
+                                            <rect key="frame" x="20" y="0.0" width="578" height="66"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
@@ -35,31 +45,48 @@
             </objects>
             <point key="canvasLocation" x="1659" y="-1190"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="Ouf-0T-8a3">
             <objects>
-                <collectionViewController id="9pp-qK-gbz" sceneMemberID="viewController">
+                <collectionViewController id="9pp-qK-gbz" customClass="DetailViewController" customModule="Backflip_TV" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="fg9-OD-u0T">
                         <rect key="frame" x="0.0" y="0.0" width="1285" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Hy0-NN-ADQ">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="500" height="570"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="90" minY="70" maxX="90" maxY="70"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" id="TVV-bS-8sW">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DataItemCell" id="y36-dL-vMA" customClass="DataItemCollectionViewCell" customModule="Backflip_TV" customModuleProvider="target">
+                                <rect key="frame" x="90" y="210" width="500" height="570"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="500" height="570"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView opaque="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFill" fixedFrame="YES" image="Iceland 1" adjustsImageWhenAncestorFocused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eOi-0V-s9b">
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="500"/>
+                                            <animations/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6HX-yV-NRF">
+                                            <rect key="frame" x="0.0" y="535" width="500" height="35"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <animations/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <animations/>
+                                <connections>
+                                    <outlet property="imageView" destination="eOi-0V-s9b" id="cia-4I-C2G"/>
+                                    <outlet property="label" destination="6HX-yV-NRF" id="feS-49-F4O"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -72,11 +99,49 @@
             </objects>
             <point key="canvasLocation" x="1130.5" y="7"/>
         </scene>
+        <!--Logout-->
+        <scene sceneID="8fK-eV-Z1T">
+            <objects>
+                <viewController id="o2D-xx-Fbk" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aey-vn-G7T"/>
+                        <viewControllerLayoutGuide type="bottom" id="31O-7r-qvN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wzb-Ng-paH">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Logout" id="R7R-Oq-Itg"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ys8-dt-2JZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-858" y="1175"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="eFz-xI-VyX">
+            <objects>
+                <tabBarController id="m44-68-q7o" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="rF8-Et-qMR">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="140"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Nwd-pq-PAD" kind="relationship" relationship="viewControllers" id="PJa-qz-Bep"/>
+                        <segue destination="o2D-xx-Fbk" kind="relationship" relationship="viewControllers" id="jMe-ao-a0Y"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oUb-2P-Kl6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3172" y="143"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="V2F-k7-CSg">
             <objects>
                 <navigationController id="CAg-mw-HJU" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="VeB-qX-wB6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VeB-qX-wB6">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="145"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -89,10 +154,11 @@
             </objects>
             <point key="canvasLocation" x="805" y="-1190"/>
         </scene>
-        <!--Split View Controller-->
+        <!--Event History-->
         <scene sceneID="r30-hC-9lk">
             <objects>
-                <splitViewController id="Nwd-pq-PAD" sceneMemberID="viewController">
+                <splitViewController title="Event History" id="Nwd-pq-PAD" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Event History" id="Kjf-al-CHS"/>
                     <connections>
                         <segue destination="CAg-mw-HJU" kind="relationship" relationship="masterViewController" id="S1V-CM-5Eb"/>
                         <segue destination="9pp-qK-gbz" kind="relationship" relationship="detailViewController" id="29Y-vW-5XJ"/>
@@ -100,7 +166,10 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6a-xe-F1V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-692" y="-621"/>
+            <point key="canvasLocation" x="-858" y="-784"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Iceland 1" width="749" height="500"/>
+    </resources>
 </document>
