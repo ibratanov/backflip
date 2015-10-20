@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 	// MARK: Parse
 	//--------------------------------------
 	
-	func setupParse()
+	func setupParse()`
 	{
 		#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")

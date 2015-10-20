@@ -13,11 +13,13 @@ import MapleBacon
 import Foundation
 import MagicalRecord
 
+import SKPhotoBrowser
 
-class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate
+
+class EventAlbumViewController : UICollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate
 {
 	
-	//-------------------------------------
+	//---------------==--------------------
 	// MARK: Global Variables
 	//-------------------------------------
 	
@@ -28,13 +30,12 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	var collectionContent : [Photo] = []
 	
-	var photoBrowser : MWPhotoBrowser?
-	
-	var likeButton : DOFavoriteButton?
-	var likeLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 100, 21))
-	
+	var photoBrowser : BFPhotoBrowser?
+	// var likeButton : DOFavoriteButton?
+	// var likeLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 100, 21))
 	
 	@IBOutlet weak var segmentedControl : UISegmentedControl!
+	
 	let spinner : UIActivityIndicatorView = UIActivityIndicatorView()
 	let refreshControl : UIRefreshControl = UIRefreshControl()
 	
@@ -230,47 +231,38 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	
 	//-------------------------------------
-	// MARK: BWPhotoBrowserDelegate
+	// MARK: MWPhotoBrowserDelegate
 	//-------------------------------------
 	
-	func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser!) -> UInt
+	func didShowPhotoAtIndex(index: Int)
 	{
-		return UInt(collectionContent.count)
-	}
-	
-	
-	func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhotoProtocol!
-	{
-		if (collectionContent.count < Int(index)) {
-			return nil;
+		if (index > (collectionContent.count - 1) || index < 0) {
+			return
 		}
 		
-		let photo = collectionContent[Int(index)]
-		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://")))
-	
-		if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
-			_photo.caption = photo.caption
-		}
+		let photo = collectionContent[index]
 		
-		
-		return _photo
-	}
-	
-	func photoBrowser(photoBrowser: MWPhotoBrowser!, didDisplayPhotoAtIndex index: UInt)
-	{
-		let photo = collectionContent[Int(index)]
-		likeLabel.text = NSString(format: "%i likes", photo.upvoteCount!.integerValue) as String
-
+		photoBrowser?.likeLabel.text = "\(photo.upvoteCount!) like"+((photo.upvoteCount?.intValue > 1 || photo.upvoteCount?.intValue == 0) ? "s" : "")
 		if (photo.usersLiked != nil) {
 			let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
 			if (liked) {
-				likeButton!.select()
+				self.photoBrowser?.likeButton?.tintColor = UIColor(red:1,  green:0.216,  blue:0.173, alpha:1)
+				self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOn")
 			} else {
-				likeButton!.deselect()
+				self.photoBrowser?.likeButton?.tintColor = UIColor.whiteColor()
+				self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOff")
 			}
-		} else {
-			likeButton!.deselect()
 		}
+		
+		print("Uploader = \(photo.uploader), current user = \(PFUser.currentUser()?.objectId)")
+		if (photo.uploader == PFUser.currentUser()?.objectId) {
+			self.photoBrowser?.trashButton?.image = UIImage(named: "UIButtonBarTrash")
+			self.photoBrowser?.trashButton?.action = "deletePhoto"
+		} else {
+			self.photoBrowser?.trashButton?.image = UIImage(named: "UIButtonBarFlag")
+			self.photoBrowser?.trashButton?.action = "flagPhoto"
+		}
+		
 	}
 	
 	
@@ -330,38 +322,37 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			
 		} else {
 		
-			photoBrowser = MWPhotoBrowser(delegate: self)
-			photoBrowser?.alwaysShowControls = true
-			photoBrowser?.displayActionButton = false
-		
-			// Our own custom share button
-			let shareBarButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: "sharePhoto")
-			shareBarButton.image = UIImage(named: "more-icon")
-		
-		
-			// Toolbar items
-			let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-		
-			likeButton = DOFavoriteButton(frame: CGRectMake(0, 0, 50, 44), image: UIImage(named: "heart-icon-empty"))
-			likeButton!.addTarget(self, action: Selector("likePhoto"), forControlEvents: .TouchUpInside)
-			likeButton!.imageColorOff = UIColor.whiteColor()
-			likeButton!.imageColorOn = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
-			likeButton!.lineColor = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
-			likeButton!.circleColor = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
-		
-			likeLabel.font = UIFont(name: "Avenir-Medium", size: 16)
-			likeLabel.textColor = UIColor.whiteColor()
-			likeLabel.backgroundColor = UIColor.clearColor()
-		
-			let likeLabelButton = UIBarButtonItem(customView: likeLabel)
-			let likeBarButton = UIBarButtonItem(customView: likeButton!)
-			likeBarButton.width = 40
+			// Photos
+			var images = [SKPhoto]()
+			for photo in collectionContent {
+				let image = SKPhoto.photoWithImageURL(photo.image!.url!)
+				image.shouldCachePhotoURLImage = true
+				
+				if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
+					image.caption = photo.caption
+				}
+				
+				images.append(image)
+			}
 			
-			photoBrowser?.toolbar?.items = [likeBarButton, likeLabelButton, flexSpace, shareBarButton]
 			
-			photoBrowser?.setCurrentPhotoIndex(UInt(indexPath.row)-1)
-		
-			self.navigationController?.pushViewController(photoBrowser!, animated: true)
+			let cell = collectionView.cellForItemAtIndexPath(indexPath) as! AlbumViewCell
+			let originImage = cell.imageView?.image // some image for baseImage
+			photoBrowser = BFPhotoBrowser(originImage: originImage!, photos: images, animatedFromView: cell)
+			photoBrowser!.initializePageIndex(indexPath.row - 1)
+			photoBrowser?.delegate = self
+			
+			photoBrowser!.displayToolbar = true
+			photoBrowser!.displayCounterLabel = false
+			photoBrowser!.displayBackAndForwardButton = false
+			
+			photoBrowser?.shareButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "sharePhoto")
+			
+			photoBrowser?.trashButton = UIBarButtonItem(image: UIImage(named: "UIButtonBarTrash"), style: .Plain, target: self, action: "flagPhoto")
+			
+			photoBrowser?.likeButton = UIBarButtonItem(image: UIImage(named: "PUFavoriteOff"), style: .Plain, target: self, action: "likePhoto")
+			
+			self.presentViewController(photoBrowser!, animated: true, completion: {})
 		}
 	}
 	
@@ -497,18 +488,18 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	
 	@IBAction func sharePhoto()
 	{
-		
-		let selectedIndex = photoBrowser?.currentIndex
+		let selectedIndex = photoBrowser?.currentPageIndex
 		let image = collectionContent[Int(selectedIndex!)]
-
-		let photo = photoBrowser?.imageForPhoto(photoBrowser?.photoAtIndex(UInt(selectedIndex!)))
 		
-		let reportImage = ReportImageActivity();
-		let vc = UIActivityViewController(activityItems: [image, photo!], applicationActivities:[reportImage])
-		vc.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypePrint]
-		self.presentViewController(vc, animated: true, completion: nil)
+		//let photo = photoBrowser!.photos[selectedIndex!].underlyingImage
 		
+		// let reportImage = ReportImageActivity();
+		let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities:nil)
+		activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypePrint]
+		
+		photoBrowser?.presentViewController(activityViewController, animated: true, completion: nil)
 	}
+	
 	
 	@IBAction func likePhoto()
 	{
@@ -519,7 +510,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			
 			MagicalRecord.saveWithBlock({ (context) -> Void in
 				
-				let selectedIndex = self.photoBrowser?.currentIndex
+				let selectedIndex = self.photoBrowser?.currentPageIndex
 				let _photo = self.collectionContent[Int(selectedIndex!)]
 				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 				
@@ -531,7 +522,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
 				if (liked) {
 					var liked = photo.usersLiked!.componentsSeparatedByString(",")
-					let index = liked.indexOf(PFUser.currentUser()!.username!)  // find(liked, PFUser.currentUser()!.username!)
+					let index = liked.indexOf(PFUser.currentUser()!.username!)
 					liked.removeAtIndex(index!)
 					photo.usersLiked = liked.joinWithSeparator(",")
 					
@@ -546,7 +537,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				
 			}, completion: { (completed, error) -> Void in
 				
-				let selectedIndex = self.photoBrowser?.currentIndex
+				let selectedIndex = self.photoBrowser?.currentPageIndex
 				let _photo = self.collectionContent[Int(selectedIndex!)]
 				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 				
@@ -561,17 +552,19 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				
 				dispatch_async(dispatch_get_main_queue(), {
 					
-					self.likeLabel.text = NSString(format: "%i likes", photo.upvoteCount!.integerValue) as String
+					self.photoBrowser?.likeLabel.text = NSString(format: "%i likes", photo.upvoteCount!.integerValue) as String
 					
-					let selectedIndex = self.photoBrowser?.currentIndex
+					let selectedIndex = self.photoBrowser?.currentPageIndex
 					let _photo = self.collectionContent[Int(selectedIndex!)]
 					let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 					if (photo.usersLiked != nil) {
 						let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
 						if (liked) {
-							self.likeButton!.select()
+							self.photoBrowser?.likeButton?.tintColor = UIColor(red:1,  green:0.216,  blue:0.173, alpha:1)
+							self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOn")
 						} else {
-							self.likeButton!.deselect()
+							self.photoBrowser?.likeButton?.tintColor = UIColor.whiteColor()
+							self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOff")
 						}
 					}
 					
@@ -583,7 +576,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		})
 	}
 	
-	func flagPhoto(sender: AnyObject)
+	func flagPhoto()
 	{
 		dispatch_async(dispatch_get_main_queue(), {
 			let alertController = UIAlertController(title: "Flag inappropriate content", message: "What's wrong with this photo?", preferredStyle: .Alert)
@@ -593,14 +586,14 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				
 				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
 					
-					let selectedIndex = self.photoBrowser?.currentIndex
+					let selectedIndex = self.photoBrowser?.currentPageIndex
 					let image = self.collectionContent[Int(selectedIndex!)]
-					
 					
 					let textField = alertController.textFields!.first! 
 					let photo = PFObject(className: "Photo")
 					photo.objectId = image.objectId
 					photo["flagged"] = true
+					photo["enabled"] = false
 					photo["reviewed"] = false
 					photo["blocked"] = false
 					photo["reporter"] = PFUser.currentUser()!.objectId
@@ -629,13 +622,54 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				})
 				
 			}))
-			self.presentViewController(alertController, animated: true, completion: nil)
+			
+			self.photoBrowser?.presentViewController(alertController, animated: true, completion: nil)
 		})
 		
 	}
 
 	
-	
+	func deletePhoto()
+	{
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+			
+			let selectedIndex = self.photoBrowser?.currentPageIndex
+			let image = self.collectionContent[Int(selectedIndex!)]
+			
+			let photo = PFObject(className: "Photo")
+			photo.objectId = image.objectId
+			photo["flagged"] = true
+			photo["reviewed"] = false
+			photo["enabled"] = false
+			photo["blocked"] = false
+			photo["reporter"] = PFUser.currentUser()!.objectId
+			photo["reportMessage"] = "Removed at request of owner"
+			
+			photo.saveInBackgroundWithBlock({ (success, error) -> Void in
+				
+				BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
+					print("Photo saved")
+				})
+				
+			})
+			
+			
+			let imageIndex = self.collectionContent.indexOf(image)
+			self.collectionContent.removeAtIndex(imageIndex!)
+			
+			// imageIndex = find(self.orginalContent, image)
+			// self.orginalContent.removeAtIndex(imageIndex!)
+			
+			dispatch_async(dispatch_get_main_queue(), {
+				self.photoBrowser?.reloadData()
+				self.collectionView?.reloadData()
+			})
+			
+		})
+		
+	}
+
+
 	//-------------------------------------
 	// MARK: Memory
 	//-------------------------------------
@@ -689,10 +723,6 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 				_segmentedControl.selectedSegmentIndex = 0;
 				self.segementedControlValueChanged(_segmentedControl)
 			}
-			
-//            for photo : Photo in photos {
-//                println("curl -O \""+photo.image!.url!+"\" &&")
-//            }
             
 			dispatch_async(dispatch_get_main_queue()) {
 				self.collectionView?.reloadData()
@@ -842,11 +872,6 @@ class EventEditingPopover : PopoverView, UITableViewDelegate, UITableViewDataSou
 	
 	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
 	{
-		
-//		if (range.length + range.location > textField.text!.characters.count) {
-//			return false;
-//		}
-
 		let newLength = textField.text!.characters.count + string.characters.count - range.length;
 		
 		return newLength < 26
