@@ -42,6 +42,10 @@ public class BFPhotoBrowser : SKPhotoBrowser
 	{
 		super.viewWillAppear(animated)
 		
+		likeButton?.tintColor = UIColor.whiteColor()
+		shareButton?.tintColor = UIColor.whiteColor()
+		trashButton?.tintColor = UIColor.whiteColor()
+		
 		let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
 		let toolbarItems : [UIBarButtonItem] = [shareButton!, flexSpace, likeButton!, UIBarButtonItem(customView: likeLabel), flexSpace, trashButton!]
 		
