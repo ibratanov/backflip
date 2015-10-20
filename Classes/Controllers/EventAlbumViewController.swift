@@ -244,7 +244,17 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		
 		photoBrowser?.likeLabel.text = "\(photo.upvoteCount!) like"+((photo.upvoteCount?.intValue > 1 || photo.upvoteCount?.intValue == 0) ? "s" : "")
 		if (photo.usersLiked != nil) {
-			let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
+			
+			let currentUser = PFUser.currentUser()
+			
+			var liked = photo.usersLiked!.contains(currentUser!.objectId!)
+			if (currentUser!["phone_number"] != nil && photo.usersLiked!.contains((currentUser!["phone_number"] as! String))) {
+				liked = true
+			} else if (currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((currentUser!["facebook_id"] as! String))) {
+				liked = true
+			}
+			
+			
 			if (liked) {
 				self.photoBrowser?.likeButton?.tintColor = UIColor(red:1,  green:0.216,  blue:0.173, alpha:1)
 				self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOn")
@@ -491,10 +501,10 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		let selectedIndex = photoBrowser?.currentPageIndex
 		let image = collectionContent[Int(selectedIndex!)]
 		
-		//let photo = photoBrowser!.photos[selectedIndex!].underlyingImage
+		let photo = photoBrowser!.photos[selectedIndex!].underlyingImage
 		
 		// let reportImage = ReportImageActivity();
-		let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities:nil)
+		let activityViewController = UIActivityViewController(activityItems: [image, photo], applicationActivities:nil)
 		activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypePrint]
 		
 		photoBrowser?.presentViewController(activityViewController, animated: true, completion: nil)
@@ -519,17 +529,30 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					photo.usersLiked = ""
 				}
 				
-				let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
+				let currentUser = PFUser.currentUser()
+				var liked = photo.usersLiked!.contains(currentUser!.objectId!)
+				if (currentUser!["phone_number"] != nil && photo.usersLiked!.contains((currentUser!["phone_number"] as! String))) {
+					liked = true
+				} else if (currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((currentUser!["facebook_id"] as! String))) {
+					liked = true
+				}
+				
 				if (liked) {
 					var liked = photo.usersLiked!.componentsSeparatedByString(",")
-					let index = liked.indexOf(PFUser.currentUser()!.username!)
+					var index = liked.indexOf(PFUser.currentUser()!.objectId!)
+					if (index == nil && currentUser!["phone_number"] != nil) {
+						index = liked.indexOf((currentUser!["phone_number"] as! String))
+					} else if (index == nil && currentUser!["facebook_id"] != nil) {
+						index = liked.indexOf((currentUser!["facebook_id"] as! String))
+					}
+					
 					liked.removeAtIndex(index!)
 					photo.usersLiked = liked.joinWithSeparator(",")
 					
 					photo.upvoteCount = photo.upvoteCount!.integerValue - 1
 				} else {
 					var liked = photo.usersLiked!.componentsSeparatedByString(",")
-					liked.append(PFUser.currentUser()!.username!)
+					liked.append(PFUser.currentUser()!.objectId!)
 					photo.usersLiked = liked.joinWithSeparator(",")
 
 					photo.upvoteCount = photo.upvoteCount!.integerValue + 1

@@ -101,7 +101,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 
 					for asset in assets {
 						
-						var assetSize : CGSize = CGSizeMake(2048, 2048)
+						let assetSize : CGSize = CGSizeMake(2048, 2048)
 //						if (asset.pixelWidth > asset.pixelHeight) {
 //							let scaleFactor = asset.pixelWidth / asset.pixelHeight
 //							assetSize = CGSizeMake(2048, CGFloat(2048 / scaleFactor))
@@ -226,8 +226,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 				
 				for asset in (assets as! [PHAsset]) {
 					
-					// CGSizeMake(2048, 2048)
-					var assetSize : CGSize = CGSizeMake(2048, 2048)
+					let assetSize : CGSize = CGSizeMake(2048, 2048)
 //					if (asset.pixelWidth > asset.pixelHeight) {
 //						let scaleFactor = asset.pixelWidth / asset.pixelHeight
 //						assetSize = CGSizeMake(2048, CGFloat(2048 / scaleFactor))
@@ -236,9 +235,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 //						assetSize = CGSizeMake(CGFloat(2048 / scaleFactor), 2048)
 //					}
 					
-					print("Asset Size = \(assetSize)")
 					PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: assetSize, contentMode: .Default, options: options, resultHandler: { (image, object) -> Void in
-						print("Image = \(image), object = \(object)")
 						self.uploadImage(image, comment: nil, animated: true)
 					})
 				}
