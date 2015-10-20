@@ -16,10 +16,10 @@ import MagicalRecord
 import SKPhotoBrowser
 
 
-class EventAlbumViewController : UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate
+class EventAlbumViewController : UICollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate
 {
 	
-	//-------------------------------------
+	//---------------==--------------------
 	// MARK: Global Variables
 	//-------------------------------------
 	
@@ -234,46 +234,36 @@ class EventAlbumViewController : UICollectionViewController, UIImagePickerContro
 	// MARK: MWPhotoBrowserDelegate
 	//-------------------------------------
 	
-//	func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser!) -> UInt
-//	{
-//		return UInt(collectionContent.count)
-//	}
-//	
-//	
-//	func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhotoProtocol!
-//	{
-//		if (collectionContent.count < Int(index)) {
-//			return nil;
-//		}
-//		
-//		let photo = collectionContent[Int(index)]
-//		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://")))
-//	
-//		if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
-//			_photo.caption = photo.caption
-//		}
-//		
-//		
-//		return _photo
-//	}
-//	
-//	func photoBrowser(photoBrowser: MWPhotoBrowser!, didDisplayPhotoAtIndex index: UInt)
-//	{
-//		let photo = collectionContent[Int(index)]
-//		likeLabel.text = NSString(format: "%i likes", photo.upvoteCount!.integerValue) as String
-//
-//		if (photo.usersLiked != nil) {
-//			let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
-//			if (liked) {
-//				likeButton!.select()
-//			} else {
-//				likeButton!.deselect()
-//			}
-//		} else {
-//			likeButton!.deselect()
-//		}
-//	}
-	
+	func didShowPhotoAtIndex(index: Int)
+	{
+		if (index > (collectionContent.count - 1) || index < 0) {
+			return
+		}
+		
+		let photo = collectionContent[index]
+		
+		photoBrowser?.likeLabel.text = "\(photo.upvoteCount!) like"+((photo.upvoteCount?.intValue > 1 || photo.upvoteCount?.intValue == 0) ? "s" : "")
+		if (photo.usersLiked != nil) {
+			let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
+			if (liked) {
+				self.photoBrowser?.likeButton?.tintColor = UIColor(red:1,  green:0.216,  blue:0.173, alpha:1)
+				self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOn")
+			} else {
+				self.photoBrowser?.likeButton?.tintColor = UIColor.whiteColor()
+				self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOff")
+			}
+		}
+		
+		print("Uploader = \(photo.uploader), current user = \(PFUser.currentUser()?.objectId)")
+		if (photo.uploader == PFUser.currentUser()?.objectId) {
+			self.photoBrowser?.trashButton?.image = UIImage(named: "UIButtonBarTrash")
+			self.photoBrowser?.trashButton?.action = "deletePhoto"
+		} else {
+			self.photoBrowser?.trashButton?.image = UIImage(named: "UIButtonBarFlag")
+			self.photoBrowser?.trashButton?.action = "flagPhoto"
+		}
+		
+	}
 	
 	
 	//-------------------------------------
@@ -337,7 +327,11 @@ class EventAlbumViewController : UICollectionViewController, UIImagePickerContro
 			for photo in collectionContent {
 				let image = SKPhoto.photoWithImageURL(photo.image!.url!)
 				image.shouldCachePhotoURLImage = true
-				image.caption = photo.caption
+				
+				if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
+					image.caption = photo.caption
+				}
+				
 				images.append(image)
 			}
 			
@@ -346,6 +340,7 @@ class EventAlbumViewController : UICollectionViewController, UIImagePickerContro
 			let originImage = cell.imageView?.image // some image for baseImage
 			photoBrowser = BFPhotoBrowser(originImage: originImage!, photos: images, animatedFromView: cell)
 			photoBrowser!.initializePageIndex(indexPath.row - 1)
+			photoBrowser?.delegate = self
 			
 			photoBrowser!.displayToolbar = true
 			photoBrowser!.displayCounterLabel = false
@@ -353,48 +348,11 @@ class EventAlbumViewController : UICollectionViewController, UIImagePickerContro
 			
 			photoBrowser?.shareButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "sharePhoto")
 			
-			photoBrowser?.trashButton.target = self
-			photoBrowser?.trashButton.action = "flagPhoto:"
+			photoBrowser?.trashButton = UIBarButtonItem(image: UIImage(named: "UIButtonBarTrash"), style: .Plain, target: self, action: "flagPhoto")
 			
-			photoBrowser?.likeButton.addTarget(self, action: "likePhoto", forControlEvents: .TouchUpInside)
-			
+			photoBrowser?.likeButton = UIBarButtonItem(image: UIImage(named: "PUFavoriteOff"), style: .Plain, target: self, action: "likePhoto")
 			
 			self.presentViewController(photoBrowser!, animated: true, completion: {})
-			
-			
-			
-//			photoBrowser = MWPhotoBrowser(delegate: self)
-//			photoBrowser?.alwaysShowControls = true
-//			photoBrowser?.displayActionButton = false
-//		
-//			// Our own custom share button
-//			let shareBarButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: "sharePhoto")
-//			shareBarButton.image = UIImage(named: "more-icon")
-//		
-//		
-//			// Toolbar items
-//			let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-//		
-//			likeButton = DOFavoriteButton(frame: CGRectMake(0, 0, 50, 44), image: UIImage(named: "heart-icon-empty"))
-//			likeButton!.addTarget(self, action: Selector("likePhoto"), forControlEvents: .TouchUpInside)
-//			likeButton!.imageColorOff = UIColor.whiteColor()
-//			likeButton!.imageColorOn = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
-//			likeButton!.lineColor = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
-//			likeButton!.circleColor = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
-//		
-//			likeLabel.font = UIFont(name: "Avenir-Medium", size: 16)
-//			likeLabel.textColor = UIColor.whiteColor()
-//			likeLabel.backgroundColor = UIColor.clearColor()
-//		
-//			let likeLabelButton = UIBarButtonItem(customView: likeLabel)
-//			let likeBarButton = UIBarButtonItem(customView: likeButton!)
-//			likeBarButton.width = 40
-//			
-//			photoBrowser?.toolbar?.items = [likeBarButton, likeLabelButton, flexSpace, shareBarButton]
-//			
-//			photoBrowser?.setCurrentPhotoIndex(UInt(indexPath.row)-1)
-//		
-//			self.navigationController?.pushViewController(photoBrowser!, animated: true)
 		}
 	}
 	
@@ -602,9 +560,11 @@ class EventAlbumViewController : UICollectionViewController, UIImagePickerContro
 					if (photo.usersLiked != nil) {
 						let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
 						if (liked) {
-							self.photoBrowser?.likeButton.select()
+							self.photoBrowser?.likeButton?.tintColor = UIColor(red:1,  green:0.216,  blue:0.173, alpha:1)
+							self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOn")
 						} else {
-							self.photoBrowser?.likeButton.deselect()
+							self.photoBrowser?.likeButton?.tintColor = UIColor.whiteColor()
+							self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOff")
 						}
 					}
 					
@@ -616,7 +576,7 @@ class EventAlbumViewController : UICollectionViewController, UIImagePickerContro
 		})
 	}
 	
-	func flagPhoto(sender: AnyObject)
+	func flagPhoto()
 	{
 		dispatch_async(dispatch_get_main_queue(), {
 			let alertController = UIAlertController(title: "Flag inappropriate content", message: "What's wrong with this photo?", preferredStyle: .Alert)
@@ -629,11 +589,11 @@ class EventAlbumViewController : UICollectionViewController, UIImagePickerContro
 					let selectedIndex = self.photoBrowser?.currentPageIndex
 					let image = self.collectionContent[Int(selectedIndex!)]
 					
-					
 					let textField = alertController.textFields!.first! 
 					let photo = PFObject(className: "Photo")
 					photo.objectId = image.objectId
 					photo["flagged"] = true
+					photo["enabled"] = false
 					photo["reviewed"] = false
 					photo["blocked"] = false
 					photo["reporter"] = PFUser.currentUser()!.objectId
@@ -662,13 +622,54 @@ class EventAlbumViewController : UICollectionViewController, UIImagePickerContro
 				})
 				
 			}))
-			self.presentViewController(alertController, animated: true, completion: nil)
+			
+			self.photoBrowser?.presentViewController(alertController, animated: true, completion: nil)
 		})
 		
 	}
 
 	
-	
+	func deletePhoto()
+	{
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+			
+			let selectedIndex = self.photoBrowser?.currentPageIndex
+			let image = self.collectionContent[Int(selectedIndex!)]
+			
+			let photo = PFObject(className: "Photo")
+			photo.objectId = image.objectId
+			photo["flagged"] = true
+			photo["reviewed"] = false
+			photo["enabled"] = false
+			photo["blocked"] = false
+			photo["reporter"] = PFUser.currentUser()!.objectId
+			photo["reportMessage"] = "Removed at request of owner"
+			
+			photo.saveInBackgroundWithBlock({ (success, error) -> Void in
+				
+				BFDataProcessor.sharedProcessor.processPhotos([photo], completion: { () -> Void in
+					print("Photo saved")
+				})
+				
+			})
+			
+			
+			let imageIndex = self.collectionContent.indexOf(image)
+			self.collectionContent.removeAtIndex(imageIndex!)
+			
+			// imageIndex = find(self.orginalContent, image)
+			// self.orginalContent.removeAtIndex(imageIndex!)
+			
+			dispatch_async(dispatch_get_main_queue(), {
+				self.photoBrowser?.reloadData()
+				self.collectionView?.reloadData()
+			})
+			
+		})
+		
+	}
+
+
 	//-------------------------------------
 	// MARK: Memory
 	//-------------------------------------

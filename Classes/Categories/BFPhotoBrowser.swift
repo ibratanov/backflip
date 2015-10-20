@@ -14,11 +14,13 @@ import SKPhotoBrowser
 public class BFPhotoBrowser : SKPhotoBrowser
 {
 	
-	public var likeButton : DOFavoriteButton = DOFavoriteButton(frame: CGRectMake(0, 0, 31, 30), image: UIImage(named: "PUFavoriteOn"))
+	public var likeButton : UIBarButtonItem?
+	
 	public var likeLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 60, 21))
 	
 	public var shareButton : UIBarButtonItem?
-	public let trashButton = UIBarButtonItem(barButtonSystemItem: .Trash, target: nil, action: nil)
+	public var trashButton : UIBarButtonItem?
+	
 	
 	
 	override public func loadView()
@@ -27,19 +29,12 @@ public class BFPhotoBrowser : SKPhotoBrowser
 		
 		likeLabel.font = UIFont.systemFontOfSize(18)
 		likeLabel.textColor = UIColor.whiteColor()
-		
-		likeButton.imageColorOff = UIColor.whiteColor()
-		likeButton.imageColorOn = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
-		likeButton.lineColor = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
-		likeButton.circleColor = UIColor(red:1,  green:0.412,  blue:0.384, alpha:1)
 	}
 	
 	
 	override public func viewDidLoad()
 	{
 		super.viewDidLoad()
-		
-		trashButton.width = 40
 	}
 	
 	
@@ -48,13 +43,7 @@ public class BFPhotoBrowser : SKPhotoBrowser
 		super.viewWillAppear(animated)
 		
 		let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-		let likeBarButton = UIBarButtonItem(customView: likeButton)
-		likeBarButton.width = 46
-		likeBarButton.customView?.frame = CGRectMake(0, 0, 31, 30)
-		likeBarButton.customView?.layer.borderWidth = 1
-		likeBarButton.customView?.layer.borderColor = UIColor.redColor().CGColor
-		
-		let toolbarItems : [UIBarButtonItem] = [shareButton!, flexSpace, likeBarButton, UIBarButtonItem(customView: likeLabel), flexSpace, trashButton]
+		let toolbarItems : [UIBarButtonItem] = [shareButton!, flexSpace, likeButton!, UIBarButtonItem(customView: likeLabel), flexSpace, trashButton!]
 		
 		self.toolBar.setItems(toolbarItems, animated: true)
 	}

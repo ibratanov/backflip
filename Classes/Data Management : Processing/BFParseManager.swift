@@ -118,21 +118,6 @@ public class BFParseManager : NSObject
 		PKHUD.sharedHUD.show()
 		
 		
-//		var geoPoint : PFGeoPoint?
-//		
-//		let geocoder = CLGeocoder()
-//		geocoder.geocodeAddressString(address) { (placemarks, error) -> Void in
-//			
-//			if (placemarks == nil || placemarks?.count < 1 || error != nil) {
-//				print("Placemarks = \(placemarks), error = \(error), address = \(address)")
-//				return completion(completed: false, error: NSError(domain: "com.backflip.geocode.parse", code: 500, userInfo: [NSLocalizedDescriptionKey: "Unable to geocode placemark \(error)"]))
-//			}
-//			
-//			
-//			geoPoint = PFGeoPoint(location: placemarks?.first?.location)
-//		}
-		
-		
 		PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
 			
 			guard geoPoint != nil else {
