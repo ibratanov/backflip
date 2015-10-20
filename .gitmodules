@@ -35,3 +35,6 @@
 [submodule "Vendor/Locksmith"]
 	path = Vendor/Locksmith
 	url = git@github.com:matthewpalmer/Locksmith.git
+[submodule "Vendor/SKPhotoBrowser"]
+	path = Vendor/SKPhotoBrowser
+	url = git@github.com:suzuki-0000/SKPhotoBrowser.git

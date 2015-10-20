@@ -31,12 +31,13 @@
 
 	#if TARGET_OS_IOS
 		// Analytics yo
+		#import <Instabug/Instabug.h>
 		#import <Mixpanel/Mixpanel.h>
 		#import <Google/Analytics.h>
 		#import "NewRelicAgent/NewRelic.h"
 
-		#import "MWPhotoBrowser.h"
-		#import "MWPhotoBrowserPrivate.h"
+		// #import "MWPhotoBrowser.h"
+		// #import "MWPhotoBrowserPrivate.h"
 	#endif
 
 #endif

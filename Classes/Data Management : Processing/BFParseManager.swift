@@ -118,111 +118,120 @@ public class BFParseManager : NSObject
 		PKHUD.sharedHUD.show()
 		
 		
-		var geoPoint : PFGeoPoint?
+//		var geoPoint : PFGeoPoint?
+//		
+//		let geocoder = CLGeocoder()
+//		geocoder.geocodeAddressString(address) { (placemarks, error) -> Void in
+//			
+//			if (placemarks == nil || placemarks?.count < 1 || error != nil) {
+//				print("Placemarks = \(placemarks), error = \(error), address = \(address)")
+//				return completion(completed: false, error: NSError(domain: "com.backflip.geocode.parse", code: 500, userInfo: [NSLocalizedDescriptionKey: "Unable to geocode placemark \(error)"]))
+//			}
+//			
+//			
+//			geoPoint = PFGeoPoint(location: placemarks?.first?.location)
+//		}
 		
-		let geocoder = CLGeocoder()
-		geocoder.geocodeAddressString(address) { (placemarks, error) -> Void in
-			
-			if (placemarks == nil || placemarks?.count < 1 || error != nil) {
-				print("Placemarks = \(placemarks), error = \(error), address = \(address)")
-				return completion(completed: false, error: NSError(domain: "com.backflip.geocode.parse", code: 500, userInfo: [NSLocalizedDescriptionKey: "Unable to geocode placemark \(error)"]))
-			}
-			
-			
-			geoPoint = PFGeoPoint(location: placemarks?.first?.location)
-		}
 		
-		
-		
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
+		PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
 			
-			// Check event doesn't already exist
-			var eventObjects : [PFObject]?
-			let eventQuery = PFQuery(className: "Event")
-			eventQuery.whereKey("eventName", equalTo: name)
-			do {
-				try eventObjects = eventQuery.findObjects()
-			} catch {
-				print("📛 Parse error (eventQuery) \(error)")
+			guard geoPoint != nil else {
+				print("📛 Parse error (geoPoint) \(error)")
 				return completion(completed: false, error: NSError(domain: "com.backflip.parse", code: 500, userInfo: nil))
 			}
 			
 			
-			// check if the event exists..
-			guard eventObjects?.count < 1 else {
-				return completion(completed: false, error:  NSError(domain: "com.backflip.parse.duplicate", code: 501, userInfo: [NSLocalizedDescriptionKey: "Event already exists, object = \(eventObjects?.first)"]))
-			}
-			
-			
-			let eventObject = PFObject(className: "Event")
-			eventObject["geoLocation"] = geoPoint
-			eventObject["eventName"] = name
-			eventObject["venue"] = address
-			eventObject["startTime"] = NSDate()
-			eventObject["isLive"] = true
-			eventObject["enabled"] = true
-			eventObject["owner"] = PFUser.currentUser()
-			
-			let ACL = PFACL(user: PFUser.currentUser()!)
-			ACL.setPublicReadAccess(true)
-			ACL.setPublicWriteAccess(true)
-			eventObject.ACL = ACL
-			
-			let relation = eventObject.relationForKey("attendees")
-			relation.addObject(PFUser.currentUser()!)
-			
-			do {
-				try eventObject.save()
-			} catch {
-				print("📛 Parse error (eventObject) \(error)")
-				return completion(completed: false, error: NSError(domain: "com.backflip.parse", code: 500, userInfo: nil))
-			}
-			
-			
-			// Update the user
-			PFUser.currentUser()?.addUniqueObject(eventObject, forKey:"savedEvents")
-			PFUser.currentUser()?.addUniqueObject(name, forKey:"savedEventNames")
-			PFUser.currentUser()?.saveInBackground()
-			
-			
-			// Add the EventAttendance join table relationship for photos (liked and uploaded)
-			let attendance = PFObject(className:"EventAttendance")
-			attendance["eventID"] = eventObject.objectId
-			attendance["attendeeID"] = PFUser.currentUser()?.objectId
-			attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-			attendance.setObject(eventObject, forKey: "event")
-			attendance["photosLikedID"] = []
-			attendance["photosLiked"] = []
-			attendance["photosUploadedID"] = []
-			attendance["photosUploaded"] = []
-			attendance["enabled"] = true
-			
-			attendance.saveInBackgroundWithBlock({ (success, error) -> Void in
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
 				
-				let attendees : [PFObject] = [attendance]
-				BFDataProcessor.sharedProcessor.processEvents([eventObject], completion: { () -> Void in
+				// Check event doesn't already exist
+				var eventObjects : [PFObject]?
+				let eventQuery = PFQuery(className: "Event")
+				eventQuery.whereKey("eventName", equalTo: name)
+				do {
+					try eventObjects = eventQuery.findObjects()
+				} catch {
+					print("📛 Parse error (eventQuery) \(error)")
+					return completion(completed: false, error: NSError(domain: "com.backflip.parse", code: 500, userInfo: nil))
+				}
+				
+				
+				// check if the event exists..
+				guard eventObjects?.count < 1 else {
+					return completion(completed: false, error:  NSError(domain: "com.backflip.parse.duplicate", code: 501, userInfo: [NSLocalizedDescriptionKey: "Event already exists, object = \(eventObjects?.first)"]))
+				}
+				
+				
+				let eventObject = PFObject(className: "Event")
+				eventObject["geoLocation"] = geoPoint
+				eventObject["eventName"] = name
+				eventObject["venue"] = address
+				eventObject["startTime"] = NSDate()
+				eventObject["isLive"] = true
+				eventObject["enabled"] = true
+				eventObject["owner"] = PFUser.currentUser()
+				
+				let ACL = PFACL(user: PFUser.currentUser()!)
+				ACL.setPublicReadAccess(true)
+				ACL.setPublicWriteAccess(true)
+				eventObject.ACL = ACL
+				
+				let relation = eventObject.relationForKey("attendees")
+				relation.addObject(PFUser.currentUser()!)
+				
+				do {
+					try eventObject.save()
+				} catch {
+					print("📛 Parse error (eventObject) \(error)")
+					return completion(completed: false, error: NSError(domain: "com.backflip.parse", code: 500, userInfo: nil))
+				}
+				
+				
+				// Update the user
+				PFUser.currentUser()?.addUniqueObject(eventObject, forKey:"savedEvents")
+				PFUser.currentUser()?.addUniqueObject(name, forKey:"savedEventNames")
+				PFUser.currentUser()?.saveInBackground()
+				
+				
+				// Add the EventAttendance join table relationship for photos (liked and uploaded)
+				let attendance = PFObject(className:"EventAttendance")
+				attendance["eventID"] = eventObject.objectId
+				attendance["attendeeID"] = PFUser.currentUser()?.objectId
+				attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
+				attendance.setObject(eventObject, forKey: "event")
+				attendance["photosLikedID"] = []
+				attendance["photosLiked"] = []
+				attendance["photosUploadedID"] = []
+				attendance["photosUploaded"] = []
+				attendance["enabled"] = true
+				
+				attendance.saveInBackgroundWithBlock({ (success, error) -> Void in
 					
-					BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
+					let attendees : [PFObject] = [attendance]
+					BFDataProcessor.sharedProcessor.processEvents([eventObject], completion: { () -> Void in
 						
-						// Store event details in user defaults
-						NSUserDefaults.standardUserDefaults().setValue(eventObject.objectId!, forKey: "checkin_event_id")
-						NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
-						NSUserDefaults.standardUserDefaults().setValue(name, forKey: "checkin_event_name")
-						NSUserDefaults.standardUserDefaults().synchronize()
-						
-						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
 							
-							PKHUD.sharedHUD.hideAnimated()
+							// Store event details in user defaults
+							NSUserDefaults.standardUserDefaults().setValue(eventObject.objectId!, forKey: "checkin_event_id")
+							NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
+							NSUserDefaults.standardUserDefaults().setValue(name, forKey: "checkin_event_name")
+							NSUserDefaults.standardUserDefaults().synchronize()
 							
-							completion(completed: true, error: nil)
+							dispatch_async(dispatch_get_main_queue(), { () -> Void in
+								
+								PKHUD.sharedHUD.hideAnimated()
+								
+								completion(completed: true, error: nil)
+								
+							})
 							
 						})
-						
 					})
+					
 				})
-				
 			})
-		})
+
+		}
 		
 	}
 	

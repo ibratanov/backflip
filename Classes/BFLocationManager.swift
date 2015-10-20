@@ -71,7 +71,7 @@ public class BFLocationManager : NSObject, CLLocationManagerDelegate
 	/**
 	 * Cached Location
 	*/
-	internal var cachedLocation : CLLocation?
+	public var cachedLocation : CLLocation?
 	
 	
 	

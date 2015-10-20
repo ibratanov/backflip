@@ -267,6 +267,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
 		#endif
 		
+		if (FEATURE_INSTABUG) {
+			Instabug.startWithToken("510f98f8d22d87efdf38fcdcaa64ce78", captureSource: IBGCaptureSourceUIKit, invocationEvent: IBGInvocationEventShake)
+		}
+			
 		
 		if (FEATURE_NEW_RELIC) {
 			NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
