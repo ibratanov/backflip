@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Event History-->
         <scene sceneID="yBx-X2-APV">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="FBx-v0-Zt2" sceneMemberID="viewController">
@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="u4K-5i-jNx">
+                            <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" id="u4K-5i-jNx">
                                 <rect key="frame" x="0.0" y="199" width="634" height="66"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u4K-5i-jNx" id="UzP-tL-oQb">
@@ -29,7 +29,7 @@
                             <outlet property="delegate" destination="FBx-v0-Zt2" id="f3V-2o-eNS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="Jtn-0s-evD"/>
+                    <navigationItem key="navigationItem" title="Event History" id="Jtn-0s-evD"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H45-MP-ApH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -76,7 +76,7 @@
         <scene sceneID="V2F-k7-CSg">
             <objects>
                 <navigationController id="CAg-mw-HJU" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VeB-qX-wB6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="VeB-qX-wB6">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="145"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>

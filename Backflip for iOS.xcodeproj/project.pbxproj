@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040756B71BD6D34300F95E96 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040756AE1BD6D2E100F95E96 /* Parse.framework */; };
+		040756B81BD6D34300F95E96 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 040756AE1BD6D2E100F95E96 /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		040756BF1BD6D54500F95E96 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040756BE1BD6D54500F95E96 /* Bolts.framework */; };
 		040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event+Share.swift */; };
 		040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB59C1BC815EA00452620 /* AppDelegate.swift */; };
 		040EB59F1BC815EA00452620 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB59E1BC815EA00452620 /* ViewController.swift */; };
@@ -28,10 +31,6 @@
 		040EB5C61BC8162F00452620 /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */; };
 		040EB5C81BC8164500452620 /* Defines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420283A1BA1E0CB0059F096 /* Defines.swift */; };
 		040EB5C91BC8164A00452620 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50099C0B1B389E4B005A9867 /* Reachability.swift */; };
-		040EB5CA1BC8171D00452620 /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; };
-		040EB5CD1BC8172C00452620 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7111BA9ADB800AC6AA3 /* Bolts.framework */; };
-		040EB5CE1BC8172C00452620 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7121BA9ADB800AC6AA3 /* Parse.framework */; };
-		040EB5D01BC8173B00452620 /* MagicalRecord.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		040EB5D91BC8187F00452620 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040EB5D81BC8187F00452620 /* Photos.framework */; };
 		040FD1061BB2F14300DDB1A5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 040FD1051BB2F14300DDB1A5 /* libsqlite3.tbd */; };
 		040FD1081BB2F14B00DDB1A5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 040FD1071BB2F14B00DDB1A5 /* libz.tbd */; };
@@ -123,8 +122,6 @@
 		046D98E41BCAABA8004B3DCD /* BFCameraOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98E01BCAABA8004B3DCD /* BFCameraOverlay.swift */; };
 		046D98E51BCAABA8004B3DCD /* BFImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98E11BCAABA8004B3DCD /* BFImagePreviewController.swift */; };
 		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
-		0485F6ED1BD5B41E00E0465D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0485F6D91BD5B41A00E0465D /* Bolts.framework */; };
-		0485F6EE1BD5B42200E0465D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0485F6DA1BD5B41A00E0465D /* Parse.framework */; };
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
 		048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -174,6 +171,55 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		040756A51BD6D2E100F95E96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040756971BD6D2E000F95E96 /* Parse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 81C3821C19CCA89E0066284A;
+			remoteInfo = "Parse-iOS";
+		};
+		040756A71BD6D2E100F95E96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040756971BD6D2E000F95E96 /* Parse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 816F449B1A8E8933009CDB32;
+			remoteInfo = "ParseUnitTests-iOS";
+		};
+		040756A91BD6D2E100F95E96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040756971BD6D2E000F95E96 /* Parse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 97010FAC1630B18F00AB761E;
+			remoteInfo = "Parse-OSX";
+		};
+		040756AB1BD6D2E100F95E96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040756971BD6D2E000F95E96 /* Parse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 81C09F861AF97A490043B49C;
+			remoteInfo = "ParseUnitTests-OSX";
+		};
+		040756AD1BD6D2E100F95E96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040756971BD6D2E000F95E96 /* Parse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 815F24151BD04D150054659F;
+			remoteInfo = "Parse-tvOS";
+		};
+		040756AF1BD6D2E100F95E96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040756971BD6D2E000F95E96 /* Parse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 810156691BB3832700D7C7BD;
+			remoteInfo = "Parse-watchOS";
+		};
+		040756B91BD6D34300F95E96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040756971BD6D2E000F95E96 /* Parse.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 815F22AF1BD04D150054659F;
+			remoteInfo = "Parse-tvOS";
+		};
 		040FD77E1BD553070039CDAA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 040FD77A1BD553070039CDAA /* SKPhotoBrowser.xcodeproj */;
@@ -359,13 +405,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		040EB5D31BC8173B00452620 /* Embed Frameworks */ = {
+		040756BB1BD6D34300F95E96 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				040EB5D01BC8173B00452620 /* MagicalRecord.framework in Embed Frameworks */,
+				040756B81BD6D34300F95E96 /* Parse.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +435,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		040756971BD6D2E000F95E96 /* Parse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Parse.xcodeproj; path = "../../../../../../../../private/tmp/Parse-SDK-iOS-OSX/Parse.xcodeproj"; sourceTree = "<group>"; };
+		040756BE1BD6D54500F95E96 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		040B27D11B794E9B004B4FB2 /* Event+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Share.swift"; sourceTree = "<group>"; };
 		040EB59A1BC815EA00452620 /* Backflip TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Backflip TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		040EB59C1BC815EA00452620 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -493,8 +541,6 @@
 		047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Vendor/Facebook/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Vendor/Facebook/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		047790E61BBB1C5B00BA8F9E /* PopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
-		0485F6D91BD5B41A00E0465D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		0485F6DA1BD5B41A00E0465D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		048939BF1BD0451C005400CA /* Locksmith.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Locksmith.xcodeproj; path = Vendor/Locksmith/Locksmith.xcodeproj; sourceTree = "<group>"; };
 		0495F1751BAB0CC0002E609E /* Frontflip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Frontflip.entitlements; sourceTree = "<group>"; };
@@ -556,11 +602,8 @@
 			files = (
 				0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */,
 				0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */,
-				040EB5CD1BC8172C00452620 /* Bolts.framework in Frameworks */,
-				0485F6EE1BD5B42200E0465D /* Parse.framework in Frameworks */,
-				0485F6ED1BD5B41E00E0465D /* Bolts.framework in Frameworks */,
-				040EB5CE1BC8172C00452620 /* Parse.framework in Frameworks */,
-				040EB5CA1BC8171D00452620 /* MagicalRecord.framework in Frameworks */,
+				040756B71BD6D34300F95E96 /* Parse.framework in Frameworks */,
+				040756BF1BD6D54500F95E96 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,6 +647,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040756981BD6D2E000F95E96 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				040756A61BD6D2E100F95E96 /* Parse.framework */,
+				040756A81BD6D2E100F95E96 /* ParseUnitTests-iOS.xctest */,
+				040756AA1BD6D2E100F95E96 /* Parse.framework */,
+				040756AC1BD6D2E100F95E96 /* ParseUnitTests-OSX.xctest */,
+				040756AE1BD6D2E100F95E96 /* Parse.framework */,
+				040756B01BD6D2E100F95E96 /* Parse.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		040EB59B1BC815EA00452620 /* Backflip TV */ = {
 			isa = PBXGroup;
 			children = (
@@ -883,8 +939,8 @@
 		0485F6D81BD5B41A00E0465D /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				0485F6D91BD5B41A00E0465D /* Bolts.framework */,
-				0485F6DA1BD5B41A00E0465D /* Parse.framework */,
+				040756BE1BD6D54500F95E96 /* Bolts.framework */,
+				040756971BD6D2E000F95E96 /* Parse.xcodeproj */,
 			);
 			path = Parse;
 			sourceTree = "<group>";
@@ -1155,12 +1211,12 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				040FD78D1BD577780039CDAA /* Reveal.framework */,
 				0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */,
 				040FD1091BB2F19500DDB1A5 /* libc++.tbd */,
 				040FD10A1BB2F19500DDB1A5 /* libstdc++.tbd */,
 				040FD1071BB2F14B00DDB1A5 /* libz.tbd */,
 				040FD1051BB2F14300DDB1A5 /* libsqlite3.tbd */,
+				040FD78D1BD577780039CDAA /* Reveal.framework */,
 				040EB5D81BC8187F00452620 /* Photos.framework */,
 				0432DC481BC81CC500B31D02 /* AudioToolbox.framework */,
 				04CA5DCC1B8B9F900075C0A8 /* CoreData.framework */,
@@ -1188,11 +1244,12 @@
 				040EB5961BC815EA00452620 /* Sources */,
 				040EB5971BC815EA00452620 /* Frameworks */,
 				040EB5981BC815EA00452620 /* Resources */,
-				040EB5D31BC8173B00452620 /* Embed Frameworks */,
+				040756BB1BD6D34300F95E96 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				040756BA1BD6D34300F95E96 /* PBXTargetDependency */,
 			);
 			name = BackflipTV;
 			productName = "Backflip TV";
@@ -1291,6 +1348,10 @@
 					ProjectRef = 04ED9B0E1BC30331008493E3 /* Mixpanel.xcodeproj */;
 				},
 				{
+					ProductGroup = 040756981BD6D2E000F95E96 /* Products */;
+					ProjectRef = 040756971BD6D2E000F95E96 /* Parse.xcodeproj */;
+				},
+				{
 					ProductGroup = 046D98CA1BCAAB1D004B3DCD /* Products */;
 					ProjectRef = 046D98C91BCAAB1D004B3DCD /* QBImagePicker.xcodeproj */;
 				},
@@ -1308,6 +1369,48 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		040756A61BD6D2E100F95E96 /* Parse.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Parse.framework;
+			remoteRef = 040756A51BD6D2E100F95E96 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		040756A81BD6D2E100F95E96 /* ParseUnitTests-iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "ParseUnitTests-iOS.xctest";
+			remoteRef = 040756A71BD6D2E100F95E96 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		040756AA1BD6D2E100F95E96 /* Parse.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Parse.framework;
+			remoteRef = 040756A91BD6D2E100F95E96 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		040756AC1BD6D2E100F95E96 /* ParseUnitTests-OSX.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "ParseUnitTests-OSX.xctest";
+			remoteRef = 040756AB1BD6D2E100F95E96 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		040756AE1BD6D2E100F95E96 /* Parse.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Parse.framework;
+			remoteRef = 040756AD1BD6D2E100F95E96 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		040756B01BD6D2E100F95E96 /* Parse.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Parse.framework;
+			remoteRef = 040756AF1BD6D2E100F95E96 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		040FD77F1BD553070039CDAA /* SKPhotoBrowser.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1628,6 +1731,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		040756BA1BD6D34300F95E96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Parse-tvOS";
+			targetProxy = 040756B91BD6D34300F95E96 /* PBXContainerItemProxy */;
+		};
 		040FD7831BD553110039CDAA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SKPhotoBrowser;
@@ -1683,6 +1791,8 @@
 					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
 					"$(PROJECT_DIR)/Backflip",
 					TV/Vendor/Parse,
+					"$(PROJECT_DIR)/Backflip",
+					TV/Vendor/Parse,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1718,6 +1828,8 @@
 					"$(PROJECT_DIR)/Vendor/**",
 					"$(PROJECT_DIR)/Vendor/Parse",
 					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
+					"$(PROJECT_DIR)/Backflip",
+					TV/Vendor/Parse,
 					"$(PROJECT_DIR)/Backflip",
 					TV/Vendor/Parse,
 				);
