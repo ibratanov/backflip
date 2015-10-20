@@ -10,22 +10,26 @@ import UIKit
 import Foundation
 
 
-class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FastttCameraDelegate
+
+public class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate
 {
-	static let sharedDelegate = BFTabBarControllerDelegate.init()
+
+	public static let sharedDelegate = BFTabBarControllerDelegate.init()
+
+	/**
+	 * Shared (internal) camera controller
+	*/
+	public static let cameraController = BFCameraController.sharedController
+
 	
-	weak var _camera : CustomCamera?
 	
-	
-	
-	override init()
+	override private init()
 	{
-		//weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-		//_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
+		super.init()
 	}
 	
 	
-	func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
+	public func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
 	{
 		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
 		if (selectedIndex == 1) {
@@ -58,18 +62,20 @@ class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate, UIImage
 		
 		return true
 	}
-	
-    func displayCamera(event: Event)
-    {
-		if (_camera == nil) {
-			weak var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-			_camera = storyboard?.instantiateViewControllerWithIdentifier("customCameraFCF") as? CustomCamera
-		}
 
-		_camera?.event = event
-        _camera?.modalPresentationStyle = UIModalPresentationStyle.FullScreen
-        let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-        window?.rootViewController!.presentViewController(_camera!, animated: true, completion: nil)
-    }
-	
+
+
+	func displayCamera(event: Event?)
+	{
+		BFCameraController.sharedController.event = event
+		BFCameraController.sharedController.presentCamera()
+	}
+
+
+	func displayImagePickerSheet(event: Event?)
+	{
+		BFCameraController.sharedController.event = event
+		BFCameraController.sharedController.presentImagePickerSheet()
+	}
+
 }

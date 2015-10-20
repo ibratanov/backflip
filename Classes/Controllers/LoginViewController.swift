@@ -55,8 +55,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func displayNoInternetAlert() {
-        let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to log in.")
-        self.presentViewController(alert, animated: true, completion: nil)
+        Reachability.presentUnavailableAlert()
         print("no internet")
     }
     
@@ -134,20 +133,36 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
     @IBAction func facebookLogin()
 	{
 	
-		let login = FBSDKLoginManager()
-		login.logInWithReadPermissions(["public_profile", "email"]) { (result, error) -> Void in
+		FBSDKLoginManager.renewSystemCredentials { (results, error) -> Void in
 			
-			if (error != nil) {
-				print("Facebook login error")
-				print(error)
-			} else if (result.isCancelled == true) {
-				print("Canceled")
-			} else {
-				print("Login success")
-				
-				if (FBSDKAccessToken.currentAccessToken() != nil) {
-					self.fetchDataAndLogin(result.token.tokenString, id: result.token.userID)
+			let login = FBSDKLoginManager()
+			login.logInWithReadPermissions(["public_profile", "email"], fromViewController: self) { (result, error) -> Void in
+				if (error != nil) {
+					print("Facebook login error")
+					print(error)
+				} else if (result.isCancelled == true) {
+					print("Canceled")
+				} else {
+					print("Login success")
+					
+					if (FBSDKAccessToken.currentAccessToken() != nil) {
+						self.fetchDataAndLogin(result.token.tokenString, id: result.token.userID)
+					}
+					
+					BFParseManager.sharedManager.login(nil, facebookResult: result, uponCompletion: { (completed, error) -> Void in
+						
+						if (completed == true) {
+							self.dismissViewControllerAnimated(true, completion: nil)
+						}
+						
+						
+						print("Login completed = \(completed)")
+						print("Login error = \(error)")
+						
+					})
+					
 				}
+				
 			}
 			
 		}
@@ -172,7 +187,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 				
 				
 				let deviceQuery = PFUser.query()
-				deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor!.UUIDString)
+				deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().uniqueDeviceIdentifier())
 				deviceQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
 					
 					if (error == nil && results?.count == 0) {
@@ -193,7 +208,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 								user["email"] = emailAddress
 								user["savedEvents"] = []
 								user["savedEventNames"] = []
-								user["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+								user["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 								user["blocked"] = false
 								user["firstUse"] = true
 								user.signUpInBackgroundWithBlock({ (success, error) -> Void in
@@ -212,6 +227,13 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 									
 									if (error == nil) {
 										print(user)
+										
+										user!["facebook_id"] = Int(id)
+										user!["facebook_name"] = fullName
+										user!["email"] = emailAddress
+										user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+										user!.saveInBackgroundWithBlock(nil)
+										
 										self.dismissViewControllerAnimated(true, completion: nil)
 									} else {
 										print(error)
@@ -235,7 +257,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 								user!["facebook_id"] = Int(id)
 								user!["facebook_name"] = fullName
 								user!["email"] = emailAddress
-								user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
+								user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 								user!.saveInBackgroundWithBlock(nil)
 								
 								self.dismissViewControllerAnimated(true, completion: nil)
@@ -260,194 +282,44 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 
     func didTapButton() {
 		
-        // Check for availability of network connection using Network available class
-        if NetworkAvailable.networkConnection() == true {
+		UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+		
+		// Network reachability checking
+		guard Reachability.validNetworkConnection() else {
+			return Reachability.presentUnavailableAlert()
+		}
+
 			
-            // Appearance settings for Digits pop up menu
-            let digitsAppearance = DGTAppearance()
-            digitsAppearance.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
-            digitsAppearance.accentColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
-            
-            let digits = Digits.sharedInstance()
-            
-            // Initiate digits session
-            digits.authenticateWithDigitsAppearance(digitsAppearance, viewController: nil, title: "Sign in to Backflip") { (session, error) in
-                if session != nil {
-					
-					let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                    dispatch_async(dispatch_get_global_queue(priority, 0)) {
-                        let query = PFUser.query()
-                        query!.whereKey("phone", equalTo: session.phoneNumber)
-                        query!.limit = 1
-                        let phoneResult = query!.findObjects()
-                        
-                        
-                        // Use the UUID to check if user has logged in before via Facebook method
-                        let deviceQuery = PFUser.query()
-                        deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().identifierForVendor!.UUIDString)
-                        deviceQuery?.limit = 1
-                        
-                        
-                        // Result will have content if user has signed up already, will be nil if there is no internet
-                        if (phoneResult == nil) {
-                            self.displayNoInternetAlert()
-                            
-                        } else {
-                            
-                            if (phoneResult!.count == 0) {
-                                deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
-                                    if error == nil{
-                                        if results!.count == 0 {
-                                            
-                                            // Results == 0 means user does not exist yet
-                                            // If user proceeds with phone authentication, login with phonenumber to parse database
-                                            if error == nil {
-                                                // Initialize whatever data necessary for every user being put in database
-                                                let user = PFUser()
-                                                user.username = session.phoneNumber
-                                                user.password = session.phoneNumber
-                                                user["photosLiked"] = []
-                                                user["phone"] = session.phoneNumber
-                                                user["savedEvents"] = []
-                                                user["savedEventNames"] = []
-                                                user["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
-                                                user["blocked"] = false
-                                                user["firstUse"] = true
-                                                
-                                                //Initialize the user in the database
-                                                user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
-                                                    
-                                                    if error == nil {
-                                                        
-                                                        print("Signed Up")
-                                                        //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                                        self.dismissViewControllerAnimated(true, completion: nil)
-    
-                                                        
-                                                    } else {
-                                                        print(error)
-                                                    }
-                                                }
-                                            }
-                                            
-                                        } else {
-                                            
-                                            // User had logged in with facebook. Set the phonenumber in appropriate fields, login
-                                            let oldUser = results!.first! as! PFUser
-											
-											PFUser.logInWithUsernameInBackground(oldUser.username!, password: "backflip-pass-"+oldUser.username!, block: { (user : PFUser?, error) -> Void in
-												
-												if (error == nil && user != nil) {
-													
-													user!["phone"] = session.phoneNumber
-													user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
-													user!.saveInBackgroundWithBlock(nil)
-													
-													self.dismissViewControllerAnimated(true, completion: nil)
-												} else {
-													print(error)
-												}
-												
-											})
-                                        }
-                                    } else {
-                                        print(error)
-                                    }
-                                    
-                                }
-                                
-                            } else {
-                                
-                                // User has logged in before with either facebook or digits
-                                deviceQuery?.findObjectsInBackgroundWithBlock{ (results:[AnyObject]?, error: NSError?) -> Void in
-                                    //User has phone number, logged in wih Digits
-                                    let user = phoneResult?.first as! PFUser
-                                    
-                                    // Check for blocked. User must have account to be blocked. If not blocked, log in with username
-                                    if (user["blocked"] as! Bool == false) {
-                                        
-                                        // Logged in with digits before, account may or may not be linked to FB. Login normally
-                                        if user.username! == session.phoneNumber {
-                                            // If user proceeds with phone authentication, login with phonenumber to parse database
-                                            PFUser.logInWithUsernameInBackground(session.phoneNumber, password: session.phoneNumber) { (user , error) -> Void in
-                                                
-                                                // If older user, with no UUID, set the UUID
-                                                let uuid = user?["UUID"] as? String
-                                                
-                                                if user != nil {
-                                                    
-                                                    if uuid == nil {
-                                                        
-                                                        user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
-                                                        user?.saveInBackground()
-                                                        
-                                                    }
-                                                    
-                                                    print("Log in successful")
-                                                    //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                                    self.dismissViewControllerAnimated(true, completion: nil)
-    
-                                                    
-                                                }
-                                            }
-										} else if (user.username!.characters.contains("+") == false) {
-										
-											PFUser.logInWithUsernameInBackground(user.username!, password: "backflip-pass-"+user.username!, block: { (user, error) -> Void in
-												
-												user!.username = session.phoneNumber
-												user!.password = session.phoneNumber
-												user!["phone"] = session.phoneNumber
-												user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
-												
-												user!.saveInBackground()
-												
-												//self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-												self.dismissViewControllerAnimated(true, completion: nil)
-												
-											})
-											
-										} else {
-											
-                                            let oldUser = results!.first as! PFUser
-											
-                                            PFUser.logInWithUsernameInBackground(oldUser.username!, password: "Password") { (user, error) -> Void in
-                                                
-                                                user!.username = session.phoneNumber
-                                                user!.password = session.phoneNumber
-                                                user!["phone"] = session.phoneNumber
-												user!["UUID"] = UIDevice.currentDevice().identifierForVendor!.UUIDString
-												
-                                                user!.saveInBackground()
-                                                
-                                                //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                                                self.dismissViewControllerAnimated(true, completion: nil)
-    
-                                                
-                                            }
-                                        }
-                                        
-                                    } else {
-                                        Digits.sharedInstance().logOut()
-                                        PFUser.logOut()
-                                        print("User is Blocked")
-                                        self.displayAlertUserBlocked("You have been blocked", error: "You have uploaded inappropriate content. Please email contact@getbackflip.com for more information.")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
-            }
-        } else {
-            displayNoInternetAlert()
-        }
+		// Appearance settings for Digits pop up menu
+		let digitsAppearance = DGTAppearance()
+		digitsAppearance.backgroundColor = UIColor.whiteColor()
+		digitsAppearance.accentColor = UIColor(red: 0/255, green: 150/255, blue: 136/255, alpha: 1)
+			
+		
+		// Initiate digits session
+		let digits = Digits.sharedInstance()
+		digits.authenticateWithDigitsAppearance(digitsAppearance, viewController: nil, title: "Sign in to Backflip") { (session, error) in
+			
+			UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+				
+			BFParseManager.sharedManager.login(session, facebookResult: nil, uponCompletion: { (completed, error) -> Void in
+				
+				if (completed == true) {
+					self.dismissViewControllerAnimated(true, completion: nil)
+				}
+				
+				print("Login completed = \(completed)")
+				print("Login error = \(error)")
+				
+			})
+			
+		}
     }
 
 
     override func viewDidAppear(animated: Bool) {
         self.hidesBottomBarWhenPushed = true
-        if NetworkAvailable.networkConnection() == true {
+        if Reachability.validNetworkConnection() == true {
         // Check if the user is already logged in
             if PFUser.currentUser() != nil {
                 let query = PFUser.query()
@@ -458,7 +330,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
                             // Segue done here instead of viewDidLoad() because segues will not be created at viewDidLoad()
                             // print(Digits.sharedInstance().session())
                             //self.performSegueWithIdentifier("jumpToEventCreation", sender: self)
-                            self.performSegueWithIdentifier("toTabBar", sender: self)
+                            // self.performSegueWithIdentifier("toTabBar", sender: self)
 
                         }
                         else {

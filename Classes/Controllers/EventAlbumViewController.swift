@@ -248,6 +248,11 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		let photo = collectionContent[Int(index)]
 		let _photo = MWPhoto(URL: NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://")))
 	
+		if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
+			_photo.caption = photo.caption
+		}
+		
+		
 		return _photo
 	}
 	
@@ -300,9 +305,13 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 		} else if (self.collectionContent.count >= indexPath.row) {
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
-
-			cell.prepareForReuse()
 			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+
+			if (cell.imageUrl != imageUrl) {
+				cell.imageView?.image = nil
+			}
+
+			cell.imageUrl = imageUrl
 			cell.imageView!.setImageWithURL(imageUrl, placeholder: nil, crossFadePlaceholder: true, cacheScaled: true, completion: nil)
 		
 		}
@@ -317,7 +326,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		if (indexPath.row == 0) {
 
-			BFTabBarControllerDelegate.sharedDelegate.displayCamera(self.event!)
+			BFTabBarControllerDelegate.sharedDelegate.displayImagePickerSheet(self.event!)
 			
 		} else {
 		
@@ -349,7 +358,7 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 			likeBarButton.width = 40
 			
 			photoBrowser?.toolbar?.items = [likeBarButton, likeLabelButton, flexSpace, shareBarButton]
-		
+			
 			photoBrowser?.setCurrentPhotoIndex(UInt(indexPath.row)-1)
 		
 			self.navigationController?.pushViewController(photoBrowser!, animated: true)
@@ -699,6 +708,10 @@ class EventAlbumViewController : UICollectionViewController, MWPhotoBrowserDeleg
 	{
 		BFDataFetcher.sharedFetcher.fetchDataInBackground { (completed) -> Void in
 			self.updateData();
+
+			let event = Event.MR_findFirstByAttribute("objectId", withValue: self.event!.objectId!)
+			(self.navigationItem.titleView as? UILabel)?.text = event.name!
+			(self.navigationItem.titleView as? UILabel)?.sizeToFit()
 		}
 	}
 	
