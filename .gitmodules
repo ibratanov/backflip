@@ -28,7 +28,7 @@
 	ignore = dirty
 [submodule "Vendor/QBImagePicker"]
 	path = Vendor/QBImagePicker
-	url = git@github.com:questbeat/QBImagePicker.git
+	url = git@github.com:JackoPlane/QBImagePicker.git
 [submodule "Vendor/ImagePickerSheetController"]
 	path = Vendor/ImagePickerSheetController
 	url = git@github.com:larcus94/ImagePickerSheetController.git
