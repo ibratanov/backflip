@@ -42,7 +42,7 @@ class MasterViewController : UITableViewController
 		let cell = tableView.dequeueReusableCellWithIdentifier("cell-identifier", forIndexPath: indexPath)
 		
 		let object = self.eventObjects[indexPath.row]
-		cell.textLabel?.text = object["eventName"] as! String
+		cell.textLabel?.text = object["eventName"] as? String
 		
 		return cell
 	}
@@ -52,6 +52,9 @@ class MasterViewController : UITableViewController
 	
 	func fetchData()
 	{
+		if (Reachability.validNetworkConnection() == false) {
+			return
+		}
 		
 		let attendanceQuery = PFQuery(className: "EventAttendance")
 		attendanceQuery.whereKey("attendeeID", equalTo: "5PBeFb6CKX")
@@ -60,12 +63,16 @@ class MasterViewController : UITableViewController
 			
 			print("We have \(attendances?.count) results..")
 			
+			if (attendances?.count < 1 || attendances != nil) {
+				return
+			}
+			
 			self.eventObjects.removeAll()
 			for attendance in attendances! {
 				self.eventObjects.append((attendance["event"] as! PFObject))
 			}
 			
-			self.tableView.reloadData()
+			// self.tableView.reloadData()
 		}
 		
 		

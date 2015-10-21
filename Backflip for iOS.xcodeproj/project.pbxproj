@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		040756B71BD6D34300F95E96 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040756AE1BD6D2E100F95E96 /* Parse.framework */; };
 		040756B81BD6D34300F95E96 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 040756AE1BD6D2E100F95E96 /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		040756BF1BD6D54500F95E96 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040756BE1BD6D54500F95E96 /* Bolts.framework */; };
 		040756C11BD6DC2100F95E96 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C01BD6DC2100F95E96 /* MasterViewController.swift */; };
 		040756C31BD6DD3700F95E96 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C21BD6DD3700F95E96 /* DetailViewController.swift */; };
 		040756C51BD6DD6F00F95E96 /* GradientMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */; };
@@ -130,6 +129,9 @@
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
 		048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0496D1231BD83ADA003B0EDC /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0496D0FC1BD83AC9003B0EDC /* Bolts.framework */; };
+		0496D1241BD83ADA003B0EDC /* Bolts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0496D0FC1BD83AC9003B0EDC /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0496D12B1BD83E5E003B0EDC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7121BA9ADB800AC6AA3 /* Parse.framework */; };
 		049738201BD805CB00B58F70 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; };
 		049738211BD805CB00B58F70 /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */; };
@@ -153,7 +155,6 @@
 		04D7D7051BA9ACC000AC6AA3 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7001BA9ACC000AC6AA3 /* smile.png */; };
 		04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7011BA9ACC000AC6AA3 /* star.png */; };
 		04D7D7161BA9ADB800AC6AA3 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7111BA9ADB800AC6AA3 /* Bolts.framework */; };
-		04D7D7171BA9ADB800AC6AA3 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7121BA9ADB800AC6AA3 /* Parse.framework */; };
 		04ED9B091BC2D959008493E3 /* BFLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B081BC2D959008493E3 /* BFLocationManager.swift */; };
 		04ED9B0C1BC2FC26008493E3 /* PreProcessorMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B0B1BC2FC26008493E3 /* PreProcessorMacros.m */; };
 		04ED9B141BC30337008493E3 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04ED9B131BC30331008493E3 /* Mixpanel.framework */; };
@@ -316,6 +317,69 @@
 			remoteGlobalIDString = 0EC25C581BA385AA004191AF;
 			remoteInfo = "Locksmith iOS";
 		};
+		0496D0F71BD83AC9003B0EDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EDDA63517E17DDD00655F8A;
+			remoteInfo = "Bolts-iOS";
+		};
+		0496D0F91BD83AC9003B0EDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EDDA63517E17DDD00655F8A;
+			remoteInfo = "Bolts-OSX";
+		};
+		0496D0FB1BD83AC9003B0EDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F5AFCA021BA752750076E927;
+			remoteInfo = "Bolts-tvOS";
+		};
+		0496D0FD1BD83AC9003B0EDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8178F99C1BB0F87700AD289D;
+			remoteInfo = "Bolts-watchOS";
+		};
+		0496D0FF1BD83AC9003B0EDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8E8C8EE917F23D1D00E3F1C7;
+			remoteInfo = "BoltsTests-iOS";
+		};
+		0496D1011BD83AC9003B0EDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8E8C8F1917F241DA00E3F1C7;
+			remoteInfo = "BoltsTests-OSX";
+		};
+		0496D1031BD83AC9003B0EDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F5AFCA131BA752770076E927;
+			remoteInfo = "BoltsTests-tvOS";
+		};
+		0496D1051BD83AC9003B0EDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1EC3016018CDAA8400D06D07;
+			remoteInfo = BoltsTestUI;
+		};
+		0496D1251BD83ADA003B0EDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F5AFC9EA1BA752750076E927;
+			remoteInfo = "Bolts-tvOS";
+		};
 		049738161BD805C500B58F70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
@@ -438,6 +502,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				040756B81BD6D34300F95E96 /* Parse.framework in Embed Frameworks */,
+				0496D1241BD83ADA003B0EDC /* Bolts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,7 +527,6 @@
 
 /* Begin PBXFileReference section */
 		040756971BD6D2E000F95E96 /* Parse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Parse.xcodeproj; path = "../../../../../../../../private/tmp/Parse-SDK-iOS-OSX/Parse.xcodeproj"; sourceTree = "<group>"; };
-		040756BE1BD6D54500F95E96 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		040756C01BD6DC2100F95E96 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		040756C21BD6DD3700F95E96 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientMaskView.swift; sourceTree = "<group>"; };
@@ -575,6 +639,7 @@
 		048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		048939BF1BD0451C005400CA /* Locksmith.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Locksmith.xcodeproj; path = Vendor/Locksmith/Locksmith.xcodeproj; sourceTree = "<group>"; };
 		0495F1751BAB0CC0002E609E /* Frontflip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Frontflip.entitlements; sourceTree = "<group>"; };
+		0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Bolts.xcodeproj; path = "../../../../../../../../private/tmp/Parse-SDK-iOS-OSX/Vendor/Bolts-ObjC/Bolts.xcodeproj"; sourceTree = "<group>"; };
 		0497380E1BD805C500B58F70 /* Nuke.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nuke.xcodeproj; path = Vendor/Nuke/Nuke/Nuke.xcodeproj; sourceTree = "<group>"; };
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -634,7 +699,7 @@
 				0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */,
 				0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */,
 				040756B71BD6D34300F95E96 /* Parse.framework in Frameworks */,
-				040756BF1BD6D54500F95E96 /* Bolts.framework in Frameworks */,
+				0496D1231BD83ADA003B0EDC /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +711,7 @@
 				040FD10B1BB2F19500DDB1A5 /* libc++.tbd in Frameworks */,
 				040FD1061BB2F14300DDB1A5 /* libsqlite3.tbd in Frameworks */,
 				040FD10C1BB2F19500DDB1A5 /* libstdc++.tbd in Frameworks */,
+				0496D12B1BD83E5E003B0EDC /* Parse.framework in Frameworks */,
 				040FD7881BD571090039CDAA /* Instabug.framework in Frameworks */,
 				040EB5D91BC8187F00452620 /* Photos.framework in Frameworks */,
 				048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */,
@@ -656,7 +722,6 @@
 				04ED9B1E1BC3037D008493E3 /* FBSDKCoreKit.framework in Frameworks */,
 				502199C21B33833E00A64387 /* AVFoundation.framework in Frameworks */,
 				04CA5DCD1B8B9F900075C0A8 /* CoreData.framework in Frameworks */,
-				04D7D7171BA9ADB800AC6AA3 /* Parse.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
 				04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */,
 				0439D3281B876EA9001850DD /* Security.framework in Frameworks */,
@@ -991,7 +1056,7 @@
 		0485F6D81BD5B41A00E0465D /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				040756BE1BD6D54500F95E96 /* Bolts.framework */,
+				0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */,
 				040756971BD6D2E000F95E96 /* Parse.xcodeproj */,
 			);
 			path = Parse;
@@ -1030,6 +1095,21 @@
 				04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		0496D0ED1BD83AC9003B0EDC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0496D0F81BD83AC9003B0EDC /* Bolts.framework */,
+				0496D0FA1BD83AC9003B0EDC /* Bolts.framework */,
+				0496D0FC1BD83AC9003B0EDC /* Bolts.framework */,
+				0496D0FE1BD83AC9003B0EDC /* Bolts.framework */,
+				0496D1001BD83AC9003B0EDC /* BoltsTests-iOS.xctest */,
+				0496D1021BD83AC9003B0EDC /* BoltsTests-OSX.xctest */,
+				0496D1041BD83AC9003B0EDC /* BoltsTests-tvOS.xctest */,
+				0496D1061BD83AC9003B0EDC /* BoltsTestUI.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		0497380F1BD805C500B58F70 /* Products */ = {
@@ -1297,6 +1377,7 @@
 			);
 			dependencies = (
 				040756BA1BD6D34300F95E96 /* PBXTargetDependency */,
+				0496D1261BD83ADA003B0EDC /* PBXTargetDependency */,
 			);
 			name = BackflipTV;
 			productName = "Backflip TV";
@@ -1378,6 +1459,10 @@
 			productRefGroup = 81BA81461A49DA1800E65899 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 0496D0ED1BD83AC9003B0EDC /* Products */;
+					ProjectRef = 0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */;
+				},
 				{
 					ProductGroup = 048939C01BD0451C005400CA /* Products */;
 					ProjectRef = 048939BF1BD0451C005400CA /* Locksmith.xcodeproj */;
@@ -1526,6 +1611,62 @@
 			fileType = wrapper.framework;
 			path = Locksmith.framework;
 			remoteRef = 048939CF1BD0451C005400CA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0496D0F81BD83AC9003B0EDC /* Bolts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Bolts.framework;
+			remoteRef = 0496D0F71BD83AC9003B0EDC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0496D0FA1BD83AC9003B0EDC /* Bolts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Bolts.framework;
+			remoteRef = 0496D0F91BD83AC9003B0EDC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0496D0FC1BD83AC9003B0EDC /* Bolts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Bolts.framework;
+			remoteRef = 0496D0FB1BD83AC9003B0EDC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0496D0FE1BD83AC9003B0EDC /* Bolts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Bolts.framework;
+			remoteRef = 0496D0FD1BD83AC9003B0EDC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0496D1001BD83AC9003B0EDC /* BoltsTests-iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "BoltsTests-iOS.xctest";
+			remoteRef = 0496D0FF1BD83AC9003B0EDC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0496D1021BD83AC9003B0EDC /* BoltsTests-OSX.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "BoltsTests-OSX.xctest";
+			remoteRef = 0496D1011BD83AC9003B0EDC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0496D1041BD83AC9003B0EDC /* BoltsTests-tvOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "BoltsTests-tvOS.xctest";
+			remoteRef = 0496D1031BD83AC9003B0EDC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0496D1061BD83AC9003B0EDC /* BoltsTestUI.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = BoltsTestUI.app;
+			remoteRef = 0496D1051BD83AC9003B0EDC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		049738171BD805C500B58F70 /* Nuke.framework */ = {
@@ -1824,6 +1965,11 @@
 			name = "Locksmith iOS";
 			targetProxy = 048939D31BD0452A005400CA /* PBXContainerItemProxy */;
 		};
+		0496D1261BD83ADA003B0EDC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Bolts-tvOS";
+			targetProxy = 0496D1251BD83ADA003B0EDC /* PBXContainerItemProxy */;
+		};
 		049738231BD805CB00B58F70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Nuke iOS";
@@ -1861,18 +2007,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
 					"$(PROJECT_DIR)/Vendor/Parse",
-					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
-					"$(PROJECT_DIR)/Backflip",
-					TV/Vendor/Parse,
-					"$(PROJECT_DIR)/Backflip",
-					TV/Vendor/Parse,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/Vendor/**",
-					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
-				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Vendor/**";
 				INFOPLIST_FILE = "Backflip TV/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Vendor/**";
@@ -1900,18 +2038,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
 					"$(PROJECT_DIR)/Vendor/Parse",
-					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
-					"$(PROJECT_DIR)/Backflip",
-					TV/Vendor/Parse,
-					"$(PROJECT_DIR)/Backflip",
-					TV/Vendor/Parse,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/Vendor/**",
-					"$(PROJECT_DIR)/Vendor/MagicalReord/build/**",
-				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Vendor/**";
 				INFOPLIST_FILE = "Backflip TV/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Vendor/**";
@@ -2038,6 +2168,7 @@
 					"$(PROJECT_DIR)/Instabug",
 					"$(PROJECT_DIR)/Backflip",
 					TV/Vendor/Parse,
+					"$(PROJECT_DIR)/Vendor/Parse",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2121,6 +2252,7 @@
 					"$(PROJECT_DIR)/Instabug",
 					"$(PROJECT_DIR)/Backflip",
 					TV/Vendor/Parse,
+					"$(PROJECT_DIR)/Vendor/Parse",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

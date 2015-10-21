@@ -77,6 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 	
 	func setupParse()
 	{
+		if (Reachability.validNetworkConnection() == false) {
+			return
+		}
+		
 		//#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 		//#else
