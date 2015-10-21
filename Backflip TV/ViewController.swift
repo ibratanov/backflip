@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
 	@IBAction func updateDataTouched(sender: AnyObject)
 	{
-		BFDataFetcher.sharedFetcher.fetchData(false)
+		// BFDataFetcher.sharedFetcher.fetchData(false)
 	}
 
 }
