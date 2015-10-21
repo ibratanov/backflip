@@ -250,8 +250,8 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			var liked = photo.usersLiked!.contains(currentUser!.objectId!)
 			if (currentUser!["phone_number"] != nil && photo.usersLiked!.contains((currentUser!["phone_number"] as! String))) {
 				liked = true
-			} else if (currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((currentUser!["facebook_id"] as! String))) {
-				liked = true
+			} else if currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((String(currentUser!["facebook_id"]))) {
+                liked = true
 			}
 			
 			
@@ -428,7 +428,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			for (var i = 0; i < photos.count; i++) {
 				let photo = photos[i]
 				if (photo.usersLiked != nil) {
-					let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
+					let liked = (photo.usersLiked!.contains(PFUser.currentUser()!.username!) || photo.usersLiked!.contains(PFUser.currentUser()!.objectId!))
 					if (liked) {
 						content.append(photo)
 					}
@@ -533,8 +533,8 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 				var liked = photo.usersLiked!.contains(currentUser!.objectId!)
 				if (currentUser!["phone_number"] != nil && photo.usersLiked!.contains((currentUser!["phone_number"] as! String))) {
 					liked = true
-				} else if (currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((currentUser!["facebook_id"] as! String))) {
-					liked = true
+                } else if currentUser!["facebook_id"] != nil && photo.usersLiked!.contains(String(currentUser!["facebook_id"])) {
+                    liked = true
 				}
 				
 				if (liked) {
@@ -543,7 +543,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					if (index == nil && currentUser!["phone_number"] != nil) {
 						index = liked.indexOf((currentUser!["phone_number"] as! String))
 					} else if (index == nil && currentUser!["facebook_id"] != nil) {
-						index = liked.indexOf((currentUser!["facebook_id"] as! String))
+						index = liked.indexOf(String(currentUser!["facebook_id"]))
 					}
 					
 					liked.removeAtIndex(index!)
@@ -581,7 +581,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					let _photo = self.collectionContent[Int(selectedIndex!)]
 					let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 					if (photo.usersLiked != nil) {
-						let liked = photo.usersLiked!.contains(PFUser.currentUser()!.username!)
+						let liked = (photo.usersLiked!.contains(PFUser.currentUser()!.username!) || photo.usersLiked!.contains(PFUser.currentUser()!.objectId!))
 						if (liked) {
 							self.photoBrowser?.likeButton?.tintColor = UIColor(red:1,  green:0.216,  blue:0.173, alpha:1)
 							self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOn")

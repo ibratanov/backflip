@@ -42,7 +42,6 @@ public class BFPhotoBrowser : SKPhotoBrowser
 	{
 		super.viewWillAppear(animated)
 		
-		likeButton?.tintColor = UIColor.whiteColor()
 		shareButton?.tintColor = UIColor.whiteColor()
 		trashButton?.tintColor = UIColor.whiteColor()
 		
