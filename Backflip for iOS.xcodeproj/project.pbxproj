@@ -80,7 +80,6 @@
 		0439D3A51B8B81A6001850DD /* EventAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */; };
 		0439D3A81B8B81A6001850DD /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3A01B8B81A6001850DD /* InviteViewController.swift */; };
 		0439D3A91B8B81A6001850DD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3A11B8B81A6001850DD /* LoginViewController.swift */; };
-		0439D3B01B8B8249001850DD /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */; };
 		0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3B51B8B82E2001850DD /* Launch Screen.xib */; };
 		0439D3BB1B8B82E2001850DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3B61B8B82E2001850DD /* Main.storyboard */; };
 		0439D3C01B8B83AE001850DD /* ReportImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3BF1B8B83AE001850DD /* ReportImage.swift */; };
@@ -469,7 +468,7 @@
 		040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientMaskView.swift; sourceTree = "<group>"; };
 		040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItemCellComposer.swift; sourceTree = "<group>"; };
 		040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItemCollectionViewCell.swift; sourceTree = "<group>"; };
-		040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAlbumCell.swift; sourceTree = "<group>"; };
+		040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventAlbumCell.swift; path = ../Controllers/EventAlbumCell.swift; sourceTree = "<group>"; };
 		040B27D11B794E9B004B4FB2 /* Event+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Share.swift"; sourceTree = "<group>"; };
 		040EB59A1BC815EA00452620 /* Backflip TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Backflip TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		040EB59C1BC815EA00452620 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -523,7 +522,6 @@
 		0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAlbumViewController.swift; sourceTree = "<group>"; };
 		0439D3A01B8B81A6001850DD /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		0439D3A11B8B81A6001850DD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
 		0439D3B51B8B82E2001850DD /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		0439D3B61B8B82E2001850DD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0439D3BF1B8B83AE001850DD /* ReportImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportImage.swift; sourceTree = "<group>"; };
@@ -697,7 +695,6 @@
 			isa = PBXGroup;
 			children = (
 				0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */,
-				040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */,
 			);
 			name = "Event Album";
 			sourceTree = "<group>";
@@ -1088,7 +1085,7 @@
 		04B610311BB98FEE00C1AF1E /* Collection View */ = {
 			isa = PBXGroup;
 			children = (
-				0439D3AD1B8B8249001850DD /* AlbumViewCell.swift */,
+				040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */,
 				042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */,
 				042E8D791BB347FB00D61412 /* EventHistoryCollectionViewCell.swift */,
 				041312A61BB47A1B00C0E4D9 /* EventHistoryViewFlowLayout.swift */,
@@ -1801,7 +1798,6 @@
 				04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				0439D3DE1B8B93A5001850DD /* Backflip.xcdatamodeld in Sources */,
-				0439D3B01B8B8249001850DD /* AlbumViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

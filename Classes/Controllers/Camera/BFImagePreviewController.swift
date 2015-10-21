@@ -76,7 +76,7 @@ public class BFImagePreviewController : UIViewController, UITextViewDelegate
 		// Image View
 		imageView = UIImageView()
 		imageView?.image = self.image
-		imageView?.contentMode = .ScaleToFill
+		imageView?.contentMode = .ScaleAspectFill
 		self.view.addSubview(imageView!)
 
 
