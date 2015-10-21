@@ -29,12 +29,16 @@
 [submodule "Vendor/QBImagePicker"]
 	path = Vendor/QBImagePicker
 	url = git@github.com:JackoPlane/QBImagePicker.git
+	ignore = dirty
 [submodule "Vendor/ImagePickerSheetController"]
 	path = Vendor/ImagePickerSheetController
 	url = git@github.com:larcus94/ImagePickerSheetController.git
+	ignore = dirty
 [submodule "Vendor/Locksmith"]
 	path = Vendor/Locksmith
 	url = git@github.com:matthewpalmer/Locksmith.git
+	ignore = dirty
 [submodule "Vendor/SKPhotoBrowser"]
 	path = Vendor/SKPhotoBrowser
 	url = git@github.com:suzuki-0000/SKPhotoBrowser.git
+	ignore = dirty

@@ -250,7 +250,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			var liked = photo.usersLiked!.contains(currentUser!.objectId!)
 			if (currentUser!["phone_number"] != nil && photo.usersLiked!.contains((currentUser!["phone_number"] as! String))) {
 				liked = true
-			} else if currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((String(currentUser!["facebook_id"]))) {
+			} else if currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((currentUser!["facebook_id"] as! NSNumber).stringValue) {
                 liked = true
 			}
 			
