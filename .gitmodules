@@ -42,3 +42,6 @@
 	path = Vendor/SKPhotoBrowser
 	url = git@github.com:suzuki-0000/SKPhotoBrowser.git
 	ignore = dirty
+[submodule "Vendor/Nuke"]
+	path = Vendor/Nuke
+	url = git@github.com:kean/Nuke.git

@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(*, unavailable, renamed="EventAlbumCell")
 public class AlbumViewCell: UICollectionViewCell
 {
     
@@ -31,9 +32,6 @@ public class AlbumViewCell: UICollectionViewCell
 		imageView = UIImageView(frame: self.bounds)
 		self.backgroundView?.addSubview(imageView!)
 	}
-
-
-
 
 
 	override public func prepareForReuse()

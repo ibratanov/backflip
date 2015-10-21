@@ -8,6 +8,7 @@ framework module DigitsKit {
 
     header "DGTAppearance.h"
     header "DGTAuthenticateButton.h"
+    header "DGTAuthenticationConfiguration.h"
     header "DGTCompletionViewController.h"
     header "DGTContactAccessAuthorizationStatus.h"
     header "DGTContacts.h"

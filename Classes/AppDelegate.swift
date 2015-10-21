@@ -31,6 +31,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		//--------------------------------------
 		setupAnalytics()
 		setupParse()
+		setupCaching()
 		setupBranch(launchOptions)
 		setupCoreData()
 		setupApperance()
@@ -295,7 +296,26 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	}
 
 	
-    
+	//--------------------------------------
+	// MARK: Caching
+	//--------------------------------------
+	
+	func setupCaching()
+	{
+		#if DEBUG
+			print("📁 Diskcache \(NSURLCache.sharedURLCache().currentDiskUsage) of \(NSURLCache.sharedURLCache().diskCapacity)")
+			print("📁 Memorycache \(NSURLCache.sharedURLCache().currentMemoryUsage) of \(NSURLCache.sharedURLCache().memoryCapacity)")
+		#endif
+		
+		
+		let memoryCacheSize = 100*1024*1024 // 100 MB
+		let diskCacheSize = 500*1024*1024 // 500 MB
+		
+		let sharedCache = NSURLCache(memoryCapacity: memoryCacheSize, diskCapacity: diskCacheSize, diskPath: "backflip-nsurl-cache")
+		NSURLCache.setSharedURLCache(sharedCache)
+	}
+	
+	
     //--------------------------------------
     // MARK: Branch.io
     //--------------------------------------

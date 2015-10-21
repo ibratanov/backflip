@@ -133,12 +133,12 @@
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).CurrentEvent</string>
 		</dict>
 		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>tabBar-camera-filled</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Capture Photo</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Camera</string>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>tabBar-camera-filled</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconFile</key>

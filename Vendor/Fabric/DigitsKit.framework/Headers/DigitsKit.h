@@ -24,6 +24,7 @@
 
 #import "DGTAppearance.h"
 #import "DGTAuthenticateButton.h"
+#import "DGTAuthenticationConfiguration.h"
 #import "DGTCompletionViewController.h"
 #import "DGTContactAccessAuthorizationStatus.h"
 #import "DGTContacts.h"

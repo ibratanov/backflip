@@ -15,6 +15,7 @@
 		040756C51BD6DD6F00F95E96 /* GradientMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */; };
 		040756C81BD6DD8800F95E96 /* DataItemCellComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */; };
 		040756C91BD6DD8800F95E96 /* DataItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */; };
+		040756F71BD7E6F200F95E96 /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event+Share.swift */; };
 		040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB59C1BC815EA00452620 /* AppDelegate.swift */; };
 		040EB59F1BC815EA00452620 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB59E1BC815EA00452620 /* ViewController.swift */; };
@@ -130,6 +131,8 @@
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
 		048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		049738201BD805CB00B58F70 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; };
+		049738211BD805CB00B58F70 /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */; };
 		04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */; };
 		04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */; };
@@ -316,6 +319,48 @@
 			remoteGlobalIDString = 0EC25C581BA385AA004191AF;
 			remoteInfo = "Locksmith iOS";
 		};
+		049738161BD805C500B58F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C9174901BAE99EE004A7905;
+			remoteInfo = "Nuke iOS";
+		};
+		049738181BD805C500B58F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C22DA2C1BCAA220006E1D3B;
+			remoteInfo = "Nuke OSX";
+		};
+		0497381A1BD805C500B58F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C22D9C51BCA9734006E1D3B;
+			remoteInfo = "Nuke watchOS";
+		};
+		0497381C1BD805C500B58F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C7C06771BCA882A00089D7F;
+			remoteInfo = "Nuke iOS Tests";
+		};
+		0497381E1BD805C500B58F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C22DA381BCAA22A006E1D3B;
+			remoteInfo = "Nuke OSX Tests";
+		};
+		049738221BD805CB00B58F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C91748F1BAE99EE004A7905;
+			remoteInfo = "Nuke iOS";
+		};
 		04CCD6501B8CB70500664FB3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
@@ -433,6 +478,7 @@
 				04E39D551BA895B40061EA36 /* MapleBacon.framework in Embed Frameworks */,
 				040FD7811BD553110039CDAA /* SKPhotoBrowser.framework in Embed Frameworks */,
 				046D98D91BCAAB49004B3DCD /* QBImagePicker.framework in Embed Frameworks */,
+				049738211BD805CB00B58F70 /* Nuke.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,6 +493,7 @@
 		040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientMaskView.swift; sourceTree = "<group>"; };
 		040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItemCellComposer.swift; sourceTree = "<group>"; };
 		040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAlbumCell.swift; sourceTree = "<group>"; };
 		040B27D11B794E9B004B4FB2 /* Event+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Share.swift"; sourceTree = "<group>"; };
 		040EB59A1BC815EA00452620 /* Backflip TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Backflip TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		040EB59C1BC815EA00452620 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -554,6 +601,7 @@
 		048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		048939BF1BD0451C005400CA /* Locksmith.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Locksmith.xcodeproj; path = Vendor/Locksmith/Locksmith.xcodeproj; sourceTree = "<group>"; };
 		0495F1751BAB0CC0002E609E /* Frontflip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Frontflip.entitlements; sourceTree = "<group>"; };
+		0497380E1BD805C500B58F70 /* Nuke.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nuke.xcodeproj; path = Vendor/Nuke/Nuke/Nuke.xcodeproj; sourceTree = "<group>"; };
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ParseObject+CoreDataProperties.swift"; path = "Models/ParseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -629,6 +677,7 @@
 				040EB5D91BC8187F00452620 /* Photos.framework in Frameworks */,
 				048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */,
 				04ED9B141BC30337008493E3 /* Mixpanel.framework in Frameworks */,
+				049738201BD805CB00B58F70 /* Nuke.framework in Frameworks */,
 				04ED9B1B1BC30374008493E3 /* NewRelicAgent.framework in Frameworks */,
 				04ED9B201BC3037D008493E3 /* FBSDKLoginKit.framework in Frameworks */,
 				04ED9B1E1BC3037D008493E3 /* FBSDKCoreKit.framework in Frameworks */,
@@ -668,6 +717,23 @@
 				040756B01BD6D2E100F95E96 /* Parse.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		040756DA1BD7E6AF00F95E96 /* Event Album */ = {
+			isa = PBXGroup;
+			children = (
+				0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */,
+				040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */,
+			);
+			name = "Event Album";
+			sourceTree = "<group>";
+		};
+		040756F81BD8053B00F95E96 /* Nuke */ = {
+			isa = PBXGroup;
+			children = (
+				0497380E1BD805C500B58F70 /* Nuke.xcodeproj */,
+			);
+			name = Nuke;
 			sourceTree = "<group>";
 		};
 		040EB59B1BC815EA00452620 /* Backflip TV */ = {
@@ -750,6 +816,7 @@
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				040756F81BD8053B00F95E96 /* Nuke */,
 				040FD7841BD571090039CDAA /* Instabug */,
 				040FD7791BD552E70039CDAA /* SKPhotoBrowser */,
 				048939BE1BD04513005400CA /* Locksmith */,
@@ -995,6 +1062,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		0497380F1BD805C500B58F70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				049738171BD805C500B58F70 /* Nuke.framework */,
+				049738191BD805C500B58F70 /* Nuke.framework */,
+				0497381B1BD805C500B58F70 /* Nuke.framework */,
+				0497381D1BD805C500B58F70 /* Nuke iOS Tests.xctest */,
+				0497381F1BD805C500B58F70 /* Nuke OSX Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		04B1C6511B97648C00F30C80 /* DOFavoriteButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1154,10 +1233,10 @@
 		04F41BEE1B74FBF4001AB8DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				040756DA1BD7E6AF00F95E96 /* Event Album */,
 				046D98DD1BCAABA8004B3DCD /* Camera */,
 				0439D3D41B8B8896001850DD /* CheckinViewController.swift */,
 				0439D39C1B8B81A6001850DD /* CreatePublicEventViewController.swift */,
-				0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */,
 				042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */,
 				0439D3A01B8B81A6001850DD /* InviteViewController.swift */,
 				0439D3A11B8B81A6001850DD /* LoginViewController.swift */,
@@ -1289,6 +1368,7 @@
 				046D98DB1BCAAB49004B3DCD /* PBXTargetDependency */,
 				048939D41BD0452A005400CA /* PBXTargetDependency */,
 				040FD7831BD553110039CDAA /* PBXTargetDependency */,
+				049738231BD805CB00B58F70 /* PBXTargetDependency */,
 			);
 			name = Backflip;
 			productName = ParseStarterProject;
@@ -1361,6 +1441,10 @@
 				{
 					ProductGroup = 04ED9B0F1BC30331008493E3 /* Products */;
 					ProjectRef = 04ED9B0E1BC30331008493E3 /* Mixpanel.xcodeproj */;
+				},
+				{
+					ProductGroup = 0497380F1BD805C500B58F70 /* Products */;
+					ProjectRef = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
 				},
 				{
 					ProductGroup = 040756981BD6D2E000F95E96 /* Products */;
@@ -1494,6 +1578,41 @@
 			fileType = wrapper.framework;
 			path = Locksmith.framework;
 			remoteRef = 048939CF1BD0451C005400CA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		049738171BD805C500B58F70 /* Nuke.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Nuke.framework;
+			remoteRef = 049738161BD805C500B58F70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		049738191BD805C500B58F70 /* Nuke.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Nuke.framework;
+			remoteRef = 049738181BD805C500B58F70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0497381B1BD805C500B58F70 /* Nuke.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Nuke.framework;
+			remoteRef = 0497381A1BD805C500B58F70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0497381D1BD805C500B58F70 /* Nuke iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Nuke iOS Tests.xctest";
+			remoteRef = 0497381C1BD805C500B58F70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0497381F1BD805C500B58F70 /* Nuke OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Nuke OSX Tests.xctest";
+			remoteRef = 0497381E1BD805C500B58F70 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */ = {
@@ -1688,6 +1807,7 @@
 				042E8D711BB300A100D61412 /* Watchdog.swift in Sources */,
 				04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */,
 				046D98C41BCAAAF4004B3DCD /* SheetCollectionViewCell.swift in Sources */,
+				040756F71BD7E6F200F95E96 /* EventAlbumCell.swift in Sources */,
 				0439D3A41B8B81A6001850DD /* CreatePublicEventViewController.swift in Sources */,
 				0439D3A91B8B81A6001850DD /* LoginViewController.swift in Sources */,
 				043AB3B81BBE212200BA5827 /* PKHUDSuccessView.swift in Sources */,
@@ -1770,6 +1890,11 @@
 			isa = PBXTargetDependency;
 			name = "Locksmith iOS";
 			targetProxy = 048939D31BD0452A005400CA /* PBXContainerItemProxy */;
+		};
+		049738231BD805CB00B58F70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Nuke iOS";
+			targetProxy = 049738221BD805CB00B58F70 /* PBXContainerItemProxy */;
 		};
 		04E39D571BA895B40061EA36 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

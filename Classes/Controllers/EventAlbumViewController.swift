@@ -6,33 +6,33 @@
 //  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
+import Nuke
 import Parse
 import Photos
 import MessageUI
-import MapleBacon
 import Foundation
 import MagicalRecord
 
 import SKPhotoBrowser
 
 
-class EventAlbumViewController : UICollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate
+class EventAlbumViewController : UICollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate, ImagePreheatingControllerDelegate
 {
 	
-	//---------------==--------------------
+	//-------------------------------------
 	// MARK: Global Variables
 	//-------------------------------------
 	
 	var event : Event?
 	
-	let CELL_REUSE_IDENTIFIER = "album-cell"
 	let ADD_CELL_REUSE_IDENTIFIER = "add-album-cell"
 	
 	var collectionContent : [Photo] = []
 	
 	var photoBrowser : BFPhotoBrowser?
-	// var likeButton : DOFavoriteButton?
-	// var likeLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 100, 21))
+	
+	private var preheatController : ImagePreheatingController!
+	
 	
 	@IBOutlet weak var segmentedControl : UISegmentedControl!
 	
@@ -57,6 +57,8 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		
 		UIApplication.sharedApplication().statusBarHidden = false
 
+		self.preheatController.enabled = true
+		
 		#if FEATURE_GOOGLE_ANALYTICS
             let tracker = GAI.sharedInstance().defaultTracker
             tracker.set(kGAIScreenName, value: "Event Album")
@@ -73,7 +75,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 	{
 		super.viewWillDisappear(animated)
 		
-		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+		self.preheatController.enabled = false
 	}
 	
 	override func viewDidLoad()
@@ -91,6 +93,10 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		titleLabel.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 44))
 		self.navigationItem.titleView = titleLabel
 		
+		
+		// Preheat controller
+		self.preheatController = ImagePreheatingControllerForCollectionView(collectionView: self.collectionView!)
+		self.preheatController.delegate = self
 		
 		
 		// Hide the "leave" button when pushed from event history
@@ -178,6 +184,40 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			
 		}
 		
+	}
+	
+	
+	
+	//
+	// MARK: Preheat Controller Delegate
+	//
+	
+	func preheatingController(controller: ImagePreheatingController, didUpdateWithAddedIndexPaths addedIndexPaths: [NSIndexPath], removedIndexPaths: [NSIndexPath])
+	{
+		func requestsForIndexPaths(indexPaths: [NSIndexPath]) -> [ImageRequest] {
+			return indexPaths.map {
+				let indexPath : NSIndexPath = $0
+				if (indexPath.row != 0 && indexPath.row < self.collectionContent.count) {
+					let photo = self.collectionContent[Int(indexPath.row)-1]
+					return self.imageRequestWithURL(NSURL(string: photo.image!.url!)!)
+				}
+				
+				return self.imageRequestWithURL(NSURL(string: "")!)
+			}
+		}
+		
+		Nuke.startPreheatingImages(requestsForIndexPaths(addedIndexPaths))
+		Nuke.stopPreheatingImages(requestsForIndexPaths(removedIndexPaths))
+	}
+	
+	func imageRequestWithURL(URL: NSURL) -> ImageRequest
+	{
+		func imageTargetSize() -> CGSize {
+			let size = (self.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
+			let scale = UIScreen.mainScreen().scale
+			return CGSize(width: size.width * scale, height: size.height * scale);
+		}
+		return ImageRequest(URL: URL, targetSize: imageTargetSize(), contentMode: .AspectFill)
 	}
 	
 	
@@ -292,36 +332,40 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 	
 	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
 	{
-		var cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
+		var cell : EventAlbumCell?
 		if (indexPath.row == 0) {
-			cell = collectionView.dequeueReusableCellWithReuseIdentifier(ADD_CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
+			cell = collectionView.dequeueReusableCellWithReuseIdentifier(ADD_CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as? EventAlbumCell
+		} else {
+			cell = collectionView.dequeueReusableCellWithReuseIdentifier(EventAlbumCell.reuseIdentifier, forIndexPath: indexPath) as? EventAlbumCell
 		}
 			
 		if (indexPath.row == 0) {
 			
-			cell.imageView!.image = UIImage(named: "album-add-photo")
-			cell.imageView!.image!.imageWithRenderingMode(.AlwaysTemplate)
-			cell.imageView!.contentMode = .ScaleAspectFit
-			cell.imageView!.tintColor = UIColor.grayColor()
+			cell!.imageView!.image = UIImage(named: "album-add-photo")
+			cell!.imageView!.image!.imageWithRenderingMode(.AlwaysTemplate)
+			cell!.imageView!.contentMode = .ScaleAspectFit
+			cell!.imageView!.tintColor = UIColor.grayColor()
 			
 		} else if (self.collectionContent.count >= indexPath.row) {
-			
-			let photo = collectionContent[Int(indexPath.row)-1]
-			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
-
-			if (cell.imageUrl != imageUrl) {
-				cell.imageView?.image = nil
-			}
-
-			cell.imageUrl = imageUrl
-			cell.imageView!.setImageWithURL(imageUrl, placeholder: nil, crossFadePlaceholder: true, cacheScaled: true, completion: nil)
 		
 		}
 		
-		cell.layer.shouldRasterize = true
-		cell.layer.rasterizationScale = UIScreen.mainScreen().scale
+		// cell.layer.shouldRasterize = true
+		// cell.layer.rasterizationScale = UIScreen.mainScreen().scale
 		
-		return cell
+		return cell!
+	}
+	
+	override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+	{
+		if (indexPath.row > 0) {
+			guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
+			
+			let photo = collectionContent[Int(indexPath.row)-1]
+			cell.imageView.nk_prepareForReuse()
+			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			cell.imageView.nk_setImageWithURL(imageUrl)
+		}
 	}
 	
 	override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
@@ -346,7 +390,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			}
 			
 			
-			let cell = collectionView.cellForItemAtIndexPath(indexPath) as! AlbumViewCell
+			let cell = collectionView.cellForItemAtIndexPath(indexPath) as! EventAlbumCell
 			let originImage = cell.imageView?.image // some image for baseImage
 			photoBrowser = BFPhotoBrowser(originImage: originImage!, photos: images, animatedFromView: cell)
 			photoBrowser!.initializePageIndex(indexPath.row - 1)
@@ -428,7 +472,13 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			for (var i = 0; i < photos.count; i++) {
 				let photo = photos[i]
 				if (photo.usersLiked != nil) {
-					let liked = (photo.usersLiked!.contains(PFUser.currentUser()!.username!) || photo.usersLiked!.contains(PFUser.currentUser()!.objectId!))
+					var liked = photo.usersLiked!.contains(PFUser.currentUser()!.objectId!)
+					if (PFUser.currentUser()!["phone_number"] != nil && photo.usersLiked!.contains((PFUser.currentUser()!["phone_number"] as! String))) {
+						liked = true
+					} else if PFUser.currentUser()!["facebook_id"] != nil && photo.usersLiked!.contains((PFUser.currentUser()!["facebook_id"] as! NSNumber).stringValue) {
+						liked = true
+					}
+					
 					if (liked) {
 						content.append(photo)
 					}
@@ -533,7 +583,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 				var liked = photo.usersLiked!.contains(currentUser!.objectId!)
 				if (currentUser!["phone_number"] != nil && photo.usersLiked!.contains((currentUser!["phone_number"] as! String))) {
 					liked = true
-                } else if currentUser!["facebook_id"] != nil && photo.usersLiked!.contains(String(currentUser!["facebook_id"])) {
+                } else if currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((currentUser!["facebook_id"] as! NSNumber).stringValue) {
                     liked = true
 				}
 				
@@ -543,7 +593,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					if (index == nil && currentUser!["phone_number"] != nil) {
 						index = liked.indexOf((currentUser!["phone_number"] as! String))
 					} else if (index == nil && currentUser!["facebook_id"] != nil) {
-						index = liked.indexOf(String(currentUser!["facebook_id"]))
+						index = liked.indexOf((currentUser!["facebook_id"] as! NSNumber).stringValue)
 					}
 					
 					liked.removeAtIndex(index!)
@@ -581,7 +631,13 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					let _photo = self.collectionContent[Int(selectedIndex!)]
 					let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 					if (photo.usersLiked != nil) {
-						let liked = (photo.usersLiked!.contains(PFUser.currentUser()!.username!) || photo.usersLiked!.contains(PFUser.currentUser()!.objectId!))
+						var liked = photo.usersLiked!.contains(PFUser.currentUser()!.objectId!)
+						if (PFUser.currentUser()!["phone_number"] != nil && photo.usersLiked!.contains((PFUser.currentUser()!["phone_number"] as! String))) {
+							liked = true
+						} else if PFUser.currentUser()!["facebook_id"] != nil && photo.usersLiked!.contains((PFUser.currentUser()!["facebook_id"] as! NSNumber).stringValue) {
+							liked = true
+						}
+						
 						if (liked) {
 							self.photoBrowser?.likeButton?.tintColor = UIColor(red:1,  green:0.216,  blue:0.173, alpha:1)
 							self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOn")
@@ -634,8 +690,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					let imageIndex = self.collectionContent.indexOf(image)
 					self.collectionContent.removeAtIndex(imageIndex!)
 					
-					// imageIndex = find(self.orginalContent, image)
-					// self.orginalContent.removeAtIndex(imageIndex!)
 					
 					dispatch_async(dispatch_get_main_queue(), {
 						self.photoBrowser?.reloadData()
@@ -701,7 +755,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 	{
 		super.didReceiveMemoryWarning()
 		
-		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+		// MapleBaconStorage.sharedStorage.clearMemoryStorage()
 	}
 	
 	

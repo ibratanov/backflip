@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
+import Nuke
 import Parse
 import DigitsKit
 import Foundation
-import MapleBacon
 import CoreLocation
 
 
@@ -36,8 +36,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
-		
-		MapleBaconStorage.sharedStorage.clearMemoryStorage()
 	}
 	
 	
@@ -195,7 +193,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
 	{
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
+		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(EventAlbumCell.reuseIdentifier, forIndexPath: indexPath) as! EventAlbumCell
 		
 		let index = self.pickerView?.selectedRowInComponent(0)
 		let event = self.events[Int(index!)]
@@ -204,17 +202,29 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			cell.imageView!.image = UIImage(named: "check-in-screen-double-tap")
 			
 		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
-			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
-			cell.imageView!.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
+			// let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
+			// cell.imageView!.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
 		}
 		
-		// cell.addGestureRecognizer(self.doubleTapGesture!)
 		cell.layer.shouldRasterize = true
 		cell.layer.rasterizationScale = UIScreen.mainScreen().scale
 		
 		return cell
 	}
 	
+	
+	func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+	{
+		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
+		
+		let index = self.pickerView?.selectedRowInComponent(0)
+		let event = self.events[Int(index!)]
+		let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
+		
+		cell.imageView.nk_prepareForReuse()
+		let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+		cell.imageView.nk_setImageWithURL(imageUrl)
+	}
 	
 	
 	//-------------------------------------

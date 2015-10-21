@@ -95,25 +95,39 @@ class EventHistoryViewController : UICollectionViewController
 
 	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
 	{
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_IDENTIFIER, forIndexPath: indexPath) as! EventHistoryCollectionViewCell
+		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(EventAlbumCell.reuseIdentifier, forIndexPath: indexPath) as! EventAlbumCell
 		
 		
 //		let predicate = NSPredicate(format: "ANY event.objectId == %@ && flagged == 0", self.events[indexPath.section].objectId!)
 //		var photos = Photo.MR_findAllWithPredicate(predicate) as? [Photo]
-		var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
-		photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
+		// var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
+		// photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
 		
 		
-		let imageUrl = NSURL(string: photos[indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
-		if (cell.imageUrl != imageUrl) {
-			cell.imageView?.image = nil
-		}
-		
-		cell.imageUrl = imageUrl
-		cell.imageView?.setImageWithURL(imageUrl!, placeholder: nil, crossFadePlaceholder: true, cacheScaled: true, completion: nil)
+//		let imageUrl = NSURL(string: photos[indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
+//		if (cell.imageUrl != imageUrl) {
+//			cell.imageView?.image = nil
+//		}
+//		
+//		cell.imageUrl = imageUrl
+//		cell.imageView?.setImageWithURL(imageUrl!, placeholder: nil, crossFadePlaceholder: true, cacheScaled: true, completion: nil)
 		
 		return cell
 	}
+	
+	
+	override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+	{
+		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
+		
+		var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
+		photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
+		cell.imageView.nk_prepareForReuse()
+		let imageUrl = NSURL(string: photos[indexPath.row].image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+		cell.imageView.nk_setImageWithURL(imageUrl)
+	}
+	
+	
 	
 	override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
 	{
