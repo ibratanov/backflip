@@ -754,8 +754,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 	override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
-		
-		// MapleBaconStorage.sharedStorage.clearMemoryStorage()
 	}
 	
 	

@@ -155,7 +155,6 @@
 		04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7011BA9ACC000AC6AA3 /* star.png */; };
 		04D7D7161BA9ADB800AC6AA3 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7111BA9ADB800AC6AA3 /* Bolts.framework */; };
 		04D7D7171BA9ADB800AC6AA3 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7121BA9ADB800AC6AA3 /* Parse.framework */; };
-		04E39D551BA895B40061EA36 /* MapleBacon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04ED9B091BC2D959008493E3 /* BFLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B081BC2D959008493E3 /* BFLocationManager.swift */; };
 		04ED9B0C1BC2FC26008493E3 /* PreProcessorMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B0B1BC2FC26008493E3 /* PreProcessorMacros.m */; };
 		04ED9B141BC30337008493E3 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04ED9B131BC30331008493E3 /* Mixpanel.framework */; };
@@ -163,7 +162,6 @@
 		04ED9B1B1BC30374008493E3 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04ED9B1A1BC30374008493E3 /* NewRelicAgent.framework */; };
 		04ED9B1E1BC3037D008493E3 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */; };
 		04ED9B201BC3037D008493E3 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */; };
-		04ED9B221BC3370D008493E3 /* MapleBacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E39D501BA895330061EA36 /* MapleBacon.framework */; };
 		04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
 		3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A312EBD1B18EA3B003F08CB /* CoreLocation.framework */; };
@@ -417,27 +415,6 @@
 			remoteGlobalIDString = C7CF9816174984E4008D9D13;
 			remoteInfo = "libMagicalRecord for OS X Tests";
 		};
-		04E39D4F1BA895330061EA36 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F2520C481A3EDAFE0061BB33;
-			remoteInfo = MapleBacon;
-		};
-		04E39D511BA895330061EA36 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F2520C531A3EDAFF0061BB33;
-			remoteInfo = MapleBaconTests;
-		};
-		04E39D561BA895B40061EA36 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F2520C471A3EDAFE0061BB33;
-			remoteInfo = MapleBacon;
-		};
 		04ED9B121BC30331008493E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 04ED9B0E1BC30331008493E3 /* Mixpanel.xcodeproj */;
@@ -475,7 +452,6 @@
 				048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */,
 				04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */,
 				04ED9B161BC3033A008493E3 /* Mixpanel.framework in Embed Frameworks */,
-				04E39D551BA895B40061EA36 /* MapleBacon.framework in Embed Frameworks */,
 				040FD7811BD553110039CDAA /* SKPhotoBrowser.framework in Embed Frameworks */,
 				046D98D91BCAAB49004B3DCD /* QBImagePicker.framework in Embed Frameworks */,
 				049738211BD805CB00B58F70 /* Nuke.framework in Embed Frameworks */,
@@ -628,7 +604,6 @@
 		04D7D7011BA9ACC000AC6AA3 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = Vendor/DOFavoriteButton/star.png; sourceTree = SOURCE_ROOT; };
 		04D7D7111BA9ADB800AC6AA3 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		04D7D7121BA9ADB800AC6AA3 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapleBacon.xcodeproj; path = Vendor/MapleBacon/Library/MapleBacon/MapleBacon.xcodeproj; sourceTree = "<group>"; };
 		04ED9B081BC2D959008493E3 /* BFLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFLocationManager.swift; sourceTree = "<group>"; };
 		04ED9B0A1BC2FC1B008493E3 /* PreProcessorMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreProcessorMacros.h; sourceTree = "<group>"; };
 		04ED9B0B1BC2FC26008493E3 /* PreProcessorMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreProcessorMacros.m; sourceTree = "<group>"; };
@@ -682,7 +657,6 @@
 				04ED9B201BC3037D008493E3 /* FBSDKLoginKit.framework in Frameworks */,
 				04ED9B1E1BC3037D008493E3 /* FBSDKCoreKit.framework in Frameworks */,
 				502199C21B33833E00A64387 /* AVFoundation.framework in Frameworks */,
-				04ED9B221BC3370D008493E3 /* MapleBacon.framework in Frameworks */,
 				04CA5DCD1B8B9F900075C0A8 /* CoreData.framework in Frameworks */,
 				04D7D7171BA9ADB800AC6AA3 /* Parse.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
@@ -826,7 +800,6 @@
 				04ED9B0D1BC30329008493E3 /* Mixpanel */,
 				047790C71BB9CDF300BA8F9E /* Facebook */,
 				042E8D6F1BB3009800D61412 /* Watchdog */,
-				04E39D491BA895290061EA36 /* MapleBacon */,
 				04B1C66A1B9783CD00F30C80 /* PKHUD */,
 				04B1C6511B97648C00F30C80 /* DOFavoriteButton */,
 				04CCD5C91B8CB2D200664FB3 /* MagicalRecord */,
@@ -1181,23 +1154,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		04E39D491BA895290061EA36 /* MapleBacon */ = {
-			isa = PBXGroup;
-			children = (
-				04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */,
-			);
-			name = MapleBacon;
-			sourceTree = "<group>";
-		};
-		04E39D4B1BA895330061EA36 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				04E39D501BA895330061EA36 /* MapleBacon.framework */,
-				04E39D521BA895330061EA36 /* MapleBaconTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		04ED9AFF1BC2D8B4008493E3 /* Location Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -1363,7 +1319,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				04E39D571BA895B40061EA36 /* PBXTargetDependency */,
 				04ED9B181BC3033A008493E3 /* PBXTargetDependency */,
 				046D98DB1BCAAB49004B3DCD /* PBXTargetDependency */,
 				048939D41BD0452A005400CA /* PBXTargetDependency */,
@@ -1433,10 +1388,6 @@
 				{
 					ProductGroup = 04CCD6451B8CB70500664FB3 /* Products */;
 					ProjectRef = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
-				},
-				{
-					ProductGroup = 04E39D4B1BA895330061EA36 /* Products */;
-					ProjectRef = 04E39D4A1BA895330061EA36 /* MapleBacon.xcodeproj */;
 				},
 				{
 					ProductGroup = 04ED9B0F1BC30331008493E3 /* Products */;
@@ -1671,20 +1622,6 @@
 			remoteRef = 04CCD65E1B8CB70500664FB3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		04E39D501BA895330061EA36 /* MapleBacon.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MapleBacon.framework;
-			remoteRef = 04E39D4F1BA895330061EA36 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		04E39D521BA895330061EA36 /* MapleBaconTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MapleBaconTests.xctest;
-			remoteRef = 04E39D511BA895330061EA36 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		04ED9B131BC30331008493E3 /* Mixpanel.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1895,11 +1832,6 @@
 			isa = PBXTargetDependency;
 			name = "Nuke iOS";
 			targetProxy = 049738221BD805CB00B58F70 /* PBXContainerItemProxy */;
-		};
-		04E39D571BA895B40061EA36 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MapleBacon;
-			targetProxy = 04E39D561BA895B40061EA36 /* PBXContainerItemProxy */;
 		};
 		04ED9B181BC3033A008493E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2120,8 +2052,6 @@
 					"$(PROJECT_DIR)/Vendor/**",
 					"$(SRCROOT)/Vendor/MagicalRecord/**/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
-					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon\"/**",
-					"$(SRCROOT)/Vendor/MapleBacon/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -2204,8 +2134,6 @@
 					"$(PROJECT_DIR)/Vendor/**",
 					"$(SRCROOT)/Vendor/MagicalRecord/**/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
-					"\"$(SRCROOT)/Vendor/MapleBacon/Library/MapleBacon\"/**",
-					"$(SRCROOT)/Vendor/MapleBacon/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;

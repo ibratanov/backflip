@@ -14,10 +14,6 @@
 	path = Vendor/PKHUD
 	url = https://github.com/pkluz/PKHUD.git
 	ignore = dirty
-[submodule "Vendor/MapleBacon"]
-	path = Vendor/MapleBacon
-	url = git@github.com:zalando/MapleBacon.git
-	ignore = dirty
 [submodule "Vendor/DOFavoriteButton"]
 	path = Vendor/DOFavoriteButton
 	url = git@github.com:kylebshr/DOFavoriteButton.git

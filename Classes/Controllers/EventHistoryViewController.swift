@@ -7,7 +7,6 @@
 //
 
 import Parse
-import MapleBacon
 import Foundation
 
 
@@ -80,7 +79,6 @@ class EventHistoryViewController : UICollectionViewController
 	
 	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
-		
 		//let predicate = NSPredicate(format: "ANY event.objectId == %@ && flagged == 0", self.events[section].objectId!)
 		//let photos = Photo.MR_findAllWithPredicate(predicate) as? [Photo]
 		
@@ -102,15 +100,6 @@ class EventHistoryViewController : UICollectionViewController
 //		var photos = Photo.MR_findAllWithPredicate(predicate) as? [Photo]
 		// var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
 		// photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
-		
-		
-//		let imageUrl = NSURL(string: photos[indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
-//		if (cell.imageUrl != imageUrl) {
-//			cell.imageView?.image = nil
-//		}
-//		
-//		cell.imageUrl = imageUrl
-//		cell.imageView?.setImageWithURL(imageUrl!, placeholder: nil, crossFadePlaceholder: true, cacheScaled: true, completion: nil)
 		
 		return cell
 	}
@@ -167,8 +156,7 @@ class EventHistoryViewController : UICollectionViewController
 	
 	override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 	{
-		// Clear in-memory cache
-		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+		
 	}
 	
 	
