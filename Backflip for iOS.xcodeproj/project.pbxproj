@@ -829,6 +829,7 @@
 		0422D0FE1BCFF0440078E7F6 /* Data Management / Processing */ = {
 			isa = PBXGroup;
 			children = (
+				049222A71B725CAA00FFB08A /* Models */,
 				0420283F1BA1ECD70059F096 /* Database */,
 				0422D10E1BCFF3190078E7F6 /* BFDataFetcher.swift */,
 				0422D10F1BCFF3190078E7F6 /* BFDataManager.swift */,
@@ -1094,7 +1095,8 @@
 				04C61FBC1B8B982600E2ACB5 /* GeoPoint.swift */,
 				04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */,
 			);
-			path = Models;
+			name = Models;
+			path = ../Models;
 			sourceTree = "<group>";
 		};
 		0496D0ED1BD83AC9003B0EDC /* Products */ = {
@@ -1303,7 +1305,6 @@
 			isa = PBXGroup;
 			children = (
 				0422D0FE1BCFF0440078E7F6 /* Data Management / Processing */,
-				049222A71B725CAA00FFB08A /* Models */,
 				0439D3AC1B8B822C001850DD /* Views */,
 				04F41BEE1B74FBF4001AB8DA /* Controllers */,
 				0439D3C51B8B86AC001850DD /* Extensions */,
