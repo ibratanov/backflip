@@ -302,7 +302,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 
 			print("Uploading image of size \(image?.size)")
 			var file : PFFile?
-			let compressedImage = UIImageJPEGRepresentation(image!, 0.5)
+			let compressedImage = UIImageJPEGRepresentation(image!, 0.7)
 			if (compressedImage != nil) {
 				file = PFFile(name: "image.png", data: compressedImage!)
 			} else {
@@ -314,7 +314,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 			photo["image"] = file!
 			photo["thumbnail"] = file!
 			photo["upvoteCount"] = 1
-			photo["usersLiked"] = [PFUser.currentUser()!.username!]
+			photo["usersLiked"] = [PFUser.currentUser()!.objectId!]
 			photo["uploader"] = PFUser.currentUser()!
 			photo["uploaderName"] = PFUser.currentUser()!.username!
 			photo["flagged"] = false
