@@ -352,7 +352,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
 			cell.imageView.nk_prepareForReuse()
-			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
 			cell.imageView.nk_setImageWithURL(imageUrl)
 		}
 	}

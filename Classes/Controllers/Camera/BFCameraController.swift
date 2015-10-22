@@ -302,17 +302,19 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 
 			print("Uploading image of size \(image?.size)")
 			var file : PFFile?
-			let compressedImage = UIImageJPEGRepresentation(image!, 0.7)
+			let compressedImage = UIImageJPEGRepresentation(image!, 0.6)
 			if (compressedImage != nil) {
 				file = PFFile(name: "image.png", data: compressedImage!)
 			} else {
 				file = PFFile(name: "image.png", data: UIImagePNGRepresentation(image!)!)
 			}
 
+			let thumbnail = cropImageToSquare(image: image!)
+
 			let photo = PFObject(className: "Photo")
 			photo["caption"] = (comment != nil) ? comment : ""
 			photo["image"] = file!
-			photo["thumbnail"] = cropImageToSquare(image!)
+			photo["thumbnail"] = PFFile(name: "thumbnail.png", data: UIImageJPEGRepresentation(thumbnail, 0.5)!)
 			photo["upvoteCount"] = 1
 			photo["usersLiked"] = [PFUser.currentUser()!.objectId!]
 			photo["uploader"] = PFUser.currentUser()!
@@ -399,37 +401,34 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 
 
 
-	//
+	//----------------------------------------
 	// MARK: Image modification
-	//
+	//----------------------------------------
 
-	private func cropImageToSquare(image originalImage: UIImage) -> UIImage
+	private func cropImageToSquare(image image: UIImage) -> UIImage
 	{
-		// Get image and measurements
-		let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage!)
-		let contextSize: CGSize = contextImage.size
-		let posX: CGFloat
-		let posY: CGFloat
-		let width: CGFloat
-		let height: CGFloat
+		let originalWidth  = image.size.width
+		let originalHeight = image.size.height
+		var x: CGFloat = 0.0
+		var y: CGFloat = 0.0
+		var edge: CGFloat = 0.0
 
-		//Calibrate image for optimal crop
-		if contextSize.width > contextSize.height {
-			posX = ((contextSize.width - contextSize.height) / 2)
-			posY = 0
-			width = contextSize.height
-			height = contextSize.height
-		} else {
-			posX = 0
-			posY = ((contextSize.height - contextSize.width) / 2)
-			width = contextSize.width
-			height = contextSize.width
+		if (originalWidth > originalHeight) { // landscape
+			edge = originalHeight
+			x = (originalWidth - edge) / 2.0
+			y = 0.0
+		} else if (originalHeight > originalWidth) { // portrait
+			edge = originalWidth
+			x = 0.0
+			y = (originalHeight - originalWidth) / 2.0
+		} else { // square
+			edge = originalWidth
 		}
 
-		let rect: CGRect = CGRectMake(posX, posY, width, height)
-		let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage!, rect)!
+		let cropSquare = CGRectMake(x, y, edge, edge)
+		let imageRef = CGImageCreateWithImageInRect(image.CGImage, cropSquare);
 
-		return UIImage(CGImage: imageRef)
+		return UIImage(CGImage: imageRef!, scale: UIScreen.mainScreen().scale, orientation: image.imageOrientation)
 	}
 
 }
