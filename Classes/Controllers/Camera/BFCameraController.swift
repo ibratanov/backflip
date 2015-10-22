@@ -312,7 +312,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 			let photo = PFObject(className: "Photo")
 			photo["caption"] = (comment != nil) ? comment : ""
 			photo["image"] = file!
-			photo["thumbnail"] = cropImageToSquare(file!)
+			photo["thumbnail"] = cropImageToSquare(image!)
 			photo["upvoteCount"] = 1
 			photo["usersLiked"] = [PFUser.currentUser()!.objectId!]
 			photo["uploader"] = PFUser.currentUser()!
