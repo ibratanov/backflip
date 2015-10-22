@@ -23,5 +23,6 @@ extension Event {
     @NSManaged var attendees: NSSet?
     @NSManaged var geoLocation: GeoPoint?
     @NSManaged var photos: NSSet?
+    @NSManaged var inviteUrl: String?
 
 }

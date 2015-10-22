@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.5.0</string>
+	<string>2.6.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -33,7 +33,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.5.0</string>
+	<string>2.6.0</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -122,6 +122,33 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Backflip would like to use your location.</string>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>tabBar-locator</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Current Event</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).CurrentEvent</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>tabBar-camera-filled</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Capture Photo</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Camera</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>tabBar-eventHistory</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Event History</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).EventHistory</string>
+		</dict>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

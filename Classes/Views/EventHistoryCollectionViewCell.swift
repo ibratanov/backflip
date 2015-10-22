@@ -12,6 +12,8 @@ import Foundation
 class EventHistoryCollectionViewCell : UICollectionViewCell
 {
 	
+	var imageUrl : NSURL?
+	
 	@IBOutlet var imageView : UIImageView?
 	
 }

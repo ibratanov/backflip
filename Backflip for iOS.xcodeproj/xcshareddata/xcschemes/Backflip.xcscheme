@@ -63,6 +63,10 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
+            argument = "-DSNAPSHOT=1"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-D DEBUG"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -70,6 +74,11 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "DEBUG"
+            value = "1"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SNAPSHOT"
             value = "1"
             isEnabled = "NO">
          </EnvironmentVariable>

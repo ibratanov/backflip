@@ -13,9 +13,13 @@ xcuserdata
 
 # Build products
 build/
+DerivedData/
 *.o
 *.LinkFileList
 *.hmap
+
+
+fastlane/screenshots/
 
 # Automatic backup files
 *~.nib/

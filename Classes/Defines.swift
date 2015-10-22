@@ -28,3 +28,5 @@ let FEATURE_GOOGLE_ANALYTICS : Bool = false
 let FEATURE_NEW_RELIC : Bool = true
 
 let FEATURE_MIXPANEL : Bool = true
+
+let FEATURE_INSTABUG : Bool = true

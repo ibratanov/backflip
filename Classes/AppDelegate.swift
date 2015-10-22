@@ -25,17 +25,19 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
 	{
-		
+				
 		//--------------------------------------
 		// Setup Parse & Application appearance
 		//--------------------------------------
 		setupAnalytics()
 		setupParse()
+		setupCaching()
 		setupBranch(launchOptions)
 		setupCoreData()
 		setupApperance()
-		
-		
+
+		BonjourService.sharedService.registerService()
+
 		//--------------------------------------
 		// Watchdog
 		//--------------------------------------
@@ -71,18 +73,22 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             if let options = launchOptions {
                 noPushPayload = options[UIApplicationLaunchOptionsRemoteNotificationKey] != nil;
             }
+			
             if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
                 PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             }
         }
 		
+		#if ((arch(i386) || arch(x86_64)) && os(iOS)) || SNAPSHOT
+			print("📲 Disabling push notifications for the simulator")
+		#else
+			let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
         
-        let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
-        
-        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-        application.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()
-		
+			let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+			application.registerUserNotificationSettings(settings)
+			application.registerForRemoteNotifications()
+		#endif
+			
 		PFInstallation.currentInstallation().saveInBackground()
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
@@ -226,7 +232,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		defaultACL.setPublicReadAccess(true)
 		PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 		
-		if (NetworkAvailable.networkConnection()) {
+		if (Reachability.validNetworkConnection()) {
 			PFConfig.getConfigInBackgroundWithBlock { (config, error) -> Void in
 				self.setupApperance()
 			}
@@ -263,6 +269,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         
 		#endif
 		
+		if (FEATURE_INSTABUG) {
+			Instabug.startWithToken("510f98f8d22d87efdf38fcdcaa64ce78", captureSource: IBGCaptureSourceUIKit, invocationEvent: IBGInvocationEventShake)
+		}
+			
 		
 		if (FEATURE_NEW_RELIC) {
 			NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
@@ -287,7 +297,26 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	}
 
 	
-    
+	//--------------------------------------
+	// MARK: Caching
+	//--------------------------------------
+	
+	func setupCaching()
+	{
+		#if DEBUG
+			print("📁 Diskcache \(NSURLCache.sharedURLCache().currentDiskUsage) of \(NSURLCache.sharedURLCache().diskCapacity)")
+			print("📁 Memorycache \(NSURLCache.sharedURLCache().currentMemoryUsage) of \(NSURLCache.sharedURLCache().memoryCapacity)")
+		#endif
+		
+		
+		let memoryCacheSize = 100*1024*1024 // 100 MB
+		let diskCacheSize = 500*1024*1024 // 500 MB
+		
+		let sharedCache = NSURLCache(memoryCapacity: memoryCacheSize, diskCapacity: diskCacheSize, diskPath: "backflip-nsurl-cache")
+		NSURLCache.setSharedURLCache(sharedCache)
+	}
+	
+	
     //--------------------------------------
     // MARK: Branch.io
     //--------------------------------------

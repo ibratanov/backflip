@@ -68,6 +68,11 @@ public class BFLocationManager : NSObject, CLLocationManagerDelegate
 	internal var locationBlock : BFLocationUpdatedBlock?
 	
 	
+	/**
+	 * Cached Location
+	*/
+	public var cachedLocation : CLLocation?
+	
 	
 	
 	override private init()
@@ -133,6 +138,21 @@ public class BFLocationManager : NSObject, CLLocationManagerDelegate
 				
 				locationBlock = completion
 				
+				
+				#if SNAPSHOT
+					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
+					dispatch_after(delayTime, dispatch_get_main_queue()) {
+						let location = CLLocation(latitude: 43.64607355662625, longitude: -79.3959379037681)
+						self.locationManager(self.locationManager, didUpdateLocations: [location])
+					}
+				#endif
+				
+				
+				if (cachedLocation != nil) {
+					locationBlock?(location: cachedLocation, error: nil)
+				}
+				
+				
 				if #available(iOS 9.0, *) {
 					locationManager.requestLocation()
 				} else {
@@ -181,6 +201,7 @@ public class BFLocationManager : NSObject, CLLocationManagerDelegate
 		locationPending = false
 		
 		if (locationBlock != nil) {
+			cachedLocation = locations.first
 			locationBlock!(location: locations.first, error: nil)
 		}
 		

@@ -7,7 +7,6 @@
 //
 
 import Parse
-import MapleBacon
 import Foundation
 
 
@@ -80,7 +79,6 @@ class EventHistoryViewController : UICollectionViewController
 	
 	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
-		
 		//let predicate = NSPredicate(format: "ANY event.objectId == %@ && flagged == 0", self.events[section].objectId!)
 		//let photos = Photo.MR_findAllWithPredicate(predicate) as? [Photo]
 		
@@ -95,17 +93,30 @@ class EventHistoryViewController : UICollectionViewController
 
 	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
 	{
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_IDENTIFIER, forIndexPath: indexPath) as! EventHistoryCollectionViewCell
+		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(EventAlbumCell.reuseIdentifier, forIndexPath: indexPath) as! EventAlbumCell
 		
 		
 //		let predicate = NSPredicate(format: "ANY event.objectId == %@ && flagged == 0", self.events[indexPath.section].objectId!)
 //		var photos = Photo.MR_findAllWithPredicate(predicate) as? [Photo]
-		var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
-		photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
-		cell.imageView?.setImageWithURL(NSURL(string: photos[indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
+		// var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
+		// photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
 		
 		return cell
 	}
+	
+	
+	override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+	{
+		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
+		
+		var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
+		photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
+		cell.imageView.nk_prepareForReuse()
+		let imageUrl = NSURL(string: photos[indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+		cell.imageView.nk_setImageWithURL(imageUrl)
+	}
+	
+	
 	
 	override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
 	{
@@ -145,8 +156,7 @@ class EventHistoryViewController : UICollectionViewController
 	
 	override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 	{
-		// Clear in-memory cache
-		MapleBaconStorage.sharedStorage.clearMemoryStorage()
+		
 	}
 	
 	

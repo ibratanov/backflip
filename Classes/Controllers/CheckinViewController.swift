@@ -6,17 +6,16 @@
 //  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
+import Nuke
 import Parse
 import DigitsKit
 import Foundation
-import MapleBacon
 import CoreLocation
 
 
 
 class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource
 {
-	var shakeCount : Int = 0
 	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
 	
@@ -37,30 +36,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
-		
-		MapleBaconStorage.sharedStorage.clearMemoryStorage()
-	}
-	
-	
-	
-	//-------------------------------------
-	// MARK: Pop, lock and shake
-	//-------------------------------------
-	
-	override func canBecomeFirstResponder() -> Bool
-	{
-		return true
-	}
-	
-	override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?)
-	{
-		if motion == .MotionShake {
-			shakeCount++
-			if (shakeCount > 3) {
-				self.presentViewController(GameViewController(), animated: true, completion: nil)
-				shakeCount = 0
-			}
-		}
 	}
 	
 	
@@ -96,8 +71,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		// Login validation
 		if (PFUser.currentUser() == nil) {
-			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
-			self.performSegueWithIdentifier("display-login-popover", sender: self)
 			return
 		}
 		
@@ -182,6 +155,9 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         // Useful when dismissing a dialogue on the checkin screen - updates nearby events.
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
 			fetchData()
+		} else {
+			Digits.sharedInstance().logOut() // We do this to stop the un-sandbox'd digits data
+				self.performSegueWithIdentifier("display-login-popover", sender: self)
 		}
 		
 	}
@@ -217,7 +193,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
 	{
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CELL_REUSE_IDENTIFIER, forIndexPath: indexPath) as! AlbumViewCell
+		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(EventAlbumCell.reuseIdentifier, forIndexPath: indexPath) as! EventAlbumCell
 		
 		let index = self.pickerView?.selectedRowInComponent(0)
 		let event = self.events[Int(index!)]
@@ -227,10 +203,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			
 		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
 			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
-			cell.imageView!.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
+
+			cell.imageView.nk_prepareForReuse()
+			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			cell.imageView.nk_setImageWithURL(imageUrl)
 		}
 		
-		// cell.addGestureRecognizer(self.doubleTapGesture!)
 		cell.layer.shouldRasterize = true
 		cell.layer.rasterizationScale = UIScreen.mainScreen().scale
 		
@@ -238,6 +216,21 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	}
 	
 	
+//	func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+//	{
+//		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
+//
+//		if ((1 + indexPath.row) != self.collectionView(collectionView, numberOfItemsInSection: 0)) {
+//			let index = self.pickerView?.selectedRowInComponent(0)
+//			let event = self.events[Int(index!)]
+//			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
+//		
+//			cell.imageView.nk_prepareForReuse()
+//			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+//			cell.imageView.nk_setImageWithURL(imageUrl)
+//		}
+//	}
+
 	
 	//-------------------------------------
 	// MARK: UIPickerViewDelegate
@@ -325,63 +318,12 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func checkinWithEvent(event : Event)
 	{
-		// Display a HUD letting the user know we're checking them in
-		PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Checking in..")
-		PKHUD.sharedHUD.show()
-		
-		
-		// Store channel for push notifications
-		let currentInstallation = PFInstallation.currentInstallation()
-		currentInstallation.addUniqueObject("a"+event.objectId!, forKey: "channels")
-		currentInstallation.saveInBackground()
-		
-		
-		// Create attendance object, save to parse; save to CoreData
-		let attendance = PFObject(className:"EventAttendance")
-		attendance["eventID"] = event.objectId
-		attendance["attendeeID"] = PFUser.currentUser()?.objectId
-		attendance["photosLikedID"] = []
-		attendance["photosLiked"] = []
-		attendance["photosUploadedID"] = []
-		attendance["photosUploaded"] = []
-		attendance["enabled"] = true
-		attendance.setObject(PFUser.currentUser()!, forKey: "attendee")
-		attendance.setObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "event")
-		
-		
-		attendance.saveInBackgroundWithBlock { (success, error) -> Void in
-
-			let attendees : [PFObject] = [attendance] 
-			BFDataProcessor.sharedProcessor.processAttendees(attendees, completion: { () -> Void in
-
-				// Add attendee to event
-				let account = PFUser.currentUser()
-				account?.addUniqueObject(PFObject(withoutDataWithClassName: "Event", objectId: event.objectId), forKey: "savedEvents")
-				account?.addUniqueObject(event.name!, forKey: "savedEventNames")
-				account?.saveInBackground()
-				
-				// Add user to Event objects relation
-				let eventQuery = PFQuery(className: "Event")
-				eventQuery.whereKey("eventName", equalTo: event.name!)
-				eventQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-					let eventObj = objects!.first as! PFObject
-					let relation = eventObj.relationForKey("attendees")
-					relation.addObject(PFUser.currentUser()!)
-					eventObj.saveInBackground()
-				}
-				
-				// Store event details in user defaults
-				NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
-				NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
-				NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
-				
-				PKHUD.sharedHUD.hideAnimated()
-				
-				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
-				dispatch_after(delayTime, dispatch_get_main_queue()) {
-					self.performSegueWithIdentifier("display-event-album", sender: self)
-				}
-			})
+		BFParseManager.sharedManager.checkin(event.objectId!) { (completed, error) -> Void in
+			
+			let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+			dispatch_after(delayTime, dispatch_get_main_queue()) {
+				self.performSegueWithIdentifier("display-event-album", sender: self)
+			}
 			
 		}
 		
@@ -421,11 +363,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool
 	{
-		if (identifier == "create-event" && NetworkAvailable.networkConnection() == false) {
-			
-			let alert = NetworkAvailable.networkAlert("No Internet Connection", error: "Connect to the internet to create an event.")
-			self.presentViewController(alert, animated: true, completion: nil)
-			
+		if (identifier == "create-event" && Reachability.validNetworkConnection() == false) {
+			Reachability.presentUnavailableAlert()
 			return false
 		}
 		
@@ -529,7 +468,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		
 		let authorizationStatus = CLLocationManager.authorizationStatus()
 		if (authorizationStatus == .Denied || authorizationStatus == .Restricted) {
-			let alertController = UIAlertController(title: "Location Services", message: "We require location services to find nearby events, Please enable Location Services in settings", preferredStyle: .Alert)
+			let alertController = UIAlertController(title: "Enable Location", message: "Backflip needs location services to find nearby events 📍🌎", preferredStyle: .Alert)
 			alertController.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
 				
 				let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))

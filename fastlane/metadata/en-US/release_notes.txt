@@ -1,0 +1,3 @@
+- Fixed event creation & nearby events detection issue
+- Improved event history view - more photos and faster loading
+- Ability to make an event private and edit the name
