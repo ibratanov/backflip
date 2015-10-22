@@ -125,6 +125,9 @@
 		046D98E31BCAABA8004B3DCD /* BFCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98DF1BCAABA8004B3DCD /* BFCameraController.swift */; };
 		046D98E41BCAABA8004B3DCD /* BFCameraOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98E01BCAABA8004B3DCD /* BFCameraOverlay.swift */; };
 		046D98E51BCAABA8004B3DCD /* BFImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98E11BCAABA8004B3DCD /* BFImagePreviewController.swift */; };
+		0472D0FB1BD94B2200D8891B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
+		0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
+		0472D0FD1BD94D4800D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
 		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
@@ -633,6 +636,7 @@
 		046D98DF1BCAABA8004B3DCD /* BFCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFCameraController.swift; sourceTree = "<group>"; };
 		046D98E01BCAABA8004B3DCD /* BFCameraOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFCameraOverlay.swift; sourceTree = "<group>"; };
 		046D98E11BCAABA8004B3DCD /* BFImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFImagePreviewController.swift; sourceTree = "<group>"; };
+		0472D0D61BD948BE00D8891B /* BonjourService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourService.swift; sourceTree = "<group>"; };
 		047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Vendor/Facebook/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Vendor/Facebook/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		047790E61BBB1C5B00BA8F9E /* PopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
@@ -778,6 +782,7 @@
 				0485F6D71BD5B41A00E0465D /* Vendor */,
 				040EB59C1BC815EA00452620 /* AppDelegate.swift */,
 				040EB59E1BC815EA00452620 /* ViewController.swift */,
+				0472D0D61BD948BE00D8891B /* BonjourService.swift */,
 				040756C01BD6DC2100F95E96 /* MasterViewController.swift */,
 				040756C21BD6DD3700F95E96 /* DetailViewController.swift */,
 				040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */,
@@ -1828,9 +1833,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				040EB5C21BC8162F00452620 /* Attendance.swift in Sources */,
+				0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */,
 				040EB59F1BC815EA00452620 /* ViewController.swift in Sources */,
 				040EB5C81BC8164500452620 /* Defines.swift in Sources */,
 				040EB5BE1BC8161100452620 /* GeoPoint+CoreDataProperties.swift in Sources */,
+				0472D0FB1BD94B2200D8891B /* String+Extensions.swift in Sources */,
 				040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */,
 				040EB5C11BC8162F00452620 /* File.swift in Sources */,
 				040EB5A21BC815EA00452620 /* Backflip_TV.xcdatamodeld in Sources */,
@@ -1864,6 +1871,7 @@
 				0422D1141BCFF3190078E7F6 /* BFDataManager.swift in Sources */,
 				043AB3BD1BBE212200BA5827 /* Window.swift in Sources */,
 				04D7D7021BA9ACC000AC6AA3 /* DOFavoriteButton.swift in Sources */,
+				0472D0FD1BD94D4800D8891B /* BonjourService.swift in Sources */,
 				043AB3B31BBE212200BA5827 /* PKHUDImageView.swift in Sources */,
 				043AB3B21BBE212200BA5827 /* PKHUDErrorView.swift in Sources */,
 				043AB3BB1BBE212200BA5827 /* PKHUDTitleView.swift in Sources */,

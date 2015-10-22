@@ -21,7 +21,9 @@ class MasterViewController : UITableViewController
 	override func loadView()
 	{
 		super.loadView()
-		
+
+		BonjourService.sharedService.registerService()
+
 		fetchData()
 	}
 	
@@ -72,7 +74,7 @@ class MasterViewController : UITableViewController
 				self.eventObjects.append((attendance["event"] as! PFObject))
 			}
 			
-			// self.tableView.reloadData()
+			self.tableView.reloadData()
 		}
 		
 		

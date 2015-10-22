@@ -312,7 +312,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 			let photo = PFObject(className: "Photo")
 			photo["caption"] = (comment != nil) ? comment : ""
 			photo["image"] = file!
-			photo["thumbnail"] = file!
+			photo["thumbnail"] = cropImageToSquare(file!)
 			photo["upvoteCount"] = 1
 			photo["usersLiked"] = [PFUser.currentUser()!.objectId!]
 			photo["uploader"] = PFUser.currentUser()!
@@ -395,6 +395,41 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 			})
 
 		}
+	}
+
+
+
+	//
+	// MARK: Image modification
+	//
+
+	private func cropImageToSquare(image originalImage: UIImage) -> UIImage
+	{
+		// Get image and measurements
+		let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage!)
+		let contextSize: CGSize = contextImage.size
+		let posX: CGFloat
+		let posY: CGFloat
+		let width: CGFloat
+		let height: CGFloat
+
+		//Calibrate image for optimal crop
+		if contextSize.width > contextSize.height {
+			posX = ((contextSize.width - contextSize.height) / 2)
+			posY = 0
+			width = contextSize.height
+			height = contextSize.height
+		} else {
+			posX = 0
+			posY = ((contextSize.height - contextSize.width) / 2)
+			width = contextSize.width
+			height = contextSize.width
+		}
+
+		let rect: CGRect = CGRectMake(posX, posY, width, height)
+		let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage!, rect)!
+
+		return UIImage(CGImage: imageRef)
 	}
 
 }
