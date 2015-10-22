@@ -205,7 +205,7 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
 
 			cell.imageView.nk_prepareForReuse()
-			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
 			cell.imageView.nk_setImageWithURL(imageUrl)
 		}
 		
