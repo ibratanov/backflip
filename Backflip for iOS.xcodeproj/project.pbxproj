@@ -2158,7 +2158,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
-					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Vendor",
 					"$(PROJECT_DIR)/Vendor/Branch",
 					"$(PROJECT_DIR)/Vendor/Fabric",
@@ -2166,9 +2165,6 @@
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
 					"$(PROJECT_DIR)/Instabug",
-					"$(PROJECT_DIR)/Backflip",
-					TV/Vendor/Parse,
-					"$(PROJECT_DIR)/Vendor/Parse",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2242,7 +2238,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
-					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Vendor",
 					"$(PROJECT_DIR)/Vendor/Branch",
 					"$(PROJECT_DIR)/Vendor/Fabric",
@@ -2250,9 +2245,6 @@
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
 					"$(PROJECT_DIR)/Instabug",
-					"$(PROJECT_DIR)/Backflip",
-					TV/Vendor/Parse,
-					"$(PROJECT_DIR)/Vendor/Parse",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
