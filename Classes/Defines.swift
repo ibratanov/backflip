@@ -19,6 +19,9 @@ let nEventObjectsUpdated : String = "nEventObjectsUpdated"
 
 
 
+let FEATURE_COREDATA_SEED : Bool = true
+
+
 //------------------------------------
 // MARK: Feature Flags
 //------------------------------------
