@@ -347,6 +347,8 @@ public class BFParseManager : NSObject
 			
 			if (user != nil && user!["password_updated"] != nil && NSNumber(integer: Int(user!["password_updated"] as! String)!).boolValue == true) {
 				password = "backflip-pass-"+user!.username!
+			} else {
+				password = "Password"
 			}
 			
 			
