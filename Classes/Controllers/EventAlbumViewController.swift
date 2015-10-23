@@ -379,6 +379,10 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			}
 			
 			
+			UIToolbar.appearance().tintColor = UIColor.whiteColor()
+			UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
+			
+			
 			let cell = collectionView.cellForItemAtIndexPath(indexPath) as! EventAlbumCell
 			let originImage = cell.imageView?.image // some image for baseImage
 			photoBrowser = BFPhotoBrowser(originImage: originImage!, photos: images, animatedFromView: cell)
@@ -548,8 +552,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
 		
-			
-			
 			MagicalRecord.saveWithBlock({ (context) -> Void in
 				
 				let selectedIndex = self.photoBrowser?.currentPageIndex
@@ -660,7 +662,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					
 					
 					dispatch_async(dispatch_get_main_queue(), {
-						self.photoBrowser?.reloadData()
+						self.updatePhotoBrowser()
 						self.collectionView?.reloadData()
 					})
 					
@@ -698,15 +700,11 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 				
 			})
 			
-			
 			let imageIndex = self.collectionContent.indexOf(image)
 			self.collectionContent.removeAtIndex(imageIndex!)
 			
-			// imageIndex = find(self.orginalContent, image)
-			// self.orginalContent.removeAtIndex(imageIndex!)
-			
 			dispatch_async(dispatch_get_main_queue(), {
-				self.photoBrowser?.reloadData()
+				self.updatePhotoBrowser()
 				self.collectionView?.reloadData()
 			})
 			
@@ -715,6 +713,37 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 	}
 
 
+	
+	func updatePhotoBrowser()
+	{
+		// Photos
+		var images = [SKPhoto]()
+		for photo in collectionContent {
+			let image = SKPhoto.photoWithImageURL(photo.image!.url!)
+			image.shouldCachePhotoURLImage = true
+			
+			if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
+				image.caption = photo.caption
+			}
+			
+			images.append(image)
+		}
+		
+		if (images.count < 1) {
+			photoBrowser?.dismissPhotoBrowser()
+		}
+		
+		
+		let selectedIndex = photoBrowser?.currentPageIndex
+		if ((selectedIndex! - 1) >= (photoBrowser!.numberOfPhotos-1)) {
+			photoBrowser?.reloadData()
+			photoBrowser?.initializePageIndex((selectedIndex! - 1))
+		}
+		
+	}
+	
+	
+	
 	//-------------------------------------
 	// MARK: Memory
 	//-------------------------------------
