@@ -311,6 +311,17 @@ public class BFParseManager : NSObject
 						
 						user!.password = "backflip-pass-"+user!.username!
 						user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+						
+						if (phoneNumber != nil) {
+							user!["phoneNumber"] = phoneNumber
+						}
+						
+						if (facebookId != nil) {
+							user!["facebook_id"] = Int(facebookId!)
+							user!["email"] = emailAddress
+							user!["facebook_name"] = "\(firstName!) \(lastName!)"
+						}
+						
 						user!.saveInBackgroundWithBlock(nil)
 						
 						return completion(completed: true, error: nil)
@@ -340,6 +351,17 @@ public class BFParseManager : NSObject
 					
 					user!.password = "backflip-pass-"+user!.username!
 					user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+					
+					if (phoneNumber != nil) {
+						user!["phoneNumber"] = phoneNumber
+					}
+					
+					if (facebookId != nil) {
+						user!["facebook_id"] = Int(facebookId!)
+						user!["email"] = emailAddress
+						user!["facebook_name"] = "\(firstName!) \(lastName!)"
+					}
+					
 					user!.saveInBackgroundWithBlock(nil)
 					
 					return completion(completed: true, error: nil)
@@ -360,22 +382,20 @@ public class BFParseManager : NSObject
 	
 	private func createUser(firstName: String?, lastName: String?, emailAddress: String?, facebookId: String?, phoneNumber: String?, uponCompletion completion: (completed : Bool, error : NSError?) -> Void) -> Void
 	{
-		
 		let user = PFUser()
 		if (facebookId != nil) {
 			user.username = facebookId
 			user.password = "backflip-pass-\(facebookId!)"
 			user["facebook_id"] = Int(facebookId!)
 			user["email"] = emailAddress
+			user["facebook_name"] = "\(firstName!) \(lastName!)"
 		} else {
 			user.username = phoneNumber
 			user.password = "backflip-pass-\(phoneNumber!)"
 			user["phone"] = phoneNumber
 		}
-		
 
 		user["photosLiked"] = []
-		user["facebook_name"] = "\(firstName) \(lastName)"
 		user["savedEvents"] = []
 		user["savedEventNames"] = []
 		user["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
