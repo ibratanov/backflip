@@ -339,7 +339,7 @@ public class BFParseManager : NSObject
 		} else if (devices?.count > 0) {
 			
 			let user = devices?.first
-			var password = (user!.username!.characters.contains("+") == false) ? "Password" : "backflip-pass-"+user!.username!
+			var password = (user!.username!.characters.contains("+") == false) ? "backflip-pass-"+user!.username! : "Password"
 			if (user != nil && user!["facebook_id"] != nil) {
 				password = "backflip-pass-"+user!.username!
 			}
