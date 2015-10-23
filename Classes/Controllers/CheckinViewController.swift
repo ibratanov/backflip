@@ -202,8 +202,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			cell.imageView!.image = UIImage(named: "check-in-screen-double-tap")
 			
 		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
-			// let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
-			// cell.imageView!.setImageWithURL(NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!)
+			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
+
+			cell.imageView.nk_prepareForReuse()
+			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			cell.imageView.nk_setImageWithURL(imageUrl)
 		}
 		
 		cell.layer.shouldRasterize = true
@@ -213,19 +216,21 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	}
 	
 	
-	func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
-	{
-		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
-		
-		let index = self.pickerView?.selectedRowInComponent(0)
-		let event = self.events[Int(index!)]
-		let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
-		
-		cell.imageView.nk_prepareForReuse()
-		let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
-		cell.imageView.nk_setImageWithURL(imageUrl)
-	}
-	
+//	func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+//	{
+//		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
+//
+//		if ((1 + indexPath.row) != self.collectionView(collectionView, numberOfItemsInSection: 0)) {
+//			let index = self.pickerView?.selectedRowInComponent(0)
+//			let event = self.events[Int(index!)]
+//			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
+//		
+//			cell.imageView.nk_prepareForReuse()
+//			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+//			cell.imageView.nk_setImageWithURL(imageUrl)
+//		}
+//	}
+
 	
 	//-------------------------------------
 	// MARK: UIPickerViewDelegate

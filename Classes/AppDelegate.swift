@@ -35,7 +35,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupBranch(launchOptions)
 		setupCoreData()
 		setupApperance()
-		
+
+		BonjourService.sharedService.registerService()
 
 		//--------------------------------------
 		// Watchdog

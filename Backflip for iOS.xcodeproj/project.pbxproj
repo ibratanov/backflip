@@ -18,7 +18,6 @@
 		040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event+Share.swift */; };
 		040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB59C1BC815EA00452620 /* AppDelegate.swift */; };
 		040EB59F1BC815EA00452620 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB59E1BC815EA00452620 /* ViewController.swift */; };
-		040EB5A21BC815EA00452620 /* Backflip_TV.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 040EB5A01BC815EA00452620 /* Backflip_TV.xcdatamodeld */; };
 		040EB5A51BC815EA00452620 /* Main-TV.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040EB5A31BC815EA00452620 /* Main-TV.storyboard */; };
 		040EB5A71BC815EA00452620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040EB5A61BC815EA00452620 /* Assets.xcassets */; };
 		040EB5BA1BC8160D00452620 /* File+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04196F521B8B996000AE5FA5 /* File+CoreDataProperties.swift */; };
@@ -54,7 +53,6 @@
 		0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420283A1BA1E0CB0059F096 /* Defines.swift */; };
 		042028481BA1EFC50059F096 /* Backflip.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 042028471BA1ECE20059F096 /* Backflip.sqlite */; };
 		042028501BA1F4E20059F096 /* Photo+Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420284F1BA1F4E20059F096 /* Photo+Sharing.swift */; };
-		0422D10D1BCFF2DB0078E7F6 /* Backflip.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0422D10B1BCFF2DB0078E7F6 /* Backflip.xcdatamodeld */; };
 		0422D1131BCFF3190078E7F6 /* BFDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0422D10E1BCFF3190078E7F6 /* BFDataFetcher.swift */; };
 		0422D1141BCFF3190078E7F6 /* BFDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0422D10F1BCFF3190078E7F6 /* BFDataManager.swift */; };
 		0422D1151BCFF3190078E7F6 /* BFDataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0422D1101BCFF3190078E7F6 /* BFDataProcessor.swift */; };
@@ -87,7 +85,6 @@
 		0439D3D11B8B87D3001850DD /* BFTabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3D01B8B87D3001850DD /* BFTabBarControllerDelegate.swift */; };
 		0439D3D31B8B887C001850DD /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3D21B8B887C001850DD /* Array+Extensions.swift */; };
 		0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3D41B8B8896001850DD /* CheckinViewController.swift */; };
-		0439D3DE1B8B93A5001850DD /* Backflip.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */; };
 		043AB3AD1BBE212100BA5827 /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB39B1BBE212100BA5827 /* FrameView.swift */; };
 		043AB3AE1BBE212100BA5827 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 043AB39C1BBE212100BA5827 /* Images.xcassets */; };
 		043AB3AF1BBE212100BA5827 /* PKHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB39D1BBE212100BA5827 /* PKHUD.swift */; };
@@ -125,10 +122,14 @@
 		046D98E31BCAABA8004B3DCD /* BFCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98DF1BCAABA8004B3DCD /* BFCameraController.swift */; };
 		046D98E41BCAABA8004B3DCD /* BFCameraOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98E01BCAABA8004B3DCD /* BFCameraOverlay.swift */; };
 		046D98E51BCAABA8004B3DCD /* BFImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98E11BCAABA8004B3DCD /* BFImagePreviewController.swift */; };
+		0472D0FB1BD94B2200D8891B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
+		0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
+		0472D0FD1BD94D4800D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
 		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
 		048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04937DD41BD979F9004A2730 /* Backflip.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04937DD11BD979D1004A2730 /* Backflip.xcdatamodeld */; };
 		0496D1231BD83ADA003B0EDC /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0496D0FC1BD83AC9003B0EDC /* Bolts.framework */; };
 		0496D1241BD83ADA003B0EDC /* Bolts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0496D0FC1BD83AC9003B0EDC /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0496D12B1BD83E5E003B0EDC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D7D7121BA9ADB800AC6AA3 /* Parse.framework */; };
@@ -537,7 +538,6 @@
 		040EB59A1BC815EA00452620 /* Backflip TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Backflip TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		040EB59C1BC815EA00452620 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		040EB59E1BC815EA00452620 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		040EB5A11BC815EA00452620 /* Backflip_TV.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Backflip_TV.xcdatamodel; sourceTree = "<group>"; };
 		040EB5A41BC815EA00452620 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Main-TV.storyboard"; sourceTree = "<group>"; };
 		040EB5A61BC815EA00452620 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		040EB5A81BC815EA00452620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -559,7 +559,6 @@
 		0420283A1BA1E0CB0059F096 /* Defines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defines.swift; sourceTree = "<group>"; };
 		042028471BA1ECE20059F096 /* Backflip.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Backflip.sqlite; sourceTree = "<group>"; };
 		0420284F1BA1F4E20059F096 /* Photo+Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Photo+Sharing.swift"; sourceTree = "<group>"; };
-		0422D10C1BCFF2DB0078E7F6 /* Backflip.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Backflip.xcdatamodel; sourceTree = "<group>"; };
 		0422D10E1BCFF3190078E7F6 /* BFDataFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFDataFetcher.swift; sourceTree = "<group>"; };
 		0422D10F1BCFF3190078E7F6 /* BFDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFDataManager.swift; sourceTree = "<group>"; };
 		0422D1101BCFF3190078E7F6 /* BFDataProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFDataProcessor.swift; sourceTree = "<group>"; };
@@ -633,11 +632,13 @@
 		046D98DF1BCAABA8004B3DCD /* BFCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFCameraController.swift; sourceTree = "<group>"; };
 		046D98E01BCAABA8004B3DCD /* BFCameraOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFCameraOverlay.swift; sourceTree = "<group>"; };
 		046D98E11BCAABA8004B3DCD /* BFImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFImagePreviewController.swift; sourceTree = "<group>"; };
+		0472D0D61BD948BE00D8891B /* BonjourService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourService.swift; sourceTree = "<group>"; };
 		047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Vendor/Facebook/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Vendor/Facebook/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		047790E61BBB1C5B00BA8F9E /* PopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		048939BF1BD0451C005400CA /* Locksmith.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Locksmith.xcodeproj; path = Vendor/Locksmith/Locksmith.xcodeproj; sourceTree = "<group>"; };
+		04937DD21BD979D1004A2730 /* Backflip.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Backflip.xcdatamodel; sourceTree = "<group>"; };
 		0495F1751BAB0CC0002E609E /* Frontflip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Frontflip.entitlements; sourceTree = "<group>"; };
 		0496D0EC1BD83AC9003B0EDC /* Bolts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Bolts.xcodeproj; path = "../../../../../../../../private/tmp/Parse-SDK-iOS-OSX/Vendor/Bolts-ObjC/Bolts.xcodeproj"; sourceTree = "<group>"; };
 		0497380E1BD805C500B58F70 /* Nuke.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nuke.xcodeproj; path = Vendor/Nuke/Nuke/Nuke.xcodeproj; sourceTree = "<group>"; };
@@ -778,6 +779,7 @@
 				0485F6D71BD5B41A00E0465D /* Vendor */,
 				040EB59C1BC815EA00452620 /* AppDelegate.swift */,
 				040EB59E1BC815EA00452620 /* ViewController.swift */,
+				0472D0D61BD948BE00D8891B /* BonjourService.swift */,
 				040756C01BD6DC2100F95E96 /* MasterViewController.swift */,
 				040756C21BD6DD3700F95E96 /* DetailViewController.swift */,
 				040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */,
@@ -786,7 +788,6 @@
 				040EB5A31BC815EA00452620 /* Main-TV.storyboard */,
 				040EB5A61BC815EA00452620 /* Assets.xcassets */,
 				040EB5A81BC815EA00452620 /* Info.plist */,
-				040EB5A01BC815EA00452620 /* Backflip_TV.xcdatamodeld */,
 			);
 			path = "Backflip TV";
 			sourceTree = "<group>";
@@ -819,16 +820,16 @@
 		0420283F1BA1ECD70059F096 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				0422D10B1BCFF2DB0078E7F6 /* Backflip.xcdatamodeld */,
+				04937DD11BD979D1004A2730 /* Backflip.xcdatamodeld */,
 				042028471BA1ECE20059F096 /* Backflip.sqlite */,
 			);
-			name = Database;
-			path = "../../Supporting Files";
+			path = Database;
 			sourceTree = "<group>";
 		};
 		0422D0FE1BCFF0440078E7F6 /* Data Management / Processing */ = {
 			isa = PBXGroup;
 			children = (
+				049222A71B725CAA00FFB08A /* Models */,
 				0420283F1BA1ECD70059F096 /* Database */,
 				0422D10E1BCFF3190078E7F6 /* BFDataFetcher.swift */,
 				0422D10F1BCFF3190078E7F6 /* BFDataManager.swift */,
@@ -1094,7 +1095,8 @@
 				04C61FBC1B8B982600E2ACB5 /* GeoPoint.swift */,
 				04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */,
 			);
-			path = Models;
+			name = Models;
+			path = ../Models;
 			sourceTree = "<group>";
 		};
 		0496D0ED1BD83AC9003B0EDC /* Products */ = {
@@ -1303,7 +1305,6 @@
 			isa = PBXGroup;
 			children = (
 				0422D0FE1BCFF0440078E7F6 /* Data Management / Processing */,
-				049222A71B725CAA00FFB08A /* Models */,
 				0439D3AC1B8B822C001850DD /* Views */,
 				04F41BEE1B74FBF4001AB8DA /* Controllers */,
 				0439D3C51B8B86AC001850DD /* Extensions */,
@@ -1827,12 +1828,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				040EB5C21BC8162F00452620 /* Attendance.swift in Sources */,
+				0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */,
 				040EB59F1BC815EA00452620 /* ViewController.swift in Sources */,
 				040EB5C81BC8164500452620 /* Defines.swift in Sources */,
 				040EB5BE1BC8161100452620 /* GeoPoint+CoreDataProperties.swift in Sources */,
+				0472D0FB1BD94B2200D8891B /* String+Extensions.swift in Sources */,
 				040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */,
 				040EB5C11BC8162F00452620 /* File.swift in Sources */,
-				040EB5A21BC815EA00452620 /* Backflip_TV.xcdatamodeld in Sources */,
 				040756C31BD6DD3700F95E96 /* DetailViewController.swift in Sources */,
 				040EB5BD1BC8161100452620 /* Event+CoreDataProperties.swift in Sources */,
 				040EB5C31BC8162F00452620 /* Event.swift in Sources */,
@@ -1863,6 +1865,7 @@
 				0422D1141BCFF3190078E7F6 /* BFDataManager.swift in Sources */,
 				043AB3BD1BBE212200BA5827 /* Window.swift in Sources */,
 				04D7D7021BA9ACC000AC6AA3 /* DOFavoriteButton.swift in Sources */,
+				0472D0FD1BD94D4800D8891B /* BonjourService.swift in Sources */,
 				043AB3B31BBE212200BA5827 /* PKHUDImageView.swift in Sources */,
 				043AB3B21BBE212200BA5827 /* PKHUDErrorView.swift in Sources */,
 				043AB3BB1BBE212200BA5827 /* PKHUDTitleView.swift in Sources */,
@@ -1875,6 +1878,7 @@
 				04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */,
 				04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */,
 				043AB3AD1BBE212100BA5827 /* FrameView.swift in Sources */,
+				04937DD41BD979F9004A2730 /* Backflip.xcdatamodeld in Sources */,
 				043AB3B11BBE212100BA5827 /* PKHUDAssets.swift in Sources */,
 				046D98C61BCAAAF4004B3DCD /* SheetController.swift in Sources */,
 				0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */,
@@ -1919,7 +1923,6 @@
 				041312A71BB47A1B00C0E4D9 /* EventHistoryViewFlowLayout.swift in Sources */,
 				0422D1181BCFF6520078E7F6 /* BFParseManager.swift in Sources */,
 				046D98C01BCAAAF4004B3DCD /* PreviewCollectionViewCell.swift in Sources */,
-				0422D10D1BCFF2DB0078E7F6 /* Backflip.xcdatamodeld in Sources */,
 				0439D3CD1B8B8758001850DD /* NSDate+Extensions.swift in Sources */,
 				0439D3A81B8B81A6001850DD /* InviteViewController.swift in Sources */,
 				0422D1131BCFF3190078E7F6 /* BFDataFetcher.swift in Sources */,
@@ -1938,7 +1941,6 @@
 				0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */,
 				04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
-				0439D3DE1B8B93A5001850DD /* Backflip.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2158,7 +2160,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
-					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Vendor",
 					"$(PROJECT_DIR)/Vendor/Branch",
 					"$(PROJECT_DIR)/Vendor/Fabric",
@@ -2166,9 +2167,6 @@
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
 					"$(PROJECT_DIR)/Instabug",
-					"$(PROJECT_DIR)/Backflip",
-					TV/Vendor/Parse,
-					"$(PROJECT_DIR)/Vendor/Parse",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2242,7 +2240,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
-					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Vendor",
 					"$(PROJECT_DIR)/Vendor/Branch",
 					"$(PROJECT_DIR)/Vendor/Fabric",
@@ -2250,9 +2247,6 @@
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Parse/**",
 					"$(PROJECT_DIR)/Instabug",
-					"$(PROJECT_DIR)/Backflip",
-					TV/Vendor/Parse,
-					"$(PROJECT_DIR)/Vendor/Parse",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2339,32 +2333,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		040EB5A01BC815EA00452620 /* Backflip_TV.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				040EB5A11BC815EA00452620 /* Backflip_TV.xcdatamodel */,
-			);
-			currentVersion = 040EB5A11BC815EA00452620 /* Backflip_TV.xcdatamodel */;
-			path = Backflip_TV.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		0422D10B1BCFF2DB0078E7F6 /* Backflip.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				0422D10C1BCFF2DB0078E7F6 /* Backflip.xcdatamodel */,
-			);
-			currentVersion = 0422D10C1BCFF2DB0078E7F6 /* Backflip.xcdatamodel */;
-			path = Backflip.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				0439D3DD1B8B93A5001850DD /* Backflip.xcdatamodel */,
 			);
 			currentVersion = 0439D3DD1B8B93A5001850DD /* Backflip.xcdatamodel */;
+			path = Backflip.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		04937DD11BD979D1004A2730 /* Backflip.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				04937DD21BD979D1004A2730 /* Backflip.xcdatamodel */,
+			);
+			currentVersion = 04937DD21BD979D1004A2730 /* Backflip.xcdatamodel */;
 			path = Backflip.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

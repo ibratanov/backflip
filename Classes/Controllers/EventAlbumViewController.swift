@@ -284,18 +284,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		
 		photoBrowser?.likeLabel.text = "\(photo.upvoteCount!) like"+((photo.upvoteCount?.intValue > 1 || photo.upvoteCount?.intValue == 0) ? "s" : "")
 		if (photo.usersLiked != nil) {
-			
-			let currentUser = PFUser.currentUser()
-			
-			var liked = photo.usersLiked!.contains(currentUser!.objectId!)
-			if (currentUser!["phone_number"] != nil && photo.usersLiked!.contains((currentUser!["phone_number"] as! String))) {
-				liked = true
-			} else if currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((currentUser!["facebook_id"] as! NSNumber).stringValue) {
-                liked = true
-			}
-			
-			
-			if (liked) {
+			if (photo.likedBy(PFUser.currentUser())) {
 				self.photoBrowser?.likeButton?.tintColor = UIColor(red:1,  green:0.216,  blue:0.173, alpha:1)
 				self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOn")
 			} else {
@@ -363,7 +352,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
 			cell.imageView.nk_prepareForReuse()
-			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
 			cell.imageView.nk_setImageWithURL(imageUrl)
 		}
 	}
@@ -472,14 +461,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			for (var i = 0; i < photos.count; i++) {
 				let photo = photos[i]
 				if (photo.usersLiked != nil) {
-					var liked = photo.usersLiked!.contains(PFUser.currentUser()!.objectId!)
-					if (PFUser.currentUser()!["phone_number"] != nil && photo.usersLiked!.contains((PFUser.currentUser()!["phone_number"] as! String))) {
-						liked = true
-					} else if PFUser.currentUser()!["facebook_id"] != nil && photo.usersLiked!.contains((PFUser.currentUser()!["facebook_id"] as! NSNumber).stringValue) {
-						liked = true
-					}
-					
-					if (liked) {
+					if (photo.likedBy(PFUser.currentUser())) {
 						content.append(photo)
 					}
 				}
@@ -579,15 +561,8 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					photo.usersLiked = ""
 				}
 				
-				let currentUser = PFUser.currentUser()
-				var liked = photo.usersLiked!.contains(currentUser!.objectId!)
-				if (currentUser!["phone_number"] != nil && photo.usersLiked!.contains((currentUser!["phone_number"] as! String))) {
-					liked = true
-                } else if currentUser!["facebook_id"] != nil && photo.usersLiked!.contains((currentUser!["facebook_id"] as! NSNumber).stringValue) {
-                    liked = true
-				}
-				
-				if (liked) {
+				if (photo.likedBy(PFUser.currentUser())) {
+					let currentUser = PFUser.currentUser()
 					var liked = photo.usersLiked!.componentsSeparatedByString(",")
 					var index = liked.indexOf(PFUser.currentUser()!.objectId!)
 					if (index == nil && currentUser!["phone_number"] != nil) {
@@ -631,14 +606,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					let _photo = self.collectionContent[Int(selectedIndex!)]
 					let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 					if (photo.usersLiked != nil) {
-						var liked = photo.usersLiked!.contains(PFUser.currentUser()!.objectId!)
-						if (PFUser.currentUser()!["phone_number"] != nil && photo.usersLiked!.contains((PFUser.currentUser()!["phone_number"] as! String))) {
-							liked = true
-						} else if PFUser.currentUser()!["facebook_id"] != nil && photo.usersLiked!.contains((PFUser.currentUser()!["facebook_id"] as! NSNumber).stringValue) {
-							liked = true
-						}
-						
-						if (liked) {
+						if (photo.likedBy(PFUser.currentUser())) {
 							self.photoBrowser?.likeButton?.tintColor = UIColor(red:1,  green:0.216,  blue:0.173, alpha:1)
 							self.photoBrowser?.likeButton?.image = UIImage(named: "PUFavoriteOn")
 						} else {
