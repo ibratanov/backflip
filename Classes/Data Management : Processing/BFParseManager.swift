@@ -304,7 +304,7 @@ public class BFParseManager : NSObject
 					password = "backflip-pass-"+user!.username!
 				}
 				
-				print("Attemping to login with username \(user!.username!), password = \(password)")
+				print("(devices.count < 1) Attemping to login with username \(user!.username!), password = \(password)")
 				PFUser.logInWithUsernameInBackground(user!.username!, password: password, block: { (user : PFUser?, error) -> Void in
 					
 					if (error == nil && user != nil) {
@@ -344,7 +344,7 @@ public class BFParseManager : NSObject
 				password = "backflip-pass-"+user!.username!
 			}
 			
-			print("Attemping to login with username \(user!.username!), password = \(password)")
+			print("(devices.count > 0) Attemping to login with username \(user!.username!), password = \(password)")
 			PFUser.logInWithUsernameInBackground(user!.username!, password: password, block: { (user : PFUser?, error) -> Void in
 				
 				if (error == nil && user != nil) {
