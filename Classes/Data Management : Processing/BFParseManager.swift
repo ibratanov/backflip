@@ -340,10 +340,15 @@ public class BFParseManager : NSObject
 		} else if (devices?.count > 0) {
 			
 			let user = devices?.first
-			var password = (user!.username!.characters.contains("+") == false || NSNumber(integer: Int(user!["password_updated"] as! String)!).boolValue == true) ? "backflip-pass-"+user!.username! : "Password"
+			var password = (user!.username!.characters.contains("+") == false) ? "backflip-pass-"+user!.username! : "Password"
 			if (user != nil && user!["facebook_id"] != nil) {
 				password = "backflip-pass-"+user!.username!
 			}
+			
+			if (user != nil && user!["password_updated"] != nil && NSNumber(integer: Int(user!["password_updated"] as! String)!).boolValue == true) {
+				password = "backflip-pass-"+user!.username!
+			}
+			
 			
 			print("(devices.count > 0) Attemping to login with username \(user!.username!), password = \(password)")
 			PFUser.logInWithUsernameInBackground(user!.username!, password: password, block: { (user : PFUser?, error) -> Void in
