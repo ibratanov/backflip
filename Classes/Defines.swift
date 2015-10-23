@@ -10,7 +10,7 @@ import Foundation
 
 
 
-let kAppDatabaseName : String = "Backflip"
+let kAppDatabaseName : String = "backflip-preseed"
 
 
 let nPhotoObjectsUpdated : String = "nPhotoObjectsUpdated"

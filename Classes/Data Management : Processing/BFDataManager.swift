@@ -17,12 +17,12 @@ class BFDataMananger : NSObject
     func setupDatabase()
     {
 		
-        #if FEATURE_COREDATA_SEED
+		if FEATURE_COREDATA_SEED {
 			self.seedDatabase()
-		#else
+		} else {
 			print("Not seeding database because we're running in DEBUG mode")
-        #endif
-		
+		}
+	
 		MagicalRecord.setupCoreDataStackWithAutoMigratingSqliteStoreNamed(kAppDatabaseName)
 		
 		#if !(TARGET_OS_EMBEDDED)  // This will work for Mac or Simulator but excludes physical iOS devices

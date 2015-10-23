@@ -51,7 +51,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		//--------------------------------------
 		// Coredata
 		//--------------------------------------
-		BFDataFetcher.sharedFetcher.fetchData(true);
+		BFDataFetcher.sharedFetcher.fetchData(false);
 		
 		
 		//--------------------------------------
@@ -79,7 +79,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             }
         }
 		
-		#if ((arch(i386) || arch(x86_64)) && os(iOS)) || SNAPSHOT
+		#if arch(i386) || arch(x86_64)
 			print("📲 Disabling push notifications for the simulator")
 		#else
 			let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
