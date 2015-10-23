@@ -36,7 +36,7 @@
 	ignore = dirty
 [submodule "Vendor/SKPhotoBrowser"]
 	path = Vendor/SKPhotoBrowser
-	url = git@github.com:suzuki-0000/SKPhotoBrowser.git
+	url = git@github.com:JackoPlane/SKPhotoBrowser.git
 	ignore = dirty
 [submodule "Vendor/Nuke"]
 	path = Vendor/Nuke
