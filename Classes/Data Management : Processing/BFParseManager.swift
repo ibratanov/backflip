@@ -317,7 +317,7 @@ public class BFParseManager : NSObject
 						}
 						
 						if (facebookId != nil) {
-							user!["facebook_id"] = Int(facebookId!)
+							user!["facebook_id"] = NSNumber(integer: Int(facebookId!)!)
 							user!["email"] = emailAddress
 							user!["facebook_name"] = "\(firstName!) \(lastName!)"
 						}
@@ -357,7 +357,7 @@ public class BFParseManager : NSObject
 					}
 					
 					if (facebookId != nil) {
-						user!["facebook_id"] = Int(facebookId!)
+						user!["facebook_id"] = NSNumber(integer: Int(facebookId!)!)
 						user!["email"] = emailAddress
 						user!["facebook_name"] = "\(firstName!) \(lastName!)"
 					}
@@ -386,7 +386,7 @@ public class BFParseManager : NSObject
 		if (facebookId != nil) {
 			user.username = facebookId
 			user.password = "backflip-pass-\(facebookId!)"
-			user["facebook_id"] = Int(facebookId!)
+			user["facebook_id"] = NSNumber(integer: Int(facebookId!)!)
 			user["email"] = emailAddress
 			user["facebook_name"] = "\(firstName!) \(lastName!)"
 		} else {

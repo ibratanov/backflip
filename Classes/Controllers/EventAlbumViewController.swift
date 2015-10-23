@@ -293,7 +293,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			}
 		}
 		
-		print("Uploader = \(photo.uploader), current user = \(PFUser.currentUser()?.objectId)")
 		if (photo.uploader == PFUser.currentUser()?.objectId) {
 			self.photoBrowser?.trashButton?.image = UIImage(named: "UIButtonBarTrash")
 			self.photoBrowser?.trashButton?.action = "deletePhoto"
@@ -338,9 +337,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		} else if (self.collectionContent.count >= indexPath.row) {
 		
 		}
-		
-		// cell.layer.shouldRasterize = true
-		// cell.layer.rasterizationScale = UIScreen.mainScreen().scale
 		
 		return cell!
 	}
