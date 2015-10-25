@@ -18,8 +18,11 @@ let nEventObjectsUpdated : String = "nEventObjectsUpdated"
 
 
 
-
-let FEATURE_COREDATA_SEED : Bool = true
+#if DEBUG
+	let FEATURE_COREDATA_SEED : Bool = false
+#else
+	let FEATURE_COREDATA_SEED : Bool = true
+#endif
 
 
 //------------------------------------
