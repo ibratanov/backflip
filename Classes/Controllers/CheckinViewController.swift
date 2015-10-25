@@ -378,6 +378,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func fetchData()
 	{
+		if (PFUser.currentUser() == nil) {
+			return
+		}
+		
 		let authorizationStatus = CLLocationManager.authorizationStatus()
 		if (authorizationStatus == .NotDetermined) {
 			

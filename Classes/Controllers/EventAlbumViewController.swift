@@ -563,8 +563,8 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					let currentUser = PFUser.currentUser()
 					var liked = photo.usersLiked!.componentsSeparatedByString(",")
 					var index = liked.indexOf(PFUser.currentUser()!.objectId!)
-					if (index == nil && currentUser!["phone_number"] != nil) {
-						index = liked.indexOf((currentUser!["phone_number"] as! String))
+					if (index == nil && currentUser!["phone"] != nil) {
+						index = liked.indexOf((currentUser!["phone"] as! String))
 					} else if (index == nil && currentUser!["facebook_id"] != nil) {
 						index = liked.indexOf((currentUser!["facebook_id"] as! NSNumber).stringValue)
 					}

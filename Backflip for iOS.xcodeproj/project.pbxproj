@@ -51,7 +51,6 @@
 		041F37981B94B08700610881 /* Attendance+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041F37951B94B08700610881 /* Attendance+CoreDataProperties.swift */; };
 		041F37991B94B08700610881 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041F37961B94B08700610881 /* Attendance.swift */; };
 		0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420283A1BA1E0CB0059F096 /* Defines.swift */; };
-		042028481BA1EFC50059F096 /* Backflip.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 042028471BA1ECE20059F096 /* Backflip.sqlite */; };
 		042028501BA1F4E20059F096 /* Photo+Sharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420284F1BA1F4E20059F096 /* Photo+Sharing.swift */; };
 		0422D1131BCFF3190078E7F6 /* BFDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0422D10E1BCFF3190078E7F6 /* BFDataFetcher.swift */; };
 		0422D1141BCFF3190078E7F6 /* BFDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0422D10F1BCFF3190078E7F6 /* BFDataManager.swift */; };
@@ -67,6 +66,7 @@
 		0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */; };
 		0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC481BC81CC500B31D02 /* AudioToolbox.framework */; };
 		0432DC641BCE9D6000B31D02 /* FacebookSDKStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0432DC631BCE9D6000B31D02 /* FacebookSDKStrings.bundle */; };
+		043350561BDAB67C00914A2E /* backflip-preseed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 043350551BDAB67C00914A2E /* backflip-preseed.sqlite */; };
 		0439D3281B876EA9001850DD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3271B876EA9001850DD /* Security.framework */; };
 		0439D3401B8B76B1001850DD /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D32F1B8B76B1001850DD /* Branch.framework */; };
 		0439D3411B8B76B1001850DD /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3311B8B76B1001850DD /* DigitsKit.framework */; };
@@ -557,7 +557,6 @@
 		041F37951B94B08700610881 /* Attendance+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Attendance+CoreDataProperties.swift"; path = "Models/Attendance+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		041F37961B94B08700610881 /* Attendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		0420283A1BA1E0CB0059F096 /* Defines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defines.swift; sourceTree = "<group>"; };
-		042028471BA1ECE20059F096 /* Backflip.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Backflip.sqlite; sourceTree = "<group>"; };
 		0420284F1BA1F4E20059F096 /* Photo+Sharing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Photo+Sharing.swift"; sourceTree = "<group>"; };
 		0422D10E1BCFF3190078E7F6 /* BFDataFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFDataFetcher.swift; sourceTree = "<group>"; };
 		0422D10F1BCFF3190078E7F6 /* BFDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFDataManager.swift; sourceTree = "<group>"; };
@@ -572,6 +571,7 @@
 		0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.0.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		0432DC481BC81CC500B31D02 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		0432DC631BCE9D6000B31D02 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKStrings.bundle; sourceTree = "<group>"; };
+		043350551BDAB67C00914A2E /* backflip-preseed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "backflip-preseed.sqlite"; sourceTree = "<group>"; };
 		0439D3271B876EA9001850DD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0439D32F1B8B76B1001850DD /* Branch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Branch.framework; sourceTree = "<group>"; };
 		0439D3311B8B76B1001850DD /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
@@ -820,8 +820,8 @@
 		0420283F1BA1ECD70059F096 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				043350551BDAB67C00914A2E /* backflip-preseed.sqlite */,
 				04937DD11BD979D1004A2730 /* Backflip.xcdatamodeld */,
-				042028471BA1ECE20059F096 /* Backflip.sqlite */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -1785,7 +1785,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				042028481BA1EFC50059F096 /* Backflip.sqlite in Resources */,
 				046D98BD1BCAAAF4004B3DCD /* Images.xcassets in Resources */,
 				0439D3BB1B8B82E2001850DD /* Main.storyboard in Resources */,
 				04D7D7031BA9ACC000AC6AA3 /* heart.png in Resources */,
@@ -1793,6 +1792,7 @@
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
 				046D98E21BCAABA8004B3DCD /* Assets.xcassets in Resources */,
 				0439D3991B8B7AEE001850DD /* DigitsKitResources.bundle in Resources */,
+				043350561BDAB67C00914A2E /* backflip-preseed.sqlite in Resources */,
 				04D7D7041BA9ACC000AC6AA3 /* like.png in Resources */,
 				04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */,
 				0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */,

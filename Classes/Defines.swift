@@ -10,13 +10,16 @@ import Foundation
 
 
 
-let kAppDatabaseName : String = "Backflip"
+let kAppDatabaseName : String = "backflip-preseed"
 
 
 let nPhotoObjectsUpdated : String = "nPhotoObjectsUpdated"
 let nEventObjectsUpdated : String = "nEventObjectsUpdated"
 
 
+
+
+let FEATURE_COREDATA_SEED : Bool = true
 
 
 //------------------------------------

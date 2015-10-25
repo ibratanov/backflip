@@ -304,16 +304,17 @@ public class BFParseManager : NSObject
 					password = "backflip-pass-"+user!.username!
 				}
 				
-				print("Attemping to login with username \(user!.username!), password = \(password)")
+				print("(devices.count < 1) Attemping to login with username \(user!.username!), password = \(password)")
 				PFUser.logInWithUsernameInBackground(user!.username!, password: password, block: { (user : PFUser?, error) -> Void in
 					
 					if (error == nil && user != nil) {
 						
 						user!.password = "backflip-pass-"+user!.username!
 						user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+						user!["password_updated"] = true
 						
 						if (phoneNumber != nil) {
-							user!["phoneNumber"] = phoneNumber
+							user!["phone"] = phoneNumber
 						}
 						
 						if (facebookId != nil) {
@@ -339,25 +340,33 @@ public class BFParseManager : NSObject
 		} else if (devices?.count > 0) {
 			
 			let user = devices?.first
-			var password = (user!.username!.characters.contains("+") == false) ? "Password" : "backflip-pass-"+user!.username!
+			var password = (user!.username!.characters.contains("+") == false) ? "backflip-pass-"+user!.username! : "Password"
 			if (user != nil && user!["facebook_id"] != nil) {
 				password = "backflip-pass-"+user!.username!
 			}
 			
-			print("Attemping to login with username \(user!.username!), password = \(password)")
+			if (user != nil && user!["password_updated"] != nil && (user!["password_updated"] as! Bool) == true) {
+				password = "backflip-pass-"+user!.username!
+			} else {
+				password = "Password"
+			}
+			
+			
+			print("(devices.count > 0) Attemping to login with username \(user!.username!), password = \(password)")
 			PFUser.logInWithUsernameInBackground(user!.username!, password: password, block: { (user : PFUser?, error) -> Void in
 				
 				if (error == nil && user != nil) {
 					
 					user!.password = "backflip-pass-"+user!.username!
 					user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+					user!["password_updated"] = true
 					
 					if (phoneNumber != nil) {
-						user!["phoneNumber"] = phoneNumber
+						user!["phone"] = phoneNumber
 					}
 					
 					if (facebookId != nil) {
-						user!["facebook_id"] = NSNumber(integer: Int(facebookId!)!)
+						user!["facebook_id"] = NSNumber(double: Double(facebookId!)!)
 						user!["email"] = emailAddress
 						user!["facebook_name"] = "\(firstName!) \(lastName!)"
 					}
@@ -386,7 +395,7 @@ public class BFParseManager : NSObject
 		if (facebookId != nil) {
 			user.username = facebookId
 			user.password = "backflip-pass-\(facebookId!)"
-			user["facebook_id"] = NSNumber(integer: Int(facebookId!)!)
+			user["facebook_id"] = NSNumber(double: Double(facebookId!)!)
 			user["email"] = emailAddress
 			user["facebook_name"] = "\(firstName!) \(lastName!)"
 		} else {
@@ -401,6 +410,7 @@ public class BFParseManager : NSObject
 		user["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 		user["blocked"] = false
 		user["firstUse"] = true
+		user["password_updated"] = true
 		
 		print("Signing up with username '\(user.username!)', and password '\(user.password!)'.")
 		user.signUpInBackgroundWithBlock({ (success, error) -> Void in
