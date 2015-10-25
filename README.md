@@ -3,7 +3,7 @@
 [![Build status](https://badge.buildkite.com/ac01128a2b2b4ab64713fd7ba43d77300728a3293ad3f3c018.svg)](https://buildkite.com/yoshimi-robotics/backflip-for-ios)
 ![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
 [![volkswagen status](https://auchenberg.github.io/volkswagen/volkswargen_ci.svg?v=1)](https://github.com/auchenberg/volkswagen)
-
+![Platforms](https://img.shields.io/badge/Platform-iOS%20%7C%20tvOS-lightgrey.svg)
 
 
 Backflip is the best way to share photos with the crowd around you. Check into a nearby event, take and upload photos, and view the best content from everyone there.
@@ -11,7 +11,7 @@ Backflip is the best way to share photos with the crowd around you. Check into a
 
 ### Requirements
 
-- [ ] Xcode 7+ (Currently Swift 2.0 compatible)
+- [ ] Xcode 7.1+ (Currently Swift 2.0 compatible)
 - [ ] Device running iOS 8.3+
 - [ ] Understanding of git [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 - [ ] Whiskey
@@ -30,7 +30,7 @@ Backflip is the best way to share photos with the crowd around you. Check into a
 
 - `master` This is the current, most up to date (**stable**) AppStore build
 - `develop` This is the current, most up to date (**unstable**) Testflight build. Never work on `develop` directly, always use a feature/bug branch and merge in (after adequate testing)
-- `feat/bug-*` These are feature/bug branches, only commit and push these when required. 
+- `feature/bug.*` These are feature/bug branches, only commit and push these when required. 
 
 ### Committing
 
