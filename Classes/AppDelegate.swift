@@ -135,7 +135,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
     }
-    
+
+
+
+	// MARK: Deep linking
+
+
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
 	{
 		
