@@ -314,7 +314,7 @@ public class BFParseManager : NSObject
 						user!["password_updated"] = true
 						
 						if (phoneNumber != nil) {
-							user!["phoneNumber"] = phoneNumber
+							user!["phone"] = phoneNumber
 						}
 						
 						if (facebookId != nil) {
@@ -362,11 +362,11 @@ public class BFParseManager : NSObject
 					user!["password_updated"] = true
 					
 					if (phoneNumber != nil) {
-						user!["phoneNumber"] = phoneNumber
+						user!["phone"] = phoneNumber
 					}
 					
 					if (facebookId != nil) {
-						user!["facebook_id"] = NSNumber(integer: Int(facebookId!)!)
+						user!["facebook_id"] = NSNumber(double: Double(facebookId!)!)
 						user!["email"] = emailAddress
 						user!["facebook_name"] = "\(firstName!) \(lastName!)"
 					}
