@@ -364,7 +364,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			// Photos
 			var images = [SKPhoto]()
 			for photo in collectionContent {
-				let image = SKPhoto.photoWithImageURL(photo.image!.url!)
+				let image = SKPhoto.photoWithImageURL(photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
 				image.shouldCachePhotoURLImage = true
 				
 				if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
@@ -715,7 +715,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		// Photos
 		var images = [SKPhoto]()
 		for photo in collectionContent {
-			let image = SKPhoto.photoWithImageURL(photo.image!.url!)
+			let image = SKPhoto.photoWithImageURL(photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
 			image.shouldCachePhotoURLImage = true
 			
 			if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
