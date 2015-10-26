@@ -229,12 +229,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 
 
 		if DEBUG_PARSE {
-			NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveWillSendURLRequestNotification:", name: PFNetworkWillSendURLRequestNotification, object: nil)
 			NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveDidReceiveURLResponseNotification:", name: PFNetworkDidReceiveURLResponseNotification, object: nil)
 
 			Parse.setLogLevel(.Debug)
 		}
 
+		
 		#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 		#else
@@ -256,23 +256,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	}
 
 
-	func receiveWillSendURLRequestNotification(notification: NSNotification)
-	{
-		guard notification.userInfo != nil else { return }
-
-		let request = notification.userInfo![PFNetworkNotificationURLRequestUserInfoKey] as? NSURLRequest
-		guard request != nil else { return }
-
-		print("URL: \(request!.URL!.absoluteString)")
-		print("Method: \(request!.HTTPMethod)")
-		print("Headers: \(request!.allHTTPHeaderFields)")
-
-		if (request?.HTTPBody != nil) {
-			let httpBody = NSString(data: request!.HTTPBody!, encoding: NSUTF8StringEncoding)
-			print("Request Body: \(httpBody)")
-		}
-	}
-
 	func receiveDidReceiveURLResponseNotification(notification: NSNotification)
 	{
 		guard notification.userInfo != nil else { return }
@@ -280,10 +263,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		// let request = notification.userInfo![PFNetworkNotificationURLRequestUserInfoKey] as! NSURLRequest
 		let response = notification.userInfo![PFNetworkNotificationURLResponseUserInfoKey] as! NSHTTPURLResponse
 		let responseBody = notification.userInfo![PFNetworkNotificationURLResponseBodyUserInfoKey] as! NSString
-		print("URL: \(response.URL!.absoluteString)")
-		print("Status code: \(response.statusCode)")
-		print("Headers: \(response.allHeaderFields)")
-		print("Response Body: \(responseBody)")
+		print("------------------------------------------------")
+		print("\tURL: \(response.URL!.absoluteString)")
+		print("\tStatus code: \(response.statusCode)")
+		print("\tHeaders: \(response.allHeaderFields)")
+		print("\tResponse Body: \(responseBody)")
+		print(" ")
 	}
 
 
