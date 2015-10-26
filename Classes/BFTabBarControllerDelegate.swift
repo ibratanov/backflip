@@ -36,9 +36,9 @@ public class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate
 			
 			let currentEvent: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
 			if (currentEvent == nil) {
-				let alertController = UIAlertController(title: "Take Photo", message: "Please check in or create an event before uploading photos.", preferredStyle: .Alert)
+				let alertController = UIAlertController(title: "Take Photo", message: "Please check in or create a new event before uploading photos.", preferredStyle: .Alert)
 				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: { (alertAction) -> Void in
+				alertController.addAction(UIAlertAction(title: "Take me there", style: .Default, handler: { (alertAction) -> Void in
 
 					if UIApplication.sharedApplication().windows.first!.rootViewController as? UITabBarController != nil {
 						let tababarController = (UIApplication.sharedApplication().windows.first!).rootViewController as! UITabBarController
