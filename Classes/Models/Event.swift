@@ -10,8 +10,30 @@ import Foundation
 import CoreData
 
 @objc(Event)
-class Event: ParseObject {
+class Event: ParseObject
+{
 
-// Insert code here to add functionality to your managed object subclass
-
+	var __cleanPhotos : [Photo] = [] // Caching, yay speed!
+	
+	
+	var cleanPhotos: [Photo] {
+		get {
+			guard self.photos != nil && self.photos?.count > 0 else { return [] }
+			
+			guard __cleanPhotos.count < 1 else { return __cleanPhotos }
+			
+			let _photos = self.photos!.allObjects as? [Photo]
+			var cleanPhotos : [Photo] = []
+			for photo in _photos! {
+				if (photo.flagged?.boolValue == false && photo.enabled?.boolValue == true) {
+					cleanPhotos.append(photo)
+				}
+			}
+			
+			__cleanPhotos = cleanPhotos // Cache
+			return cleanPhotos
+		}
+	}
+	
+	
 }

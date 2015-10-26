@@ -15,7 +15,6 @@ class EventHistoryViewController : UICollectionViewController
 	
 	private var events : [Event] = [];
 	
-	private let CELL_IDENTIFIER : String = "photo-cell-identifier"
 	private let HEADER_IDENTIFIER : String = "header-identifier"
 	
 	
@@ -37,17 +36,6 @@ class EventHistoryViewController : UICollectionViewController
     override func viewWillAppear(animated: Bool)
     {
         super.viewWillAppear(animated)
-        
-        #if FEATURE_GOOGLE_ANALYTICS
-            let tracker = GAI.sharedInstance().defaultTracker
-            tracker.set(kGAIScreenName, value: "Event History View")
-            //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
-            tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
-            
-            
-            let builder = GAIDictionaryBuilder.createScreenView()
-            tracker.send(builder.build() as [NSObject : AnyObject])
-        #endif
     }
 	
 	override func viewDidAppear(animated: Bool)
@@ -79,27 +67,18 @@ class EventHistoryViewController : UICollectionViewController
 	
 	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
-		//let predicate = NSPredicate(format: "ANY event.objectId == %@ && flagged == 0", self.events[section].objectId!)
-		//let photos = Photo.MR_findAllWithPredicate(predicate) as? [Photo]
-		
-		let photos = self.events[section].photos!.allObjects as? [Photo]
-		if (photos != nil && photos?.count < 11) {
-			return photos!.count
+		let photos = self.events[section].cleanPhotos
+		if (photos.count < 11) {
+			return photos.count
 		} else {
 			return 10
 		}
-		
 	}
 
 	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
 	{
 		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(EventAlbumCell.reuseIdentifier, forIndexPath: indexPath) as! EventAlbumCell
-		
-		
-//		let predicate = NSPredicate(format: "ANY event.objectId == %@ && flagged == 0", self.events[indexPath.section].objectId!)
-//		var photos = Photo.MR_findAllWithPredicate(predicate) as? [Photo]
-		// var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
-		// photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
+
 		
 		return cell
 	}
@@ -109,7 +88,7 @@ class EventHistoryViewController : UICollectionViewController
 	{
 		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
 		
-		var photos = self.events[indexPath.section].photos!.allObjects as! [Photo]
+		var photos = self.events[indexPath.section].cleanPhotos
 		photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
 		cell.imageView.nk_prepareForReuse()
 		let imageUrl = NSURL(string: photos[indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!

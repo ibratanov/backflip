@@ -752,17 +752,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			return
 		}
 		
-		var photos : [Photo] = []
-		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]
-		for photo : Photo in _photos {
-			if (photo.flagged != nil && Bool(photo.flagged!) == true) {
-				continue
-			}
-			
-			photos.append(photo)
-		}
-		
-		
+		let photos = event!.cleanPhotos
 		if (photos.count < 1) {
 			print("No Photos/ No Updates")
 			dispatch_async(dispatch_get_main_queue()) {

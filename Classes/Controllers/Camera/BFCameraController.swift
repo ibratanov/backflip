@@ -18,7 +18,7 @@ import QBImagePicker
  * Settings
 */
 
-public let kMULTI_UPLOAD_ASSET_LIMIT : UInt = 10
+public let kMULTI_UPLOAD_ASSET_LIMIT : UInt = 20
 
 
 
@@ -175,7 +175,7 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 
 		let multiImagePicker = QBImagePickerController()
 		multiImagePicker.delegate = self
-		// multiImagePicker.mediaType = .Image
+		multiImagePicker.mediaType = .Image
 		multiImagePicker.allowsMultipleSelection = true
 		multiImagePicker.maximumNumberOfSelection = kMULTI_UPLOAD_ASSET_LIMIT
 		multiImagePicker.showsNumberOfSelectedAssets = true
