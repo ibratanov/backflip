@@ -137,9 +137,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     }
 
 
-
+	//--------------------------------------
 	// MARK: Deep linking
-
+	//--------------------------------------
 
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
 	{
@@ -329,48 +329,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     func setupBranch(launchOptions: [NSObject: AnyObject]?)
     {
         
-		let branch: Branch = Branch.getInstance()
-		branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
-			
-			if (error == nil) {
-				
-				if ((params["referringOut"])  != nil) {
-					
-					let eventId =  params["eventObject"] as? String
-					if (eventId != nil) {
-						
-						let event : Event = Event.MR_findFirstByAttribute("objectId", withValue: eventId!)
-						
-						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+event.name!+"', would you like to check in?", preferredStyle: .Alert)
-						alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
-							
-							
-							let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-							let tabBar : UITabBarController = window?.rootViewController! as! UITabBarController
-							let checkinViewController : CheckinViewController = (tabBar.viewControllers![0] as! UINavigationController).viewControllers[0] as! CheckinViewController
-							
-							print(checkinViewController)
-							
-							
-							// let checkinController : CheckinViewController = CheckinViewController()
-							checkinViewController.checkinWithEvent(event)
-							
-						}))
-						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-					} else {
-						
-						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
-						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-					}
-					
-				}
-			}
+		Branch.getInstance().initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
+ 
+			BFParseManager.sharedManager.handleInviteLink(params, error: error)
+
 		})
 
     }
