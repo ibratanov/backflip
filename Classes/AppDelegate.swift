@@ -36,7 +36,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupCoreData()
 		setupApperance()
 
-		// BonjourService.sharedService.registerService()
+		if FEATURE_ENABLE_BONJOUR {
+			BonjourService.sharedService.registerService()
+		}
 
 		//--------------------------------------
 		// Watchdog
@@ -135,7 +137,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
     }
-    
+
+
+	//--------------------------------------
+	// MARK: Deep linking
+	//--------------------------------------
+
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
 	{
 		
@@ -219,13 +226,22 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		#if FEATURE_PARSE_LOCAL
 			Parse.enableLocalDatastore()
 		#endif
-			
+
+
+		if DEBUG_PARSE {
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveWillSendURLRequestNotification:", name: PFNetworkWillSendURLRequestNotification, object: nil)
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveDidReceiveURLResponseNotification:", name: PFNetworkDidReceiveURLResponseNotification, object: nil)
+
+			Parse.setLogLevel(.Debug)
+		}
+
 		#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 		#else
 			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
 		#endif
-		
+
+
 		
 		// Default ACL
 		let defaultACL = PFACL();
@@ -238,8 +254,42 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			}
 		}
 	}
-	
-	
+
+
+	func receiveWillSendURLRequestNotification(notification: NSNotification)
+	{
+		guard notification.userInfo != nil else { return }
+
+		let request = notification.userInfo![PFNetworkNotificationURLRequestUserInfoKey] as? NSURLRequest
+		guard request != nil else { return }
+
+		print("URL: \(request!.URL!.absoluteString)")
+		print("Method: \(request!.HTTPMethod)")
+		print("Headers: \(request!.allHTTPHeaderFields)")
+
+		if (request?.HTTPBody != nil) {
+			let httpBody = NSString(data: request!.HTTPBody!, encoding: NSUTF8StringEncoding)
+			print("Request Body: \(httpBody)")
+		}
+	}
+
+	func receiveDidReceiveURLResponseNotification(notification: NSNotification)
+	{
+		guard notification.userInfo != nil else { return }
+
+		// let request = notification.userInfo![PFNetworkNotificationURLRequestUserInfoKey] as! NSURLRequest
+		let response = notification.userInfo![PFNetworkNotificationURLResponseUserInfoKey] as! NSHTTPURLResponse
+		let responseBody = notification.userInfo![PFNetworkNotificationURLResponseBodyUserInfoKey] as! NSString
+		print("URL: \(response.URL!.absoluteString)")
+		print("Status code: \(response.statusCode)")
+		print("Headers: \(response.allHeaderFields)")
+		print("Response Body: \(responseBody)")
+	}
+
+
+
+
+
 	//--------------------------------------
 	// MARK: Analytics
 	//--------------------------------------
@@ -324,48 +374,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     func setupBranch(launchOptions: [NSObject: AnyObject]?)
     {
         
-		let branch: Branch = Branch.getInstance()
-		branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
-			
-			if (error == nil) {
-				
-				if ((params["referringOut"])  != nil) {
-					
-					let eventId =  params["eventObject"] as? String
-					if (eventId != nil) {
-						
-						let event : Event = Event.MR_findFirstByAttribute("objectId", withValue: eventId!)
-						
-						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+event.name!+"', would you like to check in?", preferredStyle: .Alert)
-						alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
-							
-							
-							let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-							let tabBar : UITabBarController = window?.rootViewController! as! UITabBarController
-							let checkinViewController : CheckinViewController = (tabBar.viewControllers![0] as! UINavigationController).viewControllers[0] as! CheckinViewController
-							
-							print(checkinViewController)
-							
-							
-							// let checkinController : CheckinViewController = CheckinViewController()
-							checkinViewController.checkinWithEvent(event)
-							
-						}))
-						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-					} else {
-						
-						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
-						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-					}
-					
-				}
-			}
+		Branch.getInstance().initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
+
+			BFParseManager.sharedManager.handleInviteLink(params, error: error)
+
 		})
 
     }

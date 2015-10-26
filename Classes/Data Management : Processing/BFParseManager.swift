@@ -33,7 +33,7 @@ public class BFParseManager : NSObject
 			- eventId: event's ObjectId
 			- uponComplretion: Completion handler
 	*/
-	public func checkin(eventId : String, uponCompletion completion: (completed : Bool, error : NSError?) -> Void) -> Void
+	public func checkin(eventId : String, uponCompletion completion: ((completed : Bool, error : NSError?) -> Void)?) -> Void
 	{
 		// Display a HUD letting the user know we're checking them in
 		PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Checking in..")
@@ -41,7 +41,7 @@ public class BFParseManager : NSObject
 		
 		
 		let event = Event.MR_findFirstByAttribute("objectId", withValue: eventId)
-		
+
 		// Store channel for push notifications
 		let currentInstallation = PFInstallation.currentInstallation()
 		currentInstallation.addUniqueObject("a"+eventId, forKey: "channels")
@@ -86,10 +86,15 @@ public class BFParseManager : NSObject
 				NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
 				NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
 				NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
-				
+				NSUserDefaults.standardUserDefaults().synchronize()
+
 				PKHUD.sharedHUD.hideAnimated()
-				
-				return completion(completed: true, error: nil)
+
+				if (completion != nil) {
+					completion!(completed: true, error: nil)
+				}
+
+				return
 			})
 			
 		}
@@ -424,5 +429,82 @@ public class BFParseManager : NSObject
 		})
 		
 	}
-	
+
+
+
+	public func handleInviteLink(params: NSDictionary?, error: NSError?)
+	{
+		guard error == nil else { return print("🚨 Deep linking error \(error!)") }
+		guard params == nil else { return print("🚨 Deel linking provided no params dictionary") }
+
+
+		let params = params!
+		let eventId = params["eventObject"] as? String
+
+		if (params["referringOut"] != nil && eventId != nil) {
+
+			let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+			let event : Event = Event.MR_findFirstByAttribute("objectId", withValue: eventId!)
+			let attendances = Attendance.MR_findByAttribute("attendeeId", withValue: PFUser.currentUser()?.objectId) as? [Attendance]
+			if (attendances != nil || attendances?.count > 0) {
+				for attendance in attendances! {
+					if (attendance.event?.objectId == event.objectId) {
+
+						// Previously attended, point them to where they can find it in their event history
+						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+event.name!+"', You've previously checked into this event. You can find it using the buttons at the bottom under 'Event History'.", preferredStyle: .Alert)
+						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+
+						return
+					}
+
+				}
+			}
+			
+
+			let currentlyCheckedIn = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id")
+			if (currentlyCheckedIn != nil) {
+				let currentEvent = Event.MR_findFirstByAttribute("objectId", withValue: currentlyCheckedIn)
+
+				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '\(event.name!)', You're currently checked into '\(currentEvent.name!); Do you want to leave this event and join '\(event.name!)'?' ", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+				alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
+
+					// Check out
+					NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+					NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+					NSUserDefaults.standardUserDefaults().synchronize()
+
+					self.checkin(event.objectId!, uponCompletion: nil)
+				}))
+				window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+
+				return
+			}
+
+
+
+			// Standard check-in
+			if (event.name != nil) {
+				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+event.name!+"', would you like to check in?", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+				alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
+					self.checkin(event.objectId!, uponCompletion: nil)
+				}))
+				window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+
+				return
+			}
+
+
+			// Default to displaying an error otherwise
+			let alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
+			alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+			window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+
+
+		}
+
+	}
+
 }

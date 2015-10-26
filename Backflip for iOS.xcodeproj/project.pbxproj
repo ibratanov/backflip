@@ -46,6 +46,7 @@
 		040FD7881BD571090039CDAA /* Instabug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040FD7861BD571090039CDAA /* Instabug.framework */; };
 		040FD78A1BD5746B0039CDAA /* BFPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040FD7891BD5746B0039CDAA /* BFPhotoBrowser.swift */; };
 		041312A71BB47A1B00C0E4D9 /* EventHistoryViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041312A61BB47A1B00C0E4D9 /* EventHistoryViewFlowLayout.swift */; };
+		04154B841BDD9EA50084435D /* Frontflip.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 0495F1751BAB0CC0002E609E /* Frontflip.entitlements */; };
 		04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04196F521B8B996000AE5FA5 /* File+CoreDataProperties.swift */; };
 		041F37971B94B08700610881 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041F37941B94B08700610881 /* Event+CoreDataProperties.swift */; };
 		041F37981B94B08700610881 /* Attendance+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041F37951B94B08700610881 /* Attendance+CoreDataProperties.swift */; };
@@ -1790,6 +1791,7 @@
 				04D7D7031BA9ACC000AC6AA3 /* heart.png in Resources */,
 				040FD7871BD571090039CDAA /* Instabug.bundle in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
+				04154B841BDD9EA50084435D /* Frontflip.entitlements in Resources */,
 				046D98E21BCAABA8004B3DCD /* Assets.xcassets in Resources */,
 				0439D3991B8B7AEE001850DD /* DigitsKitResources.bundle in Resources */,
 				043350561BDAB67C00914A2E /* backflip-preseed.sqlite in Resources */,

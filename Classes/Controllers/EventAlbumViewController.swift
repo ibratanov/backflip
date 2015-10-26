@@ -414,17 +414,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 	}
 	
 	
-	func tapped(sender: DOFavoriteButton) {
-		if sender.selected {
-			// deselect
-			sender.deselect()
-		} else {
-			// select with animation
-			sender.select()
-		}
-	}
-	
-	
 	//-------------------------------------
 	// MARK: Segemented Control
 	//-------------------------------------
