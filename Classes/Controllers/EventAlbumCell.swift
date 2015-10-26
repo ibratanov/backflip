@@ -41,6 +41,10 @@ class EventAlbumCell : UICollectionViewCell
 	override func prepareForReuse()
 	{
 		super.prepareForReuse()
+		
+		#if os(tvOS)
+			self.label.text = nil
+		#endif
 	}
 	
 

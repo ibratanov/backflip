@@ -28,6 +28,8 @@ class DetailViewController: UICollectionViewController
 	var event : PFObject? {
 		set {
 			_event = newValue
+			
+			SVProgressHUD.show()
 			self.fetchData()
 		}
 		get {
@@ -54,7 +56,7 @@ class DetailViewController: UICollectionViewController
 			self.photos.removeAll()
 			self.photos = objects!
 			
-			print("We have \(self.photos.count) photos for display..")
+			SVProgressHUD.dismissWithDelay(0.1)
 			
 			self.collectionView?.reloadData()
 		}
@@ -135,10 +137,10 @@ class DetailViewController: UICollectionViewController
 		let image = photo["image"] as? PFFile
 		
 		if (image != nil) {
-			// cell.imageView?.nk_prepareForReuse()
+			cell.imageView?.nk_prepareForReuse()
 			let imageUrl = NSURL(string: image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
 			print("Image URL = \(imageUrl)")
-			// cell.imageView.nk_setImageWithURL(imageUrl)
+			cell.imageView.nk_setImageWithURL(imageUrl)
 		}
 		
 		if (photo["caption"] != nil && (photo["caption"] as? String) != "Camera roll upload") {
