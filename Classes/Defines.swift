@@ -21,7 +21,7 @@ let nEventObjectsUpdated : String = "nEventObjectsUpdated"
 // MARK: Debugging flags
 //------------------------------------
 
-let DEBUG_PARSE : Bool = true
+let DEBUG_PARSE : Bool = false
 
 let DEBUG_COREDATA : Bool = true
 

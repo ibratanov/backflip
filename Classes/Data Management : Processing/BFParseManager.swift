@@ -247,7 +247,6 @@ public class BFParseManager : NSObject
 			let graphRequest = FBSDKGraphRequest(graphPath: facebookResult!.token.userID!, parameters: ["fields": "id, about, email, first_name, last_name, name"])
 			graphRequest.startWithCompletionHandler { (connection, result, error) -> Void in
 					
-				print("📢📢📢📢📢📢📢📢📢📢📢📢 GRAPH RESULT HANDLER CALLED")
 				if (error != nil) {
 					print("Facebook error \(error)")
 					return completion(completed: false, error: error)
@@ -435,7 +434,7 @@ public class BFParseManager : NSObject
 	public func handleInviteLink(params: NSDictionary?, error: NSError?)
 	{
 		guard error == nil else { return print("🚨 Deep linking error \(error!)") }
-		guard params == nil else { return print("🚨 Deel linking provided no params dictionary") }
+		guard params != nil else { return print("🚨 Deep linking provided no params dictionary") }
 
 
 		let params = params!
@@ -443,7 +442,7 @@ public class BFParseManager : NSObject
 
 		if (params["referringOut"] != nil && eventId != nil) {
 
-			let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+			let window : UIWindow? = UIApplication.sharedApplication().windows.first
 			let event : Event = Event.MR_findFirstByAttribute("objectId", withValue: eventId!)
 			let attendances = Attendance.MR_findByAttribute("attendeeId", withValue: PFUser.currentUser()?.objectId) as? [Attendance]
 			if (attendances != nil || attendances?.count > 0) {
@@ -461,12 +460,15 @@ public class BFParseManager : NSObject
 				}
 			}
 			
+			
+			
 
 			let currentlyCheckedIn = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id")
 			if (currentlyCheckedIn != nil) {
 				let currentEvent = Event.MR_findFirstByAttribute("objectId", withValue: currentlyCheckedIn)
 
-				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '\(event.name!)', You're currently checked into '\(currentEvent.name!); Do you want to leave this event and join '\(event.name!)'?' ", preferredStyle: .Alert)
+				
+				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '\(event.name!)', You're currently checked into '\(currentEvent.name!)' Do you want to leave this event and join '\(event.name!)'?' ", preferredStyle: .Alert)
 				alertController.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
 				alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
 
@@ -475,7 +477,17 @@ public class BFParseManager : NSObject
 					NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
 					NSUserDefaults.standardUserDefaults().synchronize()
 
-					self.checkin(event.objectId!, uponCompletion: nil)
+					self.checkin(event.objectId!, uponCompletion: { (completed, error) -> Void in
+						if window?.rootViewController as? UITabBarController != nil {
+							let tabbarController = window!.rootViewController as! UITabBarController
+							let navigationController = tabbarController.viewControllers?.first as? UINavigationController
+							
+							let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+							let checkinViewController = storyboard.instantiateViewControllerWithIdentifier("CheckinViewController") as! CheckinViewController
+							navigationController?.setViewControllers([checkinViewController], animated: false)
+							
+						}
+					})
 				}))
 				window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
 
@@ -489,7 +501,14 @@ public class BFParseManager : NSObject
 				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+event.name!+"', would you like to check in?", preferredStyle: .Alert)
 				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 				alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
-					self.checkin(event.objectId!, uponCompletion: nil)
+					self.checkin(event.objectId!, uponCompletion: {  (completed, error) -> Void in
+						
+						if UIApplication.sharedApplication().windows.first!.rootViewController as? UITabBarController != nil {
+							let tababarController = (UIApplication.sharedApplication().windows.first!).rootViewController as! UITabBarController
+							tababarController.selectedIndex = 0
+						}
+						
+					})
 				}))
 				window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
 
