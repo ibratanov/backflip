@@ -450,7 +450,7 @@ public class BFParseManager : NSObject
 					if (attendance.event?.objectId == event.objectId) {
 
 						// Previously attended, point them to where they can find it in their event history
-						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+event.name!+"', You've previously checked into this event. You can find it using the buttons at the bottom under 'Event History'.", preferredStyle: .Alert)
+						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+". You've previously checked into this event. Find it in your 'Current Event' or 'Event History' below.", preferredStyle: .Alert)
 						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
 						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
 
@@ -468,7 +468,7 @@ public class BFParseManager : NSObject
 				let currentEvent = Event.MR_findFirstByAttribute("objectId", withValue: currentlyCheckedIn)
 
 				
-				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '\(event.name!)', You're currently checked into '\(currentEvent.name!)' Do you want to leave this event and join '\(event.name!)'?' ", preferredStyle: .Alert)
+				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join \(event.name!). You're currently checked into \(currentEvent.name!). Do you want to leave this event and join \(event.name!)?", preferredStyle: .Alert)
 				alertController.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
 				alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
 
@@ -498,7 +498,7 @@ public class BFParseManager : NSObject
 
 			// Standard check-in
 			if (event.name != nil) {
-				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+event.name!+"', would you like to check in?", preferredStyle: .Alert)
+				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
 				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 				alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
 					self.checkin(event.objectId!, uponCompletion: {  (completed, error) -> Void in

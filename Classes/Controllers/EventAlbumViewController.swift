@@ -134,7 +134,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 	
 	@IBAction func leaveEvent()
 	{
-		let alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave? This event will be moved to your event history.", preferredStyle: .Alert)
+		let alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave? This event will be moved to your Event History.", preferredStyle: .Alert)
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Leave", style: .Destructive, handler: { (alertAction) -> Void in
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
@@ -480,7 +480,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 				
 				NSLog("Branch short URL generation failed, %@", error);
 				
-				let alertController = UIAlertController(title: "Invite Friends", message: "Whoops, it appears we're having trouble generating a link to share with your friends. Please try again later", preferredStyle: .Alert)
+				let alertController = UIAlertController(title: "Invite Friends", message: "Whoops, it appears we're having trouble generating a link to share with your friends. Please try again.", preferredStyle: .Alert)
 				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
 				self.presentViewController(alertController, animated: true, completion: nil)
 				
