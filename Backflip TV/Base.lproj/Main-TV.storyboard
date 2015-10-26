@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9059" systemVersion="15A279b" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="m44-68-q7o">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9059" systemVersion="15A279b" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="Nwd-pq-PAD">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
@@ -13,8 +13,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell-identifier" textLabel="dak-ve-9br" style="IBUITableViewCellStyleDefault" id="u4K-5i-jNx">
-                                <rect key="frame" x="0.0" y="199" width="594" height="66"/>
+                            <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell-identifier" textLabel="dak-ve-9br" style="IBUITableViewCellStyleDefault" id="u4K-5i-jNx">
+                                <rect key="frame" x="0.0" y="199" width="634" height="66"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u4K-5i-jNx" id="UzP-tL-oQb">
                                     <rect key="frame" x="0.0" y="0.0" width="618" height="66"/>
@@ -25,7 +25,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="38"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -45,10 +45,10 @@
             </objects>
             <point key="canvasLocation" x="1659" y="-1190"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--Event Name-->
         <scene sceneID="Ouf-0T-8a3">
             <objects>
-                <collectionViewController id="9pp-qK-gbz" customClass="DetailViewController" customModule="Backflip_TV" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController title="Event Name" id="9pp-qK-gbz" customClass="DetailViewController" customModule="Backflip_TV" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="fg9-OD-u0T">
                         <rect key="frame" x="0.0" y="0.0" width="1285" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,8 +60,8 @@
                             <inset key="sectionInset" minX="90" minY="70" maxX="90" maxY="70"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DataItemCell" id="y36-dL-vMA" customClass="DataItemCollectionViewCell" customModule="Backflip_TV" customModuleProvider="target">
-                                <rect key="frame" x="90" y="210" width="500" height="570"/>
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="event-album-cell-identifier" id="y36-dL-vMA" customClass="EventAlbumCell" customModule="Backflip_TV" customModuleProvider="target">
+                                <rect key="frame" x="90" y="215" width="500" height="570"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="500" height="570"/>
@@ -94,48 +94,97 @@
                             <outlet property="delegate" destination="9pp-qK-gbz" id="Jtd-r5-VKJ"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" title="Event Name" id="3ni-QA-ivT"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtv-Qb-ocG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1130.5" y="7"/>
+            <point key="canvasLocation" x="2718.5" y="63"/>
         </scene>
-        <!--Logout-->
-        <scene sceneID="8fK-eV-Z1T">
+        <!--Navigation Controller-->
+        <scene sceneID="DOs-fc-dWM">
             <objects>
-                <viewController id="o2D-xx-Fbk" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="aey-vn-G7T"/>
-                        <viewControllerLayoutGuide type="bottom" id="31O-7r-qvN"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Wzb-Ng-paH">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Logout" id="R7R-Oq-Itg"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ys8-dt-2JZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-858" y="1175"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="eFz-xI-VyX">
-            <objects>
-                <tabBarController id="m44-68-q7o" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="rF8-Et-qMR">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="140"/>
+                <navigationController id="0MS-Zj-Wsi" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xPh-sz-lmK">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="145"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
+                    </navigationBar>
                     <connections>
-                        <segue destination="Nwd-pq-PAD" kind="relationship" relationship="viewControllers" id="PJa-qz-Bep"/>
-                        <segue destination="o2D-xx-Fbk" kind="relationship" relationship="viewControllers" id="jMe-ao-a0Y"/>
+                        <segue destination="9pp-qK-gbz" kind="relationship" relationship="rootViewController" id="Iji-S1-FXp"/>
                     </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oUb-2P-Kl6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NEj-SM-oPC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3172" y="143"/>
+            <point key="canvasLocation" x="1130.5" y="63"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="gX4-n6-oA6">
+            <objects>
+                <viewController id="WDJ-Op-ncX" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Ed-7A-P3V"/>
+                        <viewControllerLayoutGuide type="bottom" id="15b-cU-9Mq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="igJ-Mi-5sh">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Connect your Backflip account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dU-JF-W2U">
+                                <rect key="frame" x="213" y="320" width="1183" height="168"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="55"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unlock your iOS Device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBq-ry-EDL">
+                                <rect key="frame" x="325" y="477" width="335" height="60"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZY-rL-Nwm">
+                                <rect key="frame" x="268" y="490" width="23" height="33"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YW5-XX-Ifl">
+                                <rect key="frame" x="268" y="566" width="23" height="36"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enable Wifi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ly-XB-cNq">
+                                <rect key="frame" x="325" y="553" width="335" height="60"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Open Backflip" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sQY-lj-KY0">
+                                <rect key="frame" x="325" y="630" width="335" height="60"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgp-tk-4Ph">
+                                <rect key="frame" x="268" y="643" width="23" height="36"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4jz-Gn-Jhb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-858" y="495"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="V2F-k7-CSg">
@@ -161,7 +210,7 @@
                     <tabBarItem key="tabBarItem" title="Event History" id="Kjf-al-CHS"/>
                     <connections>
                         <segue destination="CAg-mw-HJU" kind="relationship" relationship="masterViewController" id="S1V-CM-5Eb"/>
-                        <segue destination="9pp-qK-gbz" kind="relationship" relationship="detailViewController" id="29Y-vW-5XJ"/>
+                        <segue destination="0MS-Zj-Wsi" kind="relationship" relationship="detailViewController" id="OP7-rw-qEM"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6a-xe-F1V" userLabel="First Responder" sceneMemberID="firstResponder"/>

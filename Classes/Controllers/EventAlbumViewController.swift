@@ -513,7 +513,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		
 		let photo = photoBrowser!.photos[selectedIndex!].underlyingImage
 		
-		// let reportImage = ReportImageActivity();
 		let activityViewController = UIActivityViewController(activityItems: [image, photo], applicationActivities:nil)
 		activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypePrint]
 		
@@ -636,7 +635,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					
 					
 					dispatch_async(dispatch_get_main_queue(), {
-						self.updatePhotoBrowser()
+						self.photoBrowser?.dismissPhotoBrowser()
 						self.collectionView?.reloadData()
 					})
 					
@@ -678,41 +677,11 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			self.collectionContent.removeAtIndex(imageIndex!)
 			
 			dispatch_async(dispatch_get_main_queue(), {
-				self.updatePhotoBrowser()
+				self.photoBrowser?.dismissPhotoBrowser()
 				self.collectionView?.reloadData()
 			})
 			
 		})
-		
-	}
-
-
-	
-	func updatePhotoBrowser()
-	{
-		// Photos
-		var images = [SKPhoto]()
-		for photo in collectionContent {
-			let image = SKPhoto.photoWithImageURL(photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
-			image.shouldCachePhotoURLImage = true
-			
-			if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
-				image.caption = photo.caption
-			}
-			
-			images.append(image)
-		}
-		
-		if (images.count < 1) {
-			photoBrowser?.dismissPhotoBrowser()
-		}
-		
-		
-		let selectedIndex = photoBrowser?.currentPageIndex
-		if ((selectedIndex! - 1) >= (photoBrowser!.numberOfPhotos-1)) {
-			photoBrowser?.reloadData()
-			photoBrowser?.initializePageIndex((selectedIndex! - 1))
-		}
 		
 	}
 	

@@ -62,7 +62,6 @@
 		042E8D761BB30BFD00D61412 /* EventHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */; };
 		042E8D781BB3119A00D61412 /* EventHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */; };
 		042E8D7A1BB347FB00D61412 /* EventHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D791BB347FB00D61412 /* EventHistoryCollectionViewCell.swift */; };
-		0432DC411BC81AF700B31D02 /* Backflip.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */; };
 		0432DC421BC81AFE00B31D02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
 		0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */; };
 		0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC481BC81CC500B31D02 /* AudioToolbox.framework */; };
@@ -127,6 +126,8 @@
 		0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
 		0472D0FD1BD94D4800D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
 		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
+		0477CE151BDEE45A0033BDEE /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE121BDEE45A0033BDEE /* Nuke.framework */; };
+		0477CE161BDEE45A0033BDEE /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE121BDEE45A0033BDEE /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
 		048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -137,6 +138,11 @@
 		049738201BD805CB00B58F70 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; };
 		049738211BD805CB00B58F70 /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */; };
+		04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
+		04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */; };
+		04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */; };
+		04B399321BDED7BC00B0F80A /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B3992D1BDED7BC00B0F80A /* SVProgressHUD.m */; };
+		04B399331BDED7BC00B0F80A /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B3992F1BDED7BC00B0F80A /* SVRadialGradientLayer.m */; };
 		04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */; };
 		04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */; };
 		04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB61B8B982600E2ACB5 /* File.swift */; };
@@ -276,6 +282,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = AAA8FE021ACDA079002A9710;
 			remoteInfo = QBImagePicker;
+		};
+		0477CE111BDEE45A0033BDEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CC345971BD96CFE005C2DD8;
+			remoteInfo = "Nuke tvOS";
+		};
+		0477CE131BDEE45A0033BDEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CC345A31BD96D2A005C2DD8;
+			remoteInfo = "Nuke tvOS Tests";
+		};
+		0477CE171BDEE45A0033BDEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CC345961BD96CFE005C2DD8;
+			remoteInfo = "Nuke tvOS";
 		};
 		048939C71BD0451C005400CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -503,6 +530,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0477CE161BDEE45A0033BDEE /* Nuke.framework in Embed Frameworks */,
 				040756B81BD6D34300F95E96 /* Parse.framework in Embed Frameworks */,
 				0496D1241BD83ADA003B0EDC /* Bolts.framework in Embed Frameworks */,
 			);
@@ -645,6 +673,14 @@
 		0497380E1BD805C500B58F70 /* Nuke.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nuke.xcodeproj; path = Vendor/Nuke/Nuke/Nuke.xcodeproj; sourceTree = "<group>"; };
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		04B399281BDED7BC00B0F80A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		04B3992A1BDED7BC00B0F80A /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SVProgressHUD-Prefix.pch"; path = "SVProgressHUD/SVProgressHUD/SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
+		04B3992C1BDED7BC00B0F80A /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
+		04B3992D1BDED7BC00B0F80A /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
+		04B3992E1BDED7BC00B0F80A /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		04B3992F1BDED7BC00B0F80A /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVRadialGradientLayer.m; path = SVProgressHUD/SVProgressHUD/SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ParseObject+CoreDataProperties.swift"; path = "Models/ParseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
 		04C61FB61B8B982600E2ACB5 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -700,6 +736,7 @@
 			files = (
 				0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */,
 				0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */,
+				0477CE151BDEE45A0033BDEE /* Nuke.framework in Frameworks */,
 				040756B71BD6D34300F95E96 /* Parse.framework in Frameworks */,
 				0496D1231BD83ADA003B0EDC /* Bolts.framework in Frameworks */,
 			);
@@ -777,12 +814,11 @@
 		040EB59B1BC815EA00452620 /* Backflip TV */ = {
 			isa = PBXGroup;
 			children = (
+				04B399191BDECF4F00B0F80A /* Controllers */,
 				0485F6D71BD5B41A00E0465D /* Vendor */,
 				040EB59C1BC815EA00452620 /* AppDelegate.swift */,
 				040EB59E1BC815EA00452620 /* ViewController.swift */,
 				0472D0D61BD948BE00D8891B /* BonjourService.swift */,
-				040756C01BD6DC2100F95E96 /* MasterViewController.swift */,
-				040756C21BD6DD3700F95E96 /* DetailViewController.swift */,
 				040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */,
 				040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */,
 				040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */,
@@ -1050,6 +1086,7 @@
 		0485F6D71BD5B41A00E0465D /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				04B399231BDED76300B0F80A /* SVProgressHUD */,
 				0485F6D81BD5B41A00E0465D /* Parse */,
 			);
 			path = Vendor;
@@ -1121,8 +1158,10 @@
 				049738171BD805C500B58F70 /* Nuke.framework */,
 				049738191BD805C500B58F70 /* Nuke.framework */,
 				0497381B1BD805C500B58F70 /* Nuke.framework */,
+				0477CE121BDEE45A0033BDEE /* Nuke.framework */,
 				0497381D1BD805C500B58F70 /* Nuke iOS Tests.xctest */,
 				0497381F1BD805C500B58F70 /* Nuke OSX Tests.xctest */,
+				0477CE141BDEE45A0033BDEE /* Nuke tvOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1163,6 +1202,30 @@
 				043AB3AC1BBE212100BA5827 /* WindowRootViewController.swift */,
 			);
 			name = PKHUD;
+			sourceTree = "<group>";
+		};
+		04B399191BDECF4F00B0F80A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				040756C01BD6DC2100F95E96 /* MasterViewController.swift */,
+				040756C21BD6DD3700F95E96 /* DetailViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		04B399231BDED76300B0F80A /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				04B399281BDED7BC00B0F80A /* SVIndefiniteAnimatedView.h */,
+				04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */,
+				04B3992A1BDED7BC00B0F80A /* SVProgressHUD-Prefix.pch */,
+				04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */,
+				04B3992C1BDED7BC00B0F80A /* SVProgressHUD.h */,
+				04B3992D1BDED7BC00B0F80A /* SVProgressHUD.m */,
+				04B3992E1BDED7BC00B0F80A /* SVRadialGradientLayer.h */,
+				04B3992F1BDED7BC00B0F80A /* SVRadialGradientLayer.m */,
+			);
+			name = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		04B610311BB98FEE00C1AF1E /* Collection View */ = {
@@ -1380,6 +1443,7 @@
 			dependencies = (
 				040756BA1BD6D34300F95E96 /* PBXTargetDependency */,
 				0496D1261BD83ADA003B0EDC /* PBXTargetDependency */,
+				0477CE181BDEE45A0033BDEE /* PBXTargetDependency */,
 			);
 			name = BackflipTV;
 			productName = "Backflip TV";
@@ -1578,6 +1642,20 @@
 			fileType = wrapper.cfbundle;
 			path = QBImagePickerDemoTests.xctest;
 			remoteRef = 046D98D61BCAAB1E004B3DCD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0477CE121BDEE45A0033BDEE /* Nuke.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Nuke.framework;
+			remoteRef = 0477CE111BDEE45A0033BDEE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0477CE141BDEE45A0033BDEE /* Nuke tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Nuke tvOS Tests.xctest";
+			remoteRef = 0477CE131BDEE45A0033BDEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		048939C81BD0451C005400CA /* Locksmith.framework */ = {
@@ -1779,6 +1857,7 @@
 				0432DC421BC81AFE00B31D02 /* Images.xcassets in Resources */,
 				040EB5A71BC815EA00452620 /* Assets.xcassets in Resources */,
 				040EB5A51BC815EA00452620 /* Main-TV.storyboard in Resources */,
+				04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1829,6 +1908,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */,
 				040EB5C21BC8162F00452620 /* Attendance.swift in Sources */,
 				0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */,
 				040EB59F1BC815EA00452620 /* ViewController.swift in Sources */,
@@ -1837,6 +1917,7 @@
 				0472D0FB1BD94B2200D8891B /* String+Extensions.swift in Sources */,
 				040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */,
 				040EB5C11BC8162F00452620 /* File.swift in Sources */,
+				04B399321BDED7BC00B0F80A /* SVProgressHUD.m in Sources */,
 				040756C31BD6DD3700F95E96 /* DetailViewController.swift in Sources */,
 				040EB5BD1BC8161100452620 /* Event+CoreDataProperties.swift in Sources */,
 				040EB5C31BC8162F00452620 /* Event.swift in Sources */,
@@ -1845,11 +1926,12 @@
 				040756C91BD6DD8800F95E96 /* DataItemCollectionViewCell.swift in Sources */,
 				040EB5BC1BC8161100452620 /* Photo+CoreDataProperties.swift in Sources */,
 				040EB5C41BC8162F00452620 /* Photo.swift in Sources */,
+				04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */,
+				04B399331BDED7BC00B0F80A /* SVRadialGradientLayer.m in Sources */,
 				040756C81BD6DD8800F95E96 /* DataItemCellComposer.swift in Sources */,
 				040EB5C51BC8162F00452620 /* GeoPoint.swift in Sources */,
 				040EB5BA1BC8160D00452620 /* File+CoreDataProperties.swift in Sources */,
 				040756C51BD6DD6F00F95E96 /* GradientMaskView.swift in Sources */,
-				0432DC411BC81AF700B31D02 /* Backflip.xcdatamodeld in Sources */,
 				040756C11BD6DC2100F95E96 /* MasterViewController.swift in Sources */,
 				040EB5BB1BC8161100452620 /* Attendance+CoreDataProperties.swift in Sources */,
 				040EB5BF1BC8161100452620 /* ParseObject+CoreDataProperties.swift in Sources */,
@@ -1964,6 +2046,11 @@
 			name = QBImagePicker;
 			targetProxy = 046D98DA1BCAAB49004B3DCD /* PBXContainerItemProxy */;
 		};
+		0477CE181BDEE45A0033BDEE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Nuke tvOS";
+			targetProxy = 0477CE171BDEE45A0033BDEE /* PBXContainerItemProxy */;
+		};
 		048939D41BD0452A005400CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Locksmith iOS";
@@ -2007,6 +2094,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
@@ -2038,6 +2126,7 @@
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",

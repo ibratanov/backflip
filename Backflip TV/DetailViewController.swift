@@ -6,13 +6,63 @@
 //  Copyright © 2015 Backflip. All rights reserved.
 //
 
+import Nuke
 import UIKit
+import Parse
 import Foundation
 
 class DetailViewController: UICollectionViewController
 {
 	
 	private let cellComposer = DataItemCellComposer()
+
+	private var photos : [PFObject] = []
+	
+	
+	
+	// --------------------------------------
+	//  MARK: Setters
+	// --------------------------------------
+	
+	private var _event : PFObject?
+	var event : PFObject? {
+		set {
+			_event = newValue
+			self.fetchData()
+		}
+		get {
+			return _event
+		}
+	}
+	
+	
+	
+	// --------------------------------------
+	//  MARK: Data fetching
+	// --------------------------------------
+	
+	func fetchData()
+	{
+		let photoQuery = PFQuery(className: "Photo")
+		photoQuery.whereKey("enabled", equalTo: true)
+		photoQuery.whereKey("flagged", equalTo: false)
+		photoQuery.whereKey("event", equalTo: PFObject(withoutDataWithClassName: "Event", objectId: event?.objectId))
+		photoQuery.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+			
+			guard objects?.count > 0 else { return }
+			
+			self.photos.removeAll()
+			self.photos = objects!
+			
+			print("We have \(self.photos.count) photos for display..")
+			
+			self.collectionView?.reloadData()
+		}
+		
+	}
+	
+	
+	
 	
 	// MARK: UIViewController
 	
@@ -54,30 +104,46 @@ class DetailViewController: UICollectionViewController
 		maskView.frame = CGRect(origin: CGPoint(x: 0, y: collectionView.contentOffset.y), size: collectionView.bounds.size)
 	}
 	
-	// MARK: UICollectionViewDataSource
 	
-	override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-		// The collection view shows all items in a single section.
+	
+	
+	// --------------------------------------
+	//  MARK: Collection View
+	// --------------------------------------
+	
+	override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
+	{
 		return 1
 	}
 	
-	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 10
+	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+	{
+		return self.photos.count
 	}
 	
-	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-		// Dequeue a cell from the collection view.
-		return collectionView.dequeueReusableCellWithReuseIdentifier(DataItemCollectionViewCell.reuseIdentifier, forIndexPath: indexPath)
+	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
+	{
+		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(EventAlbumCell.reuseIdentifier, forIndexPath: indexPath)
+		return cell
 	}
 	
-	// MARK: UICollectionViewDelegate
-	
-	override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-		guard let cell = cell as? DataItemCollectionViewCell else { fatalError("Expected to display a `DataItemCollectionViewCell`.") }
+	override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+	{
+		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
 		
-		// let item = items[indexPath.row]
+		let photo = self.photos[Int(indexPath.row)]
+		let image = photo["image"] as? PFFile
 		
-		// Configure the cell.
-		cellComposer.composeCell(cell, withDataItem: nil)
+		if (image != nil) {
+			// cell.imageView?.nk_prepareForReuse()
+			let imageUrl = NSURL(string: image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			print("Image URL = \(imageUrl)")
+			// cell.imageView.nk_setImageWithURL(imageUrl)
+		}
+		
+		if (photo["caption"] != nil && (photo["caption"] as? String) != "Camera roll upload") {
+			cell.label.text = photo["caption"] as? String
+		}
 	}
+	
 }

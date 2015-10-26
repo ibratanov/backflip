@@ -23,6 +23,11 @@
 	#import "ZAActivityBar.h"
 	#import "BFDataWrapper.h"
 
+	// SVProgressHUD
+	#if TARGET_OS_TV
+		#import "SVProgressHUD.h"
+	#endif
+
 	// Facebook
 	#if TARGET_OS_IOS
 		#import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -35,9 +40,6 @@
 		#import <Mixpanel/Mixpanel.h>
 		#import <Google/Analytics.h>
 		#import "NewRelicAgent/NewRelic.h"
-
-		// #import "MWPhotoBrowser.h"
-		// #import "MWPhotoBrowserPrivate.h"
 	#endif
 
 #endif
