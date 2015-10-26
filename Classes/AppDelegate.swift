@@ -36,7 +36,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupCoreData()
 		setupApperance()
 
-		BonjourService.sharedService.registerService()
+		if FEATURE_ENABLE_BONJOUR {
+			BonjourService.sharedService.registerService()
+		}
 
 		//--------------------------------------
 		// Watchdog
@@ -224,13 +226,22 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		#if FEATURE_PARSE_LOCAL
 			Parse.enableLocalDatastore()
 		#endif
-			
+
+
+		if DEBUG_PARSE {
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveWillSendURLRequestNotification:", name: PFNetworkWillSendURLRequestNotification, object: nil)
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveDidReceiveURLResponseNotification:", name: PFNetworkDidReceiveURLResponseNotification, object: nil)
+
+			Parse.setLogLevel(.Debug)
+		}
+
 		#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 		#else
 			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
 		#endif
-		
+
+
 		
 		// Default ACL
 		let defaultACL = PFACL();
@@ -243,8 +254,42 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			}
 		}
 	}
-	
-	
+
+
+	func receiveWillSendURLRequestNotification(notification: NSNotification)
+	{
+		guard notification.userInfo != nil else { return }
+
+		let request = notification.userInfo![PFNetworkNotificationURLRequestUserInfoKey] as? NSURLRequest
+		guard request != nil else { return }
+
+		print("URL: \(request!.URL!.absoluteString)")
+		print("Method: \(request!.HTTPMethod)")
+		print("Headers: \(request!.allHTTPHeaderFields)")
+
+		if (request?.HTTPBody != nil) {
+			let httpBody = NSString(data: request!.HTTPBody!, encoding: NSUTF8StringEncoding)
+			print("Request Body: \(httpBody)")
+		}
+	}
+
+	func receiveDidReceiveURLResponseNotification(notification: NSNotification)
+	{
+		guard notification.userInfo != nil else { return }
+
+		// let request = notification.userInfo![PFNetworkNotificationURLRequestUserInfoKey] as! NSURLRequest
+		let response = notification.userInfo![PFNetworkNotificationURLResponseUserInfoKey] as! NSHTTPURLResponse
+		let responseBody = notification.userInfo![PFNetworkNotificationURLResponseBodyUserInfoKey] as! NSString
+		print("URL: \(response.URL!.absoluteString)")
+		print("Status code: \(response.statusCode)")
+		print("Headers: \(response.allHeaderFields)")
+		print("Response Body: \(responseBody)")
+	}
+
+
+
+
+
 	//--------------------------------------
 	// MARK: Analytics
 	//--------------------------------------
@@ -330,7 +375,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     {
         
 		Branch.getInstance().initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
- 
+
 			BFParseManager.sharedManager.handleInviteLink(params, error: error)
 
 		})

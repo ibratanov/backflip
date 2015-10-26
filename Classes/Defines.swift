@@ -18,8 +18,14 @@ let nEventObjectsUpdated : String = "nEventObjectsUpdated"
 
 
 
+//------------------------------------
+// MARK: Debugging flags
+//------------------------------------
 
-let FEATURE_COREDATA_SEED : Bool = true
+let DEBUG_PARSE : Bool = true
+
+let DEBUG_COREDATA : Bool = true
+
 
 
 //------------------------------------
@@ -33,3 +39,7 @@ let FEATURE_NEW_RELIC : Bool = true
 let FEATURE_MIXPANEL : Bool = true
 
 let FEATURE_INSTABUG : Bool = true
+
+let FEATURE_COREDATA_SEED : Bool = true
+
+let FEATURE_ENABLE_BONJOUR : Bool = false
