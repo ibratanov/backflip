@@ -370,7 +370,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			
 			let cell = collectionView.cellForItemAtIndexPath(indexPath) as! EventAlbumCell
 			let originImage = cell.imageView?.image // some image for baseImage
-			photoBrowser = BFPhotoBrowser(originImage: originImage!, photos: images, animatedFromView: cell)
+			photoBrowser = BFPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
 			photoBrowser!.initializePageIndex(indexPath.row - 1)
 			photoBrowser?.delegate = self
 			
