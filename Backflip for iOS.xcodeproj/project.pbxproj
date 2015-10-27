@@ -130,6 +130,10 @@
 		0477CE161BDEE45A0033BDEE /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE121BDEE45A0033BDEE /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0477CE391BDFB2DF0033BDEE /* PhotoBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE381BDFB2DF0033BDEE /* PhotoBrowserViewController.swift */; };
 		0477CE3C1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE3B1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift */; };
+		0477CE3F1BDFE7BA0033BDEE /* EventHistoryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE3E1BDFE7BA0033BDEE /* EventHistoryCollectionViewController.swift */; };
+		0477CE421BDFEBA30033BDEE /* BFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE411BDFEBA30033BDEE /* BFViewController.swift */; };
+		0477CE471BDFEF000033BDEE /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE461BDFEF000033BDEE /* libFlurry_7.2.1.a */; };
+		0477CE491BDFF3B20033BDEE /* EventHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE481BDFF3B20033BDEE /* EventHistoryCollectionViewCell.swift */; };
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
 		048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -669,6 +673,12 @@
 		047790E61BBB1C5B00BA8F9E /* PopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		0477CE381BDFB2DF0033BDEE /* PhotoBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowserViewController.swift; sourceTree = "<group>"; };
 		0477CE3B1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowserItemViewController.swift; sourceTree = "<group>"; };
+		0477CE3E1BDFE7BA0033BDEE /* EventHistoryCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryCollectionViewController.swift; sourceTree = "<group>"; };
+		0477CE411BDFEBA30033BDEE /* BFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFViewController.swift; sourceTree = "<group>"; };
+		0477CE441BDFEF000033BDEE /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		0477CE451BDFEF000033BDEE /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
+		0477CE461BDFEF000033BDEE /* libFlurry_7.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.2.1.a; sourceTree = "<group>"; };
+		0477CE481BDFF3B20033BDEE /* EventHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		048939BF1BD0451C005400CA /* Locksmith.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Locksmith.xcodeproj; path = Vendor/Locksmith/Locksmith.xcodeproj; sourceTree = "<group>"; };
 		04937DD21BD979D1004A2730 /* Backflip.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Backflip.xcdatamodel; sourceTree = "<group>"; };
@@ -778,6 +788,7 @@
 				0439D3401B8B76B1001850DD /* Branch.framework in Frameworks */,
 				502199AE1B33817100A64387 /* Accounts.framework in Frameworks */,
 				0439D34E1B8B7709001850DD /* TwitterCore.framework in Frameworks */,
+				0477CE471BDFEF000033BDEE /* libFlurry_7.2.1.a in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				0439D3421B8B76B1001850DD /* Fabric.framework in Frameworks */,
 			);
@@ -894,6 +905,7 @@
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				0477CE431BDFEF000033BDEE /* Flurry */,
 				040756F81BD8053B00F95E96 /* Nuke */,
 				040FD7841BD571090039CDAA /* Instabug */,
 				040FD7791BD552E70039CDAA /* SKPhotoBrowser */,
@@ -1096,6 +1108,26 @@
 			name = "Photo Browser";
 			sourceTree = "<group>";
 		};
+		0477CE3D1BDFE79D0033BDEE /* Collection View */ = {
+			isa = PBXGroup;
+			children = (
+				0477CE3E1BDFE7BA0033BDEE /* EventHistoryCollectionViewController.swift */,
+				0477CE481BDFF3B20033BDEE /* EventHistoryCollectionViewCell.swift */,
+			);
+			name = "Collection View";
+			sourceTree = "<group>";
+		};
+		0477CE431BDFEF000033BDEE /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				0477CE441BDFEF000033BDEE /* Flurry.h */,
+				0477CE451BDFEF000033BDEE /* FlurryWatch.h */,
+				0477CE461BDFEF000033BDEE /* libFlurry_7.2.1.a */,
+			);
+			name = Flurry;
+			path = Vendor/Flurry;
+			sourceTree = "<group>";
+		};
 		0485F6D71BD5B41A00E0465D /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1220,6 +1252,7 @@
 		04B399191BDECF4F00B0F80A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0477CE3D1BDFE79D0033BDEE /* Collection View */,
 				0477CE3A1BDFB35F0033BDEE /* Photo Browser */,
 				040756C01BD6DC2100F95E96 /* MasterViewController.swift */,
 				040756C21BD6DD3700F95E96 /* DetailViewController.swift */,
@@ -1391,6 +1424,7 @@
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				50099C0B1B389E4B005A9867 /* Reachability.swift */,
 				0439D3D01B8B87D3001850DD /* BFTabBarControllerDelegate.swift */,
+				0477CE411BDFEBA30033BDEE /* BFViewController.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1926,12 +1960,14 @@
 				040EB5C21BC8162F00452620 /* Attendance.swift in Sources */,
 				0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */,
 				040EB59F1BC815EA00452620 /* ViewController.swift in Sources */,
+				0477CE3F1BDFE7BA0033BDEE /* EventHistoryCollectionViewController.swift in Sources */,
 				040EB5C81BC8164500452620 /* Defines.swift in Sources */,
 				040EB5BE1BC8161100452620 /* GeoPoint+CoreDataProperties.swift in Sources */,
 				0472D0FB1BD94B2200D8891B /* String+Extensions.swift in Sources */,
 				040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */,
 				0477CE391BDFB2DF0033BDEE /* PhotoBrowserViewController.swift in Sources */,
 				040EB5C11BC8162F00452620 /* File.swift in Sources */,
+				0477CE491BDFF3B20033BDEE /* EventHistoryCollectionViewCell.swift in Sources */,
 				04B399321BDED7BC00B0F80A /* SVProgressHUD.m in Sources */,
 				040756C31BD6DD3700F95E96 /* DetailViewController.swift in Sources */,
 				040EB5BD1BC8161100452620 /* Event+CoreDataProperties.swift in Sources */,
@@ -1970,6 +2006,7 @@
 				043AB3B21BBE212200BA5827 /* PKHUDErrorView.swift in Sources */,
 				043AB3BB1BBE212200BA5827 /* PKHUDTitleView.swift in Sources */,
 				040EB5C01BC8162800452620 /* Photo+CoreDataProperties.swift in Sources */,
+				0477CE421BDFEBA30033BDEE /* BFViewController.swift in Sources */,
 				043AB3BA1BBE212200BA5827 /* PKHUDTextView.swift in Sources */,
 				0439D3C01B8B83AE001850DD /* ReportImage.swift in Sources */,
 				040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */,
@@ -2292,6 +2329,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
 					"$(PROJECT_DIR)/Vendor/Google/**",
+					"$(PROJECT_DIR)/Vendor/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				OTHER_LDFLAGS = (
@@ -2371,6 +2409,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
 					"$(PROJECT_DIR)/Vendor/Google/**",
+					"$(PROJECT_DIR)/Vendor/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				OTHER_LDFLAGS = (

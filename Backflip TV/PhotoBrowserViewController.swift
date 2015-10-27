@@ -17,6 +17,8 @@ class PhotoBrowserViewController : UIPageViewController, UIPageViewControllerDat
 	
 	internal var controllerCache = NSCache()
 	
+	internal var pageControl : UIPageControl?
+	
 	
 	// --------------------------------------
 	//  MARK: View Management
@@ -26,9 +28,22 @@ class PhotoBrowserViewController : UIPageViewController, UIPageViewControllerDat
 	{
 		super.viewDidLoad()
 		
+		dataSource = self
+		
+		self.pageControl = UIPageControl(frame: CGRectMake(10, 10, 100, 20))
+		self.pageControl?.numberOfPages = 10
+		self.view.bringSubviewToFront(self.pageControl!)
+	}
+	
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		
 		self.dataSource = self
 		let initialViewController = viewControllerForPage(0)
 		self.setViewControllers([initialViewController], direction: .Forward, animated: false, completion: nil)
+		
 	}
 	
 	

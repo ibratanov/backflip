@@ -38,7 +38,7 @@
 		// Analytics yo
 		#import <Instabug/Instabug.h>
 		#import <Mixpanel/Mixpanel.h>
-		#import <Google/Analytics.h>
+		#import "Flurry.h"
 		#import "NewRelicAgent/NewRelic.h"
 	#endif
 

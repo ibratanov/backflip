@@ -18,6 +18,14 @@ public class PhotoBrowserItemViewController : UIViewController
 	public var imageView : UIImageView = UIImageView(frame: CGRectZero)
 	
 	
+	override public func loadView()
+	{
+		super.loadView()
+		
+		imageView.contentMode = .ScaleAspectFit
+		self.view.addSubview(imageView)
+	}
+	
 	override public func viewWillLayoutSubviews()
 	{
 		super.viewWillLayoutSubviews()

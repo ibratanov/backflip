@@ -147,11 +147,23 @@ class DetailViewController: UICollectionViewController
 	
 	override func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath)
 	{
-		let photoBrowser = PhotoBrowserViewController()
-		photoBrowser.photos = self.photos
-		
-		let navigationController = UINavigationController(rootViewController: photoBrowser)
-		self.presentViewController(navigationController, animated: true, completion: nil)
+		self.performSegueWithIdentifier("presentPhotoBrowser", sender: self)
+	}
+	
+	
+	
+	// --------------------------------------
+	//  MARK: Segues
+	// --------------------------------------
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+	{
+		if (segue.identifier == "presentPhotoBrowser") {
+			let photoBrowser : PhotoBrowserViewController = segue.destinationViewController as! PhotoBrowserViewController
+			photoBrowser.photos = self.photos
+			photoBrowser.dataSource = photoBrowser
+		}
+
 	}
 	
 	
