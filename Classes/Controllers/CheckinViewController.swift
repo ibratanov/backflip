@@ -14,7 +14,7 @@ import CoreLocation
 
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource
+class CheckinViewController : BFViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource
 {
 	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?

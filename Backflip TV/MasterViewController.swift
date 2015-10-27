@@ -115,8 +115,6 @@ class MasterViewController : UITableViewController
 			self.tableView.reloadData()
 			
 			self.tableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: true, scrollPosition: .Top)
-			// self.tableView.setNeedsFocusUpdate()
-			// self.tableView.updateFocusIfNeeded()
 		}
 		
 	}

@@ -139,7 +139,6 @@ class DetailViewController: UICollectionViewController
 		if (image != nil) {
 			cell.imageView?.nk_prepareForReuse()
 			let imageUrl = NSURL(string: image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
-			print("Image URL = \(imageUrl)")
 			cell.imageView.nk_setImageWithURL(imageUrl)
 		}
 		
@@ -147,5 +146,28 @@ class DetailViewController: UICollectionViewController
 			cell.label.text = photo["caption"] as? String
 		}
 	}
+	
+	override func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath)
+	{
+		self.performSegueWithIdentifier("presentPhotoBrowser", sender: self)
+	}
+	
+	
+	
+	// --------------------------------------
+	//  MARK: Segues
+	// --------------------------------------
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+	{
+		if (segue.identifier == "presentPhotoBrowser") {
+			let photoBrowser : PhotoBrowserViewController = segue.destinationViewController as! PhotoBrowserViewController
+			photoBrowser.photos = self.photos
+			photoBrowser.dataSource = photoBrowser
+		}
+
+	}
+	
+	
 	
 }
