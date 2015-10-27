@@ -22,7 +22,7 @@ import Foundation
 
 
 
-public class BFImagePreviewController : UIViewController, UITextViewDelegate
+public class BFImagePreviewController : BFViewController, UITextViewDelegate
 {
 
 	/**

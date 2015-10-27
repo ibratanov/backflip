@@ -10,7 +10,7 @@ import Parse
 import DigitsKit
 
 
-class LoginViewController: UIViewController, UINavigationControllerDelegate {
+class LoginViewController: BFViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var termsTextView: UITextView!
     @IBOutlet weak var facebookButton: UIButton!

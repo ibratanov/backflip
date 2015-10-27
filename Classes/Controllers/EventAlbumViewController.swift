@@ -16,7 +16,7 @@ import MagicalRecord
 import SKPhotoBrowser
 
 
-class EventAlbumViewController : UICollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate, ImagePreheatingControllerDelegate
+class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate, ImagePreheatingControllerDelegate
 {
 	
 	//-------------------------------------
