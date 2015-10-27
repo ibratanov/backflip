@@ -15,6 +15,8 @@ class PhotoBrowserViewController : UIPageViewController, UIPageViewControllerDat
 	
 	var photos : [PFObject] = []
 	
+	var initialPageIndex = 0
+	
 	internal var controllerCache = NSCache()
 	
 	internal var pageControl : UIPageControl?
@@ -30,9 +32,9 @@ class PhotoBrowserViewController : UIPageViewController, UIPageViewControllerDat
 		
 		dataSource = self
 		
-		self.pageControl = UIPageControl(frame: CGRectMake(10, 10, 100, 20))
-		self.pageControl?.numberOfPages = 10
-		self.view.bringSubviewToFront(self.pageControl!)
+		// self.pageControl = UIPageControl(frame: CGRectMake(10, 10, 100, 20))
+		// self.pageControl?.numberOfPages = 10
+		// self.view.bringSubviewToFront(self.pageControl!)
 	}
 	
 	
@@ -40,8 +42,8 @@ class PhotoBrowserViewController : UIPageViewController, UIPageViewControllerDat
 	{
 		super.viewWillAppear(animated)
 		
-		self.dataSource = self
-		let initialViewController = viewControllerForPage(0)
+		dataSource = self
+		let initialViewController = viewControllerForPage(initialPageIndex)
 		self.setViewControllers([initialViewController], direction: .Forward, animated: false, completion: nil)
 		
 	}

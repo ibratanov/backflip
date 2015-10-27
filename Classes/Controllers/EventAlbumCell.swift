@@ -41,6 +41,10 @@ class EventAlbumCell : UICollectionViewCell
 	override func prepareForReuse()
 	{
 		super.prepareForReuse()
+		
+		#if os(tvOS)
+			self.label?.alpha = 1.0
+		#endif
 	}
 	
 
@@ -55,9 +59,9 @@ class EventAlbumCell : UICollectionViewCell
 			*/
 			coordinator.addCoordinatedAnimations({ [unowned self] in
 				if self.focused {
-					self.label?.alpha = 1.0
-				} else {
 					self.label?.alpha = 0.0
+				} else {
+					self.label?.alpha = 1.0
 				}
 			}, completion: nil)
 			

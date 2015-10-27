@@ -674,7 +674,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     CGFloat posY = floorf(activeHeight*0.45f);
 
     CGPoint newCenter;
-    CGFloat rotateAngle;
+    CGFloat rotateAngle = 0.0;
     
     // Update posX and posY in regards to orientation
     if(ignoreOrientation){

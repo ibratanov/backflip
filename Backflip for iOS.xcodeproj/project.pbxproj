@@ -12,8 +12,6 @@
 		040756C11BD6DC2100F95E96 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C01BD6DC2100F95E96 /* MasterViewController.swift */; };
 		040756C31BD6DD3700F95E96 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C21BD6DD3700F95E96 /* DetailViewController.swift */; };
 		040756C51BD6DD6F00F95E96 /* GradientMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */; };
-		040756C81BD6DD8800F95E96 /* DataItemCellComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */; };
-		040756C91BD6DD8800F95E96 /* DataItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */; };
 		040756F71BD7E6F200F95E96 /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B27D11B794E9B004B4FB2 /* Event+Share.swift */; };
 		040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB59C1BC815EA00452620 /* AppDelegate.swift */; };
@@ -61,7 +59,6 @@
 		042E8D711BB300A100D61412 /* Watchdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D701BB300A100D61412 /* Watchdog.swift */; };
 		042E8D761BB30BFD00D61412 /* EventHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */; };
 		042E8D781BB3119A00D61412 /* EventHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */; };
-		042E8D7A1BB347FB00D61412 /* EventHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D791BB347FB00D61412 /* EventHistoryCollectionViewCell.swift */; };
 		0432DC421BC81AFE00B31D02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
 		0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */; };
 		0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC481BC81CC500B31D02 /* AudioToolbox.framework */; };
@@ -134,6 +131,7 @@
 		0477CE421BDFEBA30033BDEE /* BFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE411BDFEBA30033BDEE /* BFViewController.swift */; };
 		0477CE471BDFEF000033BDEE /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE461BDFEF000033BDEE /* libFlurry_7.2.1.a */; };
 		0477CE491BDFF3B20033BDEE /* EventHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE481BDFF3B20033BDEE /* EventHistoryCollectionViewCell.swift */; };
+		0477CE4A1BE0052F0033BDEE /* NSDate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3CC1B8B8758001850DD /* NSDate+Extensions.swift */; };
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
 		048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -149,6 +147,9 @@
 		04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */; };
 		04B399321BDED7BC00B0F80A /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B3992D1BDED7BC00B0F80A /* SVProgressHUD.m */; };
 		04B399331BDED7BC00B0F80A /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B3992F1BDED7BC00B0F80A /* SVRadialGradientLayer.m */; };
+		04BCCEF81BE019FA00523296 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BCCEF71BE019FA00523296 /* AccountViewController.swift */; };
+		04BCCEFB1BE0251800523296 /* BonjourConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BCCEFA1BE0251800523296 /* BonjourConnection.swift */; };
+		04BCCEFD1BE02E9A00523296 /* BonjourServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BCCEFC1BE02E9A00523296 /* BonjourServer.swift */; };
 		04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */; };
 		04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */; };
 		04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C61FB61B8B982600E2ACB5 /* File.swift */; };
@@ -566,8 +567,6 @@
 		040756C01BD6DC2100F95E96 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		040756C21BD6DD3700F95E96 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientMaskView.swift; sourceTree = "<group>"; };
-		040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItemCellComposer.swift; sourceTree = "<group>"; };
-		040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventAlbumCell.swift; path = ../Controllers/EventAlbumCell.swift; sourceTree = "<group>"; };
 		040B27D11B794E9B004B4FB2 /* Event+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Share.swift"; sourceTree = "<group>"; };
 		040EB59A1BC815EA00452620 /* Backflip TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Backflip TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -602,7 +601,6 @@
 		042E8D701BB300A100D61412 /* Watchdog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Watchdog.swift; path = Vendor/Watchdog/Classes/Watchdog.swift; sourceTree = "<group>"; };
 		042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryViewController.swift; sourceTree = "<group>"; };
 		042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryHeaderView.swift; sourceTree = "<group>"; };
-		042E8D791BB347FB00D61412 /* EventHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.0.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		0432DC481BC81CC500B31D02 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		0432DC631BCE9D6000B31D02 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKStrings.bundle; sourceTree = "<group>"; };
@@ -695,6 +693,9 @@
 		04B3992D1BDED7BC00B0F80A /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
 		04B3992E1BDED7BC00B0F80A /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		04B3992F1BDED7BC00B0F80A /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVRadialGradientLayer.m; path = SVProgressHUD/SVProgressHUD/SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		04BCCEF71BE019FA00523296 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		04BCCEFA1BE0251800523296 /* BonjourConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BonjourConnection.swift; path = Bonjour/BonjourConnection.swift; sourceTree = "<group>"; };
+		04BCCEFC1BE02E9A00523296 /* BonjourServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BonjourServer.swift; path = Bonjour/BonjourServer.swift; sourceTree = "<group>"; };
 		04C61FB01B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ParseObject+CoreDataProperties.swift"; path = "Models/ParseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseObject.swift; sourceTree = "<group>"; };
 		04C61FB61B8B982600E2ACB5 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -829,13 +830,12 @@
 		040EB59B1BC815EA00452620 /* Backflip TV */ = {
 			isa = PBXGroup;
 			children = (
+				04BCCEF91BE024F400523296 /* Bonjour */,
 				04B399191BDECF4F00B0F80A /* Controllers */,
 				0485F6D71BD5B41A00E0465D /* Vendor */,
 				040EB59C1BC815EA00452620 /* AppDelegate.swift */,
 				040EB59E1BC815EA00452620 /* ViewController.swift */,
 				0472D0D61BD948BE00D8891B /* BonjourService.swift */,
-				040756C61BD6DD8800F95E96 /* DataItemCellComposer.swift */,
-				040756C71BD6DD8800F95E96 /* DataItemCollectionViewCell.swift */,
 				040756C41BD6DD6F00F95E96 /* GradientMaskView.swift */,
 				040EB5A31BC815EA00452620 /* Main-TV.storyboard */,
 				040EB5A61BC815EA00452620 /* Assets.xcassets */,
@@ -1252,6 +1252,7 @@
 		04B399191BDECF4F00B0F80A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				04BCCED21BE019DD00523296 /* Account */,
 				0477CE3D1BDFE79D0033BDEE /* Collection View */,
 				0477CE3A1BDFB35F0033BDEE /* Photo Browser */,
 				040756C01BD6DC2100F95E96 /* MasterViewController.swift */,
@@ -1280,10 +1281,26 @@
 			children = (
 				040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */,
 				042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */,
-				042E8D791BB347FB00D61412 /* EventHistoryCollectionViewCell.swift */,
 				041312A61BB47A1B00C0E4D9 /* EventHistoryViewFlowLayout.swift */,
 			);
 			name = "Collection View";
+			sourceTree = "<group>";
+		};
+		04BCCED21BE019DD00523296 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				04BCCEF71BE019FA00523296 /* AccountViewController.swift */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		04BCCEF91BE024F400523296 /* Bonjour */ = {
+			isa = PBXGroup;
+			children = (
+				04BCCEFA1BE0251800523296 /* BonjourConnection.swift */,
+				04BCCEFC1BE02E9A00523296 /* BonjourServer.swift */,
+			);
+			name = Bonjour;
 			sourceTree = "<group>";
 		};
 		04C61FB41B8B97F700E2ACB5 /* CoreData */ = {
@@ -1956,11 +1973,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04BCCEFB1BE0251800523296 /* BonjourConnection.swift in Sources */,
 				04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */,
 				040EB5C21BC8162F00452620 /* Attendance.swift in Sources */,
 				0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */,
 				040EB59F1BC815EA00452620 /* ViewController.swift in Sources */,
 				0477CE3F1BDFE7BA0033BDEE /* EventHistoryCollectionViewController.swift in Sources */,
+				04BCCEFD1BE02E9A00523296 /* BonjourServer.swift in Sources */,
 				040EB5C81BC8164500452620 /* Defines.swift in Sources */,
 				040EB5BE1BC8161100452620 /* GeoPoint+CoreDataProperties.swift in Sources */,
 				0472D0FB1BD94B2200D8891B /* String+Extensions.swift in Sources */,
@@ -1968,6 +1987,7 @@
 				0477CE391BDFB2DF0033BDEE /* PhotoBrowserViewController.swift in Sources */,
 				040EB5C11BC8162F00452620 /* File.swift in Sources */,
 				0477CE491BDFF3B20033BDEE /* EventHistoryCollectionViewCell.swift in Sources */,
+				0477CE4A1BE0052F0033BDEE /* NSDate+Extensions.swift in Sources */,
 				04B399321BDED7BC00B0F80A /* SVProgressHUD.m in Sources */,
 				040756C31BD6DD3700F95E96 /* DetailViewController.swift in Sources */,
 				040EB5BD1BC8161100452620 /* Event+CoreDataProperties.swift in Sources */,
@@ -1975,18 +1995,17 @@
 				040EB5C91BC8164A00452620 /* Reachability.swift in Sources */,
 				040EB5C61BC8162F00452620 /* ParseObject.swift in Sources */,
 				0477CE3C1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift in Sources */,
-				040756C91BD6DD8800F95E96 /* DataItemCollectionViewCell.swift in Sources */,
 				040EB5BC1BC8161100452620 /* Photo+CoreDataProperties.swift in Sources */,
 				040EB5C41BC8162F00452620 /* Photo.swift in Sources */,
 				04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */,
 				04B399331BDED7BC00B0F80A /* SVRadialGradientLayer.m in Sources */,
-				040756C81BD6DD8800F95E96 /* DataItemCellComposer.swift in Sources */,
 				040EB5C51BC8162F00452620 /* GeoPoint.swift in Sources */,
 				040EB5BA1BC8160D00452620 /* File+CoreDataProperties.swift in Sources */,
 				040756C51BD6DD6F00F95E96 /* GradientMaskView.swift in Sources */,
 				040756C11BD6DC2100F95E96 /* MasterViewController.swift in Sources */,
 				040EB5BB1BC8161100452620 /* Attendance+CoreDataProperties.swift in Sources */,
 				040EB5BF1BC8161100452620 /* ParseObject+CoreDataProperties.swift in Sources */,
+				04BCCEF81BE019FA00523296 /* AccountViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2027,7 +2046,6 @@
 				0439D3A41B8B81A6001850DD /* CreatePublicEventViewController.swift in Sources */,
 				0439D3A91B8B81A6001850DD /* LoginViewController.swift in Sources */,
 				043AB3B81BBE212200BA5827 /* PKHUDSuccessView.swift in Sources */,
-				042E8D7A1BB347FB00D61412 /* EventHistoryCollectionViewCell.swift in Sources */,
 				043AB3B51BBE212200BA5827 /* PKHUDSquareBaseView.swift in Sources */,
 				042E8D781BB3119A00D61412 /* EventHistoryHeaderView.swift in Sources */,
 				046D98BB1BCAAAF4004B3DCD /* ImagePickerAction.swift in Sources */,

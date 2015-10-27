@@ -23,6 +23,10 @@
 	#import "ZAActivityBar.h"
 	#import "BFDataWrapper.h"
 
+	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <unistd.h>
+
 	// SVProgressHUD
 	#if TARGET_OS_TV
 		#import "SVProgressHUD.h"

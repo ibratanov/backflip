@@ -26,6 +26,11 @@ class EventHistoryCollectionViewCell : UICollectionViewCell, UICollectionViewDat
 	*/
 	@IBOutlet weak var eventLabel : UILabel!
 	
+	/**
+	 * Event Date Label
+	*/
+	@IBOutlet weak var eventDateLabel : UILabel!
+	
 	
 	/**
 	 * Event object
@@ -35,27 +40,7 @@ class EventHistoryCollectionViewCell : UICollectionViewCell, UICollectionViewDat
 	/**
 	 * Photos for this event
 	*/
-	private weak var photos : [PFObject] = []
-	
-	
-	
-	func init?(coder aDecoder: NSCoder)
-	{
-		super.init(coder: aDecoder)
-		
-		
-		
-		// Layout -  Only run on the main thread
-		dispatch_async(dispatch_get_main_queue(), { () -> Void in
-			// self.collectionView?.contentInset = UIEdgeInsetsMake(0.0, 0.0, 72.0, 0.0)
-			
-			let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
-			flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
-			flow.itemSize = CGSizeMake((self.view.frame.size.width/5)-1, (self.view.frame.size.width/5)-1);
-			flow.minimumInteritemSpacing = 1;
-			flow.minimumLineSpacing = 1;
-		})
-	}
+	private var photos : [PFObject] = []
 	
 	
 	
@@ -66,6 +51,12 @@ class EventHistoryCollectionViewCell : UICollectionViewCell, UICollectionViewDat
 	func configureCell(event: PFObject?)
 	{
 		self.event = event
+		
+		self.eventLabel.text = event?["eventName"] as? String
+		if (event?.createdAt != nil) {
+			self.eventDateLabel.text = event!.createdAt!.timeAgo
+		}
+		
 		self.fetchData()
 	}
 	
@@ -87,10 +78,57 @@ class EventHistoryCollectionViewCell : UICollectionViewCell, UICollectionViewDat
 			self.photos.removeAll()
 			self.photos = objects!
 			
-			print("We have \(self.photos.count) photos for '\(event!["eventName"]!)'..")
-			
 			self.collectionView?.reloadData()
 		}
 		
 	}
+	
+	
+	// --------------------------------------
+	//  MARK: Collection View
+	// --------------------------------------
+	
+	func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
+	{
+		return 1
+	}
+	
+	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+	{
+		return self.photos.count
+	}
+	
+	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
+	{
+		return collectionView.dequeueReusableCellWithReuseIdentifier(EventAlbumCell.reuseIdentifier, forIndexPath: indexPath)
+	}
+	
+	func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+	{
+		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
+		
+		let photo = self.photos[Int(indexPath.row)]
+		cell.imageView.nk_prepareForReuse()
+		
+		let file = photo["image"] as? PFFile
+		if (file != nil) {
+			let imageUrl = NSURL(string: file!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			cell.imageView.nk_setImageWithURL(imageUrl)
+		}
+	}
+	
+	func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath)
+	{
+		let storyboard = UIStoryboard(name: "Main-TV", bundle: NSBundle.mainBundle())
+		let photoBrowserViewController = storyboard.instantiateViewControllerWithIdentifier("PhotoBrowserViewController") as! PhotoBrowserViewController
+		
+		photoBrowserViewController.photos = self.photos
+		photoBrowserViewController.initialPageIndex = indexPath.row
+		
+		let window = UIApplication.sharedApplication().windows.first
+		if (window != nil) {
+			window?.rootViewController?.presentViewController(photoBrowserViewController, animated: true, completion: nil)
+		}
+	}
+	
 }
