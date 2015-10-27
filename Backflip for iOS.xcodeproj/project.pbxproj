@@ -126,8 +126,6 @@
 		0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
 		0472D0FD1BD94D4800D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
 		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
-		0477CE151BDEE45A0033BDEE /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE121BDEE45A0033BDEE /* Nuke.framework */; };
-		0477CE161BDEE45A0033BDEE /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE121BDEE45A0033BDEE /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
 		048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -282,27 +280,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = AAA8FE021ACDA079002A9710;
 			remoteInfo = QBImagePicker;
-		};
-		0477CE111BDEE45A0033BDEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0CC345971BD96CFE005C2DD8;
-			remoteInfo = "Nuke tvOS";
-		};
-		0477CE131BDEE45A0033BDEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0CC345A31BD96D2A005C2DD8;
-			remoteInfo = "Nuke tvOS Tests";
-		};
-		0477CE171BDEE45A0033BDEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 0CC345961BD96CFE005C2DD8;
-			remoteInfo = "Nuke tvOS";
 		};
 		048939C71BD0451C005400CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -530,7 +507,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0477CE161BDEE45A0033BDEE /* Nuke.framework in Embed Frameworks */,
 				040756B81BD6D34300F95E96 /* Parse.framework in Embed Frameworks */,
 				0496D1241BD83ADA003B0EDC /* Bolts.framework in Embed Frameworks */,
 			);
@@ -736,7 +712,6 @@
 			files = (
 				0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */,
 				0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */,
-				0477CE151BDEE45A0033BDEE /* Nuke.framework in Frameworks */,
 				040756B71BD6D34300F95E96 /* Parse.framework in Frameworks */,
 				0496D1231BD83ADA003B0EDC /* Bolts.framework in Frameworks */,
 			);
@@ -1158,10 +1133,8 @@
 				049738171BD805C500B58F70 /* Nuke.framework */,
 				049738191BD805C500B58F70 /* Nuke.framework */,
 				0497381B1BD805C500B58F70 /* Nuke.framework */,
-				0477CE121BDEE45A0033BDEE /* Nuke.framework */,
 				0497381D1BD805C500B58F70 /* Nuke iOS Tests.xctest */,
 				0497381F1BD805C500B58F70 /* Nuke OSX Tests.xctest */,
-				0477CE141BDEE45A0033BDEE /* Nuke tvOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1443,7 +1416,6 @@
 			dependencies = (
 				040756BA1BD6D34300F95E96 /* PBXTargetDependency */,
 				0496D1261BD83ADA003B0EDC /* PBXTargetDependency */,
-				0477CE181BDEE45A0033BDEE /* PBXTargetDependency */,
 			);
 			name = BackflipTV;
 			productName = "Backflip TV";
@@ -1642,20 +1614,6 @@
 			fileType = wrapper.cfbundle;
 			path = QBImagePickerDemoTests.xctest;
 			remoteRef = 046D98D61BCAAB1E004B3DCD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0477CE121BDEE45A0033BDEE /* Nuke.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Nuke.framework;
-			remoteRef = 0477CE111BDEE45A0033BDEE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0477CE141BDEE45A0033BDEE /* Nuke tvOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Nuke tvOS Tests.xctest";
-			remoteRef = 0477CE131BDEE45A0033BDEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		048939C81BD0451C005400CA /* Locksmith.framework */ = {
@@ -2046,11 +2004,6 @@
 			name = QBImagePicker;
 			targetProxy = 046D98DA1BCAAB49004B3DCD /* PBXContainerItemProxy */;
 		};
-		0477CE181BDEE45A0033BDEE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Nuke tvOS";
-			targetProxy = 0477CE171BDEE45A0033BDEE /* PBXContainerItemProxy */;
-		};
 		048939D41BD0452A005400CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Locksmith iOS";
@@ -2308,7 +2261,7 @@
 				PRODUCT_NAME = Frontflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Supporting Files/Backflip-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2386,7 +2339,7 @@
 				PRODUCT_NAME = Backflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Supporting Files/Backflip-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
