@@ -160,6 +160,10 @@ public class BFImagePreviewController : UIViewController, UITextViewDelegate
 			comment = nil
 		}
 		
+        if (self.image != nil) {
+            UIImageWriteToSavedPhotosAlbum(self.image!, nil, nil, nil)
+        }
+        
 		delegate?.imagePreviewDidSelectUploadButton?(self, button: uploadButton, image: self.image, comment: comment)
 
 		self.dismissViewControllerAnimated(true, completion: nil)
