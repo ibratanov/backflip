@@ -245,6 +245,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		
 		// Default ACL
 		let defaultACL = PFACL();
+		defaultACL.setPublicWriteAccess(true)
 		defaultACL.setPublicReadAccess(true)
 		PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 		
@@ -260,7 +261,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	{
 		guard notification.userInfo != nil else { return }
 
-		// let request = notification.userInfo![PFNetworkNotificationURLRequestUserInfoKey] as! NSURLRequest
 		let response = notification.userInfo![PFNetworkNotificationURLResponseUserInfoKey] as! NSHTTPURLResponse
 		let responseBody = notification.userInfo![PFNetworkNotificationURLResponseBodyUserInfoKey] as! NSString
 		print("------------------------------------------------")

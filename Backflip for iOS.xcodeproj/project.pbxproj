@@ -128,6 +128,8 @@
 		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
 		0477CE151BDEE45A0033BDEE /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE121BDEE45A0033BDEE /* Nuke.framework */; };
 		0477CE161BDEE45A0033BDEE /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE121BDEE45A0033BDEE /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0477CE391BDFB2DF0033BDEE /* PhotoBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE381BDFB2DF0033BDEE /* PhotoBrowserViewController.swift */; };
+		0477CE3C1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE3B1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift */; };
 		048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */; };
 		048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; };
 		048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 048939C81BD0451C005400CA /* Locksmith.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -665,6 +667,8 @@
 		047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Vendor/Facebook/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Vendor/Facebook/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		047790E61BBB1C5B00BA8F9E /* PopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
+		0477CE381BDFB2DF0033BDEE /* PhotoBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowserViewController.swift; sourceTree = "<group>"; };
+		0477CE3B1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowserItemViewController.swift; sourceTree = "<group>"; };
 		048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		048939BF1BD0451C005400CA /* Locksmith.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Locksmith.xcodeproj; path = Vendor/Locksmith/Locksmith.xcodeproj; sourceTree = "<group>"; };
 		04937DD21BD979D1004A2730 /* Backflip.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Backflip.xcdatamodel; sourceTree = "<group>"; };
@@ -1083,6 +1087,15 @@
 			name = Facebook;
 			sourceTree = "<group>";
 		};
+		0477CE3A1BDFB35F0033BDEE /* Photo Browser */ = {
+			isa = PBXGroup;
+			children = (
+				0477CE381BDFB2DF0033BDEE /* PhotoBrowserViewController.swift */,
+				0477CE3B1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift */,
+			);
+			name = "Photo Browser";
+			sourceTree = "<group>";
+		};
 		0485F6D71BD5B41A00E0465D /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1207,6 +1220,7 @@
 		04B399191BDECF4F00B0F80A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0477CE3A1BDFB35F0033BDEE /* Photo Browser */,
 				040756C01BD6DC2100F95E96 /* MasterViewController.swift */,
 				040756C21BD6DD3700F95E96 /* DetailViewController.swift */,
 			);
@@ -1916,6 +1930,7 @@
 				040EB5BE1BC8161100452620 /* GeoPoint+CoreDataProperties.swift in Sources */,
 				0472D0FB1BD94B2200D8891B /* String+Extensions.swift in Sources */,
 				040EB59D1BC815EA00452620 /* AppDelegate.swift in Sources */,
+				0477CE391BDFB2DF0033BDEE /* PhotoBrowserViewController.swift in Sources */,
 				040EB5C11BC8162F00452620 /* File.swift in Sources */,
 				04B399321BDED7BC00B0F80A /* SVProgressHUD.m in Sources */,
 				040756C31BD6DD3700F95E96 /* DetailViewController.swift in Sources */,
@@ -1923,6 +1938,7 @@
 				040EB5C31BC8162F00452620 /* Event.swift in Sources */,
 				040EB5C91BC8164A00452620 /* Reachability.swift in Sources */,
 				040EB5C61BC8162F00452620 /* ParseObject.swift in Sources */,
+				0477CE3C1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift in Sources */,
 				040756C91BD6DD8800F95E96 /* DataItemCollectionViewCell.swift in Sources */,
 				040EB5BC1BC8161100452620 /* Photo+CoreDataProperties.swift in Sources */,
 				040EB5C41BC8162F00452620 /* Photo.swift in Sources */,

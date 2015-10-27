@@ -135,15 +135,25 @@ class DetailViewController: UICollectionViewController
 		let image = photo["image"] as? PFFile
 		
 		if (image != nil) {
-			// cell.imageView?.nk_prepareForReuse()
+			cell.imageView?.nk_prepareForReuse()
 			let imageUrl = NSURL(string: image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
-			print("Image URL = \(imageUrl)")
-			// cell.imageView.nk_setImageWithURL(imageUrl)
+			cell.imageView.nk_setImageWithURL(imageUrl)
 		}
 		
 		if (photo["caption"] != nil && (photo["caption"] as? String) != "Camera roll upload") {
 			cell.label.text = photo["caption"] as? String
 		}
 	}
+	
+	override func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath)
+	{
+		let photoBrowser = PhotoBrowserViewController()
+		photoBrowser.photos = self.photos
+		
+		let navigationController = UINavigationController(rootViewController: photoBrowser)
+		self.presentViewController(navigationController, animated: true, completion: nil)
+	}
+	
+	
 	
 }

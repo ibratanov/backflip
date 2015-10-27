@@ -13,8 +13,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell-identifier" textLabel="dak-ve-9br" style="IBUITableViewCellStyleDefault" id="u4K-5i-jNx">
-                                <rect key="frame" x="0.0" y="199" width="634" height="66"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell-identifier" textLabel="dak-ve-9br" style="IBUITableViewCellStyleDefault" id="u4K-5i-jNx">
+                                <rect key="frame" x="0.0" y="199" width="594" height="66"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u4K-5i-jNx" id="UzP-tL-oQb">
                                     <rect key="frame" x="0.0" y="0.0" width="618" height="66"/>
