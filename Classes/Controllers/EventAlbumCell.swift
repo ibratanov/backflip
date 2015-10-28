@@ -44,6 +44,7 @@ class EventAlbumCell : UICollectionViewCell
 		
 		#if os(tvOS)
 			self.label?.alpha = 1.0
+			self.label.text = nil
 		#endif
 	}
 	

@@ -25,6 +25,8 @@ class DetailViewController: UICollectionViewController
 	var event : PFObject? {
 		set {
 			_event = newValue
+			
+			SVProgressHUD.show()
 			self.fetchData()
 		}
 		get {
@@ -51,7 +53,7 @@ class DetailViewController: UICollectionViewController
 			self.photos.removeAll()
 			self.photos = objects!
 			
-			print("We have \(self.photos.count) photos for display..")
+			SVProgressHUD.dismissWithDelay(0.1)
 			
 			self.collectionView?.reloadData()
 		}

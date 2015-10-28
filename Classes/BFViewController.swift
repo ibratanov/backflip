@@ -9,29 +9,42 @@
 import Parse
 import Foundation
 
-class BFViewController : UIViewController
+public class BFViewController : UIViewController
 {
 	let flurryParameters : [NSObject : AnyObject] = ["Author": UIDevice.currentDevice().uniqueDeviceIdentifier(), "User_Status": "Registered"]
 	
 	
-	override func viewWillAppear(animated: Bool)
+	override public func viewWillAppear(animated: Bool)
 	{
 		super.viewWillAppear(animated)
 		
 		Flurry.logEvent("Screen_\(self.title)", withParameters: flurryParameters, timed: true)
 	}
 	
-	override func viewWillDisappear(animated: Bool)
+	override public func viewWillDisappear(animated: Bool)
 	{
 		super.viewWillDisappear(animated)
 		
 		Flurry.endTimedEvent("Screen_\(self.title)", withParameters: nil);
 	}
-	
 }
 
 
-class BFCollectionViewController : UICollectionViewController
+public class BFCollectionViewController : UICollectionViewController
 {
-	
+    let flurryParameters : [NSObject : AnyObject] = ["Author": UIDevice.currentDevice().uniqueDeviceIdentifier(), "User_Status": "Registered"]
+    
+    public override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        Flurry.logEvent("Screen_\(self.title)", withParameters: flurryParameters, timed: true)
+    }
+    
+    override public func viewWillDisappear(animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        
+        Flurry.endTimedEvent("Screen_\(self.title)", withParameters: nil);
+    }
 }

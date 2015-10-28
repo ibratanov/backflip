@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import DigitsKit
 
-class InviteViewController: UIViewController {
+class InviteViewController: BFViewController {
     @IBOutlet weak var imageView: UIImageView!
 
     override func viewDidLoad() {

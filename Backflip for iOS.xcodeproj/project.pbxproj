@@ -61,10 +61,6 @@
 		0430A41D1BE13BA500E33359 /* Instabug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A41B1BE13BA500E33359 /* Instabug.framework */; };
 		0430A43E1BE142EC00E33359 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A42F1BE13D6E00E33359 /* Bolts.framework */; };
 		0430A43F1BE142EC00E33359 /* Bolts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A42F1BE13D6E00E33359 /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0430A4471BE14A6900E33359 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A4441BE14A6900E33359 /* Bolts.framework */; };
-		0430A4481BE14A6900E33359 /* Bolts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A4441BE14A6900E33359 /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0430A44B1BE14C9700E33359 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A3E31BE0986F00E33359 /* Parse.framework */; };
-		0430A44C1BE14C9700E33359 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A3E31BE0986F00E33359 /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0432DC421BC81AFE00B31D02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
 		0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */; };
 		0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC481BC81CC500B31D02 /* AudioToolbox.framework */; };
@@ -129,8 +125,8 @@
 		0472D0FC1BD94B3300D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
 		0472D0FD1BD94D4800D8891B /* BonjourService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472D0D61BD948BE00D8891B /* BonjourService.swift */; };
 		047790E71BBB1C5B00BA8F9E /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047790E61BBB1C5B00BA8F9E /* PopoverView.swift */; };
-		0477CE151BDEE45A0033BDEE /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE121BDEE45A0033BDEE /* Nuke.framework */; };
-		0477CE161BDEE45A0033BDEE /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0477CE121BDEE45A0033BDEE /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0477CE151BDEE45A0033BDEE /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		0477CE161BDEE45A0033BDEE /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0477CE391BDFB2DF0033BDEE /* PhotoBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE381BDFB2DF0033BDEE /* PhotoBrowserViewController.swift */; };
 		0477CE3C1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE3B1BDFB3840033BDEE /* PhotoBrowserItemViewController.swift */; };
 		0477CE3F1BDFE7BA0033BDEE /* EventHistoryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477CE3E1BDFE7BA0033BDEE /* EventHistoryCollectionViewController.swift */; };
@@ -167,6 +163,10 @@
 		04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; };
 		04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04CCD6691B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */; };
+		04D022571BE15DD200375C84 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A4731BE1559D00E33359 /* Nuke.framework */; };
+		04D022581BE15DD200375C84 /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A4731BE1559D00E33359 /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04D022881BE192B300375C84 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D022861BE192B300375C84 /* Bolts.framework */; };
+		04D022891BE192B300375C84 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D022871BE192B300375C84 /* Parse.framework */; };
 		04D7D7021BA9ACC000AC6AA3 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D7D6FD1BA9ACC000AC6AA3 /* DOFavoriteButton.swift */; };
 		04D7D7031BA9ACC000AC6AA3 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D6FE1BA9ACC000AC6AA3 /* heart.png */; };
 		04D7D7041BA9ACC000AC6AA3 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D6FF1BA9ACC000AC6AA3 /* like.png */; };
@@ -320,19 +320,19 @@
 			remoteGlobalIDString = 0430A4421BE14A5A00E33359;
 			remoteInfo = "Bolts-OSX";
 		};
-		0430A4491BE14A6900E33359 /* PBXContainerItemProxy */ = {
+		0430A4721BE1559D00E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 81ED94111BE147CF00795F05;
-			remoteInfo = "Bolts-iOS";
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CC345971BD96CFE005C2DD8;
+			remoteInfo = "Nuke tvOS";
 		};
-		0430A44D1BE14C9700E33359 /* PBXContainerItemProxy */ = {
+		0430A4741BE1559D00E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3D41BE0986E00E33359 /* Parse.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 81C3821B19CCA89E0066284A;
-			remoteInfo = "Parse-iOS";
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CC345A31BD96D2A005C2DD8;
+			remoteInfo = "Nuke tvOS Tests";
 		};
 		046D98D01BCAAB1E004B3DCD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -368,27 +368,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = AAA8FE021ACDA079002A9710;
 			remoteInfo = QBImagePicker;
-		};
-		0477CE111BDEE45A0033BDEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0CC345971BD96CFE005C2DD8;
-			remoteInfo = "Nuke tvOS";
-		};
-		0477CE131BDEE45A0033BDEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0CC345A31BD96D2A005C2DD8;
-			remoteInfo = "Nuke tvOS Tests";
-		};
-		0477CE171BDEE45A0033BDEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 0CC345961BD96CFE005C2DD8;
-			remoteInfo = "Nuke tvOS";
 		};
 		048939C71BD0451C005400CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -530,6 +509,13 @@
 			remoteGlobalIDString = C7CF9816174984E4008D9D13;
 			remoteInfo = "libMagicalRecord for OS X Tests";
 		};
+		04D022591BE15DD200375C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497380E1BD805C500B58F70 /* Nuke.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CC345961BD96CFE005C2DD8;
+			remoteInfo = "Nuke tvOS";
+		};
 		04ED9B121BC30331008493E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 04ED9B0E1BC30331008493E3 /* Mixpanel.xcodeproj */;
@@ -554,8 +540,9 @@
 			dstSubfolderSpec = 10;
 			files = (
 				0430A43F1BE142EC00E33359 /* Bolts.framework in Embed Frameworks */,
+				04D022581BE15DD200375C84 /* Nuke.framework in Embed Frameworks */,
 				0430A3F71BE09F5100E33359 /* Parse.framework in Embed Frameworks */,
-				0477CE161BDEE45A0033BDEE /* Nuke.framework in Embed Frameworks */,
+				0477CE161BDEE45A0033BDEE /* (null) in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -572,8 +559,6 @@
 				040FD7811BD553110039CDAA /* SKPhotoBrowser.framework in Embed Frameworks */,
 				046D98D91BCAAB49004B3DCD /* QBImagePicker.framework in Embed Frameworks */,
 				049738211BD805CB00B58F70 /* Nuke.framework in Embed Frameworks */,
-				0430A44C1BE14C9700E33359 /* Parse.framework in Embed Frameworks */,
-				0430A4481BE14A6900E33359 /* Bolts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -731,6 +716,8 @@
 		04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MagicalRecord.xcodeproj; path = Vendor/MagicalRecord/MagicalRecord.xcodeproj; sourceTree = "<group>"; };
 		04CCD6671B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+FetchOrCreate.h"; sourceTree = "<group>"; };
 		04CCD6681B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+FetchOrCreate.m"; sourceTree = "<group>"; };
+		04D022861BE192B300375C84 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "Vendor/Parse-old/Bolts.framework"; sourceTree = "<group>"; };
+		04D022871BE192B300375C84 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Vendor/Parse-old/Parse.framework"; sourceTree = "<group>"; };
 		04D7D6FD1BA9ACC000AC6AA3 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DOFavoriteButton.swift; path = Vendor/DOFavoriteButton/DOFavoriteButton.swift; sourceTree = SOURCE_ROOT; };
 		04D7D6FE1BA9ACC000AC6AA3 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = Vendor/DOFavoriteButton/heart.png; sourceTree = SOURCE_ROOT; };
 		04D7D6FF1BA9ACC000AC6AA3 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = like.png; path = Vendor/DOFavoriteButton/like.png; sourceTree = SOURCE_ROOT; };
@@ -767,7 +754,8 @@
 			files = (
 				0430A43E1BE142EC00E33359 /* Bolts.framework in Frameworks */,
 				0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */,
-				0477CE151BDEE45A0033BDEE /* Nuke.framework in Frameworks */,
+				0477CE151BDEE45A0033BDEE /* (null) in Frameworks */,
+				04D022571BE15DD200375C84 /* Nuke.framework in Frameworks */,
 				0430A3F61BE09F5100E33359 /* Parse.framework in Frameworks */,
 				0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */,
 			);
@@ -780,8 +768,7 @@
 				040FD1081BB2F14B00DDB1A5 /* libz.tbd in Frameworks */,
 				040FD10B1BB2F19500DDB1A5 /* libc++.tbd in Frameworks */,
 				040FD1061BB2F14300DDB1A5 /* libsqlite3.tbd in Frameworks */,
-				0430A44B1BE14C9700E33359 /* Parse.framework in Frameworks */,
-				0430A4471BE14A6900E33359 /* Bolts.framework in Frameworks */,
+				04D022891BE192B300375C84 /* Parse.framework in Frameworks */,
 				0430A41D1BE13BA500E33359 /* Instabug.framework in Frameworks */,
 				040FD10C1BB2F19500DDB1A5 /* libstdc++.tbd in Frameworks */,
 				040EB5D91BC8187F00452620 /* Photos.framework in Frameworks */,
@@ -794,6 +781,7 @@
 				502199C21B33833E00A64387 /* AVFoundation.framework in Frameworks */,
 				04CA5DCD1B8B9F900075C0A8 /* CoreData.framework in Frameworks */,
 				81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */,
+				04D022881BE192B300375C84 /* Bolts.framework in Frameworks */,
 				04CCD6601B8CB7EB00664FB3 /* MagicalRecord.framework in Frameworks */,
 				0439D3281B876EA9001850DD /* Security.framework in Frameworks */,
 				0439D3411B8B76B1001850DD /* DigitsKit.framework in Frameworks */,
@@ -945,6 +933,8 @@
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				04D022861BE192B300375C84 /* Bolts.framework */,
+				04D022871BE192B300375C84 /* Parse.framework */,
 				0430A41E1BE13D6800E33359 /* Bolts */,
 				0430A4191BE13BA500E33359 /* Instabug */,
 				0477CE431BDFEF000033BDEE /* Flurry */,
@@ -1218,10 +1208,10 @@
 				049738171BD805C500B58F70 /* Nuke.framework */,
 				049738191BD805C500B58F70 /* Nuke.framework */,
 				0497381B1BD805C500B58F70 /* Nuke.framework */,
-				0477CE121BDEE45A0033BDEE /* Nuke.framework */,
+				0430A4731BE1559D00E33359 /* Nuke.framework */,
 				0497381D1BD805C500B58F70 /* Nuke iOS Tests.xctest */,
 				0497381F1BD805C500B58F70 /* Nuke OSX Tests.xctest */,
-				0477CE141BDEE45A0033BDEE /* Nuke tvOS Tests.xctest */,
+				0430A4751BE1559D00E33359 /* Nuke tvOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1521,9 +1511,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				0477CE181BDEE45A0033BDEE /* PBXTargetDependency */,
-				0430A3F91BE09F5100E33359 /* PBXTargetDependency */,
 				0430A4411BE142EC00E33359 /* PBXTargetDependency */,
+				0430A3F91BE09F5100E33359 /* PBXTargetDependency */,
+				04D0225A1BE15DD200375C84 /* PBXTargetDependency */,
 			);
 			name = BackflipTV;
 			productName = "Backflip TV";
@@ -1548,8 +1538,6 @@
 				048939D41BD0452A005400CA /* PBXTargetDependency */,
 				040FD7831BD553110039CDAA /* PBXTargetDependency */,
 				049738231BD805CB00B58F70 /* PBXTargetDependency */,
-				0430A44A1BE14A6900E33359 /* PBXTargetDependency */,
-				0430A44E1BE14C9700E33359 /* PBXTargetDependency */,
 			);
 			name = Backflip;
 			productName = ParseStarterProject;
@@ -1754,6 +1742,20 @@
 			remoteRef = 0430A4451BE14A6900E33359 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		0430A4731BE1559D00E33359 /* Nuke.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Nuke.framework;
+			remoteRef = 0430A4721BE1559D00E33359 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0430A4751BE1559D00E33359 /* Nuke tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Nuke tvOS Tests.xctest";
+			remoteRef = 0430A4741BE1559D00E33359 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		046D98D11BCAAB1E004B3DCD /* QBImagePicker.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1780,20 +1782,6 @@
 			fileType = wrapper.cfbundle;
 			path = QBImagePickerDemoTests.xctest;
 			remoteRef = 046D98D61BCAAB1E004B3DCD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0477CE121BDEE45A0033BDEE /* Nuke.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Nuke.framework;
-			remoteRef = 0477CE111BDEE45A0033BDEE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0477CE141BDEE45A0033BDEE /* Nuke tvOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Nuke tvOS Tests.xctest";
-			remoteRef = 0477CE131BDEE45A0033BDEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		048939C81BD0451C005400CA /* Locksmith.framework */ = {
@@ -2134,25 +2122,10 @@
 			name = "Bolts-tvOS";
 			targetProxy = 0430A4401BE142EC00E33359 /* PBXContainerItemProxy */;
 		};
-		0430A44A1BE14A6900E33359 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Bolts-iOS";
-			targetProxy = 0430A4491BE14A6900E33359 /* PBXContainerItemProxy */;
-		};
-		0430A44E1BE14C9700E33359 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Parse-iOS";
-			targetProxy = 0430A44D1BE14C9700E33359 /* PBXContainerItemProxy */;
-		};
 		046D98DB1BCAAB49004B3DCD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = QBImagePicker;
 			targetProxy = 046D98DA1BCAAB49004B3DCD /* PBXContainerItemProxy */;
-		};
-		0477CE181BDEE45A0033BDEE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Nuke tvOS";
-			targetProxy = 0477CE171BDEE45A0033BDEE /* PBXContainerItemProxy */;
 		};
 		048939D41BD0452A005400CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2163,6 +2136,11 @@
 			isa = PBXTargetDependency;
 			name = "Nuke iOS";
 			targetProxy = 049738221BD805CB00B58F70 /* PBXContainerItemProxy */;
+		};
+		04D0225A1BE15DD200375C84 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Nuke tvOS";
+			targetProxy = 04D022591BE15DD200375C84 /* PBXContainerItemProxy */;
 		};
 		04ED9B181BC3033A008493E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2354,6 +2332,7 @@
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Instabug",
+					"$(PROJECT_DIR)/Vendor/Parse-old",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2404,7 +2383,7 @@
 				PRODUCT_NAME = Frontflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Supporting Files/Backflip-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2432,6 +2411,7 @@
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
 					"$(PROJECT_DIR)/Vendor/Instabug",
+					"$(PROJECT_DIR)/Vendor/Parse-old",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

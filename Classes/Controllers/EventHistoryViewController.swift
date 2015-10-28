@@ -10,7 +10,7 @@ import Parse
 import Foundation
 
 
-class EventHistoryViewController : UICollectionViewController
+class EventHistoryViewController : BFCollectionViewController
 {
 	
 	private var events : [Event] = [];
