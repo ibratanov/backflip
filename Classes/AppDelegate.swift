@@ -319,6 +319,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			let mixpanel: Mixpanel = Mixpanel.sharedInstance()
 			mixpanel.track("App launched")
 		}
+        
+        if (FEATURE_FLURRY) {
+            Flurry.startSession("5ZH2SGGPCVDPDKS5KS83")
+            Flurry.logEvent("User:\(PFUser.currentUser()?.objectId) Started Application")
+        }
 	}
 	
 	

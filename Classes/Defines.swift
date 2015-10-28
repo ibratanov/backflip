@@ -36,6 +36,8 @@ let FEATURE_NEW_RELIC : Bool = true
 
 let FEATURE_MIXPANEL : Bool = true
 
+let FEATURE_FLURRY : Bool = true
+
 let FEATURE_INSTABUG : Bool = true
 
 #if DEBUG
