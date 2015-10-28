@@ -45,7 +45,7 @@ extension Event : UIActivityItemSource
             return "<html><body>Check out the photos from \(self.name!) on Backflip! \(inviteUrl!)</body></html>"
 		} else if (activityType == UIActivityTypePostToTwitter) {
             let config = PFConfig.currentConfig()
-            return "Check out the photos from '\(self.name!)' on @getbackflip \(inviteUrl!) \(config["twitter_share_content"]!)"
+            return "Check out \(self.name!) on @getbackflip \(inviteUrl!) \(config["twitter_share_content"]!)"
 		}
 		
 		
