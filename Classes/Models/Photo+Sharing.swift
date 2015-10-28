@@ -46,7 +46,7 @@ extension Photo : UIActivityItemSource
 			return "<html><body>Image posted via <a href=\"http://getbackflip.com/\">Backflip</a>"+"</body></html>"
 		} else if (activityType == UIActivityTypePostToTwitter) {
             let config = PFConfig.currentConfig()
-            return "Check out this pic from "+self.event!.name!+"\n@getbackflip \(config["twitter_share_content"]!)"
+            return "Check out this photo from "+self.event!.name!+"\n@getbackflip \(config["twitter_share_content"]!)"
 		} else if (activityType == UIActivityTypePostToFacebook) {
 			return ""
 		}
