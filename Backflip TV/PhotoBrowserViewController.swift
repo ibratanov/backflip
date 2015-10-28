@@ -18,9 +18,15 @@ class PhotoBrowserViewController : UIPageViewController, UIPageViewControllerDat
 	var initialPageIndex = 0
 	
 	internal var controllerCache = NSCache()
-	
-	internal var pageControl : UIPageControl?
-	
+
+
+	/**
+	 * Slideshow
+	*/
+	internal var slideshowMode : Bool = false
+
+	internal let slideshowDuration : Double = 3
+
 	
 	// --------------------------------------
 	//  MARK: View Management
@@ -31,10 +37,10 @@ class PhotoBrowserViewController : UIPageViewController, UIPageViewControllerDat
 		super.viewDidLoad()
 		
 		dataSource = self
-		
-		// self.pageControl = UIPageControl(frame: CGRectMake(10, 10, 100, 20))
-		// self.pageControl?.numberOfPages = 10
-		// self.view.bringSubviewToFront(self.pageControl!)
+
+		let tapRecognizer = UITapGestureRecognizer(target: self, action: "handlePlayPausePress:")
+		tapRecognizer.allowedPressTypes = [NSNumber(integer: UIPressType.PlayPause.rawValue)];
+		self.view.addGestureRecognizer(tapRecognizer)
 	}
 	
 	
@@ -49,7 +55,44 @@ class PhotoBrowserViewController : UIPageViewController, UIPageViewControllerDat
 	}
 	
 	
-	
+
+	// --------------------------------------
+	//  MARK: Slideshow
+	// --------------------------------------
+
+	func handlePlayPausePress(sender: AnyObject?)
+	{
+		slideshowMode = !slideshowMode
+
+		if (slideshowMode == true) {
+			let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(slideshowDuration * Double(NSEC_PER_SEC)))
+			dispatch_after(delayTime, dispatch_get_main_queue()) {
+				self.updateSlideshow()
+			}
+		}
+	}
+
+	func updateSlideshow()
+	{
+		if (slideshowMode == true) {
+			let index = 1 + indexOfPhotoForViewController(self.viewControllers!.first!)
+			if (index > 0 && index < self.photos.count) {
+				let viewController = self.viewControllerForPage(index)
+				self.setViewControllers([viewController], direction: .Forward, animated: true, completion: nil)
+			} else if (index == self.photos.count) {
+				let viewController = self.viewControllerForPage(0)
+				self.setViewControllers([viewController], direction: .Forward, animated: true, completion: nil)
+			}
+
+
+			let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(slideshowDuration * Double(NSEC_PER_SEC)))
+			dispatch_after(delayTime, dispatch_get_main_queue()) {
+				self.updateSlideshow()
+			}
+		}
+ 	}
+
+
 	// --------------------------------------
 	//  MARK: Page View Controller
 	// --------------------------------------

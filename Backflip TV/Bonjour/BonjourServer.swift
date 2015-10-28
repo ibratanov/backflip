@@ -55,17 +55,17 @@ public class BonjourServer : NSObject, NSStreamDelegate
 	
 	func acceptConnection(socketHandle socket: CFSocketNativeHandle)
 	{
-		var readStream :  UnsafeMutablePointer<Unmanaged<CFReadStream>?> = nil
-		var writeStream :  UnsafeMutablePointer<Unmanaged<CFWriteStream>?> = nil
-		
-		CFStreamCreatePairWithSocket(kCFAllocatorDefault, socket, readStream, writeStream)
-		if (readStream != nil && writeStream != nil) {
-			
-			CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue)
-			CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue)
-			
-		}
-		
+//		var readStream :  UnsafeMutablePointer<Unmanaged<CFReadStream>?> = nil
+//		var writeStream :  UnsafeMutablePointer<Unmanaged<CFWriteStream>?> = nil
+//		
+//		CFStreamCreatePairWithSocket(kCFAllocatorDefault, socket, readStream, writeStream)
+//		if (readStream != nil && writeStream != nil) {
+//			
+//			CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue)
+//			CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue)
+//			
+//		}
+
 	}
 	
 	
