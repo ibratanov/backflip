@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Parse
 
 extension Event : UIActivityItemSource
 {
@@ -43,7 +44,8 @@ extension Event : UIActivityItemSource
 		if (activityType == UIActivityTypeMail) {
             return "<html><body>Check out the photos from \(self.name!) on Backflip! \(inviteUrl!)</body></html>"
 		} else if (activityType == UIActivityTypePostToTwitter) {
-			return "Check out the photos from '\(self.name!)' on @getbackflip \(inviteUrl!) #backflip"
+            let config = PFConfig.currentConfig()
+            return "Check out the photos from '\(self.name!)' on @getbackflip \(inviteUrl!) \(config["twitter_share_content"]!)"
 		}
 		
 		
