@@ -44,3 +44,6 @@
 [submodule "Vendor/Parse"]
 	path = Vendor/Parse
 	url = git@github.com:ParsePlatform/Parse-SDK-iOS-OSX.git
+[submodule "Vendor/Bolts"]
+	path = Vendor/Bolts
+	url = git@github.com:BoltsFramework/Bolts-iOS.git

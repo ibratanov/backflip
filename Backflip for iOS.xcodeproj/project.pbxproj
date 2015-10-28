@@ -38,8 +38,6 @@
 		040FD10C1BB2F19500DDB1A5 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 040FD10A1BB2F19500DDB1A5 /* libstdc++.tbd */; };
 		040FD7801BD553110039CDAA /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040FD77F1BD553070039CDAA /* SKPhotoBrowser.framework */; };
 		040FD7811BD553110039CDAA /* SKPhotoBrowser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 040FD77F1BD553070039CDAA /* SKPhotoBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		040FD7871BD571090039CDAA /* Instabug.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 040FD7851BD571090039CDAA /* Instabug.bundle */; };
-		040FD7881BD571090039CDAA /* Instabug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040FD7861BD571090039CDAA /* Instabug.framework */; };
 		040FD78A1BD5746B0039CDAA /* BFPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040FD7891BD5746B0039CDAA /* BFPhotoBrowser.swift */; };
 		041312A71BB47A1B00C0E4D9 /* EventHistoryViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041312A61BB47A1B00C0E4D9 /* EventHistoryViewFlowLayout.swift */; };
 		04154B841BDD9EA50084435D /* Frontflip.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 0495F1751BAB0CC0002E609E /* Frontflip.entitlements */; };
@@ -57,12 +55,16 @@
 		042E8D711BB300A100D61412 /* Watchdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D701BB300A100D61412 /* Watchdog.swift */; };
 		042E8D761BB30BFD00D61412 /* EventHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */; };
 		042E8D781BB3119A00D61412 /* EventHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */; };
-		0430A3EE1BE0989E00E33359 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A3E31BE0986F00E33359 /* Parse.framework */; };
-		0430A3EF1BE0989E00E33359 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A3E31BE0986F00E33359 /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0430A3F61BE09F5100E33359 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A3EB1BE0986F00E33359 /* Parse.framework */; };
 		0430A3F71BE09F5100E33359 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A3EB1BE0986F00E33359 /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0430A4151BE09F8300E33359 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A40A1BE09F6D00E33359 /* Bolts.framework */; };
-		0430A4161BE09F8300E33359 /* Bolts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A40A1BE09F6D00E33359 /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0430A41C1BE13BA500E33359 /* Instabug.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0430A41A1BE13BA500E33359 /* Instabug.bundle */; };
+		0430A41D1BE13BA500E33359 /* Instabug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A41B1BE13BA500E33359 /* Instabug.framework */; };
+		0430A43E1BE142EC00E33359 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A42F1BE13D6E00E33359 /* Bolts.framework */; };
+		0430A43F1BE142EC00E33359 /* Bolts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A42F1BE13D6E00E33359 /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0430A4471BE14A6900E33359 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A4441BE14A6900E33359 /* Bolts.framework */; };
+		0430A4481BE14A6900E33359 /* Bolts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A4441BE14A6900E33359 /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0430A44B1BE14C9700E33359 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A3E31BE0986F00E33359 /* Parse.framework */; };
+		0430A44C1BE14C9700E33359 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0430A3E31BE0986F00E33359 /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0432DC421BC81AFE00B31D02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81BA81511A49DA1800E65899 /* Images.xcassets */; };
 		0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */; };
 		0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0432DC481BC81CC500B31D02 /* AudioToolbox.framework */; };
@@ -248,13 +250,6 @@
 			remoteGlobalIDString = 810156691BB3832700D7C7BD;
 			remoteInfo = "Parse-watchOS";
 		};
-		0430A3F01BE0989E00E33359 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3D41BE0986E00E33359 /* Parse.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 81C3821B19CCA89E0066284A;
-			remoteInfo = "Parse-iOS";
-		};
 		0430A3F81BE09F5100E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0430A3D41BE0986E00E33359 /* Parse.xcodeproj */;
@@ -262,68 +257,82 @@
 			remoteGlobalIDString = 815F22AF1BD04D150054659F;
 			remoteInfo = "Parse-tvOS";
 		};
-		0430A4051BE09F6D00E33359 /* PBXContainerItemProxy */ = {
+		0430A42E1BE13D6E00E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8EDDA63517E17DDD00655F8A;
-			remoteInfo = "Bolts-iOS";
-		};
-		0430A4071BE09F6D00E33359 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8EDDA63517E17DDD00655F8A;
-			remoteInfo = "Bolts-OSX";
-		};
-		0430A4091BE09F6D00E33359 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = F5AFCA021BA752750076E927;
 			remoteInfo = "Bolts-tvOS";
 		};
-		0430A40B1BE09F6D00E33359 /* PBXContainerItemProxy */ = {
+		0430A4301BE13D6E00E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8178F99C1BB0F87700AD289D;
 			remoteInfo = "Bolts-watchOS";
 		};
-		0430A40D1BE09F6D00E33359 /* PBXContainerItemProxy */ = {
+		0430A4321BE13D6E00E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8E8C8EE917F23D1D00E3F1C7;
 			remoteInfo = "BoltsTests-iOS";
 		};
-		0430A40F1BE09F6D00E33359 /* PBXContainerItemProxy */ = {
+		0430A4341BE13D6E00E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8E8C8F1917F241DA00E3F1C7;
 			remoteInfo = "BoltsTests-OSX";
 		};
-		0430A4111BE09F6D00E33359 /* PBXContainerItemProxy */ = {
+		0430A4361BE13D6E00E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = F5AFCA131BA752770076E927;
 			remoteInfo = "BoltsTests-tvOS";
 		};
-		0430A4131BE09F6D00E33359 /* PBXContainerItemProxy */ = {
+		0430A4381BE13D6E00E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1EC3016018CDAA8400D06D07;
 			remoteInfo = BoltsTestUI;
 		};
-		0430A4171BE09F8300E33359 /* PBXContainerItemProxy */ = {
+		0430A4401BE142EC00E33359 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = F5AFC9EA1BA752750076E927;
 			remoteInfo = "Bolts-tvOS";
+		};
+		0430A4431BE14A6900E33359 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 81ED94291BE147CF00795F05;
+			remoteInfo = "Bolts-iOS";
+		};
+		0430A4451BE14A6900E33359 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0430A4421BE14A5A00E33359;
+			remoteInfo = "Bolts-OSX";
+		};
+		0430A4491BE14A6900E33359 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 81ED94111BE147CF00795F05;
+			remoteInfo = "Bolts-iOS";
+		};
+		0430A44D1BE14C9700E33359 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0430A3D41BE0986E00E33359 /* Parse.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 81C3821B19CCA89E0066284A;
+			remoteInfo = "Parse-iOS";
 		};
 		046D98D01BCAAB1E004B3DCD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -544,7 +553,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0430A4161BE09F8300E33359 /* Bolts.framework in Embed Frameworks */,
+				0430A43F1BE142EC00E33359 /* Bolts.framework in Embed Frameworks */,
 				0430A3F71BE09F5100E33359 /* Parse.framework in Embed Frameworks */,
 				0477CE161BDEE45A0033BDEE /* Nuke.framework in Embed Frameworks */,
 			);
@@ -560,10 +569,11 @@
 				048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */,
 				04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */,
 				04ED9B161BC3033A008493E3 /* Mixpanel.framework in Embed Frameworks */,
-				0430A3EF1BE0989E00E33359 /* Parse.framework in Embed Frameworks */,
 				040FD7811BD553110039CDAA /* SKPhotoBrowser.framework in Embed Frameworks */,
 				046D98D91BCAAB49004B3DCD /* QBImagePicker.framework in Embed Frameworks */,
 				049738211BD805CB00B58F70 /* Nuke.framework in Embed Frameworks */,
+				0430A44C1BE14C9700E33359 /* Parse.framework in Embed Frameworks */,
+				0430A4481BE14A6900E33359 /* Bolts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,8 +598,6 @@
 		040FD1091BB2F19500DDB1A5 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		040FD10A1BB2F19500DDB1A5 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		040FD77A1BD553070039CDAA /* SKPhotoBrowser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SKPhotoBrowser.xcodeproj; path = Vendor/SKPhotoBrowser/SKPhotoBrowser.xcodeproj; sourceTree = "<group>"; };
-		040FD7851BD571090039CDAA /* Instabug.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Instabug.bundle; sourceTree = "<group>"; };
-		040FD7861BD571090039CDAA /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Instabug.framework; sourceTree = "<group>"; };
 		040FD7891BD5746B0039CDAA /* BFPhotoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPhotoBrowser.swift; path = ../Categories/BFPhotoBrowser.swift; sourceTree = "<group>"; };
 		040FD78D1BD577780039CDAA /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		041312A61BB47A1B00C0E4D9 /* EventHistoryViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -609,7 +617,9 @@
 		042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryViewController.swift; sourceTree = "<group>"; };
 		042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryHeaderView.swift; sourceTree = "<group>"; };
 		0430A3D41BE0986E00E33359 /* Parse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Parse.xcodeproj; sourceTree = "<group>"; };
-		0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Bolts.xcodeproj; path = "Vendor/Bolts-ObjC/Bolts.xcodeproj"; sourceTree = "<group>"; };
+		0430A41A1BE13BA500E33359 /* Instabug.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Instabug.bundle; sourceTree = "<group>"; };
+		0430A41B1BE13BA500E33359 /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Instabug.framework; sourceTree = "<group>"; };
+		0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Bolts.xcodeproj; path = Vendor/Bolts/Bolts.xcodeproj; sourceTree = "<group>"; };
 		0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.0.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		0432DC481BC81CC500B31D02 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		0432DC631BCE9D6000B31D02 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKStrings.bundle; sourceTree = "<group>"; };
@@ -755,7 +765,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0430A4151BE09F8300E33359 /* Bolts.framework in Frameworks */,
+				0430A43E1BE142EC00E33359 /* Bolts.framework in Frameworks */,
 				0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */,
 				0477CE151BDEE45A0033BDEE /* Nuke.framework in Frameworks */,
 				0430A3F61BE09F5100E33359 /* Parse.framework in Frameworks */,
@@ -770,9 +780,10 @@
 				040FD1081BB2F14B00DDB1A5 /* libz.tbd in Frameworks */,
 				040FD10B1BB2F19500DDB1A5 /* libc++.tbd in Frameworks */,
 				040FD1061BB2F14300DDB1A5 /* libsqlite3.tbd in Frameworks */,
+				0430A44B1BE14C9700E33359 /* Parse.framework in Frameworks */,
+				0430A4471BE14A6900E33359 /* Bolts.framework in Frameworks */,
+				0430A41D1BE13BA500E33359 /* Instabug.framework in Frameworks */,
 				040FD10C1BB2F19500DDB1A5 /* libstdc++.tbd in Frameworks */,
-				0430A3EE1BE0989E00E33359 /* Parse.framework in Frameworks */,
-				040FD7881BD571090039CDAA /* Instabug.framework in Frameworks */,
 				040EB5D91BC8187F00452620 /* Photos.framework in Frameworks */,
 				048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */,
 				04ED9B141BC30337008493E3 /* Mixpanel.framework in Frameworks */,
@@ -852,15 +863,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		040FD7841BD571090039CDAA /* Instabug */ = {
-			isa = PBXGroup;
-			children = (
-				040FD7851BD571090039CDAA /* Instabug.bundle */,
-				040FD7861BD571090039CDAA /* Instabug.framework */,
-			);
-			path = Instabug;
-			sourceTree = "<group>";
-		};
 		0420283F1BA1ECD70059F096 /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -907,17 +909,35 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0430A3FB1BE09F6C00E33359 /* Products */ = {
+		0430A4191BE13BA500E33359 /* Instabug */ = {
 			isa = PBXGroup;
 			children = (
-				0430A4061BE09F6D00E33359 /* Bolts.framework */,
-				0430A4081BE09F6D00E33359 /* Bolts.framework */,
-				0430A40A1BE09F6D00E33359 /* Bolts.framework */,
-				0430A40C1BE09F6D00E33359 /* Bolts.framework */,
-				0430A40E1BE09F6D00E33359 /* BoltsTests-iOS.xctest */,
-				0430A4101BE09F6D00E33359 /* BoltsTests-OSX.xctest */,
-				0430A4121BE09F6D00E33359 /* BoltsTests-tvOS.xctest */,
-				0430A4141BE09F6D00E33359 /* BoltsTestUI.app */,
+				0430A41A1BE13BA500E33359 /* Instabug.bundle */,
+				0430A41B1BE13BA500E33359 /* Instabug.framework */,
+			);
+			name = Instabug;
+			path = Vendor/Instabug;
+			sourceTree = "<group>";
+		};
+		0430A41E1BE13D6800E33359 /* Bolts */ = {
+			isa = PBXGroup;
+			children = (
+				0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */,
+			);
+			name = Bolts;
+			sourceTree = "<group>";
+		};
+		0430A4201BE13D6E00E33359 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0430A4441BE14A6900E33359 /* Bolts.framework */,
+				0430A4461BE14A6900E33359 /* Bolts.framework */,
+				0430A42F1BE13D6E00E33359 /* Bolts.framework */,
+				0430A4311BE13D6E00E33359 /* Bolts.framework */,
+				0430A4331BE13D6E00E33359 /* BoltsTests-iOS.xctest */,
+				0430A4351BE13D6E00E33359 /* BoltsTests-OSX.xctest */,
+				0430A4371BE13D6E00E33359 /* BoltsTests-tvOS.xctest */,
+				0430A4391BE13D6E00E33359 /* BoltsTestUI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -925,9 +945,10 @@
 		0439D32D1B8B7686001850DD /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				0430A41E1BE13D6800E33359 /* Bolts */,
+				0430A4191BE13BA500E33359 /* Instabug */,
 				0477CE431BDFEF000033BDEE /* Flurry */,
 				040756F81BD8053B00F95E96 /* Nuke */,
-				040FD7841BD571090039CDAA /* Instabug */,
 				040FD7791BD552E70039CDAA /* SKPhotoBrowser */,
 				048939BE1BD04513005400CA /* Locksmith */,
 				046D98C81BCAAB17004B3DCD /* QBImagePicker */,
@@ -983,7 +1004,6 @@
 		0439D33A1B8B76B1001850DD /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */,
 				0430A3D41BE0986E00E33359 /* Parse.xcodeproj */,
 			);
 			name = Parse;
@@ -1503,7 +1523,7 @@
 			dependencies = (
 				0477CE181BDEE45A0033BDEE /* PBXTargetDependency */,
 				0430A3F91BE09F5100E33359 /* PBXTargetDependency */,
-				0430A4181BE09F8300E33359 /* PBXTargetDependency */,
+				0430A4411BE142EC00E33359 /* PBXTargetDependency */,
 			);
 			name = BackflipTV;
 			productName = "Backflip TV";
@@ -1528,7 +1548,8 @@
 				048939D41BD0452A005400CA /* PBXTargetDependency */,
 				040FD7831BD553110039CDAA /* PBXTargetDependency */,
 				049738231BD805CB00B58F70 /* PBXTargetDependency */,
-				0430A3F11BE0989E00E33359 /* PBXTargetDependency */,
+				0430A44A1BE14A6900E33359 /* PBXTargetDependency */,
+				0430A44E1BE14C9700E33359 /* PBXTargetDependency */,
 			);
 			name = Backflip;
 			productName = ParseStarterProject;
@@ -1587,8 +1608,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 0430A3FB1BE09F6C00E33359 /* Products */;
-					ProjectRef = 0430A3FA1BE09F6C00E33359 /* Bolts.xcodeproj */;
+					ProductGroup = 0430A4201BE13D6E00E33359 /* Products */;
+					ProjectRef = 0430A41F1BE13D6E00E33359 /* Bolts.xcodeproj */;
 				},
 				{
 					ProductGroup = 048939C01BD0451C005400CA /* Products */;
@@ -1677,60 +1698,60 @@
 			remoteRef = 0430A3EC1BE0986F00E33359 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0430A4061BE09F6D00E33359 /* Bolts.framework */ = {
+		0430A42F1BE13D6E00E33359 /* Bolts.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Bolts.framework;
-			remoteRef = 0430A4051BE09F6D00E33359 /* PBXContainerItemProxy */;
+			remoteRef = 0430A42E1BE13D6E00E33359 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0430A4081BE09F6D00E33359 /* Bolts.framework */ = {
+		0430A4311BE13D6E00E33359 /* Bolts.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Bolts.framework;
-			remoteRef = 0430A4071BE09F6D00E33359 /* PBXContainerItemProxy */;
+			remoteRef = 0430A4301BE13D6E00E33359 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0430A40A1BE09F6D00E33359 /* Bolts.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Bolts.framework;
-			remoteRef = 0430A4091BE09F6D00E33359 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0430A40C1BE09F6D00E33359 /* Bolts.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Bolts.framework;
-			remoteRef = 0430A40B1BE09F6D00E33359 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0430A40E1BE09F6D00E33359 /* BoltsTests-iOS.xctest */ = {
+		0430A4331BE13D6E00E33359 /* BoltsTests-iOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "BoltsTests-iOS.xctest";
-			remoteRef = 0430A40D1BE09F6D00E33359 /* PBXContainerItemProxy */;
+			remoteRef = 0430A4321BE13D6E00E33359 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0430A4101BE09F6D00E33359 /* BoltsTests-OSX.xctest */ = {
+		0430A4351BE13D6E00E33359 /* BoltsTests-OSX.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "BoltsTests-OSX.xctest";
-			remoteRef = 0430A40F1BE09F6D00E33359 /* PBXContainerItemProxy */;
+			remoteRef = 0430A4341BE13D6E00E33359 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0430A4121BE09F6D00E33359 /* BoltsTests-tvOS.xctest */ = {
+		0430A4371BE13D6E00E33359 /* BoltsTests-tvOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "BoltsTests-tvOS.xctest";
-			remoteRef = 0430A4111BE09F6D00E33359 /* PBXContainerItemProxy */;
+			remoteRef = 0430A4361BE13D6E00E33359 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0430A4141BE09F6D00E33359 /* BoltsTestUI.app */ = {
+		0430A4391BE13D6E00E33359 /* BoltsTestUI.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = BoltsTestUI.app;
-			remoteRef = 0430A4131BE09F6D00E33359 /* PBXContainerItemProxy */;
+			remoteRef = 0430A4381BE13D6E00E33359 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0430A4441BE14A6900E33359 /* Bolts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Bolts.framework;
+			remoteRef = 0430A4431BE14A6900E33359 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0430A4461BE14A6900E33359 /* Bolts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Bolts.framework;
+			remoteRef = 0430A4451BE14A6900E33359 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		046D98D11BCAAB1E004B3DCD /* QBImagePicker.framework */ = {
@@ -1929,13 +1950,13 @@
 				046D98BD1BCAAAF4004B3DCD /* Images.xcassets in Resources */,
 				0439D3BB1B8B82E2001850DD /* Main.storyboard in Resources */,
 				04D7D7031BA9ACC000AC6AA3 /* heart.png in Resources */,
-				040FD7871BD571090039CDAA /* Instabug.bundle in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
 				04154B841BDD9EA50084435D /* Frontflip.entitlements in Resources */,
 				046D98E21BCAABA8004B3DCD /* Assets.xcassets in Resources */,
 				0439D3991B8B7AEE001850DD /* DigitsKitResources.bundle in Resources */,
 				043350561BDAB67C00914A2E /* backflip-preseed.sqlite in Resources */,
 				04D7D7041BA9ACC000AC6AA3 /* like.png in Resources */,
+				0430A41C1BE13BA500E33359 /* Instabug.bundle in Resources */,
 				04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */,
 				0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */,
 				04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */,
@@ -2103,20 +2124,25 @@
 			name = SKPhotoBrowser;
 			targetProxy = 040FD7821BD553110039CDAA /* PBXContainerItemProxy */;
 		};
-		0430A3F11BE0989E00E33359 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Parse-iOS";
-			targetProxy = 0430A3F01BE0989E00E33359 /* PBXContainerItemProxy */;
-		};
 		0430A3F91BE09F5100E33359 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Parse-tvOS";
 			targetProxy = 0430A3F81BE09F5100E33359 /* PBXContainerItemProxy */;
 		};
-		0430A4181BE09F8300E33359 /* PBXTargetDependency */ = {
+		0430A4411BE142EC00E33359 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Bolts-tvOS";
-			targetProxy = 0430A4171BE09F8300E33359 /* PBXContainerItemProxy */;
+			targetProxy = 0430A4401BE142EC00E33359 /* PBXContainerItemProxy */;
+		};
+		0430A44A1BE14A6900E33359 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Bolts-iOS";
+			targetProxy = 0430A4491BE14A6900E33359 /* PBXContainerItemProxy */;
+		};
+		0430A44E1BE14C9700E33359 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Parse-iOS";
+			targetProxy = 0430A44D1BE14C9700E33359 /* PBXContainerItemProxy */;
 		};
 		046D98DB1BCAAB49004B3DCD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2322,13 +2348,12 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/**",
 					"$(PROJECT_DIR)/Vendor",
 					"$(PROJECT_DIR)/Vendor/Branch",
 					"$(PROJECT_DIR)/Vendor/Fabric",
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
-					"$(PROJECT_DIR)/Instabug",
+					"$(PROJECT_DIR)/Vendor/Instabug",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2336,10 +2361,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Vendor/**",
+					"$(PROJECT_DIR)/Vendor",
 					"$(SRCROOT)/Vendor/MagicalRecord/**/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
-					"\"$(SRCROOT)/Vendor/Parse/Parse\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -2347,7 +2371,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
-					"$(PROJECT_DIR)/Vendor/Google/**",
 					"$(PROJECT_DIR)/Vendor/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
@@ -2403,23 +2426,21 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/**",
 					"$(PROJECT_DIR)/Vendor",
 					"$(PROJECT_DIR)/Vendor/Branch",
 					"$(PROJECT_DIR)/Vendor/Fabric",
 					"$(PROJECT_DIR)/Vendor/Facebook",
 					"$(PROJECT_DIR)/Vendor/NewRelic",
-					"$(PROJECT_DIR)/Instabug",
+					"$(PROJECT_DIR)/Vendor/Instabug",
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Supporting Files/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Vendor/**",
+					"$(PROJECT_DIR)/Vendor",
 					"$(SRCROOT)/Vendor/MagicalRecord/**/**",
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
-					"\"$(SRCROOT)/Vendor/Parse/Parse\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -2427,7 +2448,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/**",
-					"$(PROJECT_DIR)/Vendor/Google/**",
 					"$(PROJECT_DIR)/Vendor/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
