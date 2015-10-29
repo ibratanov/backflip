@@ -52,7 +52,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 					
 					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
 					dispatch_after(delayTime, dispatch_get_main_queue()) {
-						self.bonjourClient.streamText("Greetings from Toronto, Canada")
+						// self.bonjourClient.streamText("Greetings from Toronto, Canada")
 						
 						let payload : [String: AnyObject] = ["account":["objectId": PFUser.currentUser()!.objectId!, "phone_number": PFUser.currentUser()!["phone"]]]
 						print("Payload = \(payload)")
@@ -274,6 +274,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		let defaultACL = PFACL();
 		defaultACL.setPublicWriteAccess(true)
 		defaultACL.setPublicReadAccess(true)
+        defaultACL.setPublicWriteAccess(true)
 		PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 		
 		if (Reachability.validNetworkConnection()) {
@@ -345,6 +346,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			let mixpanel: Mixpanel = Mixpanel.sharedInstance()
 			mixpanel.track("App launched")
 		}
+        
+        if (FEATURE_FLURRY) {
+            Flurry.startSession("5ZH2SGGPCVDPDKS5KS83")
+            Flurry.logEvent("User:\(PFUser.currentUser()?.objectId) Started Application")
+        }
 	}
 	
 	

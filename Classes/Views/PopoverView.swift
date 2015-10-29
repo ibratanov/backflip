@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class PopoverView : UIViewController, UIPopoverPresentationControllerDelegate
+class PopoverView : BFViewController, UIPopoverPresentationControllerDelegate
 {
 	
 	init()

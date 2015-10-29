@@ -96,7 +96,7 @@ class MasterViewController : UITableViewController
 		}
 		
 		let attendanceQuery = PFQuery(className: "EventAttendance")
-		attendanceQuery.whereKey("attendeeID", equalTo: "5PBeFb6CKX")
+		attendanceQuery.whereKey("attendeeID", equalTo: "PH2JGLM1Ml")
 		attendanceQuery.includeKey("event")
 		attendanceQuery.findObjectsInBackgroundWithBlock { (attendances, error) -> Void in
 			
@@ -105,7 +105,9 @@ class MasterViewController : UITableViewController
 			
 			self.events.removeAll()
 			for attendance in attendances! {
-				self.events.append((attendance["event"] as! PFObject))
+				if (attendance["event"] != nil) {
+					self.events.append((attendance["event"] as! PFObject))
+				}
 			}
 			
 			SVProgressHUD.dismissWithDelay(0.1)

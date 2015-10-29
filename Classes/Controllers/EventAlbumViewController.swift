@@ -16,7 +16,7 @@ import MagicalRecord
 import SKPhotoBrowser
 
 
-class EventAlbumViewController : UICollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate, ImagePreheatingControllerDelegate
+class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate, ImagePreheatingControllerDelegate
 {
 	
 	//-------------------------------------
@@ -535,6 +535,9 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 				if (photo.usersLiked == nil) {
 					photo.usersLiked = ""
 				}
+
+                print("Photo (un)like attempted:")
+                print(photo.objectId!)
 				
 				if (photo.likedBy(PFUser.currentUser())) {
 					let currentUser = PFUser.currentUser()

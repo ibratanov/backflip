@@ -12,7 +12,7 @@ import Parse
 import DigitsKit
 
 
-class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
+class CreatePublicEventViewController: BFViewController, UITextFieldDelegate {
     
     
     @IBAction func settingButton(sender: AnyObject) {
