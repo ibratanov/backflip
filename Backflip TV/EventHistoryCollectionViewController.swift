@@ -27,12 +27,24 @@ class EventHistoryCollectionViewController : UICollectionViewController
 		collectionView.contentInset.bottom = EventHistoryCollectionViewController.minimumEdgePadding - layout.sectionInset.bottom
 	}
 	
-	override func viewWillAppear(animated: Bool)
+	override func viewDidAppear(animated: Bool)
 	{
-		super.viewWillAppear(animated)
+		super.viewDidAppear(animated)
 		
-		SVProgressHUD.show()
-		self.fetchData()
+		let userId = NSUserDefaults.standardUserDefaults().objectForKey("account.objectId") as? String
+		if (userId != nil) {
+			SVProgressHUD.show()
+			self.fetchData()
+		} else {
+			// Show login screen..
+			let storyboard = UIStoryboard(name: "Main-TV", bundle: NSBundle.mainBundle())
+			let loginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController")
+			
+			let window = UIApplication.sharedApplication().windows.first
+			if (window != nil) {
+				window?.rootViewController?.presentViewController(loginViewController, animated: true, completion: nil)
+			}
+		}
 	}
 	
 	
@@ -83,23 +95,28 @@ class EventHistoryCollectionViewController : UICollectionViewController
 	{
 		guard Reachability.validNetworkConnection() else {
 			print("Not fetching data due to lack of network connection")
+			SVProgressHUD.dismiss()
 			return
 		}
 		
+		let attendee = NSUserDefaults.standardUserDefaults().objectForKey("account.objectId") as? String
+		print("Attendee = \(attendee)")
 		let attendanceQuery = PFQuery(className: "EventAttendance")
-		attendanceQuery.whereKey("attendeeID", equalTo: "5PBeFb6CKX")
+		attendanceQuery.whereKey("attendeeID", equalTo:attendee!)
 		attendanceQuery.includeKey("event")
 		attendanceQuery.findObjectsInBackgroundWithBlock { (attendances, error) -> Void in
 			
 			print("We have \(attendances?.count) results..")
+			SVProgressHUD.dismissWithDelay(0.1)
+			
 			guard attendances?.count > 0 else { return }
 			
 			self.events.removeAll()
 			for attendance in attendances! {
-				self.events.append((attendance["event"] as! PFObject))
+				if (attendance["event"] != nil) {
+					self.events.append((attendance["event"] as! PFObject))
+				}
 			}
-			
-			SVProgressHUD.dismissWithDelay(0.1)
 			
 			self.collectionView!.reloadData()
 		}

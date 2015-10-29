@@ -46,4 +46,13 @@
 		#import "NewRelicAgent/NewRelic.h"
 	#endif
 
+
+	// Bonjour
+	#if TARGET_OS_TV
+		#import "BFBonjourServer.h"
+		#import "BFBonjourConnection.h"
+	#else
+		#import "BFBonjourClient.h"
+	#endif
+
 #endif

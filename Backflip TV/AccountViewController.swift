@@ -38,6 +38,26 @@ class AccountViewController : UIViewController
 		NSUserDefaults.standardUserDefaults().removeObjectForKey("account.fullName")
 		NSUserDefaults.standardUserDefaults().removeObjectForKey("account.phoneNumber")
 		NSUserDefaults.standardUserDefaults().synchronize()
+		
+		
+		// Show login screen again..
+		let storyboard = UIStoryboard(name: "Main-TV", bundle: NSBundle.mainBundle())
+		let loginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController")
+		
+		let window = UIApplication.sharedApplication().windows.first
+		if (window != nil) {
+			window?.rootViewController?.presentViewController(loginViewController, animated: true, completion: nil)
+		}
 	}
 	
+	
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		
+		self.accountIdLabel.text = NSUserDefaults.standardUserDefaults().objectForKey("account.objectId") as? String
+		self.accountNameLabel.text = NSUserDefaults.standardUserDefaults().objectForKey("account.fullName") as? String
+		self.accountPhoneNumber.text = NSUserDefaults.standardUserDefaults().objectForKey("account.phoneNumber") as? String
+	}
 }

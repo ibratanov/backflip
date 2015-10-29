@@ -17,7 +17,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 {
 
     var window: UIWindow?
-	
+	var bonjourClient = BFBonjourClient()
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -37,7 +37,34 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupApperance()
 
 		if FEATURE_ENABLE_BONJOUR {
-			BonjourService.sharedService.registerService()
+			
+			bonjourClient.incomingBlock = { (incomingString) -> Void in
+				print("👻 bonjour service recived text '\(incomingString)'")
+			}
+			
+			bonjourClient.startServiceBrowserWithDiscovery({ (netService) -> Void in
+				print("👀 Found service of type `\(netService.type)`, with name `\(netService.name)` broadcasting on :\(netService.port)");
+				
+				let alertController = UIAlertController(title: "Backflip TV", message: "The Apple TV '\(netService.name)' is requesting account authorization, continue?", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Decline", style: .Cancel, handler: nil))
+				alertController.addAction(UIAlertAction(title: "Grant", style: .Default, handler: { (alertAction) -> Void in
+					self.bonjourClient.openStreamsForService(netService)
+					
+					let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
+					dispatch_after(delayTime, dispatch_get_main_queue()) {
+						self.bonjourClient.streamText("Greetings from Toronto, Canada")
+						
+						let payload : [String: AnyObject] = ["account":["objectId": PFUser.currentUser()!.objectId!, "phone_number": PFUser.currentUser()!["phone"]]]
+						print("Payload = \(payload)")
+						let JSONPayload = try! NSJSONSerialization.dataWithJSONObject(payload, options: NSJSONWritingOptions())
+						
+						self.bonjourClient.streamText("base64:"+JSONPayload.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0)))
+					}
+				}))
+				
+				let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+				window?.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
+			})
 		}
 
 		//--------------------------------------
