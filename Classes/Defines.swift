@@ -46,4 +46,13 @@ let FEATURE_INSTABUG : Bool = true
 	let FEATURE_COREDATA_SEED : Bool = true
 #endif
 
-let FEATURE_ENABLE_BONJOUR : Bool = false
+let FEATURE_ENABLE_BONJOUR : Bool = true
+
+
+
+// ------------------------------------
+//  MARK: Bonjour
+// ------------------------------------
+
+let BONJOUR_SERVICE_TYPE : String = "_backflip-tv._tcp."
+

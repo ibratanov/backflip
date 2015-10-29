@@ -13,9 +13,6 @@ import Foundation
 
 class DetailViewController: UICollectionViewController
 {
-	
-	private let cellComposer = DataItemCellComposer()
-
 	private var photos : [PFObject] = []
 	
 	

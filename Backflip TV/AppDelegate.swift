@@ -24,12 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 		// Setup Parse & Application appearance
 		//--------------------------------------
 		setupParse()
-		// setupCoreData()
-		
-		//--------------------------------------
-		// Coredata
-		//--------------------------------------
-		// BFDataFetcher.sharedFetcher.fetchData(false);
 		
 		return true
 	}
@@ -59,39 +53,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 
 	
 	
-	
-	
-	//--------------------------------------
-	// MARK: CoreData
-	//--------------------------------------
-	
-	func setupCoreData()
-	{
-		// BFDataMananger.sharedManager.setupDatabase()
-	}
-	
-	
 	//--------------------------------------
 	// MARK: Parse
 	//--------------------------------------
 	
 	func setupParse()
 	{
-		if (Reachability.validNetworkConnection() == false) {
-			return
-		}
+		guard Reachability.validNetworkConnection() else { return }
 		
 		//#if DEBUG
-		//	Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
+			// Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 		//#else
 			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
 		//#endif
-		
-		
-		// Default ACL
-		//let defaultACL = PFACL();
-		//defaultACL.setPublicReadAccess(true)
-		//PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 	}
 	
 	

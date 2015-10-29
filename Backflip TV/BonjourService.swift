@@ -96,8 +96,11 @@ class BonjourService : NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelega
 		print("netServiceDidRemoveDomain")
 	}
 
-	func netServiceBrowser(netServiceBrowser: NSNetServiceBrowser, didFindService netService: NSNetService, moreComing moreServicesComing: Bool) {
+	func netServiceBrowser(netServiceBrowser: NSNetServiceBrowser, didFindService netService: NSNetService, moreComing moreServicesComing: Bool)
+	{
 		print("netServiceDidFindService")
+		
+		
 	}
 
 	func netServiceBrowser(netServiceBrowser: NSNetServiceBrowser, didRemoveService netService: NSNetService, moreComing moreServicesComing: Bool) {

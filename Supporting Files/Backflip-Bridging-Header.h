@@ -23,6 +23,10 @@
 	#import "ZAActivityBar.h"
 	#import "BFDataWrapper.h"
 
+	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <unistd.h>
+
 	// SVProgressHUD
 	#if TARGET_OS_TV
 		#import "SVProgressHUD.h"
@@ -40,6 +44,15 @@
 		#import <Mixpanel/Mixpanel.h>
 		#import "Flurry.h"
 		#import "NewRelicAgent/NewRelic.h"
+	#endif
+
+
+	// Bonjour
+	#if TARGET_OS_TV
+		#import "BFBonjourServer.h"
+		#import "BFBonjourConnection.h"
+	#else
+		#import "BFBonjourClient.h"
 	#endif
 
 #endif
