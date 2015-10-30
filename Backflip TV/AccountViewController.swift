@@ -46,7 +46,7 @@ class AccountViewController : UIViewController
 		
 		let window = UIApplication.sharedApplication().windows.first
 		if (window != nil) {
-			window?.rootViewController?.presentViewController(loginViewController, animated: true, completion: nil)
+			window?.rootViewController = loginViewController
 		}
 	}
 	
