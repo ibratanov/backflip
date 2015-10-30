@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 
 extension Photo : UIActivityItemSource
@@ -44,11 +45,11 @@ extension Photo : UIActivityItemSource
 		if (activityType == UIActivityTypeMail) {
 			return "<html><body>Image posted via <a href=\"http://getbackflip.com/\">Backflip</a>"+"</body></html>"
 		} else if (activityType == UIActivityTypePostToTwitter) {
-			return "Check out this photo from '"+self.event!.name!+"' on @getbackflip #backflip"
+            let config = PFConfig.currentConfig()
+            return "Check out this photo from "+self.event!.name!+"\n@getbackflip \(config["twitter_share_content"]!)"
 		} else if (activityType == UIActivityTypePostToFacebook) {
 			return ""
 		}
-		
 		
 		return ""
 	}

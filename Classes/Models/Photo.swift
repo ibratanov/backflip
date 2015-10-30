@@ -21,7 +21,7 @@ class Photo: ParseObject
 		guard self.usersLiked != nil else { return false }
 
 		var liked = self.usersLiked!.contains(user!.objectId!)
-		if (user!["phone_number"] != nil && self.usersLiked!.contains((user!["phone_number"] as! String))) {
+		if (user!["phone"] != nil && self.usersLiked!.contains((user!["phone"] as! String))) {
 			liked = true
 		} else if user!["facebook_id"] != nil && self.usersLiked!.contains((user!["facebook_id"] as! NSNumber).stringValue) {
 			liked = true

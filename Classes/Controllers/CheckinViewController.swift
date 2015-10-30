@@ -14,7 +14,7 @@ import CoreLocation
 
 
 
-class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource
+class CheckinViewController : BFViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDataSource
 {
 	var events : [Event] = []
 	var doubleTapGesture : UITapGestureRecognizer?
@@ -129,6 +129,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		if (PFUser.currentUser() != nil && PFUser.currentUser()?.objectId != nil) {
             fetchData()
 			
+			BFBonjourManager.sharedManager.startServiceDiscovery()
+			
 			BFDataFetcher.sharedFetcher.fetchDataInBackground({ (completed) -> Void in
 				self.fetchData()
 			})
@@ -180,11 +182,11 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		}
 		
 		let event = self.events[Int(index!)]
-		if (event.photos?.count > 0) {
-			if (event.photos?.count > 5) {
+		if (event.cleanPhotos.count > 0) {
+			if (event.cleanPhotos.count > 5) {
 				return 6
 			} else {
-				return 1 + event.photos!.count
+				return 1 + event.cleanPhotos.count
 			}
 		}
 		
@@ -201,8 +203,8 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		if ((1 + indexPath.row) == self.collectionView(collectionView, numberOfItemsInSection: 0)) {
 			cell.imageView!.image = UIImage(named: "check-in-screen-double-tap")
 			
-		} else if (event.photos!.count != 0 && event.photos!.count > indexPath.row) {
-			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
+		} else if (event.cleanPhotos.count != 0 && event.cleanPhotos.count > indexPath.row) {
+			let photo : Photo = event.cleanPhotos[indexPath.row]
 
 			cell.imageView.nk_prepareForReuse()
 			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
@@ -215,21 +217,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 		return cell
 	}
 	
-	
-//	func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
-//	{
-//		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
-//
-//		if ((1 + indexPath.row) != self.collectionView(collectionView, numberOfItemsInSection: 0)) {
-//			let index = self.pickerView?.selectedRowInComponent(0)
-//			let event = self.events[Int(index!)]
-//			let photo : Photo = event.photos!.allObjects[indexPath.row] as! Photo
-//		
-//			cell.imageView.nk_prepareForReuse()
-//			let imageUrl = NSURL(string: photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
-//			cell.imageView.nk_setImageWithURL(imageUrl)
-//		}
-//	}
 
 	
 	//-------------------------------------
@@ -351,7 +338,6 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 			if (currentEventId != nil) {
 				let event = Event.MR_findFirstByAttribute("objectId", withValue: currentEventId!)
 				albumViewController.event = event
-				// albumViewController.event = Event.fetchOrCreateWhereAttribute("objectId", isValue: currentEventId!) as? Event
 			} else {
 				let index = self.pickerView?.selectedRowInComponent(0)
 				let event = self.events[Int(index!)]
@@ -378,6 +364,10 @@ class CheckinViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
 	
 	func fetchData()
 	{
+		if (PFUser.currentUser() == nil) {
+			return
+		}
+		
 		let authorizationStatus = CLLocationManager.authorizationStatus()
 		if (authorizationStatus == .NotDetermined) {
 			

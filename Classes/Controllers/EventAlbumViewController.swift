@@ -16,7 +16,7 @@ import MagicalRecord
 import SKPhotoBrowser
 
 
-class EventAlbumViewController : UICollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate, ImagePreheatingControllerDelegate
+class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate, ImagePreheatingControllerDelegate
 {
 	
 	//-------------------------------------
@@ -58,17 +58,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		UIApplication.sharedApplication().statusBarHidden = false
 
 		self.preheatController.enabled = true
-		
-		#if FEATURE_GOOGLE_ANALYTICS
-            let tracker = GAI.sharedInstance().defaultTracker
-            tracker.set(kGAIScreenName, value: "Event Album")
-            //tracker.set("&uid", value: PFUser.currentUser()?.objectId)
-            tracker.set(GAIFields.customDimensionForIndex(2), value: PFUser.currentUser()?.objectId)
-            
-            
-            let builder = GAIDictionaryBuilder.createScreenView()
-            tracker.send(builder.build() as [NSObject : AnyObject])
-		#endif
     }
 	
 	override func viewWillDisappear(animated: Bool)
@@ -145,7 +134,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 	
 	@IBAction func leaveEvent()
 	{
-		let alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave? This event will be moved to your event history.", preferredStyle: .Alert)
+		let alertController = UIAlertController(title: "Leave Event", message: "Are you sure you want to leave? This event will be moved to your Event History.", preferredStyle: .Alert)
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Leave", style: .Destructive, handler: { (alertAction) -> Void in
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
@@ -293,7 +282,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			}
 		}
 		
-		print("Uploader = \(photo.uploader), current user = \(PFUser.currentUser()?.objectId)")
 		if (photo.uploader == PFUser.currentUser()?.objectId) {
 			self.photoBrowser?.trashButton?.image = UIImage(named: "UIButtonBarTrash")
 			self.photoBrowser?.trashButton?.action = "deletePhoto"
@@ -339,9 +327,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		
 		}
 		
-		// cell.layer.shouldRasterize = true
-		// cell.layer.rasterizationScale = UIScreen.mainScreen().scale
-		
 		return cell!
 	}
 	
@@ -368,7 +353,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			// Photos
 			var images = [SKPhoto]()
 			for photo in collectionContent {
-				let image = SKPhoto.photoWithImageURL(photo.image!.url!)
+				let image = SKPhoto.photoWithImageURL(photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
 				image.shouldCachePhotoURLImage = true
 				
 				if (photo.caption != nil && photo.caption?.characters.count > 1 && photo.caption != "Camera roll upload") {
@@ -379,9 +364,13 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			}
 			
 			
+			UIToolbar.appearance().tintColor = UIColor.whiteColor()
+			UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
+			
+			
 			let cell = collectionView.cellForItemAtIndexPath(indexPath) as! EventAlbumCell
 			let originImage = cell.imageView?.image // some image for baseImage
-			photoBrowser = BFPhotoBrowser(originImage: originImage!, photos: images, animatedFromView: cell)
+			photoBrowser = BFPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
 			photoBrowser!.initializePageIndex(indexPath.row - 1)
 			photoBrowser?.delegate = self
 			
@@ -411,17 +400,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		}
 		
 		return supplementaryView as! UICollectionReusableView
-	}
-	
-	
-	func tapped(sender: DOFavoriteButton) {
-		if sender.selected {
-			// deselect
-			sender.deselect()
-		} else {
-			// select with animation
-			sender.select()
-		}
 	}
 	
 	
@@ -502,7 +480,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 				
 				NSLog("Branch short URL generation failed, %@", error);
 				
-				let alertController = UIAlertController(title: "Invite Friends", message: "Whoops, it appears we're having trouble generating a link to share with your friends. Please try again later", preferredStyle: .Alert)
+				let alertController = UIAlertController(title: "Invite Friends", message: "Whoops, it appears we're having trouble generating a link to share with your friends. Please try again.", preferredStyle: .Alert)
 				alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
 				self.presentViewController(alertController, animated: true, completion: nil)
 				
@@ -535,7 +513,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 		
 		let photo = photoBrowser!.photos[selectedIndex!].underlyingImage
 		
-		// let reportImage = ReportImageActivity();
 		let activityViewController = UIActivityViewController(activityItems: [image, photo], applicationActivities:nil)
 		activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeAssignToContact, UIActivityTypePrint]
 		
@@ -548,8 +525,6 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
 		
-			
-			
 			MagicalRecord.saveWithBlock({ (context) -> Void in
 				
 				let selectedIndex = self.photoBrowser?.currentPageIndex
@@ -560,13 +535,16 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 				if (photo.usersLiked == nil) {
 					photo.usersLiked = ""
 				}
+
+                print("Photo (un)like attempted:")
+                print(photo.objectId!)
 				
 				if (photo.likedBy(PFUser.currentUser())) {
 					let currentUser = PFUser.currentUser()
 					var liked = photo.usersLiked!.componentsSeparatedByString(",")
 					var index = liked.indexOf(PFUser.currentUser()!.objectId!)
-					if (index == nil && currentUser!["phone_number"] != nil) {
-						index = liked.indexOf((currentUser!["phone_number"] as! String))
+					if (index == nil && currentUser!["phone"] != nil) {
+						index = liked.indexOf((currentUser!["phone"] as! String))
 					} else if (index == nil && currentUser!["facebook_id"] != nil) {
 						index = liked.indexOf((currentUser!["facebook_id"] as! NSNumber).stringValue)
 					}
@@ -660,7 +638,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 					
 					
 					dispatch_async(dispatch_get_main_queue(), {
-						self.photoBrowser?.reloadData()
+						self.photoBrowser?.dismissPhotoBrowser()
 						self.collectionView?.reloadData()
 					})
 					
@@ -698,23 +676,20 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 				
 			})
 			
-			
 			let imageIndex = self.collectionContent.indexOf(image)
 			self.collectionContent.removeAtIndex(imageIndex!)
 			
-			// imageIndex = find(self.orginalContent, image)
-			// self.orginalContent.removeAtIndex(imageIndex!)
-			
 			dispatch_async(dispatch_get_main_queue(), {
-				self.photoBrowser?.reloadData()
+				self.photoBrowser?.dismissPhotoBrowser()
 				self.collectionView?.reloadData()
 			})
 			
 		})
 		
 	}
-
-
+	
+	
+	
 	//-------------------------------------
 	// MARK: Memory
 	//-------------------------------------
@@ -738,17 +713,7 @@ class EventAlbumViewController : UICollectionViewController, UIPopoverPresentati
 			return
 		}
 		
-		var photos : [Photo] = []
-		let _photos : [Photo] = event?.photos?.allObjects as! [Photo]
-		for photo : Photo in _photos {
-			if (photo.flagged != nil && Bool(photo.flagged!) == true) {
-				continue
-			}
-			
-			photos.append(photo)
-		}
-		
-		
+		let photos = event!.cleanPhotos
 		if (photos.count < 1) {
 			print("No Photos/ No Updates")
 			dispatch_async(dispatch_get_main_queue()) {

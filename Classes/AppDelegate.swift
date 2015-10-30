@@ -17,7 +17,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 {
 
     var window: UIWindow?
-	
+	var bonjourClient = BFBonjourClient()
 
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -35,8 +35,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		setupBranch(launchOptions)
 		setupCoreData()
 		setupApperance()
-
-		BonjourService.sharedService.registerService()
+		
 
 		//--------------------------------------
 		// Watchdog
@@ -51,7 +50,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		//--------------------------------------
 		// Coredata
 		//--------------------------------------
-		BFDataFetcher.sharedFetcher.fetchData(true);
+		BFDataFetcher.sharedFetcher.fetchData(false);
 		
 		
 		//--------------------------------------
@@ -79,7 +78,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             }
         }
 		
-		#if ((arch(i386) || arch(x86_64)) && os(iOS)) || SNAPSHOT
+		#if arch(i386) || arch(x86_64)
 			print("📲 Disabling push notifications for the simulator")
 		#else
 			let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
@@ -135,7 +134,12 @@ class AppDelegate : UIResponder, UIApplicationDelegate
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
     }
-    
+
+
+	//--------------------------------------
+	// MARK: Deep linking
+	//--------------------------------------
+
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
 	{
 		
@@ -219,17 +223,28 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		#if FEATURE_PARSE_LOCAL
 			Parse.enableLocalDatastore()
 		#endif
-			
+
+
+		if DEBUG_PARSE {
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveDidReceiveURLResponseNotification:", name: PFNetworkDidReceiveURLResponseNotification, object: nil)
+
+			Parse.setLogLevel(.Debug)
+		}
+
+		
 		#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 		#else
 			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
 		#endif
-		
+
+
 		
 		// Default ACL
 		let defaultACL = PFACL();
+		defaultACL.setPublicWriteAccess(true)
 		defaultACL.setPublicReadAccess(true)
+        defaultACL.setPublicWriteAccess(true)
 		PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 		
 		if (Reachability.validNetworkConnection()) {
@@ -238,8 +253,26 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			}
 		}
 	}
-	
-	
+
+
+	func receiveDidReceiveURLResponseNotification(notification: NSNotification)
+	{
+		guard notification.userInfo != nil else { return }
+
+		let response = notification.userInfo![PFNetworkNotificationURLResponseUserInfoKey] as! NSHTTPURLResponse
+		let responseBody = notification.userInfo![PFNetworkNotificationURLResponseBodyUserInfoKey] as! NSString
+		print("------------------------------------------------")
+		print("\tURL: \(response.URL!.absoluteString)")
+		print("\tStatus code: \(response.statusCode)")
+		print("\tHeaders: \(response.allHeaderFields)")
+		print("\tResponse Body: \(responseBody)")
+		print(" ")
+	}
+
+
+
+
+
 	//--------------------------------------
 	// MARK: Analytics
 	//--------------------------------------
@@ -283,6 +316,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			let mixpanel: Mixpanel = Mixpanel.sharedInstance()
 			mixpanel.track("App launched")
 		}
+        
+        if (FEATURE_FLURRY) {
+            Flurry.startSession("5ZH2SGGPCVDPDKS5KS83")
+            Flurry.logEvent("User:\(PFUser.currentUser()?.objectId) Started Application")
+        }
 	}
 	
 	
@@ -324,48 +362,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     func setupBranch(launchOptions: [NSObject: AnyObject]?)
     {
         
-		let branch: Branch = Branch.getInstance()
-		branch.initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
-			
-			if (error == nil) {
-				
-				if ((params["referringOut"])  != nil) {
-					
-					let eventId =  params["eventObject"] as? String
-					if (eventId != nil) {
-						
-						let event : Event = Event.MR_findFirstByAttribute("objectId", withValue: eventId!)
-						
-						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join '"+event.name!+"', would you like to check in?", preferredStyle: .Alert)
-						alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-						alertController.addAction(UIAlertAction(title: "Join", style: .Default, handler: { (alertAction) -> Void in
-							
-							
-							let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-							let tabBar : UITabBarController = window?.rootViewController! as! UITabBarController
-							let checkinViewController : CheckinViewController = (tabBar.viewControllers![0] as! UINavigationController).viewControllers[0] as! CheckinViewController
-							
-							print(checkinViewController)
-							
-							
-							// let checkinController : CheckinViewController = CheckinViewController()
-							checkinViewController.checkinWithEvent(event)
-							
-						}))
-						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-					} else {
-						
-						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
-						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-						
-						let window : UIWindow? = UIApplication.sharedApplication().windows.first!
-						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-					}
-					
-				}
-			}
+		Branch.getInstance().initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
+
+			BFParseManager.sharedManager.handleInviteLink(params, error: error)
+
 		})
 
     }

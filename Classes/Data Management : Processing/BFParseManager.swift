@@ -33,7 +33,7 @@ public class BFParseManager : NSObject
 			- eventId: event's ObjectId
 			- uponComplretion: Completion handler
 	*/
-	public func checkin(eventId : String, uponCompletion completion: (completed : Bool, error : NSError?) -> Void) -> Void
+	public func checkin(eventId : String, uponCompletion completion: ((completed : Bool, error : NSError?) -> Void)?) -> Void
 	{
 		// Display a HUD letting the user know we're checking them in
 		PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Checking in..")
@@ -41,7 +41,7 @@ public class BFParseManager : NSObject
 		
 		
 		let event = Event.MR_findFirstByAttribute("objectId", withValue: eventId)
-		
+
 		// Store channel for push notifications
 		let currentInstallation = PFInstallation.currentInstallation()
 		currentInstallation.addUniqueObject("a"+eventId, forKey: "channels")
@@ -86,10 +86,15 @@ public class BFParseManager : NSObject
 				NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
 				NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
 				NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
-				
+				NSUserDefaults.standardUserDefaults().synchronize()
+
 				PKHUD.sharedHUD.hideAnimated()
-				
-				return completion(completed: true, error: nil)
+
+				if (completion != nil) {
+					completion!(completed: true, error: nil)
+				}
+
+				return
 			})
 			
 		}
@@ -242,7 +247,6 @@ public class BFParseManager : NSObject
 			let graphRequest = FBSDKGraphRequest(graphPath: facebookResult!.token.userID!, parameters: ["fields": "id, about, email, first_name, last_name, name"])
 			graphRequest.startWithCompletionHandler { (connection, result, error) -> Void in
 					
-				print("📢📢📢📢📢📢📢📢📢📢📢📢 GRAPH RESULT HANDLER CALLED")
 				if (error != nil) {
 					print("Facebook error \(error)")
 					return completion(completed: false, error: error)
@@ -304,13 +308,25 @@ public class BFParseManager : NSObject
 					password = "backflip-pass-"+user!.username!
 				}
 				
-				print("Attemping to login with username \(user!.username!), password = \(password)")
+				print("(devices.count < 1) Attemping to login with username \(user!.username!), password = \(password)")
 				PFUser.logInWithUsernameInBackground(user!.username!, password: password, block: { (user : PFUser?, error) -> Void in
 					
 					if (error == nil && user != nil) {
 						
 						user!.password = "backflip-pass-"+user!.username!
 						user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+						user!["password_updated"] = true
+						
+						if (phoneNumber != nil) {
+							user!["phone"] = phoneNumber
+						}
+						
+						if (facebookId != nil) {
+							user!["facebook_id"] = NSNumber(integer: Int(facebookId!)!)
+							user!["email"] = emailAddress
+							user!["facebook_name"] = "\(firstName!) \(lastName!)"
+						}
+						
 						user!.saveInBackgroundWithBlock(nil)
 						
 						return completion(completed: true, error: nil)
@@ -328,18 +344,37 @@ public class BFParseManager : NSObject
 		} else if (devices?.count > 0) {
 			
 			let user = devices?.first
-			var password = (user!.username!.characters.contains("+") == false) ? "Password" : "backflip-pass-"+user!.username!
+			var password = (user!.username!.characters.contains("+") == false) ? "backflip-pass-"+user!.username! : "Password"
 			if (user != nil && user!["facebook_id"] != nil) {
 				password = "backflip-pass-"+user!.username!
 			}
 			
-			print("Attemping to login with username \(user!.username!), password = \(password)")
+			if (user != nil && user!["password_updated"] != nil && (user!["password_updated"] as! Bool) == true) {
+				password = "backflip-pass-"+user!.username!
+			} else {
+				password = "Password"
+			}
+			
+			
+			print("(devices.count > 0) Attemping to login with username \(user!.username!), password = \(password)")
 			PFUser.logInWithUsernameInBackground(user!.username!, password: password, block: { (user : PFUser?, error) -> Void in
 				
 				if (error == nil && user != nil) {
 					
 					user!.password = "backflip-pass-"+user!.username!
 					user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
+					user!["password_updated"] = true
+					
+					if (phoneNumber != nil) {
+						user!["phone"] = phoneNumber
+					}
+					
+					if (facebookId != nil) {
+						user!["facebook_id"] = NSNumber(double: Double(facebookId!)!)
+						user!["email"] = emailAddress
+						user!["facebook_name"] = "\(firstName!) \(lastName!)"
+					}
+					
 					user!.saveInBackgroundWithBlock(nil)
 					
 					return completion(completed: true, error: nil)
@@ -360,27 +395,26 @@ public class BFParseManager : NSObject
 	
 	private func createUser(firstName: String?, lastName: String?, emailAddress: String?, facebookId: String?, phoneNumber: String?, uponCompletion completion: (completed : Bool, error : NSError?) -> Void) -> Void
 	{
-		
 		let user = PFUser()
 		if (facebookId != nil) {
 			user.username = facebookId
 			user.password = "backflip-pass-\(facebookId!)"
-			user["facebook_id"] = Int(facebookId!)
+			user["facebook_id"] = NSNumber(double: Double(facebookId!)!)
 			user["email"] = emailAddress
+			user["facebook_name"] = "\(firstName!) \(lastName!)"
 		} else {
 			user.username = phoneNumber
 			user.password = "backflip-pass-\(phoneNumber!)"
 			user["phone"] = phoneNumber
 		}
-		
 
 		user["photosLiked"] = []
-		user["facebook_name"] = "\(firstName) \(lastName)"
 		user["savedEvents"] = []
 		user["savedEventNames"] = []
 		user["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
 		user["blocked"] = false
 		user["firstUse"] = true
+		user["password_updated"] = true
 		
 		print("Signing up with username '\(user.username!)', and password '\(user.password!)'.")
 		user.signUpInBackgroundWithBlock({ (success, error) -> Void in
@@ -394,5 +428,102 @@ public class BFParseManager : NSObject
 		})
 		
 	}
-	
+
+
+
+	public func handleInviteLink(params: NSDictionary?, error: NSError?)
+	{
+		guard error == nil else { return print("🚨 Deep linking error \(error!)") }
+		guard params != nil else { return print("🚨 Deep linking provided no params dictionary") }
+
+
+		let params = params!
+		let eventId = params["eventObject"] as? String
+
+		if (params["referringOut"] != nil && eventId != nil) {
+
+			let window : UIWindow? = UIApplication.sharedApplication().windows.first
+			let event : Event = Event.MR_findFirstByAttribute("objectId", withValue: eventId!)
+			let attendances = Attendance.MR_findByAttribute("attendeeId", withValue: PFUser.currentUser()?.objectId) as? [Attendance]
+			if (attendances != nil || attendances?.count > 0) {
+				for attendance in attendances! {
+					if (attendance.event?.objectId == event.objectId) {
+
+						// Previously attended, point them to where they can find it in their event history
+						let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+". You've previously checked into this event. Find it in your 'Current Event' or 'Event History' below.", preferredStyle: .Alert)
+						alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+						window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+
+						return
+					}
+
+				}
+			}
+			
+			
+			
+
+			let currentlyCheckedIn = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id")
+			if (currentlyCheckedIn != nil) {
+				let currentEvent = Event.MR_findFirstByAttribute("objectId", withValue: currentlyCheckedIn)
+
+				
+				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join \(event.name!). You're currently checked into \(currentEvent.name!). Do you want to leave this event and join \(event.name!)?", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+				alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
+
+					// Check out
+					NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+					NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+					NSUserDefaults.standardUserDefaults().synchronize()
+
+					self.checkin(event.objectId!, uponCompletion: { (completed, error) -> Void in
+						if window?.rootViewController as? UITabBarController != nil {
+							let tabbarController = window!.rootViewController as! UITabBarController
+							let navigationController = tabbarController.viewControllers?.first as? UINavigationController
+							
+							let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+							let checkinViewController = storyboard.instantiateViewControllerWithIdentifier("CheckinViewController") as! CheckinViewController
+							navigationController?.setViewControllers([checkinViewController], animated: false)
+							
+						}
+					})
+				}))
+				window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+
+				return
+			}
+
+
+
+			// Standard check-in
+			if (event.name != nil) {
+				let alertController = UIAlertController(title: "Backflip Event Invitation", message: "You have been invited to join "+event.name!+", would you like to check in?", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+				alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action) -> Void in
+					self.checkin(event.objectId!, uponCompletion: {  (completed, error) -> Void in
+						
+						if UIApplication.sharedApplication().windows.first!.rootViewController as? UITabBarController != nil {
+							let tababarController = (UIApplication.sharedApplication().windows.first!).rootViewController as! UITabBarController
+							tababarController.selectedIndex = 0
+						}
+						
+					})
+				}))
+				window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+
+				return
+			}
+
+
+			// Default to displaying an error otherwise
+			let alertController = UIAlertController(title: "Backflip Event Invitation", message: "Oops! Appears theres an issue with this invite link. Please try again", preferredStyle: .Alert)
+			alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+			window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+
+
+		}
+
+	}
+
 }

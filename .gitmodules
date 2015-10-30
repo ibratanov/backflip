@@ -36,8 +36,14 @@
 	ignore = dirty
 [submodule "Vendor/SKPhotoBrowser"]
 	path = Vendor/SKPhotoBrowser
-	url = git@github.com:suzuki-0000/SKPhotoBrowser.git
+	url = git@github.com:JackoPlane/SKPhotoBrowser.git
 	ignore = dirty
 [submodule "Vendor/Nuke"]
 	path = Vendor/Nuke
 	url = git@github.com:kean/Nuke.git
+[submodule "Vendor/Bolts"]
+	path = Vendor/Bolts
+	url = git@github.com:BoltsFramework/Bolts-iOS.git
+[submodule "Vendor/Parse"]
+	path = Vendor/Parse
+	url = git@github.com:ParsePlatform/Parse-SDK-iOS-OSX.git

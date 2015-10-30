@@ -12,7 +12,7 @@ import Parse
 import DigitsKit
 
 
-class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
+class CreatePublicEventViewController: BFViewController, UITextFieldDelegate {
     
     
     @IBAction func settingButton(sender: AnyObject) {
@@ -238,7 +238,9 @@ class CreatePublicEventViewController: UIViewController, UITextFieldDelegate {
     // Information on how this delegate method works
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
 	{
-        return textField.text!.characters.count <= 25
+		let newLength = textField.text!.characters.count + string.characters.count - range.length;
+		
+		return newLength < 26
     }
     
     

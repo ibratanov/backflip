@@ -6,16 +6,16 @@
 //  Copyright © 2015 Backflip. All rights reserved.
 //
 
+import Nuke
 import UIKit
 
 
 class EventAlbumCell : UICollectionViewCell
 {
-	
 	static let reuseIdentifier = "event-album-cell-identifier"
 	
 	#if os(tvOS)
-		@IBOutlet weak var label: UILabel = UILabel()
+		@IBOutlet weak var label: UILabel!
 	#endif
 	
 	@IBOutlet weak var imageView : UIImageView!
@@ -41,6 +41,11 @@ class EventAlbumCell : UICollectionViewCell
 	override func prepareForReuse()
 	{
 		super.prepareForReuse()
+		
+		#if os(tvOS)
+			self.label?.alpha = 1.0
+			// self.label.text = nil
+		#endif
 	}
 	
 
@@ -55,9 +60,9 @@ class EventAlbumCell : UICollectionViewCell
 			*/
 			coordinator.addCoordinatedAnimations({ [unowned self] in
 				if self.focused {
-					self.label.alpha = 1.0
+					self.label?.alpha = 0.0
 				} else {
-					self.label.alpha = 0.0
+					self.label?.alpha = 1.0
 				}
 			}, completion: nil)
 			

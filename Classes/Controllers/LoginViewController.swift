@@ -10,7 +10,7 @@ import Parse
 import DigitsKit
 
 
-class LoginViewController: UIViewController, UINavigationControllerDelegate {
+class LoginViewController: BFViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var termsTextView: UITextView!
     @IBOutlet weak var facebookButton: UIButton!
@@ -146,9 +146,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 				} else {
 					print("Login success")
 					
-					if (FBSDKAccessToken.currentAccessToken() != nil) {
-						self.fetchDataAndLogin(result.token.tokenString, id: result.token.userID)
-					}
 					
 					BFParseManager.sharedManager.login(nil, facebookResult: result, uponCompletion: { (completed, error) -> Void in
 						
@@ -169,117 +166,6 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 		}
 		
     }
-	
-	func fetchDataAndLogin(token: String?, id: String?)
-	{
-		let graphRequest = FBSDKGraphRequest(graphPath: id!, parameters: ["fields": "id, about, email, first_name, last_name, name"])
-		graphRequest.startWithCompletionHandler { (connection, result, error) -> Void in
-			
-			if (error != nil) {
-				
-			} else {
-			
-				let emailAddress = result.valueForKey("email") as! String
-				let id = result.valueForKey("id") as! String
-				let fullName = result.valueForKey("name") as! String
-				
-				print(result)
-				print("^^ Facebook graph result")
-				
-				
-				let deviceQuery = PFUser.query()
-				deviceQuery?.whereKey("UUID", equalTo: UIDevice.currentDevice().uniqueDeviceIdentifier())
-				deviceQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
-					
-					if (error == nil && results?.count == 0) {
-						
-						let userQuery = PFUser.query()
-						userQuery?.whereKey("username", equalTo: id)
-						userQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
-						
-							if (error == nil && results?.count < 1) {
-								
-								let user = PFUser()
-								user.username = id
-								user.password = "backflip-pass-"+id
-								user["photosLiked"] = []
-								user["phone"] = id
-								user["facebook_id"] = Int(id)
-								user["facebook_name"] = fullName
-								user["email"] = emailAddress
-								user["savedEvents"] = []
-								user["savedEventNames"] = []
-								user["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
-								user["blocked"] = false
-								user["firstUse"] = true
-								user.signUpInBackgroundWithBlock({ (success, error) -> Void in
-									
-									if (error == nil) {
-										self.dismissViewControllerAnimated(true, completion: nil)
-									} else {
-										print(error)
-									}
-									
-								})
-								
-							} else if (error == nil && results?.count > 0) {
-
-								PFUser.logInWithUsernameInBackground(id, password: "backflip-pass-"+id, block: { (user, error) -> Void in
-									
-									if (error == nil) {
-										print(user)
-										
-										user!["facebook_id"] = Int(id)
-										user!["facebook_name"] = fullName
-										user!["email"] = emailAddress
-										user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
-										user!.saveInBackgroundWithBlock(nil)
-										
-										self.dismissViewControllerAnimated(true, completion: nil)
-									} else {
-										print(error)
-									}
-									
-								})
-								
-							} else {
-								print(error)
-							}
-							
-						})
-						
-					} else if (error == nil && results?.count > 0) {
-						
-						let user = results?.first as? PFUser
-						PFUser.logInWithUsernameInBackground(user!.username!, password: "backflip-pass-"+user!.username!, block: { (user : PFUser?, error) -> Void in
-							
-							if (error == nil && user != nil) {
-								
-								user!["facebook_id"] = Int(id)
-								user!["facebook_name"] = fullName
-								user!["email"] = emailAddress
-								user!["UUID"] = UIDevice.currentDevice().uniqueDeviceIdentifier()
-								user!.saveInBackgroundWithBlock(nil)
-								
-								self.dismissViewControllerAnimated(true, completion: nil)
-							} else {
-								print(error)
-							}
-							
-						})
-						
-					} else {
-						print("Login error")
-						print(error)
-					}
-					
-				})
-				
-			}
-		}
-		
-	}
-	
 
     func didTapButton() {
 		
@@ -298,8 +184,7 @@ class LoginViewController: UIViewController, UINavigationControllerDelegate {
 			
 		
 		// Initiate digits session
-		let digits = Digits.sharedInstance()
-		digits.authenticateWithDigitsAppearance(digitsAppearance, viewController: nil, title: "Sign in to Backflip") { (session, error) in
+		Digits.sharedInstance().authenticateWithDigitsAppearance(digitsAppearance, viewController: nil, title: "Sign in to Backflip") { (session, error) in
 			
 			UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
 				
