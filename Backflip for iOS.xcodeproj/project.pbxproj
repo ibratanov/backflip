@@ -132,6 +132,7 @@
 		04937DD41BD979F9004A2730 /* Backflip.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04937DD11BD979D1004A2730 /* Backflip.xcdatamodeld */; };
 		049738201BD805CB00B58F70 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; };
 		049738211BD805CB00B58F70 /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04A0DCC71BE7F91300C5AABD /* EventEditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DCC61BE7F91300C5AABD /* EventEditingView.swift */; };
 		04A251701BA20C67003B89E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */; };
 		04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */; };
@@ -568,6 +569,7 @@
 		0495F1751BAB0CC0002E609E /* Frontflip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Frontflip.entitlements; sourceTree = "<group>"; };
 		0497380E1BD805C500B58F70 /* Nuke.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nuke.xcodeproj; path = Vendor/Nuke/Nuke/Nuke.xcodeproj; sourceTree = "<group>"; };
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		04A0DCC61BE7F91300C5AABD /* EventEditingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEditingView.swift; sourceTree = "<group>"; };
 		04A2516F1BA20C67003B89E8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04B399281BDED7BC00B0F80A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
@@ -659,9 +661,10 @@
 				040FD1081BB2F14B00DDB1A5 /* libz.tbd in Frameworks */,
 				040FD10B1BB2F19500DDB1A5 /* libc++.tbd in Frameworks */,
 				040FD1061BB2F14300DDB1A5 /* libsqlite3.tbd in Frameworks */,
+				040FD10C1BB2F19500DDB1A5 /* libstdc++.tbd in Frameworks */,
+				0477CE471BDFEF000033BDEE /* libFlurry_7.2.1.a in Frameworks */,
 				04D022891BE192B300375C84 /* Parse.framework in Frameworks */,
 				0430A41D1BE13BA500E33359 /* Instabug.framework in Frameworks */,
-				040FD10C1BB2F19500DDB1A5 /* libstdc++.tbd in Frameworks */,
 				040EB5D91BC8187F00452620 /* Photos.framework in Frameworks */,
 				048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */,
 				04ED9B141BC30337008493E3 /* Mixpanel.framework in Frameworks */,
@@ -684,7 +687,6 @@
 				0439D3401B8B76B1001850DD /* Branch.framework in Frameworks */,
 				502199AE1B33817100A64387 /* Accounts.framework in Frameworks */,
 				0439D34E1B8B7709001850DD /* TwitterCore.framework in Frameworks */,
-				0477CE471BDFEF000033BDEE /* libFlurry_7.2.1.a in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
 				0439D3421B8B76B1001850DD /* Fabric.framework in Frameworks */,
 			);
@@ -868,6 +870,7 @@
 				04B610311BB98FEE00C1AF1E /* Collection View */,
 				040FD7891BD5746B0039CDAA /* BFPhotoBrowser.swift */,
 				047790E61BBB1C5B00BA8F9E /* PopoverView.swift */,
+				04A0DCC61BE7F91300C5AABD /* EventEditingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1856,6 +1859,7 @@
 				0422D1161BCFF3190078E7F6 /* BFDataWrapper.m in Sources */,
 				046D98BC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift in Sources */,
 				04C61FC21B8B982600E2ACB5 /* Photo.swift in Sources */,
+				04A0DCC71BE7F91300C5AABD /* EventEditingView.swift in Sources */,
 				040FD78A1BD5746B0039CDAA /* BFPhotoBrowser.swift in Sources */,
 				04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */,
 				04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */,
