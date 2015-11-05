@@ -47,3 +47,6 @@
 [submodule "Vendor/Parse"]
 	path = Vendor/Parse
 	url = git@github.com:ParsePlatform/Parse-SDK-iOS-OSX.git
+[submodule "Vendor/Armchair"]
+	path = Vendor/Armchair
+	url = git@github.com:UrbanApps/Armchair.git
