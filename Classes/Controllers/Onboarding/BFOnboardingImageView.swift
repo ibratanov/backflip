@@ -17,8 +17,9 @@ class BFOnboardingImageView : UIView
 	internal var altImageView : UIImageView?
 	
 	internal var currentIndex = 0
-	internal var images = ["background-1", "login-background", "Scene-4"]
+	internal var images = ["background-1", "background-2", "Scene-4"]
 	
+	internal var animating = false
 	
 	
 	override init(frame: CGRect)
@@ -64,16 +65,22 @@ class BFOnboardingImageView : UIView
 	
 
 
+	func startAnimating()
+	{
+		if (animating == false) {
+			animating = true
+			self.animationLoop()
+		}
+	}
+	
+	
 	func animationLoop()
 	{
-
 		if (self.imageView?.alpha == 0) {
 			self.animateToAltImageView()
 		} else {
 			self.animateToImageView()
 		}
-
-
 	}
 
 

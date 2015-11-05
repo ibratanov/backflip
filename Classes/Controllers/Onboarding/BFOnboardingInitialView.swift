@@ -18,6 +18,8 @@ class BFOnboardingInitialView : UIView
 
 	internal let arrorwImageView = UIImageView(image: UIImage(named: "forward-arrow-white"))
 
+	internal var animating = false
+	
 
 	
 	override init(frame: CGRect)
@@ -34,6 +36,15 @@ class BFOnboardingInitialView : UIView
 		self.setup()
 	}
 
+	
+	func startAnimation()
+	{
+		if (animating == false) {
+			animating = true
+			self.animate()
+		}
+	}
+	
 
 	func animate()
 	{

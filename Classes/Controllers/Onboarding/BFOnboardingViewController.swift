@@ -54,10 +54,8 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 	{
 		super.viewDidAppear(animated)
 
-		let page = self.cachedPages[0] as! BFOnboardingInitialView
-		page.animate()
-
-		self.animatedView?.animationLoop()
+		(self.cachedPages[0] as! BFOnboardingInitialView).startAnimation()
+		self.animatedView?.startAnimating()
 	}
 
 	
