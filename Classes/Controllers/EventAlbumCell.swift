@@ -33,6 +33,8 @@ class EventAlbumCell : UICollectionViewCell
 			imageView.adjustsImageWhenAncestorFocused = true
 		#endif
 		
+		self.backgroundColor = UIColor(red:0.863,  green:0.867,  blue:0.875, alpha:1)
+		
 		imageView.contentMode = .ScaleToFill
 		imageView.clipsToBounds = false
 	}
@@ -44,7 +46,6 @@ class EventAlbumCell : UICollectionViewCell
 		
 		#if os(tvOS)
 			self.label?.alpha = 1.0
-			// self.label.text = nil
 		#endif
 	}
 	

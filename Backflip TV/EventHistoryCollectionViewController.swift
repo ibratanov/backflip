@@ -42,7 +42,7 @@ class EventHistoryCollectionViewController : UICollectionViewController
 			
 			let window = UIApplication.sharedApplication().windows.first
 			if (window != nil) {
-				window?.rootViewController?.presentViewController(loginViewController, animated: true, completion: nil)
+				window?.rootViewController = loginViewController
 			}
 		}
 	}
