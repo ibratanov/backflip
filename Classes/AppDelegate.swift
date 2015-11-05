@@ -8,6 +8,7 @@ import UIKit
 
 import Parse
 import Fabric
+import Armchair
 import DigitsKit
 import FBSDKCoreKit
 
@@ -46,6 +47,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			}
 		#endif
 
+		
+		Armchair.appID("1009368473")
+		Armchair.daysUntilPrompt(1)
+		Armchair.usesUntilPrompt(2)
+		
 		
 		//--------------------------------------
 		// Coredata

@@ -68,4 +68,9 @@ public class BFBonjourManager : NSObject
 	}
 
 	
+	public func stopServiceDiscovery()
+	{
+		self.bonjourClient.closeStreams()
+	}
+	
 }

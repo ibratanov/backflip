@@ -13,7 +13,10 @@ import Foundation
 class EventHistoryViewController : BFCollectionViewController
 {
 	
-	private var events : [Event] = [];
+	private var events : [Event] = []
+	
+	private var cachedPhotos : [String : [Photo]] = [:]
+	
 	
 	private let HEADER_IDENTIFIER : String = "header-identifier"
 	
@@ -23,14 +26,31 @@ class EventHistoryViewController : BFCollectionViewController
 	// MARK: Collection View Datasource
 	//-------------------------------------
 	
-	override func viewDidLoad()
+	
+	override func loadView()
 	{
-		super.viewDidLoad()
+		super.loadView()
 		
 		self.title = "Event History"
 		self.collectionView?.registerClass(EventHistoryHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HEADER_IDENTIFIER)
 		
-		fetchData()
+		self.collectionView?.backgroundColor = UIColor.whiteColor()
+		
+		self.fetchData()
+	}
+	
+	override func viewDidLoad()
+	{
+		super.viewDidLoad()
+		
+		// Layout -  Only run on the main thread
+		self.collectionView?.contentInset = UIEdgeInsetsMake(0.0, 0.0, 72.0, 0.0)
+		
+		let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
+		flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
+		flow.itemSize = CGSizeMake((self.view.frame.size.width/5)-1, (self.view.frame.size.width/5)-1);
+		flow.minimumInteritemSpacing = 1;
+		flow.minimumLineSpacing = 1;
 	}
     
     override func viewWillAppear(animated: Bool)
@@ -41,21 +61,6 @@ class EventHistoryViewController : BFCollectionViewController
 	override func viewDidAppear(animated: Bool)
 	{
 		super.viewDidAppear(animated)
-		
-		self.collectionView?.backgroundColor = UIColor.whiteColor()
-		
-		fetchData()
-		
-		// Layout -  Only run on the main thread
-		dispatch_async(dispatch_get_main_queue(), { () -> Void in
-			self.collectionView?.contentInset = UIEdgeInsetsMake(0.0, 0.0, 72.0, 0.0)
-			
-			let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
-			flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
-			flow.itemSize = CGSizeMake((self.view.frame.size.width/5)-1, (self.view.frame.size.width/5)-1);
-			flow.minimumInteritemSpacing = 1;
-			flow.minimumLineSpacing = 1;
-		})
 	}
 	
 	
@@ -88,10 +93,9 @@ class EventHistoryViewController : BFCollectionViewController
 	{
 		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
 		
-		var photos = self.events[indexPath.section].cleanPhotos
-		photos.sortInPlace{ $0.upvoteCount!.integerValue > $1.upvoteCount!.integerValue }
+		let photos = cachedPhotos[self.events[indexPath.section].objectId!]
 		cell.imageView.nk_prepareForReuse()
-		let imageUrl = NSURL(string: photos[indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+		let imageUrl = NSURL(string: photos![indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
 		cell.imageView.nk_setImageWithURL(imageUrl)
 	}
 	
@@ -205,7 +209,21 @@ class EventHistoryViewController : BFCollectionViewController
 		_events.sortInPlace { if ($0.createdAt != nil && $1.createdAt != nil) { return $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending } else { return false } }
 		
 		self.events = _events;
+		self.processAndCachePhotos()
 		self.collectionView?.reloadData()
+	}
+	
+	
+	func processAndCachePhotos()
+	{
+		for event in events {
+			
+			let _photos = event.cleanPhotos.sort({ (photo1, photo2) -> Bool in
+				if (photo1.createdAt != nil && photo2.createdAt != nil) { return (photo1.createdAt!.compare(photo2.createdAt!) == NSComparisonResult.OrderedDescending) } else { return false }
+			})
+			
+			cachedPhotos[event.objectId!] = _photos
+		}
 	}
 	
 }
