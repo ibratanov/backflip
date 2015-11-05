@@ -167,5 +167,11 @@
 	<false/>
 	<key>branch_key</key>
 	<string>key_live_mkkw8ynhD7ZoI6bSN63nMenmyFc6TMYk</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-Regular.ttf</string>
+		<string>Lato-Bold.ttf</string>
+	</array>
 </dict>
 </plist>
