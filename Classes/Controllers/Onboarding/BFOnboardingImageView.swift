@@ -17,7 +17,7 @@ class BFOnboardingImageView : UIView
 	internal var altImageView : UIImageView?
 	
 	internal var currentIndex = 0
-	internal var images = ["background-1", "background-2", "Scene-4"]
+	internal var images = [UIImage(named: "background-1"), UIImage(named: "background-2"), UIImage(named: "Scene-4")]
 	
 	internal var animating = false
 	
@@ -45,7 +45,7 @@ class BFOnboardingImageView : UIView
 	func setup()
 	{
 		self.imageView = UIImageView(frame: CGRectMake(0, -15, self.frame.width, self.frame.height+15))
-		self.imageView?.image = UIImage(named: images[currentIndex])
+		self.imageView?.image = images[currentIndex]
 		self.imageView?.alpha = 1
 
 		self.altImageView = UIImageView(frame: CGRectMake(0, 0, self.frame.width, self.frame.height+15))
@@ -99,7 +99,7 @@ class BFOnboardingImageView : UIView
 
 
 			self.altImageView?.frame = CGRectMake(0, 0, self.frame.width, self.frame.height+15)
-			self.altImageView?.image = UIImage(named: self.images[self.currentIndex])
+			self.altImageView?.image = self.images[self.currentIndex]
 
 			UIView.animateWithDuration(2, delay: 0, options: .TransitionCrossDissolve, animations: { () -> Void in
 				self.imageView?.alpha = 0
@@ -127,7 +127,7 @@ class BFOnboardingImageView : UIView
 
 
 				self.imageView?.frame = CGRectMake(0, 0, self.frame.width, self.frame.height+15)
-				self.imageView?.image = UIImage(named: self.images[self.currentIndex])
+				self.imageView?.image = self.images[self.currentIndex]
 
 				UIView.animateWithDuration(2, delay: 0, options: .TransitionCrossDissolve, animations: { () -> Void in
 					self.imageView?.alpha = 1

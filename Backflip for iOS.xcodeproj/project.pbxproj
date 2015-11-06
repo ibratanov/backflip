@@ -111,6 +111,7 @@
 		045386731BEBBB26001E46ED /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 045386691BEBBB26001E46ED /* Lato-Light.ttf */; };
 		045386741BEBBB26001E46ED /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0453866A1BEBBB26001E46ED /* Lato-LightItalic.ttf */; };
 		045386751BEBBB26001E46ED /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0453866B1BEBBB26001E46ED /* Lato-Regular.ttf */; };
+		045386B71BED0BA8001E46ED /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045386B61BED0BA8001E46ED /* Crashlytics.framework */; };
 		046D98BA1BCAAAF4004B3DCD /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98A91BCAAAF4004B3DCD /* AnimationController.swift */; };
 		046D98BB1BCAAAF4004B3DCD /* ImagePickerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98AA1BCAAAF4004B3DCD /* ImagePickerAction.swift */; };
 		046D98BC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98AC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift */; };
@@ -558,6 +559,7 @@
 		045386691BEBBB26001E46ED /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		0453866A1BEBBB26001E46ED /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
 		0453866B1BEBBB26001E46ED /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		045386B61BED0BA8001E46ED /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		046D98A91BCAAAF4004B3DCD /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		046D98AA1BCAAAF4004B3DCD /* ImagePickerAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerAction.swift; sourceTree = "<group>"; };
 		046D98AB1BCAAAF4004B3DCD /* ImagePickerSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerSheetController.h; sourceTree = "<group>"; };
@@ -709,6 +711,7 @@
 				50C9A7931B276F430091FEC9 /* Social.framework in Frameworks */,
 				040FD7801BD553110039CDAA /* SKPhotoBrowser.framework in Frameworks */,
 				3A312EBE1B18EA3B003F08CB /* CoreLocation.framework in Frameworks */,
+				045386B71BED0BA8001E46ED /* Crashlytics.framework in Frameworks */,
 				0439D3401B8B76B1001850DD /* Branch.framework in Frameworks */,
 				502199AE1B33817100A64387 /* Accounts.framework in Frameworks */,
 				0439D34E1B8B7709001850DD /* TwitterCore.framework in Frameworks */,
@@ -860,6 +863,7 @@
 		0439D3301B8B76B1001850DD /* Fabric */ = {
 			isa = PBXGroup;
 			children = (
+				045386B61BED0BA8001E46ED /* Crashlytics.framework */,
 				0439D3981B8B7AEE001850DD /* DigitsKitResources.bundle */,
 				0439D34D1B8B7709001850DD /* TwitterCore.framework */,
 				0439D3311B8B76B1001850DD /* DigitsKit.framework */,

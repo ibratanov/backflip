@@ -10,6 +10,7 @@ import Parse
 import Fabric
 import DigitsKit
 import FBSDKCoreKit
+import Crashlytics
 
 
 @UIApplicationMain
@@ -91,7 +92,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		PFInstallation.currentInstallation().saveInBackground()
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-			Fabric.with([Digits()])
+			Fabric.with([Digits.self, Crashlytics.self])
 		});
         
 		

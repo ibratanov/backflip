@@ -28,13 +28,14 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 	internal var cachedPages : [AnyObject?] = []
 	
 	// Content
-	internal var images : [String] = ["made-easy-icon", "how-it-works-icon", "why-trust-icon", "start-stashing-icon"]
-	internal var titles : [String] = ["Everyone Can Invest", "It's Easy To Get Started", "Stash Has Your Back", "Start Saving", ""]
+	internal var images : [String] = ["icon-1", "icon-2", "icon-3", "icon-4", "icon-5"]
+	internal var titles : [String] = ["Explore", "Event Creation", "Camera", "Share", "Report a Problem"]
 	internal var descriptions : [String] = [
-		"Investing use to be complicated, with high minimums and fees, We've made it simple and affordable",
-		"Pick an investment tied to somethingthing you believe, like or want. Invest as little as $5. And Stash will guide you from there.",
-		"Rest Easy. Your data is secure. You can withdraw money at anytime. And our pricing is simple: We charge $1 a month. Once your account reaches $5,000, we change 0.25% of your balance per year.",
-		"Start with as little as $5 and have your money work for you"
+		"Explore what’s happening around you right now",
+		"Create your own event — Tap and hold the name to make it private",
+		"Get social — Invite friends to view an album via an invite link or share photos directly to other platforms",
+		"Post photos to other social platforms, send them to friends, or save them to your phone",
+		"Shake your device on any screen to contact us, report a problem or just say hi!"
 	]
 	
 	
