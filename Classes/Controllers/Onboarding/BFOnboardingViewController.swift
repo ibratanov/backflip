@@ -31,10 +31,10 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 	internal var images : [String] = ["icon-1", "icon-2", "icon-3", "icon-4", "icon-5"]
 	internal var titles : [String] = ["Explore", "Event Creation", "Camera", "Share", "Report a Problem"]
 	internal var descriptions : [String] = [
-		"Explore what’s happening around you right now",
+		"Discover what’s happening around you right now",
 		"Create your own event — Tap and hold the name to make it private",
+		"Snap and post directly to your current event to share the experience",
 		"Get social — Invite friends to view an album via an invite link or share photos directly to other platforms",
-		"Post photos to other social platforms, send them to friends, or save them to your phone",
 		"Shake your device on any screen to contact us, report a problem or just say hi!"
 	]
 	
@@ -55,7 +55,9 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 	{
 		super.viewDidAppear(animated)
 
-		(self.cachedPages[0] as! BFOnboardingInitialView).startAnimation()
+		if (self.cachedPages[0] != nil) {
+			(self.cachedPages[0] as! BFOnboardingInitialView).startAnimation()
+		}
 		self.animatedView?.startAnimating()
 	}
 
@@ -115,13 +117,15 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 	
 	internal func setupButtons()
 	{
-		digitsButton.backgroundColor = UIColor(red:0,  green:0.765,  blue:0.263, alpha:1)
+		digitsButton.backgroundColor = UIColor.clearColor()
 		digitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 		digitsButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
 		digitsButton.layer.cornerRadius = 25
-		digitsButton.titleLabel?.font =  UIFont(name: "Lato-Light", size: 20)
-		digitsButton.setTitle("Log in via SMS", forState: .Normal)
+		digitsButton.titleLabel?.font =  UIFont(name: "Lato-Regular", size: 14)
+		digitsButton.setTitle("Login via SMS", forState: .Normal)
 		digitsButton.addTarget(self, action: "digitsLogin:", forControlEvents: .TouchUpInside)
+		digitsButton.titleLabel?.layer.shadowColor = UIColor.blackColor().CGColor
+		digitsButton.titleLabel?.layer.shadowOffset = CGSizeMake(1.0, 1.0)
 		digitsButton.frame = CGRectMake(10, (self.view.bounds.height - 60) - 50, self.view.bounds.width - 20, 50)
 	
 		facebookButton.backgroundColor = UIColor(red:0.231,  green:0.349,  blue:0.596, alpha:1)
@@ -129,9 +133,9 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 		facebookButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
 		facebookButton.layer.cornerRadius = 25
 		facebookButton.titleLabel?.font =  UIFont(name: "Lato-Light", size: 20)
-		facebookButton.setTitle("Log in via Facebook", forState: .Normal)
+		facebookButton.setTitle("Login via Facebook", forState: .Normal)
 		facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: .TouchUpInside)
-		facebookButton.frame = CGRectMake(10, (self.digitsButton.frame.origin.y - 10) - 50, self.view.bounds.width - 20, 50)
+		facebookButton.frame = CGRectMake(10, (self.digitsButton.frame.origin.y - 10) - 30, self.view.bounds.width - 20, 50)
 	}
 	
 	
