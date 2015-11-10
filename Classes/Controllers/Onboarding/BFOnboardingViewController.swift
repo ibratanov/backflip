@@ -9,6 +9,7 @@
 import UIKit
 import DigitsKit
 
+
 class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 {
 	// Backgrounds
@@ -19,6 +20,7 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 	// Buttons
 	internal var facebookButton : UIButton = UIButton(type: .Custom)
 	internal var digitsButton : UIButton = UIButton(type: .Custom)
+	internal var legalButton : UIButton = UIButton(type: .Custom)
 	
 	internal var pageControl : UIPageControl = UIPageControl()
 	
@@ -68,6 +70,7 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 		
 		self.view.addSubview(facebookButton)
 		self.view.addSubview(digitsButton)
+		self.view.addSubview(legalButton)
 		
 		self.view.addSubview(pageControl)
 		
@@ -135,7 +138,18 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 		facebookButton.titleLabel?.font =  UIFont(name: "Lato-Light", size: 20)
 		facebookButton.setTitle("Login via Facebook", forState: .Normal)
 		facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: .TouchUpInside)
-		facebookButton.frame = CGRectMake(10, (self.digitsButton.frame.origin.y - 10) - 30, self.view.bounds.width - 20, 50)
+		facebookButton.frame = CGRectMake(20, (self.digitsButton.frame.origin.y - 10) - 30, self.view.bounds.width - 40, 50)
+		
+		legalButton.backgroundColor = UIColor.clearColor()
+		legalButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+		legalButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: 10)
+		legalButton.titleLabel?.alpha = 0.8
+		legalButton.setTitle("By creating an account, you agree to our Terms & Conditions", forState: .Normal)
+		legalButton.addTarget(self, action: "legalButtonPressed:", forControlEvents: .TouchUpInside)
+		legalButton.titleLabel?.layer.shadowColor = UIColor.blackColor().CGColor
+		legalButton.titleLabel?.layer.shadowOffset = CGSizeMake(1.0, 1.0)
+		legalButton.frame = CGRectMake(10, self.view.bounds.height - 30, self.view.bounds.width - 20, 40)
+		
 	}
 	
 	
@@ -356,6 +370,17 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 				}
 				
 			}
+			
+		}
+	}
+	
+	
+	func legalButtonPressed(sender: AnyObject?)
+	{
+		if #available(iOS 9, *) {
+			
+			let safariViewController = SFSafariViewController(URL: NSURL(string: "http://getbackflip.com/eula")!)
+			self.presentViewController(safariViewController, animated: true, completion: nil)
 			
 		}
 	}

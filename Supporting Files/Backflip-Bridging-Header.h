@@ -27,6 +27,13 @@
 	#include <netinet/in.h>
 	#include <unistd.h>
 
+
+	// iOS 9 only..
+	#if TARGET_OS_IOS && __IPHONE_9_0
+		@import SafariServices;
+	#endif
+
+
 	// SVProgressHUD
 	#if TARGET_OS_TV
 		#import "SVProgressHUD.h"
