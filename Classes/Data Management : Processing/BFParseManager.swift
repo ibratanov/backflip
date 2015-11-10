@@ -9,6 +9,7 @@
 import Parse
 import DigitsKit
 import Foundation
+import Crashlytics
 
 
 
@@ -329,6 +330,8 @@ public class BFParseManager : NSObject
 						
 						user!.saveInBackgroundWithBlock(nil)
 						
+						self.loginAnalytics(user!["email"] as? String, objectId: user!.objectId!, fullName: user!["facebook_name"] as? String, phoneNumber: user!["phone"] as? String)
+						
 						return completion(completed: true, error: nil)
 					} else {
 						return completion(completed: false, error: error)
@@ -377,6 +380,8 @@ public class BFParseManager : NSObject
 					
 					user!.saveInBackgroundWithBlock(nil)
 					
+					self.loginAnalytics(user!["email"] as? String, objectId: user!.objectId!, fullName: user!["facebook_name"] as? String, phoneNumber: user!["phone"] as? String)
+					
 					return completion(completed: true, error: nil)
 				} else {
 					return completion(completed: false, error: error)
@@ -390,7 +395,22 @@ public class BFParseManager : NSObject
 		
 	}
 	
-	
+	private func loginAnalytics(emailAddress: String?, objectId: String, fullName: String?, phoneNumber: String?)
+	{
+		Crashlytics.sharedInstance().setUserIdentifier(objectId)
+		
+		if (emailAddress != nil) {
+			Crashlytics.sharedInstance().setUserEmail(emailAddress)
+		}
+
+		if (fullName != nil) {
+			Crashlytics.sharedInstance().setUserName(fullName)
+		}
+		
+		if (phoneNumber != nil) {
+			Crashlytics.sharedInstance().setObjectValue("phoneNumber", forKey: phoneNumber!)
+		}
+	}
 	
 	
 	private func createUser(firstName: String?, lastName: String?, emailAddress: String?, facebookId: String?, phoneNumber: String?, uponCompletion completion: (completed : Bool, error : NSError?) -> Void) -> Void
