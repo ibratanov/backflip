@@ -161,4 +161,15 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 		self.pageControl.currentPage = pageIndex
 	}
 	
+	
+	// ----------------------------------------
+	//  MARK: - Data
+	// ----------------------------------------
+	
+	private func loadEvents(animated: Bool)
+	{
+		let _events = Event.MR_findByAttribute("featured", withValue:1) as! [Event]
+		
+	}
+	
 }

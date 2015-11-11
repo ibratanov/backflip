@@ -530,7 +530,6 @@
 		0439D3D01B8B87D3001850DD /* BFTabBarControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFTabBarControllerDelegate.swift; sourceTree = "<group>"; };
 		0439D3D21B8B887C001850DD /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		0439D3D41B8B8896001850DD /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
-		0439D3DD1B8B93A5001850DD /* Backflip.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Backflip.xcdatamodel; sourceTree = "<group>"; };
 		043AB39B1BBE212100BA5827 /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameView.swift; path = Vendor/PKHUD/PKHUD/FrameView.swift; sourceTree = "<group>"; };
 		043AB39C1BBE212100BA5827 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Vendor/PKHUD/PKHUD/Images.xcassets; sourceTree = "<group>"; };
 		043AB39D1BBE212100BA5827 /* PKHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUD.swift; path = Vendor/PKHUD/PKHUD/PKHUD.swift; sourceTree = "<group>"; };
@@ -1463,7 +1462,6 @@
 				0439D3B31B8B82E2001850DD /* Interface */,
 				0439D3BE1B8B838F001850DD /* Activity Items */,
 				81BA81491A49DA1800E65899 /* Info.plist */,
-				0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */,
 				043AB3BF1BBE304F00BA5827 /* Toronto, ON, Canada.gpx */,
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81821A49E27F00E65899 /* Backflip-Bridging-Header.h */,
@@ -2425,16 +2423,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		0439D3DC1B8B93A5001850DD /* Backflip.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				0439D3DD1B8B93A5001850DD /* Backflip.xcdatamodel */,
-			);
-			currentVersion = 0439D3DD1B8B93A5001850DD /* Backflip.xcdatamodel */;
-			path = Backflip.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		04937DD11BD979D1004A2730 /* Backflip.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

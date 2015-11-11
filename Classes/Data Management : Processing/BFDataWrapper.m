@@ -161,7 +161,6 @@
 	}
 	NSLog(@"📝 Processing %lu events..", (unsigned long)events.count);
 	
-
 	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
 		
 		for (PFObject *event in events) {
@@ -186,6 +185,9 @@
 			if ([self isValidValue:event[@"venue"]])
 				[object setVenue:event[@"venue"]];
 		
+			if ([self isValidValue:event[@"featured"]])
+				 [object setFeatured:@([event[@"featured"] boolValue])];
+				 
 			if ([self isValidValue:event[@"startTime"]])
 				[object setStartTime:(NSDate *)event[@"startTime"]];
 			

@@ -24,5 +24,6 @@ extension Event {
     @NSManaged var geoLocation: GeoPoint?
     @NSManaged var photos: NSSet?
     @NSManaged var inviteUrl: String?
+	@NSManaged var featured: NSNumber?
 
 }
