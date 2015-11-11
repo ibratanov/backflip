@@ -161,6 +161,7 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 	{
 		self.gradientView = BFGradientView.init(frame: self.view.frame)
 		self.gradientView?.alpha = 0
+		self.gradientView?.colours = [UIColor(red:0.447,  green:0.314,  blue:0.643, alpha:1), UIColor(red:0.263,  green:0.824,  blue:0.859, alpha:1)]
 		self.view.addSubview(self.gradientView!)
 		self.view.sendSubviewToBack(self.gradientView!)
 		

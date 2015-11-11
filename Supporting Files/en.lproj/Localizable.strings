@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  Backflip for iOS
+
+  Created by Jack Perry on 2015-11-10.
+  Copyright © 2015 Backflip. All rights reserved.
+*/
+
+
+"title.discover.suggested-events" = "SUGGESTED EVENTS";
+"title.discover.browse" = "BROWSE";

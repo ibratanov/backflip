@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Event)
-class Event: ParseObject
+public class Event: ParseObject
 {
 
 	var __cleanPhotos : [Photo] = [] // Caching, yay speed!

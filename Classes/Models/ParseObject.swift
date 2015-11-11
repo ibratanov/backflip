@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(ParseObject)
-class ParseObject: NSManagedObject {
+public class ParseObject: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 

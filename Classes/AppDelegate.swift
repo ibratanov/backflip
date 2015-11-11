@@ -93,7 +93,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-			Fabric.sharedSDK().debug = true
+			// Fabric.sharedSDK().debug = true
 			Fabric.with([Digits.self, Crashlytics.self])
 		});
         

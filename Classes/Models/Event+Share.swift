@@ -17,17 +17,17 @@ extension Event : UIActivityItemSource
 	// MARK: UIActivityItemSource
 	//-------------------------------------
 	
-	func activityViewControllerPlaceholderItem(activityViewController: UIActivityViewController) -> AnyObject
+	public func activityViewControllerPlaceholderItem(activityViewController: UIActivityViewController) -> AnyObject
 	{
 		return shareText(nil)
 	}
 	
-	func activityViewController(activityViewController: UIActivityViewController, itemForActivityType activityType: String) -> AnyObject?
+	public func activityViewController(activityViewController: UIActivityViewController, itemForActivityType activityType: String) -> AnyObject?
 	{
 		return shareText(activityType)
 	}
 	
-	func activityViewController(activityViewController: UIActivityViewController, subjectForActivityType activityType: String?) -> String
+	public func activityViewController(activityViewController: UIActivityViewController, subjectForActivityType activityType: String?) -> String
 	{
 		return shareSubject(activityType)
 	}

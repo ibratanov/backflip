@@ -9,29 +9,55 @@
 import UIKit
 import Foundation
 
-class BFGradientView : UIView
+public class BFGradientView : UIView
 {
 	
-	override init(frame: CGRect)
+	/**
+	 * Gradient Colors
+	*/
+	public var colours: [UIColor] = [] {
+		didSet {
+			
+			var __colours: [CGColor] = []
+			for colour in colours {
+				__colours.append(colour.CGColor)
+			}
+			
+			self.gradientLayer.colors = __colours
+		}
+	}
+	
+	/**
+	 * Gradient Layer
+	*/
+	private let gradientLayer = CAGradientLayer()
+	
+	
+	
+	public override init(frame: CGRect)
 	{
 		super.init(frame: frame)
 		
-		self.setupGradient()
+		self.layer.insertSublayer(self.gradientLayer, atIndex: 0)
 	}
 
-	required init?(coder aDecoder: NSCoder)
+	required public init?(coder aDecoder: NSCoder)
 	{
 	    super.init(coder: aDecoder)
 		
-		self.setupGradient()
+		self.layer.insertSublayer(self.gradientLayer, atIndex: 0)
+	}
+	
+	
+	// ----------------------------------------
+	//  MARK: - Layout
+	// ----------------------------------------
+	
+	public override func layoutSubviews()
+	{
+		super.layoutSubviews()
+		
+		self.gradientLayer.frame = self.frame
 	}
 
-	
-	func setupGradient()
-	{
-		let gradient: CAGradientLayer = CAGradientLayer()
-		gradient.frame = self.bounds
-		gradient.colors = [UIColor(red:0.447,  green:0.314,  blue:0.643, alpha:1).CGColor, UIColor(red:0.263,  green:0.824,  blue:0.859, alpha:1).CGColor]
-		self.layer.insertSublayer(gradient, atIndex: 0)
-	}
 }

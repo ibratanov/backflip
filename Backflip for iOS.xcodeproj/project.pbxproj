@@ -112,6 +112,12 @@
 		045386741BEBBB26001E46ED /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0453866A1BEBBB26001E46ED /* Lato-LightItalic.ttf */; };
 		045386751BEBBB26001E46ED /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0453866B1BEBBB26001E46ED /* Lato-Regular.ttf */; };
 		045386B71BED0BA8001E46ED /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045386B61BED0BA8001E46ED /* Crashlytics.framework */; };
+		045386F11BF25304001E46ED /* BFExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386F01BF25304001E46ED /* BFExploreViewController.swift */; };
+		045386F41BF259A2001E46ED /* BFFeaturedEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386F31BF259A2001E46ED /* BFFeaturedEventCell.swift */; };
+		045386F61BF29780001E46ED /* BFFeaturedEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386F51BF29780001E46ED /* BFFeaturedEventsView.swift */; };
+		045386FA1BF2A12C001E46ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 045386FC1BF2A12C001E46ED /* Localizable.strings */; };
+		045386FE1BF2AE4D001E46ED /* BFBrowseEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386FD1BF2AE4D001E46ED /* BFBrowseEventsView.swift */; };
+		045387001BF2B571001E46ED /* BFBrowseEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386FF1BF2B571001E46ED /* BFBrowseEventCell.swift */; };
 		046D98BA1BCAAAF4004B3DCD /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98A91BCAAAF4004B3DCD /* AnimationController.swift */; };
 		046D98BB1BCAAAF4004B3DCD /* ImagePickerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98AA1BCAAAF4004B3DCD /* ImagePickerAction.swift */; };
 		046D98BC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98AC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift */; };
@@ -560,6 +566,12 @@
 		0453866A1BEBBB26001E46ED /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
 		0453866B1BEBBB26001E46ED /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		045386B61BED0BA8001E46ED /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		045386F01BF25304001E46ED /* BFExploreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFExploreViewController.swift; path = Explore/BFExploreViewController.swift; sourceTree = "<group>"; };
+		045386F31BF259A2001E46ED /* BFFeaturedEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFFeaturedEventCell.swift; path = Explore/BFFeaturedEventCell.swift; sourceTree = "<group>"; };
+		045386F51BF29780001E46ED /* BFFeaturedEventsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFFeaturedEventsView.swift; sourceTree = "<group>"; };
+		045386FB1BF2A12C001E46ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		045386FD1BF2AE4D001E46ED /* BFBrowseEventsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFBrowseEventsView.swift; path = Explore/BFBrowseEventsView.swift; sourceTree = "<group>"; };
+		045386FF1BF2B571001E46ED /* BFBrowseEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFBrowseEventCell.swift; path = Explore/BFBrowseEventCell.swift; sourceTree = "<group>"; };
 		046D98A91BCAAAF4004B3DCD /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		046D98AA1BCAAAF4004B3DCD /* ImagePickerAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerAction.swift; sourceTree = "<group>"; };
 		046D98AB1BCAAAF4004B3DCD /* ImagePickerSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerSheetController.h; sourceTree = "<group>"; };
@@ -896,6 +908,7 @@
 		0439D3AC1B8B822C001850DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				045386F21BF25814001E46ED /* Explore */,
 				0453865F1BEBB7B9001E46ED /* Onboarding */,
 				04B610311BB98FEE00C1AF1E /* Collection View */,
 				040FD7891BD5746B0039CDAA /* BFPhotoBrowser.swift */,
@@ -991,6 +1004,33 @@
 				0453866B1BEBBB26001E46ED /* Lato-Regular.ttf */,
 			);
 			path = Lato;
+			sourceTree = "<group>";
+		};
+		045386EF1BF252E4001E46ED /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				045386F01BF25304001E46ED /* BFExploreViewController.swift */,
+			);
+			name = Explore;
+			sourceTree = "<group>";
+		};
+		045386F21BF25814001E46ED /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				045386F51BF29780001E46ED /* BFFeaturedEventsView.swift */,
+				045386F31BF259A2001E46ED /* BFFeaturedEventCell.swift */,
+				045386FD1BF2AE4D001E46ED /* BFBrowseEventsView.swift */,
+				045386FF1BF2B571001E46ED /* BFBrowseEventCell.swift */,
+			);
+			name = Explore;
+			sourceTree = "<group>";
+		};
+		045386F71BF2A102001E46ED /* Localized Strings */ = {
+			isa = PBXGroup;
+			children = (
+				045386FC1BF2A12C001E46ED /* Localizable.strings */,
+			);
+			name = "Localized Strings";
 			sourceTree = "<group>";
 		};
 		046D98A81BCAAAF4004B3DCD /* ImagePickerSheetController */ = {
@@ -1365,6 +1405,7 @@
 		04F41BEE1B74FBF4001AB8DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				045386EF1BF252E4001E46ED /* Explore */,
 				040756DA1BD7E6AF00F95E96 /* Event Album */,
 				046D98DD1BCAABA8004B3DCD /* Camera */,
 				045386401BEBB714001E46ED /* Onboarding */,
@@ -1417,6 +1458,7 @@
 		81BA81481A49DA1800E65899 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				045386F71BF2A102001E46ED /* Localized Strings */,
 				045386601BEBBB25001E46ED /* Fonts */,
 				0439D3B31B8B82E2001850DD /* Interface */,
 				0439D3BE1B8B838F001850DD /* Activity Items */,
@@ -1805,6 +1847,7 @@
 				043350561BDAB67C00914A2E /* backflip-preseed.sqlite in Resources */,
 				04D7D7041BA9ACC000AC6AA3 /* like.png in Resources */,
 				0430A41C1BE13BA500E33359 /* Instabug.bundle in Resources */,
+				045386FA1BF2A12C001E46ED /* Localizable.strings in Resources */,
 				0453866E1BEBBB26001E46ED /* Lato-Bold.ttf in Resources */,
 				0453866F1BEBBB26001E46ED /* Lato-BoldItalic.ttf in Resources */,
 				0453866C1BEBBB26001E46ED /* Lato-Black.ttf in Resources */,
@@ -1899,6 +1942,7 @@
 				0477CE421BDFEBA30033BDEE /* BFViewController.swift in Sources */,
 				043AB3BA1BBE212200BA5827 /* PKHUDTextView.swift in Sources */,
 				0439D3C01B8B83AE001850DD /* ReportImage.swift in Sources */,
+				045386F61BF29780001E46ED /* BFFeaturedEventsView.swift in Sources */,
 				040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */,
 				046D98C21BCAAAF4004B3DCD /* PreviewSupplementaryView.swift in Sources */,
 				0439D3CF1B8B8777001850DD /* UIColor+Extensions.swift in Sources */,
@@ -1916,12 +1960,14 @@
 				040756F71BD7E6F200F95E96 /* EventAlbumCell.swift in Sources */,
 				0439D3A41B8B81A6001850DD /* CreatePublicEventViewController.swift in Sources */,
 				043AB3B81BBE212200BA5827 /* PKHUDSuccessView.swift in Sources */,
+				045386FE1BF2AE4D001E46ED /* BFBrowseEventsView.swift in Sources */,
 				043AB3B51BBE212200BA5827 /* PKHUDSquareBaseView.swift in Sources */,
 				042E8D781BB3119A00D61412 /* EventHistoryHeaderView.swift in Sources */,
 				04D5E6411BE3B6440073FEDB /* BFBonjourManager.swift in Sources */,
 				046D98BB1BCAAAF4004B3DCD /* ImagePickerAction.swift in Sources */,
 				0439D3A51B8B81A6001850DD /* EventAlbumViewController.swift in Sources */,
 				046D98E51BCAABA8004B3DCD /* BFImagePreviewController.swift in Sources */,
+				045387001BF2B571001E46ED /* BFBrowseEventCell.swift in Sources */,
 				043AB3BC1BBE212200BA5827 /* PKHUDWideBaseView.swift in Sources */,
 				046D98C71BCAAAF4004B3DCD /* SheetPreviewCollectionViewCell.swift in Sources */,
 				043AB3B91BBE212200BA5827 /* PKHUDSystemActivityIndicatorView.swift in Sources */,
@@ -1944,6 +1990,7 @@
 				0422D1161BCFF3190078E7F6 /* BFDataWrapper.m in Sources */,
 				046D98BC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift in Sources */,
 				04C61FC21B8B982600E2ACB5 /* Photo.swift in Sources */,
+				045386F41BF259A2001E46ED /* BFFeaturedEventCell.swift in Sources */,
 				04A0DCC71BE7F91300C5AABD /* EventEditingView.swift in Sources */,
 				040FD78A1BD5746B0039CDAA /* BFPhotoBrowser.swift in Sources */,
 				04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */,
@@ -1969,6 +2016,7 @@
 				042E8D761BB30BFD00D61412 /* EventHistoryViewController.swift in Sources */,
 				0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */,
 				045386481BEBB714001E46ED /* BFOnboardingInfoView.swift in Sources */,
+				045386F11BF25304001E46ED /* BFExploreViewController.swift in Sources */,
 				04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */,
 				045386491BEBB714001E46ED /* BFOnboardingInitialView.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
@@ -2017,6 +2065,14 @@
 				040EB5A41BC815EA00452620 /* Base */,
 			);
 			name = "Main-TV.storyboard";
+			sourceTree = "<group>";
+		};
+		045386FC1BF2A12C001E46ED /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				045386FB1BF2A12C001E46ED /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
