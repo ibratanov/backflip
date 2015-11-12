@@ -32,4 +32,9 @@ class BFDataProcessor
 		return BFDataWrapper.processPhotos(photos, completion: completion)
 	}
 	
+	func processEventFeatures(features: [PFObject]?, completion: () -> Void)
+	{
+		return BFDataWrapper.processEventFeatures(features, completion: completion)
+	}
+	
 }

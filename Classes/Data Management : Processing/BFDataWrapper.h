@@ -17,6 +17,6 @@
 + (void)processEvents:(nullable NSArray *)events completion:(nullable void (^)(void))completionBlock;
 + (void)processPhotos:(nullable NSArray *)photos completion:(nullable void (^)(void))completionBlock;
 + (void)processAttendance:(nullable NSArray *)attendance completion:(nullable void (^)(void))completionBlock;
-
++ (void)processEventFeatures:(nullable NSArray *)features completion:(nullable void (^)(void))completionBlock;
 
 @end

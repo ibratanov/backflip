@@ -107,6 +107,26 @@ class BFDataFetcher : NSObject
 				
 			}
 			
+			// Event Features
+			dispatch_async(dispatch_get_global_queue(priority, 0)) {
+				let objects: AnyObject? = object?.objectForKey("EventFeature")
+				if (objects?.count > 0) {
+					if (activityInidactor) {
+						#if os(iOS)
+							ZAActivityBar.showWithStatus("Processing Featured Events", forAction: "process_features")
+						#endif
+					}
+					
+					BFDataProcessor.sharedProcessor.processEventFeatures(objects as? [PFObject], completion: { () -> Void in
+						if (activityInidactor) {
+							#if os(iOS)
+								ZAActivityBar.showSuccessWithStatus("Featured Events Processed", forAction: "process_features")
+							#endif
+						}
+					})
+				}
+				
+			}
 			
 			
 		})

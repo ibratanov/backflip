@@ -98,10 +98,12 @@ public class BFFeaturedEventCell : UICollectionViewCell
 		self.layer.cornerRadius = 4
 		self.contentView.layer.masksToBounds = true
 		self.contentView.layer.cornerRadius = 4
+		self.contentView.layer.borderWidth = 0.5
+		self.contentView.layer.borderColor = UIColor(red:0.941,  green:0.945,  blue:0.953, alpha:1).CGColor
 		
 		self.imageView.clipsToBounds = true
 		self.imageView.layer.masksToBounds = true
-		self.imageView.backgroundColor = UIColor.lightGrayColor()
+		self.imageView.backgroundColor = UIColor(red:0.941,  green:0.945,  blue:0.953, alpha:1)
 		
 		self.blurBackgroundView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.6)
 		self.blurBackgroundView.clipsToBounds = true

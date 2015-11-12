@@ -110,7 +110,6 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 	{
 		let cell = tableView.dequeueReusableCellWithIdentifier(BFBrowseEventCell.reuseIdentifier, forIndexPath: indexPath) as! BFBrowseEventCell
 		
-		
 		cell.backgroundImageView.image = UIImage(named: "Scene-4")
 		cell.textLabel?.text = "Startup OH TO"
 		cell.detailTextLabel?.text = "Toronto, Ontario"

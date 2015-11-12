@@ -1,5 +1,5 @@
 //
-//  GeoPoint+CoreDataProperties.swift
+//  Tag+CoreDataProperties.swift
 //  Backflip for iOS
 //
 //  Created by Jack Perry on 2015-11-12.
@@ -12,10 +12,11 @@
 import Foundation
 import CoreData
 
-extension GeoPoint {
+extension Tag {
 
-    @NSManaged var index: NSNumber?
-    @NSManaged var latitude: NSNumber?
-    @NSManaged var longitude: NSNumber?
+    @NSManaged var name: String?
+    @NSManaged var color: String?
+    @NSManaged var priority: NSNumber?
+    @NSManaged var event: Event?
 
 }

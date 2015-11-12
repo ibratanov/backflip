@@ -94,6 +94,8 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 		self.lineView = UIView(frame: CGRectZero)
 		self.lineView.backgroundColor = UIColor(red:0.851,  green:0.851,  blue:0.851, alpha:1)
 		self.addSubview(self.lineView)
+		
+		self.loadEvents(false)
 	}
 	
 	
@@ -168,7 +170,13 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 	
 	private func loadEvents(animated: Bool)
 	{
-		let _events = Event.MR_findByAttribute("featured", withValue:1) as! [Event]
+		let predicate = NSPredicate(format: "%K >= %@ AND %K =< %@ AND %K == %@", argumentArray: ["startTime", NSDate(), "endTime", NSDate(), "enabled", 1])
+		let features = EventFeature.MR_findAllWithPredicate(predicate)
+		
+		print("We have \(features.count) featured events")
+		for feature in features {
+			print("Feature.. \(feature)")
+		}
 		
 	}
 	

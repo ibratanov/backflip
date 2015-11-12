@@ -118,6 +118,10 @@
 		045386FA1BF2A12C001E46ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 045386FC1BF2A12C001E46ED /* Localizable.strings */; };
 		045386FE1BF2AE4D001E46ED /* BFBrowseEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386FD1BF2AE4D001E46ED /* BFBrowseEventsView.swift */; };
 		045387001BF2B571001E46ED /* BFBrowseEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386FF1BF2B571001E46ED /* BFBrowseEventCell.swift */; };
+		045949DB1BF4FD6E00CCC348 /* EventFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045949D71BF4FD6E00CCC348 /* EventFeature.swift */; };
+		045949DC1BF4FD6E00CCC348 /* EventFeature+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045949D81BF4FD6E00CCC348 /* EventFeature+CoreDataProperties.swift */; };
+		045949DD1BF4FD6E00CCC348 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045949D91BF4FD6E00CCC348 /* Tag.swift */; };
+		045949DE1BF4FD6E00CCC348 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045949DA1BF4FD6E00CCC348 /* Tag+CoreDataProperties.swift */; };
 		046D98BA1BCAAAF4004B3DCD /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98A91BCAAAF4004B3DCD /* AnimationController.swift */; };
 		046D98BB1BCAAAF4004B3DCD /* ImagePickerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98AA1BCAAAF4004B3DCD /* ImagePickerAction.swift */; };
 		046D98BC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D98AC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift */; };
@@ -571,6 +575,10 @@
 		045386FB1BF2A12C001E46ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		045386FD1BF2AE4D001E46ED /* BFBrowseEventsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFBrowseEventsView.swift; path = Explore/BFBrowseEventsView.swift; sourceTree = "<group>"; };
 		045386FF1BF2B571001E46ED /* BFBrowseEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFBrowseEventCell.swift; path = Explore/BFBrowseEventCell.swift; sourceTree = "<group>"; };
+		045949D71BF4FD6E00CCC348 /* EventFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFeature.swift; sourceTree = "<group>"; };
+		045949D81BF4FD6E00CCC348 /* EventFeature+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "EventFeature+CoreDataProperties.swift"; path = "Models/EventFeature+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		045949D91BF4FD6E00CCC348 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		045949DA1BF4FD6E00CCC348 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tag+CoreDataProperties.swift"; path = "Models/Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		046D98A91BCAAAF4004B3DCD /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		046D98AA1BCAAAF4004B3DCD /* ImagePickerAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerAction.swift; sourceTree = "<group>"; };
 		046D98AB1BCAAAF4004B3DCD /* ImagePickerSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerSheetController.h; sourceTree = "<group>"; };
@@ -1177,6 +1185,8 @@
 				04C61FBA1B8B982600E2ACB5 /* Photo.swift */,
 				04C61FBC1B8B982600E2ACB5 /* GeoPoint.swift */,
 				04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */,
+				045949D71BF4FD6E00CCC348 /* EventFeature.swift */,
+				045949D91BF4FD6E00CCC348 /* Tag.swift */,
 			);
 			name = Models;
 			path = ../Models;
@@ -1314,6 +1324,8 @@
 		04C61FB41B8B97F700E2ACB5 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				045949D81BF4FD6E00CCC348 /* EventFeature+CoreDataProperties.swift */,
+				045949DA1BF4FD6E00CCC348 /* Tag+CoreDataProperties.swift */,
 				04196F521B8B996000AE5FA5 /* File+CoreDataProperties.swift */,
 				041F37951B94B08700610881 /* Attendance+CoreDataProperties.swift */,
 				04C61FC51B8B987B00E2ACB5 /* Photo+CoreDataProperties.swift */,
@@ -1944,12 +1956,14 @@
 				040B27D21B794E9B004B4FB2 /* Event+Share.swift in Sources */,
 				046D98C21BCAAAF4004B3DCD /* PreviewSupplementaryView.swift in Sources */,
 				0439D3CF1B8B8777001850DD /* UIColor+Extensions.swift in Sources */,
+				045949DC1BF4FD6E00CCC348 /* EventFeature+CoreDataProperties.swift in Sources */,
 				04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */,
 				04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */,
 				043AB3AD1BBE212100BA5827 /* FrameView.swift in Sources */,
 				04937DD41BD979F9004A2730 /* Backflip.xcdatamodeld in Sources */,
 				043AB3B11BBE212100BA5827 /* PKHUDAssets.swift in Sources */,
 				046D98C61BCAAAF4004B3DCD /* SheetController.swift in Sources */,
+				045949DB1BF4FD6E00CCC348 /* EventFeature.swift in Sources */,
 				0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */,
 				046D98E31BCAABA8004B3DCD /* BFCameraController.swift in Sources */,
 				042E8D711BB300A100D61412 /* Watchdog.swift in Sources */,
@@ -1983,6 +1997,7 @@
 				043AB3B61BBE212200BA5827 /* PKHUDStatusView.swift in Sources */,
 				045386471BEBB714001E46ED /* BFOnboardingImageView.swift in Sources */,
 				04ED9B0C1BC2FC26008493E3 /* PreProcessorMacros.m in Sources */,
+				045949DE1BF4FD6E00CCC348 /* Tag+CoreDataProperties.swift in Sources */,
 				04CCD6691B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m in Sources */,
 				046D98BF1BCAAAF4004B3DCD /* PreviewCollectionView.swift in Sources */,
 				0422D1161BCFF3190078E7F6 /* BFDataWrapper.m in Sources */,
@@ -2015,6 +2030,7 @@
 				0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */,
 				045386481BEBB714001E46ED /* BFOnboardingInfoView.swift in Sources */,
 				045386F11BF25304001E46ED /* BFExploreViewController.swift in Sources */,
+				045949DD1BF4FD6E00CCC348 /* Tag.swift in Sources */,
 				04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */,
 				045386491BEBB714001E46ED /* BFOnboardingInitialView.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,

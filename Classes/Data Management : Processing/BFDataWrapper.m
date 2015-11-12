@@ -42,6 +42,7 @@
 @end
 
 
+
 @implementation BFDataWrapper
 
 
@@ -146,6 +147,11 @@
 	return [[BFDataWrapper sharedWrapper] processAttendance:attendance completion:completionBlock];
 }
 
++ (void)processEventFeatures:(NSArray *)features completion:(void (^)(void))completionBlock
+{
+	return [[BFDataWrapper sharedWrapper] processEventFeatures:features completion:completionBlock];
+}
+
 
 #pragma mark -
 #pragma mark (PRIVATE) Object saving
@@ -184,9 +190,6 @@
 			
 			if ([self isValidValue:event[@"venue"]])
 				[object setVenue:event[@"venue"]];
-		
-			if ([self isValidValue:event[@"featured"]])
-				 [object setFeatured:@([event[@"featured"] boolValue])];
 				 
 			if ([self isValidValue:event[@"startTime"]])
 				[object setStartTime:(NSDate *)event[@"startTime"]];
@@ -345,6 +348,60 @@
 		
 	}];
 
+}
+
+
+- (void)processEventFeatures:(NSArray *)features completion:(void (^)(void))completionBlock
+{
+	if (features == NULL || features.count < 1) {
+		if (completionBlock)
+			return completionBlock();
+		else
+			return ;
+	}
+	NSLog(@"📝 Processing %lu event features..", (unsigned long)features.count);
+	
+	[self saveWithBlock:^(NSManagedObjectContext *localContext) {
+		
+		for (PFObject *feature in features) {
+			
+			EventFeature *object = [Attendance fetchOrCreateWhereAttribute:@"objectId" isValue:feature.objectId inContext:localContext];
+			
+			if (feature.createdAt)
+				[object setCreatedAt:feature.createdAt];
+			
+			if (feature.updatedAt)
+				[object setUpdatedAt:feature.updatedAt];
+			
+			if ([self isValidValue:feature[@"enabled"]])
+				[object setEnabled:@([feature[@"enabled"] boolValue])];
+			
+			if ([self isValidValue:feature[@"startTime"]])
+				[object setStartTime:(NSDate *)feature[@"startTime"]];
+			
+			if ([self isValidValue:feature[@"endTime"]])
+				[object setEndTime:(NSDate *)feature[@"endTime"]];
+			
+			if ([self isValidValue:feature[@"priority"]])
+				[object setPriority:@([feature[@"priority"] integerValue])];
+			
+			if ([self isValidValue:feature[@"event"]]) {
+				Event *event = [Event fetchOrCreateWhereAttribute:@"objectId" isValue:((PFObject *)feature[@"event"]).objectId inContext:localContext];
+				[object setEvent:event];
+			}
+		}
+		
+	} completion:^(BOOL contextDidSave, NSError *error) {
+		
+		if (error)
+			NSLog(@"📛 Coredata error %@", error);
+		
+		if (completionBlock)
+			return completionBlock();
+		else
+			return ;
+		
+	}];
 }
 
 
