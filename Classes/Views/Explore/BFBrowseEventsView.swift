@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 import Foundation
 
 public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDelegate
@@ -16,7 +17,13 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 	 * Events, array of `Event` objects
 	*/
 	public var events: [Event] = []
-	private let eventCount = 8
+	
+	/**
+	 * Block called when `tableView` has been reloaded / hieght changed
+	*/
+	public typealias BFBrowseContentUpdateBlock = () -> Void
+	
+	public var updateBlock : BFBrowseContentUpdateBlock?
 	
 	/**
 	 * Table View
@@ -69,6 +76,8 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 		self.titleLabel.attributedText = attributedText
 		self.titleLabel.textColor = UIColor.grayColor()
 		self.addSubview(self.titleLabel)
+		
+		self.loadEvents(false)
 	}
 	
 	
@@ -88,7 +97,7 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 
 	public var contentHeight: CGFloat {
 		get {
-			return CGFloat(eventCount * Int(BFBrowseEventCell.contentHight))
+			return CGFloat(self.events.count * Int(BFBrowseEventCell.contentHight))
 		}
 	}
 	
@@ -102,7 +111,7 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 	@available(iOS 2.0, *)
 	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
-		return Int(eventCount) // events.count
+		return Int(self.events.count)
 	}
 	
 	@available(iOS 2.0, *)
@@ -110,14 +119,16 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 	{
 		let cell = tableView.dequeueReusableCellWithIdentifier(BFBrowseEventCell.reuseIdentifier, forIndexPath: indexPath) as! BFBrowseEventCell
 		
-		cell.backgroundImageView.image = UIImage(named: "Scene-4")
-		cell.textLabel?.text = "Startup OH TO"
-		cell.detailTextLabel?.text = "Toronto, Ontario"
-		cell.rightDetailLabel.text = "Tomorrow"
+		let event = self.events[indexPath.row]
+		cell.textLabel?.text = event.name
+		cell.detailTextLabel?.text = event.venue
+		cell.rightDetailLabel.text = event.startTime?.timeTogo
 		
 		return cell
 	}
 
+	
+	
 
 	// ----------------------------------------
 	//  MARK: - Table View (Delegate)
@@ -130,4 +141,91 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 	}
 
 	
+	@available(iOS 2.0, *)
+	public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+	{
+		guard let cell = cell as? BFBrowseEventCell else { fatalError("Expected to display a `BFBrowseEventCell`.") }
+		
+		let event = self.events[indexPath.row]
+		
+		cell.imageView!.nk_prepareForReuse()
+		if let image = event.previewImage {
+			let imageUrl = NSURL(string: image.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
+			cell.backgroundImageView!.nk_setImageWithURL(imageUrl!)
+		}
+		
+	}
+	
+	
+	// ----------------------------------------
+	//  MARK: - Data
+	// ----------------------------------------
+	
+	private func loadEvents(animated: Bool)
+	{
+		self.events.removeAll()
+	
+		
+		BFLocationManager.sharedManager.fetchLocation(.House) { (location, error) -> Void in
+			
+			if (error != nil) {
+				return // self.handleLocationError(error)
+			}
+			
+			let config = PFConfig.currentConfig()
+			let _events = Event.MR_findAll() as! [Event]
+			let nearbyEvents : NSMutableArray = NSMutableArray()
+			
+			let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10km (It's really in meters here 'cause of legacy, turns to Kms below)
+			let region : CLCircularRegion = CLCircularRegion(center: location!.coordinate, radius: (radius.doubleValue * 1000), identifier: "nearby-events-region")
+			
+			// Filter by event location and attancance
+			for event : Event in _events {
+				if (event.geoLocation != nil && event.live != nil && Bool(event.live!) == true && event.enabled != nil && Bool(event.enabled!) == true) {
+					let coordinate = CLLocationCoordinate2D(latitude: event.geoLocation!.latitude!.doubleValue, longitude: event.geoLocation!.longitude!.doubleValue)
+					if (region.containsCoordinate(coordinate)) {
+						
+						var attended = false
+						let attendees = event.attendees!.allObjects as! [Attendance]
+						for attendee : Attendance in attendees {
+							if (PFUser.currentUser() != nil && attendee.attendeeId == PFUser.currentUser()!.objectId!) {
+								attended = true
+								break
+							}
+						}
+						
+						if (attended == false) {
+							nearbyEvents.addObject(event)
+						}
+						
+					}
+				}
+			}
+			
+			
+			// Sort by closest to furthest
+			nearbyEvents.sortedArrayWithOptions(.Concurrent, usingComparator: { (event1, event2) -> NSComparisonResult in
+				let location1 = CLLocation(latitude: (event1 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event1 as! Event).geoLocation!.longitude!.doubleValue)
+				let location2 = CLLocation(latitude: (event2 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event2 as! Event).geoLocation!.longitude!.doubleValue)
+				let distance1 : NSNumber = NSNumber(double: location!.distanceFromLocation(location1))
+				let distance2 : NSNumber = NSNumber(double: location!.distanceFromLocation(location2))
+				return distance1.compare(distance2)
+			})
+			
+			
+			// Update UI
+			self.events = (nearbyEvents.copy()) as! [Event]
+			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+			
+				self.tableView.reloadData()
+				if (self.updateBlock != nil) {
+					self.updateBlock!()
+				}
+				
+			})
+			
+		}
+
+		
+	}
 }

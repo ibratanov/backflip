@@ -122,7 +122,7 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 	
 	public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
-		let numberOfItems = 9
+		let numberOfItems = self.events.count
 		
 		self.pageControl.numberOfPages = 1 * Int(ceil(Double(numberOfItems) / 3.0)) // Round up to nearist 1
 		return numberOfItems
@@ -134,11 +134,8 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 	{
 		let cell = collectionView.dequeueReusableCellWithReuseIdentifier(BFFeaturedEventCell.reuseIdentifier, forIndexPath: indexPath) as! BFFeaturedEventCell
 		
-		cell.textLabel.text = "Demo Event \(indexPath.row)"
-		
-		if (indexPath.row == 1) {
-			cell.imageView.image = UIImage(named: "Scene-4")
-		}
+		let event = self.events[indexPath.row]
+		cell.textLabel.text = event.name
 		
 		return cell
 	}
@@ -149,6 +146,21 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 		print("Selected cell \(indexPath.row)")
 	}
 	
+	@available(iOS 6.0, *)
+	public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+	{
+		if (indexPath.row > 0) {
+			guard let cell = cell as? BFFeaturedEventCell else { fatalError("Expected to display a `BFFeaturedEventCell`.") }
+			
+			let event = self.events[indexPath.row]
+	
+			cell.imageView.nk_prepareForReuse()
+			if (event.featureImage != nil) {
+				let imageUrl = NSURL(string: event.featureImage!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
+				cell.imageView.nk_setImageWithURL(imageUrl!)
+			}
+		}
+	}
 	
 	
 	// ----------------------------------------
@@ -170,14 +182,20 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 	
 	private func loadEvents(animated: Bool)
 	{
-		let predicate = NSPredicate(format: "%K >= %@ AND %K =< %@ AND %K == %@", argumentArray: ["startTime", NSDate(), "endTime", NSDate(), "enabled", 1])
-		let features = EventFeature.MR_findAllWithPredicate(predicate)
+		self.events.removeAll()
 		
-		print("We have \(features.count) featured events")
-		for feature in features {
-			print("Feature.. \(feature)")
+		let predicate = NSPredicate(format: "%K =< %@ AND %K >= %@ AND %K == %@", argumentArray: ["startTime", NSDate(), "endTime", NSDate(), "enabled", NSNumber(integer: 1)])
+		let features = EventFeature.MR_findAllSortedBy("priority", ascending: false, withPredicate: predicate) as! [EventFeature]
+		
+		if (features.count < 1) {
+			return
 		}
 		
+		for feature in features {
+			self.events.append(feature.event!)
+		}
+		
+		self.collectionView.reloadData()
 	}
 	
 }

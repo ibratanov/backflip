@@ -8,9 +8,12 @@
 #import "DGTContactAccessAuthorizationStatus.h"
 
 @class DGTAppearance;
+#if !TARGET_OS_TV
 @class DGTContactsUploadResult;
+#endif
 @class DGTSession;
 
+#if !TARGET_OS_TV
 /**
  *  Block type called after the Digits upload contacts flow is complete.
  *
@@ -18,6 +21,7 @@
  *  error is of the `DGTErrorDomain` domain with one of the codes in `DGTErrorCode`.
  */
 typedef void (^DGTUploadContactsCompletion)(DGTContactsUploadResult *result, NSError *error);
+#endif
 
 /**
  *  Block type called after Digits lookup contacts is complete.
@@ -51,6 +55,7 @@ typedef void (^DGTDeleteAllUploadedContactsCompletion)(NSError *error);
 
 - (instancetype)init __attribute__((unavailable("Use -initWithUserSession: instead")));
 
+#if !TARGET_OS_TV
 /**
  *  Uploads the user's Address Book to Digits. If `+[DGTContacts contactsAccessAuthorizationStatus]` is DGTContactAccessAuthorizationStatusPending, the Address Book permission UI will be presented to the user with the standard appearance. The UI is presented as a modal off of the top-most view controller. The modal title is the application name.
  *
@@ -84,6 +89,7 @@ typedef void (^DGTDeleteAllUploadedContactsCompletion)(NSError *error);
  *  @param completion                 Block called after the upload contacts flow has ended.
  */
 - (void)startContactsUploadWithDigitsAppearance:(DGTAppearance *)appearance presenterViewController:(UIViewController *)presenterViewController title:(NSString *)title completion:(DGTUploadContactsCompletion)completion;
+#endif
 
 /**
  *  Initiates a request to retrieve the authenticated user's contact matches. This method will fetch a portion of matches from Digits, and will yield a cursor that can be provided in a subsequent call to offset the next set of matches.

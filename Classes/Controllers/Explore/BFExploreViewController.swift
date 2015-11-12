@@ -48,11 +48,19 @@ public class BFExploreViewController : UIViewController
 	{
 		super.loadView()
 		
+		// Logo
+		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
+		
 		self.scrollView = UIScrollView(frame: CGRectZero)
 		self.view.addSubview(self.scrollView)
 		
 		self.featuredView = BFFeaturedEventsView(frame: CGRectZero)
 		self.browseView = BFBrowseEventsView(frame: CGRectZero)
+		
+		self.browseView.updateBlock = {
+			self.view.layoutIfNeeded()
+		}
+			
 		
 		self.scrollView.addSubview(self.featuredView)
 		self.scrollView.addSubview(self.browseView)

@@ -13,9 +13,11 @@
         <attribute name="startTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="attendees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="event" inverseEntity="Attendance" syncable="YES"/>
+        <relationship name="featureImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="File" syncable="YES"/>
         <relationship name="features" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventFeature" inverseName="event" inverseEntity="EventFeature" syncable="YES"/>
         <relationship name="geoLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GeoPoint" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="event" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="previewImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="File" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="event" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <entity name="EventFeature" representedClassName=".EventFeature" parentEntity="ParseObject" syncable="YES">
@@ -63,7 +65,7 @@
     </entity>
     <elements>
         <element name="Attendance" positionX="223" positionY="81" width="128" height="75"/>
-        <element name="Event" positionX="-54" positionY="18" width="128" height="225"/>
+        <element name="Event" positionX="-54" positionY="18" width="128" height="255"/>
         <element name="File" positionX="-18" positionY="81" width="128" height="75"/>
         <element name="GeoPoint" positionX="-36" positionY="36" width="128" height="90"/>
         <element name="ParseObject" positionX="-63" positionY="-18" width="128" height="105"/>

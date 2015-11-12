@@ -63,9 +63,10 @@ public class BFBrowseEventCell : UITableViewCell
 	private func loadView()
 	{
 		self.gradientView = BFGradientView(frame: CGRectZero)
-		self.gradientView.colours = [UIColor.clearColor(), UIColor.blackColor().colorWithAlphaComponent(0.8)]
+		self.gradientView.colours = [UIColor.clearColor(), UIColor.blackColor().colorWithAlphaComponent(0.4)]
 		self.backgroundImageView = UIImageView(frame: CGRectZero)
 		self.backgroundImageView.contentMode = .ScaleToFill
+		self.backgroundImageView.backgroundColor = UIColor(red:0.941,  green:0.945,  blue:0.953, alpha:1)
 		self.contentView.addSubview(self.backgroundImageView)
 		self.contentView.insertSubview(self.gradientView, atIndex: 1)
 		

@@ -185,6 +185,66 @@ extension NSDate {
 		
 	}
 	
+	var timeTogo: String {
+		
+		let now = NSDate()
+		let deltaSeconds = Int(fabs(timeIntervalSinceDate(now)))
+		let deltaMinutes = deltaSeconds / 60
+		
+		var value: Int!
+		
+		if deltaSeconds < 5 {
+			// Just Now
+			return NSDateTimeAgoLocalizedStrings("Just now")
+		} else if deltaSeconds < kMinute {
+			// Seconds Ago
+			return stringFromFormat("%%d %@seconds", withValue: deltaSeconds)
+		} else if deltaSeconds < 120 {
+			// A Minute Ago
+			return NSDateTimeAgoLocalizedStrings("A minute")
+		} else if deltaMinutes < kMinute {
+			// Minutes Ago
+			return stringFromFormat("%%d %@minutes ago", withValue: deltaMinutes)
+		} else if deltaMinutes < 120 {
+			// An Hour Ago
+			return NSDateTimeAgoLocalizedStrings("An hour")
+		} else if deltaMinutes < kDay {
+			// Hours Ago
+			value = Int(floor(Float(deltaMinutes / kMinute)))
+			return stringFromFormat("%%d %@hours ", withValue: value)
+		} else if deltaMinutes < (kDay * 2) {
+			// Yesterday
+			return NSDateTimeAgoLocalizedStrings("Tomorrow")
+		} else if deltaMinutes < kWeek {
+			// Days Ago
+			value = Int(floor(Float(deltaMinutes / kDay)))
+			return stringFromFormat("%%d %@days", withValue: value)
+		} else if deltaMinutes < (kWeek * 2) {
+			// Last Week
+			return NSDateTimeAgoLocalizedStrings("Next week")
+		} else if deltaMinutes < kMonth {
+			// Weeks Ago
+			value = Int(floor(Float(deltaMinutes / kWeek)))
+			return stringFromFormat("%%d %@weeks", withValue: value)
+		} else if deltaMinutes < (kDay * 61) {
+			// Last month
+			return NSDateTimeAgoLocalizedStrings("Next month")
+		} else if deltaMinutes < kYear {
+			// Month Ago
+			value = Int(floor(Float(deltaMinutes / kMonth)))
+			return stringFromFormat("%%d %@months", withValue: value)
+		} else if deltaMinutes < (kDay * (kYear * 2)) {
+			// Last Year
+			return NSDateTimeAgoLocalizedStrings("Next Year")
+		}
+		
+		// Years Ago
+		value = Int(floor(Float(deltaMinutes / kYear)))
+		return stringFromFormat("%%d %@years", withValue: value)
+		
+	}
+
+	
 	func stringFromFormat(format: String, withValue value: Int) -> String {
 		
 		let localeFormat = String(format: format, getLocaleFormatUnderscoresWithValue(Double(value)))

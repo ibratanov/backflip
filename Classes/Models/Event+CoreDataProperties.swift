@@ -26,5 +26,7 @@ extension Event {
     @NSManaged var photos: NSSet?
     @NSManaged var features: NSSet?
     @NSManaged var tags: NSSet?
+	@NSManaged var previewImage: File?
+	@NSManaged var featureImage: File?
 
 }

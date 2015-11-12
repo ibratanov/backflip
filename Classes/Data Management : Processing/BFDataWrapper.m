@@ -195,11 +195,21 @@
 				[object setStartTime:(NSDate *)event[@"startTime"]];
 			
 			if ([self isValidValue:event[@"endTime"]])
-				[object setStartTime:(NSDate *)event[@"endTime"]];
+				[object setEndTime:(NSDate *)event[@"endTime"]];
 			
 			if ([self isValidValue:event[@"owner"]]) {
 				PFObject *owner = (PFObject *)event[@"owner"];
 				[object setOwner:owner.objectId];
+			}
+			
+			if ([self isValidValue:event[@"featureImage"]]) {
+				File *file = [File fetchOrCreateWhereAttribute:@"url" isValue:((PFFile *)event[@"featureImage"]).url inContext:localContext];
+				[object setFeatureImage:file];
+			}
+			
+			if ([self isValidValue:event[@"previewImage"]]) {
+				File *file = [File fetchOrCreateWhereAttribute:@"url" isValue:((PFFile *)event[@"previewImage"]).url inContext:localContext];
+				[object setPreviewImage:file];
 			}
 			
 			if ([self isValidValue:event[@"geoLocation"]]) {
@@ -365,7 +375,7 @@
 		
 		for (PFObject *feature in features) {
 			
-			EventFeature *object = [Attendance fetchOrCreateWhereAttribute:@"objectId" isValue:feature.objectId inContext:localContext];
+			EventFeature *object = [EventFeature fetchOrCreateWhereAttribute:@"objectId" isValue:feature.objectId inContext:localContext];
 			
 			if (feature.createdAt)
 				[object setCreatedAt:feature.createdAt];
