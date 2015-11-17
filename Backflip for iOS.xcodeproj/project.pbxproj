@@ -193,6 +193,11 @@
 		04D7D7041BA9ACC000AC6AA3 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D6FF1BA9ACC000AC6AA3 /* like.png */; };
 		04D7D7051BA9ACC000AC6AA3 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7001BA9ACC000AC6AA3 /* smile.png */; };
 		04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7011BA9ACC000AC6AA3 /* star.png */; };
+		04E0C9AE1BFB955F00DAA953 /* BFPreviewLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9AD1BFB955F00DAA953 /* BFPreviewLocationCell.swift */; };
+		04E0C9C51BFB972400DAA953 /* BFPreviewTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9C41BFB972400DAA953 /* BFPreviewTitleView.swift */; };
+		04E0C9C81BFBAB2400DAA953 /* BFPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9C71BFBAB2400DAA953 /* BFPreviewViewController.swift */; };
+		04E0C9CD1BFBACE300DAA953 /* LGSemiModalNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9CA1BFBACE300DAA953 /* LGSemiModalNavViewController.m */; };
+		04E0C9CE1BFBACE300DAA953 /* LGSemiModalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9CC1BFBACE300DAA953 /* LGSemiModalTransition.m */; };
 		04ED9B091BC2D959008493E3 /* BFLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B081BC2D959008493E3 /* BFLocationManager.swift */; };
 		04ED9B0C1BC2FC26008493E3 /* PreProcessorMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B0B1BC2FC26008493E3 /* PreProcessorMacros.m */; };
 		04ED9B141BC30337008493E3 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04ED9B131BC30331008493E3 /* Mixpanel.framework */; };
@@ -659,6 +664,13 @@
 		04D7D6FF1BA9ACC000AC6AA3 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = like.png; path = Vendor/DOFavoriteButton/like.png; sourceTree = SOURCE_ROOT; };
 		04D7D7001BA9ACC000AC6AA3 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smile.png; path = Vendor/DOFavoriteButton/smile.png; sourceTree = SOURCE_ROOT; };
 		04D7D7011BA9ACC000AC6AA3 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = Vendor/DOFavoriteButton/star.png; sourceTree = SOURCE_ROOT; };
+		04E0C9AD1BFB955F00DAA953 /* BFPreviewLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewLocationCell.swift; path = Preview/BFPreviewLocationCell.swift; sourceTree = "<group>"; };
+		04E0C9C41BFB972400DAA953 /* BFPreviewTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewTitleView.swift; path = Preview/BFPreviewTitleView.swift; sourceTree = "<group>"; };
+		04E0C9C71BFBAB2400DAA953 /* BFPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewViewController.swift; path = Preview/BFPreviewViewController.swift; sourceTree = "<group>"; };
+		04E0C9C91BFBACE300DAA953 /* LGSemiModalNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGSemiModalNavViewController.h; sourceTree = "<group>"; };
+		04E0C9CA1BFBACE300DAA953 /* LGSemiModalNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGSemiModalNavViewController.m; sourceTree = "<group>"; };
+		04E0C9CB1BFBACE300DAA953 /* LGSemiModalTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGSemiModalTransition.h; sourceTree = "<group>"; };
+		04E0C9CC1BFBACE300DAA953 /* LGSemiModalTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGSemiModalTransition.m; sourceTree = "<group>"; };
 		04ED9B081BC2D959008493E3 /* BFLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFLocationManager.swift; sourceTree = "<group>"; };
 		04ED9B0A1BC2FC1B008493E3 /* PreProcessorMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreProcessorMacros.h; sourceTree = "<group>"; };
 		04ED9B0B1BC2FC26008493E3 /* PreProcessorMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreProcessorMacros.m; sourceTree = "<group>"; };
@@ -917,6 +929,7 @@
 			children = (
 				045386F21BF25814001E46ED /* Explore */,
 				0453865F1BEBB7B9001E46ED /* Onboarding */,
+				04E0C9C31BFB961E00DAA953 /* Preview */,
 				04B610311BB98FEE00C1AF1E /* Collection View */,
 				040FD7891BD5746B0039CDAA /* BFPhotoBrowser.swift */,
 				047790E61BBB1C5B00BA8F9E /* PopoverView.swift */,
@@ -1381,6 +1394,35 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		04E0C9C31BFB961E00DAA953 /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				04E0C9AD1BFB955F00DAA953 /* BFPreviewLocationCell.swift */,
+				04E0C9C41BFB972400DAA953 /* BFPreviewTitleView.swift */,
+			);
+			name = Preview;
+			sourceTree = "<group>";
+		};
+		04E0C9C61BFBAB0200DAA953 /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				04E0C9CF1BFBACEB00DAA953 /* Modal Transistion */,
+				04E0C9C71BFBAB2400DAA953 /* BFPreviewViewController.swift */,
+			);
+			name = Preview;
+			sourceTree = "<group>";
+		};
+		04E0C9CF1BFBACEB00DAA953 /* Modal Transistion */ = {
+			isa = PBXGroup;
+			children = (
+				04E0C9C91BFBACE300DAA953 /* LGSemiModalNavViewController.h */,
+				04E0C9CA1BFBACE300DAA953 /* LGSemiModalNavViewController.m */,
+				04E0C9CB1BFBACE300DAA953 /* LGSemiModalTransition.h */,
+				04E0C9CC1BFBACE300DAA953 /* LGSemiModalTransition.m */,
+			);
+			name = "Modal Transistion";
+			sourceTree = "<group>";
+		};
 		04ED9AFF1BC2D8B4008493E3 /* Location Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -1416,6 +1458,7 @@
 		04F41BEE1B74FBF4001AB8DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				04E0C9C61BFBAB0200DAA953 /* Preview */,
 				045386EF1BF252E4001E46ED /* Explore */,
 				040756DA1BD7E6AF00F95E96 /* Event Album */,
 				046D98DD1BCAABA8004B3DCD /* Camera */,
@@ -1947,6 +1990,7 @@
 				043AB3B31BBE212200BA5827 /* PKHUDImageView.swift in Sources */,
 				043AB3B21BBE212200BA5827 /* PKHUDErrorView.swift in Sources */,
 				04BCCF0B1BE26FED00523296 /* NSNetService+Bonjour.m in Sources */,
+				04E0C9AE1BFB955F00DAA953 /* BFPreviewLocationCell.swift in Sources */,
 				043AB3BB1BBE212200BA5827 /* PKHUDTitleView.swift in Sources */,
 				040EB5C01BC8162800452620 /* Photo+CoreDataProperties.swift in Sources */,
 				0477CE421BDFEBA30033BDEE /* BFViewController.swift in Sources */,
@@ -1960,6 +2004,7 @@
 				04C61FBE1B8B982600E2ACB5 /* File.swift in Sources */,
 				04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */,
 				043AB3AD1BBE212100BA5827 /* FrameView.swift in Sources */,
+				04E0C9C51BFB972400DAA953 /* BFPreviewTitleView.swift in Sources */,
 				04937DD41BD979F9004A2730 /* Backflip.xcdatamodeld in Sources */,
 				043AB3B11BBE212100BA5827 /* PKHUDAssets.swift in Sources */,
 				046D98C61BCAAAF4004B3DCD /* SheetController.swift in Sources */,
@@ -1984,6 +2029,7 @@
 				046D98C71BCAAAF4004B3DCD /* SheetPreviewCollectionViewCell.swift in Sources */,
 				043AB3B91BBE212200BA5827 /* PKHUDSystemActivityIndicatorView.swift in Sources */,
 				0422D1151BCFF3190078E7F6 /* BFDataProcessor.swift in Sources */,
+				04E0C9CD1BFBACE300DAA953 /* LGSemiModalNavViewController.m in Sources */,
 				0453864A1BEBB714001E46ED /* BFOnboardingViewController.swift in Sources */,
 				043AB3AF1BBE212100BA5827 /* PKHUD.swift in Sources */,
 				041F37971B94B08700610881 /* Event+CoreDataProperties.swift in Sources */,
@@ -1994,6 +2040,7 @@
 				048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */,
 				0439D3D31B8B887C001850DD /* Array+Extensions.swift in Sources */,
 				043AB3B41BBE212200BA5827 /* PKHUDProgressView.swift in Sources */,
+				04E0C9C81BFBAB2400DAA953 /* BFPreviewViewController.swift in Sources */,
 				043AB3B61BBE212200BA5827 /* PKHUDStatusView.swift in Sources */,
 				045386471BEBB714001E46ED /* BFOnboardingImageView.swift in Sources */,
 				04ED9B0C1BC2FC26008493E3 /* PreProcessorMacros.m in Sources */,
@@ -2006,6 +2053,7 @@
 				045386F41BF259A2001E46ED /* BFFeaturedEventCell.swift in Sources */,
 				04A0DCC71BE7F91300C5AABD /* EventEditingView.swift in Sources */,
 				040FD78A1BD5746B0039CDAA /* BFPhotoBrowser.swift in Sources */,
+				04E0C9CE1BFBACE300DAA953 /* LGSemiModalTransition.m in Sources */,
 				04196F541B8B996000AE5FA5 /* File+CoreDataProperties.swift in Sources */,
 				04C61FB21B8B97DB00E2ACB5 /* ParseObject+CoreDataProperties.swift in Sources */,
 				043AB3B01BBE212100BA5827 /* PKHUDAnimating.swift in Sources */,

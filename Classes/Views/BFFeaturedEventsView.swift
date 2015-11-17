@@ -144,6 +144,20 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 	public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 	{
 		print("Selected cell \(indexPath.row)")
+		
+		let viewController = BFPreviewViewController()
+		let modalNavigationController = LGSemiModalNavViewController(rootViewController: viewController)
+		modalNavigationController.view.frame = CGRectMake(0, 0, self.bounds.width, 472)
+	
+		modalNavigationController.backgroundShadeColor = UIColor.blackColor()
+		modalNavigationController.animationSpeed = 0.35
+		modalNavigationController.backgroundShadeAlpha = 0.4
+		modalNavigationController.tapDismissEnabled = true
+		modalNavigationController.scaleTransform = CGAffineTransformMakeScale(0.94, 0.94)
+		
+		let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+		window?.rootViewController!.presentViewController(modalNavigationController, animated: true, completion: nil)
+		
 	}
 	
 	@available(iOS 6.0, *)
