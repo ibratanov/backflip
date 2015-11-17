@@ -68,7 +68,7 @@ public class BFPreviewLocationCell : UICollectionViewCell
 	{
 		super.layoutSubviews()
 		
-		self.titleView.frame = CGRectMake(0, 0, self.bounds.width, 20)
+		self.titleView.frame = CGRectMake(0, 0, self.frame.width, 20)
 	}
 	
 }

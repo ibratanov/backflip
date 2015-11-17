@@ -70,7 +70,7 @@ public class BFPreviewTitleView: UIView
 	{
 		self.textLabel = UILabel(frame: CGRectZero)
 		self.textLabel.font = UIFont.systemFontOfSize(16, weight: UIFontWeightLight)
-		self.textLabel.textColor = UIColor.grayColor()
+		self.textLabel.textColor = UIColor.lightGrayColor()
 		self.leftLine.backgroundColor = UIColor.lightGrayColor()
 		self.rightLine.backgroundColor = UIColor.lightGrayColor()
 		
@@ -83,11 +83,11 @@ public class BFPreviewTitleView: UIView
 	{
 		super.layoutSubviews()
 		
-		if (self.text != nil) {
+		if (self.textLabel.text != nil) {
 			
 			let textSize = self.text!.sizeWithAttributes([NSFontAttributeName: self.textLabel.font])
 			
-			self.textLabel.frame = CGRectMake((self.bounds.width/2)-(textSize.width/2), (self.bounds.height/2)-(textSize.height/2), textSize.width, textSize.height)
+			self.textLabel.frame = CGRectMake((self.frame.width/2)-(textSize.width/2), (self.bounds.height/2)-(textSize.height/2), textSize.width, textSize.height)
 			self.leftLine.frame = CGRectMake(LINE_PADDING, (self.bounds.height/2) - (LINE_HEIGHT/2), self.textLabel.frame.origin.x-(LINE_PADDING*2), LINE_HEIGHT)
 			
 			

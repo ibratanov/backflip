@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class BFPreviewViewController : UIViewController
+class BFPreviewViewController : UIViewController, UICollectionViewDataSource
 {
 	
 	/**
@@ -27,9 +27,21 @@ class BFPreviewViewController : UIViewController
 		
 		self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
 		self.collectionView.registerClass(BFPreviewLocationCell.self, forCellWithReuseIdentifier: BFPreviewLocationCell.reuseIdentifier)
+		self.collectionView.dataSource = self
 		self.view.addSubview(self.collectionView)
 	}
 	
+	
+	override func viewDidLoad()
+	{
+		super.viewDidLoad()
+		
+		let flow = self.collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
+		flow.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 44);
+		flow.itemSize = CGSizeMake(self.view.frame.width, 40);
+		flow.minimumInteritemSpacing = 1;
+		flow.minimumLineSpacing = 1;
+	}
 	
 	
 	override func viewWillLayoutSubviews()
