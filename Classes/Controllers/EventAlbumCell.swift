@@ -28,7 +28,7 @@ class EventAlbumCell : UICollectionViewCell
 	{
 		super.layoutSubviews()
 		self.addSubview(self.imageView)
-		self.imageView.frame = self.frame
+		self.imageView.frame = self.bounds
 	}
 	
 	
