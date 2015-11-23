@@ -160,6 +160,7 @@
 		04A0DCC71BE7F91300C5AABD /* EventEditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DCC61BE7F91300C5AABD /* EventEditingView.swift */; };
 		04A6B7091C0375E800C863DC /* INTULocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7041C0375E200C863DC /* INTULocationManager.framework */; };
 		04A6B70A1C0375E800C863DC /* INTULocationManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7041C0375E200C863DC /* INTULocationManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04A6B70E1C03826800C863DC /* BFFeaturedBlankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B70D1C03826800C863DC /* BFFeaturedBlankCell.swift */; };
 		04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */; };
 		04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */; };
@@ -659,6 +660,7 @@
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		04A0DCC61BE7F91300C5AABD /* EventEditingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEditingView.swift; sourceTree = "<group>"; };
 		04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocationManager.xcodeproj; path = Vendor/LocationManager/LocationManager/LocationManager.xcodeproj; sourceTree = "<group>"; };
+		04A6B70D1C03826800C863DC /* BFFeaturedBlankCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFFeaturedBlankCell.swift; path = Preview/BFFeaturedBlankCell.swift; sourceTree = "<group>"; };
 		04B399281BDED7BC00B0F80A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		04B3992A1BDED7BC00B0F80A /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SVProgressHUD-Prefix.pch"; path = "SVProgressHUD/SVProgressHUD/SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -1084,6 +1086,7 @@
 			children = (
 				045386F51BF29780001E46ED /* BFFeaturedEventsView.swift */,
 				045386F31BF259A2001E46ED /* BFFeaturedEventCell.swift */,
+				04A6B70D1C03826800C863DC /* BFFeaturedBlankCell.swift */,
 				045386FD1BF2AE4D001E46ED /* BFBrowseEventsView.swift */,
 				045386FF1BF2B571001E46ED /* BFBrowseEventCell.swift */,
 			);
@@ -2106,6 +2109,7 @@
 				04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */,
 				043AB3AD1BBE212100BA5827 /* FrameView.swift in Sources */,
 				04E0C9C51BFB972400DAA953 /* BFPreviewTitleView.swift in Sources */,
+				04A6B70E1C03826800C863DC /* BFFeaturedBlankCell.swift in Sources */,
 				04937DD41BD979F9004A2730 /* Backflip.xcdatamodeld in Sources */,
 				043AB3B11BBE212100BA5827 /* PKHUDAssets.swift in Sources */,
 				04E0CAD31BFD300300DAA953 /* BFPhotoCollectionViewCell.swift in Sources */,
