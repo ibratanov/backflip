@@ -58,7 +58,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wkq-Is-a5V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1606.5" y="-1994.5"/>
+            <point key="canvasLocation" x="1628.5" y="-1994.5"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="iyr-vI-yo6">
@@ -87,7 +87,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wbi-s5-D5I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1853" y="-1160"/>
+            <point key="canvasLocation" x="1606.5" y="-958.5"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Stc-X2-8PZ">
@@ -104,7 +104,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HTm-EL-10W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1033" y="-1160"/>
+            <point key="canvasLocation" x="920.5" y="-958.5"/>
         </scene>
         <!--Event Albums-->
         <scene sceneID="0XN-eA-FQT">
@@ -160,6 +160,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="DUi-05-Ndi"/>
+                    <connections>
+                        <segue destination="nKw-HA-0z8" kind="presentation" identifier="create-event" modalPresentationStyle="fullScreen" id="Czn-69-HOt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h5A-Dd-Xe1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -321,11 +324,7 @@
                                 <action selector="logout" destination="0pn-ur-yjM" id="Fao-lv-i1j"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="New Event" id="axG-Fn-fQa">
-                            <connections>
-                                <segue destination="nKw-HA-0z8" kind="presentation" identifier="create-event" modalPresentationStyle="fullScreen" id="RKT-Z5-PZR"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="New Event" id="axG-Fn-fQa"/>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>

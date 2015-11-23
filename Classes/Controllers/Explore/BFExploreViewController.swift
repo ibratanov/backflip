@@ -58,13 +58,14 @@ public class BFExploreViewController : UIViewController
 		self.browseView = BFBrowseEventsView(frame: CGRectZero)
 		
 		self.browseView.updateBlock = {
-			print("We should update the frame now..")
-			
 			self.browseView.frame = CGRectMake(0, self.featuredView.bounds.height, self.scrollView.frame.width, 45 + self.browseView.contentHeight())
 			self.scrollView.contentSize = CGSizeMake(self.view.bounds.width, self.featuredView.frame.height + self.browseView.frame.height)
 		}
 			
 		UIApplication.sharedApplication().statusBarHidden = false
+		
+		
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createButtonPressed:")
 		
 		self.scrollView.addSubview(self.featuredView)
 		self.scrollView.addSubview(self.browseView)
@@ -86,5 +87,10 @@ public class BFExploreViewController : UIViewController
 	}
 
 	
+	
+	public func createButtonPressed(sender: AnyObject?)
+	{
+		self.performSegueWithIdentifier("create-event", sender: sender)
+	}
 	
 }
