@@ -143,9 +143,8 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 	@available(iOS 6.0, *)
 	public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 	{
-		print("Selected cell \(indexPath.row)")
-		
 		let viewController = BFPreviewViewController()
+		viewController.event = self.events[indexPath.row]
 		let modalNavigationController = LGSemiModalNavViewController(rootViewController: viewController)
 		modalNavigationController.view.frame = CGRectMake(0, 0, self.bounds.width, 472)
 	

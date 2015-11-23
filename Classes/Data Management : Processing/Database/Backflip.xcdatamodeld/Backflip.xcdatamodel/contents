@@ -10,6 +10,7 @@
         <attribute name="live" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="regionRadius" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="startTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="attendees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="event" inverseEntity="Attendance" syncable="YES"/>
@@ -65,12 +66,12 @@
     </entity>
     <elements>
         <element name="Attendance" positionX="223" positionY="81" width="128" height="75"/>
-        <element name="Event" positionX="-54" positionY="18" width="128" height="255"/>
+        <element name="Event" positionX="-54" positionY="18" width="128" height="270"/>
+        <element name="EventFeature" positionX="81" positionY="126" width="128" height="105"/>
         <element name="File" positionX="-18" positionY="81" width="128" height="75"/>
         <element name="GeoPoint" positionX="-36" positionY="36" width="128" height="90"/>
         <element name="ParseObject" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Photo" positionX="43" positionY="126" width="128" height="180"/>
-        <element name="EventFeature" positionX="81" positionY="126" width="128" height="105"/>
         <element name="Tag" positionX="90" positionY="135" width="128" height="105"/>
     </elements>
 </model>

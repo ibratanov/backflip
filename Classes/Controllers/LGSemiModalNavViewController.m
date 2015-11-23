@@ -18,7 +18,13 @@
 
 - (void)loadView{
     [super loadView];
-    
+	
+	self.navigationBar.titleTextAttributes = nil;
+	self.navigationBar.barStyle = UIBarStyleDefault;
+	self.navigationBar.translucent = YES;
+	self.navigationBar.barTintColor = nil;
+	self.navigationBar.tintColor = [UIColor blueColor];
+	
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.view.clipsToBounds = YES;
     self.transitioningDelegate = self;

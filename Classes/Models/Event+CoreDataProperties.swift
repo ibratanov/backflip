@@ -28,5 +28,6 @@ extension Event {
     @NSManaged var tags: NSSet?
 	@NSManaged var previewImage: File?
 	@NSManaged var featureImage: File?
+	@NSManaged var regionRadius: NSNumber?
 
 }

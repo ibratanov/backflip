@@ -198,6 +198,12 @@
 		04E0C9C81BFBAB2400DAA953 /* BFPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9C71BFBAB2400DAA953 /* BFPreviewViewController.swift */; };
 		04E0C9CD1BFBACE300DAA953 /* LGSemiModalNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9CA1BFBACE300DAA953 /* LGSemiModalNavViewController.m */; };
 		04E0C9CE1BFBACE300DAA953 /* LGSemiModalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9CC1BFBACE300DAA953 /* LGSemiModalTransition.m */; };
+		04E0C9D11BFD078A00DAA953 /* BFPreviewDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9D01BFD078A00DAA953 /* BFPreviewDescriptionCell.swift */; };
+		04E0C9D31BFD0C7700DAA953 /* BFPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9D21BFD0C7700DAA953 /* BFPreviewCell.swift */; };
+		04E0C9D51BFD122200DAA953 /* BFPreviewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9D41BFD122200DAA953 /* BFPreviewHeaderCell.swift */; };
+		04E0CA591BFD1B5300DAA953 /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9DB1BFD1B5300DAA953 /* Markdown.swift */; };
+		04E0CAD11BFD283600DAA953 /* BFPreviewPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0CAD01BFD283600DAA953 /* BFPreviewPhotoCell.swift */; };
+		04E0CAD31BFD300300DAA953 /* BFPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0CAD21BFD300300DAA953 /* BFPhotoCollectionViewCell.swift */; };
 		04ED9B091BC2D959008493E3 /* BFLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B081BC2D959008493E3 /* BFLocationManager.swift */; };
 		04ED9B0C1BC2FC26008493E3 /* PreProcessorMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B0B1BC2FC26008493E3 /* PreProcessorMacros.m */; };
 		04ED9B141BC30337008493E3 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04ED9B131BC30331008493E3 /* Mixpanel.framework */; };
@@ -206,7 +212,6 @@
 		04ED9B1E1BC3037D008493E3 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D31BB9CF3800BA8F9E /* FBSDKCoreKit.framework */; };
 		04ED9B201BC3037D008493E3 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047790D01BB9CE2B00BA8F9E /* FBSDKLoginKit.framework */; };
 		04F472BF1BE2B5E10065DC97 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F472BE1BE2B5E10065DC97 /* Bolts.framework */; };
-		04F472E91BE2B7AA0065DC97 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F472E81BE2B7AA0065DC97 /* Parse.framework */; };
 		04F472F11BE2BFA80065DC97 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F472E51BE2B75D0065DC97 /* Parse.framework */; };
 		04F7A7961B9E3114008758D3 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */; };
 		04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD59E11B901D63005A1FA4 /* String+Extensions.swift */; };
@@ -671,6 +676,12 @@
 		04E0C9CA1BFBACE300DAA953 /* LGSemiModalNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGSemiModalNavViewController.m; sourceTree = "<group>"; };
 		04E0C9CB1BFBACE300DAA953 /* LGSemiModalTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGSemiModalTransition.h; sourceTree = "<group>"; };
 		04E0C9CC1BFBACE300DAA953 /* LGSemiModalTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGSemiModalTransition.m; sourceTree = "<group>"; };
+		04E0C9D01BFD078A00DAA953 /* BFPreviewDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewDescriptionCell.swift; path = Preview/BFPreviewDescriptionCell.swift; sourceTree = "<group>"; };
+		04E0C9D21BFD0C7700DAA953 /* BFPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewCell.swift; path = Preview/BFPreviewCell.swift; sourceTree = "<group>"; };
+		04E0C9D41BFD122200DAA953 /* BFPreviewHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewHeaderCell.swift; path = Preview/BFPreviewHeaderCell.swift; sourceTree = "<group>"; };
+		04E0C9DB1BFD1B5300DAA953 /* Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Markdown.swift; path = Markingbird/Markdown.swift; sourceTree = "<group>"; };
+		04E0CAD01BFD283600DAA953 /* BFPreviewPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewPhotoCell.swift; path = Preview/BFPreviewPhotoCell.swift; sourceTree = "<group>"; };
+		04E0CAD21BFD300300DAA953 /* BFPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		04ED9B081BC2D959008493E3 /* BFLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFLocationManager.swift; sourceTree = "<group>"; };
 		04ED9B0A1BC2FC1B008493E3 /* PreProcessorMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreProcessorMacros.h; sourceTree = "<group>"; };
 		04ED9B0B1BC2FC26008493E3 /* PreProcessorMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreProcessorMacros.m; sourceTree = "<group>"; };
@@ -678,7 +689,6 @@
 		04ED9B1A1BC30374008493E3 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NewRelicAgent.framework; path = Vendor/NewRelic/NewRelicAgent.framework; sourceTree = "<group>"; };
 		04F472BE1BE2B5E10065DC97 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "Vendor/Parse/Vendor/Bolts-ObjC/build/tvOS/Bolts.framework"; sourceTree = "<group>"; };
 		04F472E51BE2B75D0065DC97 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/Parse-ajtodeyuqzbymyhfubuupssadzzh/Build/Products/Release-appletvos/Parse.framework"; sourceTree = "<group>"; };
-		04F472E81BE2B7AA0065DC97 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../../Library/Developer/Xcode/DerivedData/Parse-ajtodeyuqzbymyhfubuupssadzzh/Build/Products/Debug-appletvos/Parse.framework"; sourceTree = "<group>"; };
 		04F7A7941B9E24BD008758D3 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		04F7A7951B9E3114008758D3 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
 		04FD59E11B901D63005A1FA4 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -707,7 +717,6 @@
 				04F472F11BE2BFA80065DC97 /* Parse.framework in Frameworks */,
 				0432DC441BC81C5C00B31D02 /* libsqlite3.tbd in Frameworks */,
 				04D022571BE15DD200375C84 /* Nuke.framework in Frameworks */,
-				04F472E91BE2B7AA0065DC97 /* Parse.framework in Frameworks */,
 				0432DC491BC81CC600B31D02 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -872,6 +881,7 @@
 				042E8D6F1BB3009800D61412 /* Watchdog */,
 				04B1C66A1B9783CD00F30C80 /* PKHUD */,
 				04B1C6511B97648C00F30C80 /* DOFavoriteButton */,
+				04E0C9D61BFD1B5300DAA953 /* Markingbird */,
 				04CCD5C91B8CB2D200664FB3 /* MagicalRecord */,
 				04CA5D831B8B9D390075C0A8 /* ZAActivityBar */,
 				0439D32E1B8B76B1001850DD /* Branch */,
@@ -932,6 +942,7 @@
 				04E0C9C31BFB961E00DAA953 /* Preview */,
 				04B610311BB98FEE00C1AF1E /* Collection View */,
 				040FD7891BD5746B0039CDAA /* BFPhotoBrowser.swift */,
+				04E0CAD21BFD300300DAA953 /* BFPhotoCollectionViewCell.swift */,
 				047790E61BBB1C5B00BA8F9E /* PopoverView.swift */,
 				04A0DCC61BE7F91300C5AABD /* EventEditingView.swift */,
 			);
@@ -1194,8 +1205,8 @@
 				04C61FB41B8B97F700E2ACB5 /* CoreData */,
 				04C61FB61B8B982600E2ACB5 /* File.swift */,
 				041F37961B94B08700610881 /* Attendance.swift */,
-				04C61FB81B8B982600E2ACB5 /* Event.swift */,
 				04C61FBA1B8B982600E2ACB5 /* Photo.swift */,
+				04C61FB81B8B982600E2ACB5 /* Event.swift */,
 				04C61FBC1B8B982600E2ACB5 /* GeoPoint.swift */,
 				04C61FB11B8B97DB00E2ACB5 /* ParseObject.swift */,
 				045949D71BF4FD6E00CCC348 /* EventFeature.swift */,
@@ -1397,8 +1408,12 @@
 		04E0C9C31BFB961E00DAA953 /* Preview */ = {
 			isa = PBXGroup;
 			children = (
-				04E0C9AD1BFB955F00DAA953 /* BFPreviewLocationCell.swift */,
+				04E0C9D21BFD0C7700DAA953 /* BFPreviewCell.swift */,
 				04E0C9C41BFB972400DAA953 /* BFPreviewTitleView.swift */,
+				04E0C9D41BFD122200DAA953 /* BFPreviewHeaderCell.swift */,
+				04E0C9D01BFD078A00DAA953 /* BFPreviewDescriptionCell.swift */,
+				04E0C9AD1BFB955F00DAA953 /* BFPreviewLocationCell.swift */,
+				04E0CAD01BFD283600DAA953 /* BFPreviewPhotoCell.swift */,
 			);
 			name = Preview;
 			sourceTree = "<group>";
@@ -1421,6 +1436,15 @@
 				04E0C9CC1BFBACE300DAA953 /* LGSemiModalTransition.m */,
 			);
 			name = "Modal Transistion";
+			sourceTree = "<group>";
+		};
+		04E0C9D61BFD1B5300DAA953 /* Markingbird */ = {
+			isa = PBXGroup;
+			children = (
+				04E0C9DB1BFD1B5300DAA953 /* Markdown.swift */,
+			);
+			name = Markingbird;
+			path = Vendor/Markingbird;
 			sourceTree = "<group>";
 		};
 		04ED9AFF1BC2D8B4008493E3 /* Location Services */ = {
@@ -1530,7 +1554,6 @@
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				04F472E81BE2B7AA0065DC97 /* Parse.framework */,
 				0432DC431BC81C5C00B31D02 /* libsqlite3.tbd */,
 				040FD1091BB2F19500DDB1A5 /* libc++.tbd */,
 				040FD10A1BB2F19500DDB1A5 /* libstdc++.tbd */,
@@ -2007,6 +2030,7 @@
 				04E0C9C51BFB972400DAA953 /* BFPreviewTitleView.swift in Sources */,
 				04937DD41BD979F9004A2730 /* Backflip.xcdatamodeld in Sources */,
 				043AB3B11BBE212100BA5827 /* PKHUDAssets.swift in Sources */,
+				04E0CAD31BFD300300DAA953 /* BFPhotoCollectionViewCell.swift in Sources */,
 				046D98C61BCAAAF4004B3DCD /* SheetController.swift in Sources */,
 				045949DB1BF4FD6E00CCC348 /* EventFeature.swift in Sources */,
 				0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */,
@@ -2038,6 +2062,7 @@
 				04CA5DC01B8B9D4B0075C0A8 /* SKBounceAnimation.m in Sources */,
 				041F37981B94B08700610881 /* Attendance+CoreDataProperties.swift in Sources */,
 				048939BD1BD043DF005400CA /* UIDevice+Extensions.swift in Sources */,
+				04E0C9D31BFD0C7700DAA953 /* BFPreviewCell.swift in Sources */,
 				0439D3D31B8B887C001850DD /* Array+Extensions.swift in Sources */,
 				043AB3B41BBE212200BA5827 /* PKHUDProgressView.swift in Sources */,
 				04E0C9C81BFBAB2400DAA953 /* BFPreviewViewController.swift in Sources */,
@@ -2073,10 +2098,14 @@
 				046D98C51BCAAAF4004B3DCD /* SheetCollectionViewLayout.swift in Sources */,
 				046D98BA1BCAAAF4004B3DCD /* AnimationController.swift in Sources */,
 				043AB3BE1BBE212200BA5827 /* WindowRootViewController.swift in Sources */,
+				04E0C9D11BFD078A00DAA953 /* BFPreviewDescriptionCell.swift in Sources */,
 				041F37991B94B08700610881 /* Attendance.swift in Sources */,
 				042E8D761BB30BFD00D61412 /* EventHistoryViewController.swift in Sources */,
 				0420283B1BA1E0CB0059F096 /* Defines.swift in Sources */,
+				04E0CAD11BFD283600DAA953 /* BFPreviewPhotoCell.swift in Sources */,
+				04E0CA591BFD1B5300DAA953 /* Markdown.swift in Sources */,
 				045386481BEBB714001E46ED /* BFOnboardingInfoView.swift in Sources */,
+				04E0C9D51BFD122200DAA953 /* BFPreviewHeaderCell.swift in Sources */,
 				045386F11BF25304001E46ED /* BFExploreViewController.swift in Sources */,
 				045949DD1BF4FD6E00CCC348 /* Tag.swift in Sources */,
 				04CA5D881B8B9D440075C0A8 /* ZAActivityBar.m in Sources */,
@@ -2372,7 +2401,7 @@
 				PRODUCT_NAME = Frontflip;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Supporting Files/Backflip-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2382,6 +2411,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";

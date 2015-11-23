@@ -24,6 +24,13 @@ class EventAlbumCell : UICollectionViewCell
 	var representedPhoto : Photo?
 	
 	
+	override func layoutSubviews()
+	{
+		super.layoutSubviews()
+		self.addSubview(self.imageView)
+		self.imageView.frame = self.frame
+	}
+	
 	
 	override func awakeFromNib()
 	{

@@ -197,6 +197,9 @@
 			if ([self isValidValue:event[@"endTime"]])
 				[object setEndTime:(NSDate *)event[@"endTime"]];
 			
+			if ([self isValidValue:event[@"regionRadius"]])
+				[object setRegionRadius:@([event[@"regionRadius"] doubleValue])];
+			
 			if ([self isValidValue:event[@"owner"]]) {
 				PFObject *owner = (PFObject *)event[@"owner"];
 				[object setOwner:owner.objectId];

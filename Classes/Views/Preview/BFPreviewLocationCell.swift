@@ -9,15 +9,12 @@
 import UIKit
 import MapKit
 import Foundation
+import CoreLocation
 
-public class BFPreviewLocationCell : UICollectionViewCell
+public class BFPreviewLocationCell : BFPreviewCell, MKMapViewDelegate
 {
 	
-	/**
-	 * Reuse Identifier
-	*/
-	public static let reuseIdentifier: String = "preview-location-cell"
-	
+	public static let identifier: String = "preview-location-cell"
 	
 	/**
 	 * Map View
@@ -35,9 +32,9 @@ public class BFPreviewLocationCell : UICollectionViewCell
 	//  MARK: - Initializers
 	// ----------------------------------------
 	
-	public override init(frame: CGRect)
+	public override init(style: UITableViewCellStyle, reuseIdentifier: String?)
 	{
-		super.init(frame: frame)
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		self.loadView()
 	}
 	
@@ -54,8 +51,12 @@ public class BFPreviewLocationCell : UICollectionViewCell
 	private func loadView() -> Void
 	{
 		self.mapView = MKMapView(frame: CGRectZero)
+		self.mapView.delegate = self
 		self.mapView.layer.borderColor = UIColor.lightGrayColor().CGColor
 		self.mapView.layer.borderWidth = 0.5
+		self.mapView.layer.cornerRadius = 8.0
+		self.mapView.showsUserLocation = true
+		self.mapView.userInteractionEnabled = false
 		self.contentView.addSubview(self.mapView)
 		
 		self.titleView = BFPreviewTitleView(frame: CGRectZero)
@@ -69,6 +70,64 @@ public class BFPreviewLocationCell : UICollectionViewCell
 		super.layoutSubviews()
 		
 		self.titleView.frame = CGRectMake(0, 0, self.frame.width, 20)
+		self.mapView.frame = CGRectMake(5, 25, self.frame.width - 10, 150)
 	}
 	
+	
+	
+	// ----------------------------------------
+	//  MARK: - Configuration
+	// ----------------------------------------
+	
+	
+	public override func prepareForReuse() -> Void
+	{
+		super.prepareForReuse()
+		self.mapView.removeAnnotations(self.mapView.annotations)
+	}
+	
+	public override func cellHeight() -> CGFloat
+	{
+		return 180.0
+	}
+	
+	public override func configureCell(withEvent event: Event?) -> Void
+	{
+		let locationPin = MKPointAnnotation()
+		locationPin.coordinate = CLLocationCoordinate2DMake(Double(event!.geoLocation!.latitude!), Double(event!.geoLocation!.longitude!))
+		locationPin.title = event!.name
+		locationPin.subtitle = event!.venue
+		self.mapView.addAnnotation(locationPin)
+		
+		
+		let mapRegion = MKCoordinateRegionMake(locationPin.coordinate, MKCoordinateSpanMake(0.02, 0.02))
+		self.mapView.setRegion(mapRegion, animated: true)
+		
+		if (event!.regionRadius != nil) {
+			let locationRadius = MKCircle(centerCoordinate: locationPin.coordinate, radius: event!.regionRadius!.doubleValue)
+			self.mapView.addOverlay(locationRadius)
+		}
+	}
+	
+	
+	
+	// ----------------------------------------
+	//  MARK: - Map view Delegate
+	// ----------------------------------------
+
+	@available(iOS 7.0, *)
+	public func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer
+	{
+		// Location Radius
+		if let overlay = overlay as? MKCircle {
+			let circleRenderer = MKCircleRenderer(circle: overlay)
+			circleRenderer.fillColor = UIColor.redColor().colorWithAlphaComponent(0.2)
+			circleRenderer.strokeColor = UIColor.redColor().colorWithAlphaComponent(0.3)
+			circleRenderer.lineWidth = 1.0
+			return circleRenderer
+		}
+		
+		return MKOverlayRenderer()
+	}
+
 }

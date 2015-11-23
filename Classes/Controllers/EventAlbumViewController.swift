@@ -99,7 +99,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 			self.navigationItem.leftBarButtonItem = nil
 		}
 		
-		updateData()
+		self.updateData()
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "photoUploaded", name: "camera-photo-uploaded", object: nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)

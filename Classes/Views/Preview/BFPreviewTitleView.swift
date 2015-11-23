@@ -89,7 +89,7 @@ public class BFPreviewTitleView: UIView
 			
 			self.textLabel.frame = CGRectMake((self.frame.width/2)-(textSize.width/2), (self.bounds.height/2)-(textSize.height/2), textSize.width, textSize.height)
 			self.leftLine.frame = CGRectMake(LINE_PADDING, (self.bounds.height/2) - (LINE_HEIGHT/2), self.textLabel.frame.origin.x-(LINE_PADDING*2), LINE_HEIGHT)
-			
+			self.rightLine.frame = CGRectMake(LINE_PADDING  + (self.textLabel.frame.origin.x + self.textLabel.frame.size.width), (self.bounds.height/2) - (LINE_HEIGHT/2), (self.frame.width - (LINE_PADDING*2)) - (self.textLabel.frame.origin.x + self.textLabel.frame.size.width), LINE_HEIGHT)
 			
 		}
 		

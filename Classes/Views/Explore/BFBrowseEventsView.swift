@@ -156,6 +156,25 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 		
 	}
 	
+	@available(iOS 2.0, *)
+	public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	{
+		let viewController = BFPreviewViewController()
+		viewController.event = self.events[indexPath.row]
+		let modalNavigationController = LGSemiModalNavViewController(rootViewController: viewController)
+		modalNavigationController.view.frame = CGRectMake(0, 0, self.bounds.width, 472)
+		
+		modalNavigationController.backgroundShadeColor = UIColor.blackColor()
+		modalNavigationController.animationSpeed = 0.35
+		modalNavigationController.backgroundShadeAlpha = 0.4
+		modalNavigationController.tapDismissEnabled = true
+		modalNavigationController.scaleTransform = CGAffineTransformMakeScale(0.94, 0.94)
+		
+		let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+		window?.rootViewController!.presentViewController(modalNavigationController, animated: true, completion: nil)
+	}
+	
+	
 	
 	// ----------------------------------------
 	//  MARK: - Data
