@@ -55,6 +55,8 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Checkin", style: .Plain, target: nil, action: "")
 		self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red:0,  green:0.467,  blue:1, alpha:1)
+		self.navigationItem.rightBarButtonItem?.target = self
+		self.navigationItem.rightBarButtonItem?.action = "checkinButtonPressed:"
 		
 		self.tableView = UITableView(frame: self.view.bounds, style: .Plain)
 		self.tableView.dataSource = self
@@ -195,6 +197,22 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 		} else {
 		    // Fallback on earlier versions
 			print("We don't currently support iOS 8 for ticket purchasing..")
+		}
+	}
+	
+	
+	func checkinButtonPressed(sender: AnyObject?)
+	{
+		BFParseManager.sharedManager.checkin(self.event!.objectId!) { (completed, error) -> Void in
+			
+			let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+			dispatch_after(delayTime, dispatch_get_main_queue()) {
+				self.dismissViewControllerAnimated(true, completion: { () -> Void in
+					print("here, we should be checked in")
+				})
+				// self.performSegueWithIdentifier("display-event-album", sender: self)
+			}
+			
 		}
 	}
 	
