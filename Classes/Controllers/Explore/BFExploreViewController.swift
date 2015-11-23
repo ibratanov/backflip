@@ -86,6 +86,9 @@ public class BFExploreViewController : UIViewController
 	}
 
 	
+	// ----------------------------------------
+	//  MARK: - Touch events
+	// ----------------------------------------
 	
 	public func createButtonPressed(sender: AnyObject?)
 	{

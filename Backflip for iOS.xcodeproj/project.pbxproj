@@ -162,6 +162,7 @@
 		04A6B70A1C0375E800C863DC /* INTULocationManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7041C0375E200C863DC /* INTULocationManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04A6B70E1C03826800C863DC /* BFFeaturedBlankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B70D1C03826800C863DC /* BFFeaturedBlankCell.swift */; };
 		04A6B7111C03898400C863DC /* BFWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7101C03898400C863DC /* BFWebviewController.swift */; };
+		04A6B7141C039F0300C863DC /* BFSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7131C039F0300C863DC /* BFSettingsViewController.swift */; };
 		04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */; };
 		04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */; };
@@ -663,6 +664,7 @@
 		04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocationManager.xcodeproj; path = Vendor/LocationManager/LocationManager/LocationManager.xcodeproj; sourceTree = "<group>"; };
 		04A6B70D1C03826800C863DC /* BFFeaturedBlankCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFFeaturedBlankCell.swift; path = Preview/BFFeaturedBlankCell.swift; sourceTree = "<group>"; };
 		04A6B7101C03898400C863DC /* BFWebviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFWebviewController.swift; path = Webview/BFWebviewController.swift; sourceTree = "<group>"; };
+		04A6B7131C039F0300C863DC /* BFSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFSettingsViewController.swift; path = Settings/BFSettingsViewController.swift; sourceTree = "<group>"; };
 		04B399281BDED7BC00B0F80A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		04B3992A1BDED7BC00B0F80A /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SVProgressHUD-Prefix.pch"; path = "SVProgressHUD/SVProgressHUD/SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -1287,6 +1289,14 @@
 			name = Webview;
 			sourceTree = "<group>";
 		};
+		04A6B7121C039EF300C863DC /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				04A6B7131C039F0300C863DC /* BFSettingsViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		04B1C6511B97648C00F30C80 /* DOFavoriteButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1547,6 +1557,7 @@
 		04F41BEE1B74FBF4001AB8DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				04A6B7121C039EF300C863DC /* Settings */,
 				04A6B70F1C03896F00C863DC /* Webview */,
 				04E0C9C61BFBAB0200DAA953 /* Preview */,
 				045386EF1BF252E4001E46ED /* Explore */,
@@ -2162,6 +2173,7 @@
 				043AB3B61BBE212200BA5827 /* PKHUDStatusView.swift in Sources */,
 				045386471BEBB714001E46ED /* BFOnboardingImageView.swift in Sources */,
 				04ED9B0C1BC2FC26008493E3 /* PreProcessorMacros.m in Sources */,
+				04A6B7141C039F0300C863DC /* BFSettingsViewController.swift in Sources */,
 				045949DE1BF4FD6E00CCC348 /* Tag+CoreDataProperties.swift in Sources */,
 				04CCD6691B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m in Sources */,
 				046D98BF1BCAAAF4004B3DCD /* PreviewCollectionView.swift in Sources */,

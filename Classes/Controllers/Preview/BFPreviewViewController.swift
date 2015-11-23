@@ -186,28 +186,20 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 	
 	func ticketsButtonPressed(sender: AnyObject?)
 	{
-		if #available(iOS 9.0, *) {
-			if let url = NSURL(string: self.event!.ticketUrl!) {
-				self.dismissViewControllerAnimated(true, completion: { () -> Void in
+		if let url = NSURL(string: self.event!.ticketUrl!) {
+			self.dismissViewControllerAnimated(true, completion: { () -> Void in
+				if #available(iOS 9.0, *) {
 					let safariViewController = SFSafariViewController(URL: url)
 					let window : UIWindow? = UIApplication.sharedApplication().windows.first!
 					window?.rootViewController!.presentViewController(safariViewController, animated: true, completion: nil)
-				})
-			}
-		} else {
-		    // Fallback on earlier versions
-			print("We don't currently support iOS 8 for ticket purchasing..")
-			if let url = NSURL(string: self.event!.ticketUrl!) {
-				
-				self.dismissViewControllerAnimated(true, completion: { () -> Void in
+				} else {
 					let webViewController = BFWebviewController()
 					webViewController.loadUrl(url)
 					let navigationController = UINavigationController(rootViewController: webViewController)
 					let window : UIWindow? = UIApplication.sharedApplication().windows.first!
 					window?.rootViewController!.presentViewController(navigationController, animated: true, completion: nil)
-				})
-			}
-			
+				}
+			})
 		}
 	}
 	

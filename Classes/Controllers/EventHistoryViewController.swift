@@ -31,7 +31,7 @@ class EventHistoryViewController : BFCollectionViewController
 	{
 		super.loadView()
 		
-		self.title = "Event History"
+		self.title = "History"
 		self.collectionView?.registerClass(EventHistoryHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HEADER_IDENTIFIER)
 		
 		self.collectionView?.backgroundColor = UIColor.whiteColor()
