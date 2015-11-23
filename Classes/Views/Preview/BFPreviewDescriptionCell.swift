@@ -62,7 +62,7 @@ class BFPreviewDescriptionCell : BFPreviewCell
 	{
 		super.layoutSubviews()
 		
-		self.markdownLabel.frame = CGRectMake(5, 7.55, self.frame.width - 10, self.cellHeight() + 10.0)
+		self.markdownLabel.frame = CGRectMake(5, 7.55, self.frame.width - 10, self.cellHeight() + 5.0)
 	}
 	
 	
@@ -72,15 +72,16 @@ class BFPreviewDescriptionCell : BFPreviewCell
 	*/
 	override func cellHeight() -> CGFloat
 	{
+		let frame = UIApplication.sharedApplication().windows.first!.rootViewController!.view.frame
 		let options: NSStringDrawingOptions = [.UsesLineFragmentOrigin, .UsesFontLeading, .TruncatesLastVisibleLine]
-		let attributedSize = self.markdownLabel.attributedText?.boundingRectWithSize(CGSizeMake(self.frame.width, 10000), options:options, context: nil)
-		return attributedSize!.height - 10.0
+		let attributedSize = self.markdownLabel.attributedText?.boundingRectWithSize(CGSizeMake((frame.width - 10), 10000), options:options, context: nil)
+		return attributedSize!.height - 5.0
 	}
 	
 	
 	override func configureCell(withEvent event: Event?)
 	{
-		let exampleText = "It's very easy to make some words **bold** and other words *italic* with Markdown. You can even [link to Google!](https://google.com)"
+		let exampleText = (event?.eventDescription != nil) ? event!.eventDescription! : ""
 		
 		var markdown = Markdown()
 		var htmlContent: String = markdown.transform(exampleText)

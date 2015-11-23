@@ -55,8 +55,6 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Checkin", style: .Plain, target: nil, action: "")
 		self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red:0,  green:0.467,  blue:1, alpha:1)
-		self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Tickets", style: .Plain, target: nil, action: "")
-		self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red:0,  green:0.467,  blue:1, alpha:1)
 		
 		self.tableView = UITableView(frame: self.view.bounds, style: .Plain)
 		self.tableView.dataSource = self
@@ -78,6 +76,23 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 	{
 		super.viewWillLayoutSubviews()
 		self.tableView.frame = self.view.bounds
+	}
+	
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		
+		
+		// Ticket button
+		if (self.event?.ticketUrl != nil) {
+			self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Tickets", style: .Plain, target: nil, action: "")
+			self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red:0,  green:0.467,  blue:1, alpha:1)
+			self.navigationItem.leftBarButtonItem?.target = self
+			self.navigationItem.leftBarButtonItem?.action = "ticketsButtonPressed:"
+		} else {
+			self.navigationItem.leftBarButtonItem = nil
+		}
 	}
 	
 	
@@ -145,14 +160,42 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 	
 	
 	
+	// ----------------------------------------
+	//  MARK: - Scroll View Delegate
+	// ----------------------------------------
+	
 	func scrollViewDidScroll(scrollView: UIScrollView)
 	{
-		// This has been disabled for now.
-		var headerRect = CGRect(x: 0, y: 0, width: self.tableView.bounds.width, height: 88.0)
-		headerRect.origin.y = 44.0 + self.tableView.contentOffset.y
-		headerRect.size.height = 44 + -self.tableView.contentOffset.y
+		if (self.tableView.contentOffset.y < -44.0) {
+			var headerRect = CGRect(x: 0, y: 0, width: self.tableView.bounds.width, height: 88.0)
+			headerRect.origin.y = 44.0 + self.tableView.contentOffset.y
+			headerRect.size.height = 44 + -self.tableView.contentOffset.y
 		
-		self.headerImageView?.frame = headerRect
+			self.headerImageView?.frame = headerRect
+		}
+	}
+	
+	
+	
+	
+	// ----------------------------------------
+	//  MARK: - Button touch events
+	// ----------------------------------------
+	
+	func ticketsButtonPressed(sender: AnyObject?)
+	{
+		if #available(iOS 9.0, *) {
+			if let url = NSURL(string: self.event!.ticketUrl!) {
+				self.dismissViewControllerAnimated(true, completion: { () -> Void in
+					let safariViewController = SFSafariViewController(URL: url)
+					let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+					window?.rootViewController!.presentViewController(safariViewController, animated: true, completion: nil)
+				})
+			}
+		} else {
+		    // Fallback on earlier versions
+			print("We don't currently support iOS 8 for ticket purchasing..")
+		}
 	}
 	
 }

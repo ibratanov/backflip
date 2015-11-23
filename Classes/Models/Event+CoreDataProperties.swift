@@ -18,6 +18,7 @@ extension Event {
     @NSManaged var inviteUrl: String?
     @NSManaged var live: NSNumber?
     @NSManaged var name: String?
+	@NSManaged var eventDescription: String?
     @NSManaged var owner: String?
     @NSManaged var startTime: NSDate?
     @NSManaged var venue: String?
@@ -26,6 +27,7 @@ extension Event {
     @NSManaged var photos: NSSet?
     @NSManaged var features: NSSet?
     @NSManaged var tags: NSSet?
+	@NSManaged var ticketUrl: String?
 	@NSManaged var previewImage: File?
 	@NSManaged var featureImage: File?
 	@NSManaged var regionRadius: NSNumber?

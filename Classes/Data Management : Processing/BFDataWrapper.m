@@ -89,7 +89,7 @@
 
 - (void)setup
 {
-	NSManagedObjectContext *mainContext  = [NSManagedObjectContext MR_defaultContext];
+	NSManagedObjectContext *mainContext  = [NSManagedObjectContext MR_rootSavingContext];
 	[mainContext setUndoManager:nil];
 	
 	_dataContext = [NSManagedObjectContext MR_contextWithParent:mainContext];
@@ -184,6 +184,12 @@
 			
 			if ([self isValidValue:event[@"eventName"]])
 				[object setName:event[@"eventName"]];
+			
+			if ([self isValidValue:event[@"eventDescription"]])
+				[object setEventDescription:event[@"eventDescription"]];
+			
+			if ([self isValidValue:event[@"ticketUrl"]])
+				[object setTicketUrl: event[@"ticketUrl"]];
 			
 			if ([self isValidValue:event[@"isLive"]])
 				[object setLive:@([event[@"isLive"] boolValue])];
