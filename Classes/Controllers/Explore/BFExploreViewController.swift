@@ -64,7 +64,6 @@ public class BFExploreViewController : UIViewController
 			
 		UIApplication.sharedApplication().statusBarHidden = false
 		
-		
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createButtonPressed:")
 		
 		self.scrollView.addSubview(self.featuredView)

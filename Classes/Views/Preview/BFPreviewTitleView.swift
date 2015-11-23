@@ -69,7 +69,11 @@ public class BFPreviewTitleView: UIView
 	private func loadView() -> Void
 	{
 		self.textLabel = UILabel(frame: CGRectZero)
-		self.textLabel.font = UIFont.systemFontOfSize(16, weight: UIFontWeightLight)
+		if #available(iOS 8.2, *) {
+		    self.textLabel.font = UIFont.systemFontOfSize(16, weight: UIFontWeightLight)
+		} else {
+		   self.textLabel.font = UIFont.systemFontOfSize(16)
+		}
 		self.textLabel.textColor = UIColor.lightGrayColor()
 		self.leftLine.backgroundColor = UIColor.lightGrayColor()
 		self.rightLine.backgroundColor = UIColor.lightGrayColor()

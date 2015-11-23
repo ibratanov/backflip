@@ -362,7 +362,6 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 							self.dismissViewControllerAnimated(true, completion: nil)
 						}
 						
-						
 						print("Login completed = \(completed)")
 						print("Login error = \(error)")
 						
@@ -379,10 +378,13 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 	func legalButtonPressed(sender: AnyObject?)
 	{
 		if #available(iOS 9, *) {
-			
 			let safariViewController = SFSafariViewController(URL: NSURL(string: "http://getbackflip.com/eula")!)
 			self.presentViewController(safariViewController, animated: true, completion: nil)
-			
+		} else {
+			let webViewController = BFWebviewController()
+			webViewController.loadUrl(NSURL(string: "http://getbackflip.com/eula")!)
+			let navigationController = UINavigationController(rootViewController: webViewController)
+			self.presentViewController(navigationController, animated: true, completion: nil)
 		}
 	}
 	

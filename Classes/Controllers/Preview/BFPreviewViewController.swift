@@ -197,6 +197,17 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 		} else {
 		    // Fallback on earlier versions
 			print("We don't currently support iOS 8 for ticket purchasing..")
+			if let url = NSURL(string: self.event!.ticketUrl!) {
+				
+				self.dismissViewControllerAnimated(true, completion: { () -> Void in
+					let webViewController = BFWebviewController()
+					webViewController.loadUrl(url)
+					let navigationController = UINavigationController(rootViewController: webViewController)
+					let window : UIWindow? = UIApplication.sharedApplication().windows.first!
+					window?.rootViewController!.presentViewController(navigationController, animated: true, completion: nil)
+				})
+			}
+			
 		}
 	}
 	

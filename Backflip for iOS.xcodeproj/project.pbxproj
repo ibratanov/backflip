@@ -161,6 +161,7 @@
 		04A6B7091C0375E800C863DC /* INTULocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7041C0375E200C863DC /* INTULocationManager.framework */; };
 		04A6B70A1C0375E800C863DC /* INTULocationManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7041C0375E200C863DC /* INTULocationManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04A6B70E1C03826800C863DC /* BFFeaturedBlankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B70D1C03826800C863DC /* BFFeaturedBlankCell.swift */; };
+		04A6B7111C03898400C863DC /* BFWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7101C03898400C863DC /* BFWebviewController.swift */; };
 		04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */; };
 		04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */; };
@@ -661,6 +662,7 @@
 		04A0DCC61BE7F91300C5AABD /* EventEditingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEditingView.swift; sourceTree = "<group>"; };
 		04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocationManager.xcodeproj; path = Vendor/LocationManager/LocationManager/LocationManager.xcodeproj; sourceTree = "<group>"; };
 		04A6B70D1C03826800C863DC /* BFFeaturedBlankCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFFeaturedBlankCell.swift; path = Preview/BFFeaturedBlankCell.swift; sourceTree = "<group>"; };
+		04A6B7101C03898400C863DC /* BFWebviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFWebviewController.swift; path = Webview/BFWebviewController.swift; sourceTree = "<group>"; };
 		04B399281BDED7BC00B0F80A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		04B3992A1BDED7BC00B0F80A /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SVProgressHUD-Prefix.pch"; path = "SVProgressHUD/SVProgressHUD/SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -1277,6 +1279,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		04A6B70F1C03896F00C863DC /* Webview */ = {
+			isa = PBXGroup;
+			children = (
+				04A6B7101C03898400C863DC /* BFWebviewController.swift */,
+			);
+			name = Webview;
+			sourceTree = "<group>";
+		};
 		04B1C6511B97648C00F30C80 /* DOFavoriteButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1537,6 +1547,7 @@
 		04F41BEE1B74FBF4001AB8DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				04A6B70F1C03896F00C863DC /* Webview */,
 				04E0C9C61BFBAB0200DAA953 /* Preview */,
 				045386EF1BF252E4001E46ED /* Explore */,
 				040756DA1BD7E6AF00F95E96 /* Event Album */,
@@ -2155,6 +2166,7 @@
 				04CCD6691B8CBE9100664FB3 /* NSManagedObject+FetchOrCreate.m in Sources */,
 				046D98BF1BCAAAF4004B3DCD /* PreviewCollectionView.swift in Sources */,
 				0422D1161BCFF3190078E7F6 /* BFDataWrapper.m in Sources */,
+				04A6B7111C03898400C863DC /* BFWebviewController.swift in Sources */,
 				046D98BC1BCAAAF4004B3DCD /* ImagePickerSheetController.swift in Sources */,
 				04C61FC21B8B982600E2ACB5 /* Photo.swift in Sources */,
 				045386F41BF259A2001E46ED /* BFFeaturedEventCell.swift in Sources */,
@@ -2450,7 +2462,7 @@
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2530,7 +2542,7 @@
 					"\"$(SRCROOT)/Vendor/MagicalRecord/MagicalRecord\"/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

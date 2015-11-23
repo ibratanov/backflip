@@ -77,7 +77,11 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 		self.collectionView.registerClass(BFFeaturedBlankCell.self, forCellWithReuseIdentifier: BFFeaturedBlankCell.reuseIdentifier)
 		
 		self.titleLabel = UILabel(frame: CGRectZero)
-		self.titleLabel.font = UIFont.systemFontOfSize(10, weight: UIFontWeightSemibold)
+		if #available(iOS 8.2, *) {
+		    self.titleLabel.font = UIFont.systemFontOfSize(10, weight: UIFontWeightSemibold)
+		} else {
+			self.titleLabel.font = UIFont.systemFontOfSize(10)
+		}
 		
 		let text = NSLocalizedString("title.discover.suggested-events", comment: "SUGGESTED EVENTS")
 		let attributedText = NSMutableAttributedString(string: text)

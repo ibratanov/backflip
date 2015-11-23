@@ -52,7 +52,11 @@ class BFPreviewDescriptionCell : BFPreviewCell
 		self.markdownLabel = UILabel(frame: CGRectZero)
 		self.markdownLabel.lineBreakMode = .ByWordWrapping
 		self.markdownLabel.numberOfLines = 0
-		self.markdownLabel.font = UIFont.systemFontOfSize(17.0, weight: UIFontWeightLight)
+		if #available(iOS 8.2, *) {
+		    self.markdownLabel.font = UIFont.systemFontOfSize(17.0, weight: UIFontWeightLight)
+		} else {
+		    self.markdownLabel.font = UIFont.systemFontOfSize(17.0)
+		}
 		self.markdownLabel.userInteractionEnabled = true
 		self.contentView.addSubview(self.markdownLabel)
 	}
@@ -87,7 +91,15 @@ class BFPreviewDescriptionCell : BFPreviewCell
 		var htmlContent: String = markdown.transform(exampleText)
 		htmlContent = "<style>body{font-family: '\(self.markdownLabel.font.fontName)'; font-size:\(17.0)px;}</style> \(htmlContent)"
 		
-		let attributedOptions = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSFontAttributeName: UIFont.systemFontOfSize(17.0, weight: UIFontWeightLight)]
+		
+		var font: UIFont!
+		if #available(iOS 8.2, *) {
+			font = UIFont.systemFontOfSize(17.0, weight: UIFontWeightLight)
+		} else {
+			font = UIFont.systemFontOfSize(17.0)
+		}
+		
+		let attributedOptions = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSFontAttributeName: font]
 		let attributedString = try! NSAttributedString(data: htmlContent.dataUsingEncoding(NSUTF8StringEncoding)!, options: attributedOptions, documentAttributes: nil)
 		
 		self.markdownLabel.attributedText = attributedString

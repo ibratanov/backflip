@@ -68,7 +68,11 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 		self.tableView.registerClass(BFBrowseEventCell.self, forCellReuseIdentifier: BFBrowseEventCell.reuseIdentifier)
 		
 		self.titleLabel = UILabel(frame: CGRectZero)
-		self.titleLabel.font = UIFont.systemFontOfSize(10, weight: UIFontWeightSemibold)
+		if #available(iOS 8.2, *) {
+		    self.titleLabel.font = UIFont.systemFontOfSize(10, weight: UIFontWeightSemibold)
+		} else {
+		    self.titleLabel.font = UIFont.systemFontOfSize(10)
+		}
 		
 		let text = NSLocalizedString("title.discover.browse", comment: "BROWSE")
 		let attributedText = NSMutableAttributedString(string: text)
