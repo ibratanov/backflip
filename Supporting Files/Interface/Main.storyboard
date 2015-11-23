@@ -86,7 +86,7 @@
         <scene sceneID="pmg-is-ud3">
             <objects>
                 <navigationController id="WgT-s5-T4m" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Explore" id="rtM-aR-g7Z"/>
+                    <tabBarItem key="tabBarItem" title="Explore" image="tabbar-explore-icon" id="rtM-aR-g7Z"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NWg-Y0-46w">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -676,6 +676,7 @@
         <image name="tabBar-eventHistory-filled" width="28" height="25"/>
         <image name="tabBar-locator" width="30" height="24"/>
         <image name="tabBar-locator-filled" width="29" height="23"/>
+        <image name="tabbar-explore-icon" width="52" height="52"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="RGz-OW-NbD"/>
