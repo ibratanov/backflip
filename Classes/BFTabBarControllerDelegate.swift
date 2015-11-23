@@ -32,7 +32,7 @@ public class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate
 	public func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
 	{
 		let selectedIndex = tabBarController.viewControllers?.indexOf(viewController)
-		if (selectedIndex == 1) {
+		if (selectedIndex == 2) {
 			
 			let currentEvent: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id")
 			if (currentEvent == nil) {

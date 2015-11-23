@@ -31,10 +31,10 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="O7c-aj-Qx3" kind="relationship" relationship="viewControllers" id="RvR-y4-eV5"/>
-                        <segue destination="7NG-9a-x5O" kind="relationship" relationship="viewControllers" id="tuT-sT-sNE"/>
-                        <segue destination="Oc7-Mf-MXx" kind="relationship" relationship="viewControllers" id="lNk-6l-iuU"/>
-                        <segue destination="WgT-s5-T4m" kind="relationship" relationship="viewControllers" id="GCx-Bj-NIB"/>
+                        <segue destination="WgT-s5-T4m" kind="relationship" relationship="viewControllers" id="RGA-z9-ua9"/>
+                        <segue destination="O7c-aj-Qx3" kind="relationship" relationship="viewControllers" id="czr-Jc-1gW"/>
+                        <segue destination="7NG-9a-x5O" kind="relationship" relationship="viewControllers" id="6Mc-dn-lHS"/>
+                        <segue destination="Oc7-Mf-MXx" kind="relationship" relationship="viewControllers" id="HCa-VU-y48"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2AN-7E-O5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -130,12 +130,12 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2cd-NU-S4J">
-                                <rect key="frame" x="169" y="283" width="37" height="37"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2cd-NU-S4J">
+                                <rect key="frame" x="170" y="284" width="37" height="37"/>
                                 <color key="color" red="0.066666666669999999" green="0.52156862749999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <pickerView contentMode="scaleToFill" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHd-XW-fNZ">
-                                <rect key="frame" x="27" y="169" width="320" height="162"/>
+                                <rect key="frame" x="28" y="169" width="320" height="162"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="162" id="Lx9-9Q-cNw"/>
                                     <constraint firstAttribute="height" constant="162" id="cTu-am-Ooq"/>
@@ -198,7 +198,7 @@
                                 </connections>
                             </collectionView>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YcA-hr-4UR">
-                                <rect key="frame" x="112" y="479" width="150" height="45"/>
+                                <rect key="frame" x="113" y="479" width="150" height="45"/>
                                 <color key="backgroundColor" red="0.0" green="0.58823529409999997" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="FjL-9G-qDO"/>
@@ -514,8 +514,8 @@
                                     <constraint firstAttribute="height" constant="75" id="wHe-0A-pYW"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="WHERE ARE YOU?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="271" translatesAutoresizingMaskIntoConstraints="NO" id="edQ-k9-lFP">
-                                <rect key="frame" x="69" y="75" width="237" height="39"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="WHERE ARE YOU?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="271" translatesAutoresizingMaskIntoConstraints="NO" id="edQ-k9-lFP">
+                                <rect key="frame" x="70" y="75" width="237" height="39"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="28"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -546,8 +546,8 @@
                                     <constraint firstAttribute="height" constant="65" id="Wvc-E9-C3E"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="enter event name below" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="278" translatesAutoresizingMaskIntoConstraints="NO" id="ugz-BK-wRc">
-                                <rect key="frame" x="112" y="113" width="152" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="enter event name below" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="278" translatesAutoresizingMaskIntoConstraints="NO" id="ugz-BK-wRc">
+                                <rect key="frame" x="225" y="113" width="152" height="20"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                 <color key="textColor" red="0.44705882349999998" green="0.44705882349999998" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -676,7 +676,7 @@
         <image name="tabBar-eventHistory-filled" width="28" height="25"/>
         <image name="tabBar-locator" width="30" height="24"/>
         <image name="tabBar-locator-filled" width="29" height="23"/>
-        <image name="tabbar-explore-icon" width="52" height="52"/>
+        <image name="tabbar-explore-icon" width="27" height="27"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="RGz-OW-NbD"/>
