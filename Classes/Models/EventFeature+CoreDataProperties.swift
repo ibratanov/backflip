@@ -18,5 +18,6 @@ extension EventFeature {
     @NSManaged var endTime: NSDate?
     @NSManaged var priority: NSNumber?
     @NSManaged var event: Event?
+	@NSManaged var sticky: NSNumber?
 
 }

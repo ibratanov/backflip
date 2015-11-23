@@ -404,6 +404,9 @@
 			if ([self isValidValue:feature[@"priority"]])
 				[object setPriority:@([feature[@"priority"] integerValue])];
 			
+			if ([self isValidValue:feature[@"sticky"]])
+				[object setSticky:@([feature[@"sticky"] boolValue])];
+			
 			if ([self isValidValue:feature[@"event"]]) {
 				Event *event = [Event fetchOrCreateWhereAttribute:@"objectId" isValue:((PFObject *)feature[@"event"]).objectId inContext:localContext];
 				[object setEvent:event];

@@ -211,9 +211,13 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 			let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
 			dispatch_after(delayTime, dispatch_get_main_queue()) {
 				self.dismissViewControllerAnimated(true, completion: { () -> Void in
-					print("here, we should be checked in")
+					
+					// Select the 2nd tab
+					if UIApplication.sharedApplication().windows.first!.rootViewController as? UITabBarController != nil {
+						let tababarController = (UIApplication.sharedApplication().windows.first!).rootViewController as! UITabBarController
+						tababarController.selectedIndex = 1
+					}
 				})
-				// self.performSegueWithIdentifier("display-event-album", sender: self)
 			}
 			
 		}

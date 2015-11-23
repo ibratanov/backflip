@@ -6,6 +6,8 @@
 //  Copyright © 2015 Backflip. All rights reserved.
 //
 
+import UIKit
+import Parse
 import Foundation
 
 public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate
@@ -217,10 +219,26 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 		}
 		
 		for feature in features {
-			self.events.append(feature.event!)
+			
+			if (feature.sticky?.boolValue == true) {
+				self.events.append(feature.event!)
+				continue;
+			}
+			
+			var attended: Bool = false
+			let attendees = feature.event?.attendees?.allObjects as! [Attendance]
+			for attendee in attendees {
+				if (PFUser.currentUser() != nil && attendee.attendeeId == PFUser.currentUser()?.objectId) {
+					attended = true
+				}
+			}
+			
+			if (attended == false) {
+				self.events.append(feature.event!)
+			}
 		}
-		
+
 		self.collectionView.reloadData()
 	}
-	
+
 }
