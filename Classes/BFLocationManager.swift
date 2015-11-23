@@ -15,7 +15,7 @@ import CoreLocation
  * Debugging
 */
 #if DEBUG
-	private let kLocationDebugging : Bool = true
+	private let kLocationDebugging : Bool = false
 #else
 	private let kLocationDebugging : Bool = false
 #endif

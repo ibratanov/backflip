@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import Foundation
+import INTULocationManager
 
 public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDelegate
 {
@@ -91,14 +92,13 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 		super.layoutSubviews()
 		
 		self.titleLabel.frame = CGRectMake(7, 18, self.bounds.width-14, 12)
-		self.tableView.frame = CGRectMake(0, 45, self.bounds.width, self.contentHeight)
+		self.tableView.frame = CGRectMake(0, 45, self.bounds.width, self.contentHeight())
 
 	}
 
-	public var contentHeight: CGFloat {
-		get {
-			return CGFloat(self.events.count * Int(BFBrowseEventCell.contentHight))
-		}
+	public func contentHeight() -> CGFloat
+	{
+		return CGFloat(self.events.count * Int(BFBrowseEventCell.contentHight))
 	}
 	
 	
@@ -111,7 +111,8 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 	@available(iOS 2.0, *)
 	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
-		return Int(self.events.count)
+		print("\(__FUNCTION__) = \(self.events.count)")
+		return self.events.count
 	}
 	
 	@available(iOS 2.0, *)
@@ -185,66 +186,76 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 		self.events.removeAll()
 	
 		
-		BFLocationManager.sharedManager.fetchLocation(.House) { (location, error) -> Void in
+		INTULocationManager.sharedInstance().requestLocationWithDesiredAccuracy(.Block, timeout: 15.0, delayUntilAuthorized: true) { (location, accuracy, status) -> Void in
 			
-			if (error != nil) {
-				return // self.handleLocationError(error)
+			if (status == .Success) {
+				self.loadEvents(true, location: location)
+			} else if (status == .TimedOut) {
+				print("Location error :(, timed out")
+			} else {
+				print("General location error")
 			}
 			
-			let config = PFConfig.currentConfig()
-			let _events = Event.MR_findAll() as! [Event]
-			let nearbyEvents : NSMutableArray = NSMutableArray()
-			
-			let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10km (It's really in meters here 'cause of legacy, turns to Kms below)
-			let region : CLCircularRegion = CLCircularRegion(center: location!.coordinate, radius: (radius.doubleValue * 1000), identifier: "nearby-events-region")
-			
-			// Filter by event location and attancance
-			for event : Event in _events {
-				if (event.geoLocation != nil && event.live != nil && Bool(event.live!) == true && event.enabled != nil && Bool(event.enabled!) == true) {
+		}
+		
+	}
+	
+	
+	private func loadEvents(animated: Bool = true, location: CLLocation)
+	{
+		let config = PFConfig.currentConfig()
+		let _events = Event.MR_findAll() as! [Event]
+		let nearbyEvents : NSMutableArray = NSMutableArray()
+		
+		let radius = config["nearby_events_radius"] != nil ? config["nearby_events_radius"]! as! NSNumber : 10 // Default: 10km (It's really in meters here 'cause of legacy, turns to Kms below)
+		let region : CLCircularRegion = CLCircularRegion(center: location.coordinate, radius: (radius.doubleValue * 1000), identifier: "nearby-events-region")
+		
+		// Filter by event location and attancance
+		for event : Event in _events {
+			if (event.geoLocation != nil && event.enabled != nil && Bool(event.enabled!) == true) {
+				
+				if (event.endTime != nil && event.endTime?.isGreaterThanDate(NSDate()) == true) {
+				
 					let coordinate = CLLocationCoordinate2D(latitude: event.geoLocation!.latitude!.doubleValue, longitude: event.geoLocation!.longitude!.doubleValue)
 					if (region.containsCoordinate(coordinate)) {
-						
+					
 						var attended = false
 						let attendees = event.attendees!.allObjects as! [Attendance]
 						for attendee : Attendance in attendees {
 							if (PFUser.currentUser() != nil && attendee.attendeeId == PFUser.currentUser()!.objectId!) {
 								attended = true
-								break
+							break
 							}
 						}
-						
+					
 						if (attended == false) {
 							nearbyEvents.addObject(event)
 						}
-						
 					}
 				}
 			}
-			
-			
-			// Sort by closest to furthest
-			nearbyEvents.sortedArrayWithOptions(.Concurrent, usingComparator: { (event1, event2) -> NSComparisonResult in
-				let location1 = CLLocation(latitude: (event1 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event1 as! Event).geoLocation!.longitude!.doubleValue)
-				let location2 = CLLocation(latitude: (event2 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event2 as! Event).geoLocation!.longitude!.doubleValue)
-				let distance1 : NSNumber = NSNumber(double: location!.distanceFromLocation(location1))
-				let distance2 : NSNumber = NSNumber(double: location!.distanceFromLocation(location2))
-				return distance1.compare(distance2)
-			})
-			
-			
-			// Update UI
-			self.events = (nearbyEvents.copy()) as! [Event]
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-			
-				self.tableView.reloadData()
-				if (self.updateBlock != nil) {
-					self.updateBlock!()
-				}
-				
-			})
-			
 		}
-
 		
+		
+		// Sort by closest to furthest
+		nearbyEvents.sortedArrayWithOptions(.Concurrent, usingComparator: { (event1, event2) -> NSComparisonResult in
+			let location1 = CLLocation(latitude: (event1 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event1 as! Event).geoLocation!.longitude!.doubleValue)
+			let location2 = CLLocation(latitude: (event2 as! Event).geoLocation!.latitude!.doubleValue, longitude: (event2 as! Event).geoLocation!.longitude!.doubleValue)
+			let distance1 : NSNumber = NSNumber(double: location.distanceFromLocation(location1))
+			let distance2 : NSNumber = NSNumber(double: location.distanceFromLocation(location2))
+			return distance1.compare(distance2)
+		})
+		
+		
+		// Update UI
+		self.events = (nearbyEvents.copy()) as! [Event]
+		dispatch_async(dispatch_get_main_queue(), { () -> Void in
+			
+			print("We have \(self.events.count) events..")
+			self.tableView.reloadData()
+			
+			self.updateBlock?()
+			
+		})
 	}
 }

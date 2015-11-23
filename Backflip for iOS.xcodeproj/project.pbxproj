@@ -158,6 +158,8 @@
 		049738201BD805CB00B58F70 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; };
 		049738211BD805CB00B58F70 /* Nuke.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 049738171BD805C500B58F70 /* Nuke.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04A0DCC71BE7F91300C5AABD /* EventEditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A0DCC61BE7F91300C5AABD /* EventEditingView.swift */; };
+		04A6B7091C0375E800C863DC /* INTULocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7041C0375E200C863DC /* INTULocationManager.framework */; };
+		04A6B70A1C0375E800C863DC /* INTULocationManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7041C0375E200C863DC /* INTULocationManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */; };
 		04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */; };
@@ -375,6 +377,34 @@
 			remoteGlobalIDString = 0C91748F1BAE99EE004A7905;
 			remoteInfo = "Nuke iOS";
 		};
+		04A6B7031C0375E200C863DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6681CD281B1306C30080DBA9;
+			remoteInfo = INTULocationManager;
+		};
+		04A6B7051C0375E200C863DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B116683F18E5CEDD00D1E022;
+			remoteInfo = LocationManagerExample;
+		};
+		04A6B7071C0375E200C863DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B116686018E5CEDD00D1E022;
+			remoteInfo = LocationManagerTests;
+		};
+		04A6B70B1C0375E800C863DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6681CD271B1306C30080DBA9;
+			remoteInfo = INTULocationManager;
+		};
 		04CCD6501B8CB70500664FB3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
@@ -474,6 +504,7 @@
 			files = (
 				048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */,
 				04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */,
+				04A6B70A1C0375E800C863DC /* INTULocationManager.framework in Embed Frameworks */,
 				04ED9B161BC3033A008493E3 /* Mixpanel.framework in Embed Frameworks */,
 				040FD7811BD553110039CDAA /* SKPhotoBrowser.framework in Embed Frameworks */,
 				046D98D91BCAAB49004B3DCD /* QBImagePicker.framework in Embed Frameworks */,
@@ -627,6 +658,7 @@
 		0497380E1BD805C500B58F70 /* Nuke.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nuke.xcodeproj; path = Vendor/Nuke/Nuke/Nuke.xcodeproj; sourceTree = "<group>"; };
 		049AA6E91B73DBB2003888CE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		04A0DCC61BE7F91300C5AABD /* EventEditingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEditingView.swift; sourceTree = "<group>"; };
+		04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocationManager.xcodeproj; path = Vendor/LocationManager/LocationManager/LocationManager.xcodeproj; sourceTree = "<group>"; };
 		04B399281BDED7BC00B0F80A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		04B3992A1BDED7BC00B0F80A /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SVProgressHUD-Prefix.pch"; path = "SVProgressHUD/SVProgressHUD/SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -732,6 +764,7 @@
 				0477CE471BDFEF000033BDEE /* libFlurry_7.2.1.a in Frameworks */,
 				04D022891BE192B300375C84 /* Parse.framework in Frameworks */,
 				0430A41D1BE13BA500E33359 /* Instabug.framework in Frameworks */,
+				04A6B7091C0375E800C863DC /* INTULocationManager.framework in Frameworks */,
 				040EB5D91BC8187F00452620 /* Photos.framework in Frameworks */,
 				048939D11BD0452A005400CA /* Locksmith.framework in Frameworks */,
 				04ED9B141BC30337008493E3 /* Mixpanel.framework in Frameworks */,
@@ -867,6 +900,7 @@
 			children = (
 				04D022861BE192B300375C84 /* Bolts.framework */,
 				04D022871BE192B300375C84 /* Parse.framework */,
+				04E0CAD41C03759E00DAA953 /* LocationManager */,
 				0430A41E1BE13D6800E33359 /* Bolts */,
 				0430A4191BE13BA500E33359 /* Instabug */,
 				0477CE431BDFEF000033BDEE /* Flurry */,
@@ -1230,6 +1264,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		04A6B6FE1C0375E200C863DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04A6B7041C0375E200C863DC /* INTULocationManager.framework */,
+				04A6B7061C0375E200C863DC /* LocationManagerExample.app */,
+				04A6B7081C0375E200C863DC /* LocationManagerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		04B1C6511B97648C00F30C80 /* DOFavoriteButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1447,6 +1491,14 @@
 			path = Vendor/Markingbird;
 			sourceTree = "<group>";
 		};
+		04E0CAD41C03759E00DAA953 /* LocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */,
+			);
+			name = LocationManager;
+			sourceTree = "<group>";
+		};
 		04ED9AFF1BC2D8B4008493E3 /* Location Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -1617,6 +1669,7 @@
 				048939D41BD0452A005400CA /* PBXTargetDependency */,
 				040FD7831BD553110039CDAA /* PBXTargetDependency */,
 				049738231BD805CB00B58F70 /* PBXTargetDependency */,
+				04A6B70C1C0375E800C863DC /* PBXTargetDependency */,
 			);
 			name = Backflip;
 			productName = ParseStarterProject;
@@ -1674,6 +1727,10 @@
 			productRefGroup = 81BA81461A49DA1800E65899 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 04A6B6FE1C0375E200C863DC /* Products */;
+					ProjectRef = 04A6B6FD1C0375E200C863DC /* LocationManager.xcodeproj */;
+				},
 				{
 					ProductGroup = 048939C01BD0451C005400CA /* Products */;
 					ProjectRef = 048939BF1BD0451C005400CA /* Locksmith.xcodeproj */;
@@ -1825,6 +1882,27 @@
 			fileType = wrapper.cfbundle;
 			path = "Nuke OSX Tests.xctest";
 			remoteRef = 0497381E1BD805C500B58F70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04A6B7041C0375E200C863DC /* INTULocationManager.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = INTULocationManager.framework;
+			remoteRef = 04A6B7031C0375E200C863DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04A6B7061C0375E200C863DC /* LocationManagerExample.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LocationManagerExample.app;
+			remoteRef = 04A6B7051C0375E200C863DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04A6B7081C0375E200C863DC /* LocationManagerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LocationManagerTests.xctest;
+			remoteRef = 04A6B7071C0375E200C863DC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		04CCD6511B8CB70500664FB3 /* MagicalRecord.framework */ = {
@@ -2136,6 +2214,11 @@
 			isa = PBXTargetDependency;
 			name = "Nuke iOS";
 			targetProxy = 049738221BD805CB00B58F70 /* PBXContainerItemProxy */;
+		};
+		04A6B70C1C0375E800C863DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = INTULocationManager;
+			targetProxy = 04A6B70B1C0375E800C863DC /* PBXContainerItemProxy */;
 		};
 		04D0225A1BE15DD200375C84 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

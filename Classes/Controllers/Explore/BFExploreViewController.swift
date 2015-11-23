@@ -58,9 +58,13 @@ public class BFExploreViewController : UIViewController
 		self.browseView = BFBrowseEventsView(frame: CGRectZero)
 		
 		self.browseView.updateBlock = {
-			self.view.layoutIfNeeded()
+			print("We should update the frame now..")
+			
+			self.browseView.frame = CGRectMake(0, self.featuredView.bounds.height, self.scrollView.frame.width, 45 + self.browseView.contentHeight())
+			self.scrollView.contentSize = CGSizeMake(self.view.bounds.width, self.featuredView.frame.height + self.browseView.frame.height)
 		}
 			
+		UIApplication.sharedApplication().statusBarHidden = false
 		
 		self.scrollView.addSubview(self.featuredView)
 		self.scrollView.addSubview(self.browseView)
@@ -76,7 +80,7 @@ public class BFExploreViewController : UIViewController
 	{
 		self.scrollView.frame = self.view.bounds
 		self.featuredView.frame = CGRectMake(0, 0, self.scrollView.frame.width, 220)
-		self.browseView.frame = CGRectMake(0, self.featuredView.bounds.height, self.scrollView.frame.width, 45 + self.browseView.contentHeight)
+		self.browseView.frame = CGRectMake(0, self.featuredView.bounds.height, self.scrollView.frame.width, 45 + self.browseView.contentHeight())
 		
 		self.scrollView.contentSize = CGSizeMake(self.view.bounds.width, self.featuredView.frame.height + self.browseView.frame.height)
 	}

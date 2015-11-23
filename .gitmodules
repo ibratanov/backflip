@@ -50,3 +50,6 @@
 [submodule "Vendor/Markingbird"]
 	path = Vendor/Markingbird
 	url = git@github.com:kristopherjohnson/Markingbird.git
+[submodule "Vendor/LocationManager"]
+	path = Vendor/LocationManager
+	url = git@github.com:intuit/LocationManager.git
