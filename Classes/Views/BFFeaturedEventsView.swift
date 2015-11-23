@@ -126,7 +126,7 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 	// ----------------------------------------
 	//  MARK: - Collection View (Data source)
 	// ----------------------------------------
-	
+	@available(iOS 6.0, *)
 	public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
 		let numberOfItems = self.events.count
@@ -213,13 +213,11 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 		
 		let predicate = NSPredicate(format: "%K =< %@ AND %K >= %@ AND %K == %@", argumentArray: ["startTime", NSDate(), "endTime", NSDate(), "enabled", NSNumber(integer: 1)])
 		let features = EventFeature.MR_findAllSortedBy("priority", ascending: false, withPredicate: predicate) as! [EventFeature]
-		
 		if (features.count < 1) {
 			return
 		}
 		
 		for feature in features {
-			
 			if (feature.sticky?.boolValue == true) {
 				self.events.append(feature.event!)
 				continue;

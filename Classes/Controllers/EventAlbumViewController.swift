@@ -71,7 +71,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 	{
 		super.viewDidLoad()
 		
-		self.title = self.event?.name
+		// self.navigationItem.title = self.event?.name
 		
 		let titleLabel = UILabel(frame: CGRectZero)
 		titleLabel.text = self.event?.name
@@ -80,7 +80,9 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		titleLabel.textAlignment = .Center
 		let width = titleLabel.sizeThatFits(CGSizeMake(self.view.bounds.size.width, CGFloat.max)).width
 		titleLabel.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 44))
+		self.navigationController?.navigationItem.titleView = titleLabel
 		self.navigationItem.titleView = titleLabel
+		self.navigationController?.navigationBar.topItem?.titleView = titleLabel
 		
 		
 		// Preheat controller

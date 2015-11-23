@@ -10,19 +10,6 @@ import UIKit
 import Foundation
 
 
-/**
-	Collection View Cell
-		Content View
-			Size: 115x154
-			Broder: #FF0000
-			Corner Radius: 4
-		ImageView
-			Size: 115x116
-		Label
-			Size: 115x38
-*/
-
-
 public class BFFeaturedEventCell : UICollectionViewCell
 {
 	

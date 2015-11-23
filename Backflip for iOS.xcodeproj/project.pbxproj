@@ -163,6 +163,7 @@
 		04A6B70E1C03826800C863DC /* BFFeaturedBlankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B70D1C03826800C863DC /* BFFeaturedBlankCell.swift */; };
 		04A6B7111C03898400C863DC /* BFWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7101C03898400C863DC /* BFWebviewController.swift */; };
 		04A6B7141C039F0300C863DC /* BFSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7131C039F0300C863DC /* BFSettingsViewController.swift */; };
+		04A6B7181C03B33E00C863DC /* BFCurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7171C03B33E00C863DC /* BFCurrentViewController.swift */; };
 		04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */; };
 		04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */; };
@@ -665,6 +666,7 @@
 		04A6B70D1C03826800C863DC /* BFFeaturedBlankCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFFeaturedBlankCell.swift; path = Preview/BFFeaturedBlankCell.swift; sourceTree = "<group>"; };
 		04A6B7101C03898400C863DC /* BFWebviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFWebviewController.swift; path = Webview/BFWebviewController.swift; sourceTree = "<group>"; };
 		04A6B7131C039F0300C863DC /* BFSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFSettingsViewController.swift; path = Settings/BFSettingsViewController.swift; sourceTree = "<group>"; };
+		04A6B7171C03B33E00C863DC /* BFCurrentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFCurrentViewController.swift; path = Current/BFCurrentViewController.swift; sourceTree = "<group>"; };
 		04B399281BDED7BC00B0F80A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		04B3992A1BDED7BC00B0F80A /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SVProgressHUD-Prefix.pch"; path = "SVProgressHUD/SVProgressHUD/SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -802,12 +804,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		040756DA1BD7E6AF00F95E96 /* Event Album */ = {
+		040756DA1BD7E6AF00F95E96 /* Album */ = {
 			isa = PBXGroup;
 			children = (
 				0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */,
 			);
-			name = "Event Album";
+			name = Album;
 			sourceTree = "<group>";
 		};
 		040756F81BD8053B00F95E96 /* Nuke */ = {
@@ -977,8 +979,8 @@
 		0439D3AC1B8B822C001850DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				045386F21BF25814001E46ED /* Explore */,
 				0453865F1BEBB7B9001E46ED /* Onboarding */,
+				045386F21BF25814001E46ED /* Explore */,
 				04E0C9C31BFB961E00DAA953 /* Preview */,
 				04B610311BB98FEE00C1AF1E /* Collection View */,
 				040FD7891BD5746B0039CDAA /* BFPhotoBrowser.swift */,
@@ -1080,6 +1082,7 @@
 		045386EF1BF252E4001E46ED /* Explore */ = {
 			isa = PBXGroup;
 			children = (
+				04E0C9C61BFBAB0200DAA953 /* Preview */,
 				045386F01BF25304001E46ED /* BFExploreViewController.swift */,
 			);
 			name = Explore;
@@ -1295,6 +1298,14 @@
 				04A6B7131C039F0300C863DC /* BFSettingsViewController.swift */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		04A6B7161C03B2FE00C863DC /* Current */ = {
+			isa = PBXGroup;
+			children = (
+				04A6B7171C03B33E00C863DC /* BFCurrentViewController.swift */,
+			);
+			name = Current;
 			sourceTree = "<group>";
 		};
 		04B1C6511B97648C00F30C80 /* DOFavoriteButton */ = {
@@ -1557,13 +1568,13 @@
 		04F41BEE1B74FBF4001AB8DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				045386401BEBB714001E46ED /* Onboarding */,
+				045386EF1BF252E4001E46ED /* Explore */,
+				04A6B7161C03B2FE00C863DC /* Current */,
 				04A6B7121C039EF300C863DC /* Settings */,
 				04A6B70F1C03896F00C863DC /* Webview */,
-				04E0C9C61BFBAB0200DAA953 /* Preview */,
-				045386EF1BF252E4001E46ED /* Explore */,
-				040756DA1BD7E6AF00F95E96 /* Event Album */,
+				040756DA1BD7E6AF00F95E96 /* Album */,
 				046D98DD1BCAABA8004B3DCD /* Camera */,
-				045386401BEBB714001E46ED /* Onboarding */,
 				0439D3D41B8B8896001850DD /* CheckinViewController.swift */,
 				0439D39C1B8B81A6001850DD /* CreatePublicEventViewController.swift */,
 				042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */,
@@ -2146,6 +2157,7 @@
 				0439D3A41B8B81A6001850DD /* CreatePublicEventViewController.swift in Sources */,
 				043AB3B81BBE212200BA5827 /* PKHUDSuccessView.swift in Sources */,
 				045386FE1BF2AE4D001E46ED /* BFBrowseEventsView.swift in Sources */,
+				04A6B7181C03B33E00C863DC /* BFCurrentViewController.swift in Sources */,
 				043AB3B51BBE212200BA5827 /* PKHUDSquareBaseView.swift in Sources */,
 				042E8D781BB3119A00D61412 /* EventHistoryHeaderView.swift in Sources */,
 				04D5E6411BE3B6440073FEDB /* BFBonjourManager.swift in Sources */,
