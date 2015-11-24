@@ -1082,7 +1082,8 @@
 		045386EF1BF252E4001E46ED /* Explore */ = {
 			isa = PBXGroup;
 			children = (
-				04E0C9C61BFBAB0200DAA953 /* Preview */,
+				04E0C9CF1BFBACEB00DAA953 /* Modal Transistion */,
+				04E0C9C71BFBAB2400DAA953 /* BFPreviewViewController.swift */,
 				045386F01BF25304001E46ED /* BFExploreViewController.swift */,
 			);
 			name = Explore;
@@ -1492,15 +1493,6 @@
 				04E0C9D01BFD078A00DAA953 /* BFPreviewDescriptionCell.swift */,
 				04E0C9AD1BFB955F00DAA953 /* BFPreviewLocationCell.swift */,
 				04E0CAD01BFD283600DAA953 /* BFPreviewPhotoCell.swift */,
-			);
-			name = Preview;
-			sourceTree = "<group>";
-		};
-		04E0C9C61BFBAB0200DAA953 /* Preview */ = {
-			isa = PBXGroup;
-			children = (
-				04E0C9CF1BFBACEB00DAA953 /* Modal Transistion */,
-				04E0C9C71BFBAB2400DAA953 /* BFPreviewViewController.swift */,
 			);
 			name = Preview;
 			sourceTree = "<group>";

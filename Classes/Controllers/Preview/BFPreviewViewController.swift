@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import MapKit
 import Foundation
+import CoreLocation
 
 class BFPreviewViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate
 {
@@ -61,6 +63,13 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 		self.tableView = UITableView(frame: self.view.bounds, style: .Plain)
 		self.tableView.dataSource = self
 		self.tableView.delegate = self
+		self.view.addSubview(self.tableView)
+
+	}
+
+	override func viewDidLoad()
+	{
+		super.viewDidLoad()
 		
 		self.tableView.separatorColor = UIColor.clearColor()
 		
@@ -68,11 +77,8 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 		self.tableView.registerClass(BFPreviewDescriptionCell.self, forCellReuseIdentifier: BFPreviewDescriptionCell.identifier)
 		self.tableView.registerClass(BFPreviewHeaderCell.self, forCellReuseIdentifier: BFPreviewHeaderCell.identifier)
 		self.tableView.registerClass(BFPreviewPhotoCell.self, forCellReuseIdentifier: BFPreviewPhotoCell.identifier)
-		
-		self.view.addSubview(self.tableView)
-
 	}
-
+	
 	
 	override func viewWillLayoutSubviews()
 	{
@@ -122,7 +128,35 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 	@available(iOS 2.0, *)
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) -> Void
 	{
-		print("Selected cell \(indexPath.row)")
+		
+		if (indexPath.row == 2) {
+			let alertController = UIAlertController(title: self.event?.name, message:self.event?.venue, preferredStyle: .ActionSheet)
+			alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+			alertController.addAction(UIAlertAction(title: "Open in Maps", style: .Default, handler: { (alertAction) -> Void in
+				
+				let regionDistance:CLLocationDistance = 10000
+				let coordinates = CLLocationCoordinate2DMake(self.event!.geoLocation!.latitude!.doubleValue, self.event!.geoLocation!.longitude!.doubleValue)
+				let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+				let options = [
+					MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
+					MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
+				]
+				let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+				let mapItem = MKMapItem(placemark: placemark)
+				mapItem.name = self.event?.name
+				mapItem.openInMapsWithLaunchOptions(options)
+				
+			}))
+			
+			if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
+				alertController.addAction(UIAlertAction(title: "Open in Google Maps", style: .Default, handler: { (action) -> Void in
+					let coordinates = CLLocationCoordinate2DMake(self.event!.geoLocation!.latitude!.doubleValue, self.event!.geoLocation!.longitude!.doubleValue)
+					UIApplication.sharedApplication().openURL(NSURL(string:"comgooglemaps://?center=\(coordinates.latitude),\(coordinates.longitude)&views=satellite,traffic&zoom=15")!)
+				}))
+			}
+			
+			self.presentViewController(alertController, animated: true, completion: nil)
+		}
 	}
 	
 	

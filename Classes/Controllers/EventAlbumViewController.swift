@@ -320,12 +320,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		}
 			
 		if (indexPath.row == 0) {
-			
 			cell!.imageView!.image = UIImage(named: "album-cell-add-photo")
-			// cell!.imageView!.image!.imageWithRenderingMode(.AlwaysTemplate)
-			// cell!.imageView!.contentMode = .ScaleAspectFit
-			// cell!.imageView!.tintColor = UIColor.grayColor()
-			
 		} else if (self.collectionContent.count >= indexPath.row) {
 		
 		}

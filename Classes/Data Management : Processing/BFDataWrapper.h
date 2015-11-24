@@ -10,9 +10,7 @@
 
 @interface BFDataWrapper : NSObject
 
-
 + (BFDataWrapper * _Nonnull)sharedWrapper;
-
 
 + (void)processEvents:(nullable NSArray *)events completion:(nullable void (^)(void))completionBlock;
 + (void)processPhotos:(nullable NSArray *)photos completion:(nullable void (^)(void))completionBlock;

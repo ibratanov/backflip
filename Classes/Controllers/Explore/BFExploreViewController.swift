@@ -51,6 +51,9 @@ public class BFExploreViewController : UIViewController
 		// Logo
 		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
 		
+		// Tab bar delegate
+		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
+		
 		self.scrollView = UIScrollView(frame: CGRectZero)
 		self.view.addSubview(self.scrollView)
 		

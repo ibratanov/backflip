@@ -53,7 +53,7 @@ public class BFTabBarControllerDelegate : NSObject, UITabBarControllerDelegate
 				
 				let objectId = NSUserDefaults.standardUserDefaults().objectForKey("checkin_event_id") as? String
 				let event : Event = Event.fetchOrCreateWhereAttribute("objectId", isValue: objectId) as! Event
-				displayCamera(event)
+				self.displayCamera(event)
 
 			}
 			
