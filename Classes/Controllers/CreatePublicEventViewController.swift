@@ -212,9 +212,7 @@ class CreatePublicEventViewController: BFViewController, UITextFieldDelegate {
 			
 			
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				
 				self?.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-				
 			})
 			
 		}

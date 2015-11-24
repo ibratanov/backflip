@@ -54,6 +54,22 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		super.viewDidAppear(animated)
 		
 		UIApplication.sharedApplication().statusBarHidden = false
+		
+		// Hide the "leave" button when pushed from event history
+		let currentEventId = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id") as? String
+		print("current eventId = \(currentEventId), self.event.objectId = \(self.event?.objectId)")
+		if (currentEventId == self.event?.objectId) {
+			self.navigationController?.setViewControllers([self], animated: false)
+			
+			let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
+			self.navigationItem.titleView?.addGestureRecognizer(longPressRecognizer)
+		} else if (currentEventId != self.event?.objectId && currentEventId != nil) {
+			let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+			let currentViewController = storyboard.instantiateViewControllerWithIdentifier("current-viewcontroller")
+			self.navigationController?.setViewControllers([currentViewController], animated: false)
+		} else {
+			self.navigationItem.leftBarButtonItem = nil
+		}
     }
 	
 	override func viewWillDisappear(animated: Bool)
@@ -78,18 +94,6 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		self.navigationController?.navigationItem.titleView = titleLabel
 		self.navigationItem.titleView = titleLabel
 		self.navigationController?.navigationBar.topItem?.titleView = titleLabel
-		
-		
-		// Hide the "leave" button when pushed from event history
-		let currentEventId = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id") as? String
-		if (currentEventId == self.event?.objectId) {
-			self.navigationController?.setViewControllers([self], animated: false)
-			
-			let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
-			self.navigationItem.titleView?.addGestureRecognizer(longPressRecognizer)
-		} else {
-			self.navigationItem.leftBarButtonItem = nil
-		}
 		
 		self.updateData()
 		
@@ -135,8 +139,8 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 			
 			
 			let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-			let checkinViewController = storyboard.instantiateViewControllerWithIdentifier("CheckinViewController") as! CheckinViewController
-			self.navigationController?.setViewControllers([checkinViewController], animated: false)
+			let currentViewController = storyboard.instantiateViewControllerWithIdentifier("current-viewcontroller")
+			self.navigationController?.setViewControllers([currentViewController], animated: false)
 
 		}))
 		self.presentViewController(alertController, animated: true, completion: nil)

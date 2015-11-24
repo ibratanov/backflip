@@ -512,8 +512,8 @@ public class BFParseManager : NSObject
 							let navigationController = tabbarController.viewControllers?.first as? UINavigationController
 							
 							let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-							let checkinViewController = storyboard.instantiateViewControllerWithIdentifier("CheckinViewController") as! CheckinViewController
-							navigationController?.setViewControllers([checkinViewController], animated: false)
+							let currentViewController = storyboard.instantiateViewControllerWithIdentifier("current-viewcontroller")
+							navigationController?.setViewControllers([currentViewController], animated: false)
 							
 						}
 					})

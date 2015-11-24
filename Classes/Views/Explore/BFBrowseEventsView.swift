@@ -154,6 +154,7 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 		
 		let event = self.events[indexPath.row]
 		
+		cell.backgroundImageView.image = nil
 		if let image = event.previewImage {
 			let imageUrl = NSURL(string: image.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
 			cell.backgroundImageView?.kf_setImageWithURL(imageUrl!, placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1))])
@@ -255,7 +256,6 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 		self.events = (nearbyEvents.copy()) as! [Event]
 		dispatch_async(dispatch_get_main_queue(), { () -> Void in
 			
-			print("We have \(self.events.count) events..")
 			self.tableView.reloadData()
 			
 			self.updateBlock?()

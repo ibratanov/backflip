@@ -68,7 +68,6 @@
 		0439D3991B8B7AEE001850DD /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3981B8B7AEE001850DD /* DigitsKitResources.bundle */; };
 		0439D3A41B8B81A6001850DD /* CreatePublicEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D39C1B8B81A6001850DD /* CreatePublicEventViewController.swift */; };
 		0439D3A51B8B81A6001850DD /* EventAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */; };
-		0439D3A81B8B81A6001850DD /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3A01B8B81A6001850DD /* InviteViewController.swift */; };
 		0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3B51B8B82E2001850DD /* Launch Screen.xib */; };
 		0439D3BB1B8B82E2001850DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0439D3B61B8B82E2001850DD /* Main.storyboard */; };
 		0439D3C01B8B83AE001850DD /* ReportImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3BF1B8B83AE001850DD /* ReportImage.swift */; };
@@ -76,7 +75,6 @@
 		0439D3CF1B8B8777001850DD /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3CE1B8B8777001850DD /* UIColor+Extensions.swift */; };
 		0439D3D11B8B87D3001850DD /* BFTabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3D01B8B87D3001850DD /* BFTabBarControllerDelegate.swift */; };
 		0439D3D31B8B887C001850DD /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3D21B8B887C001850DD /* Array+Extensions.swift */; };
-		0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439D3D41B8B8896001850DD /* CheckinViewController.swift */; };
 		043AB3AD1BBE212100BA5827 /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB39B1BBE212100BA5827 /* FrameView.swift */; };
 		043AB3AE1BBE212100BA5827 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 043AB39C1BBE212100BA5827 /* Images.xcassets */; };
 		043AB3AF1BBE212100BA5827 /* PKHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB39D1BBE212100BA5827 /* PKHUD.swift */; };
@@ -205,7 +203,6 @@
 		04E0CA591BFD1B5300DAA953 /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9DB1BFD1B5300DAA953 /* Markdown.swift */; };
 		04E0CAD11BFD283600DAA953 /* BFPreviewPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0CAD01BFD283600DAA953 /* BFPreviewPhotoCell.swift */; };
 		04E0CAD31BFD300300DAA953 /* BFPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0CAD21BFD300300DAA953 /* BFPhotoCollectionViewCell.swift */; };
-		04ED9B091BC2D959008493E3 /* BFLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B081BC2D959008493E3 /* BFLocationManager.swift */; };
 		04ED9B0C1BC2FC26008493E3 /* PreProcessorMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED9B0B1BC2FC26008493E3 /* PreProcessorMacros.m */; };
 		04ED9B141BC30337008493E3 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04ED9B131BC30331008493E3 /* Mixpanel.framework */; };
 		04ED9B161BC3033A008493E3 /* Mixpanel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04ED9B131BC30331008493E3 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -537,7 +534,6 @@
 		0439D3981B8B7AEE001850DD /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
 		0439D39C1B8B81A6001850DD /* CreatePublicEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePublicEventViewController.swift; sourceTree = "<group>"; };
 		0439D39D1B8B81A6001850DD /* EventAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAlbumViewController.swift; sourceTree = "<group>"; };
-		0439D3A01B8B81A6001850DD /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		0439D3B51B8B82E2001850DD /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		0439D3B61B8B82E2001850DD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0439D3BF1B8B83AE001850DD /* ReportImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportImage.swift; sourceTree = "<group>"; };
@@ -545,7 +541,6 @@
 		0439D3CE1B8B8777001850DD /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		0439D3D01B8B87D3001850DD /* BFTabBarControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFTabBarControllerDelegate.swift; sourceTree = "<group>"; };
 		0439D3D21B8B887C001850DD /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
-		0439D3D41B8B8896001850DD /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 		043AB39B1BBE212100BA5827 /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameView.swift; path = Vendor/PKHUD/PKHUD/FrameView.swift; sourceTree = "<group>"; };
 		043AB39C1BBE212100BA5827 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Vendor/PKHUD/PKHUD/Images.xcassets; sourceTree = "<group>"; };
 		043AB39D1BBE212100BA5827 /* PKHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKHUD.swift; path = Vendor/PKHUD/PKHUD/PKHUD.swift; sourceTree = "<group>"; };
@@ -683,7 +678,6 @@
 		04E0C9DB1BFD1B5300DAA953 /* Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Markdown.swift; path = Markingbird/Markdown.swift; sourceTree = "<group>"; };
 		04E0CAD01BFD283600DAA953 /* BFPreviewPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewPhotoCell.swift; path = Preview/BFPreviewPhotoCell.swift; sourceTree = "<group>"; };
 		04E0CAD21BFD300300DAA953 /* BFPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
-		04ED9B081BC2D959008493E3 /* BFLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFLocationManager.swift; sourceTree = "<group>"; };
 		04ED9B0A1BC2FC1B008493E3 /* PreProcessorMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreProcessorMacros.h; sourceTree = "<group>"; };
 		04ED9B0B1BC2FC26008493E3 /* PreProcessorMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreProcessorMacros.m; sourceTree = "<group>"; };
 		04ED9B0E1BC30331008493E3 /* Mixpanel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mixpanel.xcodeproj; path = Vendor/Mixpanel/Mixpanel.xcodeproj; sourceTree = "<group>"; };
@@ -1450,14 +1444,6 @@
 			name = LocationManager;
 			sourceTree = "<group>";
 		};
-		04ED9AFF1BC2D8B4008493E3 /* Location Services */ = {
-			isa = PBXGroup;
-			children = (
-				04ED9B081BC2D959008493E3 /* BFLocationManager.swift */,
-			);
-			name = "Location Services";
-			sourceTree = "<group>";
-		};
 		04ED9B0D1BC30329008493E3 /* Mixpanel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1484,10 +1470,8 @@
 				04A6B70F1C03896F00C863DC /* Webview */,
 				040756DA1BD7E6AF00F95E96 /* Album */,
 				046D98DD1BCAABA8004B3DCD /* Camera */,
-				0439D3D41B8B8896001850DD /* CheckinViewController.swift */,
 				0439D39C1B8B81A6001850DD /* CreatePublicEventViewController.swift */,
 				042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */,
-				0439D3A01B8B81A6001850DD /* InviteViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1521,7 +1505,6 @@
 				0439D3AC1B8B822C001850DD /* Views */,
 				04F41BEE1B74FBF4001AB8DA /* Controllers */,
 				0439D3C51B8B86AC001850DD /* Extensions */,
-				04ED9AFF1BC2D8B4008493E3 /* Location Services */,
 				0420283A1BA1E0CB0059F096 /* Defines.swift */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				50099C0B1B389E4B005A9867 /* Reachability.swift */,
@@ -2038,7 +2021,6 @@
 				04E0CAD31BFD300300DAA953 /* BFPhotoCollectionViewCell.swift in Sources */,
 				046D98C61BCAAAF4004B3DCD /* SheetController.swift in Sources */,
 				045949DB1BF4FD6E00CCC348 /* EventFeature.swift in Sources */,
-				0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */,
 				046D98E31BCAABA8004B3DCD /* BFCameraController.swift in Sources */,
 				04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */,
 				046D98C41BCAAAF4004B3DCD /* SheetCollectionViewCell.swift in Sources */,
@@ -2093,7 +2075,6 @@
 				0422D1181BCFF6520078E7F6 /* BFParseManager.swift in Sources */,
 				046D98C01BCAAAF4004B3DCD /* PreviewCollectionViewCell.swift in Sources */,
 				0439D3CD1B8B8758001850DD /* NSDate+Extensions.swift in Sources */,
-				0439D3A81B8B81A6001850DD /* InviteViewController.swift in Sources */,
 				0422D1131BCFF3190078E7F6 /* BFDataFetcher.swift in Sources */,
 				046D98C31BCAAAF4004B3DCD /* SheetActionCollectionViewCell.swift in Sources */,
 				04FD59E21B901D63005A1FA4 /* String+Extensions.swift in Sources */,
@@ -2101,7 +2082,6 @@
 				046D98C11BCAAAF4004B3DCD /* PreviewCollectionViewLayout.swift in Sources */,
 				04C61FC31B8B982600E2ACB5 /* GeoPoint+CoreDataProperties.swift in Sources */,
 				043AB3B71BBE212200BA5827 /* PKHUDSubtitleView.swift in Sources */,
-				04ED9B091BC2D959008493E3 /* BFLocationManager.swift in Sources */,
 				046D98C51BCAAAF4004B3DCD /* SheetCollectionViewLayout.swift in Sources */,
 				046D98BA1BCAAAF4004B3DCD /* AnimationController.swift in Sources */,
 				043AB3BE1BBE212200BA5827 /* WindowRootViewController.swift in Sources */,

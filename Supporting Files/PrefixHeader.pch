@@ -8,3 +8,5 @@
 
 #import <Availability.h>
 #import "PreProcessorMacros.h"
+
+#define INTU_ENABLE_LOGGING 0

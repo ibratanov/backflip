@@ -146,6 +146,7 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 			
 			let event = self.events[indexPath.row]
 			(cell as! BFFeaturedEventCell).textLabel.text = event.name
+			(cell as! BFFeaturedEventCell).imageView.image = nil
 			if (event.featureImage != nil) {
 				let imageUrl = NSURL(string: event.featureImage!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
 				(cell as! BFFeaturedEventCell).imageView.kf_setImageWithURL(imageUrl!, placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1))])
