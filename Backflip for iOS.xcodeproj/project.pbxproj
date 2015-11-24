@@ -97,6 +97,8 @@
 		043AB3BE1BBE212200BA5827 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043AB3AC1BBE212100BA5827 /* WindowRootViewController.swift */; };
 		044FA82B1C04EF0A002972DE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044FA8291C04EF0A002972DE /* Bolts.framework */; };
 		044FA82C1C04EF0A002972DE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044FA82A1C04EF0A002972DE /* Parse.framework */; };
+		044FA82E1C04F4E1002972DE /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3341B8B76B1001850DD /* FBSDKCoreKit.framework */; };
+		044FA82F1C04F4E1002972DE /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0439D3351B8B76B1001850DD /* FBSDKLoginKit.framework */; };
 		045386461BEBB714001E46ED /* BFGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386411BEBB714001E46ED /* BFGradientView.swift */; };
 		045386471BEBB714001E46ED /* BFOnboardingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386421BEBB714001E46ED /* BFOnboardingImageView.swift */; };
 		045386481BEBB714001E46ED /* BFOnboardingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045386431BEBB714001E46ED /* BFOnboardingInfoView.swift */; };
@@ -723,6 +725,8 @@
 				040FD1061BB2F14300DDB1A5 /* libsqlite3.tbd in Frameworks */,
 				040FD10C1BB2F19500DDB1A5 /* libstdc++.tbd in Frameworks */,
 				0477CE471BDFEF000033BDEE /* libFlurry_7.2.1.a in Frameworks */,
+				044FA82E1C04F4E1002972DE /* FBSDKCoreKit.framework in Frameworks */,
+				044FA82F1C04F4E1002972DE /* FBSDKLoginKit.framework in Frameworks */,
 				0430A41D1BE13BA500E33359 /* Instabug.framework in Frameworks */,
 				04A6B7091C0375E800C863DC /* INTULocationManager.framework in Frameworks */,
 				040EB5D91BC8187F00452620 /* Photos.framework in Frameworks */,

@@ -32,7 +32,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		//--------------------------------------
 		setupAnalytics()
 		setupParse()
-		setupCaching()
 		setupBranch(launchOptions)
 		setupCoreData()
 		setupApperance()
@@ -212,26 +211,15 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	
 	func setupParse()
 	{
-		// Local caching of query results
-		#if FEATURE_PARSE_LOCAL
-			Parse.enableLocalDatastore()
-		#endif
-
-
 		if DEBUG_PARSE {
-			NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveDidReceiveURLResponseNotification:", name: PFNetworkDidReceiveURLResponseNotification, object: nil)
-
 			Parse.setLogLevel(.Debug)
 		}
-
 		
 		#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 		#else
 			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
 		#endif
-
-
 		
 		// Default ACL
 		let defaultACL = PFACL();
@@ -247,21 +235,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	}
 
 
-	func receiveDidReceiveURLResponseNotification(notification: NSNotification)
-	{
-		guard notification.userInfo != nil else { return }
-
-		let response = notification.userInfo![PFNetworkNotificationURLResponseUserInfoKey] as! NSHTTPURLResponse
-		let responseBody = notification.userInfo![PFNetworkNotificationURLResponseBodyUserInfoKey] as! NSString
-		print("------------------------------------------------")
-		print("\tURL: \(response.URL!.absoluteString)")
-		print("\tStatus code: \(response.statusCode)")
-		print("\tHeaders: \(response.allHeaderFields)")
-		print("\tResponse Body: \(responseBody)")
-		print(" ")
-	}
-
-
 
 
 
@@ -271,29 +244,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	
 	func setupAnalytics()
 	{
-		#if FEATURE_GOOGLE_ANALYTICS
-		
-            //-------Google Analytics
-            // Configure tracker from GoogleService-Info.plist.
-            var configureError:NSError?
-            GGLContext.sharedInstance().configureWithError(&configureError)
-            assert(configureError == nil, "Error configuring Google services: \(configureError)")
-            
-            // Optional: configure GAI options.
-            let gai = GAI.sharedInstance()
-            gai.trackUncaughtExceptions = true  // report uncaught exceptions
-            gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
-            
-            //-----------Google Analytics
-            
-            // var dimensionValue = "\(PFUser.currentUser()?.objectId)"
-            // gai.set(GAIFields.customDimensionForIndex(1), value: PFUser.currentUser()?.objectId)
-            //gai.set(customDimensionForIndex:1, value: dimensionValue)
-            //method called when a user signs in to an authentication system
-            //GAI.sharedInstance().defaultTracker.set("&uid", value: PFUser.currentUser()?.objectId)
-        
-		#endif
-		
 		if (FEATURE_INSTABUG) {
 			Instabug.startWithToken("510f98f8d22d87efdf38fcdcaa64ce78", captureSource: IBGCaptureSourceUIKit, invocationEvent: IBGInvocationEventShake)
 		}
@@ -321,26 +271,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	{
 		BFDataMananger.sharedManager.setupDatabase()
 	}
-
-	
-	//--------------------------------------
-	// MARK: Caching
-	//--------------------------------------
-	
-	func setupCaching()
-	{
-		#if DEBUG
-			print("📁 Diskcache \(NSURLCache.sharedURLCache().currentDiskUsage) of \(NSURLCache.sharedURLCache().diskCapacity)")
-			print("📁 Memorycache \(NSURLCache.sharedURLCache().currentMemoryUsage) of \(NSURLCache.sharedURLCache().memoryCapacity)")
-		#endif
-		
-		
-		let memoryCacheSize = 100*1024*1024 // 100 MB
-		let diskCacheSize = 500*1024*1024 // 500 MB
-		
-		let sharedCache = NSURLCache(memoryCapacity: memoryCacheSize, diskCapacity: diskCacheSize, diskPath: "backflip-nsurl-cache")
-		NSURLCache.setSharedURLCache(sharedCache)
-	}
 	
 	
     //--------------------------------------
@@ -349,13 +279,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 	
     func setupBranch(launchOptions: [NSObject: AnyObject]?)
     {
-        
 		Branch.getInstance().initSessionWithLaunchOptions(launchOptions, isReferrable: true, andRegisterDeepLinkHandler: { params, error in
-
 			BFParseManager.sharedManager.handleInviteLink(params, error: error)
-
 		})
-
     }
     
 	
