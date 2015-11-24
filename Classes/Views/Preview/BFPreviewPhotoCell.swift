@@ -96,7 +96,9 @@ public class BFPreviewPhotoCell : BFPreviewCell, UICollectionViewDataSource, UIC
 			let frame = UIApplication.sharedApplication().windows.first!.rootViewController!.view.frame
 			let itemSize = CGSizeMake(((frame.size.width - 10) / 3) - 1, ((frame.size.width - 10) / 3) - 1)
 			
-			return 44.0 + (itemSize.height * CGFloat(self.photos.count / 3))
+			let numberOfItems = (1 * Int(ceil(Double(self.photos.count) / 3.0)))
+			
+			return 44.0 + (itemSize.height * CGFloat(numberOfItems))
 		}
 	
 		return 0
