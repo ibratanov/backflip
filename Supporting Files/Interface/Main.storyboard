@@ -21,7 +21,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yjQ-Gc-cP4">
             <objects>
-                <tabBarController id="rap-jL-BIw" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabbar-controller" id="rap-jL-BIw" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -41,24 +41,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2AN-7E-O5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-319.5" y="-3398.5"/>
-        </scene>
-        <!--Onboarding View Controller-->
-        <scene sceneID="cZC-Kp-y1Y">
-            <objects>
-                <viewController id="wYX-0k-qSu" customClass="BFOnboardingViewController" customModule="Backflip" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Ilv-yc-pfJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="mQp-IS-BxB"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="XFu-w2-wln">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wkq-Is-a5V" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1628.5" y="-1994.5"/>
         </scene>
         <!--Settings-->
         <scene sceneID="iyr-vI-yo6">
@@ -455,12 +437,11 @@
                         <outlet property="pickerView" destination="SHd-XW-fNZ" id="Pqb-v1-jeV"/>
                         <outlet property="previewLabel" destination="X0R-2x-9cH" id="qRo-bi-vgL"/>
                         <segue destination="XjT-mA-gxf" kind="show" identifier="display-event-album" id="7DF-eU-AoJ"/>
-                        <segue destination="wYX-0k-qSu" kind="presentation" identifier="display-login-popover" id="ba0-uC-v4W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFp-oe-wHb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3066.5" y="-3096.5"/>
+            <point key="canvasLocation" x="3580" y="-3971"/>
         </scene>
         <!--Event Album View Controller-->
         <scene sceneID="Lqx-4V-58o">
@@ -688,7 +669,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HJi-dg-QH4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2352.5" y="-3096.5"/>
+            <point key="canvasLocation" x="2866" y="-3971"/>
         </scene>
         <!--Camera-->
         <scene sceneID="eR4-MX-Ubs">

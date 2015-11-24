@@ -398,6 +398,17 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 		super.didReceiveMemoryWarning()
 	}
 
+	
+	
+	override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?)
+	{
+		
+		let storyboard = UIStoryboard.init(name: "Main", bundle: NSBundle.mainBundle())
+		let tabrBarController = storyboard.instantiateViewControllerWithIdentifier("tabbar-controller")
+		if let window = UIApplication.sharedApplication().windows.first {
+			window.rootViewController = tabrBarController
+		}
+	}
 
 }
 

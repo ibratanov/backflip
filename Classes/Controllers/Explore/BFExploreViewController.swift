@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 import Foundation
 
 
@@ -48,6 +49,9 @@ public class BFExploreViewController : UIViewController
 	{
 		super.loadView()
 		
+		// Exit out for auth ASAP
+		self.handleAuthentication()
+		
 		// Logo
 		self.navigationItem.titleView = UIImageView(image: UIImage(named: "backflip-logo-white"))
 		
@@ -79,8 +83,17 @@ public class BFExploreViewController : UIViewController
 	//  MARK: - Layout
 	// ----------------------------------------
 	
+	public override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
+		
+		self.handleAuthentication()
+	}
+	
 	public override func viewWillLayoutSubviews()
 	{
+		super.viewWillLayoutSubviews()
+		
 		self.scrollView.frame = self.view.bounds
 		self.featuredView.frame = CGRectMake(0, 0, self.scrollView.frame.width, 220)
 		self.browseView.frame = CGRectMake(0, self.featuredView.bounds.height, self.scrollView.frame.width, 45 + self.browseView.contentHeight())
@@ -98,4 +111,19 @@ public class BFExploreViewController : UIViewController
 		self.performSegueWithIdentifier("create-event", sender: sender)
 	}
 	
+	
+	// ----------------------------------------
+	//  MARK: - Authentication
+	// ----------------------------------------
+	
+	private func handleAuthentication() -> Void
+	{
+		//Handles displaying the onboarding screen if needed
+		if (PFUser.currentUser() == nil || PFUser.currentUser()?.objectId == nil) {
+			let onboardingViewController = BFOnboardingViewController()
+			if let window = UIApplication.sharedApplication().windows.first {
+				window.rootViewController = onboardingViewController
+			}
+		}
+	}
 }
