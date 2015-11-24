@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import Foundation
+import Kingfisher
 import INTULocationManager
 
 public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDelegate
@@ -153,10 +154,9 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 		
 		let event = self.events[indexPath.row]
 		
-		cell.imageView!.nk_prepareForReuse()
 		if let image = event.previewImage {
 			let imageUrl = NSURL(string: image.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
-			cell.backgroundImageView!.nk_setImageWithURL(imageUrl!)
+			cell.backgroundImageView?.kf_setImageWithURL(imageUrl!, placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1))])
 		}
 		
 	}

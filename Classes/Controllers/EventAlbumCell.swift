@@ -6,9 +6,7 @@
 //  Copyright © 2015 Backflip. All rights reserved.
 //
 
-import Nuke
 import UIKit
-
 
 class EventAlbumCell : UICollectionViewCell
 {

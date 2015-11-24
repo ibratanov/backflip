@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Kingfisher
 
 public class BFPreviewHeaderCell : BFPreviewCell
 {
@@ -97,10 +98,9 @@ public class BFPreviewHeaderCell : BFPreviewCell
 		self.detailTextLabel?.text = event!.venue
 		self.rightDetailLabel.text = event!.startTime?.timeTogo
 		
-		self.imageView!.nk_prepareForReuse()
 		if let image = event!.previewImage {
 			let imageUrl = NSURL(string: image.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
-			self.backgroundImageView!.nk_setImageWithURL(imageUrl!)
+			self.backgroundImageView?.kf_setImageWithURL(imageUrl!, placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1))])
 		}
 	}
 	

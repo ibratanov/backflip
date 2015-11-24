@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
-import Nuke
 import Parse
 import DigitsKit
 import Foundation
@@ -195,9 +194,9 @@ class CheckinViewController : BFViewController, UIPickerViewDelegate, UIPickerVi
 		} else if (event.cleanPhotos.count != 0 && event.cleanPhotos.count > indexPath.row) {
 			let photo : Photo = event.cleanPhotos[indexPath.row]
 
-			cell.imageView.nk_prepareForReuse()
-			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
-			cell.imageView.nk_setImageWithURL(imageUrl)
+			//cell.imageView.nk_prepareForReuse()
+			//let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
+			//cell.imageView.nk_setImageWithURL(imageUrl)
 		}
 		
 		cell.layer.shouldRasterize = true

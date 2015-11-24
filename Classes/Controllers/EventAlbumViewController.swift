@@ -6,17 +6,17 @@
 //  Copyright (c) 2015 Backflip. All rights reserved.
 //
 
-import Nuke
 import Parse
 import Photos
 import MessageUI
+import Kingfisher
 import Foundation
 import MagicalRecord
 
 import SKPhotoBrowser
 
 
-class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate, ImagePreheatingControllerDelegate
+class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate
 {
 	
 	//-------------------------------------
@@ -30,8 +30,6 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 	var collectionContent : [Photo] = []
 	
 	var photoBrowser : BFPhotoBrowser?
-	
-	private var preheatController : ImagePreheatingController!
 	
 	
 	@IBOutlet weak var segmentedControl : UISegmentedControl!
@@ -56,15 +54,12 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		super.viewDidAppear(animated)
 		
 		UIApplication.sharedApplication().statusBarHidden = false
-
-		self.preheatController.enabled = true
     }
 	
 	override func viewWillDisappear(animated: Bool)
 	{
 		super.viewWillDisappear(animated)
 		
-		self.preheatController.enabled = false
 	}
 	
 	override func viewDidLoad()
@@ -83,11 +78,6 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		self.navigationController?.navigationItem.titleView = titleLabel
 		self.navigationItem.titleView = titleLabel
 		self.navigationController?.navigationBar.topItem?.titleView = titleLabel
-		
-		
-		// Preheat controller
-		self.preheatController = ImagePreheatingControllerForCollectionView(collectionView: self.collectionView!)
-		self.preheatController.delegate = self
 		
 		
 		// Hide the "leave" button when pushed from event history
@@ -176,41 +166,6 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		}
 		
 	}
-	
-	
-	
-	// -------------------------------------
-	//  MARK: Preheat Controller Delegate
-	// -------------------------------------
-	
-	func preheatingController(controller: ImagePreheatingController, didUpdateWithAddedIndexPaths addedIndexPaths: [NSIndexPath], removedIndexPaths: [NSIndexPath])
-	{
-		func requestsForIndexPaths(indexPaths: [NSIndexPath]) -> [ImageRequest] {
-			return indexPaths.map {
-				let indexPath : NSIndexPath = $0
-				if (indexPath.row != 0 && indexPath.row < self.collectionContent.count) {
-					let photo = self.collectionContent[Int(indexPath.row)-1]
-					return self.imageRequestWithURL(NSURL(string: photo.image!.url!)!)
-				}
-				
-				return self.imageRequestWithURL(NSURL(string: "")!)
-			}
-		}
-		
-		Nuke.startPreheatingImages(requestsForIndexPaths(addedIndexPaths))
-		Nuke.stopPreheatingImages(requestsForIndexPaths(removedIndexPaths))
-	}
-	
-	func imageRequestWithURL(URL: NSURL) -> ImageRequest
-	{
-		func imageTargetSize() -> CGSize {
-			let size = (self.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
-			let scale = UIScreen.mainScreen().scale
-			return CGSize(width: size.width * scale, height: size.height * scale);
-		}
-		return ImageRequest(URL: URL, targetSize: imageTargetSize(), contentMode: .AspectFill)
-	}
-	
 	
 	
 	//-------------------------------------
@@ -334,9 +289,9 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 			guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
 			
 			let photo = collectionContent[Int(indexPath.row)-1]
-			cell.imageView.nk_prepareForReuse()
+			
 			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
-			cell.imageView.nk_setImageWithURL(imageUrl)
+			cell.imageView.kf_setImageWithURL(imageUrl, placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1))])
 		}
 	}
 	

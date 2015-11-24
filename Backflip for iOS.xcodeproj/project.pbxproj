@@ -51,7 +51,6 @@
 		0422D1151BCFF3190078E7F6 /* BFDataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0422D1101BCFF3190078E7F6 /* BFDataProcessor.swift */; };
 		0422D1161BCFF3190078E7F6 /* BFDataWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422D1121BCFF3190078E7F6 /* BFDataWrapper.m */; };
 		0422D1181BCFF6520078E7F6 /* BFParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0422D1171BCFF6510078E7F6 /* BFParseManager.swift */; };
-		042E8D711BB300A100D61412 /* Watchdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D701BB300A100D61412 /* Watchdog.swift */; };
 		042E8D761BB30BFD00D61412 /* EventHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */; };
 		042E8D781BB3119A00D61412 /* EventHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */; };
 		0430A41C1BE13BA500E33359 /* Instabug.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0430A41A1BE13BA500E33359 /* Instabug.bundle */; };
@@ -192,11 +191,6 @@
 		04D022881BE192B300375C84 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D022861BE192B300375C84 /* Bolts.framework */; };
 		04D022891BE192B300375C84 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D022871BE192B300375C84 /* Parse.framework */; };
 		04D5E6411BE3B6440073FEDB /* BFBonjourManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D5E6401BE3B6440073FEDB /* BFBonjourManager.swift */; };
-		04D7D7021BA9ACC000AC6AA3 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D7D6FD1BA9ACC000AC6AA3 /* DOFavoriteButton.swift */; };
-		04D7D7031BA9ACC000AC6AA3 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D6FE1BA9ACC000AC6AA3 /* heart.png */; };
-		04D7D7041BA9ACC000AC6AA3 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D6FF1BA9ACC000AC6AA3 /* like.png */; };
-		04D7D7051BA9ACC000AC6AA3 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7001BA9ACC000AC6AA3 /* smile.png */; };
-		04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D7D7011BA9ACC000AC6AA3 /* star.png */; };
 		04E0C9AE1BFB955F00DAA953 /* BFPreviewLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9AD1BFB955F00DAA953 /* BFPreviewLocationCell.swift */; };
 		04E0C9C51BFB972400DAA953 /* BFPreviewTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9C41BFB972400DAA953 /* BFPreviewTitleView.swift */; };
 		04E0C9C81BFBAB2400DAA953 /* BFPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0C9C71BFBAB2400DAA953 /* BFPreviewViewController.swift */; };
@@ -527,7 +521,6 @@
 		0422D1111BCFF3190078E7F6 /* BFDataWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFDataWrapper.h; sourceTree = "<group>"; };
 		0422D1121BCFF3190078E7F6 /* BFDataWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFDataWrapper.m; sourceTree = "<group>"; };
 		0422D1171BCFF6510078E7F6 /* BFParseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFParseManager.swift; sourceTree = "<group>"; };
-		042E8D701BB300A100D61412 /* Watchdog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Watchdog.swift; path = Vendor/Watchdog/Classes/Watchdog.swift; sourceTree = "<group>"; };
 		042E8D751BB30BFD00D61412 /* EventHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryViewController.swift; sourceTree = "<group>"; };
 		042E8D771BB3119A00D61412 /* EventHistoryHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHistoryHeaderView.swift; sourceTree = "<group>"; };
 		0430A41A1BE13BA500E33359 /* Instabug.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Instabug.bundle; sourceTree = "<group>"; };
@@ -680,11 +673,6 @@
 		04D022861BE192B300375C84 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "Vendor/Parse-old/Bolts.framework"; sourceTree = "<group>"; };
 		04D022871BE192B300375C84 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Vendor/Parse-old/Parse.framework"; sourceTree = "<group>"; };
 		04D5E6401BE3B6440073FEDB /* BFBonjourManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BFBonjourManager.swift; sourceTree = "<group>"; };
-		04D7D6FD1BA9ACC000AC6AA3 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DOFavoriteButton.swift; path = Vendor/DOFavoriteButton/DOFavoriteButton.swift; sourceTree = SOURCE_ROOT; };
-		04D7D6FE1BA9ACC000AC6AA3 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = Vendor/DOFavoriteButton/heart.png; sourceTree = SOURCE_ROOT; };
-		04D7D6FF1BA9ACC000AC6AA3 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = like.png; path = Vendor/DOFavoriteButton/like.png; sourceTree = SOURCE_ROOT; };
-		04D7D7001BA9ACC000AC6AA3 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smile.png; path = Vendor/DOFavoriteButton/smile.png; sourceTree = SOURCE_ROOT; };
-		04D7D7011BA9ACC000AC6AA3 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = Vendor/DOFavoriteButton/star.png; sourceTree = SOURCE_ROOT; };
 		04E0C9AD1BFB955F00DAA953 /* BFPreviewLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewLocationCell.swift; path = Preview/BFPreviewLocationCell.swift; sourceTree = "<group>"; };
 		04E0C9C41BFB972400DAA953 /* BFPreviewTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewTitleView.swift; path = Preview/BFPreviewTitleView.swift; sourceTree = "<group>"; };
 		04E0C9C71BFBAB2400DAA953 /* BFPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFPreviewViewController.swift; path = Preview/BFPreviewViewController.swift; sourceTree = "<group>"; };
@@ -844,14 +832,6 @@
 			path = "Data Management : Processing";
 			sourceTree = "<group>";
 		};
-		042E8D6F1BB3009800D61412 /* Watchdog */ = {
-			isa = PBXGroup;
-			children = (
-				042E8D701BB300A100D61412 /* Watchdog.swift */,
-			);
-			name = Watchdog;
-			sourceTree = "<group>";
-		};
 		0430A4191BE13BA500E33359 /* Instabug */ = {
 			isa = PBXGroup;
 			children = (
@@ -887,9 +867,7 @@
 				04ED9B191BC3035E008493E3 /* NewRelic */,
 				04ED9B0D1BC30329008493E3 /* Mixpanel */,
 				047790C71BB9CDF300BA8F9E /* Facebook */,
-				042E8D6F1BB3009800D61412 /* Watchdog */,
 				04B1C66A1B9783CD00F30C80 /* PKHUD */,
-				04B1C6511B97648C00F30C80 /* DOFavoriteButton */,
 				04E0C9D61BFD1B5300DAA953 /* Markingbird */,
 				04CCD5C91B8CB2D200664FB3 /* MagicalRecord */,
 				04CA5D831B8B9D390075C0A8 /* ZAActivityBar */,
@@ -1280,19 +1258,6 @@
 				04A6B72B1C04BDB600C863DC /* Kingfisher.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		04B1C6511B97648C00F30C80 /* DOFavoriteButton */ = {
-			isa = PBXGroup;
-			children = (
-				04D7D6FD1BA9ACC000AC6AA3 /* DOFavoriteButton.swift */,
-				04D7D6FE1BA9ACC000AC6AA3 /* heart.png */,
-				04D7D6FF1BA9ACC000AC6AA3 /* like.png */,
-				04D7D7001BA9ACC000AC6AA3 /* smile.png */,
-				04D7D7011BA9ACC000AC6AA3 /* star.png */,
-			);
-			name = DOFavoriteButton;
-			path = Vendor/DOFavoriteButton/DOFavoriteButton;
 			sourceTree = "<group>";
 		};
 		04B1C66A1B9783CD00F30C80 /* PKHUD */ = {
@@ -1979,21 +1944,17 @@
 				045386751BEBBB26001E46ED /* Lato-Regular.ttf in Resources */,
 				0439D3BB1B8B82E2001850DD /* Main.storyboard in Resources */,
 				045386731BEBBB26001E46ED /* Lato-Light.ttf in Resources */,
-				04D7D7031BA9ACC000AC6AA3 /* heart.png in Resources */,
 				81BA81521A49DA1800E65899 /* Images.xcassets in Resources */,
 				04154B841BDD9EA50084435D /* Frontflip.entitlements in Resources */,
 				046D98E21BCAABA8004B3DCD /* Assets.xcassets in Resources */,
 				0439D3991B8B7AEE001850DD /* DigitsKitResources.bundle in Resources */,
 				043350561BDAB67C00914A2E /* backflip-preseed.sqlite in Resources */,
-				04D7D7041BA9ACC000AC6AA3 /* like.png in Resources */,
 				0430A41C1BE13BA500E33359 /* Instabug.bundle in Resources */,
 				045386FA1BF2A12C001E46ED /* Localizable.strings in Resources */,
 				0453866E1BEBBB26001E46ED /* Lato-Bold.ttf in Resources */,
 				0453866F1BEBBB26001E46ED /* Lato-BoldItalic.ttf in Resources */,
 				0453866C1BEBBB26001E46ED /* Lato-Black.ttf in Resources */,
-				04D7D7061BA9ACC000AC6AA3 /* star.png in Resources */,
 				0439D3BA1B8B82E2001850DD /* Launch Screen.xib in Resources */,
-				04D7D7051BA9ACC000AC6AA3 /* smile.png in Resources */,
 				04CA5D871B8B9D440075C0A8 /* ZAActivityBar.bundle in Resources */,
 				0432DC641BCE9D6000B31D02 /* FacebookSDKStrings.bundle in Resources */,
 				045386721BEBBB26001E46ED /* Lato-Italic.ttf in Resources */,
@@ -2073,7 +2034,6 @@
 				046D98E41BCAABA8004B3DCD /* BFCameraOverlay.swift in Sources */,
 				0422D1141BCFF3190078E7F6 /* BFDataManager.swift in Sources */,
 				043AB3BD1BBE212200BA5827 /* Window.swift in Sources */,
-				04D7D7021BA9ACC000AC6AA3 /* DOFavoriteButton.swift in Sources */,
 				043AB3B31BBE212200BA5827 /* PKHUDImageView.swift in Sources */,
 				043AB3B21BBE212200BA5827 /* PKHUDErrorView.swift in Sources */,
 				04BCCF0B1BE26FED00523296 /* NSNetService+Bonjour.m in Sources */,
@@ -2100,7 +2060,6 @@
 				045949DB1BF4FD6E00CCC348 /* EventFeature.swift in Sources */,
 				0439D3D51B8B8896001850DD /* CheckinViewController.swift in Sources */,
 				046D98E31BCAABA8004B3DCD /* BFCameraController.swift in Sources */,
-				042E8D711BB300A100D61412 /* Watchdog.swift in Sources */,
 				04C61FB31B8B97DB00E2ACB5 /* ParseObject.swift in Sources */,
 				046D98C41BCAAAF4004B3DCD /* SheetCollectionViewCell.swift in Sources */,
 				040756F71BD7E6F200F95E96 /* EventAlbumCell.swift in Sources */,

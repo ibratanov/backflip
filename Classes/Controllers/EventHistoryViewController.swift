@@ -8,6 +8,7 @@
 
 import Parse
 import Foundation
+import Kingfisher
 
 
 class EventHistoryViewController : BFCollectionViewController
@@ -94,9 +95,8 @@ class EventHistoryViewController : BFCollectionViewController
 		guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
 		
 		let photos = cachedPhotos[self.events[indexPath.section].objectId!]
-		cell.imageView.nk_prepareForReuse()
 		let imageUrl = NSURL(string: photos![indexPath.row].thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
-		cell.imageView.nk_setImageWithURL(imageUrl)
+		cell.imageView.kf_setImageWithURL(imageUrl, placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(0.4))])
 	}
 	
 	

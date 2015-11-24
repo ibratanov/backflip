@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import Foundation
+import Kingfisher
 
 public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate
 {
@@ -145,6 +146,10 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 			
 			let event = self.events[indexPath.row]
 			(cell as! BFFeaturedEventCell).textLabel.text = event.name
+			if (event.featureImage != nil) {
+				let imageUrl = NSURL(string: event.featureImage!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
+				(cell as! BFFeaturedEventCell).imageView.kf_setImageWithURL(imageUrl!, placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1))])
+			}
 		} else {
 			cell = collectionView.dequeueReusableCellWithReuseIdentifier(BFFeaturedBlankCell.reuseIdentifier, forIndexPath: indexPath)
 		}
@@ -170,22 +175,6 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 		
 			let window : UIWindow? = UIApplication.sharedApplication().windows.first!
 			window?.rootViewController!.presentViewController(modalNavigationController, animated: true, completion: nil)
-		}
-	}
-	
-	@available(iOS 6.0, *)
-	public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
-	{
-		if (indexPath.row > 0 && indexPath.row < self.events.count) {
-			guard let cell = cell as? BFFeaturedEventCell else { fatalError("Expected to display a `BFFeaturedEventCell`.") }
-			
-			let event = self.events[indexPath.row]
-	
-			cell.imageView.nk_prepareForReuse()
-			if (event.featureImage != nil) {
-				let imageUrl = NSURL(string: event.featureImage!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
-				cell.imageView.nk_setImageWithURL(imageUrl!)
-			}
 		}
 	}
 	

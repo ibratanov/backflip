@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Kingfisher
 
 
 public class BFPreviewPhotoCell : BFPreviewCell, UICollectionViewDataSource, UICollectionViewDelegate
@@ -147,9 +148,8 @@ public class BFPreviewPhotoCell : BFPreviewCell, UICollectionViewDataSource, UIC
 			guard let cell = cell as? BFPhotoCollectionViewCell else { fatalError("Expected to display a `BFPhotoCollectionViewCell`.") }
 			
 			let photo = self.photos[Int(indexPath.row)]
-			cell.imageView.nk_prepareForReuse()
 			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
-			cell.imageView.nk_setImageWithURL(imageUrl)
+			cell.imageView.kf_setImageWithURL(imageUrl, placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1))])
 		}
 	}
 	
