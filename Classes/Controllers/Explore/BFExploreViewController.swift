@@ -86,8 +86,11 @@ public class BFExploreViewController : UIViewController
 	public override func viewWillAppear(animated: Bool)
 	{
 		super.viewWillAppear(animated)
-		
+	
 		self.handleAuthentication()
+		
+		self.featuredView.loadEvents(true)
+		self.browseView.loadEvents(true)
 	}
 	
 	public override func viewWillLayoutSubviews()

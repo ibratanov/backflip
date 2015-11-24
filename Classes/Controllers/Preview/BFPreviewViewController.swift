@@ -91,7 +91,6 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 	{
 		super.viewWillAppear(animated)
 		
-		
 		// Ticket button
 		if (self.event?.ticketUrl != nil) {
 			self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Tickets", style: .Plain, target: nil, action: "")

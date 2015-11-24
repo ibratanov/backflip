@@ -196,7 +196,7 @@ public class BFFeaturedEventsView : UIView, UICollectionViewDelegate, UICollecti
 	//  MARK: - Data
 	// ----------------------------------------
 	
-	private func loadEvents(animated: Bool)
+	public func loadEvents(animated: Bool)
 	{
 		self.events.removeAll()
 		

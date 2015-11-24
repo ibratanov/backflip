@@ -185,7 +185,7 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 	//  MARK: - Data
 	// ----------------------------------------
 	
-	private func loadEvents(animated: Bool)
+	public func loadEvents(animated: Bool)
 	{
 		self.events.removeAll()
 	
