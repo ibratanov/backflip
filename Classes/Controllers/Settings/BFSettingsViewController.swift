@@ -38,7 +38,7 @@ class BFSettingsViewController : UITableViewController
 		
 		// Section '2'
 		if (indexPath.section == 2 && indexPath.row == 0) { // Logout
-			self.logout()
+			self.logoutAlert()
 		}
 	}
 	
@@ -68,44 +68,49 @@ class BFSettingsViewController : UITableViewController
 	//  MARK: - Logout
 	// ----------------------------------------
 	
-	private func logout()
+	private func logoutAlert()
 	{
 		let alertController = UIAlertController(title: "Logout", message:"Are you sure you want to logout?", preferredStyle: .ActionSheet)
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (alertAction) -> Void in
-			PFUser.logOut()
 			
-			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
-			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
-			NSUserDefaults.standardUserDefaults().synchronize()
-			
-			BFBonjourManager.sharedManager.stopServiceDiscovery()
-			
-			FBSDKLoginManager().logOut()
-			FBSDKAccessToken.setCurrentAccessToken(nil)
-			
-			Digits.sharedInstance().logOut()
-			
-			let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
-			dispatch_after(delayTime, dispatch_get_main_queue()) {
-				let onboardingViewController = BFOnboardingViewController()
-				if let window = UIApplication.sharedApplication().windows.first {
-					
-					let transition = CATransition()
-					transition.startProgress = 0.0
-					transition.endProgress = 1.0
-					transition.type = "flip" // kCATransitionPush
-					transition.subtype = "fromRight"
-					transition.duration = 0.4
-					
-					window.setRootViewController(onboardingViewController, transition: transition)
-					
-				}
-			}
+			self.logout()
 			
 		}))
 		
 		self.presentViewController(alertController, animated: true, completion: nil)
 	}
 	
+	
+	private func logout()
+	{
+		PFUser.logOut()
+		
+		NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
+		NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
+		NSUserDefaults.standardUserDefaults().synchronize()
+		
+		BFBonjourManager.sharedManager.stopServiceDiscovery()
+		
+		FBSDKLoginManager().logOut()
+		FBSDKAccessToken.setCurrentAccessToken(nil)
+		
+		Digits.sharedInstance().logOut()
+		
+		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
+		dispatch_after(delayTime, dispatch_get_main_queue()) {
+			let onboardingViewController = BFOnboardingViewController()
+			if let window = UIApplication.sharedApplication().windows.first {
+				
+				let transition = CATransition()
+				transition.startProgress = 0.0
+				transition.endProgress = 1.0
+				transition.type = "flip" // kCATransitionPush
+				transition.subtype = "fromRight"
+				transition.duration = 0.4
+				
+				window.setRootViewController(onboardingViewController, transition: transition)
+			}
+		}
+	}
 }

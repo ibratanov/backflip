@@ -122,7 +122,7 @@ public class BFExploreViewController : UIViewController
 		if (PFUser.currentUser() == nil || PFUser.currentUser()?.objectId == nil) {
 			let onboardingViewController = BFOnboardingViewController()
 			if let window = UIApplication.sharedApplication().windows.first {
-				window.rootViewController = onboardingViewController
+				window.setRootViewController(onboardingViewController)
 			}
 		}
 	}
