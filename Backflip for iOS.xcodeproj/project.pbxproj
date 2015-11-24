@@ -162,6 +162,8 @@
 		04A6B7111C03898400C863DC /* BFWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7101C03898400C863DC /* BFWebviewController.swift */; };
 		04A6B7141C039F0300C863DC /* BFSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7131C039F0300C863DC /* BFSettingsViewController.swift */; };
 		04A6B7181C03B33E00C863DC /* BFCurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7171C03B33E00C863DC /* BFCurrentViewController.swift */; };
+		04A6B72C1C04BE6E00C863DC /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7251C04BDB600C863DC /* Kingfisher.framework */; };
+		04A6B72D1C04BE6E00C863DC /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7251C04BDB600C863DC /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */; };
 		04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */; };
@@ -384,6 +386,13 @@
 			remoteGlobalIDString = D13F49D61BEDA67C00CE335D;
 			remoteInfo = "Kingfisher-tvOS";
 		};
+		04A6B72E1C04BE6E00C863DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04A6B71A1C04BDB600C863DC /* Kingfisher.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1ED2D341AD2D09F00CFC3EB;
+			remoteInfo = Kingfisher;
+		};
 		04CCD6501B8CB70500664FB3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 04CCD6441B8CB70500664FB3 /* MagicalRecord.xcodeproj */;
@@ -474,6 +483,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				048939D21BD0452A005400CA /* Locksmith.framework in Embed Frameworks */,
+				04A6B72D1C04BE6E00C863DC /* Kingfisher.framework in Embed Frameworks */,
 				04CCD6611B8CB7EB00664FB3 /* MagicalRecord.framework in Embed Frameworks */,
 				04A6B70A1C0375E800C863DC /* INTULocationManager.framework in Embed Frameworks */,
 				04ED9B161BC3033A008493E3 /* Mixpanel.framework in Embed Frameworks */,
@@ -761,6 +771,7 @@
 				502199AE1B33817100A64387 /* Accounts.framework in Frameworks */,
 				0439D34E1B8B7709001850DD /* TwitterCore.framework in Frameworks */,
 				81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */,
+				04A6B72C1C04BE6E00C863DC /* Kingfisher.framework in Frameworks */,
 				0439D3421B8B76B1001850DD /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1658,6 +1669,7 @@
 				048939D41BD0452A005400CA /* PBXTargetDependency */,
 				040FD7831BD553110039CDAA /* PBXTargetDependency */,
 				04A6B70C1C0375E800C863DC /* PBXTargetDependency */,
+				04A6B72F1C04BE6E00C863DC /* PBXTargetDependency */,
 			);
 			name = Backflip;
 			productName = ParseStarterProject;
@@ -2192,6 +2204,11 @@
 			isa = PBXTargetDependency;
 			name = INTULocationManager;
 			targetProxy = 04A6B70B1C0375E800C863DC /* PBXContainerItemProxy */;
+		};
+		04A6B72F1C04BE6E00C863DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Kingfisher;
+			targetProxy = 04A6B72E1C04BE6E00C863DC /* PBXContainerItemProxy */;
 		};
 		04ED9B181BC3033A008493E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
