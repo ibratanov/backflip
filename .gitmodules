@@ -38,9 +38,6 @@
 	path = Vendor/SKPhotoBrowser
 	url = git@github.com:JackoPlane/SKPhotoBrowser.git
 	ignore = dirty
-[submodule "Vendor/Nuke"]
-	path = Vendor/Nuke
-	url = git@github.com:kean/Nuke.git
 [submodule "Vendor/Bolts"]
 	path = Vendor/Bolts
 	url = git@github.com:BoltsFramework/Bolts-iOS.git
@@ -53,3 +50,6 @@
 [submodule "Vendor/LocationManager"]
 	path = Vendor/LocationManager
 	url = git@github.com:intuit/LocationManager.git
+[submodule "Vendor/Kingfisher"]
+	path = Vendor/Kingfisher
+	url = https://github.com/onevcat/Kingfisher.git
