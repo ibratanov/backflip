@@ -18,6 +18,15 @@ public class BFParseManager : NSObject
 	
 	public static let sharedManager = BFParseManager.init()
 	
+	public var _fbLoginManager: FBSDKLoginManager?
+	public var fbLoginManager: FBSDKLoginManager {
+		get {
+			if _fbLoginManager == nil {
+				_fbLoginManager = FBSDKLoginManager()
+			}
+			return _fbLoginManager!
+		}
+	}
 	
 	
 	private override init()

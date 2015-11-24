@@ -92,8 +92,9 @@ class BFSettingsViewController : UITableViewController
 		
 		BFBonjourManager.sharedManager.stopServiceDiscovery()
 		
-		FBSDKLoginManager().logOut()
+		BFParseManager.sharedManager.fbLoginManager.logOut()
 		FBSDKAccessToken.setCurrentAccessToken(nil)
+		BFParseManager.sharedManager._fbLoginManager = nil
 		
 		Digits.sharedInstance().logOut()
 		

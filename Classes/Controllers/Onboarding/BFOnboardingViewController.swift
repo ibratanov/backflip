@@ -344,9 +344,8 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 
 		FBSDKLoginManager.renewSystemCredentials { (results, error) -> Void in
 			
-			let login = FBSDKLoginManager()
 			// When maddie decides: "user_hometown"
-			login.logInWithReadPermissions(["public_profile", "email"], fromViewController: self) { (result, error) -> Void in
+			BFParseManager.sharedManager.fbLoginManager.logInWithReadPermissions(["public_profile", "email"], fromViewController: self) { (result, error) -> Void in
 				if (error != nil) {
 					print("Facebook login error")
 					print(error)
