@@ -34,14 +34,6 @@
 	path = Vendor/SKPhotoBrowser
 	url = git@github.com:JackoPlane/SKPhotoBrowser.git
 	ignore = dirty
-[submodule "Vendor/Bolts"]
-	path = Vendor/Bolts
-	url = git@github.com:BoltsFramework/Bolts-iOS.git
-	ignore = dirty
-[submodule "Vendor/Parse"]
-	path = Vendor/Parse
-	url = git@github.com:ParsePlatform/Parse-SDK-iOS-OSX.git
-	ignore = dirty
 [submodule "Vendor/Markingbird"]
 	path = Vendor/Markingbird
 	url = git@github.com:kristopherjohnson/Markingbird.git

@@ -328,8 +328,8 @@ public class BFCameraController : NSObject, UIImagePickerControllerDelegate, UIN
 			photo["event"] = PFObject.init(withoutDataWithClassName: "Event", objectId: self.event!.objectId!);
 
 			let photoACL = PFACL(user: PFUser.currentUser()!)
-			photoACL.setPublicReadAccess(true)
-			photoACL.setPublicWriteAccess(true)
+			photoACL.publicReadAccess = true
+			photoACL.publicWriteAccess = true
 			photo.ACL = photoACL
 
 			photo.saveInBackgroundWithBlock({[weak self] (success, error) -> Void in

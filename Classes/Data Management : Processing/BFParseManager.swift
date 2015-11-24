@@ -171,8 +171,8 @@ public class BFParseManager : NSObject
 				eventObject["owner"] = PFUser.currentUser()
 				
 				let ACL = PFACL(user: PFUser.currentUser()!)
-				ACL.setPublicReadAccess(true)
-				ACL.setPublicWriteAccess(true)
+				ACL.publicReadAccess = true
+				ACL.publicWriteAccess = true
 				eventObject.ACL = ACL
 				
 				let relation = eventObject.relationForKey("attendees")

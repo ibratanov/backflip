@@ -53,7 +53,6 @@
 		#import <Instabug/Instabug.h>
 		#import <Mixpanel/Mixpanel.h>
 		#import "Flurry.h"
-		#import "NewRelicAgent/NewRelic.h"
 	#endif
 
 

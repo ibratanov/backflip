@@ -235,9 +235,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		
 		// Default ACL
 		let defaultACL = PFACL();
-		defaultACL.setPublicWriteAccess(true)
-		defaultACL.setPublicReadAccess(true)
-        defaultACL.setPublicWriteAccess(true)
+		defaultACL.publicReadAccess = true
+		defaultACL.publicWriteAccess = true
 		PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 		
 		if (Reachability.validNetworkConnection()) {
@@ -299,10 +298,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			Instabug.startWithToken("510f98f8d22d87efdf38fcdcaa64ce78", captureSource: IBGCaptureSourceUIKit, invocationEvent: IBGInvocationEventShake)
 		}
 			
-		
-		if (FEATURE_NEW_RELIC) {
-			NewRelic.startWithApplicationToken("AA19279b875ed9929545dabb319fece8d5b6d04f96")
-		}
 		
 		if (FEATURE_MIXPANEL) {
 			Mixpanel.sharedInstanceWithToken("d2dd67060db2fd97489429fc418b2dea")
