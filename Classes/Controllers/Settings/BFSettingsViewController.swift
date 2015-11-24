@@ -85,7 +85,24 @@ class BFSettingsViewController : UITableViewController
 			FBSDKAccessToken.setCurrentAccessToken(nil)
 			
 			Digits.sharedInstance().logOut()
-			// self.performSegueWithIdentifier("display-login-popover", sender: self)
+			
+			let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
+			dispatch_after(delayTime, dispatch_get_main_queue()) {
+				let onboardingViewController = BFOnboardingViewController()
+				if let window = UIApplication.sharedApplication().windows.first {
+					
+					let transition = CATransition()
+					transition.startProgress = 0.0
+					transition.endProgress = 1.0
+					transition.type = "flip" // kCATransitionPush
+					transition.subtype = "fromRight"
+					transition.duration = 0.4
+					
+					window.setRootViewController(onboardingViewController, transition: transition)
+					
+				}
+			}
+			
 		}))
 		
 		self.presentViewController(alertController, animated: true, completion: nil)

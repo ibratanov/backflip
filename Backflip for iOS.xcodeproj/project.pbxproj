@@ -163,6 +163,7 @@
 		04A6B7181C03B33E00C863DC /* BFCurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7171C03B33E00C863DC /* BFCurrentViewController.swift */; };
 		04A6B72C1C04BE6E00C863DC /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7251C04BDB600C863DC /* Kingfisher.framework */; };
 		04A6B72D1C04BE6E00C863DC /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6B7251C04BDB600C863DC /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04A6B7311C04CC5500C863DC /* UIWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B7301C04CC5500C863DC /* UIWindow+Extensions.swift */; };
 		04B398F51BDEC7F700B0F80A /* EventAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040756F61BD7E6F200F95E96 /* EventAlbumCell.swift */; };
 		04B399301BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */; };
 		04B399311BDED7BC00B0F80A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04B3992B1BDED7BC00B0F80A /* SVProgressHUD.bundle */; };
@@ -636,6 +637,7 @@
 		04A6B7131C039F0300C863DC /* BFSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFSettingsViewController.swift; path = Settings/BFSettingsViewController.swift; sourceTree = "<group>"; };
 		04A6B7171C03B33E00C863DC /* BFCurrentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BFCurrentViewController.swift; path = Current/BFCurrentViewController.swift; sourceTree = "<group>"; };
 		04A6B71A1C04BDB600C863DC /* Kingfisher.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kingfisher.xcodeproj; path = Vendor/Kingfisher/Kingfisher.xcodeproj; sourceTree = "<group>"; };
+		04A6B7301C04CC5500C863DC /* UIWindow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extensions.swift"; sourceTree = "<group>"; };
 		04B399281BDED7BC00B0F80A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		04B399291BDED7BC00B0F80A /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		04B3992A1BDED7BC00B0F80A /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SVProgressHUD-Prefix.pch"; path = "SVProgressHUD/SVProgressHUD/SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -965,6 +967,7 @@
 				04FD59E11B901D63005A1FA4 /* String+Extensions.swift */,
 				0439D3D21B8B887C001850DD /* Array+Extensions.swift */,
 				048939BC1BD043DF005400CA /* UIDevice+Extensions.swift */,
+				04A6B7301C04CC5500C863DC /* UIWindow+Extensions.swift */,
 			);
 			name = Extensions;
 			path = Categories;
@@ -2029,6 +2032,7 @@
 				50099C0C1B389E4B005A9867 /* Reachability.swift in Sources */,
 				0439D3D11B8B87D3001850DD /* BFTabBarControllerDelegate.swift in Sources */,
 				04BCCF081BE26E8600523296 /* BFBonjourClient.m in Sources */,
+				04A6B7311C04CC5500C863DC /* UIWindow+Extensions.swift in Sources */,
 				045386461BEBB714001E46ED /* BFGradientView.swift in Sources */,
 				04C61FC01B8B982600E2ACB5 /* Event.swift in Sources */,
 				046D98E41BCAABA8004B3DCD /* BFCameraOverlay.swift in Sources */,

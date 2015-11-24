@@ -202,7 +202,7 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 	
 	func scrollViewDidScroll(scrollView: UIScrollView)
 	{
-		if (self.tableView.contentOffset.y < -44.0) {
+		if (self.tableView.contentOffset.y < -44.0 && UIAccessibilityIsReduceMotionEnabled() == false) {
 			var headerRect = CGRect(x: 0, y: 0, width: self.tableView.bounds.width, height: 88.0)
 			headerRect.origin.y = 44.0 + self.tableView.contentOffset.y
 			headerRect.size.height = 44 + -self.tableView.contentOffset.y

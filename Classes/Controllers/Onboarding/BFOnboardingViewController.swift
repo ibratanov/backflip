@@ -325,7 +325,7 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 			BFParseManager.sharedManager.login(session, facebookResult: nil, uponCompletion: { (completed, error) -> Void in
 				
 				if (completed == true) {
-					self.dismissViewControllerAnimated(true, completion: nil)
+					self.dismissViewController(animated: true, completion: nil)
 				}
 				
 				print("Login completed = \(completed)")
@@ -359,7 +359,7 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 					BFParseManager.sharedManager.login(nil, facebookResult: result, uponCompletion: { (completed, error) -> Void in
 						
 						if (completed == true) {
-							self.dismissViewControllerAnimated(true, completion: nil)
+							self.dismissViewController(animated: true, completion: nil)
 						}
 						
 						print("Login completed = \(completed)")
@@ -400,13 +400,28 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 
 	
 	
-	override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?)
+	private func dismissViewController(animated flag: Bool, completion: (() -> Void)?)
 	{
+		self.resignFirstResponder()
 		
-		let storyboard = UIStoryboard.init(name: "Main", bundle: NSBundle.mainBundle())
-		let tabrBarController = storyboard.instantiateViewControllerWithIdentifier("tabbar-controller")
-		if let window = UIApplication.sharedApplication().windows.first {
-			window.rootViewController = tabrBarController
+		print("🤓🤓🤓🤓🤓 \(__FUNCTION__)")
+		
+		let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
+		dispatch_after(delayTime, dispatch_get_main_queue()) {
+			if let window = UIApplication.sharedApplication().windows.first {
+				
+				let storyboard = UIStoryboard.init(name: "Main", bundle: NSBundle.mainBundle())
+				let _tabBarController = storyboard.instantiateViewControllerWithIdentifier("tabbar-controller")
+				
+				let transition = CATransition()
+				transition.startProgress = 0.0
+				transition.endProgress = 1.0
+				transition.type = "flip" // kCATransitionPush
+				transition.subtype = "fromRight"
+				transition.duration = 0.4
+				
+				window.setRootViewController(_tabBarController, transition: transition)
+			}
 		}
 	}
 
