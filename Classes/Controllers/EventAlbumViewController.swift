@@ -117,10 +117,11 @@ public class EventAlbumViewController : BFCollectionViewController, UIPopoverPre
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "photoUploaded", name: "camera-photo-uploaded", object: nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "flagPhoto:", name: "BFImageReportActivitySelected", object: nil)
 		
-		refreshControl.tintColor = UIColor(red:0,  green:0.588,  blue:0.533, alpha:1)
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-		refreshControl.addTarget(self, action: "refreshData", forControlEvents: .ValueChanged)
+		self.refreshControl.tintColor = UIColor(red:0,  green:0.588,  blue:0.533, alpha:1)
+		self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+		self.refreshControl.addTarget(self, action: "refreshData", forControlEvents: .ValueChanged)
 		self.collectionView!.addSubview(refreshControl)
+		
 		
 		// Layout -  Only run on the main thread
 		dispatch_async(dispatch_get_main_queue(), { () -> Void in

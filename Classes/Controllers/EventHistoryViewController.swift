@@ -57,6 +57,8 @@ class EventHistoryViewController : BFCollectionViewController
     override func viewWillAppear(animated: Bool)
     {
         super.viewWillAppear(animated)
+		
+		self.fetchData()
     }
 	
 	override func viewDidAppear(animated: Bool)

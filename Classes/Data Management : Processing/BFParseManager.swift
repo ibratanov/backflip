@@ -52,6 +52,23 @@ public class BFParseManager : NSObject
 		
 		let event = Event.MR_findFirstByAttribute("objectId", withValue: eventId)
 
+		// Check for previous attendances..
+		let attendances = Attendance.MR_findByAttribute("attendeeId", withValue: PFUser.currentUser()!.objectId!) as! [Attendance]
+		for attendance: Attendance in attendances {
+			if (event.objectId == attendance.event?.objectId && attendance.enabled != nil && Bool(attendance.enabled!) == true) {
+				
+				NSUserDefaults.standardUserDefaults().setValue(event.objectId!, forKey: "checkin_event_id")
+				NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: "checkin_event_time")
+				NSUserDefaults.standardUserDefaults().setValue(event.name, forKey: "checkin_event_name")
+				NSUserDefaults.standardUserDefaults().synchronize()
+				
+				PKHUD.sharedHUD.hideAnimated()
+				
+				completion?(completed: true, error: nil)
+				return
+			}
+		}
+		
 		// Store channel for push notifications
 		let currentInstallation = PFInstallation.currentInstallation()
 		currentInstallation.addUniqueObject("a"+eventId, forKey: "channels")
