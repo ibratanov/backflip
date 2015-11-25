@@ -223,8 +223,8 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		
 		// Default ACL
 		let defaultACL = PFACL();
-		defaultACL.publicReadAccess = true
-		defaultACL.publicWriteAccess = true
+		defaultACL.setPublicReadAccess(true)
+		defaultACL.setPublicWriteAccess(true)
 		PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
 		
 		if (Reachability.validNetworkConnection()) {

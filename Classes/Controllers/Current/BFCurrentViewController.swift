@@ -48,6 +48,7 @@ class BFCurrentViewController : UIViewController
 			let storyboard = UIStoryboard.init(name: "Main", bundle: NSBundle.mainBundle())
 			let eventAlbumViewController = storyboard.instantiateViewControllerWithIdentifier("EventAlbumViewController") as! EventAlbumViewController
 			eventAlbumViewController.event = event
+			eventAlbumViewController.currentEvent = true
 			self.navigationController?.setViewControllers([eventAlbumViewController], animated: false)
 		}
 	}

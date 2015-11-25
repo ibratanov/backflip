@@ -16,73 +16,87 @@ import MagicalRecord
 import SKPhotoBrowser
 
 
-class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate
+public class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentationControllerDelegate, SKPhotoBrowserDelegate
 {
 	
 	//-------------------------------------
 	// MARK: Global Variables
 	//-------------------------------------
 	
-	var event : Event?
+	public var event: Event?
 	
-	let ADD_CELL_REUSE_IDENTIFIER = "add-album-cell"
-	
-	var collectionContent : [Photo] = []
-	
-	var photoBrowser : BFPhotoBrowser?
+	public var currentEvent: Bool = false
 	
 	
+	/**
+	 * Collection View Cell reuse identifier
+	*/
+	internal let ADD_CELL_REUSE_IDENTIFIER = "add-album-cell"
+
+	
+	/**
+	 * Collection View Content
+	*/
+	private var content: [Photo] = []
+	
+	
+	/**
+	 * Photo browser
+	*/
+	private var photoBrowser: BFPhotoBrowser?
+	
+	/**
+	 * Segmented Control
+	*/
 	@IBOutlet weak var segmentedControl : UISegmentedControl!
 	
-	let spinner : UIActivityIndicatorView = UIActivityIndicatorView()
-	let refreshControl : UIRefreshControl = UIRefreshControl()
+	/**
+	 * Refresh Control
+	*/
+	let refreshControl: UIRefreshControl = UIRefreshControl()
+
 	
 	
 	//-------------------------------------
-	// MARK: View Delegate
+	// MARK: - View Delegate
 	//-------------------------------------
 	
-	override func loadView()
+	public override func loadView()
 	{
 		super.loadView()
 		
 		self.navigationController?.tabBarController?.delegate = BFTabBarControllerDelegate.sharedDelegate
 	}
 
-	override func viewDidAppear(animated: Bool)
+	public override func viewWillAppear(animated: Bool)
 	{
-		super.viewDidAppear(animated)
+		super.viewWillAppear(animated)
 		
 		UIApplication.sharedApplication().statusBarHidden = false
 		
-		// Hide the "leave" button when pushed from event history
-		let currentEventId = NSUserDefaults.standardUserDefaults().valueForKey("checkin_event_id") as? String
-		print("current eventId = \(currentEventId), self.event.objectId = \(self.event?.objectId)")
-		if (currentEventId == self.event?.objectId) {
-			self.navigationController?.setViewControllers([self], animated: false)
-			
-			let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
-			self.navigationItem.titleView?.addGestureRecognizer(longPressRecognizer)
-		} else if (currentEventId != self.event?.objectId && currentEventId != nil) {
-			let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-			let currentViewController = storyboard.instantiateViewControllerWithIdentifier("current-viewcontroller")
-			self.navigationController?.setViewControllers([currentViewController], animated: false)
+		if (self.currentEvent == true) {
+			if (self.event?.owner == PFUser.currentUser()?.objectId) {
+				let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
+				self.navigationItem.titleView?.addGestureRecognizer(longPressRecognizer)
+			}
 		} else {
 			self.navigationItem.leftBarButtonItem = nil
 		}
     }
 	
-	override func viewWillDisappear(animated: Bool)
+	public override func viewWillDisappear(animated: Bool)
 	{
 		super.viewWillDisappear(animated)
-		
 	}
 	
-	override func viewDidLoad()
+	public override func viewDidLoad()
 	{
 		super.viewDidLoad()
 		
-		// self.navigationItem.title = self.event?.name
+		if (self.currentEvent == false) { // So this doesn't effect the UITabBarItem's title
+			self.title = self.event?.name
+			self.navigationItem.title = self.event?.name
+		}
 		
 		let titleLabel = UILabel(frame: CGRectZero)
 		titleLabel.text = self.event?.name
@@ -91,9 +105,12 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		titleLabel.textAlignment = .Center
 		let width = titleLabel.sizeThatFits(CGSizeMake(self.view.bounds.size.width, CGFloat.max)).width
 		titleLabel.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 44))
-		self.navigationController?.navigationItem.titleView = titleLabel
-		self.navigationItem.titleView = titleLabel
-		self.navigationController?.navigationBar.topItem?.titleView = titleLabel
+		
+		if (self.currentEvent == true) {
+			self.navigationController?.navigationBar.topItem?.titleView = titleLabel
+		} else {
+			self.navigationItem.titleView = titleLabel
+		}
 		
 		self.updateData()
 		
@@ -117,7 +134,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		})
 	}
 	
-	override func preferredStatusBarStyle() -> UIStatusBarStyle
+	public override func preferredStatusBarStyle() -> UIStatusBarStyle
 	{
 		return .LightContent
 	}
@@ -147,13 +164,13 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 	}
 	
 	
-	func photoUploaded()
+	public func photoUploaded()
 	{
 		self.updateData()
 	}
 	
 	
-	func longPressed(sender: UILongPressGestureRecognizer)
+	public func longPressed(sender: UILongPressGestureRecognizer)
 	{
 		if (self.event != nil && self.event?.owner! == PFUser.currentUser()!.objectId!) {
 			
@@ -176,13 +193,13 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 	// MARK: Popover Presentation Delegate
 	//-------------------------------------
 	
-	func prepareForPopoverPresentation(popoverPresentationController: UIPopoverPresentationController)
+	public func prepareForPopoverPresentation(popoverPresentationController: UIPopoverPresentationController)
 	{
 		popoverPresentationController.sourceView = self.navigationController!.navigationBar
 		popoverPresentationController.sourceRect = CGRectMake(0, 0, self.view.frame.size.width, 40)
 	}
 	
-	func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController)
+	public func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController)
 	{
 		let popover = popoverPresentationController.presentedViewController as! EventEditingView
 		if ( popover.eventName!.text! != event!.name!  || popover.eventSwitch!.on != !(event!.live!.boolValue) ) {
@@ -214,7 +231,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 	
 	}
 	
-	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle
+	public func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle
 	{
 		return .None
 	}
@@ -224,13 +241,13 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 	// MARK: MWPhotoBrowserDelegate
 	//-------------------------------------
 	
-	func didShowPhotoAtIndex(index: Int)
+	public func didShowPhotoAtIndex(index: Int)
 	{
-		if (index > (collectionContent.count - 1) || index < 0) {
+		if (index > (content.count - 1) || index < 0) {
 			return
 		}
 		
-		let photo = collectionContent[index]
+		let photo = content[index]
 		
 		photoBrowser?.likeLabel.text = "\(photo.upvoteCount!) like"+((photo.upvoteCount?.intValue > 1 || photo.upvoteCount?.intValue == 0) ? "s" : "")
 		if (photo.usersLiked != nil) {
@@ -258,17 +275,17 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 	// MARK: UICollectionViewDelegate
 	//-------------------------------------
 	
-	override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
+	public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
 	{
 		return 1
 	}
 	
-	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+	public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
 	{
-		return (1 + Int(collectionContent.count))
+		return (1 + Int(self.content.count))
 	}
 	
-	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
+	public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
 	{
 		var cell : EventAlbumCell?
 		if (indexPath.row == 0) {
@@ -280,26 +297,26 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 			
 		if (indexPath.row == 0) {
 			cell!.imageView!.image = UIImage(named: "album-cell-add-photo")
-		} else if (self.collectionContent.count >= indexPath.row) {
+		} else if (self.content.count >= indexPath.row) {
 		
 		}
 		
 		return cell!
 	}
 	
-	override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
+	public override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath)
 	{
 		if (indexPath.row > 0) {
 			guard let cell = cell as? EventAlbumCell else { fatalError("Expected to display a `EventAlbumCell`.") }
 			
-			let photo = collectionContent[Int(indexPath.row)-1]
+			let photo = content[Int(indexPath.row)-1]
 			
 			let imageUrl = NSURL(string: photo.thumbnail!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))!
 			cell.imageView.kf_setImageWithURL(imageUrl, placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1))])
 		}
 	}
 	
-	override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+	public override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 	{
 		if (indexPath.row == 0) {
 
@@ -309,7 +326,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		
 			// Photos
 			var images = [SKPhoto]()
-			for photo in collectionContent {
+			for photo in content {
 				let image = SKPhoto.photoWithImageURL(photo.image!.url!.stringByReplacingOccurrencesOfString("http://", withString: "https://"))
 				image.shouldCachePhotoURLImage = true
 				
@@ -345,7 +362,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		}
 	}
 	
-	override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
+	public override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
 	{
 		var supplementaryView : AnyObject! = nil
 		if kind == UICollectionElementKindSectionHeader {
@@ -384,7 +401,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		var content = photos
 		let segementedControl = sender as! UISegmentedControl
 		
-		self.collectionContent.removeAll(keepCapacity: true)
+		self.content.removeAll(keepCapacity: true)
 		self.collectionView?.reloadData()
 		
 		if segementedControl.selectedSegmentIndex <= 0 {
@@ -403,7 +420,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 			}
 		}
 		
-		self.collectionContent = content
+		self.content = content
 
 		let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.3 * Double(NSEC_PER_SEC)))
 		dispatch_after(dispatchTime, dispatch_get_main_queue(), {
@@ -466,7 +483,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 	@IBAction func sharePhoto()
 	{
 		let selectedIndex = photoBrowser?.currentPageIndex
-		let image = collectionContent[Int(selectedIndex!)]
+		let image = content[Int(selectedIndex!)]
 		
 		let photo = photoBrowser!.photos[selectedIndex!].underlyingImage
 		
@@ -485,7 +502,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 			MagicalRecord.saveWithBlock({ (context) -> Void in
 				
 				let selectedIndex = self.photoBrowser?.currentPageIndex
-				let _photo = self.collectionContent[Int(selectedIndex!)]
+				let _photo = self.content[Int(selectedIndex!)]
 				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 				
 				
@@ -521,7 +538,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 			}, completion: { (completed, error) -> Void in
 				
 				let selectedIndex = self.photoBrowser?.currentPageIndex
-				let _photo = self.collectionContent[Int(selectedIndex!)]
+				let _photo = self.content[Int(selectedIndex!)]
 				let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 				
 				let photoObject = PFObject(className: "Photo")
@@ -538,7 +555,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 					self.photoBrowser?.likeLabel.text = NSString(format: "%i likes", photo.upvoteCount!.integerValue) as String
 					
 					let selectedIndex = self.photoBrowser?.currentPageIndex
-					let _photo = self.collectionContent[Int(selectedIndex!)]
+					let _photo = self.content[Int(selectedIndex!)]
 					let photo : Photo = Photo.fetchOrCreateWhereAttribute("objectId", isValue: _photo.objectId) as! Photo
 					if (photo.usersLiked != nil) {
 						if (photo.likedBy(PFUser.currentUser())) {
@@ -569,7 +586,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
 					
 					let selectedIndex = self.photoBrowser?.currentPageIndex
-					let image = self.collectionContent[Int(selectedIndex!)]
+					let image = self.content[Int(selectedIndex!)]
 					
 					let textField = alertController.textFields!.first! 
 					let photo = PFObject(className: "Photo")
@@ -590,8 +607,8 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 					})
 					
 					
-					let imageIndex = self.collectionContent.indexOf(image)
-					self.collectionContent.removeAtIndex(imageIndex!)
+					let imageIndex = self.content.indexOf(image)
+					self.content.removeAtIndex(imageIndex!)
 					
 					
 					dispatch_async(dispatch_get_main_queue(), {
@@ -614,7 +631,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
 			
 			let selectedIndex = self.photoBrowser?.currentPageIndex
-			let image = self.collectionContent[Int(selectedIndex!)]
+			let image = self.content[Int(selectedIndex!)]
 			
 			let photo = PFObject(className: "Photo")
 			photo.objectId = image.objectId
@@ -633,8 +650,8 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 				
 			})
 			
-			let imageIndex = self.collectionContent.indexOf(image)
-			self.collectionContent.removeAtIndex(imageIndex!)
+			let imageIndex = self.content.indexOf(image)
+			self.content.removeAtIndex(imageIndex!)
 			
 			dispatch_async(dispatch_get_main_queue(), {
 				self.photoBrowser?.dismissPhotoBrowser()
@@ -651,7 +668,7 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 	// MARK: Memory
 	//-------------------------------------
 	
-	override func didReceiveMemoryWarning()
+	public override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
 	}
@@ -674,12 +691,11 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
 		if (photos.count < 1) {
 			print("No Photos/ No Updates")
 			dispatch_async(dispatch_get_main_queue()) {
-				self.spinner.stopAnimating()
 				self.refreshControl.endRefreshing()
 			}
 		} else {
 		
-			self.collectionContent = photos
+			self.content = photos
 			
 			if (self.segmentedControl != nil) {
 				self.segementedControlValueChanged(self.segmentedControl)
@@ -691,7 +707,6 @@ class EventAlbumViewController : BFCollectionViewController, UIPopoverPresentati
             
 			dispatch_async(dispatch_get_main_queue()) {
 				self.collectionView?.reloadData()
-				self.spinner.stopAnimating()
 				self.refreshControl.endRefreshing()
 			}
 		}

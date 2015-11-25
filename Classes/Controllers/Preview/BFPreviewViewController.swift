@@ -246,9 +246,14 @@ class BFPreviewViewController : UIViewController, UITableViewDataSource, UITable
 				self.dismissViewControllerAnimated(true, completion: { () -> Void in
 					
 					// Select the 2nd tab
-					if UIApplication.sharedApplication().windows.first!.rootViewController as? UITabBarController != nil {
-						let tababarController = (UIApplication.sharedApplication().windows.first!).rootViewController as! UITabBarController
-						tababarController.selectedIndex = 1
+					if let tabbarController = UIApplication.sharedApplication().windows.first!.rootViewController as? UITabBarController {
+						let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+						let currentViewController = storyboard.instantiateViewControllerWithIdentifier("current-viewcontroller")
+						let currentTab = tabbarController.viewControllers?[1] as? UINavigationController
+						if (currentTab != nil) {
+							currentTab?.setViewControllers([currentViewController], animated: false)
+						}
+						tabbarController.selectedIndex = 1
 					}
 				})
 			}
