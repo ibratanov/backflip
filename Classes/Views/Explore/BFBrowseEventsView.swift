@@ -116,7 +116,6 @@ public class BFBrowseEventsView : UIView, UITableViewDataSource, UITableViewDele
 	@available(iOS 2.0, *)
 	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
-		print("\(__FUNCTION__) = \(self.events.count)")
 		return self.events.count
 	}
 	
