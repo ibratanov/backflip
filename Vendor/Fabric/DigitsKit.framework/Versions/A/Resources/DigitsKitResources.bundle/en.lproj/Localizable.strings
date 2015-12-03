@@ -1,3 +1,6 @@
+/* Label instructing customer on how to enter the code on digits.com */
+"ASSISTED_AUTH_INSTRUCTIONS" = "Visit %@ and enter the following code to sign into %@";
+
 /* Label before phone input field */
 "LABEL_ENTER_PHONE_NUMBER" = "What's your phone number?";
 
