@@ -46,3 +46,10 @@ We ship every Friday, whatever is on `develop` and has been tested and marked st
 ## Feature Flags
 
 We take advantage of [feature flags](http://code.flickr.net/2009/12/02/flipping-out/), using them is super simple and quick to implement. If you look in [Supporting files/PrefixHeader.pch](https://github.com/ibratanov/backflip/blob/master/Supporting%20Files/PrefixHeader.pch) you can see how we define a "flag". We use feature flags as they make disabling / removing feature or sections quick and (mostly) pain free.
+
+## Project Management
+
+## Managing Submodules
+
+All submodules (both iOS and tvOS are managed in the .gitmodules file). New submodules are added by drag-and-dropping the project file for the submodule into a new "Group"(folder) in the Vendor directory in Xcode.
+The framework should then be added to the Embedded Binaries section of the Project settings under Targets (for either iOS or tvOS). The framework should then appear under the Linked Frameworks and Libraries section.
