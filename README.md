@@ -49,7 +49,7 @@ We take advantage of [feature flags](http://code.flickr.net/2009/12/02/flipping-
 
 ## Project Management
 
-## Managing Submodules
+### Managing Submodules
 
 All submodules (both iOS and tvOS are managed in the .gitmodules file). New submodules are added by drag-and-dropping the project file for the submodule into a new "Group"(folder) in the Vendor directory in Xcode.
 The framework should then be added to the Embedded Binaries section of the Project settings under Targets (for either iOS or tvOS). The framework should then appear under the Linked Frameworks and Libraries section.
