@@ -125,7 +125,7 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 		digitsButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
 		digitsButton.layer.cornerRadius = 25
 		digitsButton.titleLabel?.font =  UIFont(name: "Lato-Regular", size: 14)
-		digitsButton.setTitle("Login via SMS", forState: .Normal)
+		digitsButton.setTitle("Log in via Phone Number", forState: .Normal)
 		digitsButton.addTarget(self, action: "digitsLogin:", forControlEvents: .TouchUpInside)
 		digitsButton.titleLabel?.layer.shadowColor = UIColor.blackColor().CGColor
 		digitsButton.titleLabel?.layer.shadowOffset = CGSizeMake(1.0, 1.0)
@@ -136,7 +136,7 @@ class BFOnboardingViewController : UIViewController, UIScrollViewDelegate
 		facebookButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
 		facebookButton.layer.cornerRadius = 25
 		facebookButton.titleLabel?.font =  UIFont(name: "Lato-Light", size: 20)
-		facebookButton.setTitle("Login via Facebook", forState: .Normal)
+		facebookButton.setTitle("Log in via Facebook", forState: .Normal)
 		facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: .TouchUpInside)
 		facebookButton.frame = CGRectMake(20, (self.digitsButton.frame.origin.y - 10) - 30, self.view.bounds.width - 40, 50)
 		
