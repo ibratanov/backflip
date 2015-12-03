@@ -17,7 +17,7 @@ class BFOnboardingImageView : UIView
 	internal var altImageView : UIImageView?
 	
 	internal var currentIndex = 0
-	internal var images = [UIImage(named: "background-1"), UIImage(named: "background-2"), UIImage(named: "Scene-4")]
+	internal var images = [UIImage(named: "background-1"), UIImage(named: "background-2"), UIImage(named: "background-3")]
 	
 	internal var animating = false
 	
