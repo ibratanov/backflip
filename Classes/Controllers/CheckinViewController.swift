@@ -202,7 +202,7 @@ class CheckinViewController : BFViewController, UIPickerViewDelegate, UIPickerVi
 		
 		if ((1 + indexPath.row) == self.collectionView(collectionView, numberOfItemsInSection: 0)) {
 			cell.imageView!.image = UIImage(named: "check-in-screen-double-tap")
-			
+			cell.backgroundColor = UIColor.clearColor()
 		} else if (event.cleanPhotos.count != 0 && event.cleanPhotos.count > indexPath.row) {
 			let photo : Photo = event.cleanPhotos[indexPath.row]
 
@@ -270,7 +270,7 @@ class CheckinViewController : BFViewController, UIPickerViewDelegate, UIPickerVi
 	
 	@IBAction func logout()
 	{
-		let alertController = UIAlertController(title: "Are you sure you want to logout?", message:"", preferredStyle: .Alert)
+		let alertController = UIAlertController(title: "Are you sure you want to logout?", message:"", preferredStyle: .ActionSheet)
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
 		alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (alertAction) -> Void in
 			PFUser.logOut()
@@ -278,6 +278,8 @@ class CheckinViewController : BFViewController, UIPickerViewDelegate, UIPickerVi
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_id")
 			NSUserDefaults.standardUserDefaults().removeObjectForKey("checkin_event_time")
 			NSUserDefaults.standardUserDefaults().synchronize()
+			
+			BFBonjourManager.sharedManager.stopServiceDiscovery()
 			
 			FBSDKLoginManager().logOut()
 			FBSDKAccessToken.setCurrentAccessToken(nil)

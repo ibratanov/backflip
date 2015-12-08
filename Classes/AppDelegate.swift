@@ -10,6 +10,7 @@ import Parse
 import Fabric
 import DigitsKit
 import FBSDKCoreKit
+import Crashlytics
 
 
 @UIApplicationMain
@@ -90,8 +91,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 			
 		PFInstallation.currentInstallation().saveInBackground()
 		
+		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-			Fabric.with([Digits()])
+			Fabric.sharedSDK().debug = true
+			Fabric.with([Digits.self, Crashlytics.self])
 		});
         
 		
@@ -235,7 +238,9 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		#if DEBUG
 			Parse.setApplicationId("2wR9cIAp9dFkFupEkk8zEoYwAwZyLmbgJDgX7SiV", clientKey: "3qxnKdbcJHchrHV5ZbZJMjfLpPfksGmHkOR9BrQf")
 		#else
-			Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
+            //Old (Jack)
+            //Parse.setApplicationId("TA1LOs2VBEnqvu15Zdl200LyRF1uTiyS1nGtlqUX", clientKey: "maKpXMcM6yXBenaReRcF6HS5795ziWdh6Wswl8e4")
+            Parse.setApplicationId("OTVgFOWaEP7P9dvyk7g1GfNBHySocZiNI0Azwl3m", clientKey: "aPCIzDgI819MlnhsYq2TnbuPIPviwc0VRIWDG8sx")
 		#endif
 
 
@@ -303,7 +308,10 @@ class AppDelegate : UIResponder, UIApplicationDelegate
 		#endif
 		
 		if (FEATURE_INSTABUG) {
-			Instabug.startWithToken("510f98f8d22d87efdf38fcdcaa64ce78", captureSource: IBGCaptureSourceUIKit, invocationEvent: IBGInvocationEventShake)
+			//Old Instabug (Jack)
+            //Instabug.startWithToken("510f98f8d22d87efdf38fcdcaa64ce78", captureSource: IBGCaptureSourceUIKit, invocationEvent: IBGInvocationEventShake)
+
+            Instabug.startWithToken("e8ded42be89b038aeedfea0e7f085e6f", captureSource: IBGCaptureSourceUIKit, invocationEvent: IBGInvocationEventShake)
 		}
 			
 		

@@ -53,7 +53,14 @@ class LoginViewController : UIViewController
 	
 	func accountLoggedIn()
 	{
-		self.dismissViewControllerAnimated(true, completion: nil)
+		// Show login screen again..
+		let storyboard = UIStoryboard(name: "Main-TV", bundle: NSBundle.mainBundle())
+		let tabbarController = storyboard.instantiateViewControllerWithIdentifier("tabbar-controller")
+		
+		let window = UIApplication.sharedApplication().windows.first
+		if (window != nil) {
+			window?.rootViewController = tabbarController
+		}
 	}
 }
 
